@@ -17,16 +17,16 @@ define([
 		//studio-riasd
 		{
 			riasType: ["rias.riasw.studio.WidgetPalette"],
-			requires: "rias/riasd/studio/WidgetPalette"
+			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/WidgetPalette.js"
 		},{
 			riasType: ["rias.riasw.studio.TextEditor"],
-			requires: "rias/riasd/studio/TextEditor"
+			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/TextEditor.js"
 		},{
 			riasType: ["rias.riasw.studio.OutlineTree"],
-			requires: "rias/riasd/studio/OutlineTree"
+			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/OutlineTree.js"
 		},{
 			riasType: ["rias.riasw.widget.HTMLEditor"],
-			requires: "rias/riasw/widget/HTMLEditor"
+			requires: "http://www.riaeasy.com:8081/rias/riasw/widget/HTMLEditor.js"
 		},
 		//---------------------------------------------------------
 		//chart
