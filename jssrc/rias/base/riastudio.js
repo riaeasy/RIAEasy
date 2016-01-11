@@ -16,8 +16,8 @@ define([
 	rias.i18n.message = rias.delegate(riasi18n.message);
 	rias.studioHome = "http://www.riaeasy.com:8081/";
 	rias.studioVersion = {
-		major: 0, minor: 8, patch: 0, flag: "",
-		revision: 0.80,
+		major: 1, minor: 0, patch: 0, flag: "",
+		revision: 1.0,
 		toString: function(){
 			var v = dojo.version;
 			return this.major + "." + this.minor + "." + this.patch + this.flag + " (" + this.revision + ")" +
