@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RIAEasy - The online visual designer,WYSWYG RIA/SPA designer.Based on dojo 1.10. 面向富客户/单页应用的在线可视化设计器。</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<script>
+		var dojoConfig = {
+			has: {
+				"dojo-publish-privates": 1,
+				"dojo-undef-api": 1
+			},
+			bindEncoding: 'UTF-8',
+			isDebug: true,
+			"config-deferredInstrumentation": 1,//是否自动加载那些会报告un-handled rejected promises的代码
+			"config-dojo-loader-catches": 1,//是否 catch 加载模块时的error handling
+			"dojo-trace-api": 1,//Disables the tracing of module loading.是否跟踪模块加载过程
+			"dojo-log-api": 1,//是否记录加载器的日志？
+			parseOnLoad: true,
+			async: true,
+			//cacheBust: (new Date()).getTime(),
+			waitSeconds: 30,
+			ioPublish: true,
+			locale: 'zh-cn',
+			extraLocale: ['en'],
+			trace:{
+				// these are listed so it's simple to turn them on/off while debugging loading
+				"loader-inject":0,
+				"loader-define":0,
+				"loader-exec-module":0,
+				"loader-run-factory":0,
+				"loader-finish-exec":0,
+				"loader-define-module":0,
+				"loader-circular-dependency":0,
+				"loader-define-nonmodule":0
+			},
+			packages: [
+				//{name: 'dijit', location: '../dijit'},
+				//{name: 'dojox', location: '../dojox'},
+				{name: 'rias', location: '../../rias', main: 'rias'},
+				{name: 'webApp', location: '../../webApp', main: "webApp"},
+				{name: 'act', location: '../../act', main: "act"}
+			]
+		};
+	</script>
+	<script type="text/javascript" src="webLib/dojo/dojo.js">
+	</script>
+</head>
+<body>
+<script type="text/javascript">
+	require([
+		"rias"
+	], function(rias){
+		rias.afterLoaded(function(){
+			rias.theme.loadTheme("rias", "rias", "main.css", "ios7");
+			rias.require([
+				"webApp"
+			], function(webApp){
+				rias.ready(1000, function(){
+					if(rias.has("ie") < 11){
+						rias.info({
+							dialogType: "modal",
+							content: "为了得到更好的效果，请使用 ie11+ 或者 chrome/firefox 内核的浏览器。"
+						});
+					}
+					rias.webApp.moduleMeta = "appModule/app/app";
+					rias.webApp.startup();
+				});
+			});
+		});
+	});
+</script>
+</body>
+</html>

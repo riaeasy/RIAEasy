@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>html打印测试</title>
+	<style type="text/css" media="all">
+		* { margin:0; padding:0; font-size:12px }
+		table { margin:10px; border:2px solid #000; border-collapse:collapse; margin:5px auto }
+		th, td { border:1px solid #000; border-collapse:collapse; padding:3px 5px }
+		h1 { font-size:24px }
+		@media print {
+			.no-print { display: none; }
+			.page-break { page-break-after: always; }
+		}
+	</style>
+</head>
+<body>
+<div class="no-print" style="text-align:center;margin:5px">
+	<button onClick="window.print()"> 打 印 </button>
+</div>
+<table >
+	<thead>
+	<tr>
+		<th colspan="5">
+			<h1>XXXX报表</h1>
+		</th>
+	</tr>
+	<tr>
+		<th> 序号 </th>
+		<th> 栏目1 </th>
+		<th> 栏目2 </th>
+		<th> 栏目3 </th>
+		<th> 栏目4 </th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td> 1 </td>
+		<td> 数据1 </td>
+		<td> 数据2 </td>
+		<td> 数据3 </td>
+		<td> 数据4 </td>
+	</tr>
+	<tr class="page-break">
+		<td> 2 </td>
+		<td> 数据1 </td>
+		<td> 数据2 </td>
+		<td> 数据3 </td>
+		<td> 数据4 </td>
+	</tr>
+	<tr>
+		<td> 3 </td>
+		<td> 数据1 </td>
+		<td> 数据2 </td>
+		<td> 数据3 </td>
+		<td> 数据4 </td>
+	</tr>
+	<tr>
+		<td> 4 </td>
+		<td> 数据1 </td>
+		<td> 数据2 </td>
+		<td> 数据3 </td>
+		<td> 数据4 </td>
+	</tr>
+	<tr>
+		<td> 5 </td>
+		<td> 数据1 </td>
+		<td> 数据2 </td>
+		<td> 数据3 </td>
+		<td> 数据4 </td>
+	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<th> 合计： </th>
+		<th> </th>
+		<th> </th>
+		<th> 300.00 </th>
+		<th> 300.00 </th>
+	</tr>
+	</tfoot>
+</table>
+</body>
+</html>

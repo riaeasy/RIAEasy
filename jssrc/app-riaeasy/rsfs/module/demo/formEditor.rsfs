@@ -1,0 +1,31 @@
+{
+	"_opened": {
+		"sessionid": ""
+	},
+	"_count": 49,
+	"position": 2,
+	"rsfVersion": 396,
+	"items": [
+		{
+			"rsfVersion": 394,
+			"reload": true,
+			"pix": "",
+			"isMobileApp": false,
+			"rotate": false
+		},
+		{
+			"rsfVersion": 395,
+			"reload": true,
+			"pix": "",
+			"isMobileApp": false,
+			"rotate": false
+		},
+		{
+			"rsfVersion": 396,
+			"reload": true,
+			"pix": "",
+			"isMobileApp": false,
+			"rotate": false
+		}
+	]
+}
