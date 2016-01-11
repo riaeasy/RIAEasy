@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 47,
+	"_rsfVersion": 48,
 	"_riaswVersion": "0.7",
 	"style": {
 		"height": "12em",

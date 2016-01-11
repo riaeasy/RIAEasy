@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 539,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 540,
 	"_riaswVersion": "0.7",
 	"op": "query",
 	"query": {

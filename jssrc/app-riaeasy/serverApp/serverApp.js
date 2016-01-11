@@ -2,7 +2,7 @@
 
 define([
 	"rias"
-], function(rias) {
+], function (rias) {
 
 	return {
 		config: {
@@ -16,43 +16,42 @@ define([
 			//"cacheCheckModified": true,
 			//"cacheGzipMinSize": 1 * 1024,///server.rsCache 启动Gzip的最小字节数
 			//"cacheGzipMaxSize": 1 * 1024 * 1024,///server.rsCache 启动Gzip的最大字节数
-			"respGzipMinSize": 1 * 1024,///server.response 启动Gzip的最小字节数
-			"respGzipMaxSize": 1 * 1024 * 1024,///server.response 启动Gzip的最大字节数
+			"respGzipMinSize": 1 * 1024, ///server.response 启动Gzip的最小字节数
+			"respGzipMaxSize": 1 * 1024 * 1024, ///server.response 启动Gzip的最大字节数
 			"serverId": "11",
-
 			minThreads: 10,
 			maxThreads: 50,
-			maxFormContentSize: 4 * 1024 * 1024,/// form 提交的最大字节数
+			maxFormContentSize: 4 * 1024 * 1024, /// form 提交的最大字节数
 			//maxUploadSize: 10 * 1024 * 1024,
 			port: 8088,
-			acceptors: 3,//表示同时在监听read事件的线程数，缺省值为2，对于NIO来说，建议值2-（处理器核数+1）.
+			acceptors: 3, //表示同时在监听read事件的线程数，缺省值为2，对于NIO来说，建议值2-（处理器核数+1）.
 			webContext: "/", ///访问的url根。
 
 			//path: {
-				/*系统目录结构
-				 * riasLib
-				 * webLib
-				 * webLib/dojo
-				 * webLib/dgrid
-				 * webLib/dstore
-				 * webLib/gridx
-				 * webLib/orion
-				 * appRoot ///riasApp
-				 * appRoot/serverApp
-				 * appRoot/serverApp/servlet
-				 * appRoot/serverApp/act
-				 * appRoot/serverApp/func
-				 * appRoot/serverApp/db
-				 * appRoot/webApp
-				 * appRoot/webApp/module
-				 * appRoot/webApp/nls
-				 * appRoot/webApp/themes
-				 * appRoot/rsfs
-				 * appRoot/rsfs/module
-				 * */
+			/*系统目录结构
+			 * riasLib
+			 * webLib
+			 * webLib/dojo
+			 * webLib/dgrid
+			 * webLib/dstore
+			 * webLib/gridx
+			 * webLib/orion
+			 * appRoot ///riasApp
+			 * appRoot/serverApp
+			 * appRoot/serverApp/servlet
+			 * appRoot/serverApp/act
+			 * appRoot/serverApp/func
+			 * appRoot/serverApp/db
+			 * appRoot/webApp
+			 * appRoot/webApp/module
+			 * appRoot/webApp/nls
+			 * appRoot/webApp/themes
+			 * appRoot/rsfs
+			 * appRoot/rsfs/module
+			 * */
 			//	riasLib: riasServerConfig.riasLib,//"jssrc/rias", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，发布时一般为: "jssrc/rias"。
 			//	webLib: riasServerConfig.webLib,//"jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。
-			//	appRoot: "jssrc/app-rq-my" ///发布的应用物理路径，比如: "jssrc/riasApp"。使用相对路径时，是相对于 jar 包的，不能包含"appRoot"、"riasLib"、"webLib"、"serverLib"、"serverApp"、"webApp"等字符串。
+			//	appRoot: "jssrc/app-riaeasy" ///发布的应用物理路径，比如: "jssrc/riasApp"。使用相对路径时，是相对于 jar 包的，不能包含"appRoot"、"riasLib"、"webLib"、"serverLib"、"serverApp"、"webApp"等字符串。
 			//},
 
 			defaultDbName: "db/app-riaeasy",
@@ -63,7 +62,6 @@ define([
 				"db/app-riaeasy": {
 					dbType: "mysql",
 					maxResultRecords: 999,
-
 					driverClassName: "com.mysql.jdbc.Driver",
 					url: "jdbc:mysql://localhost:3306/riaeasy?autoReconnect=true&amp;allowMultiQueries=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;mysqlEncoding=utf8",
 					username: "riaeasy",
@@ -89,7 +87,6 @@ define([
 					testWhileIdle: true//空闲时是否进行验证，检查对象是否有效，默认为false
 				}
 			},
-
 			//monitorDir: [//只能监控目录，不能监控文件。///是文件系统的路径，不是 dojo 模块名，相对于 appRoot 的路径。
 			//	//"riasLib/riass",
 			//	"serverApp/act"
@@ -97,18 +94,17 @@ define([
 
 			defaultServletPath: "/",
 			servlet: [{
-				//	module: "servlet/rsCache", ///servlet模块路径，相对于 serverApp 的路径，是文件系统的路径，不是 dojo 模块名
-				//	url: "/*"
-				//}, {
-				module: "servlet/action", ///servlet模块路径，相对于 serverApp 的路径，是文件系统的路径，不是 dojo 模块名
-				url: "/act/*"
-			}]
+					//	module: "servlet/rsCache", ///servlet模块路径，相对于 serverApp 的路径，是文件系统的路径，不是 dojo 模块名
+					//	url: "/*"
+					//}, {
+					module: "servlet/action", ///servlet模块路径，相对于 serverApp 的路径，是文件系统的路径，不是 dojo 模块名
+					url: "/act/*"
+				}]
 		},
-
 		appVersion: {
-			major: 0, minor: 8, patch: 0, flag: "",
-			revision: 0.8,
-			toString: function(){
+			major: 1, minor: 0, patch: 0, flag: "",
+			revision: 1.0,
+			toString: function () {
 				var v = rias.version;
 				return this.major + "." + this.minor + "." + this.patch + this.flag + " (" + this.revision + ")" +
 					" (RIAStudio:" + v.major + "." + v.minor + "." + v.patch + v.flag + " (" + v.revision + "))";
@@ -116,8 +112,8 @@ define([
 		},
 		appBuildtime: "@buildtime@",
 		appOwner: "成都世高科技有限公司",
-		appUser: "绵阳燃气集团",
-		appTitle: "绵阳燃气管理信息系统"
+		appUser: "成都世高科技有限公司",
+		appTitle: "RIAEasy 1.0"
 	};
 
 });

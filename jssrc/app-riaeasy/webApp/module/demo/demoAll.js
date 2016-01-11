@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 99,
+	"_rsfVersion": 100,
 	"caption": "标题1",
 	"region": "center",
 	"style": {

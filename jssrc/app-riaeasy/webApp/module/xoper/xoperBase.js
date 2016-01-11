@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 9,
+	"_rsfVersion": 10,
 	"_riaswVersion": "0.7",
 	"caption": "操作员信息",
 	"op": "query",

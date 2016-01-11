@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 77,
+	"_rsfVersion": 78,
 	"_riaswVersion": "0.7",
 	"region": "center",
 	"actions": {

@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 98,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 99,
 	"_riaswVersion": "0.7",
 	"actions": {
 		"login": "act/login",

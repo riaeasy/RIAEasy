@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 554,
+	"_rsfVersion": 555,
 	"_riaswVersion": "0.7",
 	"op": "query",
 	"query": {
