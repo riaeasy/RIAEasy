@@ -5,7 +5,7 @@
 <span style="font-size: small;">RIAEasy<sup>TM</sup>旨在实现RIA/SPA应用的快速、高质量开发，实现在线无缝可视化设计，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。</span>
 </p>
 <p>
-<span style=\"font-size: small;">RIAasy<sup>TM</sup>基于dojo构建（dojo 1.10），支持HTML5。</span>
+<span style=\"font-size: small;">RIAEasy<sup>TM</sup>基于dojo构建（dojo 1.10），支持HTML5。</span>
 </p>
 <p>
 <span style=\"font-size: small;\">RIAEasy<sup>TM</sup>的进一步发展目标：</span>
