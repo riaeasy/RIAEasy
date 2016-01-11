@@ -484,7 +484,7 @@ define([
 					if(r.length > 0){
 						rias.require(r, function(){
 							//if(self.onLoadDeferred){
-								rias.hitch(self, _filer)();
+							rias.hitch(self, _filer)();
 							//}
 						}, function(moduleId){
 							_e("require module's requires error:" + r);
@@ -519,15 +519,15 @@ define([
 				}
 			}else if(rias.isString(self.moduleMeta)){
 				try{
-					self.moduleMeta = self.moduleMeta.replace(/\./g, "/");
+					//self.moduleMeta = self.moduleMeta.replace(/\.js$/g, "").replace(/\./g, "/") + ".js";
 					_do(self._beforeLoadMeta);
 					rias.require([self.moduleMeta], function(meta){
 						//if(self.onLoadDeferred){
-							rias.hitch(self, _pro)(meta);
+						rias.hitch(self, _pro)(meta);
 						//}
 					});
 				}catch(error){
-					_e("require moduleMeta error:" + e.message, e);
+					_e("require moduleMeta error:" + error.message, error);
 				}
 			}else{
 				_e("The Module must has moduleMeta.");
