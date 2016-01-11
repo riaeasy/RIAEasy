@@ -1,0 +1,106 @@
+.dijitSplitterH {
+	height: 8px;
+}
+
+.dijitSplitterV {
+	width: 8px;
+}
+
+.dijitSplitterHover{
+	background-color: gold;
+}
+
+/* active splitter */
+.dijitSplitterActive {
+	font-size: 1px;
+	background-image: none;
+	background-color: #aaa;
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	filter: Alpha(Opacity=60);
+	margin: 0;
+}
+
+.dijitSplitterH .riaswToggleSplitterIconButton {
+	background-image: url('images/splitterToggleH.png');
+	background-repeat: no-repeat;
+	width: 71px;
+	height: 8px;
+	top: 0;
+	left: 45%;
+	cursor: pointer;
+}
+
+.dijitSplitterV .riaswToggleSplitterIconButton {
+	background-image: url('images/splitterToggleV.png');
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	width: 8px;
+	height: 71px;
+	left: 0;
+	top: 45%;
+	cursor: pointer;
+}
+
+.riaswToggleSplitterTop .riaswToggleSplitterIconOpen,
+.riaswToggleSplitterBottom .riaswToggleSplitterIconClosed {
+	/*background-position: 0 -12px !important;*/
+	background-position: 0 -24px !important;
+}
+
+.riaswToggleSplitterBottom .riaswToggleSplitterIconOpen,
+.riaswToggleSplitterTop .riaswToggleSplitterIconClosed {
+	/*background-position: 0 0 !important;*/
+	background-position: 0 -8px !important;
+}
+
+.riaswToggleSplitterLeft .riaswToggleSplitterIconOpen,
+.riaswToggleSplitterRight .riaswToggleSplitterIconClosed {
+	/*background-position: -12px 0 !important;*/
+	background-position: -24px 0 !important;
+}
+
+.riaswToggleSplitterRight .riaswToggleSplitterIconOpen,
+.riaswToggleSplitterLeft .riaswToggleSplitterIconClosed {
+	/*background-position: 0 0 !important;*/
+	background-position: -8px 0 !important;
+}
+
+.riaswToggleSplitterTop .riaswToggleSplitterIconOpenHover,
+.riaswToggleSplitterBottom .riaswToggleSplitterIconClosedHover {
+	background-position: 0 -24px !important;
+}
+
+.riaswToggleSplitterBottom .riaswToggleSplitterIconOpenHover,
+.riaswToggleSplitterTop .riaswToggleSplitterIconClosedHover {
+	background-position: 0 -8px !important;
+}
+
+.riaswToggleSplitterLeft .riaswToggleSplitterIconOpenHover,
+.riaswToggleSplitterRight .riaswToggleSplitterIconClosedHover {
+	background-position: -24px 0 !important;
+}
+
+.riaswToggleSplitterRight .riaswToggleSplitterIconOpenHover,
+.riaswToggleSplitterLeft .riaswToggleSplitterIconClosedHover {
+	background-position: -8px 0 !important;
+}
+
+.riaswToggleSplitterTop .riaswToggleSplitterA11y,
+.riaswToggleSplitterBottom .riaswToggleSplitterA11y {
+	display: none;
+	font-size: 8px;
+	text-align: center;
+}
+
+.riaswToggleSplitterRight .riaswToggleSplitterA11y,
+.riaswToggleSplitterLeft .riaswToggleSplitterA11y {
+	display: none;
+	font-size: 8px;
+	position: relative;
+	top: 48%;
+}
+
+.dijit_a11y .riaswToggleSplitterA11y {
+	display: block;
+}

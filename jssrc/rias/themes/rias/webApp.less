@@ -1,0 +1,218 @@
+
+/* rias.webApp */
+.webApp{
+	background-color: whitesmoke;
+	/*height: 100px;
+	width: 100px;*/
+	font: 12px Arial;
+	display: block;
+	/*position: relative;*/
+	margin:0;
+	overflow: hidden;
+	/*overflow: auto;*/
+}
+
+.mblComboBoxMenuItem {
+	height: 1.5em;
+}
+
+.mobile .mobileBody {
+	font-family: Helvetica;
+	font-size: 15px;
+}
+
+.webAppHeader {
+	background-color: lightblue;
+	border-bottom: 1px solid silver;
+	height: 32px;
+	padding: 0px;
+
+	.dijitIcon {
+		//display: none;
+	}
+
+	.dijitButtonText {
+		padding: 0 0.3em;
+		text-align: center;
+		color: steelblue;
+		font-weight: bold;
+		font-size: 12px;
+	}
+	.dijitButtonDisabled .dijitButtonText {
+		//color: gray;
+	}
+
+	.dijitButton .dijitButtonNode,
+	.dijitDropDownButton .dijitButtonNode,
+	.dijitComboButton .dijitButtonNode,
+	.dijitToggleButton .dijitButtonNode {
+		border-width: 0px 0px 2px 0px;
+		border-bottom-color: steelblue;
+		margin: 0px 2px;
+		padding: 4px 2px 0px 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		-webkit-box-shadow: 0 rgba(0, 0, 0, 0.15);
+		-moz-box-shadow: 0 rgba(0, 0, 0, 0.15);
+		box-shadow: 0 rgba(0, 0, 0, 0.15);
+		background-color: inherit;
+		height: 20px;
+	}
+	.dijitButtonHover .dijitButtonNode,
+	.dijitButtonNodeHover,
+	.dijitDropDownButtonHover .dijitButtonNode,
+	.dijitComboButton .dijitButtonNodeHover,
+	.dijitComboButton .dijitDownArrowButtonHover,
+	.dijitToggleButtonHover .dijitButtonNode,
+	.dijitUpArrowButtonHover,
+	.dijitDownArrowButtonHover {
+		background-color: gold;
+		border-color: gold;
+	}
+	/* active, checked status */
+	.dijitButtonActive .dijitButtonNode,
+	.dijitDropDownButtonActive .dijitButtonNode,
+	.dijitComboButtonActive .dijitButtonNode,
+	.dijitToggleButtonActive .dijitButtonNode,
+	.dijitToggleButtonChecked .dijitButtonNode {
+		background-color: gold;
+		-webkit-transition-duration: 0.1s;
+		-moz-transition-duration: 0.1s;
+		transition-duration: 0.1s;
+	}
+	.dijitUpArrowButtonActive,
+	.dijitDownArrowButtonActive {
+		background-color: gold;
+	}
+
+	/* disabled status */
+	.dijitButtonDisabled,
+	.dijitDropDownButtonDisabled,
+	.dijitComboButtonDisabled,
+	.dijitToggleButtonDisabled {
+		background-color: inherit;
+		background-image: none;
+		/*outline: none;*/
+		color: inherit;
+	}
+	.dijitButtonDisabled .dijitButtonNode,
+	.dijitDropDownButtonDisabled .dijitButtonNode,
+	.dijitComboButtonDisabled .dijitButtonNode,
+	.dijitToggleButtonDisabled .dijitButtonNode {
+		background-color: inherit;
+		border-width: 0px 0px 2px 0px;
+		padding: 4px 2px 0px 4px;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		filter: none;
+		-webkit-filter: none;
+	}
+	.dijitButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitDropDownButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitComboButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitToggleButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitDropDownButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitComboButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitToggleButtonDisabled .dijitButtonNode .dijitButtonText {
+		filter: grayscale(100%) opacity(30%);
+		-webkit-filter: grayscale(100%) opacity(30%);
+		-webkit-filter: grayscale(1) opacity(0.3);
+	}
+
+	.riaswDockNode {
+		border-width: 0px 0px 2px 0px;
+		border-bottom-color: gold;
+		padding: 4px 24px 0px 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+		-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+		background-color: inherit;
+		height: 20px;
+
+		cursor: pointer;
+		list-style: none;
+		margin: 0px 8px 0px 1em;
+		width: auto;
+		min-width: 30px;
+		float: left;
+	}
+	.riaswDockNodeHover {
+		background-color: gold;
+		border-color: gold;
+	}
+	.riaswDockNodeTitle {
+		padding: 0 0.3em;
+		text-align: center;
+		color: steelblue;
+		font-weight: bold;
+		font-size: 12px;
+	}
+
+	a {
+		//width: 108px;
+		padding: 2px 8px 2px 8px;
+		display: inline-block;
+		font-size: 12px;
+	}
+}
+
+.webAppHeaderLogo {
+	width: 180px;
+	width: 180px;
+	padding: 4px 8px 2px 8px;
+	background: url("./images/RIAStudio.png") no-repeat 0px center;
+}
+.webAppHeaderDockBar {
+	padding: 0px;
+}
+.webAppFooterDockBar {
+	padding: 0px;
+}
+.webAppHeaderBtns {
+	width: 24em;
+	padding: 0px;
+	margin: 0px;
+}
+.webAppHeaderBtnsRiasd {
+	width: 20em;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+.webAppContent {
+	background-color: whitesmoke;
+	border-top: 0px solid silver;
+	padding: 0px;
+	margin: 0px;
+}
+
+.webAppFooter {
+	background-color: lavender;
+	border-top: 1px solid silver;
+	height: 2.3em;
+	padding: 2px;
+
+	.riaswDockNode {
+		border-width: 1px 1px 4px 1px;
+		border-color: steelblue;
+	}
+}
+
+.webAppHeaderXC {
+	background-color: red;
+	overflow: hidden;
+}
+.webAppHeaderLogoXC {
+	width: 180px;
+	width: 180px;
+	padding: 4px 8px 2px 8px;
+	background: url("./images/XCIndex.png") no-repeat 0px center;
+}
+

@@ -1,0 +1,333 @@
+/**
+ * rias.riasw.layout.TabPanel
+ */
+
+/* Classes for all types of tabs (top/bottom/left/right) */
+
+.rias .dijitTabContainer {
+	background-color: inherit;
+}
+.rias .dijitTabContainerTopChildWrapper,
+.rias .dijitTabContainerBottomChildWrapper,
+.rias .dijitTabContainerLeftChildWrapper,
+.rias .dijitTabContainerRightChildWrapper {
+	background-color: inherit;
+	border: 0px solid silver;
+}
+
+.rias .dijitTabContainer .tabStripRBtn {
+	margin-right: 21px;
+}
+.rias .dijitTabContainer .tabStripLBtn {
+	margin-left: 21px;
+}
+
+.rias .nowrapTabStrip .dijitTab {
+	/*top: 2px; zensst*/
+}
+
+/* Tabs, shared classes */
+.rias .dijitTabPaneWrapper {
+	/*background-color: inherit;#dfefff zensst*/
+	border-color: silver;
+	border-style: solid;
+	border-width: 0px;
+	margin: 0px;
+	padding: 2px;
+}
+
+.rias .dijitTab {
+	padding: 6px;
+	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -351px;*/
+	background-color: transparent;
+	position: relative;
+	line-height:normal;
+	/*margin:0 2px 0 0;	/* space between one tab and the next in top/bottom mode zensst*/
+	border: 1px silver solid;
+}
+
+/* hovered tab */
+.rias .dijitTabHover {
+	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -451px;*//*zensst*/
+	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
+	background-color: gold;
+}
+/* selected tab*/
+.rias .dijitTabChecked {
+	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -501px;*//*zensst*/
+	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
+	background-color: whitesmoke;
+	/*border-width: 2px 2px 0px 2px;*/
+	border-color: steelblue;
+	/*border-style: solid;*/
+	/*font-weight: bold;*/
+}
+
+.rias .tabStrip-enabled .dijitTabController {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	background: lavender;
+}
+.rias .dijitTabListWrapper {
+	z-index: 10;
+}
+
+.rias .dijitTabSpacer {
+	/* set the spacer invisible.  note that height:0 doesn't work on IE/quirks, it's still 10px. */
+	display: none;
+}
+
+/* Close Button */
+.rias .dijitTabCloseButton {
+	width: 15px;
+	height: 15px;
+	background: url("./images/CaptionPanelBtn.png") no-repeat -105px top;
+	margin-left: 0.5em;
+}
+
+.rias .dijitTabContainerNested .dijitTabListWrapper {
+	height: auto;
+}
+
+/* ================================ */
+/* top tabs */
+.rias .dijitTabContainerTop-tabs {
+	border-bottom: 1px solid steelblue;
+	padding-left: 6px;
+}
+.rias .dijitTabContainerTop-tabs .dijitTab {
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	border-bottom: none;
+	/*padding-bottom: 4px;*/
+}
+.rias .dijitTabContainerTop-tabs .dijitTabChecked {
+	/*border-width: 2px 2px 0px 2px;
+	top: 2px;*/
+}
+.rias .tabStrip-enabled .dijitTabContainerTop-tabs {
+	border-top: 0px solid silver;
+}
+/* container */
+.rias .dijitTabContainerTop-container {
+	border-top: none;
+}
+.rias .dijitTabListContainer-top {
+	border-bottom: 0px solid silver;
+}
+
+/* ================================ */
+/* bottom tabs */
+.rias .dijitTabContainerBottom-tabs {
+	border-top: 1px solid steelblue;
+	padding-left: 6px;
+}
+.rias .dijitTabContainerBottom-tabs .dijitTab {
+	-moz-border-radius: 0 0 4px 4px;
+	-webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+	border-top: none;
+	/*padding-top: 4px;*/
+}
+.rias .dijitTabContainerBottom-tabs .dijitTabChecked {
+	/*border-width: 0px 2px 2px 2px;
+	top: -2px;*/
+}
+.rias .tabStrip-enabled .dijitTabContainerBottom-tabs {
+	border-bottom: 0px solid silver;
+}
+/* container */
+.rias .dijitTabContainerBottom-container {
+	border-bottom: none;
+}
+.rias .dijitTabListContainer-bottom {
+	border-bottom: 0px solid silver;
+}
+/* top/bottom strip */
+.rias .dijitTabContainerBottom-spacer,
+.rias .dijitTabContainerTop-spacer {
+	height: 2px;
+	border: 0px solid silver;
+	background-color: silver;
+}
+
+/* ================================ */
+/* right tabs */
+.rias .dijitTabContainerRight-tabs {
+	border-left: 1px solid steelblue;
+	padding-top: 6px;
+}
+.rias .dijitTabContainerRight-tabs .dijitTab {
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+	border-left: none;
+	/*padding-left: 4px;*/
+}
+.rias .dijitTabContainerRight-tabs .dijitTabChecked {
+	/*border-width: 2px 2px 2px 0px;
+	left: -2px;*/
+}
+.rias .tabStrip-enabled .dijitTabContainerRight-tabs {
+	border-right: 0px solid silver;
+}
+/* container */
+.rias .dijitTabContainerRight-container {
+	border-right: none;
+}
+/* some odd ie bug when borders disappear when setting a bottom margin, this sort of helps */
+/*.dj_ie6 .rias .dijitTabContainerRight-tabs .dijitTab,
+.dj_ie7 .rias .dijitTabContainerRight-tabs .dijitTab {
+	left: -2px;
+}*/
+/* some odd ie bug when borders disappear when setting a bottom margin, this sort of helps */
+/*.dj_ie6 .rias .dijitTabContainerRight-tabs .dijitTabChecked,
+.dj_ie7 .rias .dijitTabContainerRight-tabs .dijitTabChecked,
+.dj_ie6 .rias .dijitTabContainerRight-tabs .dijitTabCheckedHover,
+.dj_ie7 .rias .dijitTabContainerRight-tabs .dijitTabCheckedHover {
+	border-width: 2px 6px 2px 0px;
+	left: -2px;
+}*/
+
+/* ================================ */
+/* left tabs */
+.rias .dijitTabContainerLeft-tabs {
+	border-right: 1px solid steelblue;
+	padding-top: 6px;
+}
+.rias .dijitTabContainerLeft-tabs .dijitTab {
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+	border-right: none;
+	/*padding-right: 4px;*/
+}
+/*.dj_ie6 .rias .dijitTabContainerLeft-tabs .dijitTab,
+.dj_ie7 .rias .dijitTabContainerLeft-tabs .dijitTab {
+}*/
+.rias .dijitTabContainerLeft-tabs .dijitTabChecked {
+	/*border-width: 2px 0px 2px 2px;
+	left: 2px;*/
+}
+.rias .tabStrip-enabled .dijitTabContainerLeft-tabs {
+	border-left: 0px solid silver;
+}
+/* container */
+.rias .dijitTabContainerLeft-container {
+	border-left: none;
+}
+/* ================================ */
+/* left/right tabstrip */
+.rias .dijitTabContainerLeft-spacer,
+.rias .dijitTabContainerRight-spacer {
+	width: 0px;
+	border: 0px solid silver;
+	background-color: inherit;
+}
+/* ================================ */
+
+/* this resets the tabcontainer strip when within a contentpane */
+/*.rias .dijitTabContainerTop-dijitContentPane .dijitTabContainerTop-tabs {
+	border-left: 0 solid #ccc;
+	border-top: 0 solid #ccc;
+	border-right: 0 solid #ccc;
+	padding-top: 0;
+	padding-left: 0;
+}*/
+
+
+/* ================================ */
+/* Menu and slider control styles */
+.rias .dijitTabContainer .tabStripButton {
+	background-color: whitesmoke;
+	padding: 4px 4px 4px 4px;
+	margin-right: 0;
+	border: 1px silver solid;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.rias .dijitTabContainer .tabStripButton .dijitButtonText {
+	padding: 0;
+}
+.rias .dijitTabContainer .tabStripButtonHover {
+	background-color: gold;
+}
+.rias .dijitTabContainer .tabStripButtonDisabled {
+	background-color: inherit;
+	border: solid 1px silver;
+	filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(1) opacity(0.3);
+}
+.rias .dijitTabContainer .tabStripButton-top {
+	margin-top: 4px;
+}
+
+.dj_ie6 .rias .tabStripButton .dijitTabContent,
+.dj_ie7 .rias .tabStripButton .dijitTabContent {
+	padding-top: 7px;
+}
+
+.dj_ie6 .rias .tabStrip-disabled .tabStripButton .dijitTabContent,
+.dj_ie7 .rias .tabStrip-disabled .tabStripButton .dijitTabContent {
+	padding-top: 6px;
+}
+
+.rias .dijitTabContainer .tabStripButton-bottom {
+	background: transparent url(./images/tabBottomEnabledSpriteLR.gif) no-repeat scroll left bottom;
+	border-bottom: medium none;
+	border-top: 1px solid silver;
+}
+
+.rias .dijitTabContainer .tabStripButton-bottom .dijitTab {
+	background: transparent url(./images/tabBottomEnabledSpriteLR.gif) no-repeat scroll right bottom;
+}
+
+.rias .dijitTabStripIcon {
+	height: 15px;
+	width: 15px;
+	margin-left: 4px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat left top ;
+}
+
+.dj_ie6 .rias .dijitTabStripIcon {
+	background-image: url(./images/CaptionPanelBtn.png);
+}
+
+.rias .dijitTabStripSlideRightIcon {
+	background-position: -15px top;
+}
+
+.rias .dijitTabStripMenuIcon {
+	background-position: -90px top;
+}
+
+
+/* Nested Tabs */
+.rias .dijitTabContainerTabListNested {
+	background: lavender;
+}
+.rias .dijitTabContainerTabListNested .dijitTab {
+	/*background: none;
+	border: none;
+	top: 0;	 zensst*//* override top:1px setting of top-level tabs */
+}
+.rias .dijitTabContainerTabListNested .dijitTabHover .tabLabel {
+	/*text-decoration: underline; zensst*/
+}
+.rias .dijitTabContainerTabListNested .dijitTabChecked .tabLabel {
+	/*text-decoration: underline;
+	font-weight: bold; zensst*/
+}
+.rias .dijitTabContainerSpacerNested .dijitTabSpacer {
+	/* thinner line between tab (labels) and content */
+	/*height: 0; zensst*/
+}
+.rias .dijitTabPaneWrapperNested {
+	border: none;	/* prevent double border */
+}
+.rias .dijitTabContainerTop .dijitTabContainerTabListNested {
+	border-top: none;
+}

@@ -1,0 +1,309 @@
+
+/* rias.riasw.layout.ExpandoPane */
+
+.riaswExpandoPane {
+	/*background: inherit;#dfefff zensst*/
+	overflow:auto;
+	z-index:440 !important;
+}
+
+.riaswExpandoPane .riaswExpandoWrapper {
+	/*overflow-x:hidden;*/
+}
+
+.riaswExpandoClosed .riaswExpandoTitleNode {
+	/*display:none;*/
+}
+
+/* hide all layout children scrollbars when closed */
+.riaswExpandoClosed .riaswExpandoWrapper * {
+	overflow:hidden !important;
+}
+
+.riaswExpandoTitleNode {
+	padding-right:6px;
+	padding-left:6px;
+}
+
+.riaswExpandoIcon .a11yNode {
+	display:none;
+	visibility:hidden;
+}
+
+.riaswExpandoBottom .riaswExpandoIcon,
+.riaswExpandoTop .riaswExpandoIcon,
+.riaswExpandoLeft .riaswExpandoIcon {
+	float:right;
+	margin-right:2px;
+}
+
+.riaswExpandoRight .riaswExpandoIcon {
+	float:left;
+	margin-left:2px;
+}
+
+.riaswExpandoIcon {
+	width:14px;
+	cursor:pointer;
+	background-position:-60px 0px;
+	background-repeat: no-repeat;
+	height:14px;
+}
+
+.riaswExpandoClosed .riaswExpandoIcon {
+	background-position: 0px 0px;
+	margin:0 auto;
+}
+
+.dijitBorderContainer-riaswExpandoPane {
+	border: none !important;
+}
+
+/* soria definitions */
+
+.soria .riaswExpandoTitle {
+	height:16px;
+	font-size:0.9em;
+	font-weight:bold;
+	padding:3px;
+	padding-top:6px;
+	padding-bottom:5px;
+	background:#F0F4FC url("./images/tabContainerSprite.gif") repeat-x scroll 0px -50px;
+	border-left: 1px solid #B1BADF;
+	border-right: 1px solid #B1BADF;
+}
+
+.soria .riaswExpandoClosed .riaswExpandoTitle {
+	background: none;
+	background-color: #F0F4FC;
+	border: none;
+}
+
+.soria .riaswExpandoClosed {
+	background: none;
+	background-color: #F0F4FC;
+	border: 1px solid #B1BADF !important;
+}
+
+.soria .riaswExpandoIcon {
+	background-image: url('../images/spriteIcons.png');
+}
+
+.dj_ie6 .soria .riaswExpandoIcon {
+	background-image: url('../images/spriteRoundedIconsSmall.gif');
+}
+
+/* tundra styles */
+.tundra .riaswExpandoTitle {
+	font-weight: bold;
+	padding: 5px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	background: #fafafa url("./images/accordionItemActive.gif") repeat-x scroll left top;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+.tundra .riaswExpandoClosed .riaswExpandoTitle {
+	background: none;
+	background-color: #fafafa;
+	border: none;
+	padding:3px;
+}
+
+.tundra .riaswExpandoClosed {
+	background: none;
+	background-color: #fafafa;
+	border: 1px solid #ccc !important;
+}
+
+.tundra .riaswExpandoRight .riaswExpandoTitle,
+.tundra .riaswExpandoLeft .riaswExpandoTitle,
+.tundra .riaswExpandoClosed .riaswExpandoTitle,
+.tundra .riaswExpandoClosed {
+	background-color: #fafafa;
+}
+
+.tundra .riaswExpandoIcon {
+	background-image: url('../images/spriteIcons.png');
+}
+
+.tundra .riaswExpandoClosed .riaswExpandoIconLeft,
+.tundra .riaswExpandoClosed .riaswExpandoIconRight,
+.tundra .riaswExpandoClosed .riaswExpandoIconTop,
+.tundra .riaswExpandoClosed .riaswExpandoIconBottom {
+	margin-top: 3px;
+}
+
+/* claro styles */
+.claro .riaswExpandoTitle {
+	font-weight: bold;
+	border:1px solid #769DC0;
+	border-bottom:none;
+	background-color:#cde8ff;
+	background-image: url("../images/standardGradient.png");
+	background-position:0px 0px;
+	background-repeat:repeat-x;
+	padding: 5px 7px 2px 7px;
+	min-height:17px;
+	color:#4a4a4a;
+}
+
+.claro .riaswExpandoClosed .riaswExpandoTitle {
+	background: none;
+	background-color: #E6E6E7;
+	border: none;
+	padding:3px;
+}
+
+.claro .riaswExpandoClosed {
+	background: none;
+	background-color: #E6E6E7;
+	border: 1px solid #769DC0 !important;
+}
+
+.claro .riaswExpandoRight .riaswExpandoTitle,
+.claro .riaswExpandoLeft .riaswExpandoTitle,
+.claro .riaswExpandoClosed .riaswExpandoTitle{
+	background-color: #E6E6E7;
+}
+.claro .riaswExpandoClosed .riaswExpandoTitle{
+	background-image: url("../images/standardGradient.png");
+	background-position:0 0;
+}
+
+/* FIXME: use tundra spriteRoundedIconsSmall for now,
+because there is no compatible image files in claro (15x15
+icon, and icons are arranged in the same order as in
+spriteRoundedIconsSmall.gif */
+.claro .riaswExpandoIcon {
+	background-image: url('../images/spriteIcons.png');
+}
+
+.claro .riaswExpandoClosed .riaswExpandoIconLeft,
+.claro .riaswExpandoClosed .riaswExpandoIconRight,
+.claro .riaswExpandoClosed .riaswExpandoIconTop,
+.claro .riaswExpandoClosed .riaswExpandoIconBottom {
+	margin-top: 3px;
+}
+
+/* nihilo theme styles */
+.nihilo .riaswExpandoPane {
+	background: #fafafa;
+}
+
+.nihilo .riaswExpandoTitle {
+	height:16px;
+	font-size:0.9em;
+	font-weight:bold;
+	padding:3px;
+	padding-top:6px;
+	padding-bottom:5px;
+	background:#fafafa url("./images/tabContainerSprite.gif") repeat-x scroll 0pt -50px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+.nihilo .riaswExpandoClosed .riaswExpandoTitle {
+	background: none;
+	background-color: #fafafa;
+	border: none;
+}
+
+.nihilo .riaswExpandoClosed {
+	background: none;
+	background-color: #fafafa;
+	border: 1px solid #ccc !important;
+}
+
+.nihilo .riaswExpandoIcon {
+	background-image: url('../images/spriteIcons.png');
+}
+
+.dj_ie6 .nihilo .riaswExpandoIcon {
+	background-image: url('../images/spriteRoundedIconsSmall.gif');
+}
+
+.nihilo .riaswExpandoTop {
+	border-bottom:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+}
+
+/* open/closed states */
+
+.riaswExpandoClosed .riaswExpandoIcon {
+	margin-right:4px;
+}
+.riaswExpandoIconLeft {
+	background-position: 0 0;
+}
+.riaswExpandoClosed .riaswExpandoIconLeft {
+	background-position: -30px 0;
+	margin-right: 4px;
+}
+.riaswExpandoIconRight {
+	background-position: -30px 0;
+}
+.riaswExpandoClosed .riaswExpandoIconRight {
+	background-position: 0 0;
+	margin-left: 4px;
+}
+.riaswExpandoIconBottom {
+	background-position: -15px 0;
+}
+.riaswExpandoClosed .riaswExpandoIconBottom {
+	background-position: -45px 0;
+	margin-top:1px;
+}
+.riaswExpandoIconTop {
+	background-position: -45px 0;
+}
+.riaswExpandoClosed .riaswExpandoIconTop {
+	background-position: -15px 0;
+}
+
+
+/* rias styles */
+.rias .riaswExpandoTitle {
+	background: #f9f9f9 url("./images/accordionItemActive.png") top repeat-x;
+	border:1px solid #769DC0;
+	font-weight: bold;
+	line-height: 1.4em;
+	padding: 2px;
+	min-height:12px;
+}
+
+.rias .riaswExpandoClosed .riaswExpandoTitle {
+	background:#fff url("./images/titleBar.png") repeat-x top left;
+	background-color: #E6E6E7;
+	background-position:0 0;
+}
+
+.rias .riaswExpandoClosed {
+	background: none;
+	background-color: #F0F4FC;
+	border: 1px solid #769DC0 !important;
+}
+
+.rias .riaswExpandoRight .riaswExpandoTitle,
+.rias .riaswExpandoLeft .riaswExpandoTitle,
+.rias .riaswExpandoClosed .riaswExpandoTitle{
+	background-color: #F0F4FC;
+}
+
+.rias .riaswExpandoIcon {
+	background-image: url('../images/spriteIcons.png');
+}
+.dj_ie6 .rias .riaswExpandoIcon {
+	background-image: url('../images/spriteRoundedIconsSmall.gif');
+}
+
+.rias .riaswExpandoClosed .riaswExpandoIconLeft,
+.rias .riaswExpandoClosed .riaswExpandoIconRight,
+.rias .riaswExpandoClosed .riaswExpandoIconTop,
+.rias .riaswExpandoClosed .riaswExpandoIconBottom {
+	/*margin-top: 3px;*/
+}
+

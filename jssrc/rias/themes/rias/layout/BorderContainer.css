@@ -1,0 +1,82 @@
+/**
+ * dijit.layout.BorderContainer
+ *
+ */
+
+.rias .dijitBorderContainer {
+	/*background-color: inherit;#dfefff zensst*/
+	padding: 4px;
+	background-color: inherit;
+}
+
+.rias .dijitSplitContainer-child,
+.rias .dijitBorderContainer-child {
+	/* By default put borders on all children of BorderContainer,
+	 *  to give illusion of borders on the splitters themselves.
+	 */
+	/*border-bottom: 0px solid silver; /*zensst*/
+}
+
+.rias .dijitBorderContainer-dijitTabContainerTop,
+.rias .dijitBorderContainer-dijitTabContainerBottom,
+.rias .dijitBorderContainer-dijitTabContainerLeft,
+.rias .dijitBorderContainer-dijitTabContainerRight {
+	/* except that TabContainer defines borders on it's sub-nodes (tablist and dijitTabPaneWrapper),
+	 * so no border on domNode
+	 */
+	 border: none;
+}
+
+.rias .dijitBorderContainer-dijitBorderContainer {
+	/* also, make nested BorderContainers look like a single big widget with lots of splitters */
+	border: none;
+	padding: 0;
+}
+
+
+/*.rias .dijitSplitterH,
+.rias .dijitGutterH {
+	background: #E1EBFB;
+	border:0;
+	border-left:0 solid #d3d3d3;
+	border-right:0 solid #d3d3d3;
+	height:5px;
+}*/
+
+.dijitSplitterHover{
+	background-color: gold;
+}
+
+.rias .dijitSplitterH .dijitSplitterThumb {
+	background:#B0B0B0 none;
+	height:1px;
+	top:2px;
+	width:19px;
+}
+
+/*.rias .dijitSplitterV,
+.rias .dijitGutterV {
+	background: #E1EBFB;
+	border:0;
+	border-top:0 solid #d3d3d3;
+	border-bottom:0 solid #d3d3d3;
+	width:5px;
+}*/
+
+.rias .dijitSplitterV .dijitSplitterThumb {
+	background:#B0B0B0 none;
+	height:19px;
+	left:2px;
+	width:1px;
+}
+
+/* active splitter */
+.rias .dijitSplitterActive {
+	font-size: 1px;
+	background-image: none;
+	background-color: #aaa;
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	filter: Alpha(Opacity=60);
+	margin: 0;
+}

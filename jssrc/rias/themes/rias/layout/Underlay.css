@@ -1,0 +1,21 @@
+
+/* Underlay */
+
+.riaswUnderlayWrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 998;
+	display: none;
+	background: transparent !important;
+}
+
+.riaswUnderlay {
+	background: darkgray;
+	opacity: 0.5;
+}
+
+.dj_ie .riaswUnderlay {
+	filter: alpha(opacity=50);
+}
+

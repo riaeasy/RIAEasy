@@ -1,0 +1,157 @@
+/* Calendar*/
+
+.rias .dijitCalendarIncrementControl {
+	/* next/prev month buttons */
+	width:15px;
+	height:15px;
+	background-image: url("../images/spriteIcons.png");
+	background-repeat: no-repeat;
+}
+
+.rias .dijitA11ySideArrow {
+	display: none;
+}
+
+.rias .dijitCalendarDecrease {
+	background-position: top left;
+}
+.rias .dijitCalendarIncrease {
+	background-position: -30px top;
+}
+
+.rias table.dijitCalendarContainer {
+	font-size: 100%;
+	border-spacing: 0;
+	border-collapse: separate;
+	border: 1px solid #b1badf;
+	margin: 0;
+}
+
+.rias .dijitCalendarMonthContainer th {
+	/* month header cell */
+	background:#bed7f0 url("../layout/images/titleBar.png") repeat-x top;
+	padding-top:.3em;
+	padding-bottom:.2em;
+	text-align:center;
+}
+.dj_ie6 .rias .dijitCalendarMonthContainer th {
+	padding-top:.2em;
+	padding-bottom:.1em;
+}
+
+.rias .dijitCalendarDayLabelTemplate {
+	/* day of week labels */
+	background:#bed7f0;
+	font-weight:normal;
+	padding-top:.15em;
+	padding-bottom:.2em;
+	border-bottom: 1px solid #b1badf;
+	color:#293a4b;
+	text-align:center;
+}
+
+.rias .dijitCalendarBodyContainer {
+	border-bottom: 1px solid #eeeeee;
+}
+
+.rias .dijitCalendarMonthLabel {
+	color:#293a4b;
+	font-weight: bold;
+	padding: 0 4px;
+}
+
+.rias .dijitCalendarDateTemplate {
+	/* style for each day cell */
+	font-size: 0.9em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.3em 0.3em 0.05em 0.3em;
+	letter-spacing: 1px;
+	background-color: #fff;
+	border:#fff solid 1px !important;
+}
+
+.dj_ie .rias .dijitCalendarDateTemplate {
+	padding: 0.1em .33em 0.02em .33em;
+}
+
+.rias .dijitCalendarPreviousMonth,
+.rias .dijitCalendarNextMonth 		{
+	/* days that are part of the previous or next month */
+	color:#999999;
+	background-color:#fdfdfd !important;
+	border:#fdfdfd solid 1px !important;
+}
+
+.rias .dijitCalendarCurrentMonth {
+	/* days that are part of this month */
+}
+
+.rias .dijitCalendarDisabledDate {
+	text-decoration:line-through !important;
+}
+
+.rias .dijitCalendarCurrentDate {
+	/* cell for today's date */
+	text-decoration:underline;
+	font-weight:bold;
+}
+
+.rias .dijitCalendarSelectedDate {
+	/* cell for the selected date */
+	background-color:#b9cbf1 !important;
+	color:black !important;
+	border:#4b5aaa solid 1px !important;
+}
+
+
+.rias .dijitCalendarYearContainer {
+	/* footer of the table that contains the year display/selector */
+	background:white url("../layout/images/titleBar.png") repeat-x top;
+}
+
+.rias .dijitCalendarYearLabel {
+	/* container for all of 3 year labels */
+	margin:0;
+	padding:0.4em 0 0.25em 0;
+	text-align:center;
+	font-size: 1.17em;
+}
+
+.rias .dijitCalendarSelectedYear {
+	/* label for selected year */
+	font-weight:bolder;
+	color:black;
+	padding:0.2em;
+	padding-bottom:0.1em;
+	background-color:#b9cbf1 !important;
+	border:#4b5aaa solid 1px !important;
+}
+
+.rias .dijitCalendarNextYear,
+.rias .dijitCalendarPreviousYear {
+	/* label for next/prev years */
+	color:black !important;
+	font-weight:normal;
+}
+
+/* Styling for month DropDownButton */
+
+.rias .dijitCalendar .dijitDropDownButton {
+	margin: 0;
+}
+.rias .dijitCalendar .dijitButtonText {
+	padding: 0;
+}
+.rias .dijitCalendar .dijitDropDownButton .dijitButtonNode {
+	background-color: transparent;
+	background-image: none;
+	padding: 0;
+}
+
+/* Styling for month drop down list */
+
+.rias .dijitCalendarMonthMenu .dijitCalendarMonthLabelHover {
+	background-color: #d9e6f9;
+	color: #243C5F;
+}

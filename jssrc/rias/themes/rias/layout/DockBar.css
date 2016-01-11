@@ -1,0 +1,81 @@
+
+/* DockBar */
+.riaswDockBarDefault {
+	position: absolute;
+	/*bottom:0px;*/
+	left: 0px;
+	overflow: hidden;
+	/*margin:0;
+	margin-bottom:3px; */
+	padding: 0px;
+	width: 100%;
+	/*z-index:99; /* position the dock _just_ below the lowest pane */
+	background: transparent;
+	/* background-color:#fff; 
+	border-top:1px solid #ccc; 
+	*/
+}
+
+.riaswDockBar {
+	display: inline-block;
+	border: 0px solid silver;
+	//position: absolute;
+	padding: 1px;
+	margin: 0px;
+	/*background: #fcfcfc;*/
+	/*background-color: inherit;#dfefff zensst*/
+}
+
+.riaswDockNodeIcon {
+	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
+	width: 15px;
+	height: 15px;
+	overflow: hidden;
+	float: left;
+	margin: 2px 4px 4px 4px;
+}
+.riaswDockNodeIconDefault {
+}
+.riaswDockNodeIconDocked {
+	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
+	width: 15px; height: 15px;
+}
+.riaswDockNodeIconShown {
+	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
+	width: 15px; height: 15px;
+}
+
+.riaswDockNodeTitle {
+	overflow: hidden;
+}
+
+.riaswDockNode {
+	border: 1px solid silver;
+	padding: 2px 2em 2px 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	cursor: pointer;
+	list-style: none;
+	margin: 0px 1px;
+	height: 1.6em;
+	width: auto;
+	min-width: 4em;
+	float: left;
+	background-color: lavender;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+.riaswDockNodeDocked {
+	background-color: lavender;
+}
+.riaswDockNodeShown {
+	background-color: lightsteelblue;
+}
+.riaswDockNodeTopmost {
+	background-color: darkseagreen;
+}
+.riaswDockNodeHover {
+	/*background-color: gold;*/
+}

@@ -1,0 +1,47 @@
+.gridxRtl {
+  /* In IE7, if not set relative position, the margins can not be nagative.*/
+  /* Body */
+  /* VScroller */
+  /* RowHeader */
+  /* HeaderRegion */
+  /* edit */
+}
+.dj_ie7 .gridxRtl .gridxHeaderRow table {
+  position: relative;
+}
+.gridxRtl .gridxRow .gridxCell {
+  border-color: transparent transparent #ccc #ccc;
+  text-align: right;
+}
+.gridxRtl .gridxVScroller {
+  right: auto;
+  left: 0;
+}
+.gridxRtl .gridxTouchScrollVWrapper {
+  left: 2px;
+  right: auto;
+}
+.gridxRtl .dj_ff3,
+.gridxRtl .dj_webkit {
+  /* some browsers do not automatically move the scroll bar to left, so we move for them */
+}
+.gridxRtl .dj_ff3 .gridxVScroller,
+.gridxRtl .dj_webkit .gridxVScroller {
+  left: -1px;
+}
+.gridxRtl .gridxRowHeaderHeader,
+.gridxRtl .gridxRowHeaderBody {
+  right: 0;
+  left: auto;
+  border-right: none;
+  border-left: 1px solid #E5DAC8;
+}
+.gridxRtl .gridxHeaderRegion {
+  float: left;
+}
+.gridxRtl .gridxEditOK,
+.gridxRtl .gridxEditCancel {
+  float: left;
+  margin-left: 0;
+  margin-right: 5px;
+}

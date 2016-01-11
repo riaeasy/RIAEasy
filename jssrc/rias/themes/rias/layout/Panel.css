@@ -1,0 +1,32 @@
+
+/* Panel */
+/* ContentPanel */
+
+.riaswPanel {
+	display: block;
+	position: relative;
+	background-color: inherit;
+	padding: 0px;
+	margin:0;
+	/*overflow: hidden;*/
+	border: 0px solid silver;
+}
+.riaswPanelSelected,
+.riaswPanelFocused {
+}
+.riaswPanelHover {
+}
+
+.riaswPanelContent {
+	overflow: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswPanelContent {
+	overflow: hidden;
+}
+
+.riaswPanelFocusNode {
+}
+
+

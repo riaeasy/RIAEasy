@@ -1,0 +1,29 @@
+.rias .gridxPager {
+  background-color: #eaf1f6;
+  padding: 3px 9px;
+  border-top: 1px solid #dbdbdb;
+}
+.rias .gridxPagerNodeFocus {
+  border: 1px dotted darkblue;
+}
+.rias .gridxPagerStepperBtn,
+.rias .gridxPagerSizeSwitchBtn {
+  margin: 4px 0px;
+  color: black;
+  border: solid;
+  border-width: 0px 0px;
+  padding: 0px 2px;
+}
+.rias .gridxPagerSizeSwitchSeparator {
+  display: none;
+}
+.rias .gridxPagerStepperBtnHover,
+.rias .gridxPagerSizeSwitchBtnHover {
+  background-color: gold;
+  color: black;
+}
+.rias .gridxPagerStepperBtnActive,
+.rias .gridxPagerSizeSwitchBtnActive {
+  color: darkorange;
+  font-weight: bold;
+}

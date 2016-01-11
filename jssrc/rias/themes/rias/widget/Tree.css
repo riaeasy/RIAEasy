@@ -1,0 +1,143 @@
+/* Tree */
+
+.rias .dijitTreeNode {
+	background : url('images/treeI.gif') no-repeat;
+	/*background-position : top left;
+	background-repeat : repeat-y; zensst*/
+	zoom: 1;
+}
+
+/* left vertical line (grid) for all nodes */
+.rias .dijitTreeIsLast {
+    background: url('images/treeI_half.gif') no-repeat;
+}
+
+.rias .dijitTreeLabel {
+	font-weight: normal;
+	margin-left: 3px;
+	vertical-align: middle;
+}
+
+.rias .dijitTreeIsRoot {
+    margin-left: 0;
+    background-image: none;
+}
+
+.rias .dijitTreeExpando {
+    width: 18px;
+    height: 18px;
+}
+
+.rias .dijitTreeRow {
+	/* so insert line shows up on IE when dropping after a target element */
+	padding-bottom: 2px;
+	vertical-align: middle;
+}
+
+.rias .dijitTreeContent {
+    min-height: 18px;
+    min-width: 18px;
+    padding-left:1px;
+	vertical-align: middle;
+}
+
+.rias .dijitTreeRowHover {
+	/* using a transparent png so that we can still see grid lines, which are (unfortunately) behind the dijitRowNode that we are hovering over */
+	/*background-image: url(images/treeHover.png);
+	background-repeat: repeat; zensst*/
+	background-color: gold;
+}
+.rias .dijitTreeRowSelected {
+	background-color: skyblue;
+}
+.rias .dijitTreeRowSelected .dijitTreeLabel{
+	font-weight: bold;
+	/*background-color: skyblue;*/
+}
+
+.rias .dijitTreeExpandoOpened {
+	background: url('images/spriteTree.gif') no-repeat -18px top;
+}
+
+.rias .dijitTreeExpandoClosed {
+	background-image: url('images/spriteTree.gif');
+}
+
+.rias .dijitTreeExpandoLeaf {
+	background: url('images/spriteTree.gif') no-repeat -36px top;
+}
+
+.rias .dijitTreeExpandoLoading {
+	background-image: url('images/treeExpand_loading.gif');
+}
+
+.rias .dijitTreeIcon {
+	width: 16px;
+	height: 16px;
+}
+
+.rias .dijitFolderOpened {
+	background: url('../images/spriteDivIcons.gif') no-repeat -16px top;
+}
+
+.rias .dijitFolderClosed {
+	background: url('../images/spriteDivIcons.gif') no-repeat top left;
+}
+
+.rias .dijitLeaf {
+	background: url('../images/spriteDivIcons.gif') no-repeat -32px top;
+}
+
+/* Drag and Drop on TreeNodes
+ * Put insert line on dijitTreeContent node so it's aligned w/
+ * (ie, indented equally with) target element, even
+ * though dijitTreeRowNode is the actual "drag object"
+ */
+.rias .dijitTreeNode .dojoDndItemBefore,
+.rias .dijitTreeNode .dojoDndItemAfter {
+	border-bottom: none;
+	border-top: none;
+}
+
+.rias .dijitTreeNode .dojoDndItemBefore .dijitTreeContent {
+	/* copied from Common.css */
+	border-top: 2px solid #369;
+}
+
+.rias .dijitTreeNode .dojoDndItemAfter .dijitTreeContent {
+	/* copied from Common.css */
+	border-bottom: 2px solid #369;
+}
+
+.dijitTreeNodeDisabled {
+	background-color: inherit;
+	background-image: none;
+	/*outline: none;*/
+	color: inherit;
+}
+.dijitTreeNodeDisabled .dijitTreeRow {
+	background-color: inherit;
+	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(1) opacity(0.3);
+}
+
+/*riaswTreeMenu*/
+.riaswTreeMenu .dijitTreeRow {
+	/* so insert line shows up on IE when dropping after a target element */
+	padding: .5em .5em;
+	vertical-align: middle;
+	border-bottom: 1px solid silver;
+}
+.riaswTreeMenu .dijitTreeNodeDisabled .dijitTreeRow {
+	border-bottom-color: grey;
+}
+.riaswTreeMenu .dijitTreeExpando {
+	display: none;
+}
+.riaswTreeMenu .dijitTreeNode {
+	background: none;
+}

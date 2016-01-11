@@ -1,0 +1,10 @@
+/* Dialog */
+.rias .dijitDialogRtl .dijitDialogCloseIcon {
+  right: auto;
+  left: 5px;
+}
+.rias .dijitDialogRtl .dijitDialogPaneActionBar {
+  text-align: left;
+  padding: 3px 7px 2px 5px;
+	padding: 1.5em 1em 0.5em 1.5em;
+}

@@ -1,0 +1,65 @@
+.rias .dijitToolbar {
+	border-bottom: 1px solid #ccc;
+	background:#eaeaea url("../layout/images/titleBar.png") repeat-x top left;
+}
+
+/* setting a min-height on ditor toolbar */
+.dj_ie6 .rias .dijitToolbar {
+	height: 10px;
+}
+
+.rias .dijitToolbar .dijitButtonNode,
+.rias .dijitToolbar .dijitComboButton .dijitButtonContents,
+.rias .dijitToolbar .dijitComboButton .dijitDownArrowButton {
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	font-size: 12px;
+}
+
+.rias .dijitToolbar .dijitButton,
+.rias .dijitToolbar .dijitToggleButton,
+.rias .dijitToolbar .dijitDropDownButton,
+.rias .dijitToolbar .dijitComboButton .dijitButtonContents,
+.rias .dijitToolbar .dijitComboButton .dijitDownArrowButton {
+	background: none;/*zensst*/
+	padding: 1px;	/* on hover etc., margin replaced w/border */
+}
+
+.rias .dijitToolbar .dijitButtonChecked,
+.rias .dijitToolbar .dijitToggleButtonChecked {
+	background-color:#d8e5f8;
+	border:1px solid #316ac5;
+	padding: 0;
+}
+
+.rias .dijitToolbar .dijitButtonCheckedHover,
+.rias .dijitToolbar .dijitToggleButtonCheckedHover
+ {
+	background-color:skyblue;
+	border:1px solid silver;
+	padding: 0;
+}
+
+.rias .dijitToolbar .dijitButtonHover,
+.rias .dijitToolbar .dijitToggleButtonHover,
+.rias .dijitToolbar .dijitDropDownButtonHover,
+.rias .dijitToolbar .dijitComboButton .dijitButtonContentsHover,
+.rias .dijitToolbar .dijitComboButton .dijitDownArrowButtonHover {
+	/* TODO: change this from Hover to Selected so that button is still highlighted while drop down is being used */
+	border: 1px solid silver;
+	padding: 0;
+	background-color:skyblue;
+}
+
+.rias .dijitToolbar label {
+	padding: 3px 3px 0 6px;
+}
+
+.dj_ie .rias .dijitToolbar .dijitComboButton .dijitButtonContentsFocused,
+.dj_ie .rias .dijitToolbar .dijitComboButton .dijitDownArrowButtonFocused {
+	/* focus border doesn't appear on <td> for IE, so need to add it manually */
+	border: 1px #777 dotted !important;
+	padding: 0;
+}

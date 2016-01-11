@@ -1,0 +1,7 @@
+/* Editor */
+.dijitRtl .rias .dijitEditorIcon {
+	background-image: url('../../icons/images/editorIconsEnabled_rtl.png'); /* editor icons sprite image - enabled state */
+}
+.dijitRtl .rias .dijitDisabled .dijitEditorIcon {
+	background-image: url('../../icons/images/editorIconsDisabled_rtl.png'); /* editor icons sprite image - disabled state */
+}

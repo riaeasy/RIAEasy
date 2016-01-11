@@ -1,0 +1,234 @@
+
+.riaswPopupPane {
+	background-color: #dfefff;/*zensst*/
+	position: relative;
+	border: 1px solid #dfdfdf;
+	padding: 0px;
+	overflow: hidden;
+	-webkit-box-shadow: 0px 5px 10px #adadad;
+}
+
+.riaswPopupPaneFg {
+	-webkit-box-shadow: 0px 8px 20px #525252;
+}
+
+/* titleNode */
+.riaswPopupPaneTitle {
+	background: #cccccc;
+	background: #fafafa repeat-x bottom left;
+	border: 1px solid #bfbfbf;
+	padding: 0px;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.soria .riaswPopupPaneTitle {
+	background:#fff url("/rias/themes/soria/images/titleBar.png") repeat-x top left;
+	border: 1px solid #b1badf;
+	padding: 1px 1px 1px 1px;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.4em;
+}
+.tundra .riaswPopupPaneTitle {
+	background: #fafafa url("/rias/themes/tundra/images/titleBarBg.gif") repeat-x bottom left;
+	border: 1px solid #bfbfbf;
+	color: #000;
+}
+.rias .riaswPopupPaneTitle {
+	background:#fff url("/rias/themes/rias/images/titleBar.png") repeat-x top left;
+	/*border: 1px solid #b1badf;*/
+	padding: 2px;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.4em;
+	white-space: nowrap;
+}
+
+.riaswPopupPaneTitleSelected,
+.riaswPopupPaneTitleFocused {
+	background: #f9f9f9 url("/rias/themes/rias/images/accordionItemActive.png") top repeat-x;
+}
+
+.rias .riaswPopupPaneTitleSelected,
+.rias .riaswPopupPaneTitleFocused {
+	background: #f9f9f9 url("/rias/themes/rias/images/accordionItemActive.png") top repeat-x;
+}
+
+/* Icons */
+.riaswPaneToggleIcon {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -16px center;
+	width: 15px;
+	height: 15px;
+	margin: 2px 4px;
+	overflow: hidden;
+	float: right;
+	display: inline-block;
+}
+.soria .riaswPaneToggleIcon {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -16px center;
+	width: 15px;
+	height: 15px;
+}
+
+.riaswPaneMinimizeIcon {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -16px center;
+	width: 15px;
+	height: 15px;
+	margin: 2px 4px;
+	overflow: hidden;
+	float: right;
+}
+.soria .riaswPaneMinimizeIcon {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -16px center;
+	width: 15px;
+	height: 15px;
+}
+
+.riaswPaneCloseIcon {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -61px center;
+	width: 15px;
+	height: 15px;
+	margin: 2px 4px;
+	overflow: hidden;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+.soria .riaswPaneCloseIcon {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -61px center;
+	width: 15px;
+	height: 15px;
+}
+
+.tundra .riaswPaneCloseIcon {
+	background: url('/rias/themes/tundra/images/popupPaneBtn.png') no-repeat -61px center;
+}
+
+.riaswPaneMaximizeIcon {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -46px center;
+	width: 15px;
+	height: 15px;
+	margin: 2px 4px;
+	overflow: hidden;
+	display: inline-block;
+	float: right;
+}
+.soria .riaswPaneMaximizeIcon {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -46px center;
+	width: 15px;
+	height: 15px;
+}
+.riaswPaneRestoreIcon {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -76px center;
+	width: 15px;
+	height: 15px;
+	margin: 2px 4px;
+	float: right;
+	overflow: hidden;
+	display: none;
+}
+.soria .riaswPaneRestoreIcon {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -76px center;
+	width: 15px;
+	height: 15px;
+}
+
+.riaswPaneMaximized .riaswPaneMaximizeIcon {
+	display: none;
+}
+.riaswPaneMaximized .riaswPaneRestoreIcon {
+	display: inline-block;
+}
+
+.riaswPaneContent {
+	overflow: auto;
+	position: relative;
+	width: auto;
+	height: auto;
+}
+
+.riaswPaneHideNode {
+	overflow: auto;
+	position: relative;
+	width: auto;
+	height: auto;
+	border: 1px solid #dfdfdf;
+	background-color: #fff;
+}
+
+.riaswPaneCanvas {
+	background-color: #fff;
+}
+
+/* our un-used dock styles for now */
+.riaswPopupPaneDockDefault {
+	position: absolute;
+	/*bottom:0px;*/
+	left: 0px;
+	overflow: hidden;
+	/*margin:0;
+	margin-bottom:3px; */
+	padding: 0px;
+	width: 100%;
+	/*z-index:99; /* position the dock _just_ below the lowest pane */
+	background: transparent;
+	/* background-color:#fff; 
+	border-top:1px solid #ccc; 
+	*/
+}
+
+.riaswDockList {
+	padding: 0px;
+	margin: 0px;
+}
+
+.riaswDockRestoreButton {
+	background: url('/rias/themes/rias/images/popupPaneBtn.png') no-repeat -76px center;
+	width: 15px; height: 15px;
+	overflow: hidden;
+	float: left;
+	margin: 2px 4px 4px 4px;
+}
+.soria .riaswDockRestoreButton {
+	background: url("/rias/themes/soria/images/popupPaneBtn.png") no-repeat -76px center;
+}
+
+.riaswDockTitleNode {
+	overflow: hidden;
+}
+
+.riaswDock {
+	display: block;
+	border: 0px solid #b9bbdd;
+	position: absolute;
+	padding: 1px;
+	margin: 0px;
+	/*background: #fcfcfc;*/
+	background-color: #dfefff;/*zensst*/
+}
+
+.riaswDockNode {
+	border: 1px solid #adadad;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 3px;
+	cursor: pointer;
+	list-style: none;
+	padding: 2px 6px;
+	margin: 0px 8px 0px 1em;
+	height: 20px;
+	width: auto;
+	min-width: 30px;
+	float: left;
+	/*background: #fafafa url("/dijit/themes/tundra/images/titleBarBg.gif") repeat-x bottom left;*/
+	background: #dfefff url("/rias/themes/rias/images/titleBarBg.gif") repeat-x bottom left;
+}
+.soria .riaswDockNode {
+	background: #b7cdee url("/rias/themes/soria/images/titleBar.png") repeat-x;
+}
+.rias .riaswDockNode {
+	background: #b7cdee url("/rias/themes/soria/images/titleBar.png") repeat-x;
+}
+

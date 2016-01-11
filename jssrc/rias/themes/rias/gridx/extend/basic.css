@@ -1,0 +1,109 @@
+.rias {
+  /*common*/
+  /*Grid In Grid*/
+  /*Body*/
+  /*Header*/
+  /* Row header */
+  /* toolbar */
+  /* PagedBody */
+}
+.rias .gridx {
+  background-color: #fff;
+  border: 1px solid #DBDBDB;
+}
+.rias .gridxCell {
+  border-color: transparent #E5DAC8 #E5DAC8 transparent;
+}
+.rias .gridxRowOdd > .gridxRowTable {
+  background-color: #ffffff;
+}
+.rias .gridxBodyRowHoverEffect .gridxRowOver > .gridxRowTable .gridxCell {
+  /*background: data-uri("../images/rowback.png") skyblue repeat-x;*/
+  background-color: gold;
+}
+.rias .gridx .gridxBody .gridxRow .gridxCellFocus {
+  outline: none;
+  border: 1px dashed steelblue;
+  background-color: skyblue;
+}
+.rias .gridxHeaderRow {
+  border-top: 0px solid #FFFFFF;
+  border-bottom: 0px solid #FFFFFF;
+  clear: both;
+  background-color: lavender;
+  font-weight: bold;
+}
+.rias .gridx .gridxHeader .gridxHeaderRow .gridxHeaderCellFocus {
+  outline: none;
+  border: 1px dashed steelblue;
+  background-color: skyblue;
+}
+.dj_android .rias .gridx .gridxHeader .gridxHeaderRow .gridxHeaderCellFocus,
+.dj_ios .rias .gridx .gridxHeader .gridxHeaderRow .gridxHeaderCellFocus {
+  border-color: transparent;
+}
+.rias .gridxHeaderRowHidden {
+  height: 0;
+  border-width: 0;
+}
+.dj_ie7 .rias .gridxRowHeaderRow table {
+  border-collapse: collapse;
+}
+.rias .gridxHeaderRowInner {
+  background-image: url("data:image/gif;base64,R0lGODdhAQABAIABALy8vP///ywAAAAAAQABAAACAkQBADs=");
+  background-position: right;
+  background-repeat: repeat-y;
+  border-right: 1px solid #FFFFFF;
+}
+.rias .gridxGroupHeader {
+  border-color: #EDF2F7 #BCBCBC #BCBCBC #FFFFFF;
+}
+.rias .gridxHeaderRow .gridxCell {
+  border-color: silver;
+  border-width: 0px 1px 0px 0px;
+}
+.rias .gridxHeaderRow .gridxSubHeader {
+  border-top-color: #FFFFFF;
+}
+.rias .gridxHeaderRow {
+  background-color: lavender;
+}
+.rias .gridxDesktop .gridxHeaderRow .gridxCell:hover,
+.rias .gridxDesktop .gridxHeaderRow .gridxGroupHeader:hover {
+  background-color: gold;
+}
+.rias .gridxDesktop .gridxHeaderRow .gridxSubHeader.gridxCell:hover,
+.rias.gridxColumnResizing .gridxDesktop .gridxHeader .gridxHeaderRow .gridxSubHeader.gridxCell:hover {
+  border-top-color: #FFFFFF;
+}
+.rias.gridxColumnResizing .gridxDesktop .gridxHeader .gridxHeaderRow .gridxCell:hover {
+  background: transparent;
+  border-top-color: transparent;
+}
+.rias .gridx .gridxHeader .gridxHeaderRow .gridxSubHeader.gridxHeaderCellFocus {
+  border-top-color: steelblue;
+}
+.rias .gridx .gridxHeader .gridxHeaderRow .gridxSubHeader.gridxHeaderCellFocus:hover {
+  border-top-color: steelblue;
+}
+.dj_android .rias .gridx .gridxHeader .gridxHeaderRow .gridxSubHeader.gridxHeaderCellFocus,
+.dj_ios .rias .gridx .gridxHeader .gridxHeaderRow .gridxSubHeader.gridxHeaderCellFocus {
+  border-top-color: transparent;
+}
+.rias .gridxRowHeaderHeader .gridxHeaderCellFocus {
+  outline: none;
+  border: 1px dashed steelblue;
+}
+.rias .gridxRowHeaderRow .gridxCellFocus {
+  outline: none;
+  border: 1px dashed steelblue;
+}
+.rias .gridxBarToolBar .dijitToolbar {
+  background: none;
+  border-bottom: none;
+}
+.rias .gridxRow:first-child > .gridxRowTable .gridxCell,
+.rias .gridxBodyFirstRow .gridxCell {
+  border-top-color: silver;
+  border-top-width: 0px;
+}

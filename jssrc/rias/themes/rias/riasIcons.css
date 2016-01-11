@@ -1,0 +1,580 @@
+
+
+/*TODO:zensst. 统一 css 为 theme，且可以动态加载。考虑在 riaswMapper 中定义
+*/
+/*rias.file.Icon=================================================================*/
+.riasJSFileIcon{
+	background: url('./imagesfile/JS.png') no-repeat;
+}
+.riasJSONFileIcon{
+	background: url('./imagesfile/JS.png') no-repeat;
+}
+.riasRSPFileIcon{
+	background: url('./imagesfile/JS.png') no-repeat;
+}
+.riasRSMFileIcon{
+	background: url('./imagesfile/JS.png') no-repeat;
+}
+.riasHTMLFileIcon{
+	background: url('./imagesfile/htm.gif') no-repeat;
+}
+.riasCSSFileIcon{
+	background: url('./imagesfile/CSS.png') no-repeat;
+}
+.riasAUDIOFileIcon{
+	background: url('./imagesfile/audio.gif') no-repeat;
+}
+.riasAVIFileIcon{
+	background: url('./imagesfile/avi.gif') no-repeat;
+}
+.riasBMPFileIcon{
+	background: url('./imagesfile/bmp.gif') no-repeat;
+}
+.riasCODEFileIcon{
+	background: url('./imagesfile/code.gif') no-repeat;
+}
+.riasDOCFileIcon{
+	background: url('./imagesfile/doc.gif') no-repeat;
+}
+.riasEXEFileIcon{
+	background: url('./imagesfile/exe.gif') no-repeat;
+}
+.riasFOLDFileIcon{
+	background: url('./imagesfile/fold.gif') no-repeat;
+}
+.riasFOLDUPFileIcon{
+	background: url('./imagesfile/foldup.gif') no-repeat;
+}
+.riasGIFFileIcon{
+	background: url('./imagesfile/gif.gif') no-repeat;
+}
+.riasHLPFileIcon{
+	background: url('./imagesfile/hlp.gif') no-repeat;
+}
+.riasHTMFileIcon{
+	background: url('./imagesfile/htm.gif') no-repeat;
+}
+.riasJPGFileIcon{
+	background: url('./imagesfile/jpg.gif') no-repeat;
+}
+.riasMDBFileIcon{
+	background: url('./imagesfile/mdb.gif') no-repeat;
+}
+.riasMIDFileIcon{
+	background: url('./imagesfile/mid.gif') no-repeat;
+}
+.riasMPFileIcon{
+	background: url('./imagesfile/mp.gif') no-repeat;
+}
+.riasMP3FileIcon{
+	background: url('./imagesfile/mp3.gif') no-repeat;
+}
+.riasPDFFileIcon{
+	background: url('./imagesfile/pdf.gif') no-repeat;
+}
+.riasPICFileIcon{
+	background: url('./imagesfile/pic.gif') no-repeat;
+}
+.riasPNGFileIcon{
+	background: url('./imagesfile/png.gif') no-repeat;
+}
+.riasPPTFileIcon{
+	background: url('./imagesfile/ppt.gif') no-repeat;
+}
+.riasRARFileIcon{
+	background: url('./imagesfile/rar.gif') no-repeat;
+}
+.riasRMFileIcon{
+	background: url('./imagesfile/rm.gif') no-repeat;
+}
+.riasSWFFileIcon{
+	background: url('./imagesfile/swf.gif') no-repeat;
+}
+.riasTXTFileIcon{
+	background: url('./imagesfile/txt.gif') no-repeat;
+}
+.riasUNKNOWFileIcon{
+	background: url('./imagesfile/unknow.gif') no-repeat;
+}
+.riasXLSFileIcon{
+	background: url('./imagesfile/xls.gif') no-repeat;
+}
+.riasZIPFileIcon{
+	background: url('./imagesfile/zip.gif') no-repeat;
+}
+
+
+/*rias.ui.Icon=================================================================*/
+.okIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: 0px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.cancelIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -33px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.addIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -289px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.addChildIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -289px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.reduceIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -321px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.newIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -289px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.newDirIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.newFileIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.deleIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -417px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.deleteIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -417px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.modiIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -353px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.rollbackIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -449px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.queryIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.saveIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.saveAsIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.clearIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px -49px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.openIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -33px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.closeIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -129px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.copyIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -33px -49px;
+	width: 16px;
+	height: 16px;
+}
+.cutIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: 0px -49px;
+	width: 16px;
+	height: 16px;
+}
+.pasteIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px -49px;
+	width: 16px;
+	height: 16px;
+}
+.undoIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -49px;
+	width: 16px;
+	height: 16px;
+}
+.redoIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -129px -49px;
+	width: 16px;
+	height: 16px;
+}
+.refreshIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -161px -97px;
+	width: 16px;
+	height: 16px;
+}
+.printIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -161px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.drawIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px -65px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.previewIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.runIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px -97px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.loginIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -65px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.menuIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -97px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.optionIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -385px -49px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.helpIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.infoIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.warnIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.errorIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -129px -81px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.upIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -33px -33px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.downIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -33px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.priorIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: 0px -33px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.nextIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -65px -33px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.parentIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -129px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.childIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -129px -17px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.logIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -97px -97px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.startIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -193px -97px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.stopIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -353px -97px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+
+
+
+
+
+
+
+.newFolderIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -21px -22px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.uploadIcon {
+	background-image: url(./images/sprite.png);
+	background-position: 0 -450px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.downloadAllIcon {
+	background-image: url(./images/sprite.png); /* FIXME: add logic for new_document-disabled.gif? */
+	background-position: 0 -1060px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.downloadSomeIcon {
+	background-image: url(./images/sprite.png); /* FIXME: add logic for new_document-disabled.gif? */
+	background-position: 0 -994px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.userSettingsMenuIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -692px;
+	background-repeat: no-repeat;
+	width: 27px;
+	height: 27px;
+}
+.appSettingsMenuIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -48px -692px;
+	background-repeat: no-repeat;
+	width: 27px;
+	height: 27px;
+}
+.helpMenuIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -48px -652px;
+	background-repeat: no-repeat;
+	width: 27px;
+	height: 27px;
+}
+
+.flowLayoutIcon {
+	background-image: url(./images/sprite.png); /* FIXME: add logic for undo-disabled.gif? */
+	background-position: -51px -1777px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.absoluteLayoutIcon {
+	background-image: url(./images/sprite.png); /* FIXME: add logic for undo-disabled.gif? */
+	background-position: -75px -1777px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.stickynoteIcon {
+	background-image: url(./images/sprite.png); /* FIXME: add logic for undo-disabled.gif? */
+	background-position: -46px -610px;
+	width: 27px;
+	height: 27px;
+}
+.rotateIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -860px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.deviceIcon {
+	background-image: url(./images/sprite.png);
+	background-position: 0 -780px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+.openBrowserIcon {
+	background-image: url(./images/sprite.png); /* FIXME: Disabled version? */
+	background-position: -46px -532px;
+	background-repeat: no-repeat;
+	width: 27px;
+	height: 27px;
+}
+.documentSettingsIcon {
+	background-image: url(./images/sprite.png); /* FIXME: Disabled version? */
+	background-position: -46px -572px;
+	background-repeat: no-repeat;
+	width: 27px;
+	height: 27px;
+}
+
+.gotolineIcon {
+	background-image: url(./images/sprite.png);
+	background-position: 0 -1316px;
+	width: 18px;
+	height: 18px;
+}
+
+.formatIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -1455px;
+	width: 18px;
+	height: 18px;
+}
+.fullScreenIcon {
+	background-image: url(./images/sprite.png);
+	background-position: 0 -1184px;
+	width: 18px;
+	height: 18px;
+}
+.htmlFileIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -1323px;
+	width: 16px;
+	height: 16px;
+}
+.htmlFileIconReadOnly{
+	background-image: url(./images/sprite.png);
+	background-position: -99px -1323px;
+	width: 16px;
+	height: 16px;
+}
+.themeFileIcon {
+	background-image: url(./images/sprite.png);
+	background-position: 0 -1382px;
+	width: 16px;
+	height: 16px;
+}
+.themeFileIconReadOnly {
+	background-image: url(./images/sprite.png);
+	background-position: -21px -1382px;
+	width: 16px;
+	height: 16px;
+}
+.cssFileIcon {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -1257px;
+	width: 16px;
+	height: 16px;
+}
+.cssFileIconReadOnly {
+	background-image: url(./images/sprite.png);
+	background-position: -82px -1279px;
+	width: 16px;
+	height: 16px;
+}
+.newOpenMenuItem {
+	background-image:url(./images/sprite.png);
+	width:20px;
+	height:16px;
+}

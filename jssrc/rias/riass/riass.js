@@ -1,0 +1,1 @@
+define(["rias/base/hostRhino"],function(a){a.riass={riasd:{}};return a});

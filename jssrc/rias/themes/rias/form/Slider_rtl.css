@@ -1,0 +1,34 @@
+
+/* Slider */
+
+.dijitRtl .rias .dijitSliderProgressBarH,
+.dijitRtl .rias .dijitSliderRemainingBarH,
+.dijitRtl .rias .dijitSliderLeftBumper,
+.dijitRtl .rias .dijitSliderRightBumper,
+.dijitRtl .rias .dijitSliderTopBumper {
+	background-position: top right;
+}
+
+.dijitRtl .rias .dijitSliderProgressBarV,
+.dijitRtl .rias .dijitSliderRemainingBarV,
+.dijitRtl .rias .dijitSliderBottomBumper {
+	background-position: bottom right;
+}
+
+.dijitRtl .rias .dijitSliderLeftBumper {
+	border-left-width: 0;
+	border-right-width: 1px;
+}
+
+.dijitRtl .rias .dijitSliderRightBumper {
+	border-left-width: 1px;
+	border-right-width: 0;
+}
+
+.dijitRtl .rias .dijitSliderIncrementIconH {
+	background:url('../images/spriteIcons.png') no-repeat left top;
+}
+
+.dijitRtl .rias .dijitSliderDecrementIconH {
+	background:url('../images/spriteIcons.png') no-repeat -30px top;
+}

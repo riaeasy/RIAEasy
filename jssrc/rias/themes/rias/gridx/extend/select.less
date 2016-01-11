@@ -1,0 +1,24 @@
+.rias {
+	/* row select */
+	.gridxRowSelected > .gridxRowTable,
+	.gridxRowSelected > .gridxRowTable .gridxCell,
+	/* column select */
+	.gridxRow .gridxColumnSelected,
+	/* cell select */
+	.gridxRow .gridxCellSelected {
+		/*background:url("../images/rowback.png") #cee6fa repeat-x;*/
+		/*background:url("../images/rowback.png") skyblue repeat-x; zensst*/
+		background-color: skyblue;
+		border: dashed steelblue;
+		border-width: 0px 1px 1px 0px;
+	}
+	/* Indirect Select */
+	.gridx {
+		.dijitCheckBoxPartial {
+			.icon(checkBoxPartial);
+		}
+		.dijitCheckBoxPartialDisabled {
+			.icon(checkBoxPartialDisabled);
+		}
+	}
+}

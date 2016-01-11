@@ -1,0 +1,44 @@
+
+.riaswLoadingPointer {
+	position: absolute;
+	z-index: 999;
+}
+
+.riaswLoading {
+	float: right;
+	position: fixed;
+	height: 1.5em;
+	top: 0;
+	right: 0;
+	padding: 1em 2em;
+	border: 1px solid lightsteelblue;
+	background-color: steelblue;
+	min-width: 60px;
+	-moz-box-shadow: 0.5em 0.5em 2em black;
+	-webkit-box-shadow: 0.5em 0.5em 2em black;
+	box-shadow: 0.5em 0.5em 2em black;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
+}
+
+.riaswLoadingIcon {
+	background-image: url(./images/loading.gif);
+	background-repeat: no-repeat;
+	height: 10px;
+	width: 50px;
+	vertical-align: middle;
+}
+
+.riaswLoadingCaption {
+	color: whitesmoke;
+	font-size: 1.2em;
+	font-weight: bold;
+	line-height: 1.4em;
+	white-space: nowrap;
+	word-wrap: break-word;
+	padding-left: 0.5em;
+}
+
+
+
