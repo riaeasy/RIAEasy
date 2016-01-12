@@ -204,7 +204,7 @@ define([
 		//gp.cellIdOps = gp.cellIdOps;// || cellIdOps;
 		if(rias.isArray(gp.cellIdOps)){
 			gp.structure = [
-				{field: gp.store.idAttribute,		name: "操作",			width: gp.opColumnWidth || '6em',
+				{field: gp.store.idAttribute,		name: "操作",			width: gp.opColumnWidth || '8em',
 					//expandLevel: 'all',
 					widgetsInCell: true,
 					navigable: true,

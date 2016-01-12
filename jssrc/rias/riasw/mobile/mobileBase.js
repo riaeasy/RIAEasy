@@ -2,7 +2,7 @@
 //RIAStudio client mobile runtime widget - base(mobile)
 
 define([
-	"rias/base/riastudio",
+	"rias/riasw/riastudio",
 	"dijit/_WidgetBase",
 	"dojox/mobile/common",
 	"dojox/mobile/TransitionEvent",

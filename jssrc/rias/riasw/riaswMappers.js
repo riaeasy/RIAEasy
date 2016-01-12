@@ -14,20 +14,6 @@ define([
 			requires: "rias/riasw/studio/Module"
 		},
 		//============================================================================================================//
-		//studio-riasd
-		{
-			riasType: ["rias.riasw.studio.WidgetPalette"],
-			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/WidgetPalette.js"
-		},{
-			riasType: ["rias.riasw.studio.TextEditor"],
-			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/TextEditor.js"
-		},{
-			riasType: ["rias.riasw.studio.OutlineTree"],
-			requires: "http://www.riaeasy.com:8081/rias/riasd/studio/OutlineTree.js"
-		},{
-			riasType: ["rias.riasw.widget.HTMLEditor"],
-			requires: "http://www.riaeasy.com:8081/rias/riasw/widget/HTMLEditor.js"
-		},
 		//---------------------------------------------------------
 		//chart
 		//flow
@@ -432,6 +418,12 @@ define([
 		},{
 			riasType: ["rias.riasw.widget.Editor"],
 			requires: "rias/riasw/widget/Editor"
+		},{
+			riasType: ["rias.riasw.widget.TextEditor"],
+			requires: "rias/riasw/widget/TextEditor"
+		},{
+			riasType: ["rias.riasw.widget.HTMLEditor"],
+			requires: "rias/riasw/widget/HTMLEditor"
 		},{
 			riasType: ["rias.riasw.widget.Calendar", "dijit.Calendar"],
 			requires: "rias/riasw/widget/Calendar"

@@ -37,7 +37,7 @@ define([
 		if (has("host-browser")) {
 			rias.require(["dijit/dijit"], function () {
 				rias.require([
-					"rias/base/riastudio",
+					"rias/riasw/riastudio",
 					"rias/base/validate"
 				], function (rias) {
 					_d.resolve(rias);
