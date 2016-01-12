@@ -13,7 +13,7 @@
 			if (message) {
 				SysUtil.logRequest(level, objName, req, message);
 			} else {
-				SysUtil.logRequest(level, objName, req);
+				SysUtil.logRequest(level, objName,  rdeq);
 			}
 		}
 	};
