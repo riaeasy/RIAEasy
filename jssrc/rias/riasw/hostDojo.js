@@ -1031,11 +1031,14 @@ define([
 			this.inherited(arguments);
 		},
 		postCreate: function(){
+			if(this.domNode){
+				this.domNode._riasrWidget = this;
+			}
 			this.inherited(arguments);
 		},
 		destroy: function(/*Boolean*/ preserveDom){
-			if(!this._destroyed && !this._destroying){
-				this._destroying = true;
+			if(!this._destroyed && !this._riasDestroying){
+				this._riasDestroying = true;
 				this.uninitialize();
 
 				function destroy(w){
@@ -1067,7 +1070,7 @@ define([
 				this.destroyRendering(preserveDom);
 				rias.registry.remove(this.id);
 			}
-			this._destroying = false;
+			this._riasDestroying = false;
 			this.inherited(arguments);
 		},
 		destroyDescendants: function(/*Boolean?*/ preserveDom){

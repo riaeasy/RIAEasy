@@ -59,7 +59,7 @@ define([
 	}
 
 	if(rias.has("rias-riasd")){
-		rias.riasdUrl = "http://www.riaeasy.com:8081";
+		rias.riasdUrl = (rias.has("rias-riasd-local") ? "" : "http://www.riaeasy.com:8081");
 		rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
 			var p = url.lastIndexOf("/"),
 				n;

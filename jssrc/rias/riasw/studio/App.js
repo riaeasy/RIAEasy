@@ -205,7 +205,7 @@ define([
 		_internalResize: function(){
 			//console.debug(this.id, "resize in.");
 			//console.trace();
-			if(this._destroying || this._destroyed){
+			if(this._riasDestroying || this._beingDestroyed){
 				return;
 			}
 

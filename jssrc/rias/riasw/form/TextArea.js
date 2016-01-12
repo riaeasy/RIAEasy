@@ -21,7 +21,7 @@ define([
 			rias.dom.setStyle(this.textbox, "word-wrap", value);
 		},
 		resize: function(changeSize, resultSize){
-			if(this._destroying || this._destroyed){
+			if(this._riasDestroying || this._beingDestroyed){
 				return;
 			}
 			var dn = this.domNode,

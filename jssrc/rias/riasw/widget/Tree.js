@@ -78,15 +78,15 @@ define([
 		templateString:
 			'<div class="dijitTreeNode" role="presentation">' +
 				'<div data-dojo-attach-point="rowNode" class="dijitTreeRow" role="presentation">' +
-				'<span data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando" role="presentation"></span>' +
-				'<span data-dojo-attach-point="expandoNodeText" class="dijitExpandoText" role="presentation"></span>' +
-				'<span data-dojo-attach-point="contentNode" class="dijitTreeContent" role="presentation">' +
-				'<span role="presentation" class="dijitInline dijitIcon dijitTreeIcon" data-dojo-attach-point="iconNode"></span>' +
-				'<span data-dojo-attach-point="labelNode,focusNode" class="dijitTreeLabel" role="treeitem" tabindex="-1" aria-selected="false" id="${id}_label"></span>' +
-				'</span>' +
+					'<span data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando" role="presentation"></span>' +
+					'<span data-dojo-attach-point="expandoNodeText" class="dijitExpandoText" role="presentation"></span>' +
+					'<span data-dojo-attach-point="contentNode" class="dijitTreeContent" role="presentation">' +
+						'<span role="presentation" class="dijitInline dijitIcon dijitTreeIcon" data-dojo-attach-point="iconNode"></span>' +
+						'<span data-dojo-attach-point="labelNode,focusNode" class="dijitTreeLabel" role="treeitem" tabindex="-1" aria-selected="false" id="${id}_label"></span>' +
+					'</span>' +
 				'</div>' +
 				'<div data-dojo-attach-point="containerNode" class="dijitTreeNodeContainer" role="presentation" style="display: none;" aria-labelledby="${id}_label"></div>' +
-				'</div>',
+			'</div>',
 
 		isFocusable: function(){
 			return !this.disabled && this.focusNode && (rias.dom.getStyle(this.domNode, "display") != "none");
@@ -174,7 +174,7 @@ define([
 		removeChild: function(/* treeNode */ node){
 			this.inherited(arguments);
 
-			if(!this.tree._beingDestroyed){///避免 collapse
+			if(!this._beingDestroyed && !this.tree._beingDestroyed){///避免 collapse
 				var children = this.getChildren();
 				if(children.length == 0){
 					this.isExpandable = false;

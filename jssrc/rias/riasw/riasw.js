@@ -357,6 +357,11 @@ define([
 				}
 			}*/
 			w = new _ctor(params, refNode);
+			if(w && w._riasrCreateError){
+				if(rias.isFunction(errCall)){
+					rias.hitch(this, errCall)(w._riasrCreateError);
+				}
+			}
 		}catch(e){
 			/*if(e.message.indexOf("Tried to register widget") < 0){
 				w = rias.registry.byId(params.id);
@@ -710,9 +715,10 @@ define([
 					var params = rias.isFunction(ctor._riasdMeta.defaultParams) ?
 							ctor._riasdMeta.defaultParams(_params) :
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params),//不应该修改 meta.defaultParams，故mixinDeep({},..}
-						refNode = rias.dom.byId(params.refNode || params.id);
+					///FIXME:zensst. 使用 refNode 后，id 会重复。
+						refNode;// = rias.dom.byId(params.refNodeId || params.id);
 
-					delete params.refNode;
+					delete params.refNodeId;
 					//delete params._riaswType;
 					//delete params._riaswIdOfModule;
 					///最好不在这里设置 params.owner，避免在下面的 params 自动创建中处理
@@ -725,6 +731,7 @@ define([
 						console.error(s, _params);
 						errf(s);
 						//_d.resolve(undefined);
+						_params._riaswIdOfModule = _params._riaswIdOfModule + "_duplicationId";///id 重复时，会造成循环，需要变更 id。
 						_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
 						return;
 					}

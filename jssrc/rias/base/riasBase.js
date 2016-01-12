@@ -127,6 +127,7 @@ define([
 			try{
 				this.create.apply(this, arguments);
 			}catch(e){
+				this._riasrCreateError = e;
 				console.error(rias.getStackTrace(e), this);
 			}
 		},
@@ -137,9 +138,11 @@ define([
 				owner = w._riasrOwner || w.ownerRiasw;
 			w._riasrCreated = true;///下面需要用到
 
-			if(w.domNode){
-				w.domNode._riasrWidget = w;
-			}
+			///改在 _WidgetBase.postCreate 中设置。
+			//if(w.domNode){
+			//	w.domNode._riasrWidget = w;
+			//}
+
 			if(!w._riaswType){
 				/*if(!params._riaswType){
 					s = "No _riaswType in params.";
@@ -193,9 +196,11 @@ define([
 			if(rias.isDebug && !w._riasrModule && !rias.isRiasWebApp(w)){///new App() 时，webApp 尚未赋值。
 				console.debug("The widget('" + (w.id || w.name || w._riaswType) + "')._riasrModule is undefined.", params);
 			}
-			if(w._riasrModule){
+			if(!w._riasrOwner){
 				try{
-					if(!w._riasrOwner){
+					if(rias.isRiasw(w.ownerRiasw)){
+						w.ownerRiasw.own(w);
+					}else if(rias.isRiasw(w._riasrModule)){
 						w._riasrModule.own(w);
 					}
 				}catch(e){
@@ -307,8 +312,8 @@ define([
 		destroy: function(/*Boolean*/ preserveDom){
 			var self = this;
 			self._beingDestroyed = true;
-			if(!self._destroying){
-				self._destroying = true;
+			if(!self._riasDestroying){
+				self._riasDestroying = true;
 				self.destroyRiasrChildren(preserveDom);
 				self.orphan();
 				if(self._riasrModule && self._riasrModule[self._riaswIdOfModule]){
@@ -316,7 +321,7 @@ define([
 				}
 			}
 			self._destroyed = true;
-			self._destroying = false;
+			self._riasDestroying = false;
 			rias.publish("_riaswDestroy", {
 				widget: self
 			});
@@ -411,6 +416,7 @@ define([
 				var odh = {
 					_handle: handle,
 					_remove: rias.before(self, "destroy", function (preserveDom){
+						self._beingDestroyed = true;
 						if(handle._riasrParent){
 							rias.removeChild(handle._riasrParent, handle);
 						}
@@ -589,7 +595,7 @@ define([
 					};
 					if(rias.isFunction(self["_on" + N])){
 						self.own(self.watch(name, function(_name, oldValue, value){
-							if(this._destroying || this._beingDestroyed){
+							if(this._riasDestroying || this._beingDestroyed){
 								return undefined;
 							}
 							return self["_on" + N](value, oldValue);

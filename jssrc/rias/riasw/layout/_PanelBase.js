@@ -231,7 +231,7 @@ define([
 					//_cnt++;
 					//console.debug(self.id, _cnt, "parentScroll");
 					//rias.debounce(this.id + "_onScroll", function(){
-						if(!self._destroying && !self._beingDestroyed){
+						if(!self._riasDestroying && !self._beingDestroyed){
 							self.resize();
 						}
 					//}, this, 800)();
@@ -278,7 +278,7 @@ define([
 		//},
 
 		_onParentNodeChanged: function(){
-			if(this._destroying || this._beingDestroyed){
+			if(this._riasDestroying || this._beingDestroyed){
 				return;
 			}
 			var self = this,
@@ -297,7 +297,7 @@ define([
 					rias.debounce(self.id + "_onViewportResize", function(){
 						//console.debug(self.id, _cnt, "resize");
 						//console.trace();
-						if(!self._destroying && !self._beingDestroyed){
+						if(!self._riasDestroying && !self._beingDestroyed){
 							self.resize();
 						}
 					}, self, 200, function(){
@@ -527,7 +527,7 @@ define([
 		afterLayout: function(){
 		},
 		layout: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
-			if(this._destroying || this._beingDestroyed){
+			if(this._riasDestroying || this._beingDestroyed){
 				return;
 			}
 			var self = this,
@@ -563,7 +563,7 @@ define([
 			//_cnt++;
 			//console.debug(this.id, _cnt, "resize in.");
 			var r;
-			if(this._destroying || this._beingDestroyed){
+			if(this._riasDestroying || this._beingDestroyed){
 				//console.debug(c, this.id, "resize out:", r);
 				return;
 			}
@@ -715,7 +715,7 @@ define([
 			//if(this._started){
 			return rias.when(self._doPlay(value), function(result){
 				if(result){
-					if(!self._destroying && !self._beingDestroyed){
+					if(!self._riasDestroying && !self._beingDestroyed){
 						self._refreshDisplayState();
 						self.onDisplayStateChanged(self.displayState);
 						self._saveToCookie();
@@ -950,7 +950,7 @@ define([
 			self._stopPlay();
 			//displayState = (displayState < -3 || displayState > 3 ? 1 : displayState);
 			displayState = Widget.displayStateInt(displayState);
-			if(self._destroying || self._beingDestroyed || !forcePlay && self._displayState && oldState === displayState){
+			if(self._riasDestroying || self._beingDestroyed || !forcePlay && self._displayState && oldState === displayState){
 				df.resolve();
 				return df.promise;
 			}

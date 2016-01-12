@@ -529,26 +529,19 @@ define([
 		}
 		///因为需要处理 css，应该包含未显示的
 		ws = rias.filter(_allWin, function(w){
-			return !w._destroying && !w.isModal() && !w.isTop();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasDestroying && !w.isModal() && !w.isTop();// && (!win || w !== win);
 		});
 		ms = rias.filter(_allWin, function(w){
-			return !w._destroying && w.isModal();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasDestroying && w.isModal();// && (!win || w !== win);
 		});
 		ts = rias.filter(_allWin, function(w){
-			return !w._destroying && w.isTop();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasDestroying && w.isTop();// && (!win || w !== win);
 		});
 		Underlay.hide();
 		try{
 			ws.sort(_sort);
 			ms.sort(_sort);
 			ts.sort(_sort);
-			/*if(win && !win._destroying){
-				if(win.isShown()){
-					win.isModal() ? ms.push(win) : win.isTop() ? ts.push(win) : ws.push(win);
-				}else{
-					win.isModal() ? ms.unshift(win) : win.isTop() ? ts.unshift(win) : ws.unshift(win);
-				}
-			}*/
 			z = zt = Widget._startZ + ((ms.length + ts.length + ws.length + 3) << 1);
 			for(i = ms.length - 1; i >= 0; i--){
 				z -= 2;

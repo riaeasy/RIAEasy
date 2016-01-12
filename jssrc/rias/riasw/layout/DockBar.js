@@ -144,9 +144,6 @@ define([
 			this.inherited(arguments);
 		},
 		destroy: function(){
-			//if(this._destroying || this._beingDestroyed){
-			//	return;
-			//}
 			rias.forEach(this._hBadge, function(item){
 				item.remove();
 			});

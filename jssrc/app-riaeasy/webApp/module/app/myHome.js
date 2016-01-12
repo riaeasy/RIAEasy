@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 37,
+	"_rsfVersion": 41,
 	"_riaswVersion": "0.7",
 	"_riaswChildren": [
 		{
@@ -22,6 +22,14 @@ define([
 					"region": "top",
 					"toggleable": true,
 					"_riaswChildren": [
+						{
+							"_riaswType": "rias.riasw.layout.ContentPanel",
+							"_riaswIdOfModule": "contentPanel0",
+							"style": {
+								"border": "0px #b1badf solid",
+								"padding": "0px 0px 0px 0px"
+							}
+						},
 						{
 							"_riaswType": "rias.riasw.layout.ContentPanel",
 							"_riaswIdOfModule": "aboutContent",
