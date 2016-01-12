@@ -5,7 +5,7 @@ define([
 	"_rsfVersion": 82,
 	"_riaswVersion": "0.7",
 	"region": "center",
-	"requires": "http://www.riaeasy.com:8081/rias/riasd/riasd.js",
+	"requires": [],
 	"afterFiler": function () {
 			var m = this;
 			if (!rias.webApp.mainDock) {
@@ -248,7 +248,7 @@ define([
 											width: "30em",
 											height: rias.toInt(m.domNode.clientHeight * 0.7) + "px"
 										},
-										moduleMeta: "http://www.riaeasy.com:8081/rias/riasd/module/fileSelector.js",
+										moduleMeta: rias.getRiasdUrl("rias/riasd/module/fileSelector"),
 										rootId: "appModule",
 										//onlyDir: true,
 										actions: {
@@ -278,7 +278,7 @@ define([
 												 true
 												 );*/
 												m.newTabModule(//moduleMeta, idOfModule, caption, moduleParams, reCreate, id
-													"http://www.riaeasy.com:8081/rias/riasd/module/visualEditor.js",
+													rias.getRiasdUrl("rias/riasd/module/visualEditor"),
 													"ve_" + mn.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
 													mn,
 													{
