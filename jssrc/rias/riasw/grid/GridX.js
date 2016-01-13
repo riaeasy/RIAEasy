@@ -224,7 +224,7 @@ define([
 
 	//增加plugin的grid属性，用于plugin的事件函数取grid。
 	Bar.extend({
-		/*load: function(args, startup){
+		load: function(args, startup){
 			var t = this;
 			function _child(p){
 				rias.forEach(p.getChildren(), function(c){
@@ -247,7 +247,7 @@ define([
 					t.grid.vLayout.reLayout();
 				}, 10);
 			});
-		},*/
+		},
 		_normalizePlugin: function(def){
 			if(!def || !rias.isObject(def) || rias.isFunction(def)){
 				//def is a constructor or class name
