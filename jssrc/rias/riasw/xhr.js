@@ -153,8 +153,8 @@ define([
 			args.url = args.url + ".js";
 			var _handleAs = args.handleAs;
 			args.handleAs = "text";
-			args = rias.mixin({
-				load: function(js){
+			if(!args.load){
+				args.load = function(js){
 					try{
 						var func = new Function(
 							"args",
@@ -177,11 +177,11 @@ define([
 					}catch(e){
 						rias.xhr.error(e, errCall, !!errCall);
 					}
-				}
-			}, args);
+				};
+			}
 		}else{
-			args = rias.mixin({
-				load: function(response){
+			if(!args.load){
+				args.load = function(response){
 					try{
 						if(response instanceof Error){
 							//var s = method + " " + args.url + " error:\n";
@@ -200,8 +200,8 @@ define([
 					}catch(e){
 						rias.xhr.error(e, errCall, !!errCall);
 					}
-				}
-			}, args);
+				};
+			}
 		}
 		!(args.timeout > 0) && (args.timeout = rias.xhr.defaultTimeout);
 		args = rias.mixin({

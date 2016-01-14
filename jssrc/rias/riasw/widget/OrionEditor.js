@@ -292,16 +292,16 @@ define([
 				this.setContentType(rias.lastString(filename, "."));
 				rias.xhrGet({
 					url: self.filename,
-					timeout: 60000,
+					//timeout: 30000,
 					handleAs: "text"
-				}).then(function(content){
-						self.setContent(content);
-						self.markClean();
-						d.resolve(content);
-					}, function(error) {
-						console.warn(rias.substitute(rias.i18n.message.notfound, [self.filename]), error.message);
-						d.reject(error);
-					});
+				}, {}, function(content){
+					self.setContent(content);
+					self.markClean();
+					d.resolve(content);
+				}, function(error) {
+					console.warn(rias.substitute(rias.i18n.message.notfound, [self.filename]), error.message);
+					d.reject(error);
+				});
 			}else{
 				this.setContentType("");
 				self.setContent(self.getDefaultContent());

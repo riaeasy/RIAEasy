@@ -502,7 +502,7 @@ define([
 		function _topmost(h, value, z){
 			h.set("isTopmost", !!value);
 			if(value){
-				Widget.topmost = h;
+				!Widget.topmost && (Widget.topmost = h);
 				rias.dom.addClass(h.domNode, "riaswDialogPanelTopmost");
 				rias.dom.addClass(h.captionNode, "riaswDialogPanelCaptionNodeTopmost");
 			}else{
@@ -546,7 +546,8 @@ define([
 			for(i = ms.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ms[i];
-				if(h === win && h.isShown()){
+				//if(h === win && h.isShown()){
+				if(!Widget.topmost && h.isShown()){
 					Underlay.show({
 						ownerRiasw: h,
 						dialog: h,
