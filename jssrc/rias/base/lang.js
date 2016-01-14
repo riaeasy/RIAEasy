@@ -111,6 +111,12 @@ define([
 		return it instanceof Date;
 		//return (it != undefined) && (it != null) && (typeof it === "object") && (it.constructor.name === "Date");
 	};
+	rias.isUrl = function(location){
+		return /^:\/\//.test(location);
+	};
+	rias.isUrlLocal = function(location){
+		return /^file:\/\//.test(location) && !/^http/.test(location);
+	};
 
 	rias.hostBrowser = has("host-browser");
 

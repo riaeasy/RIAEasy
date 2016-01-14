@@ -20,9 +20,9 @@ define([
 	rias.xhr.formToJson = domForm.toJson;
 	rias.xhr.defaultTimeout = rias.config.waitSeconds ? rias.config.waitSeconds * 1000 : undefined;
 
-	rias.xhr.isLocal = function(url){
-		return /^file:\/\//.test(location) && !/^http/.test(url);
-	};
+	//rias.xhr.isLocal = function(url){
+	//	return /^file:\/\//.test(url) && !/^http/.test(url);
+	//};
 
 	rias.xhr.error = function(err, callback, silence){
 		var s = "";

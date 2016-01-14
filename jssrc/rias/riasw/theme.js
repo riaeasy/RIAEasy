@@ -25,6 +25,9 @@ define([
 			}
 		},
 		toUrl: function(url, theme, isMobile){
+			if(rias.isUrl(url)){
+				return url;
+			}
 			theme = this.themes[theme || this.currentTheme];
 			theme = theme || this.themes.rias;
 			if(isMobile){
