@@ -16,7 +16,8 @@ define([
 		if(!Tooltip._masterTT){
 			///增加 ownerRiasw
 			dijit._masterTT = Tooltip._masterTT = new Tooltip._MasterTooltip({
-				ownerRiasw: rias.webApp
+				ownerRiasw: rias.webApp,
+				_riaswIdOfModule: "_MasterTooltip"
 			});
 		}
 		return Tooltip._masterTT.show(innerHTML, aroundNode, position, rtl, textDir, onMouseEnter, onMouseLeave);

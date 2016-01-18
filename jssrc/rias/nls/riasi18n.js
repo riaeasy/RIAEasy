@@ -55,6 +55,11 @@ define({root: {
 		"delete": "Delete",
 		rename: "Rename",
 
+		check: "Check",
+		verify: "Verify",
+		audit: "Audit",
+		approval: "Approval",
+
 		hint: "Hint:",
 		info: "Infomation:",
 		warn: "Warn:",

@@ -164,6 +164,7 @@ define([
 				var self = this,
 					t = rias.riasw.__riasrTooltip ? rias.riasw.__riasrTooltip : (rias.riasw.__riasrTooltip = new Tooltip({
 						ownerRiasw: rias.webApp,
+						_riaswIdOfModule: "_riasrTooltip",
 						__h: {},
 						position: rias.tooltipPosition,
 						showDelay: 2000,
@@ -324,6 +325,7 @@ define([
 				maxHeight: args.maxHeight,
 				padding: args.padding
 			};
+			delete args.parent;
 			delete args.around;
 			delete args.orient;
 			delete args.maxHeight;
@@ -413,44 +415,46 @@ define([
 			//];
 			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.input, 0));
 		};
-		/*rias.treeSelector = function(args){
-			var _args;
-			if(rias.isString(args) || rias.isNumber(args)){
-				_args = {
-					value: args,
-					rootId: "rootId",
-					rootLabel: "rootLabel",
-					query: {},
-					target: "",
-					idAttribute: "id",
-					labelAttribute: "label"//,
-					//callDele: dumpFunc,
-					//callAddChild: dumpFunc,
-					//callModi: dumpFunc,
-				};
-			}else{
-				_args = rias.mixin({}, args);///因为有可能 content 中有实例，最好不用 mixinDeep，防止递归循环
+		rias.getTreeSelectModeInt = function(mode){
+			if(rias.isString(mode)){
+				if(mode === "leaf"){
+					mode = 1;
+				}else if(mode === "branch"){
+					mode = 2;
+				}else{
+					mode = 0;
+				}
 			}
-			_args.dialogType = (_args.dialogType !== undefined && _args.dialogType !== null ? _args.dialogType : "modal");
-			_args.moduleMeta = {
-				moduleMeta: "rias/riasw/studio/treeSelector",
+			if(mode >= 0 && mode < 3){
+				return mode;
+			}
+			return 0;
+		};
+		rias.select = function(args){
+			/*_args = {
 				value: _args.value,
-				rootId: _args.rootId,
-				rootLabel: _args.rootLabel,
 				query: _args.query,
-				target: _args.target,
-				idAttribute: _args.idAttribute,
-				labelAttribute: _args.labelAttribute,
+				additionItems: _args.additionItems,
+				//rootItems: {
+				//	query: {},
+				//	items: []
+				//},
+				rootItems: _args.rootItems,
+				store: _args.store,
+				onSelect: _args.onSelect,
 				callDele: _args.callDele,
 				callAddChild: _args.callAddChild,
 				callModi: _args.callModi
-			};
-			_args.actionBar = _args.actionBar || [
-				"btnOk",
-				"btnCancel"
-			];
-			return rias.show(_args);
-		};*/
+			};*/
+			var _args;
+			_args = rias.mixin({}, args);///因为有可能 content 中有实例，最好不用 mixinDeep，防止递归循环
+			//_args.actionBar = _args.actionBar || [
+			//	"btnOk",
+			//	"btnCancel"
+			//];
+			_args.actionBarPosition = "top";
+			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choice, 0, ["btnYes", "btnNo"]));
+		};
 		rias.showAbout = function(around) {
 			var homeLink = "<a href='" + rias.studioHome + "' target='_blank'>" + rias.studioHome + "</a>";
 			var formHTML = "<div class='about_container'>";

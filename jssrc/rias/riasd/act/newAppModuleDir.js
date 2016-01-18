@@ -1,1 +1,55 @@
-define(["rias"],function(c){return function(b,a,c){b=this.fetchByName(a,"pathname",_typeStr);a={success:!1,value:0};/^[\w\/]+$/.test(b)?""==b?a={success:!1,value:"\u7f3a\u5c11\u64cd\u4f5c\u6743\u9650..."}:(a=this.createNewDir(b,"appModule"),2===a?a={success:0,value:"\u76ee\u5f55\u5df2\u7ecf\u5b58\u5728..."}:(1===a&&(b=b.replace(/^appModule/,"rsfsModule"),a=this.createNewDir(b,"rsfsModule")),a={success:1===a,value:a})):a={success:!1,value:"\u6a21\u5757\u8def\u5f84(\u76ee\u5f55)\u540d\u5305\u542b\u4e0d\u5408\u89c4\u5b57\u7b26..."};return a}});
+
+
+//RIAStudio Server Action of riasd/newAppModuleDir.
+//非常重要：Rhino中的String不是js的string，请使用 “==” 来判断，而不是“===”
+//非常重要：act函数中不能使用能被并发改写的公共变量，否则多线程请求响应会混乱.
+
+define([
+	"rias"
+], function (rias) {
+
+	return function (method, req, res) {
+		var server = this,
+			fn = server.fetchByName(req, "pathname", _typeStr), ///不用转换后缀。
+			r,
+			result = {
+				success: false,
+				value: 0
+			};
+		if (!/^[\w\/]+$/.test(fn)) {///要允许 / 存在，但是不允许 .\ 存在。
+			result = {
+				success: false,
+				value: "模块路径(目录)名包含不合规字符..."
+			};
+		} else if (fn == "") {///允许在 root 目录创建子目录
+			result = {
+				success: false,
+				value: "缺少操作权限..."
+			};
+		} else {
+			r = server.createNewDir(fn, "appModule");
+			if (r === 2) {
+				result = {
+					success: 0,
+					value: "目录已经存在..."
+				};
+			} else {
+				if (r === 1) {
+					fn = fn.replace(/^appModule/, "rsfsModule");
+					r = server.createNewDir(fn, "rsfsModule");
+					if (r === 2) {
+						result = {
+							success: 0,
+							value: "目录已经存在..."
+						};
+					}
+				}
+				result = {
+					success: (r === 1),
+					value: r
+				};
+			}
+		}
+		return result;
+	};
+});

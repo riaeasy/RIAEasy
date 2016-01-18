@@ -231,7 +231,7 @@ define([
 				handleAs: "json",
 				timeout: options.timeout || self.timeout || rias.xhr.defaultTimeout,
 				headers: headers
-			}, {}, _ok, _err);
+			}, {}, _ok, _err, true);
 			self._currentDfd = d;
 			return d;
 		},
@@ -285,7 +285,7 @@ define([
 				isFileLocation: true,
 				handleAs: "json",
 				timeout: options.timeout || self.timeout || rias.xhr.defaultTimeout
-			}, {}, _ok, _err);
+			}, {}, _ok, _err, true);
 			self._currentDfd = d;
 			return d;
 		},

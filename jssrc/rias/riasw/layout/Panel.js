@@ -85,6 +85,7 @@ define([
 				if(!this._resizer){
 					this.own(this._resizer = new Resizer({
 						ownerRiasw: this,
+						//_riaswIdOfModule: this._riaswIdOfModule ? this._riaswIdOfModule + "_resizer" : undefined,
 						isBoxResizer: this.isBoxResizer,
 						resizeBorderWidth: this.resizeBorderWidth,
 						minSize: this.minSize,

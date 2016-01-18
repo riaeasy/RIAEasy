@@ -284,7 +284,7 @@ define([
 		onChange: function(/*===== newValue =====*/){
 		},
 
-		loadFile: function(filename){
+		loadFile: function(filename, preventCache){
 			var d = new Deferred(),
 				self = this;
 			if(filename && dojo.isString(filename)){
@@ -301,7 +301,7 @@ define([
 				}, function(error) {
 					console.warn(rias.substitute(rias.i18n.message.notfound, [self.filename]), error.message);
 					d.reject(error);
-				});
+				}, preventCache);
 			}else{
 				this.setContentType("");
 				self.setContent(self.getDefaultContent());

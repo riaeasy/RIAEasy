@@ -310,11 +310,11 @@ define([
 			ctor.prototype = _ctor.prototype;
 			rias.safeMixin(ctor, _ctor);
 			///if(!params._riaswType && )///还是先不强行设置为 riasWidget 好些，以便区分 Dijit 和 riasWidget。
-			if(params._riaswOwner){
+			if(params.ownerRiasw){
 				if(!params._riasrOwner){
-					owner = rias.by(params._riaswOwner);
+					owner = rias.by(params.ownerRiasw);
 				}
-				delete params._riaswOwner;
+				delete params.ownerRiasw;
 			}
 			if(!params._riasrModule && owner){
 				if(rias.isRiaswModule(owner)){
@@ -397,26 +397,6 @@ define([
 			}
 		}
 		return r;
-	};
-
-	var _catCounter = {};
-	//FIXME:zensst.考虑以后多页(rias.webApp)时怎样处理.
-	rias._getUniqueCat = function(widget, wholeTypeName){
-		widget = (widget._riaswType || widget.declaredClass || (rias.isString(widget) ? widget : "riasWidget"));
-		if(!wholeTypeName){
-			widget = widget.split('.').pop();
-		}
-		return rias.lowerCaseFirst(widget);
-	};
-	rias.getUniqueId = function(/*String*/cat, module){
-		var m = (rias.isRiaswModule(module) ? module : rias.webApp),
-			t = (cat || m.id),//.replace(/\./g, "_"),
-			c = (m._catCounter ? m._catCounter : _catCounter),
-			id;
-		do{
-			id = t + (t in c ? ++c[t] : c[t] = 0);
-		}while(m[id] || rias.webApp.byId(id) || rias.webApp.byId(m.id + "_" + id));
-		return dijit._scopeName === "dijit" ? id : dijit._scopeName + "_" + id; // String
 	};
 
 	var _riaswMappers = {};
@@ -637,7 +617,7 @@ define([
 		}
 		pp = pp || [];
 		//if(!m || ((m._riaswType !== 'rias.riasw.studio.Module')&&(m._riaswType !== 'rias.riasw.studio.Page'))){
-		if(!m || !rias.isRiaswModule(m)){
+		if(!m || !rias.isRiasw_Module(m)){
 			s = "The module(" + (m ? m.id : m) + ") is not a Module.";
 			console.error(s, m);
 			errf(s);
@@ -702,6 +682,96 @@ define([
 			}), _ownerRiasw, _module, _d, _pp, index);
 		}
 		var _createRiasw = function(ctor, _params, _ownerRiasw, _module, _d, _pp, index){
+			function _decodeParams(_p){
+				for (pn in _p) {
+					if(pn == "_riaswChildren" || pn == "moduleMeta" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
+						continue;
+					}
+					if (_p.hasOwnProperty(pn)) {
+						p = _p[pn];
+						if(rias.isRiasw(p)){
+							if(!p._riasrModule || p._riasrModule === rias.webApp){
+								p._riasrModule = _module;
+							}
+						}else if(rias.isObjectSimple(p)){
+							if(p.$refObj){//
+								_o = rias.getObject(p.$refObj, 0, _module) || rias.by(p.$refObj) || rias.getObject(p.$refObj);
+								if(_o){
+									_p[pn] = _o;
+								}else{
+									_ref.push([p, pn, -1, -1]);
+									delete _p[pn];
+									//delete child[pn];
+								}
+							}else if(p.$refScript){//
+								try{
+									//_o = rias._eval(_module, p.$refScript);
+									_o = rias.$refByModule(_module, p.$refScript, _p.id + "[" + pn + "]");
+								}catch(e){
+									_o = undefined;
+								}
+								if(_o){
+									_p[pn] = _o;
+								}else{
+									_ref.push([p, pn, -1, -1]);
+									delete _p[pn];
+								}
+							}else if(p._riaswType || p.declaredClass){
+								//p.id = p.id || rias.getUniqueId((_params.id || _params._riaswType.split('.').slice(-1)) + "_" + t.split('.').slice(-1), _module);
+								//p.id = p.id ? p.id : p._riaswIdOfModule ? (_module.id + "_" + p._riaswIdOfModule) :
+								//	rias.getUniqueId(_p.id + "_" + rias._getUniqueCat(p), _module);
+								if(!p._riasrModule){
+									p._riasrModule = _module;
+								}
+								ps.push([p, pn, -1, -1]);
+							}else{
+								arguments.callee(p);
+							}
+						}else if(rias.isArray(p)){
+							for(i = 0, l = p.length; i < l; i++){
+								if(rias.isRiasw(p[i])){
+									if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
+										p[i]._riasrModule = _module;
+									}
+								}else if(rias.isObjectSimple(p[i])){
+									if(p[i].$refObj){//
+										_o = rias.getObject(p[i].$refObj, 0, _module) || rias.by(p[i].$refObj) || rias.getObject(p[i].$refObj);
+										if(_o){
+											_p[pn] = _o;
+										}else{
+											_ref.push([p[i], pn, -1, -1]);
+											delete _p[pn];
+											//delete child[pn];
+										}
+									}else if(p[i].$refScript){//
+										try{
+											//_o = rias._eval(_module, p[i].$refScript);
+											_o = rias.$refByModule(_module, p[i].$refScript, _p.id + "[" + pn + "]");
+										}catch(e){
+											_o = undefined;
+										}
+										if(_o){
+											_p[pn] = _o;
+										}else{
+											_ref.push([p[i], pn, -1, -1]);
+											delete _p[pn];
+										}
+									}else if(p[i]._riaswType || p[i].declaredClass){
+										//p[i].id = p[i].id ? p[i].id : p[i]._riaswIdOfModule ? (_module.id + "_" + p[i]._riaswIdOfModule) :
+										//	rias.getUniqueId(_p.id + "_" + rias._getUniqueCat(p[i]), _module);
+										if(!p[i]._riasrModule){
+											p[i]._riasrModule = _module;
+										}
+										ps.push([p[i], pn, l, i]);
+									}else{
+										arguments.callee(p[i]);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			if(_params){
 				if(rias.isRiasw(_params)){
 					_placeRiasw(_params, _ownerRiasw, _pp, index);
@@ -713,7 +783,7 @@ define([
 					//return;
 				}else if(ctor){//} && meta.create){
 					var params = rias.isFunction(ctor._riasdMeta.defaultParams) ?
-							ctor._riasdMeta.defaultParams(_params) :
+							rias.mixinDeep({}, ctor._riasdMeta.defaultParams(_params)) :
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params),//不应该修改 meta.defaultParams，故mixinDeep({},..}
 					///FIXME:zensst. 使用 refNode 后，id 会重复。
 						refNode;// = rias.dom.byId(params.refNodeId || params.id);
@@ -737,10 +807,12 @@ define([
 					}
 					var pn, p, ps = [], _dps = [], _ref = [], _o, i, l, _p;
 					try{
+						///后面需要引用 params.id
 						params.id = refNode ? refNode.id :
 							params.id ? params.id :
 								_params._riaswIdOfModule ? (_module.id + "_" + _params._riaswIdOfModule) :
-									rias.getUniqueId(_module.id + "_" + rias._getUniqueCat(_params), _module);
+									_ownerRiasw ? rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params)) :
+										rias.getUniqueId(_module.id + "_" + rias._getUniqueCat(_params), _module);
 					}catch(e){
 						console.error(e.message, rias.getStackTrace(e), _params);
 						errf(e);
@@ -748,84 +820,7 @@ define([
 						_createError(e.message, _params, _ownerRiasw, _module, _d, _pp, index);
 						return;
 					}
-					for (pn in params) {
-						if(pn == "moduleMeta" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
-							continue;
-						}
-						if (params.hasOwnProperty(pn)) {
-							p = params[pn];
-							if(rias.isRiasw(p)){
-								if(!p._riasrModule || p._riasrModule === rias.webApp){
-									p._riasrModule = _module;
-								}
-							}else if(rias.isObjectExact(p)){
-								if(p.$refObj){//
-									_o = rias.getObject(p.$refObj, 0, _module) || rias.by(p.$refObj) || rias.getObject(p.$refObj);
-									if(_o){
-										params[pn] = _o;
-									}else{
-										_ref.push([p, pn, -1, -1]);
-										delete params[pn];
-										//delete child[pn];
-									}
-								}else if(p.$refScript){//
-									try{
-										//_o = rias._eval(_module, p.$refScript);
-										_o = rias.$refByModule(_module, p.$refScript, params.id + "[" + pn + "]");
-									}catch(e){
-										_o = undefined;
-									}
-									if(_o){
-										params[pn] = _o;
-									}else{
-										_ref.push([p, pn, -1, -1]);
-										delete params[pn];
-									}
-								}else if(p._riaswType || p.declaredClass){
-									//p.id = p.id || rias.getUniqueId((_params.id || _params._riaswType.split('.').slice(-1)) + "_" + t.split('.').slice(-1), _module);
-									p.id = p.id ? p.id : p._riaswIdOfModule ? (_module.id + "_" + p._riaswIdOfModule) :
-										rias.getUniqueId(params.id + "_" + rias._getUniqueCat(p), _module);
-									ps.push([p, pn, -1, -1]);
-								}
-							}else if(rias.isArray(p)){
-								for(i = 0, l = p.length; i < l; i++){
-									if(rias.isRiasw(p[i])){
-										if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
-											p[i]._riasrModule = _module;
-										}
-									}else if(rias.isObjectExact(p[i])){
-										if(p.$refObj){//
-											_o = rias.getObject(p.$refObj, 0, _module) || rias.by(p[i].$refRiasw) || rias.getObject(p.$refObj);
-											if(_o){
-												params[pn] = _o;
-											}else{
-												_ref.push([p, pn, -1, -1]);
-												delete params[pn];
-												//delete child[pn];
-											}
-										}else if(p.$refScript){//
-											try{
-												//_o = rias._eval(_module, p.$refScript);
-												_o = rias.$refByModule(_module, p.$refScript, params.id + "[" + pn + "]");
-											}catch(e){
-												_o = undefined;
-											}
-											if(_o){
-												params[pn] = _o;
-											}else{
-												_ref.push([p, pn, -1, -1]);
-												delete params[pn];
-											}
-										}else if(p[i]._riaswType || p[i].declaredClass){
-											p[i].id = p[i].id ? p[i].id : p[i]._riaswIdOfModule ? (_module.id + "_" + p[i]._riaswIdOfModule) :
-												rias.getUniqueId(params.id + "_" + rias._getUniqueCat(p[i]), _module);
-											ps.push([p[i], pn, l, i]);
-										}
-									}
-								}
-							}
-						}
-					}
+					_decodeParams(params);
 					rias.forEach(ps, function(_p){
 						var _dp = rias.newDeferred();
 						_dps.push(_dp);
@@ -858,7 +853,7 @@ define([
 							if(rias.isInstanceOf(_ownerRiasw, rias.Destroyable)){
 								//_ownerRiasw.own(_obj);
 							}else {
-								_owners.push(_obj, _ownerRiasw);
+								_owners.push([_obj, _ownerRiasw]);
 							}
 						}catch(e){
 							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}\n" + e.message;
@@ -883,7 +878,7 @@ define([
 							if(!_obj.id){
 								///简化 id
 								//_obj.id = _obj.id || rias.getUniqueId(_ownerRiasw.id + "_" + _params._riaswType.split('.').slice(-1), _module);
-								_obj.id = rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params), _module);
+								//_obj.id = rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params), _module);
 							}
 						}catch(e){
 							console.error(e.message, rias.getStackTrace(e), _params, _obj);

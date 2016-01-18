@@ -37,7 +37,7 @@ define([
 			//console.log("dojox.layout.GridContainerLite ::: addChild");
 			child.domNode.id = child.id;
 			GridContainerLite.superclass.addChild.call(this, child, 0);
-			if(rias.isObjectExact(column)){///增加支持 column = {}
+			if(rias.isObjectSimple(column)){///增加支持 column = {}
 				p = column.zone;
 				column = column.column;
 			}

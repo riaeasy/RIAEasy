@@ -275,8 +275,6 @@ define([
 			}
 		},
 		_afterLoadMeta: function(meta){
-			this._afterUpdateSize(this.id + " - _afterLoadMeta.");
-
 			if(this.moduleParams){
 				rias.mixinDeep(this._riaswModuleMeta, this.moduleParams);
 			}
@@ -286,6 +284,7 @@ define([
 			if (rias.isFunction(this.afterLoadMeta)){
 				this.afterLoadMeta(this._riaswModuleMeta);
 			}
+			this._afterUpdateSize(this.id + " - _afterLoadMeta.");
 		},
 		_beforeFiler: function(meta){
 			this._setContent("");
@@ -419,6 +418,70 @@ define([
 					_e("loading Module error:\n" + error.message + "\n\n" + errs, error);
 				});
 			}
+			function _decodeParams(params){
+				var pn, p,
+					_o, i, l;
+				for (pn in params) {
+					if(pn == "_riaswChildren" || pn == "moduleMeta" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
+						continue;
+					}
+					if (params.hasOwnProperty(pn)) {
+						p = params[pn];
+						if(rias.isRiasw(p)){
+							if(!p._riasrModule || p._riasrModule === rias.webApp){
+								p._riasrModule = self;
+							}
+						}else if(rias.isObjectSimple(p)){
+							if(p.$refObj){//
+								_o = rias.getObject(p.$refObj, 0, self) || rias.by(p.$refObj) || rias.getObject(p.$refObj);
+								if(_o){
+									params[pn] = _o;
+								}
+							}else if(p.$refScript){//
+								try{
+									//_o = rias._eval(module, p.$refScript);
+									_o = rias.$refByModule(self, p.$refScript, self.id + "[" + pn + "]");
+								}catch(e){
+									_o = undefined;
+								}
+								if(_o){
+									params[pn] = _o;
+								}
+							}else{
+								arguments.callee(p);
+							}
+						}else if(rias.isArray(p)){
+							for(i = 0, l = p.length; i < l; i++){
+								if(rias.isRiasw(p[i])){
+									if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
+										p[i]._riasrModule = self;
+									}
+								}else if(rias.isObjectSimple(p[i])){
+									if(p[i].$refObj){//
+										_o = rias.getObject(p[i].$refObj, 0, self) || rias.by(p[i].$refObj) || rias.getObject(p[i].$refObj);
+										if(_o){
+											params[pn] = _o;
+										}
+									}else if(p[i].$refScript){//
+										try{
+											//_o = rias._eval(module, p[i].$refScript);
+											_o = rias.$refByModule(self, p[i].$refScript, self.id + "[" + pn + "]");
+										}catch(e){
+											_o = undefined;
+										}
+										if(_o){
+											params[pn] = _o;
+										}
+									}else{
+										arguments.callee(p[i]);
+									}
+								}
+							}
+						}
+					}
+				}
+				return params;
+			}
 			function _pro(meta, mixinMeta){
 				//使用副本，避免原始 meta 被修改.
 				self._riaswModuleMeta = rias.mixinDeep({}, meta);
@@ -436,7 +499,7 @@ define([
 
 				var p = rias.mixinDeep({}, self.params, mixinMeta);
 				delete p._riaswType;
-				//delete p._riaswOwner;
+				delete p.ownerRiasw;
 				//delete p._riaswChildren;//在下面的 rias._deleDP 中删除，使用 meta 的 _riaswChildren 创建
 				//delete p._riaswIdOfModule;//保留运行期的 _riaswIdOfModule
 				delete p._riaswVersion;
@@ -460,6 +523,7 @@ define([
 					s = p.style;
 				///meta 的 style 已经在 _afterLoadMeta 中处理，这里只处理 params.style。
 				p = rias.mixinDeep({}, self._riaswModuleMeta, p);///使用 _riaswModuleMeta._riaswChildren
+				_decodeParams(p);
 				self._initSize(p);
 				delete p.style;
 				/// CaptionPanel/DialogPanel 等有 CaptionNode 存在，不应该设置 domNode.style，而应该设置 containerNode
@@ -506,7 +570,7 @@ define([
 				}catch(error){
 					_e("creating Module error:" + error.message, error);
 				}
-			}else if(rias.isObjectExact(self.moduleMeta)){
+			}else if(rias.isObjectSimple(self.moduleMeta)){
 				try{
 					if(self.moduleMeta.moduleMeta){
 						_e("Please rias.mixinDeep(moduleMeta, moduleMeta.moduleMeta).");

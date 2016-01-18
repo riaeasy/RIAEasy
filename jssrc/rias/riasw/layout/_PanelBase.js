@@ -730,7 +730,7 @@ define([
 		_playingExpand: rias.fx.wipeIn,
 		_playingSize: rias.fx.sizeTo,
 
-		duration: rias.defaultDuration,
+		duration: rias.defaultDuration / 2,
 
 		_stopPlay: function(){
 			if(this._playingContent){
@@ -802,7 +802,7 @@ define([
 				},
 				hideParam = {
 					node: self.domNode,
-					duration: self.duration / 2,
+					duration: self.duration,
 					beforeBegin: function(){
 					},
 					onEnd: function(){
@@ -1228,8 +1228,9 @@ define([
 			return this.displayState == Widget.displayShowMin;
 		},
 		isShown: function(excludeShowMin){
-			return this.displayState == Widget.displayShowNormal || this.displayState == Widget.displayShowMax
-				|| (!excludeShowMin && this.displayState == Widget.displayShowMin);
+			return this._wasShown &&
+				(this.displayState == Widget.displayShowNormal || this.displayState == Widget.displayShowMax
+					|| (!excludeShowMin && this.displayState == Widget.displayShowMin));
 		},
 		isHidden: function(){
 			return this.displayState == Widget.displayHidden;

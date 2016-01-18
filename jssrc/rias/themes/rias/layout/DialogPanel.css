@@ -177,6 +177,14 @@
 	/*border-: 1px solid silver;*/
 	display: block;
 }
+.riaswDialogPanelActionBarTop {
+	padding: 0.5em 1em 0.5em 1em;
+	text-align: left;
+	margin: 0;
+	/*border-: 1px solid silver;*/
+	border-bottom: 1px solid silver;
+	display: block;
+}
 
 /* Type ========================*/
 .riaswDialogPanelTypeInfo .riaswDialogPanelContent,

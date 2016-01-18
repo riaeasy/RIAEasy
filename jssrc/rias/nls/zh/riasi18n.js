@@ -53,6 +53,11 @@ define({
 		"delete": "删除",
 		rename: "重命名",
 
+		check: "复核",
+		verify: "审核",
+		audit: "审计",
+		approval: "审批",
+
 		hint: "提示：",
 		info: "提示信息：",
 		warn: "警告信息：",

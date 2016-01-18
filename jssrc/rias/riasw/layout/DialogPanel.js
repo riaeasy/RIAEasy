@@ -253,9 +253,12 @@ define([
 						if(!w){
 							w = {
 								_riaswType: "rias.riasw.form.Button",
-								_riaswIdOfModule: rias.isRiaswModule(self) ? p : undefined,
+								_riaswIdOfModule: p,
 								label: p,
-								tooltip: p
+								tooltip: p,
+								onClick: function(evt){
+									self.cancel();
+								}
 							};
 							if(p === "btnOk"){
 								w.label = w.tooltip = rias.i18n.action.ok;
@@ -298,7 +301,13 @@ define([
 					}else if(rias.isObjectSimple(p)){
 						w = rias.mixinDeep({}, {
 							_riaswType: "rias.riasw.form.Button",
-							_riaswIdOfModule: "btnCancel"
+							//_riaswIdOfModule: "btnCancel",
+							//label: rias.i18n.action.cancel,
+							//tooltip: rias.i18n.action.cancel,
+							//iconClass: "cancelIcon",
+							onClick: function(evt){
+								self.cancel();
+							}
 						}, p);
 					}else{
 						w = rias.by(p);
@@ -314,15 +323,17 @@ define([
 					self.own(self._actionBar = rias.createRiasw(Panel, {
 						ownerRiasw: self,
 						//_riaswIdOfModule: "_actionBar",
-						"class": "dijitReset riaswDialogPanelActionBar"
+						"class": "dijitReset"
 					}));///注意，模板中的 actionBarNode 被 _actionBar.domNode 替代
 					//self.actionBarNode = self._actionBar.domNode;///重新设置正确的 this.actionBarNode
 					if(self.actionBarPosition === "top" || self.actionBarPosition === "first"){
 						self._actionBar.placeAt(self.wrapperNode, "first");
+						rias.dom.addClass(self._actionBar.domNode, "riaswDialogPanelActionBarTop");
 					}else{
 						self._actionBar.placeAt(self.wrapperNode, "last");
+						rias.dom.addClass(self._actionBar.domNode, "riaswDialogPanelActionBar");
 					}
-					rias.filer(ps, self._actionBar, rias.isRiaswModule(self) ? self : self._riasrModule).then(function(){
+					rias.filer(ps, self._actionBar, self).then(function(){
 						self.inherited(args);
 					});
 				}else{

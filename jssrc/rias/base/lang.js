@@ -55,12 +55,12 @@ define([
 	rias._eval = function(scope, text, hint){
 		return _eval.call(scope, text + "\r\n////@ sourceURL=" + hint);
 	};
-	rias.$ref = function(scope, text, hint){
+	rias.$ref = rias.run = function(scope, text, hint){
 		return (new Function(
 			'rias',
 			text + "\r\n////@ sourceURL=" + hint))(scope, rias);
 	};
-	rias.$refByModule = function(module, text, hint){
+	rias.$refByModule = rias.runByModule = function(module, text, hint){
 		var r = (new Function(
 			'rias',
 			'module',
@@ -639,7 +639,7 @@ define([
 
 	rias.dateStamp = dateStamp;
 	rias.dateLocale = dateLocale;
-	var __dt = new Date();
+	//var __dt = new Date();
 	rias.datetime = {};
 	rias.datetime.defaultDateFormatStr = "yyyy-MM-dd";
 	rias.datetime.defaultTimeFormatStr = "HH:mm:ss";

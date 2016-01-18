@@ -86,7 +86,7 @@ define([
 		_loadHref: function(){
 			var self = this;
 			var getArgs = {
-				preventCache: (self.preventCache || true),
+				preventCache: self.preventCache,
 				url: self.href,
 				timeout: self.timeout || rias.xhr.defaultTimeout,
 				handleAs: "text"

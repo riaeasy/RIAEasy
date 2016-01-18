@@ -8,6 +8,25 @@ define([
 	"dijit/Destroyable"
 ], function(rias, Stateful, Destroyable) {
 
+	var _catCounter = {};
+	//FIXME:zensst.考虑以后多页(rias.webApp)时怎样处理.
+	rias._getUniqueCat = function(widget, wholeTypeName){
+		widget = (widget._riaswType || widget.declaredClass || (rias.isString(widget) ? widget : "riasWidget"));
+		if(!wholeTypeName){
+			widget = widget.split('.').pop();
+		}
+		return rias.lowerCaseFirst(widget);
+	};
+	rias.getUniqueId = function(/*String*/id, module){
+		var m = (rias.isRiaswModule(module) ? module : rias.webApp ? rias.webApp : undefined),
+			t = (id || m && m.id || "id"),//.replace(/\./g, "_"),
+			c = (m && m._catCounter ? m._catCounter : _catCounter);
+		do{
+			id = t + (t in c ? ++c[t] : c[t] = 1);
+		}while(rias.getObject(id) || m && (m[id] || rias.webApp.byId(id) || rias.webApp.byId(m.id + "_" + id)));
+		return id;// dijit._scopeName === "dijit" ? id : dijit._scopeName + "_" + id; // String
+	};
+
 ///Destroyable==================================================================///
 	rias.isInstanceOf = function(obj, base){
 		function _do(ctor){
@@ -159,7 +178,7 @@ define([
 			//w._riasrOwner = /*params._riasrOwner ||*/ undefined;
 			//w._riasrChildren = /*params._riasrChildren ||*/ [];
 			if(!w._riaswParams){
-				w._riaswParams = params._riaswParams;
+				w._riaswParams = params._riaswParams || {};
 			}
 			if(w._riaswParams){
 				///保留设计值，删除运行期值
@@ -210,7 +229,7 @@ define([
 					}
 				}
 			}
-			if(!w._riaswIdOfModule){
+			if(!w._riaswIdOfModule && params._riaswIdOfModule){
 				w._riaswIdOfModule = params._riaswIdOfModule;
 			}
 			if(w._riaswIdOfModule){
@@ -264,6 +283,16 @@ define([
 			}
 			if(rias.isDebug && !w._riasrOwner && !rias.isRiasWebApp(w)){
 				console.debug("The widget('" + (w.id || w.name || w._riaswType) + "')._riasrOwner is undefined.", params);
+			}
+			if(!w.id){
+				w.id = w._riasrModule && w._riaswIdOfModule ? (w._riasrModule.id + "_" + w._riaswIdOfModule) :
+					w._riasrOwner ? rias.getUniqueId(w._riasrOwner.id + "_" + rias._getUniqueCat(w)) :
+						w._riasrModule ? rias.getUniqueId(w._riasrModule.id + "_" + rias._getUniqueCat(w), w._riasrModule) :
+							rias.getUniqueId(rias._getUniqueCat(w));
+				if(w.params){
+					// if params contains {id: undefined}, prevent _applyAttributes() from processing it
+					//delete w.params.id;
+				}
 			}
 		},
 
@@ -457,6 +486,7 @@ define([
 								// Use first matching method name in above listener (prefer destroyRecursive() to destroy())
 								destroyMethodName = cleanupMethod;
 							}
+							///每种 destroy 方法都 handle after
 							hdhs.push({
 								_handle: handle,
 								_remove: rias.after(handle, cleanupMethod, onManualDestroy, true)

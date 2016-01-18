@@ -498,6 +498,15 @@ define([
 			if(!params.model._riaswIdOfModule && params._riaswIdOfModule){
 				params.model._riaswIdOfModule = params._riaswIdOfModule + "_model"
 			}
+			if(params.rootId){
+				params.model.rootId = params.rootId;
+			}
+			if(params.rootLabel){
+				params.model.rootLabel = params.rootLabel;
+			}
+			if(params.query){
+				params.model.query = params.query;
+			}
 			if(params.store){
 				params.model.store = params.store
 			}else if(!params.model.store){

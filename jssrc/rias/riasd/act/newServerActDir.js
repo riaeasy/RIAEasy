@@ -1,1 +1,47 @@
-define(["rias"],function(c){return function(a,b,c){a=this.fetchByName(b,"pathname",_typeStr);b={success:!1,value:0};/^[\w\/]+$/.test(a)?""==a?b={success:!1,value:"\u7f3a\u5c11\u64cd\u4f5c\u6743\u9650..."}:(a=this.createNewDir(a,"serverAct"),b=2===a?{success:0,value:"\u76ee\u5f55\u5df2\u7ecf\u5b58\u5728..."}:{success:1===a,value:a}):b={success:!1,value:"action\u8def\u5f84(\u76ee\u5f55)\u540d\u5305\u542b\u4e0d\u5408\u89c4\u5b57\u7b26..."};return b}});
+
+
+//RIAStudio Server Action of riasd/newServerActDir.
+//非常重要：Rhino中的String不是js的string，请使用 “==” 来判断，而不是“===”
+//非常重要：act函数中不能使用能被并发改写的公共变量，否则多线程请求响应会混乱.
+
+define([
+	"rias"
+], function(rias) {
+
+	return function (method, req, res) {
+		var server = this,
+			fn = server.fetchByName(req, "pathname", _typeStr),///不用转换后缀。
+			//dir = rias.host.jsString(req.getParameter("dir")),//未使用
+			r,
+			result = {
+				success: false,
+				value: 0
+			};
+		if(!/^[\w\/]+$/.test(fn)){///要允许 / 存在，但是不允许 .\ 存在。
+			result = {
+				success: false,
+				value: "action路径(目录)名包含不合规字符..."
+			};
+		}else if(fn == ""){///允许在 root 目录创建子目录
+			result = {
+				success: false,
+				value: "缺少操作权限..."
+			};
+		}else{
+			r = server.createNewDir(fn, "serverAct");
+			if(r === 2){
+				result = {
+					success: 0,
+					value: "目录已经存在..."
+				};
+			}else{
+				result = {
+					success: (r === 1),
+					value: r
+				};
+			}
+		}
+		return result;
+	};
+
+});

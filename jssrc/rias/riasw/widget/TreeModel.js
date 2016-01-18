@@ -20,11 +20,13 @@ define([
 			//delete params.store;
 			if(!store.getFeatures && rias.isInstanceOf(store, StoreBase)){
 				this.store = new ObjectStore({
-					ownerRiasw: store,
+					ownerRiasw: this,
 					idProperty: store.idAttribute || "id",
 					labelProperty: store.labelAttribute || "label",
 					objectStore: store
 				});
+				//store._riasrOwner.own(this.store);
+				//this.store.own(store);
 			}
 			if(!this.store.getFeatures()['dojo.data.api.Identity']){
 				throw new Error("dijit.tree.TreeStoreModel: store must support dojo.data.Identity");
@@ -45,6 +47,16 @@ define([
 	var riasType = "rias.riasw.widget.TreeModel";
 
 	var Widget = rias.declare(riasType, [rias.ObjectBase, ForestStoreModel], {
+
+		destroy: function(){
+			var h;
+			while(h = this.connects.pop()){ h.remove(); }
+			// TODO: should cancel any in-progress processing of getRoot(), getChildren()
+
+			///dijit.tree.TreeStoreModel 没有继承自 Destroyable，需要扩展
+			//this.inherited(arguments);
+			rias.hitch(this, rias.ObjectBase.prototype.destroy)(arguments);
+		},
 
 		mayHaveChildren: function(/*dojo.data.Item*/ item){
 			//if(item === this.root){

@@ -307,7 +307,7 @@ define([
 		return obj;
 	};
 	rias.dom.styleToString = function(obj) {
-		if(!rias.isObjectExact(obj)){
+		if(!rias.isObjectSimple(obj)){
 			return "";
 		}
 		var str = "", pn;
@@ -324,7 +324,7 @@ define([
 	rias.dom.styleToObject = function(value){
 		if(rias.isString(value)){
 			return rias.dom.styleFromString(value);
-		}else if(rias.isObjectExact(value)){
+		}else if(rias.isObjectSimple(value)){
 			return value;
 		}
 		return {};
@@ -1103,8 +1103,8 @@ define([
 			//	rias.removeChild(child._riasrParent, child);
 			//}
 			///某些控件的 position 可能是 Object，比如 GridContainer。
-			//if(p && p.addChild && (!position || rias.isObjectExact(position) || rias.isNumber(position) || /first|last/.test(position || ""))){
-			if(p && p.addChild && (!position || rias.isObjectExact(position) || rias.isNumber(position))){
+			//if(p && p.addChild && (!position || rias.isObjectSimple(position) || rias.isNumber(position) || /first|last/.test(position || ""))){
+			if(p && p.addChild && (!position || rias.isObjectSimple(position) || rias.isNumber(position))){
 				////移到 rias.orphan() 处理
 				////有些控件在 removeChild() 的时候会 destroy(), 比如 StackContainer，所以不能 removeChild()
 				//if(p.removeChild && p != child.(parent)){

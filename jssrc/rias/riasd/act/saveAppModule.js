@@ -1,1 +1,123 @@
-define(["rias"],function(g){return function(e,c,h){var b=this.fetchByName(c,"pathname",_typeStr);e=this.extractFilenameNoExt(b);var d=this.changeFileExt(b,"");h=d.replace(/^appModule/,"rsfsModule");c=this.fetchByName(c,"_rsf",_typeStr);var f,a,k=["","","{}"],b={success:!1,value:0},b=this.extractDir(d);if(/^[\w\/]+$/.test(d))if(""==b||/appModule$/gi.test(b))b={success:!1,value:"\u7f3a\u5c11\u64cd\u4f5c\u6743\u9650..."};else{c=c?g.fromJson(c):{};f=g.mixin({_rsfVersion:0},c._meta);a=this.readJson(h+".rsfs","rsfsModule",!0);a={_opened:a._opened&&a._opened.sessionid?a._opened:{sessionid:""},_count:0<a._count?a._count:49,position:0<a.position?a.position:0,rsfVersion:0<a.rsfVersion?a.rsfVersion:f._rsfVersion,items:g.isArray(a.items)?a.items:[]};a.rsfVersion++;b=this.extractDir(h)+"/"+e+"_rsf/"+e+"_"+a.rsfVersion+".rsf";f._rsfVersion=a.rsfVersion;f=g.toJson(f,{prettyPrint:!0,includeFunc:!0,loopToString:!1,errorToString:!0,simpleObject:!0});k[2]=f;k=g.substitute('define([\n\t"rias"${0}\n], function(rias${1}){\n\treturn ${2}\n\t\n});\n',k);d=this.writeText(d+".js","appModule",k);if(0<d&&(d=this.writeText(b,"rsfsModule",f,!0),0<d)){c={rsfVersion:a.rsfVersion,reload:c.reload?!!c.reload:!0,pix:g.isString(c.pix)?c.pix:"",isMobileApp:c.isMobileApp?!!c.isMobileApp:!1,rotate:c.rotate?!!c.rotate:!1};a.position>a.items.length-1&&(a.position=a.items.length-1);for(;0<a.items.length&&a.items.length>=a._count;)a.position--,b=a.items.shift(),b.rsfVersion&&(b=this.extractDir(h)+"/"+e+"_rsf/"+e+"_"+b.rsfVersion+".rsf",this.deleteFile(b,"rsfsModule"));for(;0<a.items.length&&a.items.length>a.position+1;)b=a.items.pop(),b.rsfVersion&&(b=this.extractDir(h)+"/"+e+"_rsf/"+e+"_"+b.rsfVersion+".rsf",this.deleteFile(b,"rsfsModule"));a.items.push(c);a.items.length>a.position+1&&a.position++;d=this.writeJson(h+".rsfs","rsfsModule",a,{},!0)}b={success:1===d,value:d}}else b={success:!1,value:"\u6a21\u5757\u540d\u5305\u542b\u4e0d\u5408\u89c4\u5b57\u7b26..."};return b}});
+
+
+//RIAStudio Server Action of riasd/saveAppModule.
+//非常重要：Rhino中的String不是js的string，请使用 “==” 来判断，而不是“===”
+//非常重要：act函数中不能使用能被并发改写的公共变量，否则多线程请求响应会混乱.
+
+define([
+	"rias"
+], function(rias) {
+
+	var js0 = 'define([\n'
+		+ '	"rias"${0}\n'
+		+ '], function(rias${1}){\n'
+		+ '	return ${2}\n'
+		+ '	\n'
+		+ '});\n';
+
+	return function (method, req, res) {
+		var server = this,
+			pn = server.fetchByName(req, "pathname", _typeStr),
+			fn = server.extractFilenameNoExt(pn),
+			mp = server.changeFileExt(pn, ""),// (server.extractFileExt(pn) === "js" ? pn.replace(/\.js$/gi, "") : pn),//转换为无文件后缀
+			rp = mp.replace(/^appModule/, "rsfsModule"),
+			rsf = server.fetchByName(req, "_rsf", _typeStr),
+			_meta,
+			rsfs,
+			ss = ["", "", "{}"],
+			text,
+			r,
+			result = {
+				success: false,
+				value: 0
+			};
+		pn = server.extractDir(mp);///取 mp 的目录
+		if(!/^[\w\/]+$/.test(mp)){///要允许 / 存在，但是不允许 .\ 存在。
+			result = {
+				success: false,
+				value: "模块名包含不合规字符..."
+			};
+		//}else if(pn == "" || /appModule$/gi.test(pn) || /appModule\/app$/gi.test(pn)){///不允许在 root 目录保存文件
+		}else if(pn == "" || /appModule$/gi.test(pn)){///不允许在 root 目录保存文件
+			result = {
+				success: false,
+				value: "缺少操作权限..."
+			};
+		}else{
+			rsf = (rsf ? rias.fromJson(rsf) : {});
+			_meta = rias.mixin({
+				_rsfVersion: 0
+			}, rsf._meta);
+			rsfs = server.readJson(rp + ".rsfs", "rsfsModule", true);
+			rsfs = {
+				_opened: (rsfs._opened && rsfs._opened.sessionid ? rsfs._opened : {
+					sessionid: ""
+				}),
+				_count: (rsfs._count > 0 ? rsfs._count : 49),
+				position: (rsfs.position > 0 ? rsfs.position : 0),
+				rsfVersion: (rsfs.rsfVersion > 0 ? rsfs.rsfVersion : _meta._rsfVersion),
+				items: (rias.isArray(rsfs.items) ? rsfs.items : [])
+			};
+			rsfs.rsfVersion++;
+			pn = server.extractDir(rp) + "/" + fn + "_rsf/" + fn + "_" + rsfs.rsfVersion + ".rsf";
+			_meta._rsfVersion = rsfs.rsfVersion;
+			_meta = rias.toJson(_meta, {
+				prettyPrint: true,
+				includeFunc: true,
+				loopToString: false,
+				errorToString: true,
+				simpleObject: true
+			});
+			ss[2] = _meta;
+			text = rias.substitute(js0, ss);
+			r = server.writeText(mp + ".js", "appModule", text);
+			if(r > 0){
+				r = server.writeText(pn, "rsfsModule", _meta, true);//json 格式，不是 js
+				if(r > 0){
+					rsf = {
+						rsfVersion: rsfs.rsfVersion,///防止客户端数据修改
+						reload: (!!rsf.reload ? !!rsf.reload : true),
+						pix: (rias.isString(rsf.pix) ? rsf.pix : ""),
+						isMobileApp: (!!rsf.isMobileApp ? !!rsf.isMobileApp : false),
+						rotate: (!!rsf.rotate ? !!rsf.rotate : false)
+					};
+					if(rsfs.position > rsfs.items.length - 1){
+						rsfs.position = rsfs.items.length - 1;
+					}
+					while(rsfs.items.length > 0 && rsfs.items.length >= rsfs._count){
+						rsfs.position--;
+						pn = rsfs.items.shift();
+						if(pn.rsfVersion){
+							pn = server.extractDir(rp) + "/" + fn + "_rsf/" + fn + "_" + pn.rsfVersion + ".rsf";
+							server.deleteFile(pn, "rsfsModule");
+						}
+					}
+					///两种改变 rsfs.items 各有优缺点。
+					///改变 rsfs.items 为长度小于应有长度 - 1，后面 push() 后刚好。
+					///position 可能为 -1，为避免死循环，应 rsfs.items.length > 0
+					//if(rsfs.items.length > rsfs.position + 1){
+					//	rsfs.items = rsfs.items.slice(0, rsfs.position);
+					//}
+					while(rsfs.items.length > 0 && rsfs.items.length > rsfs.position + 1){
+						pn = rsfs.items.pop();
+						if(pn.rsfVersion){
+							pn = server.extractDir(rp) + "/" + fn + "_rsf/" + fn + "_" + pn.rsfVersion + ".rsf";
+							server.deleteFile(pn, "rsfsModule");
+						}
+					}
+					rsfs.items.push(rsf);
+					if(rsfs.items.length > rsfs.position + 1){
+						rsfs.position++;
+					}
+					r = server.writeJson(rp + ".rsfs", "rsfsModule", rsfs, {}, true);
+				}
+			}
+			result = {
+				success: (r === 1),
+				value: r
+			};
+		}
+		return result;
+	}
+
+});

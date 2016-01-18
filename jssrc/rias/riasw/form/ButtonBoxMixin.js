@@ -246,9 +246,41 @@ define([
 			}
 		},
 
+		_getDisplayedValueAttr: function(){
+			return this.textbox.value;
+		},
+		_setDisplayedValueAttr: function(value){
+			if(value == null /* or undefined */){
+				value = ''
+			}
+			else if(typeof value != "string"){
+				value = String(value)
+			}
+			this.textbox.value = value;
+			this._set("displayedValue", this.get('displayedValue'));
+		},
+		formatDisplayedValue: function(value){
+			return value || this.get("value");
+		},
+		_getValueAttr: function(){
+			return this._get("value");
+		},
+		_setValueAttr: function(/*anything*/ newValue, /*Boolean?*/ priorityChange){
+			this._set("value", newValue);
+			this.set('displayedValue', this.formatDisplayedValue(newValue));
+			///this.inherited(arguments);///不要 inherited，避免 displayedValue 不正确
+			this._handleOnChange(newValue, priorityChange);
+		},
+		createDropDown: function(args){
+			if(this.dropDown){
+				rias.destroy(this.dropDown);
+				delete this.dropDown;
+			}
+			this.dropDown = rias.select(args);
+		},
 		openDropDown: function(){
 			var self = this,
-				args = rias.mixin({}, self.dropDownArgs),
+				args = rias.mixinDeep({}, self.dropDownArgs),
 				around = self._aroundNode || self.domNode,
 				stl = {
 					height: "auto"
@@ -257,7 +289,7 @@ define([
 				// Set width of drop down if necessary, so that dropdown width + width of scrollbar (from popup wrapper)
 				// matches width of aroundNode
 				var resizeArgs = rias.dom.getMarginBox(ddNode);
-				if(self.forceWidth || (self.autoWidth && around.offsetWidth > dd.offsetWidth)){
+				if(self.forceWidth || (self.autoWidth && around.offsetWidth > dd.domNode.offsetWidth)){
 					resizeArgs.w = around.offsetWidth;
 				}
 				if(rias.isFunction(dd.resize)){
@@ -267,17 +299,35 @@ define([
 				}
 			}
 			args.ownerRiasw = self;
-			args._riaswIdOfModule = (self._riaswIdOfModule ? self._riaswIdOfModule + "_popup" : undefined);
-			args.dialogType = args.dialogType ? args.dialogType : "tip";
+			!args._riaswIdOfModule && self._riaswIdOfModule && (args._riaswIdOfModule = self._riaswIdOfModule + "_popup");
+			args.dialogType = args.dialogType ? args.dialogType : "modal";
 			args.parent = args.parent || rias.webApp || rias.body(rias.doc);
 			//args.id = self.id + "_popup";
 			args.around = around;
+			args.autoClose = 0;
+			args.selectValue = self.get("value");
+			if(!rias.isFunction(args.getReturnValue)){
+				args.getReturnValue = function(value){
+					return value;
+				};
+			}
+			if(!rias.isFunction(args.getDisplayedValue)){
+				args.getDisplayedValue = function(value){
+					return value;
+				};
+			}
 
-			self.dropDown = rias.show(args);
+			self.createDropDown(args);
 			var dd = self.dropDown,
 				ddNode = dd.domNode;
 
-			if(dd._wasShown){
+			dd.own(rias.after(dd, "onSubmit", function(evt){
+				var v = dd.get("selectValue");
+				self.set('value', dd.getReturnValue(v), false);
+				//return true;
+			}, true));
+
+			if(dd.isShown()){
 				_size();
 			}else{
 				self.own(rias.after(dd, "onShow", function(){

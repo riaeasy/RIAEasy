@@ -201,10 +201,11 @@ define([
 			"$refScript": "return module." + gp._riaswIdOfModule + "_btnDele;"
 		};
 
+		gp.opColumnWidth = gp.opColumnWidth || "8em";
 		//gp.cellIdOps = gp.cellIdOps;// || cellIdOps;
 		if(rias.isArray(gp.cellIdOps)){
 			gp.structure = [
-				{field: gp.store.idAttribute,		name: "操作",			width: gp.opColumnWidth || '8em',
+				{field: gp.store.idAttribute,		name: "操作",			width: gp.opColumnWidth,
 					//expandLevel: 'all',
 					widgetsInCell: true,
 					navigable: true,
@@ -264,6 +265,7 @@ define([
 						//widget.view.domNode.onclick = _click;
 						for(i = 0; i < l; i++){
 							item = grid.cellIdOps[i];
+							widget[item.name].opParams = item;
 							if(item && item.name && widget[item.name] &&
 								(item.visible === undefined || item.visible == true ||
 									(rias.isFunction(item.visible) && item.visible.apply(module, [grid, this.name, widget])))){
@@ -298,23 +300,27 @@ define([
 						return rawData[col.field];
 					}
 					try{
-						switch(col.format){
-							case "text":
-								return rawData[col.field];
-							case "date":
-								return rias.datetime.format(rawData[col.field], rias.datetime.defaultDateFormatStr);
-							case "time":
-								return rias.datetime.format(rawData[col.field], rias.datetime.defaultTimeFormatStr);
-							case "datetime":
-								return rias.datetime.format(rawData[col.field], rias.datetime.defaultFormatStr);
-							case "boolean":
-								return (rawData[col.field] != false ? "是" : "否");
-							default:
-								if(/^number/.test(col.format)){
-									v = rawData[col.field];
-									return rias.toFixed(v, rias.toInt(col.format.substring(6), 0));
-								}
-								return rawData[col.field];
+						if(rias.isFunction(col.format)){
+							return col.format.apply(this, [rawData, rowId]);
+						}else if(rias.isString(col.format)){
+							switch(col.format){
+								case "text":
+									return rawData[col.field];
+								case "date":
+									return rias.datetime.format(rawData[col.field], rias.datetime.defaultDateFormatStr);
+								case "time":
+									return rias.datetime.format(rawData[col.field], rias.datetime.defaultTimeFormatStr);
+								case "datetime":
+									return rias.datetime.format(rawData[col.field], rias.datetime.defaultFormatStr);
+								case "boolean":
+									return (rawData[col.field] != false ? "是" : "否");
+								default:
+									if(/^number/.test(col.format)){
+										v = rawData[col.field];
+										return rias.toFixed(v, rias.toInt(col.format.substring(6), 0));
+									}
+									return rawData[col.field];
+							}
 						}
 					}catch(e){
 						return e;
@@ -339,6 +345,7 @@ define([
 			var g = grid,
 				id = widget.cell.row[gp.store.idAttribute],
 				d = widget.cell.model.byId(id),
+				params = widget[name].opParams,
 				meta = {
 					dialogType: "top",
 					ownerRiasw: g,
@@ -380,35 +387,35 @@ define([
 			if(name == "modi"){
 				rias.show(rias.mixinDeep({
 					_riaswIdOfModule: (g._riaswIdOfModule ? g._riaswIdOfModule + "_modi_" + id : undefined),
-					caption: "修改" + id + d,
+					caption: params.tooltip + id + d,
 					actionBar: [
 						"btnSave",
 						"btnCancel"
 					],
 					disabled: false,
 					readOnly: false
-				}, meta));
+				}, meta, params.moduleParams));
 			}else if(name == "copy"){
 				rias.show(rias.mixinDeep({
 					_riaswIdOfModule: (g._riaswIdOfModule ? g._riaswIdOfModule + "_modi_" + id : undefined),
-					caption: "复制新增" + id + d,
+					caption: params.tooltip + id + d,
 					actionBar: [
 						"btnSave",
 						"btnCancel"
 					],
 					disabled: false,
 					readOnly: false
-				}, meta));
+				}, meta, params.moduleParams));
 			}else{
 				rias.show(rias.mixinDeep({
 					_riaswIdOfModule: (g._riaswIdOfModule ? g._riaswIdOfModule + "_view_" + id : undefined),
-					caption: "查看" + id + d,
+					caption: params.tooltip + id + d,
 					actionBar: [
 						"btnClose"
 					],
 					disabled: true,
 					readOnly: true
-				}, meta));
+				}, meta, params.moduleParams));
 			}
 		};
 		gp.refreshGrid = function(query){

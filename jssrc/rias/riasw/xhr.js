@@ -224,7 +224,7 @@ define([
 			args = {
 				url: url,
 				handleAs: handleAs,
-				preventCache: preventCache || true,
+				//preventCache: preventCache || true,
 				content: query
 			};
 		}

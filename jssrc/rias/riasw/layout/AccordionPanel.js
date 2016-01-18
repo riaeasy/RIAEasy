@@ -150,6 +150,7 @@ define([
 			var child = this.contentWidget,
 				cls = rias.isString(this.buttonWidget) ? rias.getObject(this.buttonWidget) : this.buttonWidget;
 			this.button = child._buttonWidget = (new cls({
+				ownerRiasw: this,
 				contentWidget: child,
 				///增加 caption
 				label: child.caption || child.title,
@@ -342,6 +343,7 @@ define([
 
 			if(added && !child._wrapperWidget){
 				child._wrapperWidget = AccordionInnerContainer({
+					ownerRiasw: this,
 					contentWidget: child,
 					buttonWidget: this.buttonWidget,
 					id: child.id + "_wrapper",

@@ -110,8 +110,8 @@ define([
 			rias.doc.title = self.appTitle;
 			//if(!rias.hostMobile){
 				self.own(self._appLoading = rias.createRiasw(Loading, {
-					//_riaswIdOfModule: "_appLoading",
-					ownerRiasw: self
+					ownerRiasw: self,
+					_riaswIdOfModule: "loading"
 				}));
 				self._appLoading.set("caption", rias.i18n.message.loading);
 				self._appLoading.placeAt(self);
@@ -137,7 +137,7 @@ define([
 		addWidget: function(widget){
 			if(!widget.id){
 				widget.id = widget._riasrModule && widget._riaswIdOfModule ? (widget._riasrModule.id + "_" + widget._riaswIdOfModule) :
-					rias.getUniqueId(this.id + "_" + rias._getUniqueCat(widget, true), this);
+					rias.getUniqueId(this.id + "_" + rias._getUniqueCat(widget), this);
 			}
 			if(this._riasWidgets[widget.id]){
 				throw new Error("Tried to register widget with id['" + widget.id + "'],\n but that id is already registered.");
