@@ -36,8 +36,8 @@ define([
 					}
 				}
 			});*/
-			if(this.tree){
-				delete this.tree;
+			if(this.isTreeStore){
+				delete this.isTreeStore;
 				this.childrenAttribute = (this.childrenAttribute ? this.childrenAttribute : "children");
 				this.hasChildren = function(id, item){
 					var c = item ? item[this.childrenAttribute] : undefined;

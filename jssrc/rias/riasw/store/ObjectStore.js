@@ -175,7 +175,11 @@ define([
 					// find any strings and convert them to regular expressions for wildcard support
 					var required = query[i];
 					if(typeof required == "string"){
-						query[i] = RegExp("^" + rias.regexp.escapeString(required, "*?\\").replace(/\\.|\*|\?/g, convertRegex) + "$", args.ignoreCase ? "mi" : "m");
+						if(rias.startWith(required, "/") && rias.endWith(required, "/")){
+							query[i] = new RegExp(required.slice(1, -1));
+						}else{
+							query[i] = new RegExp("^" + rias.regexp.escapeString(required, "*?\\").replace(/\\.|\*|\?/g, convertRegex) + "$", args.ignoreCase ? "mi" : "m");
+						}
 						query[i].toString = (function(original){
 							return function(){
 								return original;

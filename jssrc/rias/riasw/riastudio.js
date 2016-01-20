@@ -284,6 +284,7 @@ define([
 			delete args.onClose;
 			delete args.afterLoaded;
 			args.afterLoaded = function(result){
+				///DialogPanel 自己 loadModuleMeta，而不是创建一个 Module 作为 child，故不需要额外处理（关联） submit、cancel
 				var cc = 1;
 				/*d.own(rias.after(d, "onShow", function(){
 					//if(d._isShown() && d._isVisible()){
@@ -415,7 +416,7 @@ define([
 			//];
 			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.input, 0));
 		};
-		rias.getTreeSelectModeInt = function(mode){
+		rias.getSelectTreeModeInt = function(mode){
 			if(rias.isString(mode)){
 				if(mode === "leaf"){
 					mode = 1;
@@ -431,21 +432,6 @@ define([
 			return 0;
 		};
 		rias.select = function(args){
-			/*_args = {
-				value: _args.value,
-				query: _args.query,
-				additionItems: _args.additionItems,
-				//rootItems: {
-				//	query: {},
-				//	items: []
-				//},
-				rootItems: _args.rootItems,
-				store: _args.store,
-				onSelect: _args.onSelect,
-				callDele: _args.callDele,
-				callAddChild: _args.callAddChild,
-				callModi: _args.callModi
-			};*/
 			var _args;
 			_args = rias.mixin({}, args);///因为有可能 content 中有实例，最好不用 mixinDeep，防止递归循环
 			//_args.actionBar = _args.actionBar || [

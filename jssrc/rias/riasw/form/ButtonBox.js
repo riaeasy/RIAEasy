@@ -20,15 +20,40 @@ define([
 				tabIndex: 0,
 				invalidMessage: rias.i18n.message.invalid,
 				//constraints: {locale: ""},
-				regExp: ".*",
+				//regExp: ".*",
 				tooltipPosition: [],
 				//pageSize: null,
-				query: {},
-				queryExpr: "${0}*",
-				autoComplete: true,
-				searchDelay: 200,
-				searchAttr: "name",
-				ignoreCase: true,
+				//query: {},
+				//queryExpr: "${0}*",
+				//autoComplete: true,
+				//searchDelay: 200,
+				//searchAttr: "name",
+				//ignoreCase: true,
+				dropDownArgs: {
+					autoClose: 0,
+					caption: "请选择",
+					getReturnValue: function (value){
+						return value;
+					},
+					getDisplayedValue: function (value){
+						return value;
+					},
+					//"moduleMeta": "",
+					"query": {
+					},
+					//"rootItems": {
+					//	"items": [
+					//	],
+					//	"query": {
+					//	}
+					//},
+					//"selectMode": "leaf",
+					//"store": {
+					//	"$refScript": "return rias.webApp.datas.dclass;"
+					//},
+					"style": {
+					}
+				},
 				hasDownArrow: true,
 				scrollOnFocus: true,
 				highlightMatch: "first"

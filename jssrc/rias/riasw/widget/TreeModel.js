@@ -41,12 +41,28 @@ define([
 				]);
 			}
 			this.inherited(arguments);
+		},
+
+		onGetLabel: function(/*dojo/data/Item*/ item){
+			// summary:
+			//		Get the label for an item
+			if(this.labelAttr){
+				return this.store.getValue(item,this.labelAttr);	// String
+			}else{
+				return this.store.getLabel(item);	// String
+			}
+		},
+		getLabel: function(/*dojo/data/Item*/ item){
+			return this.onGetLabel(item);
 		}
 	});
 
 	var riasType = "rias.riasw.widget.TreeModel";
 
 	var Widget = rias.declare(riasType, [rias.ObjectBase, ForestStoreModel], {
+
+		queryRoot: null,
+		additionRootItems: null,
 
 		destroy: function(){
 			var h;
@@ -95,12 +111,12 @@ define([
 						start: start,
 						count: count,
 						sort: sort,
-						query: self.query,
+						query: self.queryRoot,
 						onBegin: function(size){
-							self.root.size = size;
+							self.root.size = self.additionRootItems ? self.additionRootItems.length + size : size;
 						},
 						onComplete: function(items){
-							onComplete(items, queryObj, self.root.size);
+							onComplete(self.additionRootItems ? self.additionRootItems.concat(items) : items, queryObj, self.root.size);
 						},
 						onError: onError
 					});
@@ -117,13 +133,13 @@ define([
 						});
 						return;
 					}
-					if(self.store && self.store.serverStore && !self._isChildrenLoaded(parentItem)){
+					if(self.store && !self._isChildrenLoaded(parentItem)){
 						self.childrenSize = 0;
 						self.store.fetch({
 							start: start,
 							count: count,
 							sort: sort,
-							query: rias.mixin({parentId: parentId}, self.query || {}),
+							query: rias.mixin({parentId: parentId}, self.query),
 							onBegin: function(size){
 								self.childrenSize = size;
 							},

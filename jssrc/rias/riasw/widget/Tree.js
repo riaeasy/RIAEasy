@@ -392,6 +392,21 @@ define([
 		noDnd: false,
 		lazyLoad: true,
 
+		//rootItems: {
+		//	items: [],
+		//	query: {}
+		//},
+		rootItems: null,
+
+		postCreate: function(){
+			if(this.model){
+				if(this.rootItems){
+					this.model.queryRoot = this.rootItems.query;
+					this.model.additionRootItems = this.rootItems.items;
+				}
+			}
+			this.inherited(arguments);
+		},
 		postMixInProperties: function(){
 			this.inherited(arguments);
 			if(this.noDnd){
@@ -411,6 +426,17 @@ define([
 			if(this._started && !this._lazyLoad){
 				this.reload();
 			}
+		},
+
+		onGetLabel: function(/*dojo/data/Item*/ item){
+			// summary:
+			//		Overridable function to get the label for a tree node (given the item)
+			// tags:
+			//		extension
+			return this.model.getLabel(item);	// String
+		},
+		getLabel: function(/*dojo/data/Item*/ item){
+			return this.onGetLabel(item);
 		},
 
 		_expandNode: function(/*TreeNode*/ node){
@@ -494,6 +520,9 @@ define([
 				params.model = {
 					_riaswType: "rias.riasw.widget.TreeModel"
 				}
+			}
+			if(!params.model._riaswType){
+				params.model._riaswType = "rias.riasw.widget.TreeModel"
 			}
 			if(!params.model._riaswIdOfModule && params._riaswIdOfModule){
 				params.model._riaswIdOfModule = params._riaswIdOfModule + "_model"

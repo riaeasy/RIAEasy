@@ -733,7 +733,7 @@ define([
 			delete p.filter;
 
 			if(p.tree){
-				p.store.tree = true;
+				p.store.isTreeStore = true;
 				addM(p, [rias.mixinDeep({
 					moduleClass: 'gridx/modules/Tree',
 					nested: false

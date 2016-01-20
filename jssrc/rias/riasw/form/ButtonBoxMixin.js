@@ -11,7 +11,7 @@ define([
 		// summary:
 		//		Provides main functionality of ComboBox widget
 
-		dropDownArgs: {},
+		dropDownArgs: null,//{},
 
 		hasDownArrow: true,
 
@@ -308,11 +308,6 @@ define([
 			args.selectValue = self.get("value");
 			if(!rias.isFunction(args.getReturnValue)){
 				args.getReturnValue = function(value){
-					return value;
-				};
-			}
-			if(!rias.isFunction(args.getDisplayedValue)){
-				args.getDisplayedValue = function(value){
 					return value;
 				};
 			}
