@@ -1,0 +1,416 @@
+/* Button | DropDownButton | ComboButton | ToggleButton
+ * 
+ * Styling Buttons mainly includes:
+ * 
+ * 1. Containers
+ * 		.dijitButton
+ * 		.dijitDropDownButton
+ * 		.dijitComboButton
+ * 		.dijitButtonNode - common button/arrow wrapper shared across all three button types 
+ *
+ * 2. Button text
+ * 		.dijitButtonText
+ * 
+ * 3. Arrows - only for DropDownButton and ComboButton
+ * 	     There are total four directions arrows - down, left, right, up:
+ * 		.dijitArrowButtonInner - down arrow by default
+ *      .dijitLeftArrowButton .dijitArrowButtonInner - left arrow
+ *      .dijitRightArrowButton .dijitArrowButtonInner - right arrow
+ *      .dijitUpArrowButton .dijitArrowButtonInner - up arrow
+ * 
+ * 4. States - Hover, Active, Disabled, e.g.
+ * 		.dijitButtonHover .dijitButtonNode
+ * 		.dijitButtonActive .dijitButtonNode
+ * 		.dijitButtonDisabled .dijitButtonNode
+ *      
+ *      .dijitDisabled .dijitArrowButtonInner  - disabled arrow states 
+ */
+
+@import url("./Checkbox.css");
+@import url("./RadioButton.css");/*换为 CheckButton 了*/
+
+.dijitButtonContents {
+	display: inline-block;		/* to make focus border rectangular */
+}
+
+.riasBusyButtonIcon {
+	width: 10px;
+	height: 10px;
+	vertical-align: middle;
+	margin-left: 4px;
+	background-image: url('./images/loading_wheel.gif');
+	background-repeat: no-repeat;
+}
+/*=====================================================*/
+/* === Red Badge ==*/
+.riasButtonBadge {
+	position: relative;
+	width: 0px;
+	height: 0px;
+	text-align: right;
+	font-family: Helvetica;
+	font-size: 0.8em;
+	font-weight: bold;
+	visibility: hidden;
+	top: -1em;
+	right: -1.5em;
+	display: inline-block;
+}
+.dj_ie .riasButtonBadge {
+	top: -1.5em;
+}
+.riasButtonBadge > div {
+	position: absolute;
+	display: inline-block;
+	padding: 0px 4px;
+	top: 0px;
+	right: 0px;
+	color: white;
+	border: 2px solid white;
+	border-radius: 1em;
+	text-align: center;
+	background-clip: padding-box;
+	-moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+}
+.riasButtonBadgeRed {
+	background: red;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f56e6e), to(#ae0001), color-stop(0.5, #e44149), color-stop(0.5, #de151f));
+	background: linear-gradient(to bottom, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+}
+.riasButtonBadgeBlue {
+	background: #0000ff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5b98e7), to(#216dd6), color-stop(0.5, #4282de), color-stop(0.5, #216dd6));
+	background: linear-gradient(to bottom, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+}
+.riasButtonBadgeGreen {
+	background: #008000;
+	background: -webkit-gradient(linear, left top, left bottom, from(#6cd74a), to(#398c08), color-stop(0.5, #6bc642), color-stop(0.5, #4aad21));
+	background: linear-gradient(to bottom, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+}
+.riasButtonBadgeYellow {
+	background: darkorange;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffbc1c), to(#ff9000), color-stop(0.5, #FFA000), color-stop(0.5, #FFA000));
+	background: linear-gradient(to bottom, #ffbc1c 0%, #FFA000 50%, #FFa000 50%, #ff9000 100%);
+}
+.riasButtonBadge > div > div {
+	display: none;
+}
+
+
+/*=============================================*/
+.dijitCheckBoxIcon {		/* inside a toggle button */
+	background-image: url('./images/spriteCheckbox.png'); /* checkbox sprite image */
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+}
+.dijitRadioIcon	{		/* inside a toggle button */
+	background-image: url('./images/spriteRadio.png'); /* checkbox sprite image */
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+}
+.riaswCheckButton input,
+.riaswRadioButton input {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+.riaswCheckButton .dijitButtonNode,
+.riaswRadioButton .dijitButtonNode {
+	border: 0px solid silver;
+	padding: 4px 4px 4px 4px;
+	color: #000000;
+	background-color: inherit;
+}
+.riaswCheckButton .dijitCheckBoxIcon {
+	background-image: url('./images/spriteCheckbox.png');
+	background-position: -16px;
+}
+.riaswRadioButton .dijitCheckBoxIcon {
+	background-image: url('./images/spriteRadio.png');
+	background-position: -16px;
+}
+
+.riaswCheckButton .dijitCheckBoxIcon,
+.riaswRadioButton .dijitCheckBoxIcon {
+	/* unchecked */
+	background-position: -16px;
+}
+
+.riaswCheckButtonChecked .dijitCheckBoxIcon,
+.riaswRadioButtonChecked .dijitCheckBoxIcon {
+	/* checked */
+	background-position: 0;
+}
+
+/*.riaswCheckButtonDisabled .dijitCheckBoxIcon,
+.riaswRadioButtonDisabled .dijitCheckBoxIcon {
+	background-position: -48px;
+}
+.riaswCheckButtonCheckedDisabled .dijitCheckBoxIcon,
+.riaswRadioButtonCheckedDisabled .dijitCheckBoxIcon {
+	background-position: -32px;
+}*/
+
+.riaswCheckButtonHover,
+.riaswRadioButtonHover {
+	/* hovering over an unchecked enabled checkbox */
+	background-position: -80px;
+}
+.riaswCheckButtonHover .dijitCheckBoxIcon,
+.riaswRadioButtonHover .dijitCheckBoxIcon {
+	/* hovering over an unchecked enabled checkbox */
+	background-position: -80px;
+}
+.riaswCheckButtonCheckedHover .dijitCheckBoxIcon,
+.riaswRadioButtonCheckedHover .dijitCheckBoxIcon {
+	/* hovering over a checked enabled checkbox */
+	background-position: -64px;
+}
+
+.riaswCheckButtonDisabled .dijitButtonNode,
+.riaswRadioButtonDisabled .dijitButtonNode {
+	background-color: inherit;
+	border: solid 0px silver;
+	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(1) opacity(0.3);
+}
+
+/*=============================================*/
+.rias .dijitButtonNode {
+  /* rules for dijit.form.*Button widgets and arrow nodes on ComboBox, Spinner etc. */
+
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.rias .dijitButton .dijitButtonNode,
+.rias .dijitDropDownButton .dijitButtonNode,
+.rias .dijitComboButton .dijitButtonNode,
+.rias .dijitToggleButton .dijitButtonNode {
+  /* rules for the dijit.form.*Button widgets (see also ComboButton section below) */
+	border: 1px solid silver;
+	padding: 2px 4px 4px 4px;
+	color: #000000;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0 rgba(0, 0, 0, 0.15);
+	box-shadow: 0 rgba(0, 0, 0, 0.15);
+	background-color: inherit;
+  /*background-image: url("images/buttonEnabled.png");
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
+  background-image: -webkit-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
+  background-image: -o-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
+  background-image: linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
+  _background-image: none;  zensst*/
+}
+
+.rias .dijitComboButtonDisabled .dijitArrowButton {
+	border-left-width: 0;
+}
+/* for ComboButton */
+.rias table.dijitComboButton {
+	border-collapse: separate;
+	/* override dijit.css so that ComboBox rounded corners work */
+
+}
+.rias .dijitComboButton .dijitStretch {
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.rias .dijitComboButton .dijitArrowButton {
+	border-left-width: 0;
+	padding: 4px 2px 4px 2px;
+	/* TODO: still needed? */
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+
+/*arrow styles for down/up/left/right directions*/
+.rias .dijitArrowButtonInner {
+	width: 16px;
+	height: 100% !important;
+	margin: 0 auto;
+	background-image: url("./images/buttonArrows.png");
+	background-repeat: no-repeat;
+	/*background-position: -51px 53%;*/
+}
+.rias .dijitSelect .dijitArrowButtonInner,
+.rias .dijitComboBox .dijitArrowButtonInner {
+	background-position: -51px center;
+}
+.rias .dijitLeftArrowButton .dijitArrowButtonInner {
+	background-position: -77px 53%;
+}
+.rias .dijitRightArrowButton .dijitArrowButtonInner {
+	background-position: -26px 53%;
+}
+.rias .dijitUpArrowButton .dijitArrowButtonInner {
+	background-position: 0px 53%;
+}
+.rias .dijitDownArrowButton .dijitArrowButtonInner {
+	background-position: -51px 53%;
+}
+.rias .dijitDisabled .dijitArrowButtonInner {
+	background-position: -151px 53%;
+}
+.rias .dijitDisabled .dijitLeftArrowButton .dijitArrowButtonInner {
+	background-position: -177px 53%;
+}
+.rias .dijitDisabled .dijitRightArrowButton .dijitArrowButtonInner {
+	background-position: -126px 53%;
+}
+.rias .dijitDisabled .dijitUpArrowButton .dijitArrowButtonInner {
+	background-position: -100px 53%;
+}
+
+.dijitSpinner .dijitSpinnerButtonContainer .dijitArrowButton {
+	height: 100%;
+	width: 18px;
+}
+.dijitSpinner .dijitSpinnerButtonContainer .dijitUpArrowButton {
+	left: 0;
+	top: 0;
+}
+.dijitSpinner .dijitSpinnerButtonContainer .dijitDownArrowButton {
+	top: 0;
+	left: 50%;
+	border-width: 0px 0px 0px 1px !important;
+}
+
+.dj_ie6 .rias .dijitArrowButtonInner {
+	background-image: url("../images/spriteArrows.gif");
+}
+.dj_ie .rias .dijitSpinner .dijitUpArrowButton .dijitArrowButtonInner {
+	margin-top: 1px; /* image has too many blank pixels on top */
+}
+
+
+.rias .dijitButtonText {
+	padding: 0 0.3em;
+	text-align: center;
+}
+/* hover status */
+.rias .dijitButtonHover .dijitButtonNode,
+.rias .dijitButtonNodeHover,
+.rias .dijitDropDownButtonHover .dijitButtonNode,
+.rias .dijitComboButton .dijitButtonNodeHover,
+.rias .dijitComboButton .dijitDownArrowButtonHover,
+.rias .dijitToggleButtonHover .dijitButtonNode,
+.rias .dijitUpArrowButtonHover,
+.rias .dijitDownArrowButtonHover {
+	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
+	/*background-color: #FFCD84;*//*zensst*/
+	background-color: gold;
+	/*border-color: darkorange;
+	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
+	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;
+	box-shadow: 0em 0em 0.2em darkorange inset;*/
+}
+/* focused status */
+.rias .dijitButtonFocused .dijitButtonNode,
+.rias .dijitButtonNodeFocused,
+.rias .dijitDropDownButtonFocused .dijitButtonNode,
+.rias .dijitComboButton .dijitButtonNodeFocused,
+.rias .dijitComboButton .dijitDownArrowButtonFocused,
+.rias .dijitToggleButtonFocused .dijitButtonNode,
+.rias .dijitUpArrowButtonFocused,
+.rias .dijitDownArrowButtonFocused {
+	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
+	/*background-color: #FFCD84;*//*zensst*/
+	background-color: skyblue;
+	/*border-color: darkorange;
+	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
+	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;
+	box-shadow: 0em 0em 0.2em darkorange inset;*/
+}
+/* active, checked status */
+.rias .dijitButtonActive .dijitButtonNode,
+.rias .dijitDropDownButtonActive .dijitButtonNode,
+.rias .dijitComboButtonActive .dijitButtonNode,
+.rias .dijitToggleButtonActive .dijitButtonNode,
+.rias .dijitToggleButtonChecked .dijitButtonNode {
+	background-color: skyblue;
+	/*border-color: darkorange;
+	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
+	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;
+	box-shadow: 0em 0em 0.2em darkorange inset;*/
+	-webkit-transition-duration: 0.1s;
+	-moz-transition-duration: 0.1s;
+	transition-duration: 0.1s;
+}
+.rias .dijitUpArrowButtonActive,
+.rias .dijitDownArrowButtonActive {
+	/* same as above except don't adjust border color (it's controlled by the containing Spinner/ComboBox) */
+	/*background: #91b4e5 url("../images/buttonActive.png") top left repeat-x;  zensst*/
+	background-color: skyblue;
+	/*border-color: darkorange;
+	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
+	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;
+	box-shadow: 0em 0em 0.2em darkorange inset;*/
+}
+
+/* disabled status */
+.rias .dijitButtonDisabled,
+.rias .dijitDropDownButtonDisabled,
+.rias .dijitComboButtonDisabled,
+.rias .dijitToggleButtonDisabled {
+	background-color: inherit;
+	background-image: none;
+	/*outline: none;*/
+	color: inherit;
+}
+
+.rias .dijitButtonDisabled .dijitButtonNode,
+.rias .dijitDropDownButtonDisabled .dijitButtonNode,
+.rias .dijitComboButtonDisabled .dijitButtonNode,
+.rias .dijitToggleButtonDisabled .dijitButtonNode {
+	background-color: inherit;
+	border: solid 1px silver;
+	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+	filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(100%) opacity(30%);
+	-webkit-filter: grayscale(1) opacity(0.3);
+}
+/*.rias .dijitButtonDisabled .dijitButtonNode .dijitIcon,
+.rias .dijitDropDownButtonDisabled .dijitButtonNode .dijitIcon,
+.rias .dijitComboButtonDisabled .dijitButtonNode .dijitIcon,
+.rias .dijitToggleButtonDisabled .dijitButtonNode .dijitIcon,
+.riaswCheckButtonDisabled .dijitButtonText,
+.riaswRadioButtonDisabled .dijitButtonText,
+.rias .dijitButtonDisabled .dijitButtonNode .dijitButtonText,
+.rias .dijitDropDownButtonDisabled .dijitButtonNode .dijitButtonText,
+.rias .dijitComboButtonDisabled .dijitButtonNode .dijitButtonText,
+.rias .dijitToggleButtonDisabled .dijitButtonNode .dijitButtonText {
+}*/
+
+.dj_ie6 .rias .dijitReadOnly input,
+.dj_ie7 .rias .dijitReadOnly input,
+.dj_ie6 .rias .dijitComboButtonDisabled .dijitButtonText,
+.dj_ie7 .rias .dijitComboButtonDisabled .dijitButtonText {
+	/* opacity doesn't work on table node in IE, work around here */
+	color: #aaa;
+}
+
