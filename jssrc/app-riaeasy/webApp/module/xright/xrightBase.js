@@ -2,7 +2,8 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 555,
+	"_rsfVersion": 556,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"op": "query",
 	"query": {
@@ -59,7 +60,7 @@ define([
 			m.edt_typ.item ? v.typ = m.edt_typ.item.dval : delete v.typ;
 			m.edt_stat.item ? v.stat = m.edt_stat.item.dval : delete v.stat;
 			if(m.target){
-				if(m.op === "add"){
+				if(m.op === "add" || m.op === "copy"){
 					rias.xhrPost(m.target, v, _cb);
 				}else if(m.op === "modi"){
 					v._idDirty = m.query.id;

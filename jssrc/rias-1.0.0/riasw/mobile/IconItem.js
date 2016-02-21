@@ -7,7 +7,7 @@ define([
 ], function(rias, _Widget){
 
 	rias.theme.loadCss([
-		"IconItem.css"
+		//"IconItem.css"
 	], true);
 
 	var riasType = "rias.riasw.mobile.IconItem";

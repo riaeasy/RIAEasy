@@ -28,7 +28,7 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
-			rias.dom.addClass(this.domNode, "dijitLayoutContainer");
+			//rias.dom.addClass(this.domNode, "dijitLayoutContainer");
 		},
 
 		postCreate: function(){
@@ -122,7 +122,7 @@ define([
 
 		///onSelectChild 在 StackController 中，不方便使用，扩展一个出来。
 
-		_setupChild: function(/*dijit/_WidgetBase*/ child, added, /*Integer?*/ insertIndex){
+		_setupChild: function(/*dijit/_WidgetBase*/ child, added, insertIndex){
 			if(!added){
 				this.inherited(arguments);
 				return;

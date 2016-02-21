@@ -29,7 +29,7 @@ define([
 			this.inherited(arguments);
 
 			// Make our event connections for updating state
-			rias.after(this, "onChange", rias.hitch(this, "_updateSelection"));
+			this.own(rias.after(this, "onChange", rias.hitch(this, "_updateSelection")));
 
 			//		Connects in our store, if we have one defined
 			var store = this.store;
@@ -167,7 +167,7 @@ define([
 				me,
 				be,
 				pe;
-			if(this._riasDestroying || this._beingDestroyed){
+			if(this._riasrDestroying || this._beingDestroyed){
 				return;
 			}
 			if(changeSize){

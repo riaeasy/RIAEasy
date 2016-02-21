@@ -138,7 +138,7 @@ define([
 			this.resize();
 		},
 		resize: function(changeSize, resultSize){
-			if(this._riasDestroying || this._beingDestroyed){
+			if(this._riasrDestroying || this._beingDestroyed){
 				return;
 			}
 			var dn = this.domNode,
@@ -183,11 +183,13 @@ define([
 			be = rias.dom.getBorderExtents(cn, cs);
 			pe = rias.dom.getPadExtents(cn, cs);
 			rias.dom.setMarginBox(cn, {
-				w: this._contentBox.w,
-				h: this._contentBox.h
+				h: this._contentBox.h > 0 ? this._contentBox.h : undefined,
+				w: this._contentBox.w
 			});
-			rias.dom.setStyle(this.textbox, "height", this._contentBox.h + "px");
-			rias.dom.setStyle(this.textbox, "line-height", this._contentBox.h + "px");
+			if(this._contentBox.h > 0){
+				rias.dom.setStyle(this.textbox, "height", this._contentBox.h + "px");
+				rias.dom.setStyle(this.textbox, "line-height", this._contentBox.h + "px");
+			}
 		},
 		layout: function(){
 			this.resize();

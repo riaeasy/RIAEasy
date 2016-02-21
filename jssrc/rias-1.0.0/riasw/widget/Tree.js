@@ -224,9 +224,9 @@ define([
 				// Canceller
 				wipeIn.stop();
 			}));
-			rias.after(wipeIn, "onEnd", function(){
+			self.own(rias.after(wipeIn, "onEnd", function(){
 				def.resolve(true);
-			}, true);
+			}, true));
 			wipeIn.play();
 
 			return shimmedPromise(def);		// dojo/promise/Promise
@@ -262,9 +262,9 @@ define([
 				// Canceller
 				wipeOut.stop();
 			}));
-			rias.after(wipeOut, "onEnd", function(){
+			self.own(rias.after(wipeOut, "onEnd", function(){
 				def.resolve(true);
-			}, true);
+			}, true));
 			wipeOut.play();
 
 			return shimmedPromise(def);		// dojo/promise/Promise
@@ -385,7 +385,8 @@ define([
 		}
 	});
 
-	var Widget = rias.declare("rias.riasw.widget.Tree", [_Widget], {
+	var riasType = "rias.riasw.widget.Tree";
+	var Widget = rias.declare(riasType, [_Widget], {
 
 		nodeRender: _Widget._TreeNode,
 
@@ -496,7 +497,15 @@ define([
 			self._startPaint(def);	// after this finishes, need to reset widths of TreeNodes
 
 			return def;	// dojo/_base/Deferred
+		},
+
+		collapseNode: function(/*TreeNode*/ node){
+			this._collapseNode(node);
+		},
+		expandNode: function(/*TreeNode*/ node){
+			this._expandNode(node);
 		}
+
 	});
 
 	Widget._riasdMeta = {

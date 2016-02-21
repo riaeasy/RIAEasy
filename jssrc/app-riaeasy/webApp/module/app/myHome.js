@@ -2,9 +2,14 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 41,
+	"_rsfVersion": 38,
 	"_riaswVersion": "0.7",
-	"_riaswChildren": [
+		"caption": {
+			"$refObj": "rias.i18n.webApp.myHome.caption"
+		},
+		"iconClass": "homeIcon",
+		"region": "center",
+		"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "myHomeMain",
@@ -24,14 +29,6 @@ define([
 					"_riaswChildren": [
 						{
 							"_riaswType": "rias.riasw.layout.ContentPanel",
-							"_riaswIdOfModule": "contentPanel0",
-							"style": {
-								"border": "0px #b1badf solid",
-								"padding": "0px 0px 0px 0px"
-							}
-						},
-						{
-							"_riaswType": "rias.riasw.layout.ContentPanel",
 							"_riaswIdOfModule": "aboutContent",
 							"content": "<p>\n   <span style=\"color: rgb(12, 179, 40); font-size: small;\">R</span><span style=\"font-size: x-small;\"><span style=\"color: rgb(12, 179, 40);\">IA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>是一个在线可视化的<span style=\"text-indent: 16px;\">单页 Web 应用 (single-page application 简称为 SPA)&nbsp;</span>设计平台。 </span>\n</p>\n<p>\n   <span style=\"font-size: x-small;\"><span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>&nbsp;<span style=\"text-indent: 16px;\">旨在实现RIA/SPA应用的快速、高质量开发，实现在线无缝可视化设计，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。</span> </span>\n</p>\n<p>\n   <span style=\"font-size: x-small;\"><span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>基于dojo构建（dojo 1.10），支持HTML5。 </span>\n</p>\n<p>\n   <span style=\"font-size: x-small;\"><span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>的进一步发展目标： </span>\n</p>\n<ul>\n   <li>\n      <span style=\"font-size: x-small;\">实现跨平台、无差别的桌面、移动应用设计； </span>\n   </li>\n   <li>\n      <span style=\"font-size: x-small;\">实现云端设计、打包、运行、应用； </span>\n   </li>\n   <li>\n      <span style=\"font-size: x-small;\">实现团队开发模式； </span>\n   </li>\n   <li>\n      <span style=\"font-size: x-small;\">实现Design easy, Design anywhere &nbsp;。 </span>\n   </li>\n</ul>\n<div>\n   <div>\n      <span style=\"font-size: x-small;\"><span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>是面向跨平台的单页应用设计平台，与传统的网页设计模式差别较大，反而更接近传统的C/S桌面应用设计模式。 </span>\n   </div>\n   <div>\n      <span style=\"font-size: x-small;\"> 尽管<span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>也可以用来快速设计传统的网页，但这显然不是其真正的优势。 </span>\n   </div>\n   <div>\n      <span style=\"font-size: x-small;\"> 正如<span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>的名称已经表明的，这是一个用来做RIA的工具。如果您做过C/S桌面应用，用过Delphi、C++Builder、VisualStudio这些工具，那么就更容易理解<span style=\"color: rgb(12, 179, 40);\">RIA</span><span style=\"color: rgb(37, 42, 165);\">Easy<sup>TM</sup></span>。 </span>\n   </div>\n   <p>\n      <span style=\"font-size: x-small;\"> &nbsp; </span>\n   </p>\n</div>\n",
 							"style": {
@@ -42,11 +39,16 @@ define([
 						{
 							"_riaswType": "rias.riasw.html.Tag",
 							"_riaswIdOfModule": "aboutImg",
-							"content": "<div style=\"text-align: center;\">\n   <img alt=\"设计器图示\" style=\"width:100%; height:100%;\" src=\"/appModule/demo/demoAll_1.png\">\n</div>\n",
+							"alt": "设计器图示",
+							"src": "/webApp/module/demo/demoAll_1.png",
 							"style": {
 								"border": "0px #b1badf solid",
-								"padding": "0px 0px 0px 0px"
-							}
+								"height": "100%",
+								"padding": "0px 0px 0px 0px",
+								"text-align": "center",
+								"width": "100%"
+							},
+							"tagType": "img"
 						}
 					]
 				},

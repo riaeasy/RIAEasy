@@ -9,7 +9,7 @@ define([
 		/// FormLike =================================///
 
 		closeResult: -1,
-		closeOnSubmit: false,
+		submitDisplayState: "",
 		name: "",
 		state: "",
 
@@ -170,6 +170,9 @@ define([
 				return item;
 			});
 		},
+		isValid: function(){
+			return this.state == "";
+		},
 		_onState: function(value, oldValue){
 		},
 		_getState: function(){
@@ -227,7 +230,9 @@ define([
 			});
 		},
 		onSubmit: function(/*Event?*/ /*===== e =====*/){
-			return this.get("state") == ""; // Boolean
+			return this.isValid();// this.get("state") == ""; // Boolean
+		},
+		afterSubmit: function(){
 		},
 		submit: function(e){
 			var self = this;
@@ -237,10 +242,13 @@ define([
 			}
 			return rias.when(self.onSubmit.apply(self, arguments), function(result){
 				if(!(result === false)){
-					if(self.closeOnSubmit){
-						self.closeResult = 1;
-						self.close(self.closeResult);
-					}
+					rias.when(self.afterSubmit(result), function(result){
+						if(self.submitDisplayState){
+							self.closeResult = 1;
+							//self.close(self.closeResult);
+							self.set("displayState", self.submitDisplayState);
+						}
+					});
 				}
 			});
 		},
@@ -255,10 +263,10 @@ define([
 			}
 			return rias.when(self.onCancel(e), function(result){
 				if(!(result === false)){
-					if(self.closeOnSubmit){
+					//if(self.submitDisplayState){
 						self.closeResult = 0;
 						self.close(self.closeResult);
-					}
+					//}
 				}
 			});
 		}

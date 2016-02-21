@@ -6,6 +6,7 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<script>
+		var riasAppPath = "/app-riaeasy";
 		var dojoConfig = {
 			has: {
 				"dojo-publish-privates": 1,
@@ -21,9 +22,9 @@
 			parseOnLoad: true,
 			async: true,
 			//cacheBust: (new Date()).getTime(),
-			waitSeconds: 30,
+			waitSeconds: 5,
 			ioPublish: true,
-			locale: 'zh-cn',
+			//locale: 'zh-cn',
 			extraLocale: ['en'],
 			trace:{
 				// these are listed so it's simple to turn them on/off while debugging loading
@@ -37,16 +38,16 @@
 				"loader-define-nonmodule":0
 			},
 			packages: [
-				//{name: 'dijit', location: '../dijit'},
-				//{name: 'dojox', location: '../dojox'},
-				{name: 'rias', location: '../../rias', main: 'rias'},
-				{name: 'webApp', location: '../../webApp', main: "webApp"},
-				{name: 'act', location: '../../act', main: "act"}
+				//{name: "dojo", location: "../dojo"},
+				//{name: "dijit", location: "../dijit"},
+				//{name: "dojox", location: "../dojox"},
+				{name: "rias", location: "/rias-1.0.0", main: "rias"},
+				{name: "webApp", location: riasAppPath + "/webApp", main: "webApp"},
+				{name: "act", location: "/act", main: "act"}
 			]
 		};
 	</script>
-	<script type="text/javascript" src="webLib/dojo/dojo.js">
-	</script>
+	<script type="text/javascript" src="webLib/dojo-1.10.4/dojo/dojo.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -74,9 +75,13 @@
 	</script>
 	<div id="seo" style="display:none">
 		RIAEasyTM是一个在线可视化的单页 Web 应用 (single-page application 简称为 SPA)设计平台。
+
 		RIAEasyTM旨在实现RIA/SPA应用的快速、高质量开发，实现在线无缝可视化设计，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。
+
 		RIAEasyTM基于dojo构建（dojo 1.10），支持HTML5。
+
 		RIAEasyTM的进一步发展目标：
+
 		实现跨平台、无差别的桌面、移动应用设计；
 		实现云端设计、打包、运行、应用；
 		实现团队开发模式；

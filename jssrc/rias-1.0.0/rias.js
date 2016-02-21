@@ -28,12 +28,6 @@ define([
 
 	///不在前面加载，是为了保障加载的是打包后的 dojo/dojo 和 dijit/dijit（host-browser）
 	require(["rias/base/riasBase"], function (rias) {
-		//if(!rias.require.packs.dijit){
-		//	rias.require.packs.dijit = {name: 'dijit', location: '../dijit'};
-		//}
-		//if(!rias.require.packs.dojox){
-		//	rias.require.packs.dojox = {name: 'dojox', location: '../dojox'};
-		//}
 		if (has("host-browser")) {
 			rias.require(["dijit/dijit"], function () {
 				rias.require([
@@ -79,6 +73,8 @@ define([
 				}*/
 				_d.resolve(rias);
 			});
+		}else{
+			_d.resolve(rias);
 		}
 	});
 

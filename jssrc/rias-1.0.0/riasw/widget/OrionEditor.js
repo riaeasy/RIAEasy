@@ -403,7 +403,7 @@ define([
 				});
 				///增加对 空格 的判断，避免使用 dojo.touch 造成 空格 失效的问题。
 				///dijit/a11yclick 的 on(document, "keydown", function(e)
-				rias.after(tv, "_handleKeyDown", function(e){
+				self.own(rias.after(tv, "_handleKeyDown", function(e){
 					if(e.keyCode === 32){
 						if (e.preventDefault) {
 							e.preventDefault();
@@ -416,7 +416,7 @@ define([
 						this._doContent(" ");
 						return false;
 					}
-				}, true);
+				}, true));
 				return tv;
 			};
 

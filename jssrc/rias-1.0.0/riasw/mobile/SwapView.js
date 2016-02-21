@@ -52,7 +52,6 @@ define([
 			//		child.resize();
 			//	}
 			//});
-			this._resizeCalled = true;
 			this._internalResize();
 		},
 

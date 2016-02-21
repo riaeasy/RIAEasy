@@ -4,6 +4,7 @@ define([
 	return {
 	"_rsfVersion": 10,
 	"_riaswVersion": "0.7",
+		iconClass: "inputIcon",
 	"activeNode": "edt_val",
 	"value": "",
 	"style": {
@@ -15,20 +16,27 @@ define([
 	"afterFiler": function (result){
 			//var m = this;
 			//m.edt_val.set("value", m.value);
-			this.lbOldValue.set("content", "<font color='darkblue'><b>原来的值: " + this._oldValue + "</b></font>");
+		this.lbOldValue.set("content", "<font color='darkblue'><b>原来的值: " + this._oldValue + "</b></font>");
+		this.edt_val.set("value", this._get("value"));
 		},
-	"_setValueAttr": function (value){
-			if(!this._oldValue){
+		//"_setRiasSelectInitialValueAttr": function (value){
+		//	this.set("value", value);
+		//},
+		//"getRiasrModuleResult": function (){
+		//	return this.get("value");
+		//},
+		"_setValueAttr": function (value){
+			if(!("_oldValue" in this)){
 				this._oldValue = value ? value : "(无)";
-				if(this.lbOldValue){
-					this.lbOldValue.set("content", "<font color='darkblue'><b>原来的值: " + this._oldValue + "</b></font>");
-				}
+				//if(this.lbOldValue){
+				//	this.lbOldValue.set("content", "<font color='darkblue'><b>原来的值: " + this._oldValue + "</b></font>");
+				//}
 			}
-			if(this.edt_val){
-				this.edt_val.set("value", value);
-			}else{
+			//if(this.edt_val){
+			//	this.edt_val.set("value", value);
+			//}else{
 				this._set("value", value);
-			}
+			//}
 		},
 	"_getValueAttr": function (){
 			if(this.edt_val){
@@ -39,7 +47,9 @@ define([
 		},
 	"onSubmit": function (){
 			this.set("value", this.get("value"));
-			return this.isValid();
+		this.set("_riasrModuleResult", this.get("value"));
+			//return this.isValid();
+		return this.inherited(arguments);
 		},
 	"_riaswChildren": [
 		{

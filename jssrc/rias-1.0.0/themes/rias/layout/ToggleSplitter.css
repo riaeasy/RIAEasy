@@ -1,27 +1,78 @@
-.dijitSplitterH {
-	height: 8px;
+
+
+
+.riaswToggleSplitter {
+	position: absolute;
+	overflow: hidden;
+	z-index: 10;		/* above the panes so that splitter focus is visible on FF, see #7583*/
+	/*background-color: lavender;*/
+	background-color: inherit;
+	border-color: silver;
+	border-style: solid;
+	border-width: 0px;
+}
+.dj_ie .riaswToggleSplitter {
+	z-index: 1;	/* behind the panes so that pane borders aren't obscured see test_Gui.html/[14392] */
 }
 
-.dijitSplitterV {
-	width: 8px;
+.riaswToggleSplitterActive {
+	z-index: 11 !important;
 }
 
-.dijitSplitterHover{
-	background-color: gold;
+.riaswToggleSplitterCover {
+	position:absolute;
+	z-index:-1;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
 }
 
-/* active splitter */
-.dijitSplitterActive {
+.riaswToggleSplitterCoverActive {
+	z-index:3 !important;
+}
+
+.dj_ie .riaswToggleSplitterCover {
+	background: white;
+	opacity: 0;
+}
+.dj_ie6 .riaswToggleSplitterCover,
+.dj_ie7 .riaswToggleSplitterCover,
+.dj_ie8 .riaswToggleSplitterCover {
+	filter: alpha(opacity=0);
+}
+
+.riaswToggleSplitterShadow {
 	font-size: 1px;
-	background-image: none;
-	background-color: #aaa;
-	-moz-opacity: 0.6;
-	opacity: 0.6;
-	filter: Alpha(Opacity=60);
+	background-color: ThreeDShadow;
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	filter: Alpha(Opacity=50);
 	margin: 0;
 }
 
-.dijitSplitterH .riaswToggleSplitterIconButton {
+.dj_a11y .riaswToggleSplitterH {
+	border-top:1px solid #d3d3d3 !important;
+	border-bottom:1px solid #d3d3d3 !important;
+}
+.dj_a11y .riaswToggleSplitterV {
+	border-left:1px solid #d3d3d3 !important;
+	border-right:1px solid #d3d3d3 !important;
+}
+
+/*===============================================*/
+.riaswToggleSplitterH {
+	background:none;
+	border:0;
+	height:8px;
+}
+.dj_ios .riaswToggleSplitterH,
+.dj_android .riaswToggleSplitterH {
+	height: 8px;
+}
+.riaswToggleSplitterH .riaswToggleSplitterThumb {
+	overflow:hidden;
+	position:absolute;
 	background-image: url('images/splitterToggleH.png');
 	background-repeat: no-repeat;
 	width: 71px;
@@ -30,8 +81,23 @@
 	left: 45%;
 	cursor: pointer;
 }
+.dj_ios .riaswToggleSplitterH .riaswToggleSplitterThumb,
+.dj_android .riaswToggleSplitterH .riaswToggleSplitterThumb{
+}
 
-.dijitSplitterV .riaswToggleSplitterIconButton {
+.riaswToggleSplitterV {
+	background:none;
+	border:0;
+	width:8px;
+	margin: 0;
+}
+.dj_ios .riaswToggleSplitterV,
+.dj_android .riaswToggleSplitterV {
+	width: 8px;
+}
+.riaswToggleSplitterV .riaswToggleSplitterThumb {
+	overflow:hidden;
+	position:absolute;
 	background-image: url('images/splitterToggleV.png');
 	background-repeat: no-repeat;
 	vertical-align: middle;
@@ -41,48 +107,76 @@
 	top: 45%;
 	cursor: pointer;
 }
+.dj_ios .riaswToggleSplitterV .riaswToggleSplitterThumb,
+.dj_android .riaswToggleSplitterV .riaswToggleSplitterThumb{
+}
 
-.riaswToggleSplitterTop .riaswToggleSplitterIconOpen,
-.riaswToggleSplitterBottom .riaswToggleSplitterIconClosed {
+.riaswToggleSplitterHover{
+	background-color: gold;
+}
+.riaswToggleSplitterHHover {
+	cursor: row-resize;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswToggleSplitterVHover {
+	cursor: col-resize;
+	-webkit-tap-highlight-color: transparent;
+}
+
+
+/* active splitter */
+.riaswToggleSplitterActive {
+	font-size: 1px;
+	background-image: none;
+	background-color: #aaa;
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	filter: Alpha(Opacity=60);
+	margin: 0;
+}
+
+
+.riaswToggleSplitterTop .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbClosed {
 	/*background-position: 0 -12px !important;*/
 	background-position: 0 -24px !important;
 }
 
-.riaswToggleSplitterBottom .riaswToggleSplitterIconOpen,
-.riaswToggleSplitterTop .riaswToggleSplitterIconClosed {
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterTop .riaswToggleSplitterThumbClosed {
 	/*background-position: 0 0 !important;*/
 	background-position: 0 -8px !important;
 }
 
-.riaswToggleSplitterLeft .riaswToggleSplitterIconOpen,
-.riaswToggleSplitterRight .riaswToggleSplitterIconClosed {
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterRight .riaswToggleSplitterThumbClosed {
 	/*background-position: -12px 0 !important;*/
 	background-position: -24px 0 !important;
 }
 
-.riaswToggleSplitterRight .riaswToggleSplitterIconOpen,
-.riaswToggleSplitterLeft .riaswToggleSplitterIconClosed {
+.riaswToggleSplitterRight .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbClosed {
 	/*background-position: 0 0 !important;*/
 	background-position: -8px 0 !important;
 }
 
-.riaswToggleSplitterTop .riaswToggleSplitterIconOpenHover,
-.riaswToggleSplitterBottom .riaswToggleSplitterIconClosedHover {
+.riaswToggleSplitterTop .riaswToggleSplitterThumbOpenHover,
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbClosedHover {
 	background-position: 0 -24px !important;
 }
 
-.riaswToggleSplitterBottom .riaswToggleSplitterIconOpenHover,
-.riaswToggleSplitterTop .riaswToggleSplitterIconClosedHover {
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbOpenHover,
+.riaswToggleSplitterTop .riaswToggleSplitterThumbClosedHover {
 	background-position: 0 -8px !important;
 }
 
-.riaswToggleSplitterLeft .riaswToggleSplitterIconOpenHover,
-.riaswToggleSplitterRight .riaswToggleSplitterIconClosedHover {
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbOpenHover,
+.riaswToggleSplitterRight .riaswToggleSplitterThumbClosedHover {
 	background-position: -24px 0 !important;
 }
 
-.riaswToggleSplitterRight .riaswToggleSplitterIconOpenHover,
-.riaswToggleSplitterLeft .riaswToggleSplitterIconClosedHover {
+.riaswToggleSplitterRight .riaswToggleSplitterThumbOpenHover,
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbClosedHover {
 	background-position: -8px 0 !important;
 }
 

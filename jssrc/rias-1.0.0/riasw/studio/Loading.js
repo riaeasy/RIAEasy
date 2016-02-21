@@ -33,7 +33,7 @@ define([
 		templateString:
 			'<div class="riaswLoading">'+
 				'<span class="dijitReset dijitInline dijitIcon riaswLoadingIcon" data-dojo-attach-point="iconNode"></span>'+
-				'<span data-dojo-attach-point="captionNode" class="dijitReset dijitInline riaswLoadingCaption"></span>'+
+				'<span data-dojo-attach-point="textNode" class="dijitReset dijitInline riaswLoadingCaption"></span>'+
 			'</div>',
 
 		postCreate: function(){
@@ -47,7 +47,7 @@ define([
 				}
 			}
 
-			self.set("caption", rias.i18n.message.loading);
+			self.set("content", rias.i18n.message.loading);
 			self._isLoading = false;
 			self._ioLoading = false;
 			self._requireIdle = true;
@@ -90,7 +90,7 @@ define([
 
 		startup: function(){
 			this.inherited(arguments);
-			rias.dom.placeTo(this, {
+			rias.dom.positionAt(this, {
 				around: {
 					x: rias.webApp ? rias.webApp.appClientWidth >> 1 : rias.body(rias.doc).clientWidth >> 1,
 					y: rias.webApp ? rias.webApp.appClientHeight >> 1 : rias.body(rias.doc).clientHeight >> 1
@@ -105,10 +105,10 @@ define([
 			}
 		},
 
-		_setCaptionAttr: function(/* String */ caption){
-			this._set("caption", caption);
-			if(this.captionNode){
-				this.captionNode.innerHTML = caption;
+		_setContentAttr: function(/* String */ content){
+			this._set("content", content);
+			if(this.textNode){
+				this.textNode.innerHTML = content;
 			}
 		},
 
@@ -119,7 +119,7 @@ define([
 			//	x: e.clientX + this._offset,
 			//	y: e.clientY + this._offset + this._offset
 			//}, ["after", "before", "BL", "BR"]);
-			rias.dom.placeTo(this, {
+			rias.dom.positionAt(this, {
 				around: {
 					x: e.clientX + this._offset,
 					y: e.clientY + this._offset + this._offset
@@ -146,7 +146,7 @@ define([
 				});
 				rias.fx.fadeIn({
 					node: self.domNode,
-					duration: self.duration * 2,
+					duration: self.duration,
 					onBegin: function(){
 						//console.info("show begin.");
 						rias.dom.setStyle(self.domNode, "display", "block");

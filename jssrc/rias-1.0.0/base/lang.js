@@ -91,9 +91,22 @@ define([
 	};
 	rias.createError = createError;
 	rias.exists = lang.exists;
+	rias.isEmpty = function(any){
+		if(any == undefined || any === "" || (rias.isArrayLike(any) && any.length == 0)){
+			return true;
+		}
+		if(rias.isObject(any)){
+			//return JSON.stringify(any) === "{}";
+			for(var n in any){
+				return false;
+			}
+			return true;
+		}
+		return false;
+	};
 	rias.isString = lang.isString;
 	rias.isArray = lang.isArray;
-	rias.isArrayLike = lang.isArrayLike;
+	rias.isArrayLike = lang.isArrayLike;/// ArrayLike("") = "", String 不是 ArrayLike。
 	rias.isAlien = lang.isAlien;
 	rias.isFunction = lang.isFunction;
 	rias.isObject = lang.isObject;
@@ -181,7 +194,7 @@ define([
 		return ok;
 	};
 
-	function _mixin(dest, source, copyFunc, /*Integer*/deep, ord, pack){
+	function _mixin(dest, source, copyFunc, /*Integer*/deep, ord, exact, onlyCopy){
 		// the (!(name in empty) || empty[name] !== s) condition avoids copying properties in "source"
 		// inherited from Object.prototype. For example, if dest has a custom toString() method,
 		// don't overwrite it with the toString() method that source inherited from Object.prototype
@@ -189,7 +202,7 @@ define([
 		function _mix1(name){
 			//if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
 			s = source[name];
-			if(pack && !s){
+			if(exact && !s){
 				return;
 			}
 			if(!(name in dest) || (dest[name] !== s && (!(name in empty) || empty[name] !== s))){
@@ -203,7 +216,7 @@ define([
 							if (!rias.isArray(dest[name])){
 								dest[name] = [];
 							}
-							_mixin(dest[name], s, copyFunc, deep - 1, ord, pack);
+							_mixin(dest[name], s, copyFunc, deep - 1, ord, exact, onlyCopy);
 						}else if(rias.isObjectExact(s)){
 							///因为有可能没有 require([riasw])，所以需要检查 isRiasw、isDijit
 							if((rias.isRiasw && rias.isRiasw(s)) || (rias.isDijit && rias.isDijit(s)) || s.nodeType){
@@ -212,7 +225,7 @@ define([
 								if (!rias.isObjectExact(dest[name])){
 									dest[name] = {};
 								}
-								_mixin(dest[name], s, copyFunc, deep - 1, ord, pack);
+								_mixin(dest[name], s, copyFunc, deep - 1, ord, exact, onlyCopy);
 							}
 						}else{
 							dest[name] = copyFunc ? copyFunc(s) : s;
@@ -230,9 +243,16 @@ define([
 		var name, s, i, empty = {}, a = [];
 		deep = rias.isNumber(deep) ? deep : 0;
 		if(ord){
-			for(name in source){
-				if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+			for(name in dest){
+				if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
 					a.push(name);
+				}
+			}
+			if(!onlyCopy){
+				for(name in source){
+					if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+						a.push(name);
+					}
 				}
 			}
 			if(rias.isFunction(ord)){
@@ -242,9 +262,17 @@ define([
 			}
 			rias.forEach(a, _mix1);
 		}else{
-			for(name in source){
-				if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-					_mix1(name);
+			if(onlyCopy){
+				for(name in dest){
+					if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+						_mix1(name);
+					}
+				}
+			}else{
+				for(name in source){
+					if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+						_mix1(name);
+					}
 				}
 			}
 		}
@@ -252,36 +280,42 @@ define([
 			if(source){
 				for(i = 0; i < lang._extraNames.length; ++i){
 					name = lang._extraNames[i];
-					if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-						_mix1(name);
+					if(onlyCopy){
+						if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+							_mix1(name);
+						}
+					}else{
+						if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
+							_mix1(name);
+						}
 					}
 				}
 			}
 		}
 		return dest; // Object
 	}
-	rias.mixin = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixin = function(/*Object*/dest, /*Object..*/sources) {
 		if(!dest){ dest = {}; }
 		for(var i = 1, l = arguments.length; i < l; i++){
 			_mixin(dest, arguments[i]);
 		}
 		return dest; // Object
 	};
-	rias.mixin_ord = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixin_ord = function(/*Object*/dest, /*Object..*/sources) {
 		if(!dest){ dest = {}; }
 		for(var i = 1, l = arguments.length; i < l; i++){
 			_mixin(dest, arguments[i], undefined, undefined, 1);
 		}
 		return dest; // Object
 	};
-	rias.mixin_pack = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixin_exact = function(/*Object*/dest, /*Object..*/sources) {
 		if(!dest){ dest = {}; }
 		for(var i = 1, l = arguments.length; i < l; i++){
 			_mixin(dest, arguments[i], undefined, undefined, undefined, true);
 		}
 		return dest; // Object
 	};
-	rias.mixinDeep = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixinDeep = function(/*Object*/dest, /*Object..*/sources) {
 		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
 		//数组和函数任然直接覆盖
 		if(!dest){ dest = {}; }
@@ -291,7 +325,7 @@ define([
 		}
 		return dest; // Object
 	};
-	rias.mixinDeep_ord = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixinDeep_ord = function(/*Object*/dest, /*Object..*/sources) {
 		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
 		//数组和函数任然直接覆盖
 		if(!dest){ dest = {}; }
@@ -301,13 +335,35 @@ define([
 		}
 		return dest; // Object
 	};
-	rias.mixinDeep_pack = function(/*Object*/dest, /*Object..*/srcs) {
+	rias.mixinDeep_exact = function(/*Object*/dest, /*Object..*/sources) {
 		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
 		//数组和函数任然直接覆盖
 		if(!dest){ dest = {}; }
 		for(var i = 1, l = arguments.length; i < l; i++){
 			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99), 1);
 			_mixin(dest, arguments[i], undefined, 99, undefined, true);
+		}
+		return dest; // Object
+	};
+	rias.copy = function(/*Object*/dest, /*Object..*/sources){
+		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//数组和函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_mixin(dest, arguments[i], undefined, undefined, undefined, undefined, true);
+		}
+		return dest; // Object
+	};
+	rias.copyDeep = function(/*Object*/dest, /*Object..*/sources){
+		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//数组和函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_mixin(dest, arguments[i], undefined, 99, undefined, undefined, true);
 		}
 		return dest; // Object
 	};
@@ -425,10 +481,14 @@ define([
 	rias.toFixed = function(number, length){
 		length = (length || 0);
 		length = (length >= 0 ? length : 0) + 2;
-		return (number + Math.pow(10, -length)).toFixed(length - 2);
+		return rias.toNumber(number + Math.pow(10, -length)).toFixed(length - 2);
 	};
-	rias.toInt = function(n, def){
-		return number.round(rias.toNumber(n, def));
+	rias.toInt = function(n, def, trunc){
+		n = rias.toNumber(n, def);
+		if(trunc){
+			return rias.trunc(n);
+		}
+		return number.round(n);
 	};
 	rias.trunc = function(x) {
 		return x < 0 ? Math.ceil(x) : Math.floor(x);
@@ -567,19 +627,37 @@ define([
 	rias.map = array.map;
 	rias.filter = array.filter;
 	rias.forEach = array.forEach;
-	rias.concat = function(des, src, uni){
-		if(rias.isArray(des) && rias.isArray(src)){
+	function _concat(dest, src, uni){
+		if(rias.isArray(dest) && rias.isArrayLike(src)){
 			var i, l = src.length, item;
 			for(i = 0; i < l; i++){
 				item = src[i];
-				if(item && (!uni || rias.indexOf(des, item) < 0)){
-					des.push(item);
+				if(item && (!uni || rias.indexOf(dest, item) < 0)){
+					dest.push(item);
 				}
 			}
-			return des;
+			return dest;
 		}else{
-			return des.concat(src);
+			return dest.concat(src);
 		}
+	}
+	rias.concat = function(dest, sources){
+		if(!dest){
+			dest = [];
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_concat(dest, arguments[i]);
+		}
+		return dest; // Object
+	};
+	rias.concatUnique = function(dest, sources){
+		if(!dest){
+			dest = [];
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_concat(dest, arguments[i], true);
+		}
+		return dest; // Object
 	};
 	rias.removeItems = function(src, items){
 		var i;
@@ -733,9 +811,9 @@ define([
 					//		Adds escape sequences for non-visual characters, double quote and
 					//		backslash and surrounds with double quotes to form a valid string
 					//		literal.
-					return ('"' + str.replace(/(["\\])/g, '\\$1') + '"').
-						replace(/[\f]/g, "\\f").replace(/[\b]/g, "\\b").replace(/[\n]/g, "\\n").
-						replace(/[\t]/g, "\\t").replace(/[\r]/g, "\\r"); // string
+					return ('"' + str.replace(/(["\\])/g, '\\$1') + '"')
+						.replace(/[\f]/g, "\\f").replace(/[\b]/g, "\\b").replace(/[\n]/g, "\\n")
+						.replace(/[\t]/g, "\\t").replace(/[\r]/g, "\\r"); // string
 				};
 				if(typeof replacer == "string"){
 					spacer = replacer;

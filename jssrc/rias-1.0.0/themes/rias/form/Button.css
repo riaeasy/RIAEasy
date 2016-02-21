@@ -41,63 +41,6 @@
 	background-image: url('./images/loading_wheel.gif');
 	background-repeat: no-repeat;
 }
-/*=====================================================*/
-/* === Red Badge ==*/
-.riasButtonBadge {
-	position: relative;
-	width: 0px;
-	height: 0px;
-	text-align: right;
-	font-family: Helvetica;
-	font-size: 0.8em;
-	font-weight: bold;
-	visibility: hidden;
-	top: -1em;
-	right: -1.5em;
-	display: inline-block;
-}
-.dj_ie .riasButtonBadge {
-	top: -1.5em;
-}
-.riasButtonBadge > div {
-	position: absolute;
-	display: inline-block;
-	padding: 0px 4px;
-	top: 0px;
-	right: 0px;
-	color: white;
-	border: 2px solid white;
-	border-radius: 1em;
-	text-align: center;
-	background-clip: padding-box;
-	-moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
-	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
-}
-.riasButtonBadgeRed {
-	background: red;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f56e6e), to(#ae0001), color-stop(0.5, #e44149), color-stop(0.5, #de151f));
-	background: linear-gradient(to bottom, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
-}
-.riasButtonBadgeBlue {
-	background: #0000ff;
-	background: -webkit-gradient(linear, left top, left bottom, from(#5b98e7), to(#216dd6), color-stop(0.5, #4282de), color-stop(0.5, #216dd6));
-	background: linear-gradient(to bottom, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
-}
-.riasButtonBadgeGreen {
-	background: #008000;
-	background: -webkit-gradient(linear, left top, left bottom, from(#6cd74a), to(#398c08), color-stop(0.5, #6bc642), color-stop(0.5, #4aad21));
-	background: linear-gradient(to bottom, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
-}
-.riasButtonBadgeYellow {
-	background: darkorange;
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffbc1c), to(#ff9000), color-stop(0.5, #FFA000), color-stop(0.5, #FFA000));
-	background: linear-gradient(to bottom, #ffbc1c 0%, #FFA000 50%, #FFa000 50%, #ff9000 100%);
-}
-.riasButtonBadge > div > div {
-	display: none;
-}
-
 
 /*=============================================*/
 .dijitCheckBoxIcon {		/* inside a toggle button */
@@ -126,7 +69,7 @@
 .riaswCheckButton .dijitButtonNode,
 .riaswRadioButton .dijitButtonNode {
 	border: 0px solid silver;
-	padding: 4px 4px 4px 4px;
+	padding: 4px 4px;
 	color: #000000;
 	background-color: inherit;
 }
@@ -205,7 +148,7 @@
 .rias .dijitToggleButton .dijitButtonNode {
   /* rules for the dijit.form.*Button widgets (see also ComboButton section below) */
 	border: 1px solid silver;
-	padding: 2px 4px 4px 4px;
+	padding: 3px 4px;
 	color: #000000;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;

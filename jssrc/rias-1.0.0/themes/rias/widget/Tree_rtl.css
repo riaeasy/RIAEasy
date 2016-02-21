@@ -13,10 +13,10 @@
 
 .dijitRtl .rias .dijitTreeExpandoOpened {
 	/* todo: icon contains grid line but grid lines disabled above */
-	background: url('../images/spriteTree_rtl.gif') no-repeat -18px top;
+	background: url('./images/spriteTree_rtl.png') no-repeat -18px top;
 }
 
 .dijitRtl .rias .dijitTreeExpandoClosed {
 	/* todo: icon contains grid line but grid lines disabled above */
-	background-image: url('../images/spriteTree_rtl.gif');
+	background-image: url('./images/spriteTree_rtl.png');
 }

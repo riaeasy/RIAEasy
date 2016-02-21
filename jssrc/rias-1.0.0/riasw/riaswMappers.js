@@ -243,21 +243,21 @@ define([
 		},{
 			riasType: ["rias.riasw.layout.TabPanel", "dijit.layout.TabContainer"],
 			requires: "rias/riasw/layout/TabPanel"
+		/*},{
+			riasType: ["rias.riasw.layout.StackController", "dijit.layout.StackController"],
+			requires: "rias/riasw/layout/StackController"*/
 		},{
 			riasType: ["rias.riasw.layout.StackPanel", "dijit.layout.StackContainer"],
 			requires: "rias/riasw/layout/StackPanel"
-		},{
+		/*},{
 			riasType: ["rias.riasw.layout.SplitContainer"],
 			requires: "rias/riasw/layout/SplitContainer"
 		},{
 			riasType: ["rias.riasw.layout.GridContainer", "dojox.layout.GridContainer"],
 			requires: "rias/riasw/layout/GridContainer"
-		/*},{
-			riasType: ["rias.riasw.layout.StackController", "dijit.layout.StackController"],
-			requires: "rias/riasw/layout/StackController"*/
 		},{
 			riasType: ["rias.riasw.layout.RadioGroup", "dojox.layout.RadioGroup"],
-			requires: "rias/riasw/layout/RadioGroup"
+			requires: "rias/riasw/layout/RadioGroup"*/
 		/*},{
 			riasType: ["rias.riasw.layout.RadioGroupFade", "dojox.layout.RadioGroupFade"],
 			requires: "rias/riasw/layout/RadioGroupFade"

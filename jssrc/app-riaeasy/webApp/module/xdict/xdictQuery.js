@@ -2,11 +2,13 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 219,
+	"_rsfVersion": 222,
 	"_riaswVersion": "0.7",
 	"query": {
 		"parentId": "1"
 	},
+	"caption": "系统字典",
+	"iconClass": "menuIcon",
 	"region": "center",
 	"_riaswChildren": [
 		{
@@ -31,10 +33,16 @@ define([
 							"name": "modi",
 							"text": "修改",
 							"tooltip": "修改详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "copy",
+							"text": "复制",
+							"tooltip": "复制并新增"
 						}
 					],
+					"opColumnWidth": "8em",
 					"columnLockCount": 2,
-					"opColumnWidth": "80px",
 					"query": {
 						"$refScript": "return module.query;"
 					},

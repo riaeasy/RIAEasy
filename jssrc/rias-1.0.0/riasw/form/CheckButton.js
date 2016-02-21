@@ -3,15 +3,16 @@
 define([
 	"rias",
 	"dijit/form/ToggleButton",
-	"rias/riasw/form/_BusyButtonMixin"
-], function(rias, _Widget, _BusyButtonMixin) {
+	"rias/riasw/form/_BusyButtonMixin",
+	"rias/riasw/widget/_BadgeMixin"
+], function(rias, _Widget, _BusyButtonMixin, _BadgeMixin) {
 
 	rias.theme.loadCss([
 		"form/Button.css"
 	]);
 
 	var riasType = "rias.riasw.form.CheckButton";
-	var Widget = rias.declare(riasType, [_Widget, _BusyButtonMixin], {
+	var Widget = rias.declare(riasType, [_Widget, _BusyButtonMixin, _BadgeMixin], {
 
 		// type: [private] String
 		//		type attribute on `<input>` node.
@@ -36,78 +37,14 @@ define([
 
 		templateString:
 			'<span class="dijit dijitReset dijitInline" role="presentation">'+
-				'<span class="dijitReset dijitInline dijitButtonNode" data-dojo-attach-event="ondijitclick:__onClick" role="presentation">'+
-					'<span class="dijitReset dijitStretch dijitButtonContents" data-dojo-attach-point="titleNode,focusNode" role="button" aria-labelledby="${id}_label">'+
-						'<span class="dijitReset dijitInline dijitIcon" data-dojo-attach-point="iconNode"></span>'+
-						//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
-						'<span class="dijitReset dijitInline dijitButtonText" id="${id}_label" data-dojo-attach-point="containerNode"></span>'+
-					'</span>'+
-					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}">'+
-						'<div data-dojo-attach-point="badgeText" class="riasButtonBadgeRed"></div>'+
-					'</div>'+
+				'<span data-dojo-attach-point="focusNode" class="dijitReset dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
+					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+					//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
+					'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
+					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
 				'</span>'+
-				'<input ${!nameAttrSetting} type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1"'+
-					'data-dojo-attach-event="onclick:_onClick" role="presentation" aria-hidden="true" data-dojo-attach-point="valueNode"/>'+
+				'<input data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" role="presentation" aria-hidden="true" ${!nameAttrSetting}/>'+
 			'</span>',
-
-		badgeClass: "riasButtonBadge",
-		badgeStyle: "",
-		badgeColor: "",//"blue","green","red"(default)
-		badge: "",
-		_setBadgeStyleAttr: function(/*String*/value){
-			var n = this.badgeNode;
-			if(rias.isObject(value)){
-				rias.dom.setStyle(n, value);
-			}else{
-				if(n.style.cssText){
-					n.style.cssText += "; " + value;
-				}else{
-					n.style.cssText = value;
-				}
-			}
-			this._set("badgeStyle", value);
-		},
-		_setBadgeColorAttr: function(/*String*/value){
-			var n = this.badgeText;
-			if(rias.isString(value)){
-				rias.dom.removeClass(n, "riasButtonBadgeRed");
-				rias.dom.removeClass(n, "riasButtonBadgeBlue");
-				rias.dom.removeClass(n, "riasButtonBadgeGreen");
-				rias.dom.removeClass(n, "riasButtonBadgeYellow");
-				switch(value.charAt(0)){
-					case "b":
-						rias.dom.addClass(n, "riasButtonBadgeBlue");
-						this._set("badgeColor", "blue");
-						break;
-					case "g":
-						rias.dom.addClass(n, "riasButtonBadgeGreen");
-						this._set("badgeColor", "green");
-						break;
-					case "y":
-						rias.dom.addClass(n, "riasButtonBadgeYellow");
-						this._set("badgeColor", "yellow");
-						break;
-					default:
-						rias.dom.addClass(n, "riasButtonBadgeRed");
-						this._set("badgeColor", "red");
-				}
-			}else{
-				rias.dom.addClass(n, "riasButtonBadgeRed");
-				this._set("badgeColor", "red");
-			}
-		},
-		_getBadgeAttr: function(){
-			return this.badgeText.innerHTML || "";
-		},
-		_setBadgeAttr: function(/*String*/value){
-			if(value){
-				this.badgeText.innerHTML = value;
-				this.badgeNode.style.visibility = "visible";
-			}else{
-				this.badgeNode.style.visibility = "hidden";
-			}
-			this._set("badge", value);
-		},
 
 		_setReadOnlyAttr: function(/*Boolean*/ value){
 			this._set("readOnly", value);

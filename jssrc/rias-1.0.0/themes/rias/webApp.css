@@ -3,6 +3,7 @@
   background-color: whitesmoke;
   /*height: 100px;
 	width: 100px;*/
+  font-family: Helvetica;
   font: 12px Arial;
   display: block;
   /*position: relative;*/
@@ -22,6 +23,7 @@
   border-bottom: 1px solid silver;
   height: 32px;
   padding: 0px;
+  font-size: 15px;
   /* active, checked status */
   /* disabled status */
 }
@@ -30,24 +32,19 @@
   text-align: center;
   color: steelblue;
   font-weight: bold;
-  font-size: 12px;
 }
 .webAppHeader .dijitButton .dijitButtonNode,
 .webAppHeader .dijitDropDownButton .dijitButtonNode,
 .webAppHeader .dijitComboButton .dijitButtonNode,
 .webAppHeader .dijitToggleButton .dijitButtonNode {
-  border-width: 0px 0px 2px 0px;
-  border-bottom-color: steelblue;
-  margin: 0px 2px;
-  padding: 4px 2px 0px 4px;
+  border: 0px solid steelblue;
+  border-bottom-width: 2px;
+  margin: 1px 0.5em;
+  padding: 2px 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  -webkit-box-shadow: 0 rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 rgba(0, 0, 0, 0.15);
   background-color: inherit;
-  height: 20px;
 }
 .webAppHeader .dijitButtonHover .dijitButtonNode,
 .webAppHeader .dijitButtonNodeHover,
@@ -87,12 +84,6 @@
 .webAppHeader .dijitDropDownButtonDisabled .dijitButtonNode,
 .webAppHeader .dijitComboButtonDisabled .dijitButtonNode,
 .webAppHeader .dijitToggleButtonDisabled .dijitButtonNode {
-  background-color: inherit;
-  border-width: 0px 0px 2px 0px;
-  padding: 4px 2px 0px 4px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
   filter: none;
   -webkit-filter: none;
 }
@@ -109,50 +100,41 @@
   -webkit-filter: grayscale(1) opacity(0.3);
 }
 .webAppHeader .riaswDockNode {
-  border-width: 0px 0px 2px 0px;
-  border-bottom-color: gold;
-  padding: 4px 24px 0px 4px;
+  border: 0px solid steelblue;
+  border-bottom-width: 2px;
+  margin: 2px 0.5em;
+  padding: 2px 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   background-color: inherit;
-  height: 20px;
-  cursor: pointer;
-  list-style: none;
-  margin: 0px 8px 0px 1em;
-  width: auto;
-  min-width: 30px;
-  float: left;
+  height: auto;
+}
+.webAppHeader .riaswDockNodeShown {
+  border-width: 1px 1px 2px 1px;
 }
 .webAppHeader .riaswDockNodeHover {
   background-color: gold;
   border-color: gold;
 }
 .webAppHeader .riaswDockNodeTitle {
-  padding: 0 0.3em;
-  text-align: center;
   color: steelblue;
   font-weight: bold;
-  font-size: 12px;
 }
 .webAppHeader a {
   padding: 2px 8px 2px 8px;
   display: inline-block;
-  font-size: 12px;
 }
 .webAppHeaderLogo {
   width: 180px;
-  padding: 4px 8px 2px 8px;
+  padding: 2px 8px 2px 8px;
   background: url("images/RIAStudio.png") no-repeat 0px center;
 }
 .webAppHeaderDockBar {
-  padding: 0px;
+  padding: 1px;
 }
 .webAppFooterDockBar {
-  padding: 0px;
+  padding: 1px;
 }
 .webAppHeaderBtns {
   width: 24em;
@@ -177,7 +159,7 @@
   padding: 2px;
 }
 .webAppFooter .riaswDockNode {
-  border-width: 1px 1px 4px 1px;
+  border-width: 1px 1px 3px 1px;
   border-color: steelblue;
 }
 .webAppHeaderXC {

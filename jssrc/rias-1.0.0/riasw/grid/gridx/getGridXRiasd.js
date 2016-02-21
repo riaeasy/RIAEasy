@@ -232,7 +232,7 @@ define([
 						for(i = 0; i < l; i++){
 							item = grid.cellIdOps[i];
 							if(item && item.name){
-								str = str + (str ? " | " : "") + rias.substitute(s, [item.name, item.tooltip, item.text]);
+								str = str + (str ? "  " : "") + rias.substitute(s, [item.name, item.tooltip, item.text]);
 							}
 						}
 						return str;
@@ -340,7 +340,7 @@ define([
 		var a;
 		gp.treeColumns = gp.treeColumns || treeColumns;
 		if(gp.treeColumns && gp.treeColumns.length > 0){
-			a = rias.queryRiasd(gp.structure, "name", gp.treeColumns[0]);//FIXME:zensst.支持多个.
+			a = rias.queryRiasdParams(gp.structure, "name", gp.treeColumns[0]);//FIXME:zensst.支持多个.
 			if(a.length > 0){
 				a[0].expandLevel = "all";
 			}

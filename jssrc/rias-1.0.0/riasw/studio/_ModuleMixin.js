@@ -18,7 +18,7 @@ define([
 		content: "",
 
 		loadOnStartup: true,
-		//_lazyLoad: false,
+		//_lazyLoad: true,// false,
 		onLoadDeferred: null,
 		loadingMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingIcon'></span>${rias.i18n.message.loading}</span>",
 		errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${rias.i18n.message.loadError}</span>",
@@ -48,11 +48,14 @@ define([
 		},
 		buildRendering: function(){
 			this.inherited(arguments);
-			this._initAttr(["moduleMeta"]);
 		},
 		postCreate: function(){
 			this.inherited(arguments);
 			///this._onContent(this.content);///无需初始化
+			this._initAttr([{
+				name: "moduleMeta",
+				initialize: false
+			}]);
 		},
 		destroyDescendants: function(/*Boolean*/ preserveDom){
 			if(this.isLoaded){
@@ -105,39 +108,42 @@ define([
 				arg = arguments,
 				d = rias.newDeferred();
 			if(self.isLoading && self.onLoadDeferred){
-				if(self._lazyLoad){
-					rias.when(self.inherited(arg), function(){
-						d.resolve(self);
-					});
-				}else{
+				//if(self._lazyLoad){
+				//	rias.when(self.inherited(arg), function(){
+				//		d.resolve(self);
+				//	});
+				//}else{
 					self.onLoadDeferred.then(function(){
 						rias.when(self.inherited(arg), function(){
 							d.resolve(self);
 						});
 					});
-				}
+				//}
 			}else if(!self.isLoading && (self._needLoad || !self.isLoaded)){
-				if(self._lazyLoad){
-					rias.when(self.inherited(arg), function(){
-						d.resolve(self);
-					});
-					self._load();
-				}else{
+				//if(self._lazyLoad){
+				//	rias.when(self.inherited(arg), function(){
+				//		d.resolve(self);
+				//	});
+				//	self._load();
+				//}else{
 					rias.when(self._load(), function(){
 						rias.when(self.inherited(arg), function(){
 							d.resolve(self);
 						});
 					});
-				}
+				//}
 			}else{
 				//self._startChildren();
 				rias.when(self.inherited(arg), function(){
 					d.resolve(self);
 				});
 			}
-			/*d.then(function(){
-				self._resizeParent();
-			});*////应该在 _afterLoaded() 中处理
+			d.then(function(){
+				if(self._needLoadedAndShown && self._wasResized){
+					self.afterLoadedAndShown();
+					delete self._needLoadedAndShown;
+				}
+			});
 			return d.promise;
 		},
 		_onModuleMeta: function(/*String|Object*/meta){
@@ -246,14 +252,6 @@ define([
 			});
 		},
 
-		_resizeParent: function(){
-			this.needLayout = true;///_loadModuleMeta 后，强行 layout()
-			this.resize();///先 resize 确定自身位置大小，再 parent.resize();
-			if(this._riasrParent && this._riasrParent.resize){
-				this._riasrParent.needLayout = true;
-				this._riasrParent.resize();
-			}
-		},
 		///TODO:zensst.最好改在 resize 流程中处理。
 		_initSize: function(meta){
 			if(meta){
@@ -264,7 +262,11 @@ define([
 				if(meta.region){
 					this.set("region", meta.region);
 				}
-				this._resizeParent();
+				if(this._resizeParent){
+					//this.needLayout = true;///_loadModuleMeta 后，强行 layout()
+					//this.resize();///先 resize 确定自身位置大小，再 parent.resize();
+					this._resizeParent();
+				}
 			}
 		},
 		_beforeLoadMeta: function(){
@@ -336,6 +338,11 @@ define([
 				//self.onLoadDeferred.then(rias.hitch(self, "afterLoaded"));
 				self.onLoadDeferred.then(function(result){
 					self.afterLoaded(result);
+					if(self.isShown(true) && self._wasResized){
+						self.afterLoadedAndShown();
+					}else{
+						self._needLoadedAndShown = true;
+					}
 				});
 				//rias.dom.removeClass(self.containerNode, "riaswDialogPanelContentMessage");
 				return self.onLoadDeferred.promise;
@@ -346,13 +353,13 @@ define([
 		},
 		afterLoaded: function(result){
 		},
+		afterLoadedAndShown: function(){
+		},
 		_afterLoaded: function(result, noResolve){
 			var self = this;
 			self.isLoaded = true;
 			self.isLoading = false;
 			self._startChildren();
-
-			//self._resizeParent();
 
 			try{
 				if(!noResolve){
@@ -439,11 +446,9 @@ define([
 								}
 							}else if(p.$refScript){//
 								try{
-									//_o = rias._eval(module, p.$refScript);
 									_o = rias.$refByModule(self, p.$refScript, self.id + "[" + pn + "]");
 									params[pn] = _o;
 								}catch(e){
-									_o = undefined;
 								}
 							}else{
 								arguments.callee(p);
@@ -462,11 +467,9 @@ define([
 										}
 									}else if(p[i].$refScript){//
 										try{
-											//_o = rias._eval(module, p[i].$refScript);
 											_o = rias.$refByModule(self, p[i].$refScript, self.id + "[" + pn + "]");
 											params[pn] = _o;
 										}catch(e){
-											_o = undefined;
 										}
 									}else{
 										arguments.callee(p[i]);
@@ -493,6 +496,9 @@ define([
 				// 都不设置时，再在？先删除 ModuleMeta.region，
 				//delete self._riaswModuleMeta.region;
 
+				/*///loadMeta 时，self.params 中的值有可能已经改变，需要取当前值，用 rias.copy
+				var p = rias.mixinDeep(rias.copy(rias.mixin({}, self.params), self), mixinMeta);*/
+				///还是取 初始值 好些。
 				var p = rias.mixinDeep({}, self.params, mixinMeta);
 				delete p._riaswType;
 				delete p.ownerRiasw;
@@ -515,18 +521,26 @@ define([
 					delete self._riaswModuleMeta.moduleMeta;
 				}
 				rias._deleDP(p, false, false, false);
-				var pn,
-					s = p.style;
 				///meta 的 style 已经在 _afterLoadMeta 中处理，这里只处理 params.style。
 				p = rias.mixinDeep({}, self._riaswModuleMeta, p);///使用 _riaswModuleMeta._riaswChildren
+				var pn,
+					s = p.style,
+					_p;
 				_decodeParams(p);
 				self._initSize(p);
 				delete p.style;
 				/// CaptionPanel/DialogPanel 等有 CaptionNode 存在，不应该设置 domNode.style，而应该设置 containerNode
 				rias.dom.setStyle(self.containerNode, s);
-				///先混合 meta，避免执行 _setXXXAttr 出现错误。
+				///先混合 meta，避免执行 _setXXXAttr 出现错误。此时不会触发 _onXXX()。
 				///这里用 safeMixin ，而不是 mixinDeep，直接取代原型中属性。
-				rias.safeMixin(self, p);
+				_p = rias.mixin({}, p);
+				for(pn in _p){
+					//if(p.hasOwnProperty(pn) && rias.isFunction(self["_set" + rias.upperCaseFirst(pn) + "Attr"])){
+					if(_p.hasOwnProperty(pn) && self["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function
+						delete _p[pn];
+					}
+				}
+				rias.safeMixin(self, _p);
 				for(pn in p){
 					//if(p.hasOwnProperty(pn) && rias.isFunction(self["_set" + rias.upperCaseFirst(pn) + "Attr"])){
 					if(p.hasOwnProperty(pn) && self["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function
@@ -566,7 +580,18 @@ define([
 				}catch(error){
 					_e("creating Module error:" + error.message, error);
 				}
-			}else if(rias.isObjectSimple(self.moduleMeta)){
+			}else{
+				if(self.moduleMeta.$refObj){//
+					self.moduleMeta = rias.getObject(self.moduleMeta.$refObj, 0, self) || rias.by(self.moduleMeta.$refObj) || rias.getObject(self.moduleMeta.$refObj);
+				}else if(self.moduleMeta.$refScript){//
+					try{
+						self.moduleMeta = rias.$refByModule(self, self.moduleMeta.$refScript, self.id + "[moduleMeta]");
+					}catch(e){
+						self.moduleMeta = {};
+					}
+				}
+			}
+			if(rias.isObjectSimple(self.moduleMeta)){
 				try{
 					if(self.moduleMeta.moduleMeta){
 						_e("Please rias.mixinDeep(moduleMeta, moduleMeta.moduleMeta).");

@@ -33,6 +33,9 @@ define([
 			if(rias.isString(ctor)){
 				ctor = rias.getObject(ctor);
 			}
+			if(!ctor){
+				return false;
+			}
 			if(obj instanceof ctor){
 				return true;
 			}
@@ -341,8 +344,8 @@ define([
 		destroy: function(/*Boolean*/ preserveDom){
 			var self = this;
 			self._beingDestroyed = true;
-			if(!self._riasDestroying){
-				self._riasDestroying = true;
+			if(!self._riasrDestroying){
+				self._riasrDestroying = true;
 				self.destroyRiasrChildren(preserveDom);
 				self.orphan();
 				if(self._riasrModule && self._riasrModule[self._riaswIdOfModule]){
@@ -350,7 +353,7 @@ define([
 				}
 			}
 			self._destroyed = true;
-			self._riasDestroying = false;
+			self._riasrDestroying = false;
 			rias.publish("_riaswDestroy", {
 				widget: self
 			});
@@ -407,6 +410,7 @@ define([
 			//};
 		},
 		own: function(handles){
+			///FIXME:zensst. own(after(destroy))时，有错！执行 after 之前就 remove 了。
 			var self = this,
 				i, _i,
 				hds,
@@ -427,7 +431,7 @@ define([
 				hds = rias.toArray(arguments, 1);
 			}else{*/
 				i = self._riasrChildren.length;
-				hds = arguments;
+				hds = rias.concat(hds, arguments);// [].concat 未做转换;
 			//}
 
 			rias.forEach(hds, function(handle){
@@ -609,23 +613,27 @@ define([
 		},
 		_initAttr: function(name){
 			var self = this,
-				N;
+				N, _init = true;
 			if(rias.isArray(name)){
 				rias.forEach(name, function(n){
 					self._initAttr(n);
 				});
+			}
+			if(rias.isObject(name)){
+				_init = (name.initialize == undefined || name.initialize);
+				name = name.name;
 			}
 			if(rias.isString(name)){
 				N = rias.upperCaseFirst(name);
 				if(!rias.isFunction(self["_set" + N + "Attr"])){
 					self["_set" + N + "Attr"] = function(value){
 						//if(self[name] !== value){
-						self._set(name, value);
+						self._set(name, value);///触发 watch()
 						//}
 					};
 					if(rias.isFunction(self["_on" + N])){
 						self.own(self.watch(name, function(_name, oldValue, value){
-							if(this._riasDestroying || this._beingDestroyed){
+							if(self._riasrDestroying || self._beingDestroyed){
 								return undefined;
 							}
 							return self["_on" + N](value, oldValue);
@@ -637,6 +645,9 @@ define([
 					self["_get" + N + "Attr"] = function(){
 						return self[name];
 					};
+				}
+				if(_init && rias.isFunction(self["_on" + N])){
+					self["_on" + N](self[name], self[name]);
 				}
 			}
 		}

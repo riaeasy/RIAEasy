@@ -37,7 +37,7 @@
 }
 
 .rias .dijitTab {
-	padding: 6px;
+	padding: 0.5em;
 	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -351px;*/
 	background-color: transparent;
 	position: relative;
@@ -77,12 +77,16 @@
 	display: none;
 }
 
+.rias .dijitTab .tabLabel {
+	padding: 0em 0.5em;
+}
+
 /* Close Button */
 .rias .dijitTabCloseButton {
 	width: 15px;
 	height: 15px;
 	background: url("./images/CaptionPanelBtn.png") no-repeat -105px top;
-	margin-left: 0.5em;
+	margin: 0em;
 }
 
 .rias .dijitTabContainerNested .dijitTabListWrapper {

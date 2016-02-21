@@ -3,14 +3,14 @@
 
 define([
 	"rias",
-	"rias/riasw/layout/_PanelBase",
+	"rias/riasw/layout/_PanelBase",///_PanelBase.displayShowMin
 	"dijit/_TemplatedMixin",
 	"rias/riasw/layout/Resizer"
 ], function(rias, _PanelBase, _TemplatedMixin, Resizer){
 
-	rias.theme.loadCss([
-		"layout/Panel.css"
-	]);
+	//rias.theme.loadCss([
+	//	"layout/Panel.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.Panel";
 	var Widget = rias.declare(riasType, [_PanelBase, _TemplatedMixin], {
@@ -33,12 +33,12 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
-			this._initAttr(["selectable", "resizable", "dockTo"]);
 		},
 		postCreate: function(){
-			this._onSelectable(this.selectable);
-			this._onResizable(this.resizable);
+			//this._onSelectable(this.selectable);
+			//this._onResizable(this.resizable);
 			this.inherited(arguments);
+			this._initAttr(["selectable", "resizable"]);
 		},
 		startup: function(){
 			if(this._started){
@@ -133,7 +133,7 @@ define([
 		initialSize: {},
 		//allowedChild: "",
 		property: {
-			"displayState": {
+			"initDisplayState": {
 				"datatype": "string",
 				"description": "The displayState of the Panel.",
 				"hidden": false

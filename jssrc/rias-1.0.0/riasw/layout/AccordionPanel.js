@@ -22,9 +22,11 @@ define([
 		// tags:
 		//		private
 
+		baseClass: "dijitAccordionTitle",
+
 		templateString:
 			'<div data-dojo-attach-event="ondijitclick:_onTitleClick" class="dijitAccordionTitle" role="presentation">' +
-				'<div role="tab" class="dijitAccordionTitleFocus" data-dojo-attach-point="titleNode,focusNode" data-dojo-attach-event="onkeydown:_onTitleKeyDown" aria-expanded="false">' +
+				'<div role="tab" data-dojo-attach-point="titleNode,focusNode" class="dijitAccordionTitleFocusNode" data-dojo-attach-event="onkeydown:_onTitleKeyDown" aria-expanded="false">' +
 					'<span role="presentation" class="dijitInline dijitAccordionArrow"></span>' +
 					'<span role="presentation" class="arrowTextUp">+</span>' +
 					'<span role="presentation" class="arrowTextDown">-</span>' +
@@ -32,6 +34,8 @@ define([
 					'<span role="presentation" data-dojo-attach-point="titleTextNode, textDirNode" class="dijitAccordionText"></span>' +
 				'</div>' +
 			'</div>',
+
+		gutters: false,
 
 		// label: String
 		//		Title of the pane
@@ -47,8 +51,6 @@ define([
 		//		CSS class for icon to left of label
 		iconClassAttr: "",
 		_setIconClassAttr: { node: "iconNode", type: "class" },
-
-		baseClass: "dijitAccordionTitle",
 
 		getParent: function(){
 			// summary:
@@ -159,6 +161,9 @@ define([
 				lang: child.lang,
 				textDir: child.textDir || this.textDir,
 				iconClass: child.iconClass,
+				badge: child.badge,
+				badgeStyle: child.badgeStyle,
+				badgeColor: child.badgeColor,
 				id: child.id + "_button",
 				parent: this.parent
 			})).placeAt(this.domNode);
@@ -178,19 +183,28 @@ define([
 			var button = this.button,
 				cw = this.contentWidget;
 			this._contentWidgetWatches = [
-				cw.watch('title', rias.hitch(this, function(name, oldValue, newValue){
+				cw.watch('title', function(name, oldValue, newValue){
 					button.set("label", newValue);
-				})),
+				}),
 				///增加 caption
-				cw.watch('caption', rias.hitch(this, function(name, oldValue, newValue){
+				cw.watch('caption', function(name, oldValue, newValue){
 					button.set("label", newValue);
-				})),
-				cw.watch('tooltip', rias.hitch(this, function(name, oldValue, newValue){
+				}),
+				cw.watch('tooltip', function(name, oldValue, newValue){
 					button.set("title", newValue);
-				})),
-				cw.watch('iconClass', rias.hitch(this, function(name, oldValue, newValue){
+				}),
+				cw.watch('iconClass', function(name, oldValue, newValue){
 					button.set("iconClass", newValue);
-				}))
+				}),
+				cw.watch('badgeStyle', function(name, oldValue, newValue){
+					button.set("badgeStyle", newValue);
+				}),
+				cw.watch('badgeColor', function(name, oldValue, newValue){
+					button.set("badgeColor", newValue);
+				}),
+				cw.watch('badge', function(name, oldValue, newValue){
+					button.set("badge", newValue);
+				})
 			];
 		},
 
@@ -214,7 +228,7 @@ define([
 			this.button.destroyRecursive();
 
 			rias.forEach(this._contentWidgetWatches || [], function(w){
-				w.unwatch();
+				w.remove();//w.unwatch();//Remove unwatch in dojo2.0
 			});
 
 			delete this.contentWidget._buttonWidget;
@@ -261,7 +275,7 @@ define([
 
 		// duration: Integer
 		//		Amount of time (in ms) it takes to slide panes
-		duration: rias.defaultDuration,
+		//duration: rias.defaultDuration,
 
 		// buttonWidget: [const] String
 		//		The name of the widget used to display the title of each pane
@@ -291,9 +305,13 @@ define([
 			}
 		},
 
-		_getContainerContentBox:function(){
+		_getContainerContentBox: function(){
 			var openPane = this.selectedChildWidget;
 			if(!openPane){
+				return;
+			}
+			if(!this._contentBox){
+				console.warn(this.id, "The AccordionPanel should need a initial size.", this);
 				return;
 			}
 
@@ -319,7 +337,7 @@ define([
 				- openPane._buttonWidget.getTitleHeight();
 			return this._containerContentBox = {
 				h: this._verticalSpace,
-				w: this._contentBox.w - wrapperDomNodeMargin.w - wrapperDomNodePadBorder.w
+				w: mySize.w - wrapperDomNodeMargin.w - wrapperDomNodePadBorder.w
 					- wrapperContainerNodeMargin.w - wrapperContainerNodePadBorder.w
 			};
 		},
@@ -455,7 +473,7 @@ define([
 
 				self._animation = new rias.fx.Animation({
 					node: newContents,
-					duration: self.duration,
+					duration: self.duration / 2,
 					curve: [1, h - animationHeightOverhead - 1],
 					onAnimate: function(value){
 						//console.debug("onAnimate", value);
@@ -540,11 +558,11 @@ define([
 				defaultValue: true,
 				hidden: true
 			},
-			duration: {
+			/*duration: {
 				datatype: "number",
 				defaultValue: rias.defaultDuration,
 				title: "Duration"
-			},
+			},*/
 			persist: {
 				datatype: "boolean",
 				description: "Remembers the selected child across sessions\n\n\nBoolean",

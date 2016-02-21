@@ -384,7 +384,7 @@ define([
 		return w;
 	};
 
-	rias.queryRiasd = function(/*riasWidget*/root, /*String*/name, /*Object*/value){
+	rias.queryRiasdParams = function(/*riasWidget*/root, /*String*/name, /*Object*/value){
 		var items = (rias.isArray(root) ? root : [root]),
 			i, l = items.length,
 			w, r = [];
@@ -701,15 +701,17 @@ define([
 								}else{
 									_ref.push([p, pn, -1, -1]);
 									delete _p[pn];
-									//delete child[pn];
 								}
 							}else if(p.$refScript){//
 								try{
-									//_o = rias._eval(_module, p.$refScript);
 									_o = rias.$refByModule(_module, p.$refScript, _p.id + "[" + pn + "]");
-									_p[pn] = _o;
+									if(_o){
+										_p[pn] = _o;
+									}else{
+										_ref.push([p, pn, -1, -1]);
+										delete _p[pn];
+									}
 								}catch(e){
-									_o = undefined;
 									_ref.push([p, pn, -1, -1]);
 									delete _p[pn];
 								}
@@ -738,15 +740,17 @@ define([
 										}else{
 											_ref.push([p[i], pn, -1, -1]);
 											delete _p[pn];
-											//delete child[pn];
 										}
 									}else if(p[i].$refScript){//
 										try{
-											//_o = rias._eval(_module, p[i].$refScript);
 											_o = rias.$refByModule(_module, p[i].$refScript, _p.id + "[" + pn + "]");
-											_p[pn] = _o;
+											if(_o){
+												_p[pn] = _o;
+											}else{
+												_ref.push([p, pn, -1, -1]);
+												delete _p[pn];
+											}
 										}catch(e){
-											_o = undefined;
 											_ref.push([p[i], pn, -1, -1]);
 											delete _p[pn];
 										}

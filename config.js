@@ -1,20 +1,21 @@
 
+
 //RIAStudio Server config.
 
 var riasServerConfig = {
-
-	dojoFile: "jssrc/serverLib/dojo/dojo.js",
-	dojoBaseUrl: "jssrc/serverLib/dojo",
-	riasLib: "jssrc/rias", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，一般为: "jssrc/rias"。可以作为 appConfig.config.raisLib 的缺省值。
+	dojoFile: "jssrc/serverLib/dojo-1.10.4/dojo/dojo.js",
+	dojoBaseUrl: "jssrc/serverLib/dojo-1.10.4/dojo",
+	riasLib: "jssrc/rias-1.0.0", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，一般为: "jssrc/rias"。可以作为 appConfig.config.raisLib 的缺省值。
 	webLib: "jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。可以作为 appConfig.config.raisLib 的缺省值。
 
 	appPackage: {
-		"app-rq-my": "../../app-riaeasy"///应用包的名称，及相对于 dojoBaseUrl 的路径。
+		//riasApp: "../../../riasApp",///应用包的名称，及相对于 dojoBaseUrl 的路径。
+		"app-riaeasy": "../../../app-riaeasy" ///应用包的名称，及相对于 dojoBaseUrl 的路径。
 	}
 };
 
 var dojoConfig = {
-	baseUrl: riasServerConfig.dojoBaseUrl, //从 riasServerConfig 获取路径。
+	baseUrl: riasServerConfig.dojoBaseUrl, //host-rhino 需要显式指定，从 riasServerConfig 获取路径。
 	has: {
 		"dojo-publish-privates": 1,
 		"dojo-undef-api": 1
@@ -35,7 +36,8 @@ var dojoConfig = {
 	extraLocale: ["en"],
 	packages: [
 		///需要仔细配置
-		{name: "rias", location: "../../.." + (riasServerConfig.riasLib ? "/" + riasServerConfig.riasLib : "jssrc/rias"), main: "rias"}
+		//{name: 'dijit', location: '../dijit'},
+		{name: "rias", location: "../../../../" + (riasServerConfig.riasLib ? riasServerConfig.riasLib : "jssrc/rias"), main: "rias"}
 	]
 };
 

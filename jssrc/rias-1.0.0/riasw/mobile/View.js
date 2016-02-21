@@ -3,14 +3,14 @@
 
 define([
 	"rias/riasw/mobile/mobileBase",
-	"rias/riasw/layout/_PanelBase",
+	"rias/riasw/layout/_PanelBase",///_PanelBase.displayShowNormal
 	"dojox/mobile/ViewController",
 	"dojox/mobile/common",
 	"dojox/mobile/transition",
 	"dojox/mobile/viewRegistry",
 	"dojox/mobile/_css3",
 	"dojox/mobile/TransitionEvent"
-], function(rias, _Widget, ViewController, common, transitDeferred, viewRegistry, css3){
+], function(rias, _PanelBase, ViewController, common, transitDeferred, viewRegistry, css3){
 
 	ViewController.extend({
 		findTransitionViews: function(/*String*/moveTo){
@@ -51,7 +51,7 @@ define([
 	], true);
 
 	var riasType = "rias.riasw.mobile.View";
-	var Widget = rias.declare(riasType, [_Widget], {
+	var Widget = rias.declare(riasType, [_PanelBase], {
 
 		isLayoutContainer: true,
 		animated: false,
@@ -374,7 +374,7 @@ define([
 			this._fixViewState(toNode);
 			var toWidget = rias.registry.byNode(toNode);
 			if(toWidget){
-				if(rias.isInstanceOf(toWidget, Widget) && toWidget.displayState !== _Widget.displayShowNormal){
+				if(rias.isInstanceOf(toWidget, Widget) && toWidget.displayState !== _PanelBase.displayShowNormal){
 					toWidget.show();
 				}
 				// Now that the target view became visible, it's time to run resize()

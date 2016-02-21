@@ -48,11 +48,11 @@
 			}
 			return result.join("/");
 		}
-		function isObjectExact(it) {
-			return (it !== undefined) && (it !== null) &&
-				(typeof it === "object" && !(it instanceof Array || typeof it === "array")) &&
-				(Object.prototype.toString.call(it) !== "[object Function]");
-		}
+		//function isObjectExact(it) {
+		//	return (it !== undefined) && (it !== null) &&
+		//		(typeof it === "object" && !(it instanceof Array || typeof it === "array")) &&
+		//		(Object.prototype.toString.call(it) !== "[object Function]");
+		//}
 		function _loadServer() {
 
 			log(1, "loader", "Loading ..." + riasServerConfig.dojoFile);
@@ -72,16 +72,16 @@
 							rias.require([
 								"rias/riass/JettyServer",
 								sn
-							], function (JettyServer, sApp) {
-								sApp.config.appName = sn;
-								sApp.config.path = {};
-								//sApp.config.path.riasLib = trimPath(sApp.config.path.riasLib);
-								//sApp.config.path.webLib = trimPath(sApp.config.path.webLib);
-								//sApp.config.path.appRoot = trimPath(sApp.config.path.appRoot);
-								sApp.config.path.riasLib = trimPath(riasServerConfig.riasLib);
-								sApp.config.path.webLib = trimPath(riasServerConfig.webLib);
-								sApp.config.path.appRoot = rias.require.baseUrl + riasServerConfig.appPackage[sn];
-								rias.webServer[sn] = new JettyServer(sApp.config);
+							], function (JettyServer, serverApp) {
+								serverApp.config.appName = sn;
+								serverApp.config.path = {};
+								//serverApp.config.path.riasLib = trimPath(serverApp.config.path.riasLib);
+								//serverApp.config.path.webLib = trimPath(serverApp.config.path.webLib);
+								//serverApp.config.path.appRoot = trimPath(serverApp.config.path.appRoot);
+								serverApp.config.path.riasLib = trimPath(riasServerConfig.riasLib);
+								serverApp.config.path.webLib = trimPath(riasServerConfig.webLib);
+								serverApp.config.path.appRoot = rias.require.baseUrl + riasServerConfig.appPackage[sn];
+								rias.webServer[sn] = new JettyServer(serverApp.config);
 								rias.webServer[sn].start();
 							});
 						}

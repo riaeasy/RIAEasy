@@ -26,6 +26,76 @@ define([
 
 	var riasType = "rias.riasw.widget.Tooltip";
 	var Widget = rias.declare(riasType, [Tooltip], {
+
+		getContent: function(/*DomNode*/ node){
+			// summary:
+			//		User overridable function that return the text to display in the tooltip.
+			// tags:
+			//		extension
+			return node._riasrTooltip ? node._riasrTooltip : (this.label || this.domNode.innerHTML);
+		},
+
+		_setConnectIdAttr: function(/*String|String[]|DomNode|DomNode[]*/ newId){
+			// summary:
+			//		Connect to specified node(s)
+
+			// Remove connections to old nodes (if there are any)
+			rias.forEach(this._connections || [], function(nested){
+				rias.forEach(nested, function(handle){
+					handle.remove();
+				});
+			}, this);
+
+			// Make array of id's to connect to, excluding entries for nodes that don't exist yet, see startup()
+			this._connectIds = rias.filter(rias.isArrayLike(newId) ? newId : (newId ? [newId] : []),
+				function(id){
+					return rias.dom.byId(id, this.ownerDocument);
+				}, this);
+
+			// Make connections
+			this._connections = rias.map(this._connectIds, function(id){
+				var self = this,
+					node = rias.dom.byId(id, this.ownerDocument),
+					selector = this.selector,
+					delegatedEvent = selector ?
+						function(eventType){
+							return on.selector(selector, eventType);
+						} :
+						function(eventType){
+							return eventType;
+						};
+				return [
+					rias.on(node, delegatedEvent(rias.mouse.enter), function(){
+						self._onHover(this);
+					}),
+					rias.on(node, delegatedEvent("focusin"), function(){
+						self._onHover(this);
+					}),
+					rias.on(node, delegatedEvent(rias.mouse.leave), rias.hitch(self, "_onUnHover")),
+					rias.on(node, delegatedEvent("focusout"), rias.hitch(self, "set", "state", "DORMANT"))
+				];
+			}, this);
+
+			this._set("connectId", newId);
+		},
+
+		addTarget: function(/*OomNode|String*/ node){
+			node = rias.dom.byId(node);
+			if(rias.indexOf(this._connectIds, node) == -1){
+				this.set("connectId", this._connectIds.concat(node));
+			}
+		},
+
+		removeTarget: function(/*DomNode|String*/ node){
+			node = rias.dom.byId(node);
+			var idx = rias.indexOf(this._connectIds, node);
+			if(idx >= 0){
+				// remove id (modifies original this._connectIds but that's OK in this case)
+				this._connectIds.splice(idx, 1);
+				this.set("connectId", this._connectIds);
+			}
+		}
+
 	});
 
 	Widget._riasdMeta = {

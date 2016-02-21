@@ -42,8 +42,8 @@ define([
 
 		baseClass: "riaswToggleSplitter",
 
-		templateString: '<div class="dijitSplitter riaswToggleSplitter" dojoAttachEvent="onkeypress:_onKeyPress,onmousedown:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse">' +
-							'<div dojoAttachPoint="toggleNode" class="dijitSplitterThumb riaswToggleSplitterIconButton" tabIndex="0" role="separator" ' +
+		templateString: '<div dojoAttachEvent="onkeypress:_onKeyPress,onmousedown:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse">' +
+							'<div dojoAttachPoint="toggleNode" class="riaswToggleSplitterThumb" tabIndex="0" role="separator" ' +
 								'dojoAttachEvent="onmousedown:_onToggleNodeMouseDown,onclick:_toggle,onmouseenter:_onToggleNodeMouseMove,onmouseleave:_onToggleNodeMouseMove,onfocus:_onToggleNodeMouseMove,onblur:_onToggleNodeMouseMove">' +
 								'<span class="riaswToggleSplitterA11y" dojoAttachPoint="a11yText"></span></div>' +
 						'</div>',
@@ -65,8 +65,7 @@ define([
 
 			// we have to wait until startup to be sure the child exists in the dom
 			// and has non-zero size (if its supposed to be showing)
-			var parentPane = this.child,
-				paneNode = this.child.domNode,
+			var paneNode = this.child.domNode,
 				intPaneSize = rias.dom.getStyle(paneNode, (this.horizontal ? "height" : "width"));
 
 			this.domNode.setAttribute("aria-controls", paneNode.id);
@@ -121,6 +120,7 @@ define([
 
 		_stopDrag: function(e){
 			this.inherited(arguments);
+			this._openStyleProps = this._getStyleProps(this.child.domNode, "full");
 			this.toggleNode.blur();
 		},
 
@@ -128,10 +128,12 @@ define([
 			var state;
 			switch(this.state){
 				case "full":
-					state = this.collapsedSize ? "collapsed" : "closed";
+					//state = this.collapsedSize ? "collapsed" : "closed";
+					state = "closed";
 					break;
 				case "collapsed":
-					state = "closed";
+					//state = "closed";
+					state = "full";
 					break;
 				default:
 					state = "full";
@@ -142,13 +144,13 @@ define([
 		_onToggleNodeMouseMove: function(evt){
 			var baseClass = this.baseClass,
 				toggleNode = this.toggleNode,
-				on = this.state === "full" || this.state === "collapsed",
+				on = this.state === "full",// || this.state === "collapsed",
 				leave = evt.type === "mouseout" || evt.type === "blur";
 
-			rias.dom.toggleClass(toggleNode, baseClass + "IconOpen", leave && on);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconOpenHover", !leave && on);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconClosed", leave && !on);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconClosedHover", !leave && !on);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbOpen", leave && on);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbOpenHover", !leave && on);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbClosed", leave && !on);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbClosedHover", !leave && !on);
 		},
 
 		_handleOnChange: function(preState){
@@ -170,19 +172,19 @@ define([
 				rias.dom.setStyle(this.domNode, "cursor", "");
 				rias.dom.setStyle(paneNode, styleProps);
 			}else if(this.state === "collapsed"){
-				paneStyle  = rias.dom.getComputedStyle(paneNode);
-				openProps = this._getStyleProps(paneNode, "full", paneStyle);
-				this._openStyleProps = openProps;
+				//paneStyle  = rias.dom.getComputedStyle(paneNode);
+				//openProps = this._getStyleProps(paneNode, "full", paneStyle);
+				//this._openStyleProps = openProps;
 
 				rias.dom.setStyle(this.domNode, "cursor", "auto");
-				rias.dom.setStyle(paneNode, dim, this.collapsedSize);
+				//rias.dom.setStyle(paneNode, dim, this.collapsedSize);
 			}else{
 				// change to closed state
-				if(!this.collapsedSize){
+				//if(!this.collapsedSize){
 					paneStyle  = rias.dom.getComputedStyle(paneNode);
 					openProps = this._getStyleProps(paneNode, "full", paneStyle);
 					this._openStyleProps = openProps;
-				}
+				//}
 				var closedProps = this._getStyleProps(paneNode, "closed", paneStyle);
 
 				rias.dom.setStyle(this.domNode, "cursor", "auto");
@@ -191,8 +193,9 @@ define([
 			this._setStateClass();
 			if(this.container._started){
 				//this.container._layoutChildren(this.region);
-				this.container.needLayout = true;
-				this.container.layout(this.region);
+				this.container._layoutChildren();
+				//this.container.needLayout = true;
+				//this.container.layout(this.region);
 			}
 		},
 
@@ -236,13 +239,13 @@ define([
 			var arrow = "&#9652", region = this.region.toLowerCase(),
 				baseClass = this.baseClass,
 				toggleNode = this.toggleNode,
-				on = this.state === "full" || this.state === "collapsed",
+				on = this.state === "full",// || this.state === "collapsed",
 				focused = this.focused;
 
-			rias.dom.toggleClass(toggleNode, baseClass + "IconOpen", on && !focused);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconClosed", !on && !focused);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconOpenHover", on && focused);
-			rias.dom.toggleClass(toggleNode, baseClass + "IconClosedHover", !on && focused);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbOpen", on && !focused);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbClosed", !on && !focused);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbOpenHover", on && focused);
+			rias.dom.toggleClass(toggleNode, baseClass + "ThumbClosedHover", !on && focused);
 
 			// For a11y
 			if(region === "top" && on || region === "bottom" && !on){

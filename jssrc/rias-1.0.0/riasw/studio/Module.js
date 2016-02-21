@@ -27,6 +27,25 @@ define([
 			"<div data-dojo-attach-point='containerNode,focusNode' class='dijitReset' role='region' ${!nameAttrSetting}></div>",
 		baseClass: "riaswModule",
 
+		iconClass: "dijitNoIcon",
+		_setIconClassAttr: function(value){
+			if(this.iconNode){
+				rias.dom.removeClass(this.iconNode, this.iconClass);
+				this._set("iconClass", (value && value !== "dijitNoIcon") ? value : "dijitNoIcon");
+				rias.dom.addClass(this.iconNode, this.iconClass);
+			}else{
+				this._set("iconClass", (value && value !== "dijitNoIcon") ? value : "dijitNoIcon");
+			}
+		},
+
+		buildRendering: function(){
+			this.inherited(arguments);
+		},
+		postCreate: function(){
+			this.inherited(arguments);
+			///这里 _initAttr，避免初始化时执行，如果需要初始化，可以在 postCreate 中显式执行初始化。
+			this._initAttr(["caption", "tooltip", "iconClass", "badgeStyle", "badgeColor", "badge"]);
+		},
 		startup: function(){
 			var self = this;
 			if(self._started){

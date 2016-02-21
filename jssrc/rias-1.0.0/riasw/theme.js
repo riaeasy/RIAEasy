@@ -85,16 +85,20 @@ define([
 								riasdCssLink = link;
 							}
 						});
-						if(isAppCss || !appCssLink){
+						if(isAppCss){
 							headElem.appendChild(newLink);
-						}else if(isRiasdCss || !riasdCssLink){
-							if(!appCssLink){
+						}else if(!appCssLink){
+							if(!riasdCssLink){
 								headElem.appendChild(newLink);
 							}else{
-								headElem.insertBefore(newLink, appCssLink);
+								headElem.insertBefore(newLink, riasdCssLink);
 							}
 						}else{
-							headElem.insertBefore(newLink, riasdCssLink);
+							if(!riasdCssLink){
+								headElem.insertBefore(newLink, appCssLink);
+							}else{
+								headElem.insertBefore(newLink, riasdCssLink);
+							}
 						}
 					});
 				});

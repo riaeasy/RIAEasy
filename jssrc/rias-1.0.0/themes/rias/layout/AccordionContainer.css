@@ -16,9 +16,13 @@
 	background-color: lavender;
 	/*border-top: 1px solid #b9bbdd; zensst*/
 	border: 1px solid silver;
-	padding: 5px 4px 6px 8px;
-	font-size: 0.9em;
+	/*padding: 5px 4px 6px 8px;
+	font-size: 0.9em;*/
 	font-weight: bold;
+}
+.rias .dijitAccordionTitleFocusNode {
+	padding: 4px;
+	margin: 0px;
 }
 
 .rias .dijitAccordionContainer .dijitAccordionChildWrapper {
@@ -31,17 +35,10 @@
 }
 
 .rias .dijitAccordionTitleHover  {
-	/*background: #f9f9f9 url("/rias/themes/rias/images/accordionItemActive.png") top repeat-x; zensst*/
 	background-color: gold;
 }
 .rias .dijitAccordionTitleSelected  {
-	/*background: #f9f9f9 url("/rias/themes/rias/images/accordionItemActive.png") top repeat-x; zensst*/
 	background-color: skyblue;
-	font-weight: bold;
-	/*border-top: 1px solid #b9bbdd;
-	border-bottom: 1px solid #b9bbdd; zensst*/
-	border: 1px solid silver;
-	padding: 5px 4px 5px 8px;
 }
 
 .rias .dijitAccordionArrow {

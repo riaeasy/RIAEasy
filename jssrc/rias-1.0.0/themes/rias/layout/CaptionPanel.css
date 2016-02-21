@@ -44,51 +44,109 @@
 }
 
 /* captionNode */
-.riaswCaptionPanelCaptionNode {
+.riaswCaptionPanelCaptionNode,
+.riaswDialogPanelCaptionNode {
 	background-color: lavender;
 	border: 0px solid silver;
 	border-bottom-width: 1px;
-	padding: 2px;
+	padding: 0.5em;
 	cursor: pointer;
-	font-size: 1em;
+	/*font-size: 1em;*/
 	font-weight: bold;
-	line-height: 1.5em;
-	white-space: nowrap;
-	word-wrap: break-word;
+	/*line-height: 1.5em;*/
+	/*white-space: nowrap;
+	word-wrap: break-word;*/
 	/*position: absolute;*/
-	height: 2em;
-	top: 0em;
+	/*height: 2em;*/
+	/*top: 0em;*/
 	vertical-align: middle;
+	display: block;
 }
-.riaswCaptionPanelCaptionNodeFixedExpanded{
+.riaswDialogPanelCaptionNode {
+	background-color: lightsteelblue;
+	border-bottom-width: 0px;
 }
-.riaswCaptionPanelCaptionNodeFixedCollapsed{
+.riaswCaptionPanelCaptionNodeFixedExpanded,
+.riaswDialogPanelCaptionNodeFixedExpanded {
 }
-.riaswCaptionPanelCaptionNodeExpanded {
+.riaswCaptionPanelCaptionNodeFixedCollapsed,
+.riaswDialogPanelCaptionNodeFixedCollapsed {
 }
-.riaswCaptionPanelCaptionNodeCollapsed {
+.riaswCaptionPanelCaptionNodeExpanded,
+.riaswDialogPanelCaptionNodeExpanded {
+}
+.riaswCaptionPanelCaptionNodeCollapsed,
+.riaswDialogPanelCaptionNodeCollapsed {
+}
+.riaswCaptionPanelCaptionNodeHover,
+.riaswCaptionPanelCaptionNodeActive,
+.riaswDialogPanelCaptionNodeHover,
+.riaswDialogPanelCaptionNodeActive {
+	background-color: gold;
 }
 .riaswCaptionPanelCaptionNodeSelected,
 .riaswCaptionPanelCaptionNodeFocused {
 	background-color: skyblue;
 }
-.riaswCaptionPanelCaptionNodeHover {
-	background-color: gold;
+.riaswDialogPanelCaptionNodeSelected,
+.riaswDialogPanelCaptionNodeFocused,
+.riaswDialogPanelCaptionNodeTopmost {
+	background-color: darkseagreen;
 }
-.riaswCaptionPanelCaptionTextNode {
-	padding: 2px 4px;
+
+.riaswCaptionNodeVertical,
+.riaswCaptionNodeVerticalLR {
+	top: -0.25em;
+	padding: 0.5em 0.25em;
 }
-.riaswCaptionPanelCaptionText{
+.riaswCaptionNodeVerticalRL {
+	top: -0.25em;
+	padding: 0.5em 0em;
+}
+
+.riaswCaptionPanelCaptionTextNode,
+.riaswDialogPanelCaptionTextNode {
+	padding: 0em 0.25em;
+	word-break: break-all;
+	display: inline-block;
+}
+.riaswCaptionNodeVertical .riaswCaptionPanelCaptionTextNode,
+.riaswCaptionNodeVerticalLR .riaswCaptionPanelCaptionTextNode,
+.riaswCaptionNodeVertical .riaswDialogPanelCaptionTextNode,
+.riaswCaptionNodeVerticalLR .riaswDialogPanelCaptionTextNode {
+	padding: 0.5em 0em;
+}
+.riaswCaptionNodeVerticalRL .riaswCaptionPanelCaptionTextNode,
+.riaswCaptionNodeVerticalRL .riaswDialogPanelCaptionTextNode {
+	padding: 0.5em 0em;
 }
 
 /* Icons */
-.riaswCaptionPanelIconNode {
+.riaswCaptionPanelIconNode,
+.riaswDialogPanelIconNode {
 	/*width: 2em;
 	height: 2em;*/
 	float: right;
-	padding: 3px;
+
+	width: 15px;
+	height: 15px;
+	margin: 0px 0.25em;
+	display: inline-block;
+	border: 0;
+	vertical-align: middle;
+
+	background-image: url(./images/CaptionPanelBtn.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
 }
-.riaswCaptionPanelIconInner {
+.riaswCaptionPanelToggleIconNode,
+.riaswDialogPanelToggleIconNode {
+	/*width: 2em;
+	height: 2em;*/
+	float: none;
+}
+/*.riaswCaptionPanelIconInner,
+.riaswDialogPanelIconInner {
 	width: 15px;
 	height: 15px;
 	margin: 0px;
@@ -96,34 +154,50 @@
 	border: 0;
 	padding: 0;
 	vertical-align: middle;
+
+	background-image: url(./images/CaptionPanelBtn.png);
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+}*/
+.riaswCaptionPanelLeftIcon,
+.riaswDialogPanelLeftIcon {
+	background-position-x: 0px;
 }
-.riaswCaptionPanelLeftIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat 0px center;
+.riaswCaptionPanelCaptionNodeCollapsed .riaswCaptionPanelToggleIcon,
+.riaswCaptionPanelRightIcon,
+.riaswDialogPanelCaptionNodeCollapsed .riaswDialogPanelToggleIcon,
+.riaswDialogPanelRightIcon {
+	background-position-x: -15px;
 }
-.riaswCaptionPanelRightIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -15px center;
+.riaswCaptionPanelToggleIcon,
+.riaswDialogPanelToggleIcon {
+	background-position-x: -30px;
 }
-.riaswCaptionPanelToggleIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
+.riaswCaptionPanelExpandIcon,
+.riaswDialogPanelExpandIcon {
+	background-position-x: -45px;
 }
-.riaswCaptionPanelExpandIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -45px center;
+.riaswCaptionPanelCollapseIcon,
+.riaswDialogPanelCollapseIcon {
+	background-position-x: -60px;
 }
-.riaswCaptionPanelCollapseIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -45px center;
+.riaswCaptionPanelMaximizeIcon,
+.riaswDialogPanelMaximizeIcon {
+	background-position-x: -75px;
 }
-.riaswCaptionPanelMaximizeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -75px center;
+.riaswCaptionPanelRestoreIcon,
+.riaswDialogPanelRestoreIcon {
+	background-position-x: -90px;
 }
-.riaswCaptionPanelRestoreIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
+.riaswCaptionPanelMaximized .riaswCaptionPanelMaximizeIcon,
+.riaswDialogPanelMaximized .riaswDialogPanelMaximizeIcon {
+	background-position-x: -90px;
 }
-.riaswCaptionPanelMaximized .riaswCaptionPanelMaximizeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
+.riaswCaptionPanelCloseIcon,
+.riaswDialogPanelCloseIcon {
+	background-position-x: -105px;
 }
-.riaswCaptionPanelCloseIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -105px center;
-}
-.riaswCaptionPanelIconNodeHover {
-	background-color: silver;
+.riaswCaptionPanelIconNodeHover,
+.riaswDialogPanelIconNodeHover {
+	background-color: skyblue;
 }

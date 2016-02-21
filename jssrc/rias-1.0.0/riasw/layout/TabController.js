@@ -28,10 +28,11 @@ define([
 		},
 
 		templateString:
-			'<div role="presentation" data-dojo-attach-point="titleNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">' +
-				'<span role="presentation" class="dijitInline dijitIcon dijitTabButtonIcon" data-dojo-attach-point="iconNode"></span>' +
-				'<span data-dojo-attach-point="containerNode,focusNode" class="tabLabel"></span>' +
-				'<span class="dijitInline dijitTabCloseButton dijitTabCloseIcon" data-dojo-attach-point="closeNode" role="presentation">' +
+			'<div role="presentation" data-dojo-attach-point="focusNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">' +
+				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitIcon dijitTabButtonIcon"></span>' +
+				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="tabLabel"></span>' +
+				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
+				'<span role="presentation" data-dojo-attach-point="closeNode" class="dijitInline dijitTabCloseButton dijitTabCloseIcon">' +
 					'<span data-dojo-attach-point="closeText" class="dijitTabCloseText">[x]</span>' +
 				'</span>' +
 			'</div>',
@@ -64,7 +65,7 @@ define([
 			// summary:
 			//		Hide/show close button
 			this._set("closeButton", disp);
-			rias.dom.toggleClass(this.domNode, "dijitClosable", disp);
+			rias.dom.toggleClass(this.domNode, "dijitClosable", !!disp);
 			this.closeNode.style.display = disp ? "" : "none";
 			if(disp){
 				if(this.closeNode){
@@ -126,7 +127,7 @@ define([
 
 		baseClass: "dijitTabController",
 
-		templateString: "<div role='tablist' data-dojo-attach-event='onkeydown:onkeydown'></div>",
+		templateString: "<div role='tablist' data-dojo-attach-point='containerNode' data-dojo-attach-event='onkeydown:onkeydown'></div>",
 
 		// tabPosition: String
 		//		Defines where tabs go relative to the content.

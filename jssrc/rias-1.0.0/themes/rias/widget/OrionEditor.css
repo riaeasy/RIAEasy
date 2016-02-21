@@ -1,1 +1,9 @@
-@import "/webLib/orion/editor/editor.css";
+@import "/webLib/orion-7.0/orion/editor/themes/default.css";
+@import "/webLib/orion-7.0/orion/editor/themes/adelante.css";
+@import "/webLib/orion-7.0/orion/editor/themes/ambience.css";
+@import "/webLib/orion-7.0/orion/editor/themes/blue.css";
+@import "/webLib/orion-7.0/orion/editor/themes/eclipse.css";
+@import "/webLib/orion-7.0/orion/editor/themes/nimbus.css";
+@import "/webLib/orion-7.0/orion/editor/themes/prospecto.css";
+@import "/webLib/orion-7.0/orion/editor/themes/raspberrypi.css";
+@import "/webLib/orion-7.0/orion/editor/themes/tierra.css";

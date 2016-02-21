@@ -48,43 +48,52 @@ define([
 	};
 
 	if(!rias.require.packs.gridx){
-		rias.require.packs.gridx = {name: 'gridx', location: '../gridx'};
+		rias.require.packs.gridx = {name: 'gridx', location: '/webLib/gridx-1.3.7'};
 	}
-	if(!rias.require.packs.orion){
-		rias.require.packs.orion = {name: 'orion', location: '../orion'};
-		rias.require.packs.webtools = {name: 'webtools', location: '../webtools'};
-		rias.require.packs.javascript = {name: 'javascript', location: '../javascript'};
-		rias.require.packs.csslint = {name: 'csslint', location: '../csslint', main: "csslint"};
-		rias.require.packs.i18n = {name: 'i18n', location: '../orion', main: "i18n"};
+	if(!rias.require.packs.dgrid){
+		rias.require.packs.dgrid = {name: 'dgrid', location: '/webLib/dgrid-1.0.0'};
+	}
+	if(!rias.require.packs.dstore){
+		rias.require.packs.dstore = {name: 'dstore', location: '/webLib/dstore-1.1.1'};
 	}
 
+	if(!rias.require.packs.orion){
+		rias.require.packs.orion = {name: 'orion', location: '/webLib/orion-7.0/orion'};
+		rias.require.packs.webtools = {name: 'webtools', location: '/webLib/orion-7.0/webtools'};
+		rias.require.packs.javascript = {name: 'javascript', location: '/webLib/orion-7.0/javascript'};
+		rias.require.packs.csslint = {name: 'csslint', location: '/webLib/orion-7.0/csslint', main: "csslint"};
+		rias.require.packs.i18n = {name: 'i18n', location: '/webLib/orion-7.0/orion', main: "i18n"};
+	}
+
+	rias.has.add("rias-riasd", 0);
+	rias.has.add("rias-riasd-local", 0);
+	rias.riasdUrl = (rias.has("rias-riasd-local") ? "" : "http://211.149.223.192:8081");// "http://www.riaeasy.com:8081");
+	rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
+		var p = url.lastIndexOf("/"),
+			n;
+		if (p > -1) {
+			n = url.substring(p + 1);
+		} else {
+			n = url;
+		}
+		p = n.lastIndexOf(".");
+		if (p > -1) {
+			n = n.substring(p + 1);
+		} else {
+			n = "";
+		}
+		if(rias.riasdUrl){
+			if (n){
+				url = rias.riasdUrl + "" + rias.toUrl(url);
+			}else{
+				url = rias.riasdUrl + "" + rias.toUrl(url + ".js");
+			}
+		}
+		return url;
+	};
 	if(rias.has("rias-riasd")){
-		rias.riasdUrl = (rias.has("rias-riasd-local") ? "" : "http://www.riaeasy.com:8081");
-		rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
-			var p = url.lastIndexOf("/"),
-				n;
-			if (p > -1) {
-				n = url.substring(p + 1);
-			} else {
-				n = url;
-			}
-			p = n.lastIndexOf(".");
-			if (p > -1) {
-				n = n.substring(p + 1);
-			} else {
-				n = "";
-			}
-			if(rias.riasdUrl){
-				if (n){
-					url = rias.riasdUrl + "/" + url;
-				}else{
-					url = rias.riasdUrl + "/" + url + ".js";
-				}
-			}
-			return url;
-		};
 		rias.require([
-			"dojo/i18n!rias/nls/riasdi18n",
+			"dojo/i18n!" + rias.getRiasdUrl("rias/riasd/nls/riasdi18n"),
 			rias.getRiasdUrl("rias/riasd/riaswMappers")
 		], function(riasdi18n, riaswMappers){
 
@@ -126,16 +135,20 @@ define([
 									riasdCssLink = link;
 								}
 							});
-							if(isAppCss || !appCssLink){
+							if(isAppCss){
 								headElem.appendChild(newLink);
-							}else if(isRiasdCss || !riasdCssLink){
-								if(!appCssLink){
+							}else if(!appCssLink){
+								if(!riasdCssLink){
 									headElem.appendChild(newLink);
 								}else{
-									headElem.insertBefore(newLink, appCssLink);
+									headElem.insertBefore(newLink, riasdCssLink);
 								}
 							}else{
-								headElem.insertBefore(newLink, riasdCssLink);
+								if(!riasdCssLink){
+									headElem.insertBefore(newLink, appCssLink);
+								}else{
+									headElem.insertBefore(newLink, riasdCssLink);
+								}
 							}
 						});
 					});
@@ -176,12 +189,13 @@ define([
 					node;
 				tooltip = tooltip + "";
 				self._set("tooltip", tooltip);
-				if(self.focusNode){
+				if(self.focusNode && self.id){
 					if(!(node = rias.dom.byId(self.focusNode, self.ownerDocument))){
 						return;
 					}
 					///先 remove()，避免多次 on 而没有 remove()
-					//t.removeTarget(self.focusNode);
+					t.removeTarget(self.focusNode);
+					delete self.focusNode._riasrTooltip;
 					///node 可能没有 id，采用 self.id
 					rias.forEach(t.__h[self.id], function(h){
 						rias.forEach(h, function(_h){
@@ -192,8 +206,9 @@ define([
 						if(self.textDir && self.enforceTextDirWithUcc){///即 dojo.has("dojo-bidi")
 							tooltip = self.enforceTextDirWithUcc(null, tooltip);
 						}
-						//t.addTarget(self.focusNode);
-						t.__h[self.id] = t.own(
+						self.focusNode._riasrTooltip = tooltip;
+						t.addTarget(self.focusNode);
+						/*t.__h[self.id] = t.own(
 							///用 self(dijit) 而不是 node，可以在 disabled 的情况下也能响应.
 							//rias.on(node, delegatedEvent(rias.mouse.enter), function(evt){
 							rias.on(self, delegatedEvent(rias.mouse.enter), function(evt){
@@ -206,8 +221,8 @@ define([
 							}),
 							rias.on(self, "mouseout", rias.hitch(t, "_onUnHover")),
 							rias.on(self, "focusout", rias.hitch(t, "set", "state", "DORMANT")),
-							rias.after(self, "destroy", rias.hitch(t, "set", "state", "DORMANT"))
-						);
+							rias.before(self, "destroy", rias.hitch(t, "set", "state", "DORMANT"))
+						);*/
 					}
 				}
 			}
@@ -248,6 +263,10 @@ define([
 		//};
 		function _showDialog(args) {
 			var //_onShow = args.onShow,
+				_hookAfterSubmit = args._riasrHookAfterSubmit,
+				_afterSubmit = args.afterSubmit,
+				_onSubmit = args.onSubmit,
+				_onCancel = args.onCancel,
 				_onClose = args.onClose,
 				_afterLoaded = args.afterLoaded;
 			args.style = rias.dom.styleToObject(args.style);
@@ -281,6 +300,10 @@ define([
 			args.persist = (args.persist != undefined ? args.persist : 0);
 			args.contentType = (args.contentType != undefined ? args.contentType : "none");
 			//delete args.onShow;
+			delete args._riasrHookAfterSubmit;
+			delete args.afterSubmit;
+			delete args.onSubmit;
+			delete args.onCancel;
 			delete args.onClose;
 			delete args.afterLoaded;
 			args.afterLoaded = function(result){
@@ -297,6 +320,34 @@ define([
 						rias.hitch(d, _onShow)();
 					}
 				}, true));*/
+				if(_hookAfterSubmit){
+					d.own(rias.before(d, "afterSubmit", function(){
+						if (rias.isFunction(_hookAfterSubmit)) {
+							return _hookAfterSubmit.apply(d, arguments);
+						}
+					}, true));
+				}
+				if(_afterSubmit){
+					d.own(rias.after(d, "afterSubmit", function(){
+						if (rias.isFunction(_afterSubmit)) {
+							return _afterSubmit.apply(d, arguments);
+						}
+					}, true));
+				}
+				if(_onSubmit){
+					d.own(rias.after(d, "onSubmit", function(){
+						if (rias.isFunction(_onSubmit)) {
+							return _onSubmit.apply(d, arguments);
+						}
+					}, true));
+				}
+				if(_onCancel){
+					d.own(rias.after(d, "onCancel", function(){
+						if (rias.isFunction(_onCancel)) {
+							return _onCancel.apply(d, arguments);
+						}
+					}, true));
+				}
 				d.own(rias.after(d, "onClose", function(mr){
 					mr = (mr == undefined /*|| mr == null*/ ? d.modalResult : mr);
 					if(args.parent && d.__parentCanClose){
@@ -334,8 +385,9 @@ define([
 			delete args.x;
 			delete args.y;
 			var d = rias.createRiasw(DialogPanel, args);
-			d.startup();
 			//rias.dom.placeTo(d, args.placeToArgs);
+			d.startup();
+			//rias.dom.positionAt(d, args.placeToArgs);
 			return d;
 		}
 

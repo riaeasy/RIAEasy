@@ -6,137 +6,132 @@ define([
 	"dojo/dnd/Moveable",
 	"rias/riasw/layout/_PanelBase",
 	"rias/riasw/layout/Panel",
-	"rias/riasw/form/Button",///Badge
+	"rias/riasw/widget/_BadgeMixin",///Badge
 	"dijit/BackgroundIframe"
-], function(rias, _Widget, _TemplatedMixin, _CssStateMixin, Moveable, _PanelBase, Panel){
+], function(rias, _Widget, _TemplatedMixin, _CssStateMixin, Moveable, _PanelBase, Panel, _BadgeMixin){
 
 	rias.theme.loadCss([
-		"form/Button.css",
 		"layout/DockBar.css"
 	]);
 
-	var DockNode = rias.declare("rias.riasw.layout.DockNode", [_Widget, _TemplatedMixin, _CssStateMixin], {
+	var DockNode = rias.declare("rias.riasw.layout.DockNode", [_Widget, _TemplatedMixin, _CssStateMixin, _BadgeMixin], {
 		title: "",
 
 		targetWidget: null,
 
 		templateString:
-			'<span data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick: toggle">'+
-				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
-				'<span data-dojo-attach-point="titleNode" class="riaswDockNodeTitle">${title}</span>'+
+			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick: toggle" role="button">'+
+				'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
+				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
 				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}">'+
-					'<div data-dojo-attach-point="badgeText" class="riasButtonBadgeRed"></div>'+
 				'</div>'+
-			'</span>',
+			'</div>',
 
 		baseClass: "riaswDockNode",
 		cssStateNodes: {
 			domNode: "riaswDockNode",
 			focusNode: "riaswDockNode"
 		},
-		iconClass: "riaswDockNodeDefaultIcon",
+		//iconClass: "dijitNoIcon",
 		_setIconClassAttr: function(value){
-			rias.dom.removeClass(this.iconNode, this.iconClass || "riaswDockNodeDefaultIcon");
-			this._set("iconClass", (value && value !== "dijitNoIcon") ? value : "riaswDockNodeDefaultIcon");
+			rias.dom.removeClass(this.iconNode, this.iconClass);
+			this._set("iconClass", (value && value !== "dijitNoIcon") ? value : "dijitNoIcon");
 			rias.dom.addClass(this.iconNode, this.iconClass);
 		},
 
-		badgeClass: "riasButtonBadge",
-		badgeStyle: "",
-		badgeColor: "red",//"blue","green","red"(default)
-		badge: "",
-		_getBadgeStyleAttr: function(){
-			return this.badgeStyle;
-		},
-		_setBadgeStyleAttr: function(/*String*/value){
-			var n = this.badgeNode;
-			if(rias.isObject(value)){
-				rias.dom.setStyle(n, value);
-			}else{
-				if(n.style.cssText){
-					n.style.cssText += "; " + value;
-				}else{
-					n.style.cssText = value;
-				}
-			}
-			this._set("badgeStyle", value);
-		},
-		_getBadgeColorAttr: function(){
-			return this.badgeColor;
-		},
-		_setBadgeColorAttr: function(/*String*/value){
-			var n = this.badgeText;
-			if(rias.isString(value)){
-				rias.dom.removeClass(n, "riasButtonBadgeRed");
-				rias.dom.removeClass(n, "riasButtonBadgeBlue");
-				rias.dom.removeClass(n, "riasButtonBadgeGreen");
-				rias.dom.removeClass(n, "riasButtonBadgeYellow");
-				switch(value.charAt(0)){
-					case "b":
-						rias.dom.addClass(n, "riasButtonBadgeBlue");
-						this._set("badgeColor", "blue");
-						break;
-					case "g":
-						rias.dom.addClass(n, "riasButtonBadgeGreen");
-						this._set("badgeColor", "green");
-						break;
-					case "y":
-						rias.dom.addClass(n, "riasButtonBadgeYellow");
-						this._set("badgeColor", "yellow");
-						break;
-					default:
-						rias.dom.addClass(n, "riasButtonBadgeRed");
-						this._set("badgeColor", "red");
-				}
-			}
-		},
-		_getBadgeAttr: function(){
-			return this.badgeText.innerHTML || "";
-		},
 		_setBadgeAttr: function(/*String*/value){
-			if(value){
-				this.badgeText.innerHTML = value;
-				this.badgeNode.style.visibility = "visible";
+			this.inherited(arguments);
+			rias.dom.toggleClass(this.domNode, "riaswBadgeNodeStretch", !!value);
+		},
+
+		///注意 if(has("dojo-bidi")) 是两个不同的类，用 rias.isFunction(this.applyTextDir) 来判断
+		showLabel: true,
+		_setLabelAttr: function(/*String*/ content){
+			//this.inherited(arguments);
+			this._set("label", content);
+			this.labelNode.innerHTML = content;
+			if(this.tooltip){
+				this.labelNode.title = "";
 			}else{
-				this.badgeNode.style.visibility = "hidden";
+				if(!this.showLabel && !("title" in this.params)){
+					this.labelNode.title = rias.trim(this.labelNode.innerText || this.labelNode.textContent || "");
+				}
+				if(this.labelNode.title && rias.isFunction(this.applyTextDir)){
+					this.applyTextDir(this.labelNode, this.labelNode.title);
+				}
 			}
-			this._set("badge", value);
+		},
+		_setTooltipAttr: function(/*String*/ tooltip){
+			this.inherited(arguments);
+			this.titleNode.title = "";
 		},
 
 		_setTargetState: function(){
 			if(!this.targetWidget){
 				return;
 			}
+			//var s = this.targetWidget.isShown();
+			/// isShown() 检测了 _wasShown，在初始化时由于 _playing 的延迟而导致返回 false。改用 displayState 来判断。
 			var d = this.targetWidget.displayState,
-				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayShowMin,
-				t = s && this.targetWidget.isTopmost;
-			rias.dom.toggleClass(this.domNode, "riaswDockNodeTopmost", t);
+				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayShowMin;
+			rias.dom.toggleClass(this.domNode, "riaswDockNodeTopmost", !!this.targetWidget.isTopmost);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeShown", s);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeDocked", !s);
+			if(s){
+				rias.dom.setStyle(this.domNode, "background-color", rias.dom.getStyle(this.targetWidget.captionNode, "background-color"));
+			}else{
+				rias.dom.setStyle(this.domNode, "background-color", "");
+			}
 		},
 		_setTargetWidgetAttr: function(widget){
-			rias.forEach(this._hBadge, function(item){
+			var self = this;
+			rias.forEach(self._hBadge, function(item){
 				item.remove();
 			});
 			if(rias.isInstanceOf(widget, _PanelBase)){
-				this._hBadge = this.own(
-					rias.after(widget, "_getBadgeStyleAttr", rias.hitch(this, "_getBadgeStyleAttr"), true),
-					rias.after(widget, "_setBadgeStyleAttr", rias.hitch(this, "_setBadgeStyleAttr")),
-					rias.after(widget, "_getBadgeColorAttr", rias.hitch(this, "_getBadgeColorAttr"), true),
-					rias.after(widget, "_setBadgeColorAttr", rias.hitch(this, "_setBadgeColorAttr")),
-					rias.after(widget, "_getBadgeAttr", rias.hitch(this, "_getBadgeAttr"), true),
-					rias.after(widget, "_setBadgeAttr", rias.hitch(this, "_setBadgeAttr")),
-
-					rias.after(widget, rias.isFunction(widget._setCaptionAttr) ? "_setCaptionAttr" : "_setTitleAttr", rias.hitch(this, function(value){
-						this.set("title", value);
-					})),
-					rias.after(widget, "onDisplayStateChanged", rias.hitch(this, "_setTargetState")),
-					rias.isFunction(widget._onBringToTop) ? rias.after(widget, "_onBringToTop", rias.hitch(this, "_setTargetState")) : undefined,
-					rias.after(widget, "_setIconClassAttr", rias.hitch(this, "_setIconClassAttr"))
+				self._hBadge = self.own(
+					//widget.watch('title', function(name, oldValue, newValue){
+					//	self.set("label", newValue);
+					//}),
+					widget.watch('caption', function(name, oldValue, newValue){
+						self.set("label", newValue);
+					}),
+					widget.watch('tooltip', function(name, oldValue, newValue){
+						self.set("tooltip", newValue);
+					}),
+					widget.watch('iconClass', function(name, oldValue, newValue){
+						self.set("iconClass", newValue);
+					}),
+					widget.watch('badgeStyle', function(name, oldValue, newValue){
+						self.set("badgeStyle", newValue);
+					}),
+					widget.watch('badgeColor', function(name, oldValue, newValue){
+						self.set("badgeColor", newValue);
+					}),
+					widget.watch('badge', function(name, oldValue, newValue){
+						self.set("badge", newValue);
+					}),
+					widget.watch('displayState', function(name, oldValue, newValue){
+						self._setTargetState(newValue);
+					})
 				);
-				this._set("targetWidget", widget);
+				if(rias.isFunction(widget.onBringToTop)){
+					self._hBadge.concat(self.own(rias.after(widget, "onBringToTop", function(){
+						self._setTargetState();
+					}, true)));
+				}
+				self._set("targetWidget", widget);
+				self.set("caption", widget.get("caption"));
+				self.set("tooltip", widget.get("tooltip"));
+				self.set("iconClass", widget.get("iconClass"));
+				self.set("badgeStyle", widget.get("badgeStyle"));
+				self.set("badgeColor", widget.get("badgeColor"));
+				self.set("badge", widget.get("badge"));
+				self._setTargetState();
 			}else{
-				this._set("targetWidget", null);
+				self._set("targetWidget", null);
+				///这里不应该初始化 caption 等，而应该保持设计值。
 			}
 		},
 
@@ -165,7 +160,8 @@ define([
 		},*/
 		toggle: function(){
 			if(this.targetWidget){
-				if(!this.targetWidget.isTopmost && rias.isFunction(this.targetWidget.bringToTop)){
+				//if(this.targetWidget.isShown() && !this.targetWidget.isTopmost && rias.isFunction(this.targetWidget.bringToTop)){
+				if(this.targetWidget.isShown() && this.targetWidget._wasResized && !this.targetWidget.isTopmost && rias.isFunction(this.targetWidget.bringToTop)){
 					this.targetWidget.bringToTop();
 				}else if(rias.isFunction(this.targetWidget.toggle)){
 					this.targetWidget.toggle();
@@ -189,11 +185,14 @@ define([
 		//		array of panes currently in our dock
 		///这里申明，是在 ctor 里面，_docked.push() 是对 ctor 操作。
 		//_docked: [],
+
 		_riasdRefChildren: {
 			items: "_docked",
 			add: "addTarget",
 			remove: "removeTarget"
 		},
+
+		float: "left",
 
 		findTarget: function(targetWidget){
 			return rias.filter(this.getChildren(), function(child){
@@ -216,19 +215,21 @@ define([
 			this.addChild(node = new DockNode({
 				ownerRiasw: this,
 				targetWidget: targetWidget,
-				title: targetWidget.caption || targetWidget.title,
+				label: targetWidget.caption || targetWidget.title,
+				tooltip: targetWidget.tooltip || targetWidget.caption || targetWidget.title,
 				iconClass: targetWidget.iconClass,
-				badgeStyle: targetWidget._badgeStyle,
-				badgeColor: targetWidget._badgeColor,
-				badge: targetWidget._badge
+				badgeStyle: targetWidget.badgeStyle,
+				badgeColor: targetWidget.badgeColor,
+				badge: targetWidget.badge,
+				style: {
+					float: this.float
+				}
 			}));
 			var self= this,
-				h = this.own(
-				rias.after(node, "destroy", function(){
+				h = rias.after(node, "destroy", function(){
 					rias.removeItems(self._docked, node);
 					h.remove();
-				})
-			)[0];
+				});
 			node.startup();
 			return node;
 		},

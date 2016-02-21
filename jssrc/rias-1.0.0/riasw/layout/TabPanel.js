@@ -134,7 +134,7 @@ define([
 				this.needLayout = true;
 			}
 		},
-		_setupChild: function(/*dijit/_WidgetBase*/ tab, added, /*Integer?*/ insertIndex){
+		_setupChild: function(/*dijit/_WidgetBase*/ tab, added){
 			// Overrides StackPanel._setupChild().
 			if(added){
 				rias.dom.addClass(tab.domNode, "dijitTabPane");

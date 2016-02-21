@@ -1,11 +1,11 @@
 define([
 	"rias",
 	"rias/riasw/form/ValidationTextBox",
-	"rias/riasw/form/ButtonBoxMixin"
-], function(rias, ValidationTextBox, ButtonBoxMixin){
+	"rias/riasw/form/_ButtonBox"
+], function(rias, ValidationTextBox, _ButtonBox){
 
 	var riasType = "rias.riasw.form.ButtonBox";
-	var Widget = rias.declare(riasType, [ValidationTextBox, ButtonBoxMixin], {
+	var Widget = rias.declare(riasType, [ValidationTextBox, _ButtonBox], {
 	});
 
 	Widget._riasdMeta = {
@@ -32,25 +32,8 @@ define([
 				dropDownArgs: {
 					autoClose: 0,
 					caption: "请选择",
-					getReturnValue: function (value){
-						return value;
-					},
-					getDisplayedValue: function (value){
-						return value;
-					},
 					//"moduleMeta": "",
-					"query": {
-					},
-					//"rootItems": {
-					//	"items": [
-					//	],
-					//	"query": {
-					//	}
-					//},
 					//"selectMode": "leaf",
-					//"store": {
-					//	"$refScript": "return rias.webApp.datas.dclass;"
-					//},
 					"style": {
 					}
 				},

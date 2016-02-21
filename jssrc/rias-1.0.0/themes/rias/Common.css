@@ -1,0 +1,87 @@
+
+/* DnD hovered and selected node(s) */
+.dojoDndItemOver {
+	background-image: url(images/treeHover.png);
+}
+.dojoDndItemAnchor,
+.dojoDndItemSelected {
+	background-color: #B8CBEC;
+}
+
+
+/* DnD avatar-specific settings */
+/* For now it uses a default set of rules. Some other DnD classes can be modified as well. */
+
+table.dojoDndAvatar {
+	-moz-border-radius: 0;
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	background-color: #fff;
+	font-size: 75%;
+	color: black;
+}
+.dojoDndAvatar td	{
+	border: none;
+}
+.dojoDndAvatar tr	{
+	border: none;
+}
+.dojoDndAvatarHeader td	{
+	height: 20px;
+	padding: 0 0 0 21px;
+}
+.dojoDndAvatarItem td {
+	padding: 2px;
+}
+.dojoDndMove .dojoDndAvatarHeader	{
+	background-color: #f58383;
+	background-image: url(images/dndNoMove.png);
+	background-repeat: no-repeat;
+	background-position: 2px center;
+}
+.dojoDndCopy .dojoDndAvatarHeader	{
+	background-color: #f58383;
+	background-image: url(images/dndNoCopy.png);
+	background-repeat: no-repeat;
+	background-position: 2px center;
+}
+.dojoDndMove .dojoDndAvatarCanDrop .dojoDndAvatarHeader	{
+	background-color: #97e68d;
+	background-image: url(images/dndMove.png);
+	background-repeat: no-repeat;
+	background-position: 2px center;
+}
+.dojoDndCopy .dojoDndAvatarCanDrop .dojoDndAvatarHeader	{
+	background-color: #97e68d;
+	background-image: url(images/dndCopy.png);
+	background-repeat: no-repeat;
+	background-position: 2px center;
+}
+
+
+/* TextVertical ====================================*/
+.riaswTextHorizontal,
+.riaswTextHorizontalLR {
+	-webkit-writing-mode: horizontal-tb;
+	-mov-writin-mode: horizontal-tb;
+	writing-mode: horizontal-tb;
+}
+.riaswTextHorizontalRL {
+	-webkit-writing-mode: horizontal-tb;
+	-mov-writin-mode: horizontal-tb;
+	writing-mode: horizontal-tb;
+}
+
+.riaswTextVertical,
+ .riaswTextVerticalLR {
+	 letter-spacing: 2px;
+	 -webkit-writing-mode: vertical-lr;
+	 -mov-writin-mode: vertical-lr;
+	 writing-mode: vertical-lr;
+ }
+.riaswTextVerticalRL {
+	letter-spacing: 2px;
+	-webkit-writing-mode: vertical-rl;
+	-mov-writin-mode: vertical-rl;
+	writing-mode: vertical-rl;
+}

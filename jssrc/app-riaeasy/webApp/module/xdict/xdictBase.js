@@ -2,7 +2,8 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 540,
+	"_rsfVersion": 541,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"op": "query",
 	"query": {
@@ -23,59 +24,59 @@ define([
 		});
 	},
 	"loadData": function (query){
-			var m = this,
-				s = m._store,
-				d = rias.newDeferred();
-			if(query){
-				rias.when(s.query(query), function(items){
-					if(items.length > 0){
-						m.table.set("value", items[0]);
-					}else{
-						m.table.reset();
-					}
-					d.resolve(items);
-				}, function(err){
-					console.error("error loading the data: ", query, err);
-					d.resolve(m, err);
-				});
-			}else{
-				d.resolve(m);
-			}
-			return d.promise;
-		},
+		var m = this,
+			s = m._store,
+			d = rias.newDeferred();
+		if(query){
+			rias.when(s.query(query), function(items){
+				if(items.length > 0){
+					m.table.set("value", items[0]);
+				}else{
+					m.table.reset();
+				}
+				d.resolve(items);
+			}, function(err){
+				console.error("error loading the data: ", query, err);
+				d.resolve(m, err);
+			});
+		}else{
+			d.resolve(m);
+		}
+		return d.promise;
+	},
 	"onSubmit": function (){
-			var m = this,
-				v = m.table.get("value"),
-				d = rias.newDeferred();
-			function _cb(result){
-				if(!result.success || result.success < 1){
-					m._canClose = false;
-					rias.warn({parent: m, content: "提交处理失败", caption: m.caption});
-					d.reject(0);
-				}else{
-					d.resolve(1);
-					if(rias.webApp.datas){
-						rias.webApp.datas.loadXdict();
-					}
+		var m = this,
+			v = m.table.get("value"),
+			d = rias.newDeferred();
+		function _cb(result){
+			if(!result.success || result.success < 1){
+				m._canClose = false;
+				rias.warn({parent: m, content: "提交处理失败", caption: m.caption});
+				d.reject(0);
+			}else{
+				d.resolve(1);
+				if(rias.webApp.datas){
+					rias.webApp.datas.loadXdict();
 				}
 			}
-			m.edt_typ.item ? v.typ = m.edt_typ.item.dval : delete v.typ;
-			m.edt_stat.item ? v.stat = m.edt_stat.item.dval : delete v.stat;
-			m.edt_dtyp.item ? v.dtyp = m.edt_dtyp.item.dval : delete v.dtyp;
-			if(m.target){
-				if(m.op === "add"){
-					rias.xhrPost(m.target, v, _cb);
-				}else if(m.op === "modi"){
-					v._idDirty = m.query.id;
-					rias.xhrPut(m.target, v, _cb);
-				}else{
-					d.resolve(1);
-				}
+		}
+		m.edt_typ.item ? v.typ = m.edt_typ.item.dval : delete v.typ;
+		m.edt_stat.item ? v.stat = m.edt_stat.item.dval : delete v.stat;
+		m.edt_dtyp.item ? v.dtyp = m.edt_dtyp.item.dval : delete v.dtyp;
+		if(m.target){
+			if(m.op === "add" || m.op === "copy"){
+				rias.xhrPost(m.target, v, _cb);
+			}else if(m.op === "modi"){
+				v._idDirty = m.query.id;
+				rias.xhrPut(m.target, v, _cb);
 			}else{
 				d.resolve(1);
 			}
-			return d.promise;
-		},
+		}else{
+			d.resolve(1);
+		}
+		return d.promise;
+	},
 	"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.TablePanel",

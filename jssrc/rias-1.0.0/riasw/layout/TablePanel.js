@@ -31,6 +31,8 @@ define([
 		//showCaption: false,
 		//caption: "",
 
+		gutters: false,
+
 		rows: 1,
 		cols: 1,
 		rowHeights: [],
@@ -80,12 +82,31 @@ define([
 			rias.dom.addClass(td, this.baseClass + "Col");
 			tr.appendChild(td);
 
-			this._initAttr(["cellStyle", "childLabelWidth", "childShowLabel", "childStyle", "rowHeights", "colWidths"]);
 		},
 		postCreate: function(){
 			this.inherited(arguments);
 			this._widgets = [];
 			this._tableAttr = rias.mixinDeep({}, _tableAttr, this.tableAttr);
+			///不初始化（不触发）_on
+			this._initAttr([{
+				name: "cellStyle",
+				initialize: false
+			}, {
+				name: "childLabelWidth",
+				initialize: false
+			}, {
+				name: "childShowLabel",
+				initialize: false
+			}, {
+				name: "childStyle",
+				initialize: false
+			}, {
+				name: "rowHeights",
+				initialize: false
+			}, {
+				name: "colWidths",
+				initialize: false
+			}]);
 		},
 		startup: function(){
 			if(this._started){

@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 396,
+	"_rsfVersion": 397,
 	"_riaswVersion": "0.7",
 	"caption": "新的页面模块",
 	"region": "center",

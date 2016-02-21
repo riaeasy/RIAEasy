@@ -63,7 +63,6 @@ define([
 			//		child.resize();
 			//	}
 			//});
-			this._resizeCalled = true;
 			this._internalResize();
 			this._dim = this.getDim(); // update dimension cache
 			if(this._conn){

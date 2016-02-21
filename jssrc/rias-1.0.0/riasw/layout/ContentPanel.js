@@ -23,7 +23,6 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
-			this._initAttr(["href", "content"]);
 		},
 		postCreate: function(){
 			this.inherited(arguments);
@@ -32,6 +31,13 @@ define([
 			///this._onModuleMeta(this.moduleMeta);///无需初始化？
 			///this._onHref(this.href);///无需初始化
 			///this._onContent(this.content);///需要初始化
+			this._initAttr([{
+				name: "href",
+				initialize: false
+			}, {
+				name: "content",
+				initialize: false
+			}]);
 		},
 
 		startup: function(){

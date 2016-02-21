@@ -113,7 +113,7 @@ define([
 					ownerRiasw: self,
 					_riaswIdOfModule: "loading"
 				}));
-				self._appLoading.set("caption", rias.i18n.message.loading);
+				self._appLoading.set("content", rias.i18n.message.loading);
 				self._appLoading.placeAt(self);
 			//}
 			self.inherited(arguments);
@@ -205,7 +205,7 @@ define([
 		_internalResize: function(){
 			//console.debug(this.id, "resize in.");
 			//console.trace();
-			if(this._riasDestroying || this._beingDestroyed){
+			if(this._riasrDestroying || this._beingDestroyed){
 				return;
 			}
 

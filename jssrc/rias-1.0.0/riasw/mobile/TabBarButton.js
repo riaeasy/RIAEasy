@@ -52,7 +52,7 @@ define([
 			// summary:
 			//		Makes this widget in the selected or unselected state.
 			this.inherited(arguments);
-			rias.dom.toggleClass(this.domNode, "mblTabBarButtonSelected", selected);
+			rias.dom.toggleClass(this.domNode, "mblTabBarButtonSelected", !!selected);
 			rias.dom.setAttr(this.domNode, "aria-selected", selected ? "true" : "false");
 			if(this._moveTo){
 				var tabPanelNode = rias.by(this._moveTo);

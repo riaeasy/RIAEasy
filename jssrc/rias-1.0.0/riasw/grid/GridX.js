@@ -625,8 +625,8 @@ define([
 		iconClass16: "riaswGridIcon16",
 		defaultParams: function(params){
 			var p = getGridXRiasd(params);// rias.mixinDeep({}, params);
-			p.modules = rias.concat(p.modules || [], modules, true);
-			p.modelExt = rias.concat(p.modelExt || [], modelExt, true);
+			p.modules = rias.concatUnique(p.modules || [], modules);
+			p.modelExt = rias.concatUnique(p.modelExt || [], modelExt);
 			addModelExt(p, p.modelExt);
 
 			if(p.cache){

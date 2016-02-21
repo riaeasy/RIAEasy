@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 31,
+	"_rsfVersion": 33,
 	"_riaswVersion": "0.7",
 	"region": "center",
 	"query": {
@@ -36,6 +36,12 @@ define([
 							"name": "modi",
 							"text": "修改",
 							"tooltip": "修改详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "copy",
+							"text": "复制",
+							"tooltip": "复制并新增"
 						}
 					],
 					"columnLockCount": 2,

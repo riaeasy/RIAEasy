@@ -23,8 +23,10 @@ define([
 			maxThreads: 50,
 			maxFormContentSize: 4 * 1024 * 1024, /// form 提交的最大字节数
 			//maxUploadSize: 10 * 1024 * 1024,
-			port: 8088,
+			port: [8088],
 			acceptors: 3, //表示同时在监听read事件的线程数，缺省值为2，对于NIO来说，建议值2-（处理器核数+1）.
+			maxIdleTime: 30000,
+			lowResourceMaxIdleTime: 5000,
 			webContext: "/", ///访问的url根。
 
 			//path: {

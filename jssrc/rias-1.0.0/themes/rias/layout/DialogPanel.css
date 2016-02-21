@@ -1,6 +1,6 @@
 
 /* DialogPanel */
-@import "CaptionPanel.css";
+/*@import "CaptionPanel.css";*/
 
 .riaswDialogPanel {
 	display: block;
@@ -14,10 +14,10 @@
 	-moz-box-shadow: 0em 0em 2em #777;
 	-webkit-box-shadow: 0em 0em 2em #777;
 	box-shadow: 0em 0em 2em #777;
-	border-width: 6px;
+	border-width: 4px;
 	border-color: lightsteelblue;
 	border-style: solid;
-	border-radius: 6px;
+	border-radius: 4px;
 }
 .riaswDialogPanelHover,
 .riaswDialogPanelActive {
@@ -69,106 +69,7 @@
 	border-radius: 8px;*/
 }
 
-/* captionNode */
-.riaswDialogPanelCaptionNode {
-	background-color: lightsteelblue;
-	border: 0px solid silver;
-	/*border-bottom-width: 1px;*/
-	padding: 0px;
-	cursor: pointer;
-	font-size: 1em;
-	font-weight: bold;
-	line-height: 1.5em;
-	white-space: nowrap;
-	word-wrap: break-word;
-	height: 2em;
-	top: 0em;
-	vertical-align: middle;
-	display: block;
-}
-.riaswDialogPanelCaptionNodeFixedExpanded{
-}
-.riaswDialogPanelCaptionNodeFixedCollapsed{
-}
-.riaswDialogPanelCaptionNodeExpanded {
-}
-.riaswDialogPanelCaptionNodeCollapsed {
-}
-
-/*.riaswDialogPanelTypeInfo .riaswDialogPanelCaptionNode,
-.riaswDialogPanelTypeAbout .riaswDialogPanelCaptionNode {
-	background-color: lightsteelblue;
-}*/
-
-.riaswDialogPanelCaptionNodeHover,
-.riaswDialogPanelCaptionNodeActive/*,
-.riaswDialogPanelHover .riaswDialogPanelCaptionNode,
-.riaswDialogPanelActive .riaswDialogPanelCaptionNode*/ {
-	background-color: gold;
-}
-.riaswDialogPanelCaptionNodeSelected,
-/*.riaswDialogPanelSelected .riaswDialogPanelCaptionNode,*/
-/*.riaswDialogPanelCaptionNodeFocused,
-.riaswDialogPanelFocused .riaswDialogPanelCaptionNode,*/
-.riaswDialogPanelCaptionNodeTopmost/*,
-.riaswDialogPanelTopmost .riaswDialogPanelCaptionNode*/ {
-	background-color: darkseagreen;
-}
-/*.riaswDialogPanel .riaswDialogPanelCaptionNode {
-	background-color: lightsteelblue;
-}*/
-.riaswDialogPanelCaptionTextNode {
-	padding: 2px 4px;
-}
-.riaswDialogPanelCaptionText{
-}
-
-/* Icons */
-.riaswDialogPanelIconNode {
-	/*width: 2em;
-	height: 2em;*/
-	float: right;
-	padding: 3px;
-}
-.riaswDialogPanelIconInner {
-	width: 15px;
-	height: 15px;
-	margin: 0px;
-	display: inline-block;
-	border: 0;
-	padding: 0;
-	vertical-align: middle;
-}
-.riaswDialogPanelLeftIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat 0px center;
-}
-.riaswDialogPanelRightIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -15px center;
-}
-.riaswDialogPanelToggleIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
-}
-.riaswDialogPanelExpandIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -45px center;
-}
-.riaswDialogPanelCollapseIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -45px center;
-}
-.riaswDialogPanelMaximizeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -75px center;
-}
-.riaswDialogPanelRestoreIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
-}
-.riaswDialogPanelMaximized .riaswDialogPanelMaximizeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
-}
-.riaswDialogPanelCloseIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -105px center;
-}
-.riaswDialogPanelIconNodeHover {
-	background-color: gold;
-}
+/* ActionBar ========================= */
 
 .riaswDialogPanelActionBar {
 	padding: 1em 1em 1em 1em;

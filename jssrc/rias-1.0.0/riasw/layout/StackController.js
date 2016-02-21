@@ -30,10 +30,50 @@ define([
 
 		_aria_attr: "aria-selected",
 
+		watchPageState: true,
+
 		buildRendering: function(/*Event*/ evt){
 			this.inherited(arguments);
 			(this.focusNode || this.domNode).setAttribute("role", "tab");
+			this.isRiaswTextVertical = /left|right/.test(this.tabPosition);
+			//if(this.isRiaswTextVertical){
+			//	rias.dom.addClass(this.containerNode, "riaswTextVertical riaswCaptionNodeVertical");
+			//	this.containerNode.style.height = "";
+			//	this.containerNode.style.width = "";
+			//}
+		},
+
+		postCreate: function(){
+			var self = this,
+				page = self.page;
+			self.inherited(arguments);
+			if(self.watchPageState){
+				self.own(
+					page.watch('caption', function(name, oldValue, newValue){
+						self.set("label", newValue);
+					}),
+					page.watch('tooltip', function(name, oldValue, newValue){
+						self.set("tooltip", newValue);
+					}),
+					page.watch('iconClass', function(name, oldValue, newValue){
+						self.set("iconClass", newValue);
+					}),
+					page.watch('badgeStyle', function(name, oldValue, newValue){
+						self.set("badgeStyle", newValue);
+					}),
+					page.watch('badgeColor', function(name, oldValue, newValue){
+						self.set("badgeColor", newValue);
+					}),
+					page.watch('badge', function(name, oldValue, newValue){
+						self.set("badge", newValue);
+					//}),
+					//page.watch('displayState', function(name, oldValue, newValue){
+					//	self._setTargetState(newValue);
+					})
+				);
+			}
 		}
+
 	});
 
 
@@ -47,7 +87,7 @@ define([
 
 		baseClass: "dijitStackController",
 
-		templateString: "<span role='tablist' data-dojo-attach-event='onkeydown'></span>",
+		templateString: "<span role='tablist' data-dojo-attach-point='containerNode' data-dojo-attach-event='onkeydown'></span>",
 
 		// containerId: [const] String
 		//		The id of the page container that I point to
@@ -69,6 +109,9 @@ define([
 			return rias.by(this.id + "_" + (page._riaswIdOfModule ? page._riaswIdOfModule : page.id));
 		},
 
+		buildRendering: function(){
+			this.inherited(arguments);
+		},
 		postCreate: function(){
 			var self = this;
 			self.inherited(arguments);
@@ -165,13 +208,15 @@ define([
 					disabled: page.disabled,
 					ownerDocument: this.ownerDocument,
 					dir: page.dir,
+					tabPosition: this.tabPosition,
 					lang: page.lang,
 					textDir: page.textDir || this.textDir,
 					showLabel: page.showTitle,
 					iconClass: page.iconClass,
 					closeButton: page.closable,
-					title: page.tooltip,
-					page: page
+					tooltip: page.tooltip || page.caption || page.title,
+					page: page,
+					watchPageState: (page.watchPageState != undefined ? page.watchPageState : true)
 				});
 				this.addChild(button, insertIndex);
 				page.controlButton = button;	// this value might be overwritten if two tabs point to same container

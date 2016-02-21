@@ -2,7 +2,8 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 672,
+	"_rsfVersion": 671,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"style": {
 		"height": "12em",

@@ -2,13 +2,12 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 100,
+	"_rsfVersion": 102,
+	"_riaswType": "rias.riasw.studio.Module",
 	"caption": "标题1",
 	"region": "center",
 	"style": {
-		"height": "100%",
-		"padding": "0px",
-		"width": "100%"
+		"padding": "0px"
 	},
 	"_riaswChildren": [
 		{

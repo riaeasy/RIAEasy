@@ -72,7 +72,7 @@ window.onerror = function(msg, url, line) {
 			var self = this,
 				d = rias.mixinDeep({}, config);
 			if(!rias.hostMobile){
-				rias.mixin_pack(self, {
+				rias.mixin_exact(self, {
 					serverLocation: d.serverLocation,
 					oper: d.oper,
 					timeout: d.timeout,
@@ -90,7 +90,7 @@ window.onerror = function(msg, url, line) {
 							rias.error(e);
 						}
 					}
-					rias.mixin_pack(self, {
+					rias.mixin_exact(self, {
 						serverLocation: d.serverLocation,
 						oper: d.oper,
 						timeout: d.timeout,

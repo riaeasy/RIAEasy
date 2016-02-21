@@ -2,15 +2,32 @@
 
 define([
 	"rias",
-	"dijit/_Widget",
-	"dijit/_TemplatedMixin"
-], function(rias, _Widget, _TemplatedMixin) {
+	"rias/riasw/layout/_Gutter"
+], function(rias, _Gutter) {
+
+	rias.theme.loadCss([
+		"layout/Splitter.css"
+	]);
 
 	var riasType = "rias.riasw.layout._Splitter";
-	var Widget = rias.declare(riasType, [_Widget, _TemplatedMixin ], {
+	var Widget = rias.declare(riasType, [_Gutter], {
+
 		live: true,
 
-		templateString: '<div class="dijitSplitter" data-dojo-attach-event="onkeydown:_onKeyDown,press:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse" tabIndex="0" role="separator"><div class="dijitSplitterThumb"></div></div>',
+		minSize: {
+			w: 0,
+			h: 0
+		},
+		maxSize: {
+			w: 0,
+			h: 0
+		},
+
+		baseClass: "riaswSplitter",
+		templateString:
+			'<div data-dojo-attach-event="onkeydown:_onKeyDown,press:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse" tabIndex="0" role="separator">' +
+				'<div class="riaswSplitterThumb"></div>' +
+			'</div>',
 
 		constructor: function(){
 			this._handlers = [];
@@ -19,15 +36,12 @@ define([
 		postMixInProperties: function(){
 			this.inherited(arguments);
 
-			this.horizontal = /top|bottom/.test(this.region);
 			this._factor = /top|left/.test(this.region) ? 1 : -1;
 			this._cookieName = this.container.id + "_" + this.region;
 		},
 
 		buildRendering: function(){
 			this.inherited(arguments);
-
-			rias.dom.addClass(this.domNode, "dijitSplitter" + (this.horizontal ? "H" : "V"));
 
 			if(this.container.persist){
 				// restore old size
@@ -37,6 +51,33 @@ define([
 				}
 			}
 		},
+
+		destroy: function(){
+			this._cleanupHandlers();
+			delete this.child;
+			delete this.container;
+			delete this.cover;
+			delete this.fake;
+			this.inherited(arguments);
+		},
+
+		/*startup: function(){
+			var self = this;
+			this.inherited(arguments);
+			this.own(rias.after(this.child, "resize", function(){
+				if(self.live && self.container){
+					//self.setSplitterSize();
+				}
+			}, true));
+		},
+
+		setSplitterSize: function(){
+			var childSize = rias.dom.getMarginBox(this.child.domNode)[this.horizontal ? 'h' : 'w'],
+				region = this.region,
+				splitterAttr = region == "top" || region == "bottom" ? "top" : "left";// style attribute of splitter to adjust
+			//this.container._layoutChildren();
+			this.domNode.style[splitterAttr] = childSize + "px";
+		},*/
 
 		_computeMaxSize: function(){
 			var dim = this.horizontal ? 'h' : 'w',
@@ -49,14 +90,17 @@ define([
 			//  otherwise on the next call domGeometry methods start to lie about size.
 			var spaceAvailable = rias.dom.getContentBox(center.domNode)[dim] - 10;
 			///maxSize 改为 _splitterMaxSize
-			return Math.min(this.child._splitterMaxSize, childSize + spaceAvailable);
+			return Math.min(this.child.maxSize[dim] ? this.child.maxSize[dim] : Infinity, childSize + spaceAvailable);
 		},
 
 		_startDrag: function(e){
-			if(!this.cover){
-				this.cover = rias.dom.place("<div class=dijitSplitterCover></div>", this.child.domNode, "after");
+			if(this.child && rias.isFunction(this.child.isShowMin) && this.child.isShowMin()){
+				return;
 			}
-			rias.dom.addClass(this.cover, "dijitSplitterCoverActive");
+			if(!this.cover){
+				this.cover = rias.dom.place("<div class=" + this.baseClass + "Cover></div>", this.child.domNode, "after");
+			}
+			rias.dom.addClass(this.cover, this.baseClass + "CoverActive");
 
 			// Safeguard in case the stop event was missed.  Shouldn't be necessary if we always get the mouse up.
 			if(this.fake){
@@ -65,12 +109,12 @@ define([
 			if(!(this._resize = this.live)){ //TODO: disable live for IE6?
 				// create fake splitter to display at old position while we drag
 				(this.fake = this.domNode.cloneNode(true)).removeAttribute("id");
-				rias.dom.addClass(this.domNode, "dijitSplitterShadow");
+				rias.dom.addClass(this.domNode, this.baseClass + "Shadow");
 				rias.dom.place(this.fake, this.domNode, "after");
 			}
-			rias.dom.addClass(this.domNode, "dijitSplitterActive dijitSplitter" + (this.horizontal ? "H" : "V") + "Active");
+			rias.dom.addClass(this.domNode, this.baseClass + "Active " + this.baseClass + (this.horizontal ? "H" : "V") + "Active");
 			if(this.fake){
-				rias.dom.removeClass(this.fake, "dijitSplitterHover dijitSplitter" + (this.horizontal ? "H" : "V") + "Hover");
+				rias.dom.removeClass(this.fake, this.baseClass + "Hover " + this.baseClass + (this.horizontal ? "H" : "V") + "Hover");
 			}
 
 			//Performance: load data info local vars for onmousevent function closure
@@ -84,7 +128,7 @@ define([
 				childStart = rias.dom.getMarginBox(this.child.domNode, childCS)[dim],
 				max = this._computeMaxSize(),
 				/// minSize 改为 _splitterMinSize
-				min = Math.max(this.child._splitterMinSize, rias.dom.getPadBorderExtents(this.child.domNode, childCS)[dim] + 10),
+				min = Math.max(this.child.minSize[dim], rias.dom.getPadBorderExtents(this.child.domNode, childCS)[dim] + 10),
 				region = this.region,
 				splitterAttr = region == "top" || region == "bottom" ? "top" : "left", // style attribute of splitter to adjust
 				splitterStart = parseInt(splitterStyle[splitterAttr], 10),
@@ -121,22 +165,27 @@ define([
 		_onMouse: function(e){
 			// summary:
 			//		Handler for onmouseenter / onmouseleave events
+			if(this.child && rias.isFunction(this.child.isShowMin) && this.child.isShowMin()){
+				return;
+			}
 			var o = (e.type == "mouseover" || e.type == "mouseenter");
-			rias.dom.toggleClass(this.domNode, "dijitSplitterHover", o);
-			rias.dom.toggleClass(this.domNode, "dijitSplitter" + (this.horizontal ? "H" : "V") + "Hover", o);
+			rias.dom.toggleClass(this.domNode, this.baseClass + "Hover", o);
+			rias.dom.toggleClass(this.domNode, this.baseClass + (this.horizontal ? "H" : "V") + "Hover", o);
 		},
 
 		_stopDrag: function(e){
 			try{
 				if(this.cover){
-					rias.dom.removeClass(this.cover, "dijitSplitterCoverActive");
+					rias.dom.removeClass(this.cover, this.baseClass + "CoverActive");
 				}
 				if(this.fake){
 					rias.dom.destroy(this.fake);
 				}
-				rias.dom.removeClass(this.domNode, "dijitSplitterActive dijitSplitter" + (this.horizontal ? "H" : "V") + "Active dijitSplitterShadow");
-				this._drag(e); //TODO: redundant with onmousemove?
-				this._drag(e, true);
+				rias.dom.removeClass(this.domNode, this.baseClass + "Active " + this.baseClass + (this.horizontal ? "H" : "V") + "Active " + this.baseClass + "Shadow");
+				if(this._drag){
+					this._drag(e); //TODO: redundant with onmousemove?
+					this._drag(e, true);
+				}
 			}finally{
 				this._cleanupHandlers();
 				delete this._drag;
@@ -170,18 +219,9 @@ define([
 					return;
 			}
 			var childSize = rias.dom.getMarginSize(this.child.domNode)[ horizontal ? 'h' : 'w' ] + this._factor * tick;
-			this.container._layoutChildren(this.child.id, Math.max(Math.min(childSize, this._computeMaxSize()), this.child._splitterMinSize));
+			this.container._layoutChildren(this.child.id, Math.max(Math.min(childSize, this._computeMaxSize()), this.child.minSize[horizontal ? 'h' : 'w']));
 			e.stopPropagation();
 			e.preventDefault();
-		},
-
-		destroy: function(){
-			this._cleanupHandlers();
-			delete this.child;
-			delete this.container;
-			delete this.cover;
-			delete this.fake;
-			this.inherited(arguments);
 		}
 
 	});

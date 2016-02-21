@@ -3,25 +3,11 @@
 		"sessionid": ""
 	},
 	"_count": 49,
-	"position": 2,
-	"rsfVersion": 396,
+	"position": 0,
+	"rsfVersion": 397,
 	"items": [
 		{
-			"rsfVersion": 394,
-			"reload": true,
-			"pix": "",
-			"isMobileApp": false,
-			"rotate": false
-		},
-		{
-			"rsfVersion": 395,
-			"reload": true,
-			"pix": "",
-			"isMobileApp": false,
-			"rotate": false
-		},
-		{
-			"rsfVersion": 396,
+			"rsfVersion": 397,
 			"reload": true,
 			"pix": "",
 			"isMobileApp": false,

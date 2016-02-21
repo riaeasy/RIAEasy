@@ -13,6 +13,7 @@ define([
 ], function(rias, Moveable, TimedMoveable, Resizer, Underlay, Panel, Button, CaptionPanel){
 
 	rias.theme.loadCss([
+		"layout/CaptionPanel.css",
 		"layout/DialogPanel.css"
 	]);
 
@@ -39,7 +40,8 @@ define([
 		}
 	}
 
-	var _allWin = [];
+	var _allWin = [],
+		_startZ = 100;
 
 	var riasType = "rias.riasw.layout.DialogPanel";
 	///state:	1=show(showNormal, restore, expand), 2=showMax, 3=collapse(showMin, shrink),
@@ -48,7 +50,7 @@ define([
 
 		//loadOnStartup: false,
 
-		_startZ: 100,
+		//_startZ: _startZ,
 		isTopmost: false,
 
 		_size: undefined,
@@ -78,28 +80,21 @@ define([
 		},
 
 		_canClose: true,
-		closeOnSubmit: true,
+		submitDisplayState: "closed",
 		autoClose: 0,
 
 		templateString:
 			"<div class='dijitReset' role='dialog' aria-labelledby='${id}_captionNode'>"+
 				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
-					"<span data-dojo-attach-point='closeNode' class='dijitInline riaswDialogPanelIconNode'>"+
-						"<span class='riaswDialogPanelIconInner riaswDialogPanelCloseIcon'></span>"+
-					"</span>"+
-					"<span data-dojo-attach-point='maxNode' class='dijitInline riaswDialogPanelIconNode'>"+
-						"<span class='riaswDialogPanelIconInner riaswDialogPanelMaximizeIcon'></span>"+
-					"</span>"+
-					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswDialogPanelIconNode' role='presentation'>"+
-						"<span class='riaswDialogPanelIconInner riaswDialogPanelToggleIcon'></span>"+
-					"</span>"+
-					"<span data-dojo-attach-point='captionTextNode' class='dijitInline riaswDialogPanelCaptionTextNode'>"+
-						"<span data-dojo-attach-point='captionText' class='dijitInline riaswDialogPanelCaptionText'></span>"+
-					"</span>"+
+					"<div data-dojo-attach-point='toggleNode' class='riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></div>"+
+					'<div data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></div>'+
+					"<div data-dojo-attach-point='captionTextNode' class='riaswDialogPanelCaptionTextNode'></div>"+
+					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
+					"<div data-dojo-attach-point='closeNode' class='riaswDialogPanelIconNode riaswDialogPanelCloseIcon'></div>"+
+					"<div data-dojo-attach-point='maxNode' class='riaswDialogPanelIconNode riaswDialogPanelMaximizeIcon'></div>"+
 				"</div>"+
 				"<div data-dojo-attach-point='wrapperNode' class='dijitReset riaswDialogPanelWrapper' role='region' id='${id}_wrapper' ${!nameAttrSetting}>"+
-					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' ${!nameAttrSetting}>"+
-					"</div>"+
+					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' ${!nameAttrSetting}></div>"+
 					//"<div data-dojo-attach-point='actionBarNode' class='dijitReset riaswDialogPanelActionBar' role='region' id='${id}_actionBar'></div>"+
 				"</div>"+
 			"</div>",
@@ -110,9 +105,10 @@ define([
 			maxNode: "riaswDialogPanelIconNode",
 			toggleNode: "riaswDialogPanelIconNode",
 			captionTextNode: "riaswDialogPanelCaptionTextNode",
-			captionText: "riaswDialogPanelCaptionText",
 			containerNode: "riaswDialogPanelContent"
 		},
+
+		//splitter: false,
 
 		focusOnShow: true,
 		showCaption: true,
@@ -130,9 +126,9 @@ define([
 				//visiblity: "hidden",
 				//display: "none",
 				opacity: 0,
-				position: "absolute"
+				position: "absolute",
+				zIndex: Widget._startZ + _allWin.length + 100
 			});
-			this._initAttr(["closable", "movable", "contentType"]);
 		},
 		postCreate: function(){
 			var self = this;
@@ -147,10 +143,8 @@ define([
 					rias.dom.toggleClass(self.captionNode, "riaswDialogPanelCaptionNodeHover", false);
 				})
 			);
-			self._onContentType(self.contentType);
-			self._onClosable(self.closable);
-			self._onMovable(self.movable);
 			self.inherited(arguments);
+			this._initAttr(["closable", "movable", "contentType"]);
 
 			if(self.autoClose == 1){
 				self.own(self.on("mouseleave", function(){
@@ -178,21 +172,12 @@ define([
 				}),
 				rias.after(self.captionNode, "onmousedown", function(evt){
 					//self.defer(function(){
+					////focus 会导致其他 popup 失去焦点，最好判断一下
 					if(!self.focused){
 						self.focus();
 					}
 					//}, 100);
-				/*}),
-				rias.after(self.domNode, "onmousedown", function(evt){
-					//self.defer(function(){
-						////focus 会导致其他 popup 失去焦点，最好判断一下
-						if(!self.focused){
-							self.focus();
-						}
-					//}, 100);
-				*/})//,
-				//rias.after(self, "onSubmit", rias.hitch(self, "close"), true),
-				//rias.after(self, "onCancel", rias.hitch(self, "close"), true)
+				})
 			);
 		},
 		destroy: function(){
@@ -343,43 +328,27 @@ define([
 				self.inherited(args);
 			}
 			//if(self.placeToArgs){
-				rias.dom.placeTo(self, self.placeToArgs);
+				rias.dom.positionAt(self, self.placeToArgs);
 			//}
-		},
-
-		_refreshDisplayState: function(){
-			/*if(this.actionBar && this.actionBar.length){
-				if(!rias.dom.isVisible(this._actionBar)){
-					rias.dom.visible(this._actionBar, true);
-				}
-				this._actionBarHeight = rias.dom.getMarginBox(this._actionBar.domNode).h;
-			}else{
-				if(rias.dom.isVisible(this._actionBar)){
-					rias.dom.visible(this._actionBar, false);
-				}
-				this._actionBarHeight = 0;
-			}*/
-			if(this._actionBar){
-				this._actionBarHeight = rias.dom.getMarginBox(this._actionBar.domNode).h;
-			}else{
-				this._actionBarHeight = 0;
-			}
-			this.inherited(arguments);
 		},
 
 		_onContentType: function(value, oldValue){
 			this.contentType = contentTypeStr(value);
 			rias.dom.removeClass(this.domNode, this.baseClass + "Type" + rias.upperCaseFirst(contentTypeStr(oldValue)));
 			rias.dom.addClass(this.domNode, this.baseClass + "Type" + rias.upperCaseFirst(this.contentType));
+			switch(this.contentType){
+				case contentTypeInfo:
+					return this.set("iconClass", "infoIcon");
+				case contentTypeAbout:
+					return this.set("iconClass", "aboutIcon");
+				case contentTypeWarn:
+					return this.set("iconClass", "warnIcon");
+				case contentTypeError:
+					return this.set("iconClass", "errorIcon");
+				default:
+					return;// this.set("iconClass", "");
+			}
 		},
-
-		//_onParentNode: function(value, oldValue){
-		//	///还是不强行指定
-		//	//if(this.isModal()){
-		//	//	value = rias.webApp.domNode || rias.body(rias.doc);
-		//	//}
-		//	this.inherited(arguments, [value, oldValue]);
-		//},
 
 		_onMovable: function(value, oldValue){
 			var self = this;
@@ -479,17 +448,43 @@ define([
 		//layout: function(){
 		//	this.inherited(arguments);
 		//},
-		_onShow: function(newState){
-			if(this.focusOnShow && !(this.autoClose > 0) && !this.isTip()){
-				this.focus();
-			}
+		_hide: function(newState){
 			this.inherited(arguments);
+			if(this.isTopmost){
+				Widget.bringToTop();
+			}
 		},
-		_show: function(newState){
+		_onShow: function(newState){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(){
+				if(self.focusOnShow && !(self.autoClose > 0) && !self.isTip()){
+					if(self._playingDeferred){
+						self._playingDeferred.then(function(){
+							self.focus();
+							self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+						})
+					}else{
+						self.focus();
+						self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					}
+				}
 			});
 		},
+		restore: function(){
+			var self = this;
+			return rias.when(self.inherited(arguments), function(result){
+				if(result === self){
+					self.focus();
+					self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+				}
+			});
+		},
+
+		//_doDock: function(){
+		//	this.inherited(arguments);
+		//	Widget.bringToTop();
+		//},
+
 		resize: function(/* Object */rect){
 			this.inherited(arguments);
 		},
@@ -505,13 +500,15 @@ define([
 
 	});
 
-	Widget._startZ = 100;
+	Widget._startZ = _startZ;
 	Widget.bringToTop = function(win){
 		var i, z, zt, h,
 			ws, ms, ts;
 
+		function _visible(d){
+			return d.isShown() && d._isVisible();///TODO:zensst. _wasResized ?
+		}
 		function _topmost(h, value, z){
-			h.set("isTopmost", !!value);
 			if(value){
 				!Widget.topmost && (Widget.topmost = h);
 				rias.dom.addClass(h.domNode, "riaswDialogPanelTopmost");
@@ -521,32 +518,60 @@ define([
 				rias.dom.removeClass(h.captionNode, "riaswDialogPanelCaptionNodeTopmost");
 			}
 			rias.dom.setStyle(h.domNode, "zIndex", z);
-			h._onBringToTop();
-		}
-		function _sort(a, b){
-			h = a === win ? 1 : b === win ? -1 : rias.dom.getStyle(a.domNode, "zIndex") - rias.dom.getStyle(b.domNode, "zIndex");
-			if(isNaN(h)){
-				h = 0;
+			if(h.get("isTopmost") != value){
+				h.set("isTopmost", !!value);
+				h._onBringToTop();
 			}
-			return (a.isShown() ? b.isShown() ? h : 1 : h);
+		}
+		/*function _isFocused(id){
+			return rias.indexOf(rias.dom.focusManager.activeStack, id) >= 0;
+		}*/
+		function _sort(a, b){
+			/*if(_isFocused(a.id)){
+				return 1;
+			}
+			if(_isFocused(b.id)){
+				return -1;
+			}*/
+			h = a === win ? 1 : b === win ? -1 : rias.toInt(rias.dom.getStyle(a.domNode, "zIndex"), 0, 1) - rias.toInt(rias.dom.getStyle(b.domNode, "zIndex"), 0, 1);
+			//if(isNaN(h)){
+			//	h = 0;
+			//}
+			return (_visible(a) ? (_visible(b) ? h : 1) : (_visible(b) ? -1 : h));
 		}
 
-		if(win && Widget.topmost === win){
-			return Widget.topmost;
+		if(!win || Widget.topmost === win){
+			///不指定 win、或 win 已经 topmost，以及没有 destroy，则直接返回。
+			if(Widget.topmost && !Widget.topmost._beingDestroyed && !Widget.topmost._riasrDestroying && _visible(Widget.topmost)){
+				///已经是 topmost，则不触发 onBringToTop
+				if(!Widget.topmost.isTopmpst){
+					Widget.topmost.isTopmpst = true;
+					Widget.topmost._onBringToTop();
+				}
+				return Widget.topmost;
+			}
+			Widget.topmost = null;
 		}
+		//if(Widget.topmost && !_visible(Widget.topmost)){
+		//	Widget.topmost.isTopmpst = false;
+		//	Widget.topmost._onBringToTop();
+		//}
 		Widget.topmost = null;
-		if(win && !win.isShown()){
+		if(win && win.isDocked()){
+			///TODO:zensst.在非可见页时怎么处理？
+			///非可见时，直接返回，在 restore 后处理。
 			win.restore();
+			return Widget.topmost;
 		}
 		///因为需要处理 css，应该包含未显示的
 		ws = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasDestroying && !w.isModal() && !w.isTop();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasrDestroying && !w.isModal() && !w.isTop();// && (!win || w !== win);
 		});
 		ms = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasDestroying && w.isModal();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasrDestroying && w.isModal();// && (!win || w !== win);
 		});
 		ts = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasDestroying && w.isTop();// && (!win || w !== win);
+			return !w._beingDestroyed && !w._riasrDestroying && w.isTop();// && (!win || w !== win);
 		});
 		Underlay.hide();
 		try{
@@ -557,8 +582,10 @@ define([
 			for(i = ms.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ms[i];
-				//if(h === win && h.isShown()){
-				if(!Widget.topmost && h.isShown()){
+				///modal 以最后一个为 topmost
+				//if(h === win && _visible(h)){
+				if(!Widget.topmost && _visible(h)){
+					_topmost(h, true, zt);
 					Underlay.show({
 						ownerRiasw: h,
 						dialog: h,
@@ -568,16 +595,16 @@ define([
 						_onKeyDown: rias.hitch(h, "_onKey"),
 						ownerDocument: h.ownerDocument
 					}, zt - 1);
-					_topmost(h, true, zt);
 				}else{
 					_topmost(h, false, z);
 				}
 			}
 			zt = z;
+			///!win 时，以第一个为 topmost
 			for(i = ts.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ts[i];
-				if(h === win && h.isShown()){
+				if(!Widget.topmost && (!win || h === win) && _visible(h)){
 					_topmost(h, true, zt);
 				}else{
 					_topmost(h, false, z);
@@ -587,7 +614,7 @@ define([
 			for(i = ws.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ws[i];
-				if(h === win && h.isShown()){
+				if(!Widget.topmost && (!win || h === win) && _visible(h)){
 					_topmost(h, true, zt);
 				}else{
 					_topmost(h, false, z);
@@ -684,11 +711,11 @@ define([
 				"defaultValue": false,
 				"title": "Maximizable"
 			},
-			"duration": {
+			/*"duration": {
 				"datatype": "number",
 				"defaultValue": rias.defaultDuration,
 				"title": "Duration"
-			},
+			},*/
 			"adjustPaths": {
 				"datatype": "boolean",
 				"description": "Adjust relative paths in html string content to point to this page.\nOnly useful if you grab content from a another folder then the current one",

@@ -99,8 +99,6 @@
 	text-align: right;
 	visibility: hidden;
 	display: inline-block;
-	width: 0px;
-	height: 100%;
 	vertical-align: middle;
 }
 .dijitNumberTextBox .riaswTextBoxContainer {
@@ -155,7 +153,6 @@
 	/*#background:#fff url('../images/validationInputBg.gif') repeat-x top left;*/
 	background-color: white;
 	border: 1px solid silver;
-	height: 100%;
 	position: absolute;
 }
 

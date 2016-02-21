@@ -8,6 +8,8 @@ define([
 	"dojo/touch",
 	"dojo/keys",
 	"dojo/mouse",
+	"dojox/gesture/tap",
+	"dojox/gesture/swipe",
 	"dojo/_base/connect",
 	"dojo/_base/event",
 	"dojo/_base/window",
@@ -43,7 +45,7 @@ define([
 	"dijit/_WidgetsInTemplateMixin",
 	"dijit/_Container",
 	"dijit/form/_FormWidgetMixin"
-], function(rias, on, touch, keys, mouse, connect, event, basewin, win,
+], function(rias, on, touch, keys, mouse, gestureTap, gestureSwipe, connect, event, basewin, win,
 			_html, html, dom, domConstruct, domGeom, domClass, domStyle, domAttr, domProp,
 			css3, parser, query, cookie,
 			dijit, dijitbase, registry, a11y, selection, focus, place, Viewport, layoutUtils,
@@ -54,6 +56,10 @@ define([
 	rias.touch = touch;
 	rias.keys = keys;
 	rias.mouse = mouse;
+	rias.gesture = {
+		tap: gestureTap,
+		swipe: gestureSwipe
+	};
 
 	rias.connect = connect;
 	//rias.disconnect = connect;
@@ -245,6 +251,7 @@ define([
 	rias.dom.hasClass = domClass.contains;
 	rias.dom.addClass = domClass.add;
 	rias.dom.removeClass = domClass.remove;
+	///domClass.toggle(/*DomNode|String*/ node, /*String|Array*/ classStr, /*Boolean?*/ condition) 中 condition == undefined 时为实时反转
 	rias.dom.toggleClass = domClass.toggle;
 	rias.dom.replaceClass = domClass.replace;
 
@@ -739,7 +746,7 @@ define([
 			parent = node.getParent();
 			if(!args.parent && !parent){
 				node.placeAt(rias.webApp || rias.body(rias.doc));
-			}else{
+			}else if(args.parent){
 				if(rias.isDijit(args.parent)){
 					if(parent !== args.parent){
 						node.placeAt(args.parent);
@@ -758,7 +765,7 @@ define([
 			parent = rias.by(node.parentNode);
 			if(!args.parent && !parent){
 				rias.dom.place(node, rias.webApp && rias.webApp.domNode || rias.body(rias.doc));
-			}else{
+			}else if(args.parent){
 				if(rias.isDijit(args.parent)){
 					if(parent !== args.parent){
 						rias.dom.place(node, args.parent.domNode);
@@ -767,6 +774,25 @@ define([
 					rias.dom.place(node, args.parent);
 				}
 			}
+		}
+		return node.parentNode;
+	};
+	rias.dom.positionAt = function(node, args){
+		//args.parent: dijit
+		//args.around: dijit or domNode
+		//args.orient: around:["below", "below-alt", "above", "above-alt"] or at:["MM", "TL", "TR"...]
+		//args.maxHeight: Number(without "px")
+		//args.padding: Number(without "px")
+		//args.x: Number(without "px")
+		//args.y: Number(without "px")
+		var parent;
+		args = args || {};
+		rias.dom.placeTo(node, args);
+		if(rias.isDijit(node)){
+			parent = node.getParent();
+			node = node.domNode;
+		}else if(rias.isDomNode(node)){
+			parent = rias.by(node.parentNode);
 		}
 		var //orient = args.orient || ["below", "below-alt", "above", "above-alt"],
 			ltr = parent ? parent.isLeftToRight() : rias.dom.isBodyLtr(node.ownerDocument),
@@ -826,18 +852,20 @@ define([
 		if(widget){
 			var ws;
 			if(arguments.length > 1){
-				visiblity = !(visiblity == 0 || visiblity === "hidden");
 				ws = widget.style;
-				if(visiblity){
-					ws.visibility = "visible";
-					ws.display = "";
-					ws.opacity = (opacity !== undefined ? opacity : 1);
-				}else{
-					ws.visibility = "hidden";
-					ws.display = "none";
-					ws.opacity = (opacity !== undefined ? opacity : 0);
+				if(visiblity != undefined){
+					visiblity = !(visiblity == 0 || visiblity === "hidden");
+					if(visiblity){
+						ws.visibility = "visible";
+						ws.display = "";
+					}else{
+						ws.visibility = "hidden";
+						ws.display = "none";
+					}
 				}
-				return visiblity;
+				if(rias.isNumber(opacity)){
+					ws.opacity = opacity;
+				}
 			}
 			ws = domStyle.getComputedStyle(widget);// widget.style;
 			return ((ws.visibility === "visible" || ws.visibility === "") && ws.display !== "none");
@@ -850,6 +878,7 @@ define([
 	};
 
 	rias.dom.selection = selection;
+	rias.dom.focusManager = focus;
 	rias.dom.focus = focus.focus;
 	rias.dom.focusedNode = function(){
 		return focus.curNode;
@@ -861,9 +890,9 @@ define([
 		function capitalize(word){
 			return word.substring(0,1).toUpperCase() + word.substring(1);
 		}
-		function size(widget, dim){
+		function size(widget, _dim){
 			// size the child
-			var newSize = widget.resize ? widget.resize(dim) : rias.dom.setMarginBox(widget.domNode, dim);
+			var newSize = widget.resize ? widget.resize(_dim) : rias.dom.setMarginBox(widget.domNode, _dim);
 
 			// record child's size
 			if(newSize){
@@ -873,19 +902,20 @@ define([
 				// otherwise, call getMarginBox(), but favor our own numbers when we have them.
 				// the browser lies sometimes
 				rias.mixin(widget, rias.dom.getMarginBox(widget.domNode));
-				rias.mixin(widget, dim);
+				rias.mixin(widget, _dim);
 			}
 		}
-
-		//dim = rias.mixin({}, dim);
-
-		//rias.dom.addClass(container, "dijitLayoutContainer riaswLayoutContainer");
 
 		children = rias.filter(children, function(item){ return item.region != "center" && item.layoutAlign != "client"; })
 			.concat(rias.filter(children, function(item){ return item.region == "center" || item.layoutAlign == "client"; }));
 
 		// set positions/sizes
+		//rias.dom.addClass(container, "dijitLayoutContainer");///".dijitLayoutContainer" 会导致显示异常
 		//var cs = rias.dom.getComputedStyle(container);
+		//dim = rias.mixin({}, dim);
+		if(!dim){
+			//dim = {};//rias.dom.getContentBox(container);
+		}
 		rias.forEach(children, function(child){
 			if(child._beingDestroyed){
 				return;
@@ -939,6 +969,10 @@ define([
 					}
 				}else if(pos == "client" || pos == "center"){
 					size(child, dim);
+				}else{
+					if(child.resize){
+						child.resize();
+					}
 				}
 			}else{
 				///size()执行后，会设置 style，导致 child.size 固化
@@ -998,13 +1032,6 @@ define([
 	//	return w;
 	//};
 
-	//rias.after(rias.domConstruct, "placeDom", _afterDomConstructPlace, true);//TODO:zensst.是否可以直接覆盖 domConstruct.place ?
-	//rias.after(rias, "placeDom", _afterDomConstructPlace, true);//TODO:zensst.是否可以直接覆盖 domConstruct.place ?
-	///_afterNodeAppendChild暂时没用
-	/*function _afterNodeAppendChild(child){
-		_afterDomConstructPlace(child, this);
-	}
-	rias.after(Node, "appendChild", _afterNodeAppendChild, true);//TODO:zensst.是否可以直接覆盖 Node.appendChild ?*/
 	_WidgetBase.extend({
 		/*own: function(position, handles){
 			var self = this,
@@ -1018,6 +1045,9 @@ define([
 			}
 			return hds;
 		},*/
+		///不建议修改 set。如果需要触发 watch，则需要在 _setXXXAttr 中调用 _set()
+		//set: function(name, value){
+		//},
 		_introspect: function(){
 			this.inherited(arguments);
 		},
@@ -1037,8 +1067,8 @@ define([
 			this.inherited(arguments);
 		},
 		destroy: function(/*Boolean*/ preserveDom){
-			if(!this._destroyed && !this._riasDestroying){
-				this._riasDestroying = true;
+			if(!this._destroyed && !this._riasrDestroying){
+				this._riasrDestroying = true;
 				this.uninitialize();
 
 				function destroy(w){
@@ -1070,7 +1100,7 @@ define([
 				this.destroyRendering(preserveDom);
 				rias.registry.remove(this.id);
 			}
-			this._riasDestroying = false;
+			this._riasrDestroying = false;
 			this.inherited(arguments);
 		},
 		destroyDescendants: function(/*Boolean?*/ preserveDom){
@@ -1129,9 +1159,10 @@ define([
 				//rias.orphan(child);
 				//rias.own(ref, child, position);
 				rias.dom.place(child.domNode, ref, position);
-				if(child._onParentNodeChanged){
-					child._onParentNodeChanged();
-				}
+				//if(child._onParentNodeChanged){
+				//	child._onParentNodeChanged();
+				//}
+				child.set("riasrParentNode", ref);
 				p = child.getParent();
 				///ref 不一定是 p，故最好不要设置 _riasrParent
 				///child._riasrParent = p;
@@ -1285,7 +1316,7 @@ define([
 	});
 
 	_Container.extend({
-		_setupChild: function(/*dijit/_WidgetBase*/child, added, /*Integer?*/ insertIndex){
+		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex){
 			if(this._started){
 				if(!child._started){
 					child.startup();
@@ -1320,9 +1351,10 @@ define([
 
 			rias.dom.place(child.domNode, refNode, insertIndex);
 			child._riasrParent = p;
-			if(child._onParentNodeChanged){
-				child._onParentNodeChanged();
-			}
+			//if(child._onParentNodeChanged){
+			//	child._onParentNodeChanged();
+			//}
+			child.set("riasrParentNode", p.domNode);
 			p._setupChild(child, true, insertIndex);
 		},
 		removeChild: function(/*Widget|int*/ widget){
@@ -1346,9 +1378,10 @@ define([
 				var n = (child.domNode ? child.domNode : child);
 				if(n && n.parentNode){
 					n.parentNode.removeChild(n); // detach but don't destroy
-					if(child._onParentNodeChanged){
-						child._onParentNodeChanged();
-					}
+					//if(child._onParentNodeChanged){
+					//	child._onParentNodeChanged();
+					//}
+					child.set("riasrParentNode", undefined);
 				}
 				p._setupChild(child, false);
 			}

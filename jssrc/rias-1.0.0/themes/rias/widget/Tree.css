@@ -1,43 +1,44 @@
 /* Tree */
 
 .rias .dijitTreeNode {
-	background : url('images/treeI.gif') no-repeat;
+	/*background : url('images/treeI.gif') no-repeat;*/
 	/*background-position : top left;
 	background-repeat : repeat-y; zensst*/
+	background: none;
 	zoom: 1;
 }
-
 /* left vertical line (grid) for all nodes */
 .rias .dijitTreeIsLast {
-    background: url('images/treeI_half.gif') no-repeat;
+	/*background: url('images/treeI_half.gif') no-repeat;*/
 }
 
 .rias .dijitTreeLabel {
 	font-weight: normal;
-	margin-left: 3px;
+	margin-left: 0.3em;
 	vertical-align: middle;
 }
 
 .rias .dijitTreeIsRoot {
-    margin-left: 0;
-    background-image: none;
+	margin-left: 0;
+	background-image: none;
 }
 
 .rias .dijitTreeExpando {
-    width: 18px;
-    height: 18px;
+	width: 18px;
+	height: 18px;
 }
 
 .rias .dijitTreeRow {
 	/* so insert line shows up on IE when dropping after a target element */
-	padding-bottom: 2px;
+	/*padding-bottom: 2px;*/
+	padding: 0.1em 0.2em 0.2em 0.2em;
 	vertical-align: middle;
 }
 
 .rias .dijitTreeContent {
-    min-height: 18px;
-    min-width: 18px;
-    padding-left:1px;
+	min-height: 18px;
+	min-width: 18px;
+	padding-left:1px;
 	vertical-align: middle;
 }
 
@@ -56,15 +57,15 @@
 }
 
 .rias .dijitTreeExpandoOpened {
-	background: url('images/spriteTree.gif') no-repeat -18px top;
+	background: url('images/spriteTree.png') no-repeat -18px top;
 }
 
 .rias .dijitTreeExpandoClosed {
-	background-image: url('images/spriteTree.gif');
+	background-image: url('images/spriteTree.png');
 }
 
 .rias .dijitTreeExpandoLeaf {
-	background: url('images/spriteTree.gif') no-repeat -36px top;
+	background: url('images/spriteTree.png') no-repeat -36px top;
 }
 
 .rias .dijitTreeExpandoLoading {
@@ -129,15 +130,14 @@
 .riaswTreeMenu .dijitTreeRow {
 	/* so insert line shows up on IE when dropping after a target element */
 	padding: .5em .5em;
-	vertical-align: middle;
-	border-bottom: 1px solid silver;
+	border-bottom: 0px solid lavender;
 }
 .riaswTreeMenu .dijitTreeNodeDisabled .dijitTreeRow {
-	border-bottom-color: grey;
+	border-bottom-color: silver;
 }
-.riaswTreeMenu .dijitTreeExpando {
+/*.riaswTreeMenu .dijitTreeExpando {
 	display: none;
 }
 .riaswTreeMenu .dijitTreeNode {
 	background: none;
-}
+}*/

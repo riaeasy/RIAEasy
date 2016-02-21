@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 78,
+	"_rsfVersion": 82,
 	"_riaswVersion": "0.7",
 	"region": "center",
 	"actions": {
@@ -163,189 +163,12 @@ define([
 	},
 					"_riaswChildren": [
 						{
-							"_riaswType": "rias.riasw.grid.GridX",
-							"_riaswIdOfModule": "daccGrid",
-							"cellIdOps": [
-								{
-									"func": "cellIdOnClick",
-									"name": "view",
-									"text": "查看",
-									"tooltip": "查看详细信息"
-								}
-							],
-							"query": {
-							},
+							"_riaswType": "rias.riasw.layout.CaptionPanel",
+							"_riaswIdOfModule": "captionPanel1",
+							"layoutPriority": 0,
 							"region": "center",
-							"structure": [
-								{
-									"field": "code",
-									"name": "缴款户编号",
-									"width": "100px"
-								},
-								{
-									"field": "text",
-									"name": "名称",
-									"width": "160px"
-								},
-								{
-									"field": "daddr",
-									"name": "地址",
-									"width": "200px"
-								},
-								{
-									"field": "stat",
-									"name": "状态",
-									"width": "100px"
-								},
-								{
-									"field": "typ",
-									"name": "缴款户类型",
-									"width": "100px"
-								},
-								{
-									"field": "dtyp",
-									"name": "默认缴款类型",
-									"width": "100px"
-								},
-								{
-									"field": "dtypclass",
-									"name": "缴款户集群",
-									"width": "160px"
-								},
-								{
-									"field": "dbank",
-									"name": "开户行",
-									"width": "120px"
-								},
-								{
-									"field": "daccount",
-									"name": "帐号",
-									"width": "180px"
-								},
-								{
-									"field": "dname",
-									"name": "发票名",
-									"width": "180px"
-								},
-								{
-									"field": "dinfo",
-									"name": "备注",
-									"width": "280px"
-								}
-							],
-							"style": {
-								"border": "1px #b1badf solid",
-								"height": "100%",
-								"region": "center",
-								"weith": "100%"
-							},
-							"target": {
-								"$refScript": "return module.actions.dacc;"
-							},
-							"caption": "缴款户信息",
-							"treeColumns": [
-							],
-							"viewModule": "appModule/dacc/daccForm"
-						},
-						{
-							"_riaswType": "rias.riasw.grid.GridX",
-							"_riaswIdOfModule": "dmeterGrid",
-							"cellIdOps": [
-								{
-									"func": "cellIdOnClick",
-									"name": "view",
-									"text": "查看",
-									"tooltip": "查看详细信息"
-								}
-							],
-							"query": {
-							},
-							"region": "center",
-							"structure": [
-								{
-									"field": "code",
-									"name": "用户编号",
-									"width": "100px"
-								},
-								{
-									"field": "dcontact",
-									"name": "默认客户姓名",
-									"width": "220px"
-								},
-								{
-									"field": "text",
-									"name": "安装地址",
-									"width": "260px"
-								},
-								{
-									"field": "dmobile",
-									"name": "手机",
-									"width": "120px"
-								},
-								{
-									"field": "dtele",
-									"name": "其他联系方式",
-									"width": "180px"
-								},
-								{
-									"field": "stat",
-									"name": "状态",
-									"width": "100px"
-								},
-								{
-									"field": "typ",
-									"name": "基表类型",
-									"width": "100px"
-								},
-								{
-									"field": "dtyp",
-									"name": "计费类型",
-									"width": "100px"
-								},
-								{
-									"field": "dval",
-									"name": "量程",
-									"width": "80px"
-								},
-								{
-									"field": "dcodetyp",
-									"name": "证件类型",
-									"width": "80px"
-								},
-								{
-									"field": "dcode",
-									"name": "证件编号",
-									"width": "120px"
-								},
-								{
-									"field": "daddr",
-									"name": "证件地址",
-									"width": "260px"
-								},
-								{
-									"field": "demail",
-									"name": "email",
-									"width": "180px"
-								},
-								{
-									"field": "dinfo",
-									"name": "备注",
-									"width": "280px"
-								}
-							],
-							"style": {
-								"border": "1px #b1badf solid",
-								"height": "100%",
-								"region": "center",
-								"weith": "100%"
-							},
-							"target": {
-								"$refScript": "return module.actions.dmeter;"
-							},
-							"caption": "基表信息",
-							"treeColumns": [
-							],
-							"viewModule": "appModule/dmeter/dmeterForm"
+							"caption": "any",
+							"splitter": false
 						}
 					]
 				}
