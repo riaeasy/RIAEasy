@@ -2,14 +2,14 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 38,
+	"_rsfVersion": 39,
 	"_riaswVersion": "0.7",
-		"caption": {
-			"$refObj": "rias.i18n.webApp.myHome.caption"
-		},
-		"iconClass": "homeIcon",
-		"region": "center",
-		"_riaswChildren": [
+	"caption": {
+		"$refObj": "rias.i18n.webApp.myHome.caption"
+	},
+	"iconClass": "homeIcon",
+	"region": "center",
+	"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "myHomeMain",
