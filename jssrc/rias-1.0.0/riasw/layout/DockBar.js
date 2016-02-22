@@ -20,7 +20,7 @@ define([
 		targetWidget: null,
 
 		templateString:
-			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick: toggle" role="button">'+
+			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:onMouseEnter" role="button">'+
 				'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
 				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
@@ -167,7 +167,21 @@ define([
 					this.targetWidget.toggle();
 				}
 			}
+		},
 
+		onMouseEnter: function(e){
+			if(this.targetWidget && this.targetWidget.autoToggle){
+				if(this.targetWidget.isDocked()){
+					this.targetWidget.restore();
+				}
+			}
+		},
+		onMouseLeave: function(e){
+			//if(this.targetWidget && this.targetWidget.autoToggle){
+			//	if(this.targetWidget.isShown() && this.targetWidget._wasResized){
+			//		this.targetWidget.dock();
+			//	}
+			//}
 		}
 
 	});

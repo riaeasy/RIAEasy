@@ -51,6 +51,7 @@
 	overflow: hidden;
 }*/
 .riaswDialogPanelContent {
+	background-color: whitesmoke;/*避免 wrapper 造成 transparent*/
 	overflow: auto;
 	position: relative;
 	padding: 2px;

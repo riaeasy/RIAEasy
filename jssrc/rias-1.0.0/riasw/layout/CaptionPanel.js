@@ -299,8 +299,8 @@ define([
 			//e.preventDefault();
 			//e.stopPropagation();
 			if(this.autoToggle && this.toggleable && !this._playing){
-				if(!this.isShowMin()){
-					this.showMin();
+				if(!this.isDocked()){
+					this.dock();
 				}
 			}
 		}
