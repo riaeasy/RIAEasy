@@ -412,9 +412,8 @@ define([
 		own: function(handles){
 			///FIXME:zensst. own(after(destroy))时，有错！执行 after 之前就 remove 了。
 			var self = this,
-				i, _i,
+				i,
 				hds,
-				hdhs = [],
 				cleanupMethods = [
 					"destroyRecursive",
 					"destroy",
@@ -446,7 +445,8 @@ define([
 					});
 				}
 				var destroyMethodName;
-				var odh = {
+				var da = [],
+					odh = {
 					_handle: handle,
 					_remove: rias.before(self, "destroy", function (preserveDom){
 						self._beingDestroyed = true;
@@ -457,22 +457,25 @@ define([
 							rias.hitch(handle, self.orphan)();
 						}
 						handle[destroyMethodName](preserveDom);
+						i = self._riasrChildren.indexOf(odh);
+						if(i >= 0){
+							self._riasrChildren.splice(i, 1);
+						}
 					})
 				};
 				if(rias.isRiasw(handle)){
-					rias.hitch(handle, self.orphan)(1);
+					rias.hitch(handle, self.orphan)(true);
 					handle._riasrOwner = self;
-					self._riasrChildren.splice(i, 0, odh);
-					//delete self.ownerRiasw;
-					i++;
+					self._riasrChildren.push(odh);
 				}
 
 				// Callback for when handle is manually destroyed.
 				function onManualDestroy(){
 					odh._remove.remove();
-					rias.forEach(hdhs, function(hdh){
+					rias.forEach(da, function(hdh){
 						hdh._remove.remove();
 					});
+					da = undefined;
 				}
 
 				// Setup listeners for manual destroy of handle.
@@ -491,7 +494,7 @@ define([
 								destroyMethodName = cleanupMethod;
 							}
 							///每种 destroy 方法都 handle after
-							hdhs.push({
+							da.push({
 								_handle: handle,
 								_remove: rias.after(handle, cleanupMethod, onManualDestroy, true)
 							});

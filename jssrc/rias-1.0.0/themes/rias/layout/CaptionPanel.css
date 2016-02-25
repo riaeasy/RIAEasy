@@ -94,31 +94,11 @@
 	background-color: darkseagreen;
 }
 
-.riaswCaptionNodeVertical,
-.riaswCaptionNodeVerticalLR {
-	top: -0.25em;
-	padding: 0.5em 0.25em;
-}
-.riaswCaptionNodeVerticalRL {
-	top: -0.25em;
-	padding: 0.5em 0em;
-}
-
 .riaswCaptionPanelCaptionTextNode,
 .riaswDialogPanelCaptionTextNode {
 	padding: 0em 0.25em;
 	word-break: break-all;
 	display: inline-block;
-}
-.riaswCaptionNodeVertical .riaswCaptionPanelCaptionTextNode,
-.riaswCaptionNodeVerticalLR .riaswCaptionPanelCaptionTextNode,
-.riaswCaptionNodeVertical .riaswDialogPanelCaptionTextNode,
-.riaswCaptionNodeVerticalLR .riaswDialogPanelCaptionTextNode {
-	padding: 0.5em 0em;
-}
-.riaswCaptionNodeVerticalRL .riaswCaptionPanelCaptionTextNode,
-.riaswCaptionNodeVerticalRL .riaswDialogPanelCaptionTextNode {
-	padding: 0.5em 0em;
 }
 
 /* Icons */
@@ -128,16 +108,12 @@
 	height: 2em;*/
 	float: right;
 
-	width: 15px;
-	height: 15px;
+	width: 16px;
+	height: 16px;
 	margin: 0px 0.25em;
 	display: inline-block;
 	border: 0;
 	vertical-align: middle;
-
-	background-image: url(./images/CaptionPanelBtn.png);
-	background-position: 0px 0px;
-	background-repeat: no-repeat;
 }
 .riaswCaptionPanelToggleIconNode,
 .riaswDialogPanelToggleIconNode {
@@ -161,43 +137,80 @@
 }*/
 .riaswCaptionPanelLeftIcon,
 .riaswDialogPanelLeftIcon {
-	background-position-x: 0px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat 0px 0px;
 }
 .riaswCaptionPanelCaptionNodeCollapsed .riaswCaptionPanelToggleIcon,
 .riaswCaptionPanelRightIcon,
 .riaswDialogPanelCaptionNodeCollapsed .riaswDialogPanelToggleIcon,
 .riaswDialogPanelRightIcon {
-	background-position-x: -15px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -16px 0px;
 }
 .riaswCaptionPanelToggleIcon,
 .riaswDialogPanelToggleIcon {
-	background-position-x: -30px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -32px 0px;
 }
 .riaswCaptionPanelExpandIcon,
 .riaswDialogPanelExpandIcon {
-	background-position-x: -45px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -48px 0px;
 }
 .riaswCaptionPanelCollapseIcon,
 .riaswDialogPanelCollapseIcon {
-	background-position-x: -60px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -64px 0px;
 }
 .riaswCaptionPanelMaximizeIcon,
 .riaswDialogPanelMaximizeIcon {
-	background-position-x: -75px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -80px 0px;
 }
 .riaswCaptionPanelRestoreIcon,
 .riaswDialogPanelRestoreIcon {
-	background-position-x: -90px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -96px 0px;
 }
 .riaswCaptionPanelMaximized .riaswCaptionPanelMaximizeIcon,
 .riaswDialogPanelMaximized .riaswDialogPanelMaximizeIcon {
-	background-position-x: -90px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -96px 0px;
 }
 .riaswCaptionPanelCloseIcon,
 .riaswDialogPanelCloseIcon {
-	background-position-x: -105px;
+	background: url(./images/CaptionPanelBtn.png) no-repeat -112px 0px;
 }
 .riaswCaptionPanelIconNodeHover,
 .riaswDialogPanelIconNodeHover {
 	background-color: skyblue;
 }
+
+/* Vertical ===============================================*/
+.riaswDisplayVertical,
+.riaswDisplayVerticalLR {
+	top: -0.25em;
+	padding: 0.5em 0.25em;
+}
+.riaswDisplayVerticalRL {
+	top: -0.25em;
+	padding: 0.5em 0em;
+}
+
+.riaswDisplayVertical .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVerticalLR .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVertical .riaswDialogPanelCaptionTextNode,
+.riaswDisplayVerticalLR .riaswDialogPanelCaptionTextNode {
+	padding: 0.5em 0em;
+}
+.riaswDisplayVerticalRL .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVerticalRL .riaswDialogPanelCaptionTextNode {
+	padding: 0.5em 0em;
+}
+/*.riaswDisplayVertical .riaswCaptionPanelIconNode,
+.riaswDisplayVerticalLR .riaswCaptionPanelIconNode,
+.riaswDisplayVerticalRL .riaswCaptionPanelIconNode,
+.riaswDisplayVertical .riaswDialogPanelIconNode,
+.riaswDisplayVerticalLR .riaswDialogPanelIconNode,
+.riaswDisplayVerticalRL .riaswDialogPanelIconNode,
+.riaswDisplayVertical .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVerticalLR .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVerticalRL .riaswCaptionPanelCaptionTextNode,
+.riaswDisplayVertical .riaswDialogPanelCaptionTextNode,
+.riaswDisplayVerticalLR .riaswDialogPanelCaptionTextNode,
+.riaswDisplayVerticalRL .riaswDialogPanelCaptionTextNode {
+	display: block;
+	margin: auto;
+}*/

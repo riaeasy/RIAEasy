@@ -94,7 +94,7 @@ define([
 		},
 
 		_startDrag: function(e){
-			if(this.child && rias.isFunction(this.child.isShowMin) && this.child.isShowMin()){
+			if(this.child && rias.isFunction(this.child.isCollapsed) && this.child.isCollapsed()){
 				return;
 			}
 			if(!this.cover){
@@ -165,7 +165,7 @@ define([
 		_onMouse: function(e){
 			// summary:
 			//		Handler for onmouseenter / onmouseleave events
-			if(this.child && rias.isFunction(this.child.isShowMin) && this.child.isShowMin()){
+			if(this.child && rias.isFunction(this.child.isCollapsed) && this.child.isCollapsed()){
 				return;
 			}
 			var o = (e.type == "mouseover" || e.type == "mouseenter");

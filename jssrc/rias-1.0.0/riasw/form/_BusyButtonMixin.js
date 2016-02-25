@@ -31,7 +31,7 @@ define([
 			this.inherited(arguments);
 			this._label = this.containerNode.innerHTML;
 			this._initTimeout = this.timeout;
-			//动态改变 label 还有些问题，暂时屏蔽
+			//FIXME:zensst.动态改变 label 还有些问题，暂时屏蔽
 			//this.__busyImg = new Image();
 			//this.__busyImg.style.visibility = "hidden";
 			//this.__busyImg.src = this._blankGif;

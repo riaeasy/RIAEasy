@@ -363,7 +363,6 @@ define([
 					resizable: false,
 					//restrictPadding: 0,
 					//maxable: false,
-					//dockTo: (rias.webApp ? rias.webApp.mainDock : undefined),
 					query: {
 						id: id
 					},

@@ -37,7 +37,7 @@ define([
 			(this.focusNode || this.domNode).setAttribute("role", "tab");
 			this.isRiaswTextVertical = /left|right/.test(this.tabPosition);
 			//if(this.isRiaswTextVertical){
-			//	rias.dom.addClass(this.containerNode, "riaswTextVertical riaswCaptionNodeVertical");
+			//	rias.dom.addClass(this.containerNode, "riaswTextVertical riaswDisplayVertical");
 			//	this.containerNode.style.height = "";
 			//	this.containerNode.style.width = "";
 			//}

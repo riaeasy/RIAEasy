@@ -47,7 +47,8 @@ define([
 					this.applyTextDir(this.titleNode, this.titleNode.title);
 				}
 			}
-			rias.dom.toggleClass(cn, "riaswTextVertical riaswCaptionNodeVertical", !!this.isRiaswTextVertical);
+			rias.dom.toggleClass(cn, "riaswDisplayVertical", !!this.isRiaswTextVertical);
+			rias.dom.toggleClass(cn, "riaswTextVertical", !!this.isRiaswTextVertical);
 			//cn.style.height = "";
 			//cn.style.width = "";
 			dn.style.height = "";

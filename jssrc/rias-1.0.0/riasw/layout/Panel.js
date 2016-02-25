@@ -3,7 +3,7 @@
 
 define([
 	"rias",
-	"rias/riasw/layout/_PanelBase",///_PanelBase.displayShowMin
+	"rias/riasw/layout/_PanelBase",///_PanelBase.displayCollapsed
 	"dijit/_TemplatedMixin",
 	"rias/riasw/layout/Resizer"
 ], function(rias, _PanelBase, _TemplatedMixin, Resizer){
@@ -16,7 +16,7 @@ define([
 	var Widget = rias.declare(riasType, [_PanelBase, _TemplatedMixin], {
 
 		templateString:
-			"<div data-dojo-attach-point='containerNode,focusNode' class='dijitReset dijitContainer riaswPanelContent' role='region'>"+
+			"<div role='region' data-dojo-attach-point='containerNode,focusNode' class='dijitReset dijitContainer riaswPanelContent'>"+
 			"</div>",
 		baseClass: "riaswPanel",
 		//cssStateNodes: {
@@ -115,9 +115,9 @@ define([
 		},
 
 		_refreshDisplayState: function(){
-			//rias.dom.visible(this._resizer.domNode, this.displayState !== Widget.displayShowMin);
+			//rias.dom.visible(this._resizer.domNode, this.displayState !== Widget.displayCollapsed);
 			if(this._resizer){
-				this._resizer.set("disabled", this.displayState === _PanelBase.displayShowMin);
+				this._resizer.set("disabled", this.isCollapsed());
 			}
 			this.inherited(arguments);
 		}

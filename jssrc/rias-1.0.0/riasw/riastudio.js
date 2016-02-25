@@ -255,9 +255,6 @@ define([
 		//	resizable: true,
 		//	maxable: false,
 		//	minable: true,
-		//	dockTo: rias.webApp.mainDock,
-		//	initState: 0,
-		//	showOnStartup: false,
 		//	cookieName: "",
 		//	persist: false,
 		//};
@@ -295,7 +292,6 @@ define([
 			args.closable = (args.closable != undefined ? args.closable : true);
 			args.resizable = (args.resizable != undefined ? args.resizable : "xy");
 			args.maxable = (args.maxable != undefined ? args.maxable : false);
-			//args.dockTo = (args.dockTo != undefined ? args.dockTo : undefined);
 			args.cookieName = (args.cookieName != undefined ? args.cookieName : "");
 			args.persist = (args.persist != undefined ? args.persist : 0);
 			args.contentType = (args.contentType != undefined ? args.contentType : "none");

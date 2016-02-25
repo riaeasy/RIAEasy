@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 107,
+	"_rsfVersion": 139,
 	"requires": [
 	],
 	"moduleCss": [
@@ -19,11 +19,21 @@ define([
 			"_riaswIdOfModule": "panel1",
 			"layoutPriority": 0,
 			"region": "center",
+			"style": {
+				"height": "80em",
+				"margin": "auto",
+				"width": "60em"
+			},
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.layout.CaptionPanel",
 					"_riaswIdOfModule": "top",
-					"caption": "Top",
+					"autoToggle": true,
+					"caption": "Top(自动展开)",
+					"initDisplayBox": {
+						"h": 120
+					},
+					"initDisplayState": "collapsed",
 					"layoutPriority": 0,
 					"liveSplitters": true,
 					"maxable": true,
@@ -54,7 +64,7 @@ define([
 					"region": "bottom",
 					"splitter": true,
 					"style": {
-						"height": "8em"
+						"height": "6em"
 					},
 					"toggleable": false,
 					"_riaswChildren": [
@@ -80,7 +90,7 @@ define([
 					"region": "left",
 					"splitter": true,
 					"style": {
-						"width": "8em"
+						"width": "15em"
 					},
 					"toggleable": true,
 					"_riaswChildren": [
@@ -109,13 +119,27 @@ define([
 					"toggleable": true,
 					"_riaswChildren": [
 						{
-							"_riaswType": "rias.riasw.html.Tag",
-							"_riaswIdOfModule": "tag4",
+							"_riaswType": "rias.riasw.layout.AccordionPanel",
+							"_riaswIdOfModule": "accordionPanel1",
 							"layoutPriority": 0,
-							"region": "",
-							"tagType": "label",
-							"innerHTML": "内容",
-							"splitter": false
+							"region": "center",
+							"splitter": false,
+							"_riaswChildren": [
+								{
+									"_riaswType": "rias.riasw.layout.Panel",
+									"_riaswIdOfModule": "panel2",
+									"region": "",
+									"layoutPriority": 0,
+									"splitter": false
+								},
+								{
+									"_riaswType": "rias.riasw.layout.CaptionPanel",
+									"_riaswIdOfModule": "captionPanel2",
+									"region": "",
+									"layoutPriority": 0,
+									"splitter": false
+								}
+							]
 						}
 					]
 				},
@@ -132,13 +156,13 @@ define([
 						{
 							"_riaswType": "rias.riasw.html.Tag",
 							"_riaswIdOfModule": "tag5",
-							"innerHTML": "内容  竖排测试长度 abcdefg hihif wlf;wefkj;welkfwel;fk",
+							"innerHTML": "内容  竖排</br>测试长度 abcdefg hihif wlf;wefkj;welkfwel;fk",
 							"layoutPriority": 0,
 							"region": "center",
 							"splitter": false,
 							"style": {
-								"-webkit-writing-mode": "vertical-lr",
 								"-mov-writin-mode": "vertical-lr",
+								"-webkit-writing-mode": "vertical-lr",
 								"writing-mode": "vertical-lr"
 							},
 							"tagType": "label"
@@ -146,43 +170,45 @@ define([
 						{
 							"_riaswType": "rias.riasw.layout.CaptionPanel",
 							"_riaswIdOfModule": "captionPanel1",
-							"layoutPriority": 0,
+							"layoutPriority": 1,
 							"region": "top",
 							"splitter": false,
 							"style": {
-								"height": "16em"
-							},
-							"_riaswChildren": [
-								{
-									"_riaswType": "rias.riasw.layout.AccordionPanel",
-									"_riaswIdOfModule": "accordionPanel1",
-									"layoutPriority": 0,
-									"region": "center",
-									"splitter": false,
-									"_riaswChildren": [
-										{
-											"_riaswType": "rias.riasw.layout.Panel",
-											"_riaswIdOfModule": "panel2",
-											"region": "",
-											"layoutPriority": 0,
-											"splitter": false
-										},
-										{
-											"_riaswType": "rias.riasw.layout.CaptionPanel",
-											"_riaswIdOfModule": "captionPanel2",
-											"region": "",
-											"layoutPriority": 0,
-											"splitter": false
-										}
-									]
-								}
-							]
-						},
+								"height": "6em"
+							}
+						}
+					]
+				},
+				{
+					"_riaswType": "rias.riasw.layout.DialogPanel",
+					"_riaswIdOfModule": "floatPanel",
+					"autoToggle": true,
+					"caption": "float(自动展开)",
+					"initDisplayBox": {
+						"h": 240,
+						"w": 240
+					},
+					"initDisplayState": "collapsed",
+					"layoutPriority": 0,
+					"liveSplitters": true,
+					"maxable": true,
+					"region": "",
+					"splitter": true,
+					"style": {
+						"height": "8em",
+						"left": "26em",
+						"top": "8em",
+						"width": "20em"
+					},
+					"toggleable": true,
+					"_riaswChildren": [
 						{
-							"_riaswType": "rias.riasw.layout.CaptionPanel",
-							"_riaswIdOfModule": "captionPanel21",
+							"_riaswType": "rias.riasw.html.Tag",
+							"_riaswIdOfModule": "tag4",
 							"layoutPriority": 0,
-							"region": "bottom",
+							"region": "",
+							"tagType": "label",
+							"innerHTML": "内容",
 							"splitter": false
 						}
 					]

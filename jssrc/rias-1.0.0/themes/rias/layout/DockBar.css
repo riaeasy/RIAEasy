@@ -53,27 +53,27 @@
 
 
 .riaswDockNodeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
-	width: 15px;
-	height: 15px;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -32px center;
+	width: 16px;
+	height: 16px;
 	overflow: hidden;
 	float: left;
 	margin: 1px 4px 1px 0px;
 }
 .riaswDockNodeIconDefault {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -30px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -32px center;
 }
 .riaswDockNodeShown .riaswDockNodeIcon,
 .riaswDockNodeIconShown {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -75px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -80px center;
 }
 .riaswDockNodeDocked .riaswDockNodeIcon,
 .riaswDockNodeIconDocked {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -15px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -16px center;
 }
 .riaswDockNodeTopmost .riaswDockNodeIcon,
 .riaswDockNodeIconTopmost {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -90px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -96px center;
 }
 
 .riaswDockNodeTitle {

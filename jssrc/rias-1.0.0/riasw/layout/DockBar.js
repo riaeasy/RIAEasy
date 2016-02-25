@@ -20,9 +20,9 @@ define([
 		targetWidget: null,
 
 		templateString:
-			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:onMouseEnter" role="button">'+
-				'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
-				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave" role="button">'+
+				//'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
+				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon riaswDockNodeIconNode"></span>'+
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
 				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}">'+
 				'</div>'+
@@ -74,7 +74,7 @@ define([
 			//var s = this.targetWidget.isShown();
 			/// isShown() 检测了 _wasShown，在初始化时由于 _playing 的延迟而导致返回 false。改用 displayState 来判断。
 			var d = this.targetWidget.displayState,
-				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayShowMin;
+				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayCollapsed;
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeTopmost", !!this.targetWidget.isTopmost);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeShown", s);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeDocked", !s);
@@ -143,45 +143,44 @@ define([
 				item.remove();
 			});
 			delete this._hBadge;
-			if(this.targetWidget && this.targetWidget.restore){
+			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
 				this.targetWidget.restore();
 			}
 			delete this.targetWidget;
 			this.inherited(arguments);
 		},
 
-		/*restore: function(){
-			// summary:
-			//		remove this dock item from parent dock, and call show() on reffed floatingpane
-			if(this.targetWidget && this.targetWidget.restore){
+		restore: function(){
+			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
 				this.targetWidget.restore();
 			}
-			//this.destroyRecursive();
-		},*/
+		},
 		toggle: function(){
-			if(this.targetWidget){
-				//if(this.targetWidget.isShown() && !this.targetWidget.isTopmost && rias.isFunction(this.targetWidget.bringToTop)){
-				if(this.targetWidget.isShown() && this.targetWidget._wasResized && !this.targetWidget.isTopmost && rias.isFunction(this.targetWidget.bringToTop)){
-					this.targetWidget.bringToTop();
-				}else if(rias.isFunction(this.targetWidget.toggle)){
-					this.targetWidget.toggle();
+			var target = this.targetWidget;
+			if(target){
+				//if(target.isShown() && !target.isTopmost && rias.isFunction(target.bringToTop)){
+				if(target.isShown() && target._wasResized && !target.isTopmost && rias.isFunction(target.bringToTop)){
+					target.bringToTop();
+				}else if(rias.isFunction(target.toggle)){
+					target.toggle();
 				}
 			}
 		},
 
-		onMouseEnter: function(e){
-			if(this.targetWidget && this.targetWidget.autoToggle){
-				if(this.targetWidget.isDocked()){
-					this.targetWidget.restore();
-				}
+		_onMouseEnter: function(e){
+			var target = this.targetWidget;
+			if(target && target.autoToggle && target.toggleable && !target._playing){
+				this.own(this._autoToggleDelay = this.defer(function(){
+					if(target.isHidden() || target.isCollapsed()){
+						target.restore();
+					}
+				}, 200));
 			}
 		},
-		onMouseLeave: function(e){
-			//if(this.targetWidget && this.targetWidget.autoToggle){
-			//	if(this.targetWidget.isShown() && this.targetWidget._wasResized){
-			//		this.targetWidget.dock();
-			//	}
-			//}
+		_onMouseLeave: function(e){
+			if(this._autoToggleDelay){
+				this._autoToggleDelay.remove();
+			}
 		}
 
 	});
@@ -226,7 +225,7 @@ define([
 				this._docked = [];
 			}
 			this._docked.push(targetWidget);
-			this.addChild(node = new DockNode({
+			this.addChild(node = new DockNode(rias.mixin({
 				ownerRiasw: this,
 				targetWidget: targetWidget,
 				label: targetWidget.caption || targetWidget.title,
@@ -238,7 +237,7 @@ define([
 				style: {
 					float: this.float
 				}
-			}));
+			}, targetWidget.dockNodeParams)));
 			var self= this,
 				h = rias.after(node, "destroy", function(){
 					rias.removeItems(self._docked, node);

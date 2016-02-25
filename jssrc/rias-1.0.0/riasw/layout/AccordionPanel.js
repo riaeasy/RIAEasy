@@ -27,13 +27,13 @@ define([
 		templateString:
 			'<div data-dojo-attach-event="ondijitclick:_onTitleClick" class="dijitAccordionTitle" role="presentation">' +
 				'<div role="tab" data-dojo-attach-point="titleNode,focusNode" class="dijitAccordionTitleFocusNode" data-dojo-attach-event="onkeydown:_onTitleKeyDown" aria-expanded="false">' +
-					'<span role="presentation" class="dijitInline dijitAccordionArrow"></span>' +
-					'<span role="presentation" class="arrowTextUp">+</span>' +
-					'<span role="presentation" class="arrowTextDown">-</span>' +
-					'<span role="presentation" class="dijitInline dijitIcon" data-dojo-attach-point="iconNode"></span>' +
-					'<span role="presentation" data-dojo-attach-point="titleTextNode, textDirNode" class="dijitAccordionText"></span>' +
+				'<span role="presentation" class="dijitInline dijitAccordionArrow"></span>' +
+				'<span role="presentation" class="arrowTextUp">+</span>' +
+				'<span role="presentation" class="arrowTextDown">-</span>' +
+				'<span role="presentation" class="dijitInline dijitIcon" data-dojo-attach-point="iconNode"></span>' +
+				'<span role="presentation" data-dojo-attach-point="titleTextNode, textDirNode" class="dijitAccordionText"></span>' +
 				'</div>' +
-			'</div>',
+				'</div>',
 
 		gutters: false,
 

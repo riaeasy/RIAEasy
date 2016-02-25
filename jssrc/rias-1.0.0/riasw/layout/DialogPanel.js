@@ -44,8 +44,6 @@ define([
 		_startZ = 100;
 
 	var riasType = "rias.riasw.layout.DialogPanel";
-	///state:	1=show(showNormal, restore, expand), 2=showMax, 3=collapse(showMin, shrink),
-	//			0=hide(display=none), -1=close(destroy), -2=hide(but display) -3=dock(collapse, and hide, dock)
 	var Widget = rias.declare(riasType, [CaptionPanel], {
 
 		//loadOnStartup: false,
@@ -84,7 +82,7 @@ define([
 		autoClose: 0,
 
 		templateString:
-			"<div class='dijitReset' role='dialog' aria-labelledby='${id}_captionNode'>"+
+			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter:_onDomNodeEnter, onmouseleave:_onDomNodeLeave' aria-labelledby='${id}_captionNode'>"+
 				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
 					"<div data-dojo-attach-point='toggleNode' class='riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></div>"+
 					'<div data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></div>'+
@@ -328,7 +326,7 @@ define([
 				self.inherited(args);
 			}
 			//if(self.placeToArgs){
-				rias.dom.positionAt(self, self.placeToArgs);
+			rias.dom.positionAt(self, self.placeToArgs);
 			//}
 		},
 
@@ -479,6 +477,18 @@ define([
 				}
 			});
 		},
+		_onDomNodeEnter: function(e){
+			if(this.dockTo){
+				return;
+			}
+			this.inherited(arguments);
+		},
+		_onDomNodeLeave: function(e){
+			if(this.dockTo && this.dockTo.findTarget(this)){
+				return;
+			}
+			this.inherited(arguments);
+		},
 
 		//_doDock: function(){
 		//	this.inherited(arguments);
@@ -557,7 +567,7 @@ define([
 		//	Widget.topmost._onBringToTop();
 		//}
 		Widget.topmost = null;
-		if(win && win.isDocked()){
+		if(win && (win.isHidden() || win.isCollapsed())){
 			///TODO:zensst.在非可见页时怎么处理？
 			///非可见时，直接返回，在 restore 后处理。
 			win.restore();

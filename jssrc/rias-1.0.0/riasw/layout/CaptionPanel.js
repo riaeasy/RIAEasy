@@ -5,7 +5,7 @@ define([
 	"rias",
 	"rias/riasw/layout/ContentPanel",
 	"rias/riasw/widget/_BadgeMixin",
-	"rias/riasw/layout/_panelBase",///_panelBase.displayDocked
+	"rias/riasw/layout/_panelBase",
 	"rias/riasw/layout/DockBar"
 ], function(rias, ContentPanel, _BadgeMixin, _panelBase, DockBar){
 
@@ -16,7 +16,7 @@ define([
 	var riasType = "rias.riasw.layout.CaptionPanel";
 	var Widget = rias.declare(riasType, [ContentPanel, _BadgeMixin], {
 		templateString:
-			"<div>"+
+			"<div role='region' data-dojo-attach-event='onmouseenter:_onDomNodeEnter, onmouseleave:_onDomNodeLeave'>"+
 				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' tabindex='-1'" +
 					" data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown'>"+
 					"<div data-dojo-attach-point='toggleNode' class='riaswCaptionPanelIconNode riaswCaptionPanelToggleIconNode riaswCaptionPanelToggleIcon' role='presentation'></div>"+
@@ -25,7 +25,7 @@ define([
 					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
 					"<div data-dojo-attach-point='maxNode' class='riaswCaptionPanelIconNode riaswCaptionPanelMaximizeIcon'></div>"+
 				"</div>"+
-				"<div data-dojo-attach-point='containerNode' class='dijitReset riaswCaptionPanelContent' role='region' id='${id}_container' aria-labelledby='${id}_captionNode'></div>"+
+				"<div role='region' data-dojo-attach-point='containerNode' class='dijitReset riaswCaptionPanelContent' id='${id}_container' aria-labelledby='${id}_captionNode'></div>"+
 			"</div>",
 		baseClass: "riaswCaptionPanel",
 
@@ -50,9 +50,7 @@ define([
 		caption: "",
 		showCaption: true,
 
-		dockTo: null,
-		alwaysShowDockNode: true,
-
+		animated: true,
 		splitter: false,
 		//selectable: true,
 		toggleable: false,
@@ -61,7 +59,11 @@ define([
 		//cloasable: false,
 		//movable: false,
 		//resizable: "none",
-		animated: true,
+
+		extIconNode: null,
+
+		dockTo: null,
+		alwaysShowDockNode: true,
 
 		//state: Panel.displayShowNormal,
 
@@ -76,11 +78,14 @@ define([
 			}
 		},
 
+		_addIconNode: function(){
+
+		},
 		buildRendering: function(){
 			this.inherited(arguments);
 
 			var oldCls = this._captionClass;
-			this._captionClass = this.baseClass + "CaptionNode" + (this.toggleable ? this.isShowMin() ? "Collapsed" : "Expanded" : "Fixed");
+			this._captionClass = this.baseClass + "CaptionNode" + (this.toggleable ? this.isCollapsed() ? "Collapsed" : "Expanded" : "Fixed");
 			rias.dom.replaceClass(this.captionNode, this._captionClass, oldCls || "");
 
 		},
@@ -98,16 +103,10 @@ define([
 				}),
 				rias.on(this.toggleNode, rias.touch.release, function(evt){
 					self._onToggleClick(evt);
-				}),
-				rias.on(this.domNode, rias.touch.enter, function(evt){
-					self._onDomNodeEnter(evt);
-				}),
-				rias.on(this.domNode, rias.touch.leave, function(evt){
-					self._onDomNodeLeave(evt);
 				})
 			);
 			self.inherited(arguments);
-			this._initAttr(["caption", "showCaption", "splitter", "toggleable", "autoToggle", "maxable", "dockTo"]);
+			this._initAttr(["caption", "showCaption", "splitter", "toggleable", "autoToggle", "maxable", "dockTo", "alwaysShowDockNode"]);
 		},
 		destroy: function(){//FIXME:zensst. dojo 2.0 才开始支持 destroyRecursive()，目前只 destroy 自身.
 			if(this.dockTo && this.dockTo.removeTarget){/// this.dockTo 可能不是正常的 DockBar
@@ -139,7 +138,7 @@ define([
 		},*/
 
 		_refreshDisplayState: function(){
-			if(this.isShowMin()){
+			if(this.isCollapsed()){
 				if(rias.dom.isVisible(this.containerNode)){
 					//rias.dom.setAttr(this.captionNode, "aria-hidden", "true");
 					//rias.dom.setAttr(this.captionNode, "aria-pressed", "false");
@@ -154,8 +153,12 @@ define([
 			}
 
 			rias.dom.toggleClass(this.captionNode, this.baseClass + "Maximized", this.isShowMax());
-			if(!this.alwaysShowDockNode && this.dockTo && (this.isShowNormal() || this.isShowMax() || this.isShowMin())){
-				this.dockTo.removeTarget(this);
+			if(this.dockTo && !this.alwaysShowDockNode){
+				if(this.isShown(true)){
+					this.dockTo.removeTarget(this);
+				}else if(this.isHidden(true)){
+					this.dockTo.addTarget(this);
+				}
 			}
 			this.inherited(arguments);
 		},
@@ -215,24 +218,32 @@ define([
 				if(this.alwaysShowDockNode){
 					this.dockTo.addTarget(this);
 				}
-				if(this.displayState === _panelBase.displayDocked){
-					this.dock();
-				}
+				//if(this.displayState === _panelBase.displayCollapsed){
+				//	this.collapse();
+				//}
 				//}
 			}else{
 				//console.warn("The dockTo of '" + value + "' not exists or not the DockBar Widget.");
 				this.dockTo = null;
 			}
 		},
-
-		_doDock: function(){
-			if(!this.alwaysShowDockNode){
-				this.dockTo.addTarget(this);
+		_onAlwaysShowDockNode: function(value, oldValue){
+			value = !!value;
+			if(this.dockTo){
+				if(value){
+					this.dockTo.addTarget(this);
+				}else if(this.isShown()){
+					this.dockTo.removeTarget(this);
+				}else if(this.isHidden()){
+					this.dockTo.addTarget(this);
+				}
 			}
 		},
-		_dock: function(){
-			if(!this.toggleable || !rias.by(this.dockTo) || !this.inherited(arguments)){
-				this.collapse();
+
+		_collapse: function(){
+			this.inherited(arguments);
+			if(this.dockTo){
+				this.hide();
 			}
 		},
 
@@ -250,7 +261,7 @@ define([
 				this._onToggleClick(e);
 			}
 		},
-		toggle: function(){
+		/*toggle: function(){
 			if(this.toggleable){
 				if(this.dockTo){
 					if(this.isDocked()){
@@ -259,15 +270,27 @@ define([
 						this.dock();
 					}
 				}else{
-					if(this.isShowMin()){
+					if(this.isCollapsed()){
 						this.expand();
 					}else{
 						this.collapse();
 					}
 				}
+			}else{
+				this.restore();
 			}
-			else{
-				this.expand();
+		},*/
+		toggle: function(){
+			if(this.toggleable){
+				if(this.isHidden()){
+					this.restore();
+				}else if(this.isCollapsed()){
+					this.expand();
+				}else if(this.isShown()){
+					this.collapse();
+				}
+			}else{
+				this.restore();
 			}
 		},
 		_onToggleMax: function(e){
@@ -290,17 +313,22 @@ define([
 			//e.preventDefault();
 			//e.stopPropagation();
 			if(this.autoToggle && this.toggleable && !this._playing){
-				if(this.isShowMin()){
-					this.restore();
-				}
+				this.own(this._autoToggleDelay = this.defer(function(){
+					if(this.isCollapsed()){
+						this.restore();
+					}
+				}, 200));
 			}
 		},
 		_onDomNodeLeave: function(e){
 			//e.preventDefault();
 			//e.stopPropagation();
+			if(this._autoToggleDelay){
+				this._autoToggleDelay.remove();
+			}
 			if(this.autoToggle && this.toggleable && !this._playing){
-				if(!this.isDocked()){
-					this.dock();
+				if(!this.isCollapsed()){
+					this.collapse();
 				}
 			}
 		}

@@ -272,6 +272,23 @@ define([
 	});
 
 	_Widget.extend({
+		destroy: function(){
+			if(this._curSearch){
+				this._curSearch.timer.remove();
+				delete this._curSearch;
+			}
+			if(this.expandChildrenDeferred){
+				this.expandChildrenDeferred.cancel();
+			}
+			if(this.rootNode){
+				this.rootNode.destroyRecursive();
+			}
+			if(this.dndController && !rias.isString(this.dndController)){
+				this.dndController.destroy();
+			}
+			this.rootNode = null;
+			this.inherited(arguments);
+		},
 		destroyRecursive: function(){
 			this._beingDestroyed = true;///设置 _beingDestroyed
 			// A tree is treated as a leaf, not as a node with children (like a grid),

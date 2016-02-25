@@ -43,15 +43,15 @@
 
 .rias .dijitAccordionArrow {
 	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -30px top;*/
-	background: url('./images/CaptionPanelBtn.png') no-repeat -15px center;
-	width:15px;
-	height:15px;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -16px center;
+	width:16px;
+	height:16px;
 	margin-top:-1px;
 }
 
 .rias .dijitAccordionTitleSelected .dijitAccordionArrow {
 	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -15px top;*/
-	background: url('./images/CaptionPanelBtn.png') no-repeat -45px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -48px center;
 }
 
 .rias .dijitAccordionText {
