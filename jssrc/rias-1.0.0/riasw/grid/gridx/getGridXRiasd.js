@@ -377,17 +377,8 @@ define([
 					onSubmit: function(){
 						var m = this,
 							def = rias.newDeferred();
-						if (rias.isFunction(m._riaswModuleMeta.onSubmit)){
-							rias.when(m._riaswModuleMeta.onSubmit.call(m), function(){
-								g.refreshGrid();
-								def.resolve(1);
-							}, function(){
-								def.reject(0);
-							});
-						}else{
-							g.refreshGrid();
-							def.resolve(1);
-						}
+						g.refreshGrid();
+						def.resolve(1);
 						return def.promise;
 					}
 				};
@@ -478,17 +469,8 @@ define([
 				onSubmit: function(){
 					var m = this,
 						d = rias.newDeferred();
-					if (rias.isFunction(m._riaswModuleMeta.onSubmit)){
-						rias.when(m._riaswModuleMeta.onSubmit.call(m), function(){
-							g.refreshGrid();
-							d.resolve(1);
-						}, function(){
-							d.reject(0);
-						});
-					}else{
-						g.refreshGrid();
-						d.resolve(1);
-					}
+					g.refreshGrid();
+					d.resolve(1);
 					return d.promise;
 				}
 			});

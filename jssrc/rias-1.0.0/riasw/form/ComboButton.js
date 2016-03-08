@@ -4,12 +4,12 @@ define([
 	"rias",
 	"dijit/form/ComboButton",
 	"rias/riasw/form/_BusyButtonMixin",
-	"dijit/Menu",
-	"dijit/MenuItem",
-	"rias/riasw/form/DropDownButton"
+	//"dijit/Menu",
+	//"dijit/MenuItem",
+	"rias/riasw/form/DropDownButton"/// dijit.form.DropDownButton.extend
 ], function(rias, ComboButton, _BusyButtonMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css"
 	]);
 

@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/EdgeToEdgeCategory"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"EdgeToEdgeCategory.css"
 	], true);
 

@@ -12,7 +12,7 @@ define([
 	"dojox/mobile/viewRegistry"
 ], function(rias, ScrollableView, Heading, ListItem, ProgressIndicator, RoundRectList, viewRegistry){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ScrollablePane.css"
 		//"TreeView.css"
 	], true);

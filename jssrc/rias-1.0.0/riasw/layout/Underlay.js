@@ -5,7 +5,7 @@ define([
 	"dijit/BackgroundIframe"
 ], function(rias, _Widget, _TemplatedMixin, BackgroundIframe){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/Underlay.css"
 	]);
 
@@ -25,17 +25,23 @@ define([
 
 		_setDialogAttr: function(dlg){
 			rias.dom.setAttr(this.containerNode, "id", dlg.id + "_underlay");
-			if(dlg){
-				if(dlg.parent){
-					this.placeAt(dlg.parent);
-				}else{
-					this.placeAt(dlg._riasrParent);
-				}
-			}else{
-				this.placeAt(this.ownerDocument);
-			}
 			this._set("dialog", dlg);
+			this.set("class", rias.map(dlg["class"].split(/\s/),function(s){
+				return s + "_underlay";
+			}).join(" "));
+			this._onKeyDown = rias.hitch(dlg, "_onKey");
 			if(this.open){
+				if(dlg){
+					if(dlg.parent){
+						this.placeAt(dlg.parent);
+					}else{
+						this.placeAt(dlg._riasrParent);
+					}
+				}else{
+					this.placeAt(this.ownerDocument);
+				}
+				this.set("zIndex", dlg.get("zIndex") - 1);
+				this.ownerDocument = dlg.ownerDocument;
 				this.resize();
 			}
 		},
@@ -54,6 +60,13 @@ define([
 			this.own(rias.on(this.domNode, "keydown", rias.hitch(this, "_onKeyDown")));
 
 			this.inherited(arguments);
+			this._initAttr(["zIndex"]);
+		},
+
+		_onZIndex: function(value, oldValue){
+			if(rias.isNumber(value)){
+				rias.dom.setStyle(this.domNode, "zIndex", value);
+			}
 		},
 
 		resize: function(){
@@ -66,6 +79,8 @@ define([
 			this.domNode.style.display = "none";
 
 			var box = rias.dom.getMarginBox(this.domNode.parentNode || rias.body(this.ownerDocument));
+			box.t = 0;
+			box.l = 0;
 			rias.dom.setMarginBox(this.domNode, box);
 			if(this.containerNode != this.domNode){
 				rias.dom.setMarginBox(this.containerNode, box);
@@ -75,6 +90,19 @@ define([
 		},
 
 		show: function(){
+			var dlg = this.dialog;
+			if(dlg){
+				if(dlg.parent){
+					this.placeAt(dlg.parent);
+				}else{
+					this.placeAt(dlg._riasrParent);
+				}
+			}else{
+				this.placeAt(this.ownerDocument);
+			}
+			this.set("zIndex", dlg.get("zIndex") - 1);
+			this.ownerDocument = dlg.ownerDocument;
+
 			this.domNode.style.display = "block";
 			this.open = true;
 			this.resize();

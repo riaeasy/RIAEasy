@@ -7,7 +7,7 @@ define([
 	"rias/riasw/form/ComboBox"///extend()
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Editor.css",
 		"widget/editorIcons.css",
 		"widget/editor/editorPlugins.css"

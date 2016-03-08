@@ -83,9 +83,9 @@
 
 /* Close Button */
 .rias .dijitTabCloseButton {
-	width: 15px;
-	height: 15px;
-	background: url("./images/CaptionPanelBtn.png") no-repeat -112px top;
+	width: 16px;
+	height: 16px;
+	background: url("./images/CaptionPanelBtn.png") no-repeat -112px 0px;
 	margin: 0em;
 }
 
@@ -290,10 +290,10 @@
 }
 
 .rias .dijitTabStripIcon {
-	height: 15px;
-	width: 15px;
+	height: 16px;
+	width: 16px;
 	margin-left: 4px;
-	background: url(./images/CaptionPanelBtn.png) no-repeat left top ;
+	background: url(./images/CaptionPanelBtn.png) no-repeat left 0px;
 }
 
 .dj_ie6 .rias .dijitTabStripIcon {
@@ -301,11 +301,11 @@
 }
 
 .rias .dijitTabStripSlideRightIcon {
-	background-position: -15px top;
+	background-position: -16px 0px;
 }
 
 .rias .dijitTabStripMenuIcon {
-	background-position: -90px top;
+	background-position: -96px 0px;
 }
 
 

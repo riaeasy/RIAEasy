@@ -11,7 +11,7 @@ define([
 	"dijit/a11yclick" // AccordionButton template uses ondijitclick; not for keyboard, but for responsive touch.
 ], function(rias, _Widget, _Container, _TemplatedMixin, _CssStateMixin, StackPanel){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/AccordionContainer.css"
 	]);
 
@@ -409,6 +409,7 @@ define([
 		destroy: function(){
 			if(this._animation){
 				this._animation.stop();
+				delete self._animation;
 			}
 			rias.forEach(this.getChildren(), function(child){
 				// If AccordionContainer has been started, then each child has a wrapper widget which

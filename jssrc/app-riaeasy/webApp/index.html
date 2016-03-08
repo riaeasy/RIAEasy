@@ -6,11 +6,12 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<script>
-		var riasAppPath = "/app-riaeasy";
+		var riasAppPath = "app-riaeasy";
 		var dojoConfig = {
 			has: {
 				"dojo-publish-privates": 1,
 				"dojo-undef-api": 1,
+				"rias-xhr-simulate": 0,
 				"rias-riasd": 1
 			},
 			bindEncoding: 'UTF-8',
@@ -41,13 +42,14 @@
 				//{name: "dojo", location: "../dojo"},
 				//{name: "dijit", location: "../dijit"},
 				//{name: "dojox", location: "../dojox"},
-				{name: "rias", location: "/rias-1.0.0", main: "rias"},
-				{name: "webApp", location: riasAppPath + "/webApp", main: "webApp"},
-				{name: "act", location: "/act", main: "act"}
+				{name: "rias", location: "../../../rias-1.0.0", main: "rias"},
+				{name: "webApp", location: "../../../" + riasAppPath + "/webApp", main: "webApp"},
+				{name: "appModule", location: "../../../" + riasAppPath + "/webApp/appModule", main: "webApp"},
+				{name: "act", location: "../../../act", main: "act"}
 			]
 		};
 	</script>
-	<script type="text/javascript" src="webLib/dojo-1.10.4/dojo/dojo.js"></script>
+	<script type="text/javascript" src="../../webLib/dojo-1.10.4/dojo/dojo.js"></script>
 </head>
 <body>
 	<script type="text/javascript">

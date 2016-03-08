@@ -5,7 +5,7 @@ define([
 	"rias/riasw/mobile/mobileBase"
 ], function(rias){
 
-	//rias.theme.loadCss([
+	//rias.theme.loadRiasCss([
 	//	"Pane.css"
 	//], true);
 

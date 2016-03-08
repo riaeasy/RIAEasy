@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/PageIndicator"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"PageIndicator.css"
 	], true);
 

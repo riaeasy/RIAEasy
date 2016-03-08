@@ -4,16 +4,12 @@ define([
 
 	var _BusyButtonMixin = rias.declare("rias.riasw.form._BusyButtonMixin", null, {
 
+		busyLabel: "",
 		canBusy: true,
 		// isBusy: Boolean
 		isBusy: false,
-
-		// busyLabel: String
-		//		text while button is busy
-		busyLabel: "",
-		useBusyLabel: false,
-
-		timeout: 200, // timeout, should be controlled by xhr call
+		defaultTimeout: 200,
+		timeout: 0,
 
 		// useIcon: Boolean
 		//		use a busy icon
@@ -21,122 +17,87 @@ define([
 
 		postMixInProperties: function(){
 			this.inherited(arguments);
-			if(!this.busyLabel){
-				this.busyLabel = rias.i18n.message.loading;
-			}
+			//if(!this.busyLabel){
+			//	this.busyLabel = rias.i18n.message.loading;
+			//}
 		},
 		postCreate: function(){
 			// summary:
 			//		stores initial label and timeout for reference
 			this.inherited(arguments);
-			this._label = this.containerNode.innerHTML;
-			this._initTimeout = this.timeout;
-			//FIXME:zensst.动态改变 label 还有些问题，暂时屏蔽
-			//this.__busyImg = new Image();
-			//this.__busyImg.style.visibility = "hidden";
-			//this.__busyImg.src = this._blankGif;
-			//rias.dom.setAttr(this.__busyImg, "id", this.id+"_icon");
-			//rias.dom.addClass(this.__busyImg, "riasBusyButtonIcon");
-			//this.containerNode.appendChild(this.__busyImg);
 
-			// for initial busy buttons
-			if(this.isBusy){
-				this._makeBusy(1);
-			}
+			this._initAttr(["isBusy", "timeout"]);
 		},
 		destroy: function(){
 			if(this._timeout){
 				clearTimeout(this._timeout);
+				delete this._timeout;
 			}
-			if(this.__busyImg){
-				this.containerNode.removeChild(this.__busyImg);
-				delete this.__busyImg;
-			}
+			//if(this.__busyImg){
+			//	this.containerNode.removeChild(this.__busyImg);
+			//	delete this.__busyImg;
+			//}
 			this.inherited(arguments);
 		},
 
-		_makeBusy: function(value){
-			// summary:
-			//		sets state from idle to busy
-			if(this.isBusy != value){
-				if(value){
-					this.isBusy = true;
-					this.__disabled0 = this.get("disabled");
-					this.set("disabled", true);
-					this._setLabel(this.busyLabel, this.timeout);
-				}else{
-					this.set("disabled", this.__disabled0 ? this.__disabled0 : false);
-					this.isBusy = false;
-					this._setLabel(this._label);
-					if(this._timeout){
-						clearTimeout(this._timeout);
-					}
-					this.timeout = this._initTimeout;
-				}
-			}
+		formatBusyLabel: function(){
+			return this.busyLabel + this.timeout > 0 ? "(" + rias.trunc(this.timeout / 1000) + ")" : ""; /// this.busyLabel
 		},
-
-		resetTimeout: function(/*Int*/ timeout){
-			// summary:
-			//		to reset existing timeout and setting a new timeout
+		_onTimeout: function(value, oldValue){
 			var self = this;
 			if(self._timeout){
 				clearTimeout(self._timeout);
+				delete self._timeout;
 			}
-
-			// new timeout
-			if(timeout){
+			if(value > 0){
+				if(value >= 1000){
+					value = 1000;
+				}
 				self._timeout = setTimeout(function(){
-					self._makeBusy(0);
-				}, timeout);
-			}else if(timeout == undefined || timeout === 0){
-				self._makeBusy(0);
+					delete self._timeout;
+					if(self.get("timeout") > 1000){
+						if(self.busyLabel){
+							self.set("label", self.formatBusyLabel());
+						}
+						self.set("timeout", self.get("timeout") - 1000);
+					}else{
+						self.set("timeout", 0);
+					}
+				}, value);
+			}else{
+				self.set("isBusy", false);
 			}
 		},
-
-		_setLabel: function(/*String*/ content, /*Int*/ timeout){
-			// summary:
-			//		setting a label and optional timeout of the labels state
-
-			// this.inherited(arguments); FIXME: throws an Unknown runtime error
-
-			if(this.useBusyLabel){
-				this.label = content;
-				// Begin IE hack
-				// remove children
-				/*while(this.containerNode.firstChild){
-					this.containerNode.removeChild(this.containerNode.firstChild);
+		_onIsBusy: function(value, oldValue){
+			var self = this;
+			if(value){
+				self._disabled0 = self.get("disabled");
+				self.set("disabled", true);
+				if(self.busyLabel){
+					self._label0 = self.get("label");
 				}
-				this.containerNode.innerHTML = this.label;
-
-				if(this.tooltip){
-					this.titleNode.title = "";
+				if(rias.likePromise(self.isBusy)){
+					rias.when(self.isBusy, function(){
+						self.set("isBusy", false);
+					});
 				}else{
-					if(!this.showLabel && !rias.dom.getAttr(this.domNode, "title")){
-						this.titleNode.title = rias.trim(this.containerNode.innerText || this.containerNode.textContent || "");
-					}
-					if(this.titleNode.title && rias.isFunction(this.applyTextDir)){
-						this.applyTextDir(this.titleNode, this.titleNode.title);
-					}
-				}*/
-				// End IE hack
-			}
-
-			// setting timeout
-			if(timeout){
-				this.resetTimeout(timeout);
+					self.set("timeout", self.defaultTimeout);
+				}
 			}else{
-				this.timeout = null;
+				self.timeout = 0;
+				if(self._timeout){
+					clearTimeout(self._timeout);
+					delete self._timeout;
+				}
+				if("_disabled0" in self){
+					self.set("disabled", self._disabled0 ? self._disabled0 : false);
+					delete self._disabled0;
+				}
+				if("_label0" in self){
+					self.set("label", self._label0);
+					delete self._label0;
+				}
 			}
-
-			//动态改变 label 还有些问题，暂时屏蔽
-			//if(this.__busyImg){
-			//	if(this.useIcon && this.isBusy){
-			//		this.__busyImg.style.visibility = "visible";
-			//	}else{
-			//		this.__busyImg.style.visibility = "hidden";
-			//	}
-			//}
 		},
 
 		_onClick: function(e){
@@ -145,11 +106,13 @@ define([
 
 			// only do something if button is not busy
 			if(!this.isBusy){
-				this.inherited(arguments);	// calls onClick()
+				var result = this.inherited(arguments);	// calls onClick()
 				if(this.canBusy){
-					this._makeBusy(1);
+					this.set("isBusy", true);
 				}
+				return result;
 			}
+			return false;
 		}
 	});
 

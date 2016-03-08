@@ -1,12 +1,11 @@
 define([
-	"rias",
-	"dijit/_FocusMixin"
-], function(rias, _FocusMixin){
+	"rias"
+], function(rias){
 
 
 	var onButtonClick = function(){};
 
-	return rias.declare("rias.riasw.form._ButtonBox", [_FocusMixin], {
+	return rias.declare("rias.riasw.form._ButtonBox", null, {
 		// summary:
 		//		Provides main functionality of ComboBox widget
 

@@ -5,7 +5,7 @@ define([
 	"dojox/form/CheckedMultiSelect"
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss(["form/CheckedMultiSelect.css"]);
+	rias.theme.loadRiasCss(["form/CheckedMultiSelect.css"]);
 
 	var riasType = "rias.riasw.form.CheckedMultiSelect";
 	var Widget = rias.declare(riasType, [_Widget], {

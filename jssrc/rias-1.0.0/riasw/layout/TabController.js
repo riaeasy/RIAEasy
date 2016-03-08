@@ -29,9 +29,9 @@ define([
 
 		templateString:
 			'<div role="presentation" data-dojo-attach-point="focusNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">' +
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitIcon dijitTabButtonIcon"></span>' +
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="tabLabel"></span>' +
-				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
 				'<span role="presentation" data-dojo-attach-point="closeNode" class="dijitInline dijitTabCloseButton dijitTabCloseIcon">' +
 					'<span data-dojo-attach-point="closeText" class="dijitTabCloseText">[x]</span>' +
 				'</span>' +

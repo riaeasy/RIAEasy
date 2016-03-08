@@ -7,3 +7,33 @@
 @import "/webLib/orion-7.0/orion/editor/themes/prospecto.css";
 @import "/webLib/orion-7.0/orion/editor/themes/raspberrypi.css";
 @import "/webLib/orion-7.0/orion/editor/themes/tierra.css";
+
+.riaswOrionEditor {
+	border: 0px solid silver;
+	width: 20em;
+	vertical-align: middle;
+	display: inline-block;
+	overflow: hidden;
+}
+.riaswOrionEditorReadOnly,
+.riaswOrionEditorDisabled {
+	background-color: inherit;
+	background-image: none;
+	/*outline: none;*/
+	color: inherit;
+}
+.riaswOrionEditorFocused {
+	/*outline: 5px -webkit-focus-ring-color;*/
+	border-color: skyblue;
+	-moz-box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
+	-webkit-box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
+	box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
+}
+.riaswOrionEditorHover {
+	border-color: gold;
+	-moz-box-shadow: 0em 0em 0.3em 0.1em gold inset;
+	-webkit-box-shadow: 0em 0em 0.3em 0.1em gold inset;
+	box-shadow: 0em 0em 0.3em 0.1em gold inset;
+}
+
+

@@ -12,10 +12,10 @@
 
 .riaswUnderlay {
 	background: darkgray;
-	opacity: 0.5;
+	opacity: 0.33;
 }
 
 .dj_ie .riaswUnderlay {
-	filter: alpha(opacity=50);
+	filter: alpha(opacity=33);
 }
 

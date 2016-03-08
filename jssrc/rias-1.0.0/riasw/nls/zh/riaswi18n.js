@@ -12,7 +12,7 @@ define({
 		//ve
 		VisualEditor: "Visual Editor",
 		WidgetPalette: "Widget Palette",
-		TextEditor: "Text Editor",
+		CodeEditor: "Text Editor",
 		OutlineStore: "Outline Store",
 		OutlineTreeModel: "Outline TreeModel",
 		OutlineTree: "Outline Tree",
@@ -180,7 +180,7 @@ define({
 		//ve
 		VisualEditor: "RIAStudio 客户端控件 - VisualEditor.",
 		WidgetPalette: "RIAStudio 客户端控件 - WidgetPalette.",
-		TextEditor: "RIAStudio 客户端控件 - TextEditor.",
+		CodeEditor: "RIAStudio 客户端控件 - CodeEditor.",
 		OutlineStore: "RIAStudio 客户端控件 - OutlineStore.",
 		OutlineTreeModel: "RIAStudio 客户端控件 - OutlineTreeModel.",
 		OutlineTree: "RIAStudio 客户端控件 - OutlineTree.",

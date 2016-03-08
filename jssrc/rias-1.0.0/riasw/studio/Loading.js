@@ -6,7 +6,7 @@ define([
 	"dijit/_TemplatedMixin"
 ], function(rias, _Widget, _TemplatedMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"studio/Loading.css"
 	]);
 

@@ -97,10 +97,10 @@ define([
 					if(self._beingDestroyed){
 						return false;
 					}
-					self.defer(function(){
+					//self.defer(function(){
 						self._loadModuleMeta().then(function(result){
 						});
-					});
+					//});
 				});
 			}
 			return r;

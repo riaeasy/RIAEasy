@@ -46,7 +46,7 @@ define([
 		}
 	});
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"View.css"
 	], true);
 

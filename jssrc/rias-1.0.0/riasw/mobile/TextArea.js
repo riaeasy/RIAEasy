@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/TextArea"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"TextArea.css"
 	], true);
 

@@ -7,7 +7,7 @@ define([
 	"rias/riasw/layout/_PanelBase"
 ], function(rias, _Widget, _PanelBase){
 
-	//rias.theme.loadCss([
+	//rias.theme.loadRiasCss([
 	//	//"layout/Panel.css"
 	//]);
 
@@ -16,6 +16,8 @@ define([
 
 		doLayout: true,
 		persist: false,
+
+		_transitionDeferred: null,
 
 		baseClass: "dijitStackContainer",
 
@@ -26,6 +28,9 @@ define([
 		selectedChildWidget: null,
 		=====*/
 
+		//postMixInProperties: function(){
+		//	this.inherited(arguments);
+		//},
 		buildRendering: function(){
 			this.inherited(arguments);
 			//rias.dom.addClass(this.domNode, "dijitLayoutContainer");
@@ -58,6 +63,17 @@ define([
 			}, this);
 			delete this.__reserved_page;
 			this._descendantsBeingDestroyed = false;
+		},
+		destroy: function(){
+			if(this._animation){
+				this._animation.stop();
+				delete this._animation;
+			}
+			if(this._transitionDeferred){
+				this._transitionDeferred.cancel();
+				delete this._transitionDeferred;
+			}
+			this.inherited(arguments);
 		},
 
 		startup: function(){
@@ -119,8 +135,6 @@ define([
 			}
 			return true;
 		},
-
-		///onSelectChild 在 StackController 中，不方便使用，扩展一个出来。
 
 		_setupChild: function(/*dijit/_WidgetBase*/ child, added, insertIndex){
 			if(!added){
@@ -209,32 +223,35 @@ define([
 			// page:
 			//		Reference to child widget or id of child widget
 
-			var d = this.selectedChildWidget;
+			var self = this,
+				d = self.selectedChildWidget;
 
 			//page = rias.registry.byId(page);
 			page = rias.by(page);
 
-			if(this.selectedChildWidget != page){
+			if(self.selectedChildWidget != page){
 				///先设置 selectedChildWidget，以保证在 _transition.showChild 中 selectedChildWidget 正确
 				///同时，注意 _transition 的 new 和 old 是否正确
-				this._set("selectedChildWidget", page);
+				self._set("selectedChildWidget", page);
 				// Deselect old page and select new one
-				d = this._transition(page, d, animate);
-				rias.publish(this.id + "-selectChild", page);	// publish
-
-				if(this.persist){
-					rias.cookie(this.id + "_selectedChild", this.selectedChildWidget.id);
-				}
+				d = self._transition(page, d, animate);
+				d.then(function(){
+					rias.publish(self.id + "-selectChild", page);	// publish
+					if(self.persist){
+						rias.cookie(self.id + "_selectedChild", self.selectedChildWidget.id);
+					}
+				});
 			}
 
 			// d may be null, or a scalar like true.  Return a promise in all cases
 			return rias.when(d || true);		// Promise
 		},
 
-		_transition: function(newWidget, oldWidget /*===== ,  animate =====*/){
+		_transition: function(newWidget, oldWidget, animate){
 			var self = this,
 				df = rias.newDeferred();
-			if(oldWidget){
+
+			/*if(oldWidget){
 				rias.when(self._hideChild(oldWidget), function(){
 					rias.when(self._showChild(newWidget), function(){
 						df.resolve();
@@ -244,7 +261,63 @@ define([
 				rias.when(self._showChild(newWidget), function(){
 					df.resolve();
 				});
+			}*/
+
+			if(rias.has("ie") < 8){
+				// workaround animation bugs by not animating; not worth supporting animation for IE6 & 7
+				animate = false;
 			}
+			if(self._animation){
+				// there's an in-progress animation.  speedily end it so we can do the newly requested one
+				self._animation.stop(true);
+				delete self._animation;
+			}
+			if(self._transitionDeferred){
+				self._transitionDeferred.cancel();
+			}
+			self._transitionDeferred = df;
+			if(oldWidget && rias.isFunction(oldWidget._stopPlay)){
+				//oldWidget._stopPlay();
+			}
+			animate = false;
+			if(newWidget){
+				if(oldWidget){
+					if(animate){
+						var newContents = newWidget.domNode,
+							oldContents = oldWidget.domNode;
+
+						self._animation = new rias.fx.slideTo({
+							node: newContents,
+							duration: self.duration / 2,
+							beforeBegin: function(value){
+								self._showChild(newWidget);
+							},
+							onEnd: function(){
+								rias.when(self._hideChild(oldWidget), function(){
+									df.resolve();
+								});
+							}
+						});
+						self._animation.onStop = self._animation.onEnd;
+						self._animation.play();
+					}else{
+						rias.when(self._hideChild(oldWidget), function(){
+							rias.when(self._showChild(newWidget), function(){
+								df.resolve();
+							});
+						});
+					}
+				}else{
+					rias.when(self._showChild(newWidget), function(){
+						df.resolve();
+					});
+				}
+			}else{
+				df.resolve();
+			}
+
+			df.then(function(){
+			});
 			return df;
 		},
 
@@ -313,7 +386,7 @@ define([
 
 			//this._needResize = true;
 			this.needLayout = true;//this._isShown();
-			//this.layout();
+			this.layout();
 			if(animate != false){
 				return this._doPlayContent().then(function(){
 					(page._show && page._show()) || (page._onShow && page._onShow());
@@ -323,6 +396,11 @@ define([
 			}
 		},
 
+		onHideChild: function(page){
+		},
+		_onHideChild: function(page){
+			this.onHideChild(page);
+		},
 		_hideChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ animate){
 			// summary:
 			//		Hide the specified child by changing it's CSS, and call _onHide() so
@@ -332,6 +410,7 @@ define([
 			if(page._wrapper){	// false if not started yet
 				rias.dom.replaceClass(page._wrapper, "dijitHidden", "dijitVisible");
 			}
+			this._onHideChild(page);
 			if(animate != false){
 				return this._doPlayContent(false).then(function(){
 					page._hide && page._hide() || page.onHide && page.onHide();

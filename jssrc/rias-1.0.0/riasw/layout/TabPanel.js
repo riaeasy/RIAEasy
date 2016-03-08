@@ -9,7 +9,7 @@ define([
 	"rias/riasw/layout/ScrollingTabController"
 ], function(rias, StackPanel, _TemplatedMixin, TabController, ScrollingTabController){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/TabPanel.css"
 	]);
 
@@ -116,7 +116,7 @@ define([
 			this.inherited(arguments);
 		},
 
-		_refrshTablist: function(){
+		_refreshTablist: function(){
 			if(this.tablist){
 				var v = rias.dom.visible(this.tablist.domNode);
 				if(this.getChildren().length > 0){
@@ -141,7 +141,7 @@ define([
 			}else if(added == false){
 				rias.dom.removeClass(tab.domNode, "dijitTabPane");
 			}
-			this._refrshTablist();
+			this._refreshTablist();
 			this.inherited(arguments);
 		},
 		selectChild: function(/*dijit/_WidgetBase|String*/ page, /*Boolean*/ animate){
@@ -216,7 +216,7 @@ define([
 			return this.beforeLayout(this.needLayout || this._needResize);
 		},
 		resize: function(changeSize, resultSize){
-			//this._refrshTablist();
+			//this._refreshTablist();
 			this.inherited(arguments);
 		}
 

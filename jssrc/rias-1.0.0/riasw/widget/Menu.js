@@ -5,7 +5,7 @@ define([
 	"dijit/Menu"
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Menu.css"
 	]);
 

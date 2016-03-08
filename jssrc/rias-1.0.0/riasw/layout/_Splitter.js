@@ -5,7 +5,7 @@ define([
 	"rias/riasw/layout/_Gutter"
 ], function(rias, _Gutter) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/Splitter.css"
 	]);
 

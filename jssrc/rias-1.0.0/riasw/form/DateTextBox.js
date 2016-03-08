@@ -6,7 +6,7 @@ define([
 	"rias/riasw/form/_DateTimeTextBox"///extend(templateString)
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Calendar.css"
 	]);
 

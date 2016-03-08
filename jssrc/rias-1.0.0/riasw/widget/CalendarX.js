@@ -5,7 +5,7 @@ define([
 	"dojox/widget/Calendar"
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Calendar.css"//,
 		//"dojox/widget/Calendar/Calendar.css"
 	]);

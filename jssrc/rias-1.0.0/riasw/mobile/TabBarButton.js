@@ -7,7 +7,7 @@ define([
 	"rias/riasw/mobile/View"
 ], function(rias, _Widget, View){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"TabBar.css"
 	], true);
 

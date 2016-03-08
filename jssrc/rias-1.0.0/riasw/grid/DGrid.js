@@ -28,7 +28,7 @@ define([
 			GridFromHtml, GridWithColumnSetsFromHtml, Keyboard, Selection, Selector, Tree,
 			ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, DijitRegistry, Dnd, Pagination) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"dgrid/dgrid.css"
 	]);
 
@@ -67,7 +67,8 @@ define([
 
 			if (params) {
 				this.params = params;
-				rias.safeMixin(this, params);
+				//rias.safeMixin(this, params);
+				rias.mixin(this, params);
 
 				// Check for initial class or className in params or on domNode
 				cls = params['class'] || params.className || domNode.className;

@@ -10,7 +10,7 @@ define([
 	"rias/riasw/mobile/RoundRectList"
 ], function(rias, _Widget, ListItem){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"RoundRectList.css"
 	], true);
 

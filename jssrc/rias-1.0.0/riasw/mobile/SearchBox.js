@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/SearchBox"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"SearchBox.css"
 	], true);
 

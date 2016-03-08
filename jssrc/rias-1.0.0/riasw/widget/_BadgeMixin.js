@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Badge.css"
 	]);
 
@@ -15,10 +15,14 @@ define([
 		buildRendering: function(){
 			this.inherited(arguments);
 
-			this.badgeText = rias.dom.create("div", {
+			this.badgeText = rias.dom.create("span", {
 				"class": "riaswBadgeText riaswBadgeRed"
 			});
 			this.badgeNode.appendChild(this.badgeText);
+		},
+		postCreate: function(){
+			this.inherited(arguments);
+			this._initAttr(["badge"]);
 		},
 		destroy: function(){
 			this.inherited(arguments);
@@ -75,10 +79,17 @@ define([
 		_getBadgeAttr: function(){
 			return this.badgeText ? this.badgeText.innerHTML : "";
 		},
-		_setBadgeAttr: function(/*String*/value){
+		//_setBadgeAttr: function(/*String*/value){
+		//	this._set("badge", value);
+		//},
+		_onBadge: function(value, oldValue){
+			var n = this.badgeNode.nextSibling;
 			this.badgeText.innerHTML = value;
-			this._set("badge", value);
 			rias.dom.toggleClass(this.badgeNode, "riaswBadgeVisible", !!value);
+			if(n){
+				rias.dom.toggleClass(n, "riaswButtonNodeBadgeStretch", !!value);
+			}
+
 		}
 
 	});

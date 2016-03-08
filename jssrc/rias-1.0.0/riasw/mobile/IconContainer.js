@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/IconContainer"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"IconContainer.css"
 	], true);
 

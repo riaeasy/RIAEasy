@@ -44,12 +44,13 @@ define([
 	"dijit/_Widget",
 	"dijit/_WidgetsInTemplateMixin",
 	"dijit/_Container",
-	"dijit/form/_FormWidgetMixin"
+	"dijit/form/_FormWidgetMixin",
+	"dijit/form/_AutoCompleterMixin"
 ], function(rias, on, touch, keys, mouse, gestureTap, gestureSwipe, connect, event, basewin, win,
 			_html, html, dom, domConstruct, domGeom, domClass, domStyle, domAttr, domProp,
 			css3, parser, query, cookie,
 			dijit, dijitbase, registry, a11y, selection, focus, place, Viewport, layoutUtils,
-			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _Container, _FormWidgetMixin) {
+			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _Container, _FormWidgetMixin, _AutoCompleterMixin) {
 
 ///dom******************************************************************************///
 	rias.on = on;
@@ -88,7 +89,39 @@ define([
 	rias.dom.query = query;
 	rias.cookie = cookie;
 
-	rias.dom.byId = dom.byId;
+	if(rias.has("ie")){
+		rias.dom.byId = dom.byId = function(id, doc){
+			if(typeof id != "string"){
+				return rias.isDomNode(id) ? id : null;
+			}
+			var _d = doc || rias.doc,
+				te = id && _d.getElementById(id);
+			// attributes.id.value is better than just id in case the
+			// user has a name=id inside a form
+			if(te && (te.attributes.id.value == id || te.id == id)){
+				return rias.isDomNode(te) ? te : null;
+			}else{
+				var eles = _d.all[id];
+				if(!eles || eles.nodeName){
+					eles = [eles];
+				}
+				// if more than 1, choose first with the correct id
+				var i = 0;
+				while((te = eles[i++])){
+					if((te.attributes && te.attributes.id && te.attributes.id.value == id) || te.id == id){
+						return rias.isDomNode(te) ? te : null;
+					}
+				}
+			}
+		};
+	}else{
+		rias.dom.byId = dom.byId = function(id, doc){
+			// inline'd type check.
+			// be sure to return null per documentation, to match IE branch.
+			id = (typeof id == "string") ? (doc || rias.doc).getElementById(id) : id;
+			return rias.isDomNode(id) ? id : null; // DOMNode
+		};
+	}
 	rias.dom.isDescendant = dom.isDescendant;
 	rias.dom.setSelectable = dom.setSelectable;
 
@@ -253,7 +286,19 @@ define([
 	rias.dom.removeClass = domClass.remove;
 	///domClass.toggle(/*DomNode|String*/ node, /*String|Array*/ classStr, /*Boolean?*/ condition) 中 condition == undefined 时为实时反转
 	rias.dom.toggleClass = domClass.toggle;
-	rias.dom.replaceClass = domClass.replace;
+	var fakeNode = {
+		nodeType: 1///rias.dom.byId 需要检测 nodeType
+	};  // for effective replacement
+	var className = "className";
+	rias.dom.replaceClass = domClass.replace = function (/*DomNode|String*/ node, /*String|Array*/ addClassStr, /*String|Array?*/ removeClassStr){
+		node = rias.dom.byId(node);
+		fakeNode[className] = node[className];
+		domClass.remove(fakeNode, removeClassStr);
+		domClass.add(fakeNode, addClassStr);
+		if(node[className] !== fakeNode[className]){
+			node[className] = fakeNode[className];
+		}
+	};
 
 	rias.dom.getAttr = domAttr.get;
 	rias.dom.setAttr = domAttr.set;
@@ -346,6 +391,14 @@ define([
 			h: value.height || value.h
 		};
 	};
+
+	rias.orient = [
+		"below-centered", "below", "below-alt",
+		"above-centered", "above", "above-alt",
+		"after", "after-centered",
+		"before", "before-centered",
+		"centered"
+	];
 
 	function _riasPlace(/*DomNode*/ node, choices, layoutNode, aroundNodeCoords){
 		// summary:
@@ -495,106 +548,12 @@ define([
 
 		return best;
 	}
-	/*var __reverseCorner = {
-		// Map from corner to kitty-corner
-		"TL": "BR",
-		"TR": "BL",
-		"BL": "TR",
-		"BR": "TL"
-	};
-	rias.placeAt = function(node, pos, corners, padding, layoutNode){
-		// summary:
-		//		Positions node kitty-corner to the rectangle centered at (pos.x, pos.y) with width and height of
-		//		padding.x * 2 and padding.y * 2, or zero if padding not specified.  Picks first corner in corners[]
-		//		where node is fully visible, or the corner where it's most visible.
-		//
-		//		Node is assumed to be absolutely or relatively positioned.
-		// node: DOMNode
-		//		The node to position
-		// pos: dijit/place.__Position
-		//		Object like {x: 10, y: 20}
-		// corners: String[]
-		//		Array of Strings representing order to try corners of the node in, like ["TR", "BL"].
-		//		Possible values are:
-		//
-		//		- "BL" - bottom left
-		//		- "BR" - bottom right
-		//		- "TL" - top left
-		//		- "TR" - top right
-		// padding: dijit/place.__Position?
-		//		Optional param to set padding, to put some buffer around the element you want to position.
-		//		Defaults to zero.
-		// layoutNode: Function(node, aroundNodeCorner, nodeCorner)
-		//		For things like tooltip, they are displayed differently (and have different dimensions)
-		//		based on their orientation relative to the parent.  This adjusts the popup based on orientation.
-		// example:
-		//		Try to place node's top right corner at (10,20).
-		//		If that makes node go (partially) off screen, then try placing
-		//		bottom left corner at (10,20).
-		//	|	place(node, {x: 10, y: 20}, ["TR", "BL"])
-		var choices = rias.map(corners, function(corner){
-			var c = {
-				corner: corner,
-				aroundCorner: __reverseCorner[corner],	// so TooltipDialog.orient() gets aroundCorner argument set
-				pos: {x: pos.x,y: pos.y}
-			};
-			if(padding){
-				c.pos.x += corner.charAt(1) == 'L' ? padding.x : -padding.x;
-				c.pos.y += corner.charAt(0) == 'T' ? padding.y : -padding.y;
-			}
-			return c;
-		});
-
-		return _riasPlace(node, choices, layoutNode);
-	};*/
 	function _riasPlaceAround(
 		/*DomNode*/		node,
 		/*DomNode|dijit/place.__Rectangle*/ anchor,
 		/*String[]*/	positions,
 		/*Boolean*/		leftToRight,
 		/*Function?*/	layoutNode){
-
-		// summary:
-		//		Position node adjacent or kitty-corner to anchor
-		//		such that it's fully visible in viewport.
-		// description:
-		//		Place node such that corner of node touches a corner of
-		//		aroundNode, and that node is fully visible.
-		// anchor:
-		//		Either a DOMNode or a rectangle (object with x, y, width, height).
-		// positions:
-		//		Ordered list of positions to try matching up.
-		//
-		//		- before: places drop down to the left of the anchor node/widget, or to the right in the case
-		//			of RTL scripts like Hebrew and Arabic; aligns either the top of the drop down
-		//			with the top of the anchor, or the bottom of the drop down with bottom of the anchor.
-		//		- after: places drop down to the right of the anchor node/widget, or to the left in the case
-		//			of RTL scripts like Hebrew and Arabic; aligns either the top of the drop down
-		//			with the top of the anchor, or the bottom of the drop down with bottom of the anchor.
-		//		- before-centered: centers drop down to the left of the anchor node/widget, or to the right
-		//			in the case of RTL scripts like Hebrew and Arabic
-		//		- after-centered: centers drop down to the right of the anchor node/widget, or to the left
-		//			in the case of RTL scripts like Hebrew and Arabic
-		//		- above-centered: drop down is centered above anchor node
-		//		- above: drop down goes above anchor node, left sides aligned
-		//		- above-alt: drop down goes above anchor node, right sides aligned
-		//		- below-centered: drop down is centered above anchor node
-		//		- below: drop down goes below anchor node
-		//		- below-alt: drop down goes below anchor node, right sides aligned
-		// layoutNode: Function(node, aroundNodeCorner, nodeCorner)
-		//		For things like tooltip, they are displayed differently (and have different dimensions)
-		//		based on their orientation relative to the parent.	 This adjusts the popup based on orientation.
-		// leftToRight:
-		//		True if widget is LTR, false if widget is RTL.   Affects the behavior of "above" and "below"
-		//		positions slightly.
-		// example:
-		//	|	placeAroundNode(node, aroundNode, {'BL':'TL', 'TR':'BR'});
-		//		This will try to position node such that node's top-left corner is at the same position
-		//		as the bottom left corner of the aroundNode (ie, put node below
-		//		aroundNode, with left edges aligned).	If that fails it will try to put
-		//		the bottom-right corner of node where the top right corner of aroundNode is
-		//		(ie, put node above aroundNode, with right edges aligned)
-		//
 
 		// If around is a DOMNode (or DOMNode id), convert to coordinates.
 		var aroundNodePos;
@@ -737,41 +696,46 @@ define([
 		//args.padding: Number(without "px")
 		//args.x: Number(without "px")
 		//args.y: Number(without "px")
-		var parent;
+		var parent,
+			_parent;
 		args = args || {};
+		_parent = args.parent;
+		if(rias.isString(_parent)){
+			_parent = rias.by(_parent, rias.riasrModuleBy(node));
+		}
 		if(rias.isDijit(node)){
 			if(!node.domNode._riasrWidget && rias.isRiasw(node)){
 				node.domNode._riasrWidget = node;
 			}
 			parent = node.getParent();
-			if(!args.parent && !parent){
+			if(!_parent && !parent){
 				node.placeAt(rias.webApp || rias.body(rias.doc));
-			}else if(args.parent){
-				if(rias.isDijit(args.parent)){
-					if(parent !== args.parent){
-						node.placeAt(args.parent);
+			}else if(_parent){
+				if(rias.isDijit(_parent)){
+					if(parent !== _parent){
+						node.placeAt(_parent);
 					}
-				}else if(node.parentNode !== args.parent && rias.isDomNode(args.parent)){
-					node.placeAt(args.parent);
+				}else if(node.parentNode !== _parent && rias.isDomNode(_parent)){
+					node.placeAt(_parent);
 				}
 			}
 			if(!node._started && node.startup){
-				if(!args.parent || args.parent._started){
+				if(!_parent || _parent._started){
 					node.startup();
 				}
 			}
 			node = node.domNode;
 		}else if(rias.isDomNode(node)){
 			parent = rias.by(node.parentNode);
-			if(!args.parent && !parent){
+			if(!_parent && !parent){
 				rias.dom.place(node, rias.webApp && rias.webApp.domNode || rias.body(rias.doc));
-			}else if(args.parent){
-				if(rias.isDijit(args.parent)){
-					if(parent !== args.parent){
-						rias.dom.place(node, args.parent.domNode);
+			}else if(_parent){
+				if(rias.isDijit(_parent)){
+					if(parent !== _parent){
+						rias.dom.place(node, _parent.domNode);
 					}
-				}else if(node.parentNode !== args.parent && rias.isDomNode(args.parent)){
-					rias.dom.place(node, args.parent);
+				}else if(node.parentNode !== _parent && rias.isDomNode(_parent)){
+					rias.dom.place(node, _parent);
 				}
 			}
 		}
@@ -785,19 +749,27 @@ define([
 		//args.padding: Number(without "px")
 		//args.x: Number(without "px")
 		//args.y: Number(without "px")
-		var parent;
 		args = args || {};
-		rias.dom.placeTo(node, args);
+		var parent,
+			around;
+		around = rias.isDijit(args.around) ? args.around.domNode : rias.isString(args.around) ? rias.domNodeBy(args.around, rias.riasrModuleBy(node)) : args.around;
+		///FIXME:zensst. parent 和 around 不同步（不在同一个 parent）时的定位问题。
+		//if(rias.isDomNode(around)){
+		//	args.parent = rias.byUntil(around.parentNode);
+		//}
+		parent = rias.byUntil(rias.dom.placeTo(node, args));
 		if(rias.isDijit(node)){
-			parent = node.getParent();
+		//	parent = node.getParent();
 			node = node.domNode;
-		}else if(rias.isDomNode(node)){
-			parent = rias.by(node.parentNode);
+		//}else if(rias.isDomNode(node)){
+		//	parent = rias.by(node.parentNode);
+		}
+		if(!rias.dom.visibleFull(parent) || (rias.isDomNode(around) && !rias.dom.visibleFull(around))){
+			return false;
 		}
 		var //orient = args.orient || ["below", "below-alt", "above", "above-alt"],
 			ltr = parent ? parent.isLeftToRight() : rias.dom.isBodyLtr(node.ownerDocument),
-			viewport = rias.dom.getContentBox(node.parentNode || rias.body(node.ownerDocument)),// Viewport.getEffectiveBox(node.ownerDocument),
-			around = rias.isDijit(args.around) ? args.around.domNode : args.around;
+			viewport = rias.dom.getContentBox(node.parentNode || rias.body(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument),
 
 		var maxHeight,
 			pos = rias.dom.position(node);
@@ -821,13 +793,9 @@ define([
 		}
 
 		pos = (around ?
-			_riasPlaceAround(node, around, args.orient || ["below", "below-alt", "above", "above-alt", "after", "after-centered", "before", "before-centered"], ltr, null) :
+			_riasPlaceAround(node, around, args.orient || rias.orient, ltr, null) :
 			//rias.placeAt(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["MM"], args.padding, null));
 			_riasPlaceAround(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["center"], ltr, null));
-
-		if(node._riasrWidget && node._riasrWidget._started && node._riasrWidget.adjustSize){
-			//pos = node._riasrWidget.adjustSize(pos);
-		}
 		return pos;
 	};
 
@@ -867,22 +835,97 @@ define([
 					ws.opacity = opacity;
 				}
 			}
-			ws = domStyle.getComputedStyle(widget);// widget.style;
-			return ((ws.visibility === "visible" || ws.visibility === "") && ws.display !== "none");
+			//ws = domStyle.getComputedStyle(widget);// widget.style;
+			//return ((ws.visibility === "visible" || ws.visibility === "") && ws.display !== "none");
+			return rias.a11y._isElementShown(widget) && !rias.dom.hasClass(widget, "dijitHidden");
 		}
 		return undefined;
 	};
-	rias.dom.isVisible = function(widget){
-		widget = rias.isDomNode(widget) ? widget : (widget = rias.by(widget)) ? widget.domNode : undefined;
-		return rias.a11y._isElementShown(widget) && !rias.dom.hasClass(widget, "dijitHidden");
+	//rias.dom.isVisible = function(widget){
+	//	widget = rias.isDomNode(widget) ? widget : (widget = rias.by(widget)) ? widget.domNode : undefined;
+	//	return rias.a11y._isElementShown(widget) && !rias.dom.hasClass(widget, "dijitHidden");
+	//};
+	rias.dom.visibleFull = function(node){
+		node = rias.domNodeBy(node);
+		var //node = this.domNode,
+		//parent = this.domNode.parentNode,
+		//v = (node.style.display != 'none') && (node.style.visibility != 'hidden') && !rias.dom.hasClass(node, "dijitHidden") &&
+		//	parent && parent.style && (parent.style.display != 'none');
+			v = node && node.parentNode && rias.dom.visible(node);
+		while(v && (node = node.parentNode)){
+			v = rias.dom.visible(node);
+		}
+		return !!v;
 	};
 
 	rias.dom.selection = selection;
 	rias.dom.focusManager = focus;
-	rias.dom.focus = focus.focus;
-	rias.dom.focusedNode = function(){
-		return focus.curNode;
+	rias.dom.focus = focus.focus = function(/*Object|DomNode */ handle){
+		// summary:
+		//		Sets the focused node and the selection according to argument.
+		//		To set focus to an iframe's content, pass in the iframe itself.
+		// handle:
+		//		object returned by get(), or a DomNode
+
+		if(!handle){
+			return;
+		}
+
+		var node = "node" in handle ? handle.node : handle,		// because handle is either DomNode or a composite object
+			bookmark = handle.bookmark,
+			openedForWindow = handle.openedForWindow,
+			collapsed = bookmark ? bookmark.isCollapsed : false;
+
+		// Set the focus
+		// Note that for iframe's we need to use the <iframe> to follow the parentNode chain,
+		// but we need to set focus to iframe.contentWindow
+		if(node){
+			if(rias.isDijit(node)){
+				node = node.focusNode || node.containerNode || node.domNode;
+			}
+			var focusNode = (node.tagName && node.tagName.toLowerCase() == "iframe") ? node.contentWindow : node;
+			if(focusNode && focusNode.focus){
+				try{
+					// Gecko throws sometimes if setting focus is impossible,
+					// node not displayed or something like that
+					focusNode.focus();
+				}catch(e){/*quiet*/}
+			}
+			focus._onFocusNode(node);
+		}
+
+		// set the selection
+		// do not need to restore if current selection is not empty
+		// (use keyboard to select a menu item) or if previous selection was collapsed
+		// as it may cause focus shift (Esp in IE).
+		if(bookmark && win.withGlobal(openedForWindow || win.global, dijit.isCollapsed) && !collapsed){
+			if(openedForWindow){
+				openedForWindow.focus();
+			}
+			try{
+				win.withGlobal(openedForWindow || win.global, dijit.moveToBookmark, null, [bookmark]);
+			}catch(e2){
+				/*squelch IE internal error, see http://trac.dojotoolkit.org/ticket/1984 */
+			}
+		}
 	};
+	rias.subscribe("focusNode", function(node){
+		///subscribe("focusNode")未响应 blur，这样可以保留当前 focusNode
+		rias.dom.focusedNodePrev = rias.dom.focusedNode;
+		rias.dom.focusedNode = node;
+		//console.debug(node);
+	});
+	/*rias.subscribe("widgetFocus", function(widget, by){
+		rias.dom.focusedWidget = widget;
+		//console.debug(node);
+	});
+	rias.subscribe("widgetBlur", function(widget, by){
+		if(rias.dom.focusedWidget === widget){
+			rias.dom.focusedWidget = undefined;
+		};
+		//console.debug(node);
+	});*/
+
 	rias.dom.Viewport = Viewport;
 	rias.dom.layoutChildren = layoutUtils.layoutChildren = function(/*DomNode*/ container, /*Object*/ dim, /*Widget[]*/ children,
 																	/*String?*/ changedRegionId, /*Number?*/ changedRegionSize){
@@ -1312,6 +1355,27 @@ define([
 					this.set('tabIndex', this.tabIndex);
 				}
 			}
+		}
+	});
+
+	_AutoCompleterMixin.extend({
+		_startSearch: function(/*String*/ key){
+			// summary:
+			//		Starts a search for elements matching key (key=="" means to return all items),
+			//		and calls _openResultList() when the search completes, to display the results.
+			if(!this.dropDown){
+				var popupId = this.id + "_popup",
+					dropDownConstructor = rias.isString(this.dropDownClass) ? rias.getObject(this.dropDownClass, false) : this.dropDownClass;
+				this.dropDown = new dropDownConstructor({
+					ownerRiasw: this,
+					onChange: rias.hitch(this, this._selectOption),
+					id: popupId,
+					dir: this.dir,
+					textDir: this.textDir
+				});
+			}
+			this._lastInput = key; // Store exactly what was entered by the user.
+			this.inherited(arguments);
 		}
 	});
 

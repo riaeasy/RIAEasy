@@ -12,6 +12,7 @@ define([
 ], function(rias, xhr, ioq, request, domForm) {
 
 	rias.xhr = xhr; /// xhr === dojo.xhr
+	rias.xhr.simulate = rias.has("rias-xhr-simulate");
 	rias.xhr.objectToQuery = ioq.objectToQuery;
 	rias.xhr.queryToObject = ioq.queryToObject;
 	rias.xhr.fieldToObject = domForm.fieldToObject;
@@ -23,6 +24,20 @@ define([
 	//rias.xhr.isLocal = function(url){
 	//	return /^file:\/\//.test(url) && !/^http/.test(url);
 	//};
+
+	rias.xhr.toServerUrl = function(url, referenceModule){
+		!/:\/\//.test(url) && (url = rias.hostMobile && rias.mobileShell ?
+			(rias.mobileShell.serverLocation ?
+				(rias.endWith(rias.mobileShell.serverLocation, "/") ?
+					rias.mobileShell.serverLocation :
+					rias.mobileShell.serverLocation + "/") :
+				"") + url :
+			url);
+		return url;
+	};
+	rias.xhr.toUrl = function(url, referenceModule){
+		return rias.toUrl(url, referenceModule);
+	};
 
 	rias.xhr.error = function(err, callback, silence){
 		var s = "";
@@ -61,97 +76,27 @@ define([
 		return d;
 	});
 
-	/*rias.xhr.whenRest = function(xhr, okCall, errorCall){
-		return rias.when(xhr, function(response){
-
-		}, function(){
-
-		})
-	};*/
-	/*function _xhr(method, args, hasBody, callback, errCall){
-		var d = rias.newDeferred();
-		//args.url = args.location ? args.location + args.url : args.url;
-		//delete args.location;
-		if(rias.xhr.isLocal(args.url)){
-			args.url = args.url + ".js";
-			args.handleAs = "text";
-			args = rias.mixin({
-				load: function(js){
-					try{
-						//var func = rias._eval(rias.global, js);
-						//var func = rias._eval(undefined, js);
-						var func = new Function(
-							"args",
-							"okCall",
-							"errorCall",
-							js + "\r\n////@ sourceURL=" + args.url);
-						func(
-							args,
-							function(result){
-								if(rias.isFunction(callback)){
-									callback(result);
-								}
-								d.resolve(result.value);
-							},
-							function(e){
-								//console.error(e);
-								if(rias.isFunction(errCall)){
-									errCall(result);
-								}
-								d.reject(e);
-							});
-					}catch(e){
-						//console.error(s, js, rias.getStackTrace(e));
-						//rias.error(s + e.toString() + "\n" + response.toString());
-						rias.xhr.error(e, errCall);
-						d.reject(e);
-					}
-				}
-			}, args);
-		}else{
-			args = rias.mixin({
-				load: function(response){
-					try{
-						if(response instanceof Error){
-							console.error(s, response);
-							rias.error(s + response.toString());
-							d.reject(response);
-						}else{
-							args = rias.fromJson(response);
-							if(rias.isFunction(callback)){
-								callback(args);
-							}
-							d.resolve(args);
-						}
-					}catch(e){
-						//console.error(s, response, rias.getStackTrace(e));
-						//rias.error(s + e.toString() + "\n" + response.toString());
-						rias.xhr.error(e, errCall);
-						d.reject(e);
-					}
-				}
-			}, args);
-		}
-		args = rias.mixin({
-			timeout: rias.xhr.defaultTimeout//,
-			/// error 改在 rias.after(dojo, "_ioSetArgs", function(d) 中处理
-			//error: function(e){
-			//	//console.error(e);
-			//	rias.xhr.error(e, errCall);
-			//	d.reject(e);
-			//}
-		}, args);
-		var s = method + " " + args.url + " error:\n";
-		xhr(method, args, hasBody);
-		return d;
-	}*/
 	function _xhr(method, args, hasBody, callback, errCall){
 		//args.url = args.location ? args.location + args.url : args.url;
 		//delete args.location;
 		//if(rias.xhr.isLocal(args.url)){
-		if(args.isFileLocation){
+		args = rias.mixinDeep({}, args);
+		args.url = rias.xhr.toUrl(args.url);
+		/*if(rias.xhr.simulate){
+			var d = rias.newDeferred();
+			try{
+				rias.require([args.url], function (func) {
+					console.debug(func);
+					//callback
+					d.resolve();
+				});
+			}catch(e){
+				rias.xhr.error(e, errCall, !!errCall);
+				d.reject();
+			}
+			return d;
+		}else*/ if(args.isFileLocation){
 			args.url = args.url + ".js";
-			var _handleAs = args.handleAs;
 			args.handleAs = "text";
 			if(!args.load){
 				args.load = function(js){
@@ -216,17 +161,16 @@ define([
 	}
 	rias.xhrGet = function(/*url|args*/url, query, callback, errCall, preventCache, handleAs){
 		var args;
-		query = (query ? rias.delegate(query) : {});
 		if(typeof url === "object"){
 			args = url;
-			args.content = query;
 		}else{
 			args = {
 				url: url,
-				handleAs: handleAs,
-				//preventCache: preventCache || true,
-				content: query
+				handleAs: handleAs
 			};
+		}
+		if(query != undefined){
+			args.content = query;
 		}
 		if(preventCache != undefined){
 			args.preventCache = preventCache;
@@ -237,95 +181,36 @@ define([
 		//args.postData._method = "GET";
 		return _xhr("GET", args, false, callback, errCall);
 	};
-	rias.xhrPost = function(/*url|args*/url, postData, callback, errCall){
+	function _xhrPost(method, /*url|args*/url, postData, callback, errCall){
 		var args;
-		postData = (postData ? rias.delegate(postData) : {});
 		if(typeof url === "object"){
 			args = url;
-			args.postData = postData;
 		}else{
 			args = {
-				url: url,
-				postData: postData
+				url: url
 			};
 		}
-		args.postData._method = "POST";
+		args.postData = postData == undefined ? {} : postData;
+		args.postData._method = method;
 		if(!args.handleAs){
 			args.handleAs = "json";
 		}
 		return _xhr("POST", args, true, callback, errCall);
+	}
+	rias.xhrPost = function(/*url|args*/url, postData, callback, errCall){
+		return _xhrPost("POST", url, postData, callback, errCall);
 	};
 	rias.xhrPut = rias.xhrModi = function(/*url|args*/url, postData, callback, errCall){
-		var args;
-		postData = (postData ? rias.delegate(postData) : {});
-		if(typeof url === "object"){
-			args = url;
-			args.postData = postData;
-		}else{
-			args = {
-				url: url,
-				postData: postData
-			};
-		}
-		args.postData._method = "PUT";
-		if(!args.handleAs){
-			args.handleAs = "json";
-		}
-		return _xhr("POST", args, true, callback, errCall);
+		return _xhrPost("PUT", url, postData, callback, errCall);
 	};
 	rias.xhrAdd = function(/*url|args*/url, postData, callback, errCall){
-		var args;
-		postData = (postData ? rias.delegate(postData) : {});
-		if(typeof url === "object"){
-			args = url;
-			args.postData = postData;
-		}else{
-			args = {
-				url: url,
-				postData: postData
-			};
-		}
-		args.postData._method = "POST";
-		if(!args.handleAs){
-			args.handleAs = "json";
-		}
-		return _xhr("POST", args, true, callback, errCall);
+		return _xhrPost("POST", url, postData, callback, errCall);
 	};
 	rias.xhrDelete = function(/*url|args*/url, postData, callback, errCall){
-		var args;
-		postData = (postData ? rias.delegate(postData) : {});
-		if(typeof url === "object"){
-			args = url;
-			args.postData = postData;
-		}else{
-			args = {
-				url: url,
-				postData: postData
-			};
-		}
-		args.postData._method = "DELETE";
-		if(!args.handleAs){
-			args.handleAs = "json";
-		}
-		return _xhr("POST", args, true, callback, errCall);
+		return _xhrPost("DELETE", url, postData, callback, errCall);
 	};
 	rias.xhrSave = function(/*url|args*/url, postData, callback, errCall){
-		var args;
-		postData = (postData ? rias.delegate(postData) : {});
-		if(typeof url === "object"){
-			args = url;
-			args.postData = postData;
-		}else{
-			args = {
-				url: url,
-				postData: postData
-			};
-		}
-		args.postData._method = "SAVE";
-		if(!args.handleAs){
-			args.handleAs = "json";
-		}
-		return _xhr("POST", args, true, callback, errCall);
+		return _xhrPost("SAVE", url, postData, callback, errCall);
 	};
 
 	return rias;

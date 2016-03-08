@@ -60,7 +60,7 @@ define([
 		}
 	}
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		//"layout/Splitter.css",
 		"layout/Panel.css"
 	]);
@@ -91,7 +91,7 @@ define([
 		collapsedWidth: 0,
 		//toggleSplitterCollapsedSize: "2em",
 		//maxPadding: 60,
-		restrictPadding: 0,
+		restrictPadding: -1,
 		// doLayout: Boolean
 		//		- false - don't adjust size of children
 		//		- true - if there is a single visible child widget, set it's size to however big the _Panel is
@@ -106,7 +106,7 @@ define([
 		//resizable: "",
 		animated: false,
 
-		//_canClose: false,
+		//canClose: false,
 
 		//displayState: displayShowNormal,
 		initDisplayState: displayShowNormal,
@@ -235,7 +235,7 @@ define([
 				rias.destroy(this._onScrollHandle);
 				delete this._onScrollHandle;
 			}
-			if(this.domNode.parentNode && this.restrictPadding > 0){
+			if(this.domNode.parentNode && this.restrictPadding >= 0){
 				this.own(this._onScrollHandle = rias.on(this.domNode.parentNode, "scroll", function(){
 					//_cnt++;
 					//console.debug(self.id, _cnt, "parentScroll");
@@ -274,7 +274,7 @@ define([
 			}
 		},
 		_onRestrictPadding: function(value, oldValue){
-			this.restrictPadding = (value >= 0 ? value : 0);
+			this.restrictPadding = value;//(value >= 0 ? value : 0);
 			this._handleOnScroll();
 			if(this._started){
 				this._internalResize(this._changeSize, this._resultSize);
@@ -343,10 +343,6 @@ define([
 			//if(a < 0){
 			//	a = 2;
 			//}
-			//this._displayState0 = a;
-			//this.adjustSize();
-			//this.layout();
-			//this._playAni(a);
 			this.set("displayState", a);
 			if(this._playingDeferred){
 				return this._playingDeferred;
@@ -371,14 +367,36 @@ define([
 			}
 		},
 
+		_onBlur: function(){
+			if(rias.dom.isDescendant(rias.dom.focusedNode, this.domNode)){
+				this._focusedNode = rias.dom.focusedNode;
+			}
+		},
+		_onFocus: function(){
+			delete this._focusedNode;
+		},
 		_getFocusItems: function(){
 			var elems = rias.a11y._getTabNavigable(this.domNode);
 			this._firstFocusNode = elems.lowest || elems.first || this.closeButtonNode || this.domNode;
 			this._lastFocusNode = elems.last || elems.highest || this._firstFocusNode;
 		},
 		focus: function(){
-			this._getFocusItems();
-			rias.dom.focus(this._firstFocusNode);
+			var node;
+			if(!this.focused){
+				if(this._focusedNode){
+					rias.dom.focus(this._focusedNode);
+					return;
+				}
+				if(this.activeNode){
+					node = rias.by(this.activeNode, this);
+					if(node){
+						rias.dom.focus(node);
+						return;
+					}
+				}
+				this._getFocusItems();
+				rias.dom.focus(this._firstFocusNode);
+			}
 		},
 
 		/*_isShown: function(){
@@ -386,7 +404,7 @@ define([
 			///self 可能是 StackContainer.child，可能在不可见 页，所以不要判断 parent 的可见性。
 			//var node = this.domNode;
 			//return this._wasShown && this._isVisible();
-			return this._wasShown && rias.dom.isVisible(this);
+			return this._wasShown && rias.dom.visible(this);
 		},*/
 		_isVisible: function(){
 			/// isVisible 需要判断 parent 是否可见
@@ -395,9 +413,9 @@ define([
 			//parent = this.domNode.parentNode,
 			//v = (node.style.display != 'none') && (node.style.visibility != 'hidden') && !rias.dom.hasClass(node, "dijitHidden") &&
 			//	parent && parent.style && (parent.style.display != 'none');
-				v = node.parentNode && rias.dom.isVisible(node);
+				v = node.parentNode && rias.dom.visible(node);
 			while(v && (node = node.parentNode)){
-				v = rias.dom.isVisible(node);
+				v = rias.dom.visible(node);
 			}
 			return !!v;
 		},
@@ -479,12 +497,10 @@ define([
 			var box,
 				dom = rias.dom,
 				node = this.domNode,
-				ns = node.style,
-				cs = dom.getComputedStyle(node),
-			//h,
+				cs,
 				rg = this.region,
-				noheight = (ns.height == "" && rg !== "left" && rg !== "right" && rg !== "center"),
-				nowidth = (ns.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
+				noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center"),
+				nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
 			function _getBox(b){
 				return b ? {
 					t: b.t,
@@ -493,14 +509,24 @@ define([
 					h: noheight ? undefined : b.h
 				} : {};
 			}
-			if(rg || !noheight || !nowidth){
-				//if(rg || ns.height !== ""){
-				var cn = this.containerNode;
-				if(cn === node){
-					box = box || dom.getMarginBox(node, cs);
-					box = dom.marginBox2contentBox(node, box, cs);
-				}else{
-					box = dom.getContentBox(node, cs);
+			function _floor(b){
+				if(b.h){
+					b.h = Math.floor(b.h);
+				}
+				if(b.w){
+					b.w = Math.floor(b.w);
+				}
+				return b;
+			}
+
+			cs = dom.getComputedStyle(node);
+			if(node === this.containerNode){
+				_floor(box = dom.getMarginBox(node, cs));
+				box = dom.marginBox2contentBox(node, box, cs);
+			}else{
+				if(rg || !noheight || !nowidth){
+					_floor(box = dom.getContentBox(node, cs));
+					node = this.containerNode;
 					if(!noheight){
 						//h = (this.showCaption && this.captionNode ? this._captionHeight = rias.dom.getMarginBox(this.captionNode).h : this._captionHeight = 0);
 						/*h = (this.showCaption && this.captionNode ?
@@ -521,14 +547,18 @@ define([
 							box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
 						}
 					}
-					cs = dom.getComputedStyle(cn);
-					dom.setMarginBox(cn, _getBox(box), cs);
+					cs = dom.getComputedStyle(node);
+					dom.setMarginBox(node, _getBox(box), cs);
 					///由于在缩小的时候，有 overflow 存在，重新获取 box 的话，导致 _contentBox 失真
-					///box = dom.getContentBox(cn);
-					box = dom.marginBox2contentBox(cn, box, cs);
+					///box = dom.getContentBox(this.containerNode);
+					box = dom.marginBox2contentBox(node, box, cs);
+				}else{
+					box = undefined;
+					//node = this.containerNode;
+					//cs = dom.getComputedStyle(node);
+					//box = dom.getMarginBox(node, cs);
+					//box = dom.marginBox2contentBox(node, box, cs);
 				}
-			}else{
-				box = undefined;
 			}
 			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
 				Math.abs(box.w - this._contentBox.w) > 0.5 || Math.abs(box.h - this._contentBox.h) > 0.5){
@@ -610,9 +640,9 @@ define([
 			box = rias.mixin(this._changeSize, changeSize, box);
 			delete this._changeSize;
 			delete this._resultSize;
-			if(!isNaN(box.l) || !isNaN(box.t) || box.w >= 0 || box.h >= 0){
+			//if(!isNaN(box.l) || !isNaN(box.t) || box.w >= 0 || box.h >= 0){
 				dom.setMarginBox(node, box);
-			}
+			//}
 
 			box = dom.getMarginBox(node);
 			if(this._checkRestrict(box)){
@@ -650,6 +680,7 @@ define([
 					//if(rg || ns.height !== "" || ns.width !== ""){
 					if(!rias.objContains(this._size0, box)){
 						this._size0 = rias.mixinDeep(this._size0, box);
+						this._needPosition = false;
 						this._saveToCookie();
 					}
 				}
@@ -679,9 +710,9 @@ define([
 				box.w = this.maxSize.w;
 				//changed = true;
 			}
-			if(this.restrictPadding > 0 || this.isShowMax()){
+			if(this.restrictPadding >= 0 || this.isShowMax()){
 				///TODO:zensst. 是否解耦 webApp?
-				var r = (this.restrictPadding > 0 ? this.restrictPadding : 0),
+				var r = this.restrictPadding,
 					p = rias.dom.getContentBox(this.domNode.parentNode || (rias.webApp ? rias.webApp.domNode : rias.body(rias.doc)));
 				///先判断 height，然后才能判断 top。
 				if(box.h > p.h - r - r){
@@ -795,7 +826,7 @@ define([
 			var self = this,
 				df = rias.newDeferred(),
 				cn = self.wrapperNode ? self.wrapperNode : self.containerNode,
-				duration = self.duration;
+				duration = self.duration / 2;
 			if(show == false){
 				this._playingContent = this._playingHide({
 					node: cn,
@@ -835,7 +866,8 @@ define([
 				mb = rias.dom.getMarginBorderBox(dn),
 				_playContent,
 				r = (self.restrictPadding > 0 ? self.restrictPadding : 0),
-				isV = (self.region == "left" || self.region == "right");
+				isV = (self.region == "left" || self.region == "right"),
+				oldSize = self._size0;
 
 			function expandParam(){
 				return {
@@ -845,11 +877,11 @@ define([
 					properties: {
 						height: {
 							start: isV ? undefined : (self.showCaption && cpn ? self._captionHeight : 0),
-							end: isV ? undefined : self._size0 ? self._size0.h - mb.h : undefined
+							end: isV ? undefined : oldSize ? oldSize.h - mb.h : undefined
 						},
 						width: {
 							start: isV ? (self.showCaption && cpn ? self._captionHeight : 0) : undefined,
-							end: isV ? self._size0 ? self._size0.w - mb.w : undefined : undefined
+							end: isV ? oldSize ? oldSize.w - mb.w : undefined : undefined
 						}
 					},
 					beforeBegin: function(){
@@ -917,16 +949,16 @@ define([
 					duration: duration * 1.5,
 					properties: {
 						top: {
-							end: parentSize ? r > 0 ? parentSize.st + r : 0 : self._size0 ? self._size0.t : undefined
+							end: parentSize ? parentSize.st + r : oldSize ? oldSize.t : undefined
 						},
 						left: {
-							end: parentSize ? r > 0 ? parentSize.sl + r : 0 : self._size0 ? self._size0.l : undefined
+							end: parentSize ? parentSize.sl + r : oldSize ? oldSize.l : undefined
 						},
 						width: {
-							end: parentSize ? r > 0 ? (parentSize.w - r - r - mb.w) : parentSize.w : self._size0 ? self._size0.w - mb.w : undefined
+							end: parentSize ? (parentSize.w - r - r - mb.w) : oldSize ? oldSize.w - mb.w : undefined
 						},
 						height: {
-							end: parentSize ? r > 0 ? (parentSize.h - r - r - mb.h) : parentSize.h : self._size0 ? self._size0.h - mb.h : undefined
+							end: parentSize ? (parentSize.h - r - r - mb.h) : oldSize ? oldSize.h - mb.h : undefined
 						}
 					},
 					beforeBegin: function(){
@@ -945,20 +977,20 @@ define([
 					//method: "combine",
 					node: dn,
 					duration: duration * 1.5,
-					//width: (self._size0 ? self._size0.w : undefined),
-					//height: (self._size0 ? self._size0.h : undefined),
+					//width: (oldSize ? oldSize.w : undefined),
+					//height: (oldSize ? oldSize.h : undefined),
 					properties: {
 						top: {
-							end: self._size0 ? self._size0.t : undefined
+							end: oldSize ? oldSize.t : undefined
 						},
 						left: {
-							end: self._size0 ? self._size0.l : undefined
+							end: oldSize ? oldSize.l : undefined
 						},
 						width: {
-							end: self._size0 ? self._size0.w - mb.w : undefined
+							end: oldSize ? oldSize.w - mb.w : undefined
 						},
 						height: {
-							end: self._size0 ? self._size0.h - mb.h : undefined
+							end: oldSize ? oldSize.h - mb.h : undefined
 						}
 					},
 					beforeBegin: function(){
@@ -1199,7 +1231,7 @@ define([
 		},
 		_hide: function(newState){
 			//this._wasShown = false;/// _wasShown 表示已经显示过了，而不是 showing
-			newState = newState || this.displayState;
+			newState = (arguments.length > 0 ? newState : displayStateInt(this.displayState));
 			if(newState === intClosed){
 				this._close(newState);
 			}else if(newState === intTransparent){
@@ -1218,23 +1250,22 @@ define([
 		},
 
 		onClose: function(closeResult){
-			return this._canClose != false;/// _close 在 DialogPanel 中设置
+			return this.canClose != false;/// _close 在 DialogPanel 中设置
 		},
 		_close: function(){
+			if(!this._beingDestroyed){
+				this.destroyRecursive();
+			}
+		},
+		close: function(){
 			if(this.onClose(this.closeResult)){
-				if(!this._beingDestroyed){
-					this.destroyRecursive();
-				}
+				this.set("displayState", Widget.displayClosed);
+				//if(this._playingDeferred){
+				//	return this._playingDeferred;
+				//}
 				return true;
 			}
 			return false;
-		},
-		close: function(){
-			this.set("displayState", Widget.displayClosed);
-			//if(this._playingDeferred){
-			//	return this._playingDeferred;
-			//}
-			return true;
 		},
 
 		onShow: function(){

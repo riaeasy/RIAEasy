@@ -5,6 +5,7 @@ define([
 	"rias/riasw/mobile/mobileBase",
 	"dojox/mobile/ComboBox",
 	"dojox/mobile/_ComboBoxMenu",
+	"rias/riasw/form/_AutoCompleterMixin",
 	"rias/riasw/mobile/scrollable",
 	"rias/riasw/mobile/TextBox"
 ], function(rias, _Widget, _ComboBoxMenu){
@@ -22,7 +23,7 @@ define([
 		}
 	});
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ComboBox.css"
 	], true);
 

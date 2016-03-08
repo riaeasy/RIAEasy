@@ -50,7 +50,7 @@ define([
 			EnterKeyHandling, ToggleDir, LinkDialog, tabIndent, entities,
 			ResizeTableColumn) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Editor.css",
 		"widget/editorIcons.css",
 		"widget/editor/editorPlugins.css"

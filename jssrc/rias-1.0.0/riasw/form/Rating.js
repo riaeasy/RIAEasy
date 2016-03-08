@@ -5,7 +5,7 @@ define([
 	"dojox/form/Rating"
 ], function(rias, _Widget) {
 
-	//rias.loadCss(["dojox/form/resources/Rating.css"]);
+	//rias.loadRiasCss(["dojox/form/resources/Rating.css"]);
 
 	var riasType = "rias.riasw.form.Rating";
 	var Widget = rias.declare(riasType, [_Widget], {

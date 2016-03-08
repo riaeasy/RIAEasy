@@ -67,8 +67,9 @@ define([
 
 	rias.has.add("rias-riasd", 0);
 	rias.has.add("rias-riasd-local", 0);
-	rias.riasdUrl = (rias.has("rias-riasd-local") ? "" : "http://211.149.223.192:8081");// "http://www.riaeasy.com:8081");
+	rias.riasdUrlBase = (rias.has("rias-riasd-local") ? "" : "http://www.riaeasy.com:8081/");
 	rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
+		url += "";
 		var p = url.lastIndexOf("/"),
 			n;
 		if (p > -1) {
@@ -82,84 +83,103 @@ define([
 		} else {
 			n = "";
 		}
-		if(rias.riasdUrl){
+		if(rias.riasdUrlBase){
 			if (n){
-				url = rias.riasdUrl + "" + rias.toUrl(url);
+				url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url, dojo));
 			}else{
-				url = rias.riasdUrl + "" + rias.toUrl(url + ".js");
+				url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url + ".js", dojo));
 			}
 		}
 		return url;
 	};
 	if(rias.has("rias-riasd")){
-		rias.require([
-			"dojo/i18n!" + rias.getRiasdUrl("rias/riasd/nls/riasdi18n"),
-			rias.getRiasdUrl("rias/riasd/riaswMappers")
-		], function(riasdi18n, riaswMappers){
+		rias.initRiasd = function(){
+			var d = rias.newDeferred();
+			try{
+				rias.require([
+					rias.getRiasdUrl("rias/riasd/riaswMappers")
+				], function(riaswMappers){
+					if(riaswMappers == "not-a-module"){
+						rias.has.add("rias-riasd", 0, 0, 1);
+						d.reject(riaswMappers);
+					}else{
+						rias.registerRiaswMappers(1, riaswMappers);
+						rias.require([
+							"dojo/i18n!" + rias.getRiasdUrl("rias/riasd/nls/riasdi18n")
+						], function(riasdi18n){
+							rias.i18n.riasd = riasdi18n;
+							rias.riasd = {
+								loadRiasdCss: function(url) {
+									var doc = rias.doc,
+										links = rias.dom.query('link');
 
-			rias.i18n.riasd = riasdi18n;
-			rias.registerRiaswMappers(1, riaswMappers);
+									var csses = rias.isArray(url) ? url : url ? [url] : [];//url.split(",");
+									rias.forEach(csses, function(css){
+										css = rias.xhr.toUrl(css);
+										if (links.some(function(val) {
+											return val.getAttribute('href') === css;
+										})) {
+											// don't add if stylesheet is already loaded in the page
+											return;
+										}
 
-			rias.riasd = {
-				loadCss: function(url) {
-					var doc = rias.doc,
-						links = rias.dom.query('link');
-
-					var csses = rias.isArray(url) ? url : url ? [url] : [];//url.split(",");
-					rias.forEach(csses, function(css){
-						css = rias.toUrl(css);
-						if (links.some(function(val) {
-							return val.getAttribute('href') === css;
-						})) {
-							// don't add if stylesheet is already loaded in the page
-							return;
-						}
-
-						rias.withDoc(doc, function() {
-							var newLink = rias.dom.create('link', {
-								rel: 'stylesheet',
-								type: 'text/css',
-								href: css//rias.toUrl(css)
-							});
-							// Make sure app.css is the after library CSS files, and content.css is after app.css
-							// FIXME: Shouldn't hardcode this sort of thing
-							var headElem = doc.getElementsByTagName('head')[0],
-								isAppCss = css.indexOf(rias.theme.appCss) > -1,
-								isRiasdCss = css.indexOf("riasd/resources/riasd.css") > -1,
-								appCssLink, riasdCssLink;
-							rias.forEach(links, function(link) {
-								if(link.href.indexOf(rias.theme.appCss) > -1){
-									appCssLink = link;
+										rias.withDoc(doc, function() {
+											var newLink = rias.dom.create('link', {
+												rel: 'stylesheet',
+												type: 'text/css',
+												href: css
+											});
+											// Make sure app.css is the after library CSS files, and content.css is after app.css
+											// FIXME: Shouldn't hardcode this sort of thing
+											var headElem = doc.getElementsByTagName('head')[0],
+												isAppCss = css.indexOf(rias.theme.appCss) > -1,
+												isRiasdCss = css.indexOf("riasd.css") > -1,
+												appCssLink, riasdCssLink;
+											rias.forEach(links, function(link) {
+												if(link.href.indexOf(rias.theme.appCss) > -1){
+													appCssLink = link;
+												}
+												if(link.href.indexOf("riasd.css") > -1){
+													riasdCssLink = link;
+												}
+											});
+											if(isAppCss){
+												headElem.appendChild(newLink);
+											}else if(!appCssLink){
+												if(!riasdCssLink){
+													headElem.appendChild(newLink);
+												}else{
+													headElem.insertBefore(newLink, riasdCssLink);
+												}
+											}else{
+												if(!riasdCssLink){
+													headElem.insertBefore(newLink, appCssLink);
+												}else{
+													headElem.insertBefore(newLink, riasdCssLink);
+												}
+											}
+										});
+									});
 								}
-								if(link.href.indexOf("riasd/resources/riasd.css") > -1){
-									riasdCssLink = link;
-								}
-							});
-							if(isAppCss){
-								headElem.appendChild(newLink);
-							}else if(!appCssLink){
-								if(!riasdCssLink){
-									headElem.appendChild(newLink);
-								}else{
-									headElem.insertBefore(newLink, riasdCssLink);
-								}
-							}else{
-								if(!riasdCssLink){
-									headElem.insertBefore(newLink, appCssLink);
-								}else{
-									headElem.insertBefore(newLink, riasdCssLink);
-								}
-							}
+							};
+							//rias.theme.loadTheme(rias.theme.currentTheme || "rias", rias.theme.currentTheme || "rias", "", "ios7");
+							rias.riasd.loadRiasdCss([
+								rias.getRiasdUrl("rias/riasd/resources/riasd.css")
+							]);
+							d.resolve();
 						});
-					});
-				}
-			};
-
-			rias.theme.loadTheme(rias.theme.currentTheme || "rias", rias.theme.currentTheme || "rias", "", "ios7");
-			rias.riasd.loadCss([
-				rias.getRiasdUrl("rias/riasd/resources/riasd.css")
-			]);
-		})
+					}
+				});
+			}catch(e){
+				rias.has.add("rias-riasd", 0, 0, 1);
+				d.reject(riaswMappers);
+			}
+			return d.promise;
+		};
+	}else{
+		rias.initRiasd = function(){
+			return false;
+		}
 	}
 
 	///需要延迟加载
@@ -347,7 +367,7 @@ define([
 				d.own(rias.after(d, "onClose", function(mr){
 					mr = (mr == undefined /*|| mr == null*/ ? d.modalResult : mr);
 					if(args.parent && d.__parentCanClose){
-						args.parent._canClose = d.__parentCanClose;
+						args.parent.canClose = d.__parentCanClose;
 					}
 					if (cc && rias.isFunction(_onClose)) {
 						cc = rias.hitch(d, _onClose)(mr);
@@ -366,7 +386,7 @@ define([
 
 			};
 			//args.loadOnStartup = false;
-			args.placeToArgs = {
+			args.initPlaceToArgs = {
 				parent: args.parent,
 				around: args.around ? args.around : args.x && args.y ? {x: args.x, y: args.y} : undefined,
 				orient: args.orient,
@@ -381,9 +401,7 @@ define([
 			delete args.x;
 			delete args.y;
 			var d = rias.createRiasw(DialogPanel, args);
-			//rias.dom.placeTo(d, args.placeToArgs);
 			d.startup();
-			//rias.dom.positionAt(d, args.placeToArgs);
 			return d;
 		}
 
@@ -394,7 +412,7 @@ define([
 			if(rias.isRiasw(w)){
 				if(rias.isInstanceOf(w, DialogPanel)){
 					//return _showWinFunc(w, args);
-					w.show();
+					//w.show();
 					w.focus();
 					return w;
 				}

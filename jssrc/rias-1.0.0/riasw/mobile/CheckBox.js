@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/CheckBox"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"CheckBox.css"
 	], true);
 

@@ -13,7 +13,7 @@ define({root: {
 		//ve
 		VisualEditor: "Visual Editor",
 		WidgetPalette: "Widget Palette",
-		TextEditor: "Text Editor",
+		CodeEditor: "Text Editor",
 		OutlineStore: "Outline Store",
 		OutlineTreeModel: "Outline TreeModel",
 		OutlineTree: "Outline Tree",
@@ -181,7 +181,7 @@ define({root: {
 		//ve
 		VisualEditor: "RIAStudio Client Widget - VisualEditor.",
 		WidgetPalette: "RIAStudio Client Widget - WidgetPalette.",
-		TextEditor: "RIAStudio Client Widget - TextEditor.",
+		CodeEditor: "RIAStudio Client Widget - CodeEditor.",
 		OutlineStore: "RIAStudio Client Widget - OutlineStore.",
 		OutlineTreeModel: "RIAStudio Client Widget - OutlineTreeModel.",
 		OutlineTree: "RIAStudio Client Widget - OutlineTree.",

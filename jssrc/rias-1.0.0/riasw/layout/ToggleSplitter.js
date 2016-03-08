@@ -3,7 +3,7 @@ define([
 	"rias/riasw/layout/_Splitter"
 ], function(rias, _Splitter) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/ToggleSplitter.css"
 	]);
 

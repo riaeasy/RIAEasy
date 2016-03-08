@@ -5,7 +5,7 @@ define([
 	"dojox/form/FileInput"
 ], function(rias, _Widget) {
 
-	//rias.loadCss(["dojox/form/resources/FileInput.css"]);
+	//rias.loadRiasCss(["dojox/form/resources/FileInput.css"]);
 
 	var riasType = "rias.riasw.form.FileInput";
 	var Widget = rias.declare(riasType, [_Widget], {

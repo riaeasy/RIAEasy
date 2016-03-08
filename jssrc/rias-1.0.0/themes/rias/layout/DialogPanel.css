@@ -11,9 +11,9 @@
 	/*overflow: hidden;*/
 	/*min-height: 8em;
 	min-width: 16em;*/
-	-moz-box-shadow: 0em 0em 2em #777;
-	-webkit-box-shadow: 0em 0em 2em #777;
-	box-shadow: 0em 0em 2em #777;
+	-moz-box-shadow: 0.25em 0.25em 1em 0em #333;
+	-webkit-box-shadow: 0.25em 0.25em 1em 0em #333;
+	box-shadow: 0.25em 0.25em 1em 0em #333;
 	border-width: 4px;
 	border-color: lightsteelblue;
 	border-style: solid;
@@ -22,18 +22,17 @@
 .riaswDialogPanelHover,
 .riaswDialogPanelActive {
 	border-color: gold;
-	-moz-box-shadow: 0em 0em 2em black;
-	-webkit-box-shadow: 0em 0em 2em black;
-	box-shadow: 0em 0em 2em black;
+	-moz-box-shadow: 0.25em 0.25em 1em 0em black;
+	-webkit-box-shadow: 0.25em 0.25em 1em 0em black;
+	box-shadow: 0.25em 0.25em 1em 0em black;
 }
 .riaswDialogPanelSelected,
 /*.riaswDialogPanelFocused,*/
 .riaswDialogPanelTopmost {
-	border-color: darkseagreen;
-	background-color: whitesmoke;
-	-moz-box-shadow: 0em 0em 2em black;
-	-webkit-box-shadow: 0em 0em 2em black;
-	box-shadow: 0em 0em 2em black;
+	border-color: skyblue;
+	-moz-box-shadow: 0.25em 0.25em 1em 0em black;
+	-webkit-box-shadow: 0.25em 0.25em 1em 0em black;
+	box-shadow: 0.25em 0.25em 1em 0em black;
 }
 
 .riaswDialogPanelWrapper {
@@ -54,7 +53,7 @@
 	background-color: whitesmoke;/*避免 wrapper 造成 transparent*/
 	overflow: auto;
 	position: relative;
-	padding: 2px;
+	padding: 0px;
 	-webkit-overflow-scrolling: touch;
 }
 /*.mobileBody .riaswDialogPanelContent {

@@ -46,6 +46,7 @@ define([
 		}*/
 
 		result.success = true;
+		result.value.logged = true;
 		result.value.oper.code = code;
 		result.value.oper.name = code;
 

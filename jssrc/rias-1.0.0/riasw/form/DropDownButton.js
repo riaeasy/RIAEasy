@@ -10,7 +10,7 @@ define([
 	"dijit/MenuItem"
 ], function(rias, DropDownButton, _BusyButtonMixin, query, popup) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css"
 	]);
 

@@ -8,7 +8,7 @@ define([
 	"rias/riasw/layout/Resizer"
 ], function(rias, _PanelBase, _TemplatedMixin, Resizer){
 
-	//rias.theme.loadCss([
+	//rias.theme.loadRiasCss([
 	//	"layout/Panel.css"
 	//]);
 

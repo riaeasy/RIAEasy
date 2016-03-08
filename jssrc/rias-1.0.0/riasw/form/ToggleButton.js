@@ -6,21 +6,14 @@ define([
 	"dijit/form/_ToggleButtonMixin"
 ], function(rias, Button, _ToggleButtonMixin) {
 
-	//rias.theme.loadCss([
+	//rias.theme.loadRiasCss([
 	//	"form/Button.css"
 	//]);
 
 	var riasType = "rias.riasw.form.ToggleButton";
 	var Widget = rias.declare(riasType, [Button, _ToggleButtonMixin], {
 
-		baseClass: "dijitToggleButton",
-
-		setChecked: function(/*Boolean*/ checked){
-			// summary:
-			//		Deprecated.  Use set('checked', true/false) instead.
-			kernel.deprecated("setChecked("+checked+") is deprecated. Use set('checked',"+checked+") instead.", "", "2.0");
-			this.set('checked', checked);
-		}
+		baseClass: "dijitToggleButton"
 
 	});
 

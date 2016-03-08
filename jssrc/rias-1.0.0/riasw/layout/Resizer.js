@@ -4,7 +4,7 @@ define([
 ], function(rias, _Widget){
 
 	///TODO:zensst.改为左右下角（或者四角）都可以拉动。
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/Resizer.css"
 	]);
 

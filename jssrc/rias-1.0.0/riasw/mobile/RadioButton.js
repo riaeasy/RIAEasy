@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/RadioButton"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"RadioButton.css"
 	], true);
 

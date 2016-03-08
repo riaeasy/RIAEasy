@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/RoundRectCategory"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"RoundRectCategory.css"
 	], true);
 

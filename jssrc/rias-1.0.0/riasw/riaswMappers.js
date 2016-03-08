@@ -422,8 +422,8 @@ define([
 			riasType: ["rias.riasw.widget.Editor"],
 			requires: "rias/riasw/widget/Editor"
 		},{
-			riasType: ["rias.riasw.widget.TextEditor"],
-			requires: "rias/riasw/widget/TextEditor"
+			riasType: ["rias.riasw.widget.CodeEditor"],
+			requires: "rias/riasw/widget/CodeEditor"
 		},{
 			riasType: ["rias.riasw.widget.HTMLEditor"],
 			requires: "rias/riasw/widget/HTMLEditor"

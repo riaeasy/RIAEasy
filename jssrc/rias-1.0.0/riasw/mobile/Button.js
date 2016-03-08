@@ -7,7 +7,7 @@ define([
 	"dojox/mobile/Button"
 ], function(rias, BaseMixin, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"Button.css"
 	], true);
 

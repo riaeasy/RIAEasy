@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/ProgressBar"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ProgressBar.css"
 	], true);
 

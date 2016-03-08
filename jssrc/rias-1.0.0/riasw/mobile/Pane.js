@@ -7,7 +7,7 @@ define([
 	"dojox/mobile/Pane"
 ], function(rias, BaseMixin, _Widget){
 
-	//rias.theme.loadCss([
+	//rias.theme.loadRiasCss([
 	//	"Pane.css"
 	//], true);
 

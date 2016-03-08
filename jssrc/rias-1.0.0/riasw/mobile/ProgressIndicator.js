@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/ProgressIndicator"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ProgressIndicator.css"
 	], true);
 

@@ -29,7 +29,7 @@
 .riaswDockNode {
 	border: 1px solid silver;
 	margin: 1px;
-	padding: 3px 4px;
+	padding: 0.25em 0.25em;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -37,27 +37,27 @@
 	list-style: none;
 	/*height: 1.5em;*/
 	width: auto;
-	min-width: 4em;
-	float: left;
+	/*min-width: 4em;*/
+	/*float: left;*/
 	background-color: inherit;
+	display: inline-block;
 }
-/*.riaswDockNodeDocked {
-	background-color: lavender;
+.riaswDockNodeHidden {
+	background-color: inherit;
 }
 .riaswDockNodeShown {
 	background-color: lightsteelblue;
 }
 .riaswDockNodeTopmost {
-	background-color: darkseagreen;
-}*/
-
+	background-color: skyblue;
+}
 
 .riaswDockNodeIcon {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -32px center;
 	width: 16px;
 	height: 16px;
 	overflow: hidden;
-	float: left;
+	/*float: left;*/
 	margin: 1px 4px 1px 0px;
 }
 .riaswDockNodeIconDefault {
@@ -67,8 +67,8 @@
 .riaswDockNodeIconShown {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -80px center;
 }
-.riaswDockNodeDocked .riaswDockNodeIcon,
-.riaswDockNodeIconDocked {
+.riaswDockNodeHidden .riaswDockNodeIcon,
+.riaswDockNodeIconHidden {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -16px center;
 }
 .riaswDockNodeTopmost .riaswDockNodeIcon,
@@ -77,11 +77,11 @@
 }
 
 .riaswDockNodeTitle {
-	padding: 0 0.3em;
+	padding: 0 0em;
 	text-align: center;
 	overflow: hidden;
 }
 
 .riaswDockNodeHover {
-	/*background-color: gold;*/
+	background-color: gold;
 }

@@ -9,7 +9,7 @@ define([
 	"rias/riasw/mobile/scrollable"
 ], function(rias, _Widget, _ScrollableMixin){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		//"SwapView.css"
 	], true);
 

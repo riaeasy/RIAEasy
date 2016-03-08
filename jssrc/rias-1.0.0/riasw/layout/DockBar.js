@@ -10,7 +10,7 @@ define([
 	"dijit/BackgroundIframe"
 ], function(rias, _Widget, _TemplatedMixin, _CssStateMixin, Moveable, _PanelBase, Panel, _BadgeMixin){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/DockBar.css"
 	]);
 
@@ -20,13 +20,12 @@ define([
 		targetWidget: null,
 
 		templateString:
-			'<div data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave" role="button">'+
+			'<span role="button" data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">'+
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				//'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
 				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon riaswDockNodeIconNode"></span>'+
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
-				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}">'+
-				'</div>'+
-			'</div>',
+			'</span>',
 
 		baseClass: "riaswDockNode",
 		cssStateNodes: {
@@ -39,10 +38,12 @@ define([
 			this._set("iconClass", (value && value !== "dijitNoIcon") ? value : "dijitNoIcon");
 			rias.dom.addClass(this.iconNode, this.iconClass);
 		},
-
-		_setBadgeAttr: function(/*String*/value){
-			this.inherited(arguments);
-			rias.dom.toggleClass(this.domNode, "riaswBadgeNodeStretch", !!value);
+		_setIconLayoutTopAttr: function(value){
+			value = !!value;
+			if(value){
+				rias.dom.toggleClass(this.domNode, "riaswButtonIconTop", !!value);
+			}
+			this._set("iconLayoutTop", value);
 		},
 
 		///注意 if(has("dojo-bidi")) 是两个不同的类，用 rias.isFunction(this.applyTextDir) 来判断
@@ -67,7 +68,27 @@ define([
 			this.titleNode.title = "";
 		},
 
-		_setTargetState: function(){
+		startup: function(){
+			this.inherited(arguments);
+		},
+		destroy: function(){
+			delete this.targetWidget._riasrDockNode;
+			if(this._autoToggleDelay){
+				this._autoToggleDelay.remove();
+				delete this._autoToggleDelay;
+			}
+			rias.forEach(this._hBadge, function(item){
+				item.remove();
+			});
+			delete this._hBadge;
+			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
+				this.targetWidget.restore();
+			}
+			delete this.targetWidget;
+			this.inherited(arguments);
+		},
+
+		setTargetState: function(){
 			if(!this.targetWidget){
 				return;
 			}
@@ -77,12 +98,12 @@ define([
 				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayCollapsed;
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeTopmost", !!this.targetWidget.isTopmost);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeShown", s);
-			rias.dom.toggleClass(this.domNode, "riaswDockNodeDocked", !s);
-			if(s){
+			rias.dom.toggleClass(this.domNode, "riaswDockNodeHidden", !s);
+			/*if(s){
 				rias.dom.setStyle(this.domNode, "background-color", rias.dom.getStyle(this.targetWidget.captionNode, "background-color"));
 			}else{
 				rias.dom.setStyle(this.domNode, "background-color", "");
-			}
+			}*/
 		},
 		_setTargetWidgetAttr: function(widget){
 			var self = this;
@@ -113,12 +134,12 @@ define([
 						self.set("badge", newValue);
 					}),
 					widget.watch('displayState', function(name, oldValue, newValue){
-						self._setTargetState(newValue);
+						self.setTargetState();
 					})
 				);
 				if(rias.isFunction(widget.onBringToTop)){
 					self._hBadge.concat(self.own(rias.after(widget, "onBringToTop", function(){
-						self._setTargetState();
+						self.setTargetState();
 					}, true)));
 				}
 				self._set("targetWidget", widget);
@@ -128,26 +149,12 @@ define([
 				self.set("badgeStyle", widget.get("badgeStyle"));
 				self.set("badgeColor", widget.get("badgeColor"));
 				self.set("badge", widget.get("badge"));
-				self._setTargetState();
+				self.setTargetState();
 			}else{
 				self._set("targetWidget", null);
 				///这里不应该初始化 caption 等，而应该保持设计值。
 			}
-		},
-
-		startup: function(){
-			this.inherited(arguments);
-		},
-		destroy: function(){
-			rias.forEach(this._hBadge, function(item){
-				item.remove();
-			});
-			delete this._hBadge;
-			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
-				this.targetWidget.restore();
-			}
-			delete this.targetWidget;
-			this.inherited(arguments);
+			widget._riasrDockNode = self;
 		},
 
 		restore: function(){
@@ -168,18 +175,26 @@ define([
 		},
 
 		_onMouseEnter: function(e){
-			var target = this.targetWidget;
-			if(target && target.autoToggle && target.toggleable && !target._playing){
-				this.own(this._autoToggleDelay = this.defer(function(){
+			var self = this,
+				target = self.targetWidget;
+			if(target && target.toggleOnEnter && target.toggleable && !self._autoToggleDelay && !target._playing){
+				self._autoToggleDelay = self.defer(function(){
+					if(self._autoToggleDelay){
+						self._autoToggleDelay.remove();
+						delete self._autoToggleDelay;
+					}
 					if(target.isHidden() || target.isCollapsed()){
 						target.restore();
+					}else if(target.isShown() && !target.get("isTopmost")){
+						target.bringToTop();
 					}
-				}, 200));
+				}, rias.autoToggleDuration);
 			}
 		},
 		_onMouseLeave: function(e){
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
+				delete this._autoToggleDelay;
 			}
 		}
 
@@ -205,7 +220,19 @@ define([
 			remove: "removeTarget"
 		},
 
-		float: "left",
+		//float: "left",
+
+		postCreate: function(){
+			var self = this;
+			self.inherited(arguments);
+			this._initAttr(["float"]);
+		},
+
+		_onFloatAttr: function(value, oldValue){
+			rias.filter(this.getChildren(), function(child){
+				rias.dom.setStyle(child.domNode, "float", value);
+			});
+		},
 
 		findTarget: function(targetWidget){
 			return rias.filter(this.getChildren(), function(child){
@@ -225,7 +252,7 @@ define([
 				this._docked = [];
 			}
 			this._docked.push(targetWidget);
-			this.addChild(node = new DockNode(rias.mixin({
+			this.addChild(node = new DockNode(rias.mixinDeep({
 				ownerRiasw: this,
 				targetWidget: targetWidget,
 				label: targetWidget.caption || targetWidget.title,

@@ -16,7 +16,7 @@ define([
 
 	});
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"TextBox.css"
 	], true);
 

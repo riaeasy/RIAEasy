@@ -432,11 +432,10 @@ define([
 		baseClass: "dijitTab tabStripButton",
 
 		templateString:
-			'<div data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents"  data-dojo-attach-point="focusNode" role="button">' +
-				'<span role="presentation" class="dijitInline dijitTabStripIcon" data-dojo-attach-point="iconNode"></span>' +
+			'<div role="button" data-dojo-attach-point="focusNode" data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents">' +
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
+				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitTabStripIcon"></span>' +
 				'<span data-dojo-attach-point="containerNode,titleNode" class="dijitButtonText"></span>' +
-				'<div data-dojo-attach-point="badgeNode" class="${badgeClass}">'+
-				'</div>'+
 			'</div>',
 
 		// Override inherited tabIndex: 0 from dijit/form/Button, because user shouldn't be

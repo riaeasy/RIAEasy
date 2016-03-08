@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/Accordion"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"Accordion.css"
 	], true);
 

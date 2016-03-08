@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/TabBar"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"TabBar.css"
 	], true);
 

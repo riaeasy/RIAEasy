@@ -27,6 +27,7 @@ define([
 	"dojo/_base/config",
 
 	"dojo/aspect",
+	"dojo/promise/Promise",
 	"dojo/Deferred",
 	"dojo/promise/all",
 	"dojo/when",
@@ -39,7 +40,7 @@ define([
 			dateLocale, dateStamp,
 			createError, number, string,
 			declare, config,
-			aspect, Deferred, all, when, topic, cache,
+			aspect, Promise, Deferred, all, when, topic, cache,
 			ready) {
 
 	//var rias = lang.getObject("rias", true);
@@ -135,41 +136,47 @@ define([
 	rias.isUrlLocal = function(location){
 		return /^file:\/\//.test(location) && !/^http/.test(location);
 	};
+	rias.isPromise = function(obj){
+		return obj && obj == "[object Promise]" && rias.isFunction(obj.then);
+	};
+	rias.likePromise = function(obj){
+		return obj && rias.isFunction(obj.then);
+	};
 
-	rias.hostBrowser = has("host-browser");
+	rias.hostBrowser = !!has("host-browser");
 
 	rias.isDomNode = function(obj){
 		///IE不支持 instanceof Node
-		return rias.hostBrowser && obj && /*(obj instanceof Node) &&*/ obj.nodeType > 0;
+		return !!(rias.hostBrowser && obj && /*(obj instanceof Node) &&*/ obj.nodeType > 0);
 	};
 	///注意：在 _WidgetBase.postCreate() 之前（包含 _WidgetBase.postCreate()） obj._created都为 false，故 rias.isDijit() 为 false。
 	///建议在 _WidgetBase.startUp() 之后使用。
 	rias.isDijit = function(obj){
 		///因为有可能 redef() 导致重载，故必须用 rias.getObject() 来获取当前的实例。
-		return rias.hostBrowser && obj && obj._created && (!!obj.domNode) && rias.isInstanceOf(obj, "dijit._WidgetBase");
+		return !!(rias.hostBrowser && obj && obj._created && (!!obj.domNode) && rias.isInstanceOf(obj, "dijit._WidgetBase"));
 	};
 	rias.isRiasd = function(obj){
 		return !!obj._riaswType;
 		//return !!_getRiaswMapper(obj);
 	};
 	rias.isRiasw = function(obj){
-		return obj && obj._riasrCreated && obj._riaswType;// && obj.constructor && obj.constructor._riasdMeta;// && rias.isDijit(obj);//有非 Dijit 的 RiasWidget
+		return !!(obj && obj._riasrCreated && obj._riaswType);// && obj.constructor && obj.constructor._riasdMeta;// && rias.isDijit(obj);//有非 Dijit 的 RiasWidget
 	};
 	rias.isRiasw_Module = function(obj){
 		///因为有可能 redef() 导致重载，故必须用 rias.getObject() 来获取当前的实例。
-		return rias.hostBrowser && rias.isRiasw(obj) && rias.isInstanceOf(obj, "rias.riasw.studio._ModuleMixin");
+		return !!(rias.hostBrowser && rias.isRiasw(obj) && rias.isInstanceOf(obj, "rias.riasw.studio._ModuleMixin"));
 	};
 	rias.isRiaswModule = function(obj){
 		///因为有可能 redef() 导致重载，故必须用 rias.getObject() 来获取当前的实例。
 		//return rias.hostBrowser && rias.isRiasw(obj) && (rias.isInstanceOf(obj, rias.getObject("rias.riasw.studio.Module")) || rias.isInstanceOf(obj, rias.getObject("rias.riasw.studio.App")));
 		//return rias.hostBrowser && rias.isRiasw(obj) && obj.moduleMeta != undefined && rias.isInstanceOf(obj, rias.getObject("rias.riasw.studio._ModuleMixin"));
-		return rias.hostBrowser && rias.isRiasw(obj)
+		return !!(rias.hostBrowser && rias.isRiasw(obj)
 			&& (rias.isInstanceOf(obj, ["rias.riasw.studio.Module", "rias.riasw.studio.App"])
-				|| obj.moduleMeta != undefined && rias.isInstanceOf(obj, "rias.riasw.studio._ModuleMixin"));
+				|| obj.moduleMeta != undefined && rias.isInstanceOf(obj, "rias.riasw.studio._ModuleMixin")));
 	};
 	rias.isRiasWebApp = function(obj){
 		///因为有可能 redef() 导致重载，故必须用 rias.getObject() 来获取当前的实例。
-		return rias.hostBrowser && rias.isRiasw(obj) && rias.isInstanceOf(obj, "rias.riasw.studio.App");
+		return !!(rias.hostBrowser && rias.isRiasw(obj) && rias.isInstanceOf(obj, "rias.riasw.studio.App"));
 	};
 
 	///这里只做 Object 的 by，dom 和 Widget 的 by 在 riasw 中实现。
@@ -194,13 +201,85 @@ define([
 		return ok;
 	};
 
+	function _delete(dest, ref, /*Integer*/deep){
+		//deep是嵌套的层数.
+		var name, s, i, empty = {}, a = [];
+		function _dele1(name){
+			s = ref[name];
+			if(name in dest){
+				if (deep > 0){
+					try{
+						if(s instanceof Date){
+							delete dest[name];
+						}else if(s instanceof RegExp){
+							delete dest[name];
+						}else if(rias.isArray(s)){
+							if (!rias.isArray(dest[name])){
+								delete dest[name];
+							}else{
+								_delete(dest[name], s, deep - 1);
+							}
+						}else if(rias.isObjectExact(s)){
+							///因为有可能没有 require([riasw])，所以需要检查 isRiasw、isDijit
+							if((rias.isRiasw && rias.isRiasw(s)) || (rias.isDijit && rias.isDijit(s)) || s.nodeType){
+								delete dest[name];//复杂对象不建议深度delete，比如 DOM Node
+							}else{
+								if (!rias.isObjectExact(dest[name])){
+									delete dest[name];
+								}else{
+									_delete(dest[name], s, deep - 1);
+								}
+							}
+						}else{
+							delete dest[name];
+						}
+					}catch(e){
+						console.error(rias.getStackTrace(e));
+						throw e;
+					}
+				}else{
+					delete dest[name];
+				}
+			}
+		}
+
+		deep = rias.isNumber(deep) ? deep : 0;
+		for(name in ref){
+			if (ref.hasOwnProperty(name)) {///不要delete原型链，否则可能出现不可测问题。
+				_dele1(name);
+			}
+		}
+		return dest; // Object
+	}
+	rias.delete = function(/*Object*/dest, /*Object..*/refs) {
+		if(!dest){
+			dest = {};
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_delete(dest, arguments[i]);
+		}
+		return dest; // Object
+	};
+	rias.deleteDeep = function(/*Object*/dest, /*Object..*/refs) {
+		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//数组和函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99));
+			_delete(dest, arguments[i], 99);
+		}
+		return dest; // Object
+	};
+
 	function _mixin(dest, source, copyFunc, /*Integer*/deep, ord, exact, onlyCopy){
 		// the (!(name in empty) || empty[name] !== s) condition avoids copying properties in "source"
 		// inherited from Object.prototype. For example, if dest has a custom toString() method,
 		// don't overwrite it with the toString() method that source inherited from Object.prototype
 		//deep是嵌套的层数.
+		var name, s, i, empty = {}, a = [];
 		function _mix1(name){
-			//if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
 			s = source[name];
 			if(exact && !s){
 				return;
@@ -227,6 +306,9 @@ define([
 								}
 								_mixin(dest[name], s, copyFunc, deep - 1, ord, exact, onlyCopy);
 							}
+						}else if(rias.isFunction(s)){
+							dest[name] = copyFunc ? copyFunc(s) : s;
+							dest[name].nom = name;
 						}else{
 							dest[name] = copyFunc ? copyFunc(s) : s;
 						}
@@ -238,21 +320,16 @@ define([
 					dest[name] = copyFunc ? copyFunc(s) : s;
 				}
 			}
-			//}
 		}
-		var name, s, i, empty = {}, a = [];
+
 		deep = rias.isNumber(deep) ? deep : 0;
 		if(ord){
 			for(name in dest){
-				if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-					a.push(name);
-				}
+				a.push(name);
 			}
 			if(!onlyCopy){
 				for(name in source){
-					if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-						a.push(name);
-					}
+					a.push(name);
 				}
 			}
 			if(rias.isFunction(ord)){
@@ -264,15 +341,11 @@ define([
 		}else{
 			if(onlyCopy){
 				for(name in dest){
-					if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-						_mix1(name);
-					}
+					_mix1(name);
 				}
 			}else{
 				for(name in source){
-					if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-						_mix1(name);
-					}
+					_mix1(name);
 				}
 			}
 		}
@@ -281,13 +354,9 @@ define([
 				for(i = 0; i < lang._extraNames.length; ++i){
 					name = lang._extraNames[i];
 					if(onlyCopy){
-						if (dest.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-							_mix1(name);
-						}
+						_mix1(name);
 					}else{
-						if (source.hasOwnProperty(name)) {///不要复制原型链，否则可能出现不可测问题。
-							_mix1(name);
-						}
+						_mix1(name);
 					}
 				}
 			}
@@ -316,9 +385,11 @@ define([
 		return dest; // Object
 	};
 	rias.mixinDeep = function(/*Object*/dest, /*Object..*/sources) {
-		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
-		//数组和函数任然直接覆盖
-		if(!dest){ dest = {}; }
+		//针对下级含有object（包含数组、不包含函数?）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
 		for(var i = 1, l = arguments.length; i < l; i++){
 			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99));
 			_mixin(dest, arguments[i], undefined, 99);
@@ -326,9 +397,11 @@ define([
 		return dest; // Object
 	};
 	rias.mixinDeep_ord = function(/*Object*/dest, /*Object..*/sources) {
-		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
-		//数组和函数任然直接覆盖
-		if(!dest){ dest = {}; }
+		//针对下级含有object（包含数组、不包含函数?）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
 		for(var i = 1, l = arguments.length; i < l; i++){
 			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99), 1);
 			_mixin(dest, arguments[i], undefined, 99, 1);
@@ -336,9 +409,11 @@ define([
 		return dest; // Object
 	};
 	rias.mixinDeep_exact = function(/*Object*/dest, /*Object..*/sources) {
-		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
-		//数组和函数任然直接覆盖
-		if(!dest){ dest = {}; }
+		//针对下级含有object（包含数组、不包含函数?）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//函数任然直接覆盖
+		if(!dest){
+			dest = {};
+		}
 		for(var i = 1, l = arguments.length; i < l; i++){
 			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99), 1);
 			_mixin(dest, arguments[i], undefined, 99, undefined, true);
@@ -346,8 +421,9 @@ define([
 		return dest; // Object
 	};
 	rias.copy = function(/*Object*/dest, /*Object..*/sources){
-		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
-		//数组和函数任然直接覆盖
+		//只获取 dest 中已有的属性
+		//针对下级含有object（包含数组、不包含函数?）的object的 copy，可以保留下级object原有的属性，而不是直接覆盖替换
+		//函数任然直接覆盖
 		if(!dest){
 			dest = {};
 		}
@@ -357,8 +433,9 @@ define([
 		return dest; // Object
 	};
 	rias.copyDeep = function(/*Object*/dest, /*Object..*/sources){
-		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
-		//数组和函数任然直接覆盖
+		//只获取 dest 中已有的属性
+		//针对下级含有object（包含数组、不包含函数?）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
+		//函数任然直接覆盖
 		if(!dest){
 			dest = {};
 		}
@@ -572,6 +649,9 @@ define([
 		return p;
 	};
 	rias.formatPath = function (path) {
+		if(!path){
+			return "/";
+		}
 		if (!path.endWith("/")) {
 			return path + "/";
 		}
@@ -1098,86 +1178,16 @@ define([
 
 	rias.define = define;
 	rias.require = require;
-	/*rias.require = function(config, dependencies, callback, callerr){
-		var req,
-			moduleId,
-			compactPath = function(path){
-				var result = [],
-					segment, lastSegment;
-				path = path.replace(/\\/g, '/').split('/');
-				while(path.length){
-					segment = path.shift();
-					if(segment==".." && result.length && lastSegment!=".."){
-						result.pop();
-						lastSegment = result[result.length - 1];
-					}else if(segment!="."){
-						result.push(lastSegment= segment);
-					} // else ignore "."
-				}
-				return result.join("/");
-			},
-			onLoad = function(def){
-				module.result = def;
-				setArrived(module);
-				finishExec(module);
-				checkComplete();
-			},
-			func = function(){
-				onError.remove();
-				return callback.apply(this, arguments);
-			},
-			onError = require.on("error", function(arg){
-				try{
-					if(arg.src === "dojoLoader"){
-						if(arg.message === "scriptError"){
-							var p = req.waiting[arg.info[0]];
-							if(p){
-								moduleId = arg.info[0].replace(compactPath(req.baseUrl + p.location), p.name).replace(".js", "");
-								delete req.waiting[arg.info[0]];
-								rias.undef(moduleId);
-								if(rias.isFunction(callerr)){
-									callerr(moduleId);
-								}else{
-									console.error(arg, req, moduleId);
-								}
-							}
-						}
-					}
-				}catch(e){
-					console.error(e, arg);
-				}
-			});
-		if(rias.isArray(config)){// no configuration
-			callerr = callback;
-			callback = dependencies;
-			dependencies = config;
-			req = require(config, func);
-		}else{
-			req = require(config, dependencies, func);
-		}
-		return req;
-	};
-	rias.mixin(rias.require, require);*/
 	require.on("error", function(arg){
 		try{
-			console.error(arg, rias.getStackTrace(arg));
+			console.error("require error: ", arg.info, arg.src, arg.message, rias.getStackTrace(arg));
 		}catch(e){
-			console.error(arg, rias.getStackTrace(arg));
+			console.error("require error: ", arg, rias.getStackTrace(arg));
 		}
 	});
 
 	rias.baseUrl = rias.require.baseUrl;
-	rias.toUrl = rias.toServerUrl = rias.require.toUrl;
-	rias.toServerUrl = function(url){
-		!/:\/\//.test(url) && (url = rias.hostMobile && rias.mobileShell ?
-			(rias.mobileShell.serverLocation ?
-				(rias.endWith(rias.mobileShell.serverLocation, "/") ?
-					rias.mobileShell.serverLocation :
-					rias.mobileShell.serverLocation + "/") :
-				"") + url :
-			url);
-		return url;
-	};
+	rias.toUrl = rias.require.toUrl;
 	rias.undef = function(moduleId, referenceModule){
 		///FIXME:zensst.大小写
 		if(!rias.isFunction(rias.require.undef)){
@@ -1210,8 +1220,44 @@ define([
 		rias.require.undef(moduleId, referenceModule);
 	};
 	rias.declare = declare;
-	rias.setObject = dojo.setObject;
-	rias.getObject = dojo.getObject;
+	function getProp(/*Array*/parts, /*Boolean*/create, /*Object*/context){
+		if(!context){
+			if(parts[0] && dojo.scopeMap[parts[0]]) {
+				// Voodoo code from the old days where "dojo" or "dijit" maps to some special object
+				// rather than just window.dojo
+				context = dojo.scopeMap[parts.shift()][1];
+			}else{
+				context = dojo.global;
+			}
+		}
+
+		try{
+			for(var i = 0; i < parts.length; i++){
+				var p = parts[i];
+				if(!(p in context)){
+					if(create){
+						context[p] = {};
+					}else{
+						return;		// return undefined
+					}
+				}
+				context = context[p];
+			}
+			return context; // mixed
+		}catch(e){
+			// "p in context" throws an exception when context is a number, boolean, etc. rather than an object,
+			// so in that corner case just return undefined (by having no return statement)
+		}
+	}
+	rias.setObject = dojo.setObject = function(name, value, context){
+		var parts = name.split("."),
+			p = parts.pop(),
+			obj = getProp(parts, true, context);
+		return obj && p ? (rias.isFunction(obj.set) ? obj.set(p, value) : obj[p] = value) : undefined; // Object
+	};
+	rias.getObject = dojo.getObject = function(name, create, context){
+		return getProp(name ? name.split(".") : [], create, context); // Object
+	};
 
 	rias.deprecated = dojo.deprecated;
 	rias.experimental = dojo.experimental;

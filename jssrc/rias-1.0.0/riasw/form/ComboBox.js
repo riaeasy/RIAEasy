@@ -5,9 +5,8 @@ define([
 	"dijit/form/ComboBox",
 	"dijit/form/ComboBoxMixin",
 	"dijit/form/_TextBoxMixin",
-	"dijit/form/_AutoCompleterMixin",
 	"rias/riasw/form/ValidationTextBox"///extend(templateString)
-], function(rias, _Widget, ComboBoxMixin, _TextBoxMixin, _AutoCompleterMixin) {
+], function(rias, _Widget, ComboBoxMixin, _TextBoxMixin) {
 
 	////必须 extend ComboBoxMixin，因为 诸如 dijit.form.FilteringSelect 等控件也使用 ComboBoxMixin。
 	ComboBoxMixin.extend({

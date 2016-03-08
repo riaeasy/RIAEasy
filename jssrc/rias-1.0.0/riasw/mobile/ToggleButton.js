@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/ToggleButton"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ToggleButton.css"
 	], true);
 

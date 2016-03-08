@@ -2,17 +2,16 @@
 
 define([
 	"rias",
-	"dijit/form/ToggleButton",
-	"rias/riasw/form/_BusyButtonMixin",
+	"rias/riasw/form/ToggleButton",
 	"rias/riasw/widget/_BadgeMixin"
-], function(rias, _Widget, _BusyButtonMixin, _BadgeMixin) {
+], function(rias, _Widget, _BadgeMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css"
 	]);
 
 	var riasType = "rias.riasw.form.CheckButton";
-	var Widget = rias.declare(riasType, [_Widget, _BusyButtonMixin, _BadgeMixin], {
+	var Widget = rias.declare(riasType, [_Widget, _BadgeMixin], {
 
 		// type: [private] String
 		//		type attribute on `<input>` node.
@@ -38,10 +37,10 @@ define([
 		templateString:
 			'<span class="dijit dijitReset dijitInline" role="presentation">'+
 				'<span data-dojo-attach-point="focusNode" class="dijitReset dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
+					'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
 					//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
 					'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
-					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
 				'</span>'+
 				'<input data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" role="presentation" aria-hidden="true" ${!nameAttrSetting}/>'+
 			'</span>',

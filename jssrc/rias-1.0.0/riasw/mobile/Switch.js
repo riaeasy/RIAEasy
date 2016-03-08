@@ -7,7 +7,7 @@ define([
 	"dojox/mobile/_maskUtils"
 ], function(rias, _Widget, _maskUtils){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"Switch.css"
 	], true);
 

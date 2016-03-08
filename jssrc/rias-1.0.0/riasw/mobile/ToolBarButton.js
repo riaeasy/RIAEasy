@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/ToolBarButton"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"ToolBarButton.css"
 	], true);
 

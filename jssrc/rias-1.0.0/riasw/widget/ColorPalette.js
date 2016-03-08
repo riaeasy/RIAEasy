@@ -5,7 +5,7 @@ define([
 	"dijit/ColorPalette"
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/ColorPalette.css"
 	]);
 

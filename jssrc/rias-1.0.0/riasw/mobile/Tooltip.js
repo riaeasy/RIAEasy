@@ -6,7 +6,7 @@ define([
 	"dojox/mobile/Tooltip"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"Tooltip.css"
 	], true);
 

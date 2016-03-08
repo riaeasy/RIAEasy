@@ -12,10 +12,7 @@ define([
 	rias.registerRiaswMappers(riaswMappers);
 	rias.i18n.webApp = appi18n;
 
-	if(!rias.require.packs.appModule){
-		rias.require.packs.appModule = {name: 'appModule', location: rias.require.packs.webApp.location + '/module', main: 'appModule'};
-	}
-	rias.theme.loadCss([
+	rias.theme.loadWebAppCss([
 		"webApp.css"
 	]);
 

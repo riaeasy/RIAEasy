@@ -10,7 +10,7 @@ define([
 	"rias/riasw/mobile/EdgeToEdgeList"
 ], function(rias, _Widget, ListItem){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"EdgeToEdgeList.css"
 	], true);
 

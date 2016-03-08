@@ -589,7 +589,7 @@ define([
 		}
 	});
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css",
 		"gridx/extend/Gridx.css"
 	]);

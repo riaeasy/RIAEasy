@@ -5,7 +5,7 @@ define([
 	"dojox/form/TriStateCheckBox"
 ], function(rias, _Widget) {
 
-	//rias.loadCss(["dojox/form/resources/TriStateCheckBox.css"]);
+	//rias.loadRiasCss(["dojox/form/resources/TriStateCheckBox.css"]);
 
 	var riasType = "rias.riasw.form.TriStateCheckBox";
 	var Widget = rias.declare(riasType, [_Widget], {

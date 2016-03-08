@@ -57,7 +57,7 @@ define([
 		}
 	});
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/GridContainer.css",
 		"layout/DndGridContainer.css"
 	]);

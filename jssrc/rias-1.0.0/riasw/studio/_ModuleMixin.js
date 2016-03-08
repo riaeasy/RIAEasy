@@ -163,9 +163,9 @@ define([
 					if(self._beingDestroyed){
 						return false;
 					}
-					self.defer(function(){
+					//self.defer(function(){
 						self._loadModuleMeta();
-					});
+					//});
 				});
 			}
 			return r;
@@ -253,20 +253,21 @@ define([
 		},
 
 		///TODO:zensst.最好改在 resize 流程中处理。
-		_initSize: function(meta){
-			if(meta){
-				if(meta.style){
-					//this.set("style", meta.style);
-					rias.dom.setStyle(this.containerNode, rias.mixin({}, meta.style, {top: "0px", left: "0px"}));
+		_initSize: function(){
+			/// _loadModuleMeta 时设置 containerNode，这里是设置 domNode，params 是 create 时的 params
+			/*if(params){
+				if(params.style){
+					this.set("style", params.style);
+					//rias.dom.setStyle(this.containerNode, rias.mixin({}, params.style, {top: "0px", left: "0px"}));
 				}
-				if(meta.region){
-					this.set("region", meta.region);
+				if(params.region){
+					this.set("region", params.region);
 				}
-				if(this._resizeParent){
-					//this.needLayout = true;///_loadModuleMeta 后，强行 layout()
-					//this.resize();///先 resize 确定自身位置大小，再 parent.resize();
-					this._resizeParent();
-				}
+			}*/
+			if(this._resizeParent){
+				//this.needLayout = true;///_loadModuleMeta 后，强行 layout()
+				//this.resize();///先 resize 确定自身位置大小，再 parent.resize();
+				this._resizeParent();
 			}
 		},
 		_beforeLoadMeta: function(){
@@ -425,62 +426,6 @@ define([
 					_e("loading Module error:\n" + error.message + "\n\n" + errs, error);
 				});
 			}
-			function _decodeParams(params){
-				var pn, p,
-					_o, i, l;
-				for (pn in params) {
-					if(pn == "_riaswChildren" || pn == "moduleMeta" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
-						continue;
-					}
-					if (params.hasOwnProperty(pn)) {
-						p = params[pn];
-						if(rias.isRiasw(p)){
-							if(!p._riasrModule || p._riasrModule === rias.webApp){
-								p._riasrModule = self;
-							}
-						}else if(rias.isObjectSimple(p)){
-							if(p.$refObj){//
-								_o = rias.getObject(p.$refObj, 0, self) || rias.by(p.$refObj) || rias.getObject(p.$refObj);
-								if(_o){
-									params[pn] = _o;
-								}
-							}else if(p.$refScript){//
-								try{
-									_o = rias.$refByModule(self, p.$refScript, self.id + "[" + pn + "]");
-									params[pn] = _o;
-								}catch(e){
-								}
-							}else{
-								arguments.callee(p);
-							}
-						}else if(rias.isArray(p)){
-							for(i = 0, l = p.length; i < l; i++){
-								if(rias.isRiasw(p[i])){
-									if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
-										p[i]._riasrModule = self;
-									}
-								}else if(rias.isObjectSimple(p[i])){
-									if(p[i].$refObj){//
-										_o = rias.getObject(p[i].$refObj, 0, self) || rias.by(p[i].$refObj) || rias.getObject(p[i].$refObj);
-										if(_o){
-											params[pn] = _o;
-										}
-									}else if(p[i].$refScript){//
-										try{
-											_o = rias.$refByModule(self, p[i].$refScript, self.id + "[" + pn + "]");
-											params[pn] = _o;
-										}catch(e){
-										}
-									}else{
-										arguments.callee(p[i]);
-									}
-								}
-							}
-						}
-					}
-				}
-				return params;
-			}
 			function _pro(meta, mixinMeta){
 				//使用副本，避免原始 meta 被修改.
 				self._riaswModuleMeta = rias.mixinDeep({}, meta);
@@ -521,26 +466,36 @@ define([
 					delete self._riaswModuleMeta.moduleMeta;
 				}
 				rias._deleDP(p, false, false, false);
-				///meta 的 style 已经在 _afterLoadMeta 中处理，这里只处理 params.style。
-				p = rias.mixinDeep({}, self._riaswModuleMeta, p);///使用 _riaswModuleMeta._riaswChildren
+
 				var pn,
-					s = p.style,
-					_p;
-				_decodeParams(p);
-				self._initSize(p);
-				delete p.style;
+					_p = p;
+				//p = rias.mixinDeep({}, self._riaswModuleMeta, p);///使用 _riaswModuleMeta._riaswChildren
+				p = rias.mixinDeep({}, self._riaswModuleMeta);
+				rias.decodeRiaswParams(self, p);
+				/// p.style(_riaswModuleMeta.style) 是设置 containerNode 的（Module.containerNode = domNode）
+				/// parames.style 是设置 domNode 的，在 create 中已经设置了，这里不能 mixin
 				/// CaptionPanel/DialogPanel 等有 CaptionNode 存在，不应该设置 domNode.style，而应该设置 containerNode
-				rias.dom.setStyle(self.containerNode, s);
+				rias.dom.setStyle(self.containerNode, p.style);
+				self._initSize();
+				rias.deleteDeep(p, _p);
+				delete p.style;
 				///先混合 meta，避免执行 _setXXXAttr 出现错误。此时不会触发 _onXXX()。
 				///这里用 safeMixin ，而不是 mixinDeep，直接取代原型中属性。
+				for(pn in _p){
+					///需要重新 set 在 _riaswModuleMeta 中有 _setXXXAttr 的 params 值
+					/// _p 是 parames，检测 p(self._riaswModuleMeta)，此时的 p 已经是 params 中未覆盖的 _setXXXAttr
+					/// 此时，p 中可能没有 p[pn]，所以不能 p.hasOwnProperty(pn)
+					if(p["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function
+						p[pn] = _p[pn];
+					}
+				}
 				_p = rias.mixin({}, p);
 				for(pn in _p){
-					//if(p.hasOwnProperty(pn) && rias.isFunction(self["_set" + rias.upperCaseFirst(pn) + "Attr"])){
 					if(_p.hasOwnProperty(pn) && self["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function
 						delete _p[pn];
 					}
 				}
-				rias.safeMixin(self, _p);
+				rias.mixinDeep(self, _p);
 				for(pn in p){
 					//if(p.hasOwnProperty(pn) && rias.isFunction(self["_set" + rias.upperCaseFirst(pn) + "Attr"])){
 					if(p.hasOwnProperty(pn) && self["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function
@@ -552,7 +507,7 @@ define([
 				r = rias.isString(r) ? [r] : rias.isArray(r) ? r : [];
 				c = rias.isString(c) ? [c] : rias.isArray(c) ? c : [];
 				if(c.length > 0){
-					rias.theme.loadCss(c);
+					rias.theme.loadWebAppCss(c);
 				}
 				try{
 					if(r.length > 0){
@@ -582,7 +537,7 @@ define([
 				}
 			}else{
 				if(self.moduleMeta.$refObj){//
-					self.moduleMeta = rias.getObject(self.moduleMeta.$refObj, 0, self) || rias.by(self.moduleMeta.$refObj) || rias.getObject(self.moduleMeta.$refObj);
+					self.moduleMeta = rias.getObject(self.moduleMeta.$refObj, 0, self) || rias.getObject(self.moduleMeta.$refObj) || rias.by(self.moduleMeta.$refObj);
 				}else if(self.moduleMeta.$refScript){//
 					try{
 						self.moduleMeta = rias.$refByModule(self, self.moduleMeta.$refScript, self.id + "[moduleMeta]");

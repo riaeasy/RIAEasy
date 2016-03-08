@@ -137,6 +137,10 @@ define([
 	var __riasrId = 0;
 	Destroyable.extend({
 
+		toString: function(){
+			return "[object RiasWidget]";
+		},
+
 		///是简单对象，不是类工厂。
 		//constructor: function(params){
 		//	this._riasrOwner = null;
@@ -231,6 +235,9 @@ define([
 						rias.hitch(this, errCall)(e);
 					}
 				}
+			}
+			if(w._riasrOwner && w._riasrOwner._riasrDesigning){
+				w._riasrDesigning = true;
 			}
 			if(!w._riaswIdOfModule && params._riaswIdOfModule){
 				w._riaswIdOfModule = params._riaswIdOfModule;
@@ -520,7 +527,8 @@ define([
 			this._introspect();
 			if(params){
 				this.params = params;
-				rias.safeMixin(this, params);
+				//rias.safeMixin(this, params);
+				rias.mixin(this, params);
 			}
 			this.postMixInProperties();
 			this._applyAttributes();

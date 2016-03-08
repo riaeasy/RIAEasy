@@ -5,7 +5,7 @@ define([
 	"dijit/Toolbar"
 ], function(rias, _Widget) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Toolbar.css"
 	]);
 

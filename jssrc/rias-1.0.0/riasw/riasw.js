@@ -11,6 +11,8 @@ define([
 
 	rias.i18n.riasw = riaswi18n;
 
+	rias.autoToggleDuration = 500;
+
 ///kernal******************************************************************************///
 	(function (){
 		///为了隔离 var，独立设置一个 function 实现闭包。
@@ -84,7 +86,11 @@ define([
 						errorDisconnector = domOn(node, "error", "onerror", function(e){
 							loadDisconnector();
 							errorDisconnector();
-							rias.require.signal("error", makeError("scriptError", [url, e]));
+							if(rias.indexOf(url, "rias/riasd") >= 0){
+								rias.require.signal("error", makeError("injectUrl rias/riasd error: ", [url, e]));
+							}else{
+								rias.require.signal("error", makeError("injectUrl error: ", [url, e]));
+							}
 							callback && callback();
 						});
 
@@ -121,23 +127,23 @@ define([
 	//	}
 	//	return w;
 	//};
-	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, /*riaswModule*/module){
+	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
 		if(!any){
 			return undefined;
 		}
 		var w;
 		if(rias.isObjectSimple(any) && any.$refObj){
-			any = rias.getObject(any.$refObj, 0, module) || any.$refObj;
+			any = rias.by(any.$refObj, module) || any.$refObj;
 		}
 		if(rias.isString(any)){
-			w = (module ? module[any] : undefined) || (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any) || rias.getObject(any);
+			w = rias.getObject(any, false, module) || (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any);
 			if(!w){
-				w = dojo.byId(any);//查找DOMNode.
+				w = rias.dom.byId(any);//查找DOMNode.
 			}
 			any = w;
 		}
 		if(rias.isDomNode(any)){
-			any = any._riasrWidget || rias.registry.byNode(any) || registry.getEnclosingWidget(any);
+			any = any._riasrWidget || rias.registry.byNode(any) || rias.registry.getEnclosingWidget(any);
 		}
 		if(rias.isRiasw(any)){
 			return any;
@@ -151,6 +157,41 @@ define([
 			}
 		}
 		return undefined;
+	};
+	rias.domNodeBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+		var node = rias.dom.byId(any);
+		if(node){
+			return node;
+		}
+		node = rias.by.apply(this, arguments);
+		if(node){
+			return node.domNode;
+		}
+		return undefined;
+	};
+	rias.byUntil = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+		var w = rias.by(any);
+		if(!w){
+			w = rias.dom.byId(any);
+			if(rias.isDomNode(any)){
+				w = arguments.callee(any.parentNode, module);
+			}
+		}
+		return w;
+	};
+	rias.riasrParentBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+		var w = rias.byUntil(any);
+		if(w){
+			w = w._riasrParent;
+		}
+		return w;
+	};
+	rias.riasrModuleBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+		var w = rias.byUntil(any);
+		if(w){
+			w = w._riasrModule;
+		}
+		return w;
 	};
 
 	//rias.placeRiasw = function(/*riasWidget*/child, /*riasWidget*/parent, /*String|Number?*/position) {
@@ -193,6 +234,89 @@ define([
 		//_riaspChildren: []
 	};
 
+	rias.decodeRiaswParams = function(module, params, _pn){
+		///TODO:zensst. 未实现 params 中包含 _riaswType。
+		var pn, ppn, p,
+			_o, i, l;
+		for (pn in params) {
+			if(pn == "_riaswChildren" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
+				continue;
+			}
+			if(pn == "moduleMeta"){///必须过滤一下，避免当做 params 来创建。
+				if(params.moduleMeta.$refObj){
+					params.moduleMeta = {
+						$refObj: params.moduleMeta.$refObj
+					}
+				}else if(params.moduleMeta.$refScript){
+					params.moduleMeta = {
+						$refScript: params.moduleMeta.$refScript
+					}
+				}else{
+					continue;
+				}
+			}
+			if (params.hasOwnProperty(pn)) {
+				ppn = (_pn ? _pn + "." + pn : pn);
+				p = params[pn];
+				if(rias.isRiasw(p)){
+					if(!p._riasrModule || p._riasrModule === rias.webApp){
+						p._riasrModule = module;
+					}
+				}else if(rias.isObjectSimple(p)){
+					if(p.$refObj){//
+						_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+						if(_o != undefined){
+							rias.setObject(pn, _o, params);
+						}else{
+							console.warn(module.id, "moduleMeta." + ppn + " = undefined.");
+						}
+					}else if(p.$refScript){//
+						try{
+							_o = rias.$refByModule(module, p.$refScript, module.id + "[" + pn + "]");
+						}catch(e){
+							_o = undefined;
+						}
+						if(_o != undefined){
+							rias.setObject(pn, _o, params);
+						}else{
+							console.warn(module.id, "moduleMeta." + ppn + " = undefined.");
+						}
+					}else{
+						arguments.callee(p, ppn);
+					}
+				}else if(rias.isArray(p)){
+					for(i = 0, l = p.length; i < l; i++){
+						if(rias.isRiasw(p[i])){
+							if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
+								p[i]._riasrModule = module;
+							}
+						}else if(rias.isObjectSimple(p[i])){
+							if(p[i].$refObj){//
+								_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+								p[i] = _o;
+								if(_o == undefined){
+									console.warn(module.id, "moduleMeta." + ppn + "." + i + " = undefined.");
+								}
+							}else if(p[i].$refScript){//
+								try{
+									_o = rias.$refByModule(module, p[i].$refScript, module.id + "[" + ppn + "." + i + "]");
+								}catch(e){
+									_o = undefined;
+								}
+								p[i] = _o;
+								if(_o == undefined){
+									console.warn(module.id, "moduleMeta." + ppn + "." + i + " = undefined.");
+								}
+							}else{
+								arguments.callee(p[i], ppn + "." + i);
+							}
+						}
+					}
+				}
+			}
+		}
+		return params;
+	};
 	var _xtor = new Function;
 	rias.createRiasw = function(/*Constructor*/widgetCtor, params, /*DOMNode|String?*/refNode, errCall){
 		function forceNew(ctor){
@@ -561,7 +685,7 @@ define([
 					rias.require(r, function(ctor){
 						if(ctor){
 							//if(ctor.css){
-							//	rias.theme.loadCss(ctor.css);
+							//	rias.theme.loadRiasCss(ctor.css);
 							//}
 							r = rias.isString(requires) ? [requires] : rias.isArray(requires) ? requires : [];
 							//r = rias.isString(ctor.requires) ? r.concat([ctor.requires]) :
@@ -673,46 +797,63 @@ define([
 				_d.resolve(_obj);
 			}
 		}
-		function _createError(message, _params, _ownerRiasw, _module, _d, _pp, index){
-			///需要关联 _params._riasrWidget，不能用 Mixin({}, _params)
-			_createRiasw(_getRiaswCtor("rias.riasw.studio.DefaultError"), rias.mixin(_params, {
-				_riaswType: "rias.riasw.studio.DefaultError",
-				errorMessage: message,
-				_riaswOriginalParams: rias.mixinDeep({}, _params)///_params 已经被改变，需要用 mixinDeep
-			}), _ownerRiasw, _module, _d, _pp, index);
-		}
 		var _createRiasw = function(ctor, _params, _ownerRiasw, _module, _d, _pp, index){
-			function _decodeParams(_p){
+			function _createError(message){
+				//s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
+				console.error(message, _params);
+				errf(message);
+				//_d.resolve(undefined);
+				///需要关联 _params._riasrWidget，不能用 Mixin({}, _params)
+				_createRiasw(_getRiaswCtor("rias.riasw.studio.DefaultError"), rias.mixin(_params, {
+					_riaswType: "rias.riasw.studio.DefaultError",
+					errorMessage: message,
+					_riaswOriginalParams: rias.mixinDeep({}, _params)///_params 已经被改变，需要用 mixinDeep
+				}), _ownerRiasw, _module, _d, _pp, index);
+			}
+			function _decodeParams(_p, _pn){
 				for (pn in _p) {
-					if(pn == "_riaswChildren" || pn == "moduleMeta" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
+					if(pn == "_riaswChildren" || pn == "_riaswOriginalParams"){///必须跳过，否则会被当做 params 来创建。
 						continue;
 					}
+					if(pn == "moduleMeta"){///必须过滤一下，避免当做 params 来创建。
+						if(_p.moduleMeta.$refObj){
+							_p.moduleMeta = {
+								$refObj: _p.moduleMeta.$refObj
+							}
+						}else if(_p.moduleMeta.$refScript){
+							_p.moduleMeta = {
+								$refScript: _p.moduleMeta.$refScript
+							}
+						}else{
+							continue;
+						}
+					}
 					if (_p.hasOwnProperty(pn)) {
+						ppn = (_pn ? _pn + "." + pn : pn);
 						p = _p[pn];
 						if(rias.isRiasw(p)){
 							if(!p._riasrModule || p._riasrModule === rias.webApp){
 								p._riasrModule = _module;
 							}
 						}else if(rias.isObjectSimple(p)){
-							if(p.$refObj){//
-								_o = rias.getObject(p.$refObj, 0, _module) || rias.by(p.$refObj) || rias.getObject(p.$refObj);
-								if(_o){
-									_p[pn] = _o;
+							if(p.$refObj){
+								_o = rias.getObject(p.$refObj, 0, _module) || rias.getObject(p.$refObj);
+								if(_o != undefined){
+									rias.setObject(pn, _o, _p);
 								}else{
-									_ref.push([p, pn, -1, -1]);
+									_ref.push([p, ppn, -1, -1]);
 									delete _p[pn];
 								}
-							}else if(p.$refScript){//
+							}else if(p.$refScript){
 								try{
-									_o = rias.$refByModule(_module, p.$refScript, _p.id + "[" + pn + "]");
-									if(_o){
-										_p[pn] = _o;
-									}else{
-										_ref.push([p, pn, -1, -1]);
-										delete _p[pn];
-									}
+									_o = rias.$refByModule(_module, p.$refScript, params.id + "[" + ppn + "]");
 								}catch(e){
-									_ref.push([p, pn, -1, -1]);
+									_o = undefined;
+								}
+								if(_o != undefined){
+									rias.setObject(pn, _o, _p);
+								}else{
+									_ref.push([p, ppn, -1, -1]);
 									delete _p[pn];
 								}
 							}else if(p._riaswType || p.declaredClass){
@@ -722,9 +863,9 @@ define([
 								if(!p._riasrModule){
 									p._riasrModule = _module;
 								}
-								ps.push([p, pn, -1, -1]);
+								ps.push([p, ppn, -1, -1]);
 							}else{
-								arguments.callee(p);
+								arguments.callee(p, ppn);
 							}
 						}else if(rias.isArray(p)){
 							for(i = 0, l = p.length; i < l; i++){
@@ -734,25 +875,20 @@ define([
 									}
 								}else if(rias.isObjectSimple(p[i])){
 									if(p[i].$refObj){//
-										_o = rias.getObject(p[i].$refObj, 0, _module) || rias.by(p[i].$refObj) || rias.getObject(p[i].$refObj);
-										if(_o){
-											_p[pn] = _o;
-										}else{
-											_ref.push([p[i], pn, -1, -1]);
-											delete _p[pn];
+										_o = rias.getObject(p[i].$refObj, 0, _module) || rias.getObject(p[i].$refObj);
+										p[i] = _o;
+										if(_o == undefined){
+											_ref.push([p[i], ppn + "." + i, l, i]);
 										}
 									}else if(p[i].$refScript){//
 										try{
-											_o = rias.$refByModule(_module, p[i].$refScript, _p.id + "[" + pn + "]");
-											if(_o){
-												_p[pn] = _o;
-											}else{
-												_ref.push([p, pn, -1, -1]);
-												delete _p[pn];
-											}
+											_o = rias.$refByModule(_module, p[i].$refScript, params.id + "[" + pn + "]");
 										}catch(e){
-											_ref.push([p[i], pn, -1, -1]);
-											delete _p[pn];
+											_o = undefined;
+										}
+										p[i] = _o;
+										if(_o == undefined){
+											_ref.push([p[i], ppn + "." + i, l, i]);
 										}
 									}else if(p[i]._riaswType || p[i].declaredClass){
 										//p[i].id = p[i].id ? p[i].id : p[i]._riaswIdOfModule ? (_module.id + "_" + p[i]._riaswIdOfModule) :
@@ -760,9 +896,9 @@ define([
 										if(!p[i]._riasrModule){
 											p[i]._riasrModule = _module;
 										}
-										ps.push([p[i], pn, l, i]);
+										ps.push([p[i], ppn + "." + i, l, i]);
 									}else{
-										arguments.callee(p[i]);
+										arguments.callee(p[i], ppn + "." + i);
 									}
 								}
 							}
@@ -796,14 +932,11 @@ define([
 
 					if(_params._riaswIdOfModule && _module[_params._riaswIdOfModule]){
 						s = "Duplication _riaswIdOfModule['" + _params._riaswIdOfModule + "'] in module['" + _module.id + "']";
-						console.error(s, _params);
-						errf(s);
-						//_d.resolve(undefined);
 						_params._riaswIdOfModule = _params._riaswIdOfModule + "_duplicationId";///id 重复时，会造成循环，需要变更 id。
-						_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
+						_createError(s);
 						return;
 					}
-					var pn, p, ps = [], _dps = [], _ref = [], _o, i, l, _p;
+					var pn, ppn, p, ps = [], _dps = [], _ref = [], _o, i, l, _p;
 					try{
 						///后面需要引用 params.id
 						params.id = refNode ? refNode.id :
@@ -812,10 +945,7 @@ define([
 									_ownerRiasw ? rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params)) :
 										rias.getUniqueId(_module.id + "_" + rias._getUniqueCat(_params), _module);
 					}catch(e){
-						console.error(e.message, rias.getStackTrace(e), _params);
-						errf(e);
-						//_d.resolve(undefined);
-						_createError(e.message, _params, _ownerRiasw, _module, _d, _pp, index);
+						_createError(e.message);
 						return;
 					}
 					_decodeParams(params);
@@ -829,11 +959,12 @@ define([
 							_createRiasw(ctor, _p[0], {id: params.id}, _module, _dp, _pp, index);
 						});
 						_dp.then(function(c){
-							if(_p[2] < 0){
+							/*if(_p[2] < 0){
 								params[_p[1]] = c;
 							}else{
 								params[_p[1]][_p[3]] = c;
-							}
+							}*/
+							rias.setObject(_p[1], c, params);
 						});
 					});
 					rias.all(_dps).then(function(){
@@ -855,18 +986,12 @@ define([
 							}
 						}catch(e){
 							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}\n" + e.message;
-							console.error(s, rias.getStackTrace(e), _params);
-							errf(s);
-							//_d.resolve(undefined);
-							_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
+							_createError(s);
 							return;
 						}
 						if(!_obj){
 							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
-							console.error(s, _params);
-							errf(s);
-							//_d.resolve(undefined);
-							_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
+							_createError(s);
 							return;
 						}
 						rias.forEach(_ref, function(_p){//refs,
@@ -879,10 +1004,7 @@ define([
 								//_obj.id = rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params), _module);
 							}
 						}catch(e){
-							console.error(e.message, rias.getStackTrace(e), _params, _obj);
-							errf(e);
-							//_d.resolve(undefined);
-							_createError(e.message, _params, _ownerRiasw, _module, _d, _pp, index);
+							_createError(e.message);
 							return;
 						}
 						//function _createChildren(_obj, _params, _ownerRiasw, _module, _d)
@@ -891,20 +1013,17 @@ define([
 						//rias.forEach(ps, function(_p){
 						//	rias.placeRiasw(_obj[_p[1]], _obj, "last");
 						//});
+					}, function(){
+						s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
+						_createError(s);
 					});
 				}else{
 					s = "Error occurred when creating riasWidget: No Constructor of {id: " + _params.id + ", _riaswType: " + _params._riaswType + "}";
-					console.error(s, _params);
-					errf(s);
-					//_d.resolve(undefined);
-					_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
+					_createError(s);
 				}
 			}else{
 				s = "Error occurred when creating riasWidget: No Params.";
-				console.error(s, _params);
-				errf(s);
-				//_d.resolve(undefined);
-				_createError(s, _params, _ownerRiasw, _module, _d, _pp, index);
+				_createError(s);
 			}
 		};
 
@@ -981,29 +1100,39 @@ define([
 				/// ref = [obj, pn, -1, -1];
 				//ref[2][ref[1]] = rias.by(ref[0].$refObj);
 				if(module){
-					if(ref[2] < 0){///非数组
+					///合并，在前面设置好 ref[1]，包含数组 i
+					//if(ref[2] < 0){///非数组
 						if(ref[0].$refObj){
-							ref[4].set(ref[1], rias.getObject(ref[0].$refObj, 0, module) || rias.by(ref[0].$refObj) || rias.getObject(ref[0].$refObj));
+							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
 						}else if(ref[0].$refScript){
 							try{
 								_o = rias.$refByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
 							}catch(e){
 								_o = undefined;
 							}
-							ref[4].set(ref[1], _o);
 						}
-					}else{///TODO:zensst。目前只支持 push，不支持 index。
+						if(_o == undefined){
+							console.warn(ref[4].id, "params." + ref[1] + " = undefined.");
+						}
+						//ref[4].set(ref[1], _o);
+						rias.setObject(ref[1], _o, ref[4]);
+					/*}else{///TODO:zensst。目前只支持 push，不支持 index。
 						if(ref[0].$refObj){
-							ref[4][ref[1]].push(rias.getObject(ref[0].$refObj, 0, module) || rias.by(ref[0].$refObj) || rias.getObject(ref[0].$refObj));
+							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
 						}else if(ref[0].$refScript){
 							try{
 								_o = rias.$refByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
 							}catch(e){
 								_o = undefined;
 							}
-							ref[4][ref[1]].push(_o);
 						}
-					}
+						if(_o == undefined){
+							console.warn(ref[4].id, "params." + ref[1] + " = undefined.");
+						}
+						//ref[4][ref[1]].push(_o);
+						//ref[4][ref[1]] = _o;
+						rias.setObject(ref[1], _o, ref[4]);
+					}*/
 				}
 				if(rias.isRiasw(ref[4])){
 					i = ref[4];

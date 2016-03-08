@@ -7,7 +7,7 @@ define([
 	"rias/riasw/mobile/scrollable"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"SpinWheel.css"
 	], true);
 

@@ -8,7 +8,7 @@ define([
 	"rias/riasw/studio/_ModuleMixin"
 ], function(rias, Panel, _FormMixin, _ModuleMixin){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		//"layout/ContentPane/.css"
 	]);
 
@@ -69,7 +69,7 @@ define([
 					if(self._beingDestroyed){
 						return;
 					}
-					self.defer(function(){
+					//self.defer(function(){
 						if(!self._riaswChildren || self._riaswChildren.length < 1){
 							self._setContent(self.loadingMessage).then(function(){
 								if(self.moduleMeta){
@@ -81,10 +81,10 @@ define([
 								}
 							});
 						}else{
-							self._initSize(self.params);
+							self._initSize();
 							self._afterLoaded(self._riasrChildren);
 						}
-					});
+					//});
 				});
 			}
 			return r;
@@ -108,7 +108,7 @@ define([
 					try{
 						self._isDownloaded = true;
 						return self._setContent(html).then(function(){
-							self._initSize(self.params);
+							self._initSize();
 							self._afterLoaded(html);
 						});
 					}catch(err){
@@ -136,7 +136,7 @@ define([
 			self._isDownloaded = false; // mark that content is from a set('content') not a set('href')
 			self._setContent(self.content || "").then(function(result){
 				//rias.dom.addClass(self.containerNode, "riaswDialogPanelContentMessage");
-				self._initSize(self.params);
+				self._initSize();
 				self._afterLoaded(self.content);
 			});
 		},
@@ -148,7 +148,7 @@ define([
 				if(result.errors){
 					self._onError('Load', "Filer children error:\n" + result.errors);
 				}else{
-					self._initSize(self.params);
+					self._initSize();
 					self._afterLoaded(result);
 				}
 			}, function(error){
@@ -185,7 +185,7 @@ define([
 				console.error(consoleText, err);
 			}else if(errText){// a empty string won't change current content
 				self._setContent(errText).then(function(){
-					self._initSize(self.params);
+					self._initSize();
 					self._afterLoaded(errText, true);
 				});
 			}

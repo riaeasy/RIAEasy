@@ -47,7 +47,7 @@ define([
 			mTooltip, mUndoStack, mTextDND, mEditor, mEditorFeatures, mContentAssist, mCSSContentAssist, mHtmlContentAssist,
 			mAsyncStyler, mMirror, mTextMateStyler, mHtmlGrammar, mTextStyler, mJS, mCSS, mHTML) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/OrionEditor.css"
 	]);
 

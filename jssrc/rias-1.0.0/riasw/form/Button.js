@@ -7,7 +7,7 @@ define([
 	"rias/riasw/widget/_BadgeMixin"
 ], function(rias, Button, _BusyButtonMixin, _BadgeMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css"
 	]);
 
@@ -15,27 +15,30 @@ define([
 	var Widget = rias.declare(riasType, [Button, _BusyButtonMixin, _BadgeMixin], {
 
 		isRiaswTextVertical: false,
+		iconLayoutTop: false,
 
 		templateString:
 			'<span class="dijit dijitReset dijitInline" role="presentation">'+
 				'<span data-dojo-attach-point="focusNode" class="dijitReset dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
+					'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
 					//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
-					'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
-					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
+					'<span role="presentation" data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label"></span>'+
 				'</span>'+
-				'<input data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" role="presentation" aria-hidden="true" ${!nameAttrSetting}/>'+
+				'<input role="presentation" data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" aria-hidden="true" ${!nameAttrSetting}/>'+
 			'</span>',
 
-		_setBadgeAttr: function(/*String*/value){
-			this.inherited(arguments);
-			rias.dom.toggleClass(this.domNode, "riaswBadgeNodeStretch", !!value);
+		_setIconLayoutTopAttr: function(value){
+			value = !!value;
+			if(value){
+				rias.dom.toggleClass(this.domNode, "riaswButtonIconTop", !!value);
+			}
+			this._set("iconLayoutTop", value);
 		},
 
 		///注意 if(has("dojo-bidi")) 是两个不同的类，用 rias.isFunction(this.applyTextDir) 来判断
 		_setLabelAttr: function(/*String*/ content){
-			var dn = this.domNode,
-				cn = this.containerNode;
+			var cn = this.containerNode;
 			this.inherited(arguments);
 			if(this.tooltip){
 				this.titleNode.title = "";
@@ -47,23 +50,30 @@ define([
 					this.applyTextDir(this.titleNode, this.titleNode.title);
 				}
 			}
-			rias.dom.toggleClass(cn, "riaswDisplayVertical", !!this.isRiaswTextVertical);
-			rias.dom.toggleClass(cn, "riaswTextVertical", !!this.isRiaswTextVertical);
-			//cn.style.height = "";
-			//cn.style.width = "";
-			dn.style.height = "";
-			dn.style.width = "";
-			if(this.isRiaswTextVertical){
-				//this._captionHeight = rias.dom.getMarginBox(cn).h;
-				rias.dom.setMarginBox(dn, {
-					w: rias.dom.getMarginBox(cn).w
-				});
-			}
 		},
 		_setTooltipAttr: function(/*String*/ tooltip){
 			this.inherited(arguments);
 			this.titleNode.title = "";
+		},
+
+		buildRendering: function(/*Event*/ evt){
+			this.inherited(arguments);
+			rias.dom.toggleClass(this.domNode, "riaswDisplayVertical", !!this.isRiaswTextVertical);
+			rias.dom.toggleClass(this.containerNode, "riaswTextVertical", !!this.isRiaswTextVertical);
+			rias.dom.toggleClass(this.domNode, "riaswButtonIconTop", !!this.iconLayoutTop);
+			//if(this.isRiaswTextVertical){
+			//	this.set("iconLayoutTop", true);
+			//}
+			//this.domNode.style.height = "";
+			//this.domNode.style.width = "";
+			//if(this.isRiaswTextVertical){
+			//	//this._captionHeight = rias.dom.getMarginBox(this.containerNode).h;
+			//	rias.dom.setMarginBox(dn, {
+			//		w: rias.dom.getMarginBox(this.containerNode).w
+			//	});
+			//}
 		}
+
 	});
 
 	Widget._riasdMeta = {

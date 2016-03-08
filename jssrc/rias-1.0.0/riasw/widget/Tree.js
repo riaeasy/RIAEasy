@@ -10,7 +10,7 @@ define([
 	"dijit/tree/TreeStoreModel"
 ], function(rias, _Widget, TreeModel, dndCommon, dndSelector, dndSource) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"widget/Tree.css"
 	]);
 
@@ -77,15 +77,15 @@ define([
 
 		templateString:
 			'<div class="dijitTreeNode" role="presentation">' +
-				'<div data-dojo-attach-point="rowNode" class="dijitTreeRow" role="presentation">' +
-					'<span data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando" role="presentation"></span>' +
-					'<span data-dojo-attach-point="expandoNodeText" class="dijitExpandoText" role="presentation"></span>' +
-					'<span data-dojo-attach-point="contentNode" class="dijitTreeContent" role="presentation">' +
-						'<span role="presentation" class="dijitInline dijitIcon dijitTreeIcon" data-dojo-attach-point="iconNode"></span>' +
-						'<span data-dojo-attach-point="labelNode,focusNode" class="dijitTreeLabel" role="treeitem" tabindex="-1" aria-selected="false" id="${id}_label"></span>' +
+				'<div role="presentation" data-dojo-attach-point="rowNode,focusNode" class="dijitTreeRow" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">' +
+					'<span role="presentation" data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando"></span>' +
+					'<span role="presentation" data-dojo-attach-point="expandoNodeText" class="dijitExpandoText"></span>' +
+					'<span role="presentation" data-dojo-attach-point="contentNode" class="dijitTreeContent">' +
+						'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitIcon dijitTreeIcon"></span>' +
+						'<span role="treeitem" data-dojo-attach-point="labelNode" class="dijitTreeLabel" tabindex="-1" aria-selected="false" id="${id}_label"></span>' +
 					'</span>' +
 				'</div>' +
-				'<div data-dojo-attach-point="containerNode" class="dijitTreeNodeContainer" role="presentation" style="display: none;" aria-labelledby="${id}_label"></div>' +
+				'<div role="presentation" data-dojo-attach-point="containerNode" class="dijitTreeNodeContainer" style="display: none;" aria-labelledby="${id}_label"></div>' +
 			'</div>',
 
 		isFocusable: function(){
@@ -157,6 +157,10 @@ define([
 			this.inherited(arguments);
 		},
 		destroy: function(){
+			if(this._autoToggleDelay){
+				this._autoToggleDelay.remove();
+				delete this._autoToggleDelay;
+			}
 			if(this._loadDeferred){
 				this._loadDeferred.cancel("destroy node");//resolve(false);
 				delete this._loadDeferred;
@@ -185,7 +189,7 @@ define([
 					child._updateLayout();
 				});
 			}
-		}//,
+		},
 		/*
 		expand: function(){
 			var self = this,
@@ -268,10 +272,58 @@ define([
 			wipeOut.play();
 
 			return shimmedPromise(def);		// dojo/promise/Promise
-		}*/
+		},*/
+
+		toggle: function (){
+			if(this.tree.toggleOnClick && this.tree.model.mayHaveChildren(this.item)){
+				if(this.isExpanded){
+					this.tree._collapseNode(this);
+				}else{
+					this.tree._expandNode(this);
+				}
+			}
+		},
+
+		_onMouseEnter: function(e){
+			var self = this,
+				tree = self.tree;
+			if(tree && (tree.expandOnEnter || tree.collapseOnEnter) && !self._autoToggleDelay && tree.model.mayHaveChildren(self.item)){
+				if((!self._loadDeferred || self._loadDeferred.isFulfilled)
+					&& (!self._expandDeferred || self._expandDeferred.isFulfilled)
+					&& (!self._collapseDeferred || self._collapseDeferred.isFulfilled)){
+					self._autoToggleDelay = self.defer(function(){
+						if(self._autoToggleDelay){
+							self._autoToggleDelay.remove();
+							delete self._autoToggleDelay;
+						}
+						if(self.isExpanded){
+							if(tree.collapseOnEnter){
+								tree._collapseNode(self);
+							}
+						}else{
+							if(tree.expandOnEnter){
+								tree._expandNode(self);
+							}
+						}
+					}, rias.autoToggleDuration);
+				}
+			}
+		},
+		_onMouseLeave: function(e){
+			if(this._autoToggleDelay){
+				this._autoToggleDelay.remove();
+				delete this._autoToggleDelay;
+			}
+		}
+
 	});
 
 	_Widget.extend({
+
+		toggleOnClick: true,
+		expandOnEnter: false,
+		collapseOnEnter: false,
+
 		destroy: function(){
 			if(this._curSearch){
 				this._curSearch.timer.remove();
@@ -329,7 +381,11 @@ define([
 					// expando node was clicked, or label of a folder node was clicked; open it
 					this._onExpandoClick({node: nodeWidget});
 				}else{
-					this._publish("execute", { item: nodeWidget.item, node: nodeWidget, evt: e });
+					this._publish("execute", {
+						item: nodeWidget.item,
+						node: nodeWidget,
+						evt: e
+					});
 					this[func](nodeWidget.item, nodeWidget, e);
 					this.focusNode(nodeWidget);
 				}

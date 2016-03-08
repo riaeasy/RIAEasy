@@ -7,7 +7,7 @@ define([
 	"rias/riasw/studio/_ModuleMixin"
 ], function(rias, _TemplatedMixin, _PanelBase, _FormMixin, _ModuleMixin){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"studio/Module.css"
 	]);
 

@@ -148,7 +148,7 @@
 .rias .dijitToggleButton .dijitButtonNode {
   /* rules for the dijit.form.*Button widgets (see also ComboButton section below) */
 	border: 1px solid silver;
-	padding: 3px 4px;
+	padding: 0.25em 0.25em;
 	color: #000000;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -357,3 +357,12 @@
 	color: #aaa;
 }
 
+.riaswButtonIconTop .dijitIcon {
+	display: block;
+	margin: auto !important;
+}
+.riaswButtonIconTop .dijitButtonText,
+.riaswButtonIconTop .riaswDockNodeTitle {
+	display: block;
+	margin: auto !important;
+}

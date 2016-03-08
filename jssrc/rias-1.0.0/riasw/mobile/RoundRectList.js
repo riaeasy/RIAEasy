@@ -8,7 +8,7 @@ define([
 	"rias/riasw/mobile/ListItem"
 ], function(rias, _Widget){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"RoundRectList.css"
 	], true);
 

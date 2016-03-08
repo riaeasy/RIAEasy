@@ -6,7 +6,7 @@ define([
 	"rias/riasw/form/_FormMixin"
 ], function(rias, Panel, _FormMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/TablePanel.css"
 	]);
 
@@ -131,7 +131,7 @@ define([
 
 		_internalLayou: function(){
 			var self = this,
-				fn = rias.dom.focusedNode(),
+				fn = this._focusedNode || rias.dom.focusedNode,/// this.focused 时，没有 this._focusedNode， 取 rias.dom.focusedNode
 				tn = self.tableNode,// ? self.tableNode : self.tableNode = rias.dom.create("table", self._tableAttr),// self.tableNode,
 				tr = tn.childNodes[0], td = tr.childNodes[0],
 				r, c, rc = self.rows - 1, cc = self.cols - 1, cx, rx,

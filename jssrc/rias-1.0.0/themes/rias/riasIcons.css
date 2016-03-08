@@ -468,6 +468,27 @@
 	width: 16px;
 	height: 16px;
 }
+.riasdFuncIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -224px -64px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.riasdParamIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -256px -64px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.riasdStyleIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -288px -64px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
 .fullScreenIcon {
 	background-image: url(./images/btn_Images.png);
 	background-position: 0px -112px;

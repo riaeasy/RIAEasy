@@ -1,6 +1,5 @@
 
 /* CaptionPanel */
-@import "Panel.css";
 
 .riaswCaptionPanel {
 	display: block;
@@ -28,7 +27,7 @@
 	overflow: auto;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
-	padding: 2px;
+	padding: 0px;
 }
 /*.mobileBody .riaswCaptionPanelContent {
 	overflow: hidden;
@@ -91,7 +90,7 @@
 .riaswDialogPanelCaptionNodeSelected,
 .riaswDialogPanelCaptionNodeFocused,
 .riaswDialogPanelCaptionNodeTopmost {
-	background-color: darkseagreen;
+	background-color: skyblue;
 }
 
 .riaswCaptionPanelCaptionTextNode,
@@ -175,7 +174,20 @@
 }
 .riaswCaptionPanelIconNodeHover,
 .riaswDialogPanelIconNodeHover {
-	background-color: skyblue;
+	background-color: gold;
+}
+.riaswCaptionPanelCaptionNodeHover .riaswCaptionPanelIconNodeHover,
+.riaswCaptionPanelCaptionNodeActive .riaswCaptionPanelIconNodeHover,
+.riaswDialogPanelCaptionNodeHover .riaswDialogPanelIconNodeHover,
+.riaswDialogPanelCaptionNodeActive .riaswDialogPanelIconNodeHover {
+	background-color: lightblue;
+}
+.riaswCaptionPanelCaptionNodeSelected .riaswCaptionPanelIconNodeHover,
+.riaswCaptionPanelCaptionNodeFocused .riaswCaptionPanelIconNodeHover,
+.riaswDialogPanelCaptionNodeSelected .riaswDialogPanelIconNodeHover,
+.riaswDialogPanelCaptionNodeFocused .riaswDialogPanelIconNodeHover,
+.riaswDialogPanelCaptionNodeTopmost .riaswDialogPanelIconNodeHover {
+	background-color: gold;
 }
 
 /* Vertical ===============================================*/

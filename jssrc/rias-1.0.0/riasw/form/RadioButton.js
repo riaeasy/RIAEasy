@@ -6,7 +6,7 @@ define([
 	"dijit/form/_RadioButtonMixin"
 ], function(rias, CheckButton, _RadioButtonMixin) {
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"form/Button.css"
 	]);
 

@@ -30,24 +30,20 @@ define([
 
 		_aria_attr: "aria-selected",
 
-		watchPageState: true,
+		//watchTargetState: true,
 
 		buildRendering: function(/*Event*/ evt){
+			//this.isRiaswTextVertical = /left|right/.test(this.tabPosition);
+			this.iconLayoutTop = /left|right/.test(this.tabPosition);
 			this.inherited(arguments);
 			(this.focusNode || this.domNode).setAttribute("role", "tab");
-			this.isRiaswTextVertical = /left|right/.test(this.tabPosition);
-			//if(this.isRiaswTextVertical){
-			//	rias.dom.addClass(this.containerNode, "riaswTextVertical riaswDisplayVertical");
-			//	this.containerNode.style.height = "";
-			//	this.containerNode.style.width = "";
-			//}
 		},
 
 		postCreate: function(){
 			var self = this,
 				page = self.page;
 			self.inherited(arguments);
-			if(self.watchPageState){
+			//if(self.watchTargetState){
 				self.own(
 					page.watch('caption', function(name, oldValue, newValue){
 						self.set("label", newValue);
@@ -68,12 +64,11 @@ define([
 						self.set("badge", newValue);
 					//}),
 					//page.watch('displayState', function(name, oldValue, newValue){
-					//	self._setTargetState(newValue);
+					//	self.setTargetState(newValue);
 					})
 				);
-			}
+			//}
 		}
-
 	});
 
 
@@ -215,8 +210,8 @@ define([
 					iconClass: page.iconClass,
 					closeButton: page.closable,
 					tooltip: page.tooltip || page.caption || page.title,
-					page: page,
-					watchPageState: (page.watchPageState != undefined ? page.watchPageState : true)
+					//watchTargetState: (page.watchTargetState != undefined ? page.watchTargetState : true),
+					page: page
 				});
 				this.addChild(button, insertIndex);
 				page.controlButton = button;	// this value might be overwritten if two tabs point to same container

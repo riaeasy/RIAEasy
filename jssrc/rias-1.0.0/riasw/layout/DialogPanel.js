@@ -12,7 +12,7 @@ define([
 	"rias/riasw/layout/CaptionPanel"
 ], function(rias, Moveable, TimedMoveable, Resizer, Underlay, Panel, Button, CaptionPanel){
 
-	rias.theme.loadCss([
+	rias.theme.loadRiasCss([
 		"layout/CaptionPanel.css",
 		"layout/DialogPanel.css"
 	]);
@@ -77,19 +77,19 @@ define([
 			h: 80
 		},
 
-		_canClose: true,
+		canClose: true,
 		submitDisplayState: "closed",
 		autoClose: 0,
 
 		templateString:
 			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter:_onDomNodeEnter, onmouseleave:_onDomNodeLeave' aria-labelledby='${id}_captionNode'>"+
 				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
-					"<div data-dojo-attach-point='toggleNode' class='riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></div>"+
-					'<div data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></div>'+
-					"<div data-dojo-attach-point='captionTextNode' class='riaswDialogPanelCaptionTextNode'></div>"+
-					'<div data-dojo-attach-point="badgeNode" class="${badgeClass}"></div>'+
-					"<div data-dojo-attach-point='closeNode' class='riaswDialogPanelIconNode riaswDialogPanelCloseIcon'></div>"+
-					"<div data-dojo-attach-point='maxNode' class='riaswDialogPanelIconNode riaswDialogPanelMaximizeIcon'></div>"+
+					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
+					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></span>"+
+					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+					"<span data-dojo-attach-point='captionTextNode' class='dijitInline riaswDialogPanelCaptionTextNode'></span>"+
+					"<span data-dojo-attach-point='closeNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelCloseIcon'></span>"+
+					"<span data-dojo-attach-point='maxNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelMaximizeIcon'></span>"+
 				"</div>"+
 				"<div data-dojo-attach-point='wrapperNode' class='dijitReset riaswDialogPanelWrapper' role='region' id='${id}_wrapper' ${!nameAttrSetting}>"+
 					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' ${!nameAttrSetting}></div>"+
@@ -116,6 +116,9 @@ define([
 
 		postMixInProperties: function(){
 			this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : "";
+			if(!rias.isNumber(this.zIndex)){
+				this.set("zIndex",  Widget._startZ + _allWin.length + 100);
+			}
 			this.inherited(arguments);
 		},
 		buildRendering: function(){
@@ -124,16 +127,12 @@ define([
 				//visiblity: "hidden",
 				//display: "none",
 				opacity: 0,
-				position: "absolute",
-				zIndex: Widget._startZ + _allWin.length + 100
+				position: "absolute"
 			});
 		},
 		postCreate: function(){
 			var self = this;
 			self.own(
-				rias.on(self.closeNode, rias.touch.press, rias.hitch(self, "_stopEvent")),
-				rias.on(self.closeNode, rias.touch.release, rias.hitch(self, "cancel")),
-				rias.on(self.domNode, "keydown", rias.hitch(self, "_onKey")),
 				rias.on(self.domNode, rias.touch.over, function(evt){
 					rias.dom.toggleClass(self.captionNode, "riaswDialogPanelCaptionNodeHover", true);
 				}),
@@ -142,7 +141,7 @@ define([
 				})
 			);
 			self.inherited(arguments);
-			this._initAttr(["closable", "movable", "contentType"]);
+			this._initAttr(["zIndex", "dialogType", "movable", "contentType"]);
 
 			if(self.autoClose == 1){
 				self.own(self.on("mouseleave", function(){
@@ -165,22 +164,22 @@ define([
 			}
 			self.inherited(arguments);
 			self.own(
-				rias.after(self, "onFocus", function(){
-					self.bringToTop();
-				}),
+				//rias.after(self, "onFocus", function(){
+				//	self.bringToTop();
+				//}),
 				rias.after(self.captionNode, "onmousedown", function(evt){
 					//self.defer(function(){
 					////focus 会导致其他 popup 失去焦点，最好判断一下
-					if(!self.focused){
+					//if(!self.focused){
 						self.focus();
-					}
+					//}
 					//}, 100);
 				})
 			);
 		},
 		destroy: function(){
 			if(this._actionBar){
-				this._actionBar.destroyRecursive();
+				rias.destroy(this._actionBar);
 				delete this._actionBar;
 			}
 			if(this._onMouseOverHandle){
@@ -194,6 +193,10 @@ define([
 			if(this._moveHandle){
 				this._moveHandle.destroy();///没有 destroyRecursive();
 				delete this._moveHandle;
+			}
+			if(this._riasrUnderlay){
+				rias.destroy(this._riasrUnderlay);
+				delete this._riasrUnderlay;
 			}
 			if(this.bgIframe){
 				this.bgIframe.destroy();
@@ -217,7 +220,7 @@ define([
 			}
 		},
 
-		_initSize: function(meta){
+		_initSize: function(){
 			var self = this,
 				args = arguments;
 			if(self._actionBar){
@@ -325,11 +328,34 @@ define([
 			}else{
 				self.inherited(args);
 			}
-			//if(self.placeToArgs){
-			rias.dom.positionAt(self, self.placeToArgs);
+			//if(self.initPlaceToArgs){
+			self._needPosition = !rias.dom.positionAt(self, self.initPlaceToArgs) || !rias.dom.visible(self);/// self 不可见时，positionAt 定位不正确。
 			//}
 		},
 
+		_onZIndex: function(value, oldValue){
+			if(rias.isNumber(value)){
+				rias.dom.setStyle(this.domNode, "zIndex", value);
+				if(this._riasrUnderlay){
+					this._riasrUnderlay.set("zIndex", value - 1);
+				}
+			}
+		},
+		_onDialogType: function(value, oldValue){
+			if(this._riasrUnderlay){
+				rias.destroy(this._riasrUnderlay);
+			}
+			if(this.isModal()){
+				this._riasrUnderlay = new Underlay({
+					ownerRiasw: this,
+					dialog: this
+				});
+				if(this.isShown()){
+					this._riasrUnderlay.show();
+				}
+			}
+			Widget.bringToTop();
+		},
 		_onContentType: function(value, oldValue){
 			this.contentType = contentTypeStr(value);
 			rias.dom.removeClass(this.domNode, this.baseClass + "Type" + rias.upperCaseFirst(contentTypeStr(oldValue)));
@@ -364,20 +390,23 @@ define([
 						}
 					), {
 						onMoving: function(mover, leftTop){
-							if(leftTop.t < self.restrictPadding){
-								leftTop.t = self.restrictPadding;
-							}
-							if(leftTop.l < self.restrictPadding){
-								leftTop.l = self.restrictPadding;
-							}
-							var p = self.domNode.parentNode,
-								r = (self.restrictPadding >= Widget.prototype.restrictPadding ? self.restrictPadding : Widget.prototype.restrictPadding);
-							p = rias.dom.getContentBox(p);
-							if(leftTop.t > p.h - r){
-								leftTop.t = p.h - r;
-							}
-							if(leftTop.l > p.w - r){
-								leftTop.l = p.w - r;
+							if(self.restrictPadding >= 0){
+								var p = self.domNode.parentNode,
+									//r = (self.restrictPadding >= Widget.prototype.restrictPadding ? self.restrictPadding : Widget.prototype.restrictPadding);
+									r = self.restrictPadding;
+								if(leftTop.t < r){
+									leftTop.t = r;
+								}
+								if(leftTop.l < r){
+									leftTop.l = r;
+								}
+								p = rias.dom.getContentBox(p);
+								if(leftTop.t > p.h - r){
+									leftTop.t = p.h - r;
+								}
+								if(leftTop.l > p.w - r){
+									leftTop.l = p.w - r;
+								}
 							}
 						},
 						onMoved: function(/*===== mover, leftTop =====*/){
@@ -403,51 +432,15 @@ define([
 			//if(self._started){
 			//}
 		},
-		_onClosable: function(value, oldValue){
-			this.closable = !!value;
-			rias.dom.visible(this.closeNode, this.closable);
-		},
-
-		_onKey: function(/*Event*/ evt){
-			if(evt.keyCode == rias.keys.TAB){
-				var fn = rias.dom.focusedNode();
-				//if(rias.dom.isDescendant(fn, this.domNode) && fn.focus){
-				//	fn.focus();
-				//}
-				this._getFocusItems();
-				if(this._firstFocusNode == this._lastFocusNode){
-					// don't move focus anywhere, but don't allow browser to move focus off of dialog either
-					evt.stopPropagation();
-					evt.preventDefault();
-				}else if(fn == this._firstFocusNode && evt.shiftKey){
-					// if we are shift-tabbing from first focusable item in dialog, send focus to last item
-					//rias.dom.focus(this._lastFocusNode);
-					if(this._lastFocusNode && this._lastFocusNode.focus){
-						this._lastFocusNode.focus();
-					}
-					evt.stopPropagation();
-					evt.preventDefault();
-				}else if(fn == this._lastFocusNode && !evt.shiftKey){
-					// if we are tabbing from last focusable item in dialog, send focus to first item
-					//rias.dom.focus(this._firstFocusNode);
-					if(this._firstFocusNode && this._firstFocusNode.focus){
-						this._firstFocusNode.focus();
-					}
-					evt.stopPropagation();
-					evt.preventDefault();
-				}
-			}else if(this.closable && evt.keyCode == rias.keys.ESCAPE){
-				this.defer(this.cancel);
-				evt.stopPropagation();
-				evt.preventDefault();
-			}
-		},
 
 		//layout: function(){
 		//	this.inherited(arguments);
 		//},
 		_hide: function(newState){
 			this.inherited(arguments);
+			if(this._riasrUnderlay){
+				this._riasrUnderlay.hide();
+			}
 			if(this.isTopmost){
 				Widget.bringToTop();
 			}
@@ -455,24 +448,41 @@ define([
 		_onShow: function(newState){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(){
+				if(self._riasrUnderlay){
+					self._riasrUnderlay.show();
+				}
 				if(self.focusOnShow && !(self.autoClose > 0) && !self.isTip()){
 					if(self._playingDeferred){
 						self._playingDeferred.then(function(){
-							self.focus();
 							self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 						})
 					}else{
-						self.focus();
 						self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 					}
 				}
 			});
 		},
-		restore: function(){
+		_restore: function(){
 			var self = this;
+			if(self._needPosition){
+				var pos = rias.dom.positionAt(self, self.initPlaceToArgs);
+				self._needPosition = !pos;
+				if(pos){
+					self._size0 = {
+						t: pos.y,
+						l: pos.x,
+						h: pos.h,
+						w: pos.w
+					};
+				}
+			}
+			this.inherited(arguments);
+		},
+		restore: function(){
+			var self = this,
+				pos;
 			return rias.when(self.inherited(arguments), function(result){
 				if(result === self){
-					self.focus();
 					self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 				}
 			});
@@ -484,9 +494,9 @@ define([
 			this.inherited(arguments);
 		},
 		_onDomNodeLeave: function(e){
-			if(this.dockTo && this.dockTo.findTarget(this)){
-				return;
-			}
+			//if(this.dockTo && this.dockTo.findTarget(this)){
+			//	return;
+			//}
 			this.inherited(arguments);
 		},
 
@@ -499,10 +509,17 @@ define([
 			this.inherited(arguments);
 		},
 
+		_onFocus: function(){
+			this.inherited(arguments);
+			this.bringToTop();
+		},
 		onBringToTop: function(isTopmost){
 		},
 		_onBringToTop: function(){
 			this.onBringToTop(this.isTopmost);
+			if(this.isTopmost && !this.focused){
+				this.focus();
+			}
 		},
 		bringToTop: function(){
 			Widget.bringToTop(this);
@@ -527,7 +544,8 @@ define([
 				rias.dom.removeClass(h.domNode, "riaswDialogPanelTopmost");
 				rias.dom.removeClass(h.captionNode, "riaswDialogPanelCaptionNodeTopmost");
 			}
-			rias.dom.setStyle(h.domNode, "zIndex", z);
+			//rias.dom.setStyle(h.domNode, "zIndex", z);
+			h.set("zIndex", z);
 			if(h.get("isTopmost") != value){
 				h.set("isTopmost", !!value);
 				h._onBringToTop();
@@ -543,7 +561,8 @@ define([
 			if(_isFocused(b.id)){
 				return -1;
 			}*/
-			h = a === win ? 1 : b === win ? -1 : rias.toInt(rias.dom.getStyle(a.domNode, "zIndex"), 0, 1) - rias.toInt(rias.dom.getStyle(b.domNode, "zIndex"), 0, 1);
+			//h = a === win ? 1 : b === win ? -1 : rias.toInt(rias.dom.getStyle(a.domNode, "zIndex"), 0, 1) - rias.toInt(rias.dom.getStyle(b.domNode, "zIndex"), 0, 1);
+			h = a === win ? 1 : b === win ? -1 : rias.toInt(a.get("zIndex"), 0, 1) - rias.toInt(b.get("zIndex"), 0, 1);
 			//if(isNaN(h)){
 			//	h = 0;
 			//}
@@ -583,7 +602,7 @@ define([
 		ts = rias.filter(_allWin, function(w){
 			return !w._beingDestroyed && !w._riasrDestroying && w.isTop();// && (!win || w !== win);
 		});
-		Underlay.hide();
+		//Underlay.hide();
 		try{
 			ws.sort(_sort);
 			ms.sort(_sort);
@@ -596,7 +615,7 @@ define([
 				//if(h === win && _visible(h)){
 				if(!Widget.topmost && _visible(h)){
 					_topmost(h, true, zt);
-					Underlay.show({
+					/*Underlay.show({
 						ownerRiasw: h,
 						dialog: h,
 						"class": rias.map(h["class"].split(/\s/),function(s){
@@ -604,7 +623,7 @@ define([
 						}).join(" "),
 						_onKeyDown: rias.hitch(h, "_onKey"),
 						ownerDocument: h.ownerDocument
-					}, zt - 1);
+					}, zt - 1);*/
 				}else{
 					_topmost(h, false, z);
 				}
@@ -631,7 +650,7 @@ define([
 				}
 			}
 		}catch(e){
-			Underlay.hide();
+			//Underlay.hide();
 		}
 		return Widget.topmost;
 	};
@@ -721,11 +740,6 @@ define([
 				"defaultValue": false,
 				"title": "Maximizable"
 			},
-			/*"duration": {
-				"datatype": "number",
-				"defaultValue": rias.defaultDuration,
-				"title": "Duration"
-			},*/
 			"adjustPaths": {
 				"datatype": "boolean",
 				"description": "Adjust relative paths in html string content to point to this page.\nOnly useful if you grab content from a another folder then the current one",
