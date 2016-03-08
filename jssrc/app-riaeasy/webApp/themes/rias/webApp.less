@@ -1,0 +1,225 @@
+
+/* rias.webApp */
+.webApp{
+	background-color: lightgray;
+	/*height: 100px;
+	width: 100px;*/
+	font-family: Helvetica;
+	font: menu;
+	display: block;
+	/*position: relative;*/
+	margin:0;
+	overflow: hidden;
+	/*overflow: auto;*/
+}
+
+.webAppContent {
+	//background-color: whitesmoke;
+	//border-top: 0px solid silver;
+	//padding: 0px;
+}
+
+.mblComboBoxMenuItem {
+	height: 1.5em;
+}
+
+.mobile .mobileBody {
+	font-family: Helvetica;
+	font-size: 15px;
+}
+
+.webAppHeader {
+	font-size: 15px;
+	//background-color: lightgray;
+	border-bottom: 1px solid silver;
+	height: 2.5em;
+	padding: 0px 0px 0px 0px;
+	margin-top: 0.25em !important;
+	margin-left: 0.25em !important;
+
+	.dijitIcon {
+		//display: none;
+	}
+
+	.dijitButtonText {
+		padding: 0 0.3em;
+		text-align: center;
+		color: steelblue;
+		font-weight: bold;
+	}
+	.dijitButtonDisabled .dijitButtonText {
+		//color: gray;
+	}
+
+	.dijitButton .dijitButtonNode,
+	.dijitDropDownButton .dijitButtonNode,
+	.dijitComboButton .dijitButtonNode,
+	.dijitToggleButton .dijitButtonNode {
+		border: 1px solid transparent;
+		border-bottom: 2px solid steelblue;
+		margin: 1px 0.5em;
+		padding: 2px 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		background-color: inherit;
+		//height: 20px;
+	}
+	.dijitButtonHover .dijitButtonNode,
+	.dijitButtonNodeHover,
+	.dijitDropDownButtonHover .dijitButtonNode,
+	.dijitComboButton .dijitButtonNodeHover,
+	.dijitComboButton .dijitDownArrowButtonHover,
+	.dijitToggleButtonHover .dijitButtonNode,
+	.dijitUpArrowButtonHover,
+	.dijitDownArrowButtonHover {
+		background-color: gold;
+		border-color: gold;
+	}
+	/* active, checked status */
+	.dijitButtonActive .dijitButtonNode,
+	.dijitDropDownButtonActive .dijitButtonNode,
+	.dijitComboButtonActive .dijitButtonNode,
+	.dijitToggleButtonActive .dijitButtonNode,
+	.dijitToggleButtonChecked .dijitButtonNode {
+		background-color: gold;
+		-webkit-transition-duration: 0.1s;
+		-moz-transition-duration: 0.1s;
+		transition-duration: 0.1s;
+	}
+	.dijitUpArrowButtonActive,
+	.dijitDownArrowButtonActive {
+		background-color: gold;
+	}
+
+	/* disabled status */
+	.dijitButtonDisabled,
+	.dijitDropDownButtonDisabled,
+	.dijitComboButtonDisabled,
+	.dijitToggleButtonDisabled {
+		background-color: inherit;
+		background-image: none;
+		/*outline: none;*/
+		color: inherit;
+	}
+	.dijitButtonDisabled .dijitButtonNode,
+	.dijitDropDownButtonDisabled .dijitButtonNode,
+	.dijitComboButtonDisabled .dijitButtonNode,
+	.dijitToggleButtonDisabled .dijitButtonNode {
+		filter: none;
+		-webkit-filter: none;
+	}
+	.dijitButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitDropDownButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitComboButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitToggleButtonDisabled .dijitButtonNode .dijitIcon,
+	.dijitButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitDropDownButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitComboButtonDisabled .dijitButtonNode .dijitButtonText,
+	.dijitToggleButtonDisabled .dijitButtonNode .dijitButtonText {
+		filter: grayscale(100%) opacity(30%);
+		-webkit-filter: grayscale(100%) opacity(30%);
+		-webkit-filter: grayscale(1) opacity(0.3);
+	}
+
+	.riaswDockNode {
+		border: 1px solid transparent;
+		border-bottom: 2px solid steelblue;
+		margin: 2px 0.5em;
+		padding: 2px 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		background-color: inherit;
+		height: auto;
+	}
+	.riaswDockNodeShown {
+		border-color: steelblue;
+	}
+	.riaswDockNodeHover {
+		background-color: gold;
+		border-color: gold;
+	}
+	.riaswDockNodeTitle {
+		color: steelblue;
+		font-weight: bold;
+	}
+
+	a {
+		//width: 108px;
+		padding: 2px 8px 2px 8px;
+		display: inline-block;
+	}
+}
+
+.webAppHeaderLogo {
+	width: 180px;
+	padding: 2px 8px 2px 8px;
+	background: url("./images/RIAStudio.png") no-repeat 0px center;
+}
+.webAppHeaderDockBar {
+	padding: 1px;
+}
+.webAppFooterDockBar {
+	padding: 1px;
+}
+.webAppHeaderBtns {
+	width: 18em;
+	padding: 0px;
+	margin: 0px;
+}
+
+.webAppDockPanel {
+	//background-color: lightgray;
+	border: 0px solid silver;
+	padding: 0.25em 0.25em;
+	margin-left: 0.25em !important;
+	width: 6em;
+	//height: 3.5em
+}
+.webAppDockPanel .riaswDockNode {
+	border-width: 1px 1px 3px 1px;
+	border-color: steelblue;
+	//width: 5em;
+	//min-height: 2em;
+}
+
+.webAppCenter {
+	background-color: whitesmoke;// silver;
+	border: 0.5em solid whitesmoke;
+	padding: 0em;
+	margin: 0.25em;
+}
+.webAppCenterStack {
+	.appModuleCaption {
+	}
+	.appModuleContent {
+		margin: 0.5em 0em 0em 0em;
+	}
+}
+
+.webAppFooter {
+	//background-color: lightgray;
+	//border-top: 1px solid silver;
+	height: 2.5em;
+	line-height: 2.5em;
+	padding: 1px;
+	margin-left: 0.25em !important;
+
+	.riaswDockNode {
+		border-width: 1px 1px 3px 1px;
+		border-color: steelblue;
+	}
+}
+
+.webAppHeaderXC {
+	background-color: red;
+	overflow: hidden;
+}
+.webAppHeaderLogoXC {
+	width: 180px;
+	width: 180px;
+	padding: 4px 8px 2px 8px;
+	background: url("./images/XCIndex.png") no-repeat 0px center;
+}
+
