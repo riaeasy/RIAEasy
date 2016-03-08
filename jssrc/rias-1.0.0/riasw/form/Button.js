@@ -60,10 +60,10 @@ define([
 			this.inherited(arguments);
 			rias.dom.toggleClass(this.domNode, "riaswDisplayVertical", !!this.isRiaswTextVertical);
 			rias.dom.toggleClass(this.containerNode, "riaswTextVertical", !!this.isRiaswTextVertical);
-			rias.dom.toggleClass(this.domNode, "riaswButtonIconTop", !!this.iconLayoutTop);
-			//if(this.isRiaswTextVertical){
-			//	this.set("iconLayoutTop", true);
-			//}
+			//rias.dom.toggleClass(this.domNode, "riaswButtonIconTop", !!this.iconLayoutTop);
+			if(this.isRiaswTextVertical){
+				this.set("iconLayoutTop", true);
+			}
 			//this.domNode.style.height = "";
 			//this.domNode.style.width = "";
 			//if(this.isRiaswTextVertical){

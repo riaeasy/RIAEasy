@@ -2,13 +2,13 @@ define([
 	"rias"
 ], function(rias){
 	return {
-		"_rsfVersion": 126,
-		"_riaswVersion": "1.0",
-		"gutters": false,
-		"region": "center",
-		"requires": [
-		],
-		"afterFiler": function (){
+	"_rsfVersion": 126,
+	"_riaswVersion": "1.0",
+	"gutters": false,
+	"region": "center",
+	"requires": [
+	],
+	"afterFiler": function (){
 			var m = this;
 			if(!rias.webApp.mainDock){
 				rias.webApp.mainDock = m.appMainDockBottom;
@@ -63,7 +63,7 @@ define([
 			}
 			m.showLogInfo();
 		},
-		"afterLoaded": function (){
+	"afterLoaded": function (){
 			var m = this,
 				meta = [{
 					requireLogged: false,
@@ -102,92 +102,92 @@ define([
 				rias.webApp.launch(meta).then(function(){
 					rias.when(rias.initRiasd(), function(){
 						rias.webApp.launch({
-							requireLogged: false,
-							"_riaswType": "rias.riasw.layout.DialogPanel",
-							"_riaswIdOfModule": "riasdFileSelector",
-							"$refNote": "",
-							"caption": {
-								$refObj: "rias.i18n.riasd.visualEditor"
-							},
-							"tooltip": {
-								$refScript: "return rias.i18n.riasd.visualEditor + '<br/>IE11及以下版本只能使用部分功能';"
-							},
-							"closable": false,
-							submitDisplayState: "collapsed",
-							"initDisplayState": "hidden",
-							"initPlaceToArgs": {
-								parent: m,
-								around: "riasdFileSelector._riasrDockNode",
-								orient: ["below-centered"]
-							},
-							"dockTo": {
-								"$refObj": "appMainDockTop"
-							},
-							"maxable": false,
-							"persist": false,
-							//"toggleable": false,
-							//toggleOnEnter: true,
-							//toggleOnLeave: false,
-							dialogType: "top",
-							//autoClose: 0,
-							minSize: {
-								h: 360,
-								w: 240
-							},
-							style: {
-								width: "30em",
-								height: rias.toInt(m.domNode.clientHeight * 0.7, 600) + "px",//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
-								"padding": "0px"
-							},
-							moduleMeta: {
-								$refScript: "return rias.getRiasdUrl('rias/riasd/module/fileSelector');"
-							},
-							rootId: "appModule",
-							//onlyDir: true,
-							actions: {
-								get:		"act/riasd/getAppModule",
-								//save:		"act/riasd/saveAppModule",
-								newDir:		"act/riasd/newAppModuleDir",
-								newFile:	"act/riasd/newAppModule",
-								//rename:		"act/riasd/renameAppModule",
-								dele:		"act/riasd/deleAppModule"
-							},
-							onRestore: function(){
-								this.resize({
-									h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
-								})
-							},
-							afterSubmit: function(){
-								var m = this._riasrModule,
-									item = this.get("_riasrModuleResult"),
-									mn;
-								if(!item){
-									//请选择一个节点
-									return false;
-								}else if(item.itemType === "file"){
-									mn = item.pathname.replace(/\.js$/gi, "").replace(/\.rsf$/gi, "").replace(/\./gi, "/");
-									rias.undef(mn);
-									///先获取文件锁，然后再打开
-									//rias.xhrPost({
-									//
-									//});
-									return rias.webApp.launchRiasd(mn);
+								requireLogged: false,
+								"_riaswType": "rias.riasw.layout.DialogPanel",
+								"_riaswIdOfModule": "riasdFileSelector",
+								"$refNote": "",
+								"caption": {
+									$refObj: "rias.i18n.riasd.visualEditor"
+								},
+								"tooltip": {
+									$refScript: "return rias.i18n.riasd.visualEditor + '<br/>IE11及以下版本只能使用部分功能';"
+								},
+								"closable": false,
+								submitDisplayState: "collapsed",
+								"initDisplayState": "hidden",
+								"initPlaceToArgs": {
+									parent: m,
+									around: "riasdFileSelector._riasrDockNode",
+									orient: ["below-centered"]
+								},
+								"dockTo": {
+									"$refObj": "appMainDockTop"
+								},
+								"maxable": false,
+								"persist": false,
+								//"toggleable": false,
+								//toggleOnEnter: true,
+								//toggleOnLeave: false,
+								dialogType: "top",
+								//autoClose: 0,
+								minSize: {
+									h: 360,
+									w: 240
+								},
+								style: {
+									width: "30em",
+									height: rias.toInt(m.domNode.clientHeight * 0.7, 600) + "px",//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
+									"padding": "0px"
+								},
+								moduleMeta: {
+									$refScript: "return rias.getRiasdUrl('rias/riasd/module/fileSelector');"
+								},
+								rootId: "appModule",
+								//onlyDir: true,
+								actions: {
+									get:		"act/riasd/getAppModule",
+									//save:		"act/riasd/saveAppModule",
+									newDir:		"act/riasd/newAppModuleDir",
+									newFile:	"act/riasd/newAppModule",
+									//rename:		"act/riasd/renameAppModule",
+									dele:		"act/riasd/deleAppModule"
+								},
+								onRestore: function(){
+									this.resize({
+										h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
+									})
+								},
+								afterSubmit: function(){
+									var m = this._riasrModule,
+										item = this.get("_riasrModuleResult"),
+										mn;
+									if(!item){
+										//请选择一个节点
+										return false;
+									}else if(item.itemType === "file"){
+										mn = item.pathname.replace(/\.js$/gi, "").replace(/\.rsf$/gi, "").replace(/\./gi, "/");
+										rias.undef(mn);
+										///先获取文件锁，然后再打开
+										//rias.xhrPost({
+										//
+										//});
+										return rias.webApp.launchRiasd(mn);
+									}
 								}
-							}
-						}).then(function(){
-							});
+							}).then(function(){
+						});
 					});
 				});
 			}
 		},
-		"showLogInfo": function (){
+	"showLogInfo": function (){
 			var m = this,
 				b = rias.webApp.logged;
 			if(m.panOper){
 				m.panOper.set("content", b ? rias.webApp.oper.code + "/" + rias.webApp.oper.name : "尚未登录");
 			}
 		},
-		"doLogin": function (okcall, errcall){
+	"doLogin": function (okcall, errcall){
 			var m = this;
 			function _login(){
 				m.appDockPanel.restore();
@@ -272,9 +272,9 @@ define([
 				_logout();
 			});
 		},
-		"newTabModule": function (args){
-			args = rias.decodeRiaswParams(this, args);
-			var self = this,
+	"newTabModule": function (args){
+		args = rias.decodeRiaswParams(this, args);
+		var self = this,
 				d = rias.newDeferred(),
 				asDialog = (args._riaswType === "rias.riasw.layout.DialogPanel"),
 				parentModule = args._riasrModule || (args.moduleParams && args.moduleParams._riasrModule ? args.moduleParams._riasrModule : self),
@@ -453,182 +453,182 @@ define([
 			}
 			return d.promise;
 		},
-		"_riaswChildren": [
-			{
-				"_riaswType": "rias.riasw.layout.Panel",
-				"_riaswIdOfModule": "mainTop",
-				"region": "top",
-				"design": "headline",
-				"persist": false,
-				"gutters": false,
-				"class": "webAppHeader riaswShadow",
-				"_riaswChildren": [
-					{
-						"_riaswType": "rias.riasw.layout.Panel",
-						"region": "left",
-						"class": "webAppHeaderLogo",
-						"onClick": function (evt){
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "mainTop",
+			"region": "top",
+			"design": "headline",
+			"persist": false,
+			"gutters": false,
+			"class": "webAppHeader riaswShadow",
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.layout.Panel",
+					"region": "left",
+					"class": "webAppHeaderLogo",
+					"onClick": function (evt){
 							rias.showAbout(this);
 						},
-						"_riaswIdOfModule": "panLogo"
+					"_riaswIdOfModule": "panLogo"
+				},
+				{
+					"_riaswType": "rias.riasw.layout.DockBar",
+					"_riaswIdOfModule": "appMainDockTop",
+					"region": "center",
+					"float": "right",
+					"class": "webAppHeaderDockBar"
+				},
+				{
+					"_riaswType": "rias.riasw.layout.Panel",
+					"_riaswIdOfModule": "btns",
+					"class": "webAppHeaderBtns",
+					"layoutPriority": 0,
+					"region": "right",
+					"style": {
 					},
-					{
-						"_riaswType": "rias.riasw.layout.DockBar",
-						"_riaswIdOfModule": "appMainDockTop",
-						"region": "center",
-						"float": "right",
-						"class": "webAppHeaderDockBar"
-					},
-					{
-						"_riaswType": "rias.riasw.layout.Panel",
-						"_riaswIdOfModule": "btns",
-						"class": "webAppHeaderBtns",
-						"layoutPriority": 0,
-						"region": "right",
-						"style": {
-						},
-						"_riaswChildren": [
-							{
-								"_riaswType": "rias.riasw.form.Button",
-								"_riaswIdOfModule": "btnLogin",
-								"iconClass": "loginIcon",
-								"label": {
-									"$refObj": "rias.i18n.webApp.login"
-								},
-								"onClick": function (evt){
+					"_riaswChildren": [
+						{
+							"_riaswType": "rias.riasw.form.Button",
+							"_riaswIdOfModule": "btnLogin",
+							"iconClass": "loginIcon",
+							"label": {
+								"$refObj": "rias.i18n.webApp.login"
+							},
+							"onClick": function (evt){
 									var m = this._riasrModule;
 									m.doLogin();
 								}
-							},
-							{
-								"_riaswType": "rias.riasw.form.Button",
-								"_riaswIdOfModule": "btnOption",
-								"label": {
-									"$refObj": "rias.i18n.webApp.setting"
-								},
-								"tooltip": "暂时未提供...",
-								"iconClass": "optionIcon",
-								"disabled": true,
-								"onClick": function (evt){
-									rias.info("暂时未提供...", this);
-								}
-							},
-							{
-								"_riaswType": "rias.riasw.form.Button",
-								"_riaswIdOfModule": "btnHelp",
-								"label": {
-									"$refObj": "rias.i18n.webApp.help"
-								},
-								"tooltip": "暂时未提供...",
-								"iconClass": "helpIcon",
-								"disabled": true,
-								"onClick": function (evt){
-									rias.info("暂时未提供...", this);
-								}
-							}
-						]
-					}
-				]
-			},
-			{
-				"_riaswType": "rias.riasw.layout.Panel",
-				"_riaswIdOfModule": "mainBottom",
-				"class": "webAppFooter riaswShadow",
-				"design": "sidebar",
-				"gutters": false,
-				"persist": false,
-				"region": "bottom",
-				"splitter": false,
-				"style": {
-				},
-				"_riaswChildren": [
-					{
-						"_riaswType": "rias.riasw.html.Tag",
-						"_riaswIdOfModule": "panOper",
-						"content": "尚未登录",
-						"region": "left",
-						"style": {
-							"border": "1px solid silver",
-							"line-height": "2em",
-							"margin": "0px",
-							"padding": "0px",
-							"width": "16em"
 						},
-						"tagType": "label"
+						{
+							"_riaswType": "rias.riasw.form.Button",
+							"_riaswIdOfModule": "btnOption",
+							"label": {
+								"$refObj": "rias.i18n.webApp.setting"
+							},
+							"tooltip": "暂时未提供...",
+							"iconClass": "optionIcon",
+							"disabled": true,
+							"onClick": function (evt){
+									rias.info("暂时未提供...", this);
+								}
+						},
+						{
+							"_riaswType": "rias.riasw.form.Button",
+							"_riaswIdOfModule": "btnHelp",
+							"label": {
+								"$refObj": "rias.i18n.webApp.help"
+							},
+							"tooltip": "暂时未提供...",
+							"iconClass": "helpIcon",
+							"disabled": true,
+							"onClick": function (evt){
+									rias.info("暂时未提供...", this);
+								}
+						}
+					]
+				}
+			]
+		},
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "mainBottom",
+			"class": "webAppFooter riaswShadow",
+			"design": "sidebar",
+			"gutters": false,
+			"persist": false,
+			"region": "bottom",
+			"splitter": false,
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.html.Tag",
+					"_riaswIdOfModule": "panOper",
+					"content": "尚未登录",
+					"region": "left",
+					"style": {
+						"border": "1px solid silver",
+						"line-height": "2em",
+						"margin": "0px",
+						"padding": "0px",
+						"width": "16em"
 					},
-					{
-						"_riaswType": "rias.riasw.layout.DockBar",
-						"_riaswIdOfModule": "appMainDockBottom",
-						"class": "webAppFooterDockBar",
-						"region": "center",
-						"style": {
-							"margin": "0px",
-							"padding": "0px"
-						}
-					}
-				]
-			},
-			{
-				"_riaswType": "rias.riasw.layout.Panel",
-				"_riaswIdOfModule": "appDockPanel",
-				"class": "webAppDockPanel riaswShadow",
-				"region": "left",
-				"layoutPriority": 0,
-				"gutters": false,
-				"initDisplayState": "hidden",
-				"splitter": false,
-				"style": {
-					"border": "0px solid silver"
+					"tagType": "label"
 				},
-				"_riaswChildren": [
-					{
-						"_riaswType": "rias.riasw.layout.DockBar",
-						"_riaswIdOfModule": "appDock",
-						"style": {
-							"padding": "0px 0em"
-						}
+				{
+					"_riaswType": "rias.riasw.layout.DockBar",
+					"_riaswIdOfModule": "appMainDockBottom",
+					"class": "webAppFooterDockBar",
+					"region": "center",
+					"style": {
+						"margin": "0px",
+						"padding": "0px"
 					}
-				]
+				}
+			]
+		},
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "appDockPanel",
+			"class": "webAppDockPanel riaswShadow",
+			"region": "left",
+			"layoutPriority": 0,
+			"gutters": false,
+			"initDisplayState": "hidden",
+			"splitter": false,
+			"style": {
+				"border": "0px solid silver"
 			},
-			{
-				"_riaswType": "rias.riasw.layout.Panel",
-				"_riaswIdOfModule": "mainCenter",
-				"class": "webAppCenter riaswShadow",
-				"design": "headline",
-				"gutters": false,
-				"persist": false,
-				"region": "center",
-				"style": {
-				},
-				"_riaswChildren": [
-					{
-						"_riaswType": "rias.riasw.layout.StackPanel",
-						"_riaswIdOfModule": "tabs",
-						"class": "webAppCenterStack",
-						"region": "center",
-						"tabPosition": "top",
-						"tabStrip": true,
-						"nested": false,
-						"style": {
-							"padding": "0px"
-						},
-						"onShowChild": function (page){
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.layout.DockBar",
+					"_riaswIdOfModule": "appDock",
+					"style": {
+						"padding": "0px 0em"
+					}
+				}
+			]
+		},
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "mainCenter",
+			"class": "webAppCenter riaswShadow",
+			"design": "headline",
+			"gutters": false,
+			"persist": false,
+			"region": "center",
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.layout.StackPanel",
+					"_riaswIdOfModule": "tabs",
+					"class": "webAppCenterStack",
+					"region": "center",
+					"tabPosition": "top",
+					"tabStrip": true,
+					"nested": false,
+					"style": {
+						"padding": "0px"
+					},
+					"onShowChild": function (page){
 							this._resizeParent();
 							page.isTopmost = true;
 							if(page._riasrDockNode){
 								page._riasrDockNode.setTargetState();
 							}
 						},
-						"onHideChild": function (page){
+					"onHideChild": function (page){
 							delete page.isTopmost;
 							if(page._riasrDockNode){
 								page._riasrDockNode.setTargetState();
 							}
 						}
-					}
-				]
-			}
-		]
-	}
-
+				}
+			]
+		}
+	]
+}
+	
 });
