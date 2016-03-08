@@ -26,18 +26,18 @@ define([
 						if(!rias.webApp.logged && args.requireLogged != false){
 							m.doLogin(function(){
 								m.newTabModule(args).then(function(){
-									d.resolve.apply(this, arguments);
+									d.resolve.apply(m, arguments);
 								}, function(){
-									d.reject.apply(this, arguments);
+									d.reject.apply(m, arguments);
 								});
 							}, function(){
-								d.reject.apply(this, arguments);
+								d.reject.apply(m, arguments);
 							});
 						}else{
 							m.newTabModule(args).then(function(){
-								d.resolve.apply(this, arguments);
+								d.resolve.apply(m, arguments);
 							}, function(){
-								d.reject.apply(this, arguments);
+								d.reject.apply(m, arguments);
 							});
 						}
 						return d.promise;
@@ -100,8 +100,9 @@ define([
 
 			if(!m._riasrDesigning){
 				rias.webApp.launch(meta).then(function(){
-					rias.when(rias.initRiasd(), function(){
-						rias.webApp.launch({
+					rias.when(rias.initRiasd(), function(result){
+						if(result != false){
+							rias.webApp.launch({
 								requireLogged: false,
 								"_riaswType": "rias.riasw.layout.DialogPanel",
 								"_riaswIdOfModule": "riasdFileSelector",
@@ -175,7 +176,8 @@ define([
 									}
 								}
 							}).then(function(){
-						});
+								});
+						}
 					});
 				});
 			}
