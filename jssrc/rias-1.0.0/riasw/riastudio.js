@@ -434,7 +434,7 @@ define([
 				_args = rias.mixin({}, args);///因为有可能 content 中有实例，最好不用 mixinDeep，防止递归循环
 			}
 			if(rias.isString(_args.content)){
-				_args.content = _args.content.replace(/\n/g, "<br/>");
+				_args.content = _args.content.replace(/\n/g, "<br/>").replace(/\s/g, "&nbsp;");///先转换 回车（\n），否则 回车会被当做 空格（\s）处理
 			}
 			_args.dialogType = (_args.dialogType != undefined /*&& _args.dialogType != null*/ ? _args.dialogType : dialogType);
 			_args.contentType = (_args.contentType != undefined ? _args.contentType : contentType);
