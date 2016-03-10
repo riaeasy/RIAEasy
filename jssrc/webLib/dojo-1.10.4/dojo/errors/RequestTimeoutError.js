@@ -1,15 +1,6 @@
-define(['./create', './RequestError'], function(create, RequestError){
-	// module:
-	//		dojo/errors/RequestTimeoutError
+//>>built
 
-	/*=====
-	 return function(){
-		 // summary:
-		 //		TODOC
-	 };
-	 =====*/
-
-	return create("RequestTimeoutError", null, RequestError, {
-		dojoType: "timeout"
-	});
+define("dojo/errors/RequestTimeoutError", ["./create", "./RequestError"], function (create, RequestError) {
+    return create("RequestTimeoutError", null, RequestError, {dojoType:"timeout"});
 });
+

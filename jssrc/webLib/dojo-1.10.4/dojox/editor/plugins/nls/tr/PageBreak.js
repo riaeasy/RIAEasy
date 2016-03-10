@@ -1,5 +1,4 @@
-define(
-({
-	"pageBreak": "Sayfa Sonu"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/tr/PageBreak", ({"pageBreak":"Sayfa Sonu"}));
+

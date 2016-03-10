@@ -1,10 +1,4 @@
-define(
-({
-	insertAnchor: "Inserir âncora",
-	title: "Propriedades da âncora",
-	anchor: "Nome:",
-	text: "Descrição:",
-	set: "Definir",
-	cancel: "Cancelar"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/pt-pt/InsertAnchor", ({insertAnchor:"Inserir \xe2ncora", title:"Propriedades da \xe2ncora", anchor:"Nome:", text:"Descri\xe7\xe3o:", set:"Definir", cancel:"Cancelar"}));
+

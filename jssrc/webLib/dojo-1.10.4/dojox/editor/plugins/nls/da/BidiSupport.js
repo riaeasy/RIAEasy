@@ -1,7 +1,4 @@
-define({      
-//begin v1.x content
-	"ltr": "Venstre mod højre-tekstretning",
-	"rtl": "Højre mod venstre-tekstretning"
-//end v1.x content
-});
+//>>built
+
+define("dojox/editor/plugins/nls/da/BidiSupport", {"ltr":"Venstre mod h\xf8jre-tekstretning", "rtl":"H\xf8jre mod venstre-tekstretning"});
 

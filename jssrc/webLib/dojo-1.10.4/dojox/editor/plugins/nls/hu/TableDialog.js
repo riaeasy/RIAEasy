@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Táblázat beszúrása",
-	modifyTableTitle: "Táblázat módosítása",
-	rows: "Sorok:",
-	columns: "Oszlopok:",
-	align: "Igazítás:",
-	cellPadding: "Cellakitöltés:",
-	cellSpacing: "Cella térköz:",
-	tableWidth: "Táblázat szélessége:",
-	backgroundColor: "Háttérszín:",
-	borderColor: "Szegélyszín:",
-	borderThickness: "Szegélyvastagság:",
-	percent: "százalék",
-	pixels: "képpont",
-	"default": "alapértelmezett",
-	left: "balra",
-	center: "középre",
-	right: "jobbra",
-	buttonSet: "Beállítás", // translated elsewhere?
-	buttonInsert: "Beszúrás",
-	buttonCancel: "Mégse",
-	selectTableLabel: "Táblázat kijelölése",
-	insertTableRowBeforeLabel: "Sor hozzáadása előtte",
-	insertTableRowAfterLabel: "Sor hozzáadása utána",
-	insertTableColumnBeforeLabel: "Oszlop hozzáadása előtte",
-	insertTableColumnAfterLabel: "Oszlop hozzáadása utána",
-	deleteTableRowLabel: "Sor törlése",
-	deleteTableColumnLabel: "Oszlop törlése",
-	colorTableCellTitle: "Háttérszín táblázatcella",
-	tableContextMenuTitle: "Táblázat előugró menü"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/hu/TableDialog", ({insertTableTitle:"T\xe1bl\xe1zat besz\xfar\xe1sa", modifyTableTitle:"T\xe1bl\xe1zat m\xf3dos\xedt\xe1sa", rows:"Sorok:", columns:"Oszlopok:", align:"Igaz\xedt\xe1s:", cellPadding:"Cellakit\xf6lt\xe9s:", cellSpacing:"Cella t\xe9rk\xf6z:", tableWidth:"T\xe1bl\xe1zat sz\xe9less\xe9ge:", backgroundColor:"H\xe1tt\xe9rsz\xedn:", borderColor:"Szeg\xe9lysz\xedn:", borderThickness:"Szeg\xe9lyvastags\xe1g:", percent:"sz\xe1zal\xe9k", pixels:"k\xe9ppont", "default":"alap\xe9rtelmezett", left:"balra", center:"k\xf6z\xe9pre", right:"jobbra", buttonSet:"Be\xe1ll\xedt\xe1s", buttonInsert:"Besz\xfar\xe1s", buttonCancel:"M\xe9gse", selectTableLabel:"T\xe1bl\xe1zat kijel\xf6l\xe9se", insertTableRowBeforeLabel:"Sor hozz\xe1ad\xe1sa el\u0151tte", insertTableRowAfterLabel:"Sor hozz\xe1ad\xe1sa ut\xe1na", insertTableColumnBeforeLabel:"Oszlop hozz\xe1ad\xe1sa el\u0151tte", insertTableColumnAfterLabel:"Oszlop hozz\xe1ad\xe1sa ut\xe1na", deleteTableRowLabel:"Sor t\xf6rl\xe9se", deleteTableColumnLabel:"Oszlop t\xf6rl\xe9se", colorTableCellTitle:"H\xe1tt\xe9rsz\xedn t\xe1bl\xe1zatcella", tableContextMenuTitle:"T\xe1bl\xe1zat el\u0151ugr\xf3 men\xfc"}));
+

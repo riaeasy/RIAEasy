@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 124,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 150,
 	"_riaswVersion": "1.0",
 	"badge": "3",
 	"caption": "新的页面模块",
@@ -31,20 +30,16 @@ define([
 					"_riaswType": "rias.riasw.layout.CaptionPanel",
 					"_riaswIdOfModule": "top",
 					"caption": "Top(自动展开)",
-					"initDisplayBox": {
-						"h": 120
-					},
 					"initDisplayState": "collapsed",
 					"layoutPriority": 0,
 					"liveSplitters": true,
-					"maxable": true,
 					"region": "top",
 					"splitter": true,
 					"style": {
 						"height": "8em"
 					},
+					"toggleOnBlur": true,
 					"toggleOnEnter": true,
-					"toggleOnLeave": true,
 					"toggleable": true,
 					"_riaswChildren": [
 						{
@@ -90,7 +85,6 @@ define([
 					"closable": true,
 					"layoutPriority": 0,
 					"liveSplitters": true,
-					"maxable": true,
 					"region": "left",
 					"splitter": true,
 					"style": {
@@ -186,33 +180,34 @@ define([
 				{
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					"_riaswIdOfModule": "floatPanel",
-					"toggleOnEnter": true,
 					"caption": "float(自动展开)",
-					"initDisplayBox": {
-						"h": 240,
-						"w": 240
-					},
+					"closable": false,
 					"initDisplayState": "collapsed",
+					"initPlaceToArgs": {
+						"around": {
+							"x": 300,
+							"y": 120
+						},
+						"orient": "after"
+					},
 					"layoutPriority": 0,
 					"liveSplitters": true,
 					"maxable": true,
 					"region": "",
 					"splitter": true,
 					"style": {
-						"height": "8em",
-						"left": "26em",
-						"top": "8em",
-						"width": "20em"
+						"height": "20em",
+						"width": "25em"
 					},
+					"toggleOnBlur": true,
+					"toggleOnEnter": true,
 					"toggleable": true,
 					"_riaswChildren": [
 						{
-							"_riaswType": "rias.riasw.html.Tag",
-							"_riaswIdOfModule": "tag4",
+							"_riaswType": "rias.riasw.widget.CodeEditor",
+							"_riaswIdOfModule": "codeEditor1",
 							"layoutPriority": 0,
-							"region": "",
-							"tagType": "label",
-							"innerHTML": "内容",
+							"region": "center",
 							"splitter": false
 						}
 					]

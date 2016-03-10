@@ -1,7 +1,4 @@
-define({      
-//begin v1.x content
-	"ltr": "Direction du texte : de gauche à droite",
-	"rtl": "Direction du texte : de droite à gauche"
-//end v1.x content
-});
+//>>built
+
+define("dojox/editor/plugins/nls/fr/BidiSupport", {"ltr":"Direction du texte : de gauche \xe0 droite", "rtl":"Direction du texte : de droite \xe0 gauche"});
 

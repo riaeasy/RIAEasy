@@ -1,15 +1,4 @@
-define(
-({
-	"saveLabel": "Spara ",
-	"saveSettingLabelOn": "Intervall för Spara automatiskt...",
-	"saveSettingLabelOff": "Stäng av Spara automatiskt",
-	"saveSettingdialogTitle": "Spara automatiskt",
-	"saveSettingdialogDescription": "Välj intervall för Spara automatiskt",
-	"saveSettingdialogParamName": "Intervall för Spara automatiskt",
-	"saveSettingdialogParamLabel": "min",
-	"saveSettingdialogButtonOk": "Välj intervall",
-	"saveSettingdialogButtonCancel": "Avbryt",
-	"saveMessageSuccess": "Sparades ${0}",
-	"saveMessageFail": "Det gick inte att spara ${0}"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sv/AutoSave", ({"saveLabel":"Spara ", "saveSettingLabelOn":"Intervall f\xf6r Spara automatiskt...", "saveSettingLabelOff":"St\xe4ng av Spara automatiskt", "saveSettingdialogTitle":"Spara automatiskt", "saveSettingdialogDescription":"V\xe4lj intervall f\xf6r Spara automatiskt", "saveSettingdialogParamName":"Intervall f\xf6r Spara automatiskt", "saveSettingdialogParamLabel":"min", "saveSettingdialogButtonOk":"V\xe4lj intervall", "saveSettingdialogButtonCancel":"Avbryt", "saveMessageSuccess":"Sparades ${0}", "saveMessageFail":"Det gick inte att spara ${0}"}));
+

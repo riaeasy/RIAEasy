@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Sök: ",
-	"findTooltip": "Skriv söktexten",
-	"replaceLabel": "Ersätt med:",
-	"replaceTooltip": "Skriv ersättningstexten",
-	"findReplace": "Sök och ersätt",
-	"matchCase": "Matcha gemener/versaler",
-	"matchCaseTooltip": "Matcha gemener/versaler",
-	"backwards": "Bakåt",
-	"backwardsTooltip": "Sök bakåt efter text",
-	"replaceAllButton": "Ersätt alla",
-	"replaceAllButtonTooltip": "Ersätt all text",
-	"findButton": "Sök",
-	"findButtonTooltip": "Sök efter texten",
-	"replaceButton": "Erätt",
-	"replaceButtonTooltip": "Ersätt texten",
-	"replaceDialogText": "${0} förekomster har ersatts.",
-	"eofDialogText": "Sista förekomsten ${0}",
-	"eofDialogTextFind": "hittades",
-	"eofDialogTextReplace": "ersattes"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sv/FindReplace", ({"findLabel":"S\xf6k: ", "findTooltip":"Skriv s\xf6ktexten", "replaceLabel":"Ers\xe4tt med:", "replaceTooltip":"Skriv ers\xe4ttningstexten", "findReplace":"S\xf6k och ers\xe4tt", "matchCase":"Matcha gemener/versaler", "matchCaseTooltip":"Matcha gemener/versaler", "backwards":"Bak\xe5t", "backwardsTooltip":"S\xf6k bak\xe5t efter text", "replaceAllButton":"Ers\xe4tt alla", "replaceAllButtonTooltip":"Ers\xe4tt all text", "findButton":"S\xf6k", "findButtonTooltip":"S\xf6k efter texten", "replaceButton":"Er\xe4tt", "replaceButtonTooltip":"Ers\xe4tt texten", "replaceDialogText":"${0} f\xf6rekomster har ersatts.", "eofDialogText":"Sista f\xf6rekomsten ${0}", "eofDialogTextFind":"hittades", "eofDialogTextReplace":"ersattes"}));
+

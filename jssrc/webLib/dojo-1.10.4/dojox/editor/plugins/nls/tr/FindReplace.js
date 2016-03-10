@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Bul:",
-	"findTooltip": "Bulunacak metni girin",
-	"replaceLabel": "Değiştir:",
-	"replaceTooltip": "Değiştirilecek metni girin",
-	"findReplace": "Bul ve Değiştir",
-	"matchCase": "Büyük/küçük harf eşleştir",
-	"matchCaseTooltip": "Büyük/küçük harf eşleştir",
-	"backwards": "Geri",
-	"backwardsTooltip": "Metni geriye doğru ara",
-	"replaceAllButton": "Tümünü Değiştir",
-	"replaceAllButtonTooltip": "Tüm metni değiştir",
-	"findButton": "Bul",
-	"findButtonTooltip": "Metni bul",
-	"replaceButton": "Değiştir",
-	"replaceButtonTooltip": "Metni değiştir",
-	"replaceDialogText": "${0} tekrar değiştirildi.",
-	"eofDialogText": "Son tekrar ${0}",
-	"eofDialogTextFind": "bulundu",
-	"eofDialogTextReplace": "değiştirildi"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/tr/FindReplace", ({"findLabel":"Bul:", "findTooltip":"Bulunacak metni girin", "replaceLabel":"De\u011fi\u015ftir:", "replaceTooltip":"De\u011fi\u015ftirilecek metni girin", "findReplace":"Bul ve De\u011fi\u015ftir", "matchCase":"B\xfcy\xfck/k\xfc\xe7\xfck harf e\u015fle\u015ftir", "matchCaseTooltip":"B\xfcy\xfck/k\xfc\xe7\xfck harf e\u015fle\u015ftir", "backwards":"Geri", "backwardsTooltip":"Metni geriye do\u011fru ara", "replaceAllButton":"T\xfcm\xfcn\xfc De\u011fi\u015ftir", "replaceAllButtonTooltip":"T\xfcm metni de\u011fi\u015ftir", "findButton":"Bul", "findButtonTooltip":"Metni bul", "replaceButton":"De\u011fi\u015ftir", "replaceButtonTooltip":"Metni de\u011fi\u015ftir", "replaceDialogText":"${0} tekrar de\u011fi\u015ftirildi.", "eofDialogText":"Son tekrar ${0}", "eofDialogTextFind":"bulundu", "eofDialogTextReplace":"de\u011fi\u015ftirildi"}));
+

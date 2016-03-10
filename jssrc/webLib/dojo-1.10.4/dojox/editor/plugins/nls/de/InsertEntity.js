@@ -1,5 +1,4 @@
-define(
-({
-	insertEntity: "Symbol einfügen"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/de/InsertEntity", ({insertEntity:"Symbol einf\xfcgen"}));
+

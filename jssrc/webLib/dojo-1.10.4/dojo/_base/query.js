@@ -1,13 +1,6 @@
-define(["../query", "./NodeList"], function(query){
-	// module:
-	//		dojo/_base/query
+//>>built
 
-	/*=====
-	return {
-		// summary:
-		//		Deprecated.   Use dojo/query instead.
-	};
-	=====*/
-
-	return query;
+define("dojo/_base/query", ["../query", "./NodeList"], function (query) {
+    return query;
 });
+

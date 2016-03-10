@@ -1,7 +1,4 @@
-define(
-({
-	invalidMessage: "El valor introduït no és vàlid",
-	missingMessage: "Aquest valor és necessari",
-	rangeMessage: "Aquest valor és fora de l'interval"
-})
-);
+//>>built
+
+define("dijit/form/nls/ca/validate", ({invalidMessage:"El valor introdu\xeft no \xe9s v\xe0lid", missingMessage:"Aquest valor \xe9s necessari", rangeMessage:"Aquest valor \xe9s fora de l'interval"}));
+

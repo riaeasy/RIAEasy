@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Vložit tabulku",
-	modifyTableTitle: "Upravit tabulku",
-	rows: "Řádky:",
-	columns: "Sloupce:",
-	align: "Zarovnat:",
-	cellPadding: "Okraj buňky:",
-	cellSpacing: "Odstup buněk:",
-	tableWidth: "Šířka tabulky:",
-	backgroundColor: "Barva pozadí:",
-	borderColor: "Barva ohraničení:",
-	borderThickness: "Tloušťka ohraničení:",
-	percent: "procent",
-	pixels: "pixelů",
-	"default": "výchozí",
-	left: "vlevo",
-	center: "střed",
-	right: "vpravo",
-	buttonSet: "Nastavit", // translated elsewhere?
-	buttonInsert: "Vložit",
-	buttonCancel: "Storno",
-	selectTableLabel: "Vybrat tabulku",
-	insertTableRowBeforeLabel: "Přidat řádek před",
-	insertTableRowAfterLabel: "Přidat řádek za",
-	insertTableColumnBeforeLabel: "Přidat sloupec před",
-	insertTableColumnAfterLabel: "Přidat sloupec za",
-	deleteTableRowLabel: "Odstranit řádek",
-	deleteTableColumnLabel: "Odstranit sloupec",
-	colorTableCellTitle: "Buňka tabulky barev pozadí",
-	tableContextMenuTitle: "Kontextová nabídka tabulky"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/cs/TableDialog", ({insertTableTitle:"Vlo\u017eit tabulku", modifyTableTitle:"Upravit tabulku", rows:"\u0158\xe1dky:", columns:"Sloupce:", align:"Zarovnat:", cellPadding:"Okraj bu\u0148ky:", cellSpacing:"Odstup bun\u011bk:", tableWidth:"\u0160\xed\u0159ka tabulky:", backgroundColor:"Barva pozad\xed:", borderColor:"Barva ohrani\u010den\xed:", borderThickness:"Tlou\u0161\u0165ka ohrani\u010den\xed:", percent:"procent", pixels:"pixel\u016f", "default":"v\xfdchoz\xed", left:"vlevo", center:"st\u0159ed", right:"vpravo", buttonSet:"Nastavit", buttonInsert:"Vlo\u017eit", buttonCancel:"Storno", selectTableLabel:"Vybrat tabulku", insertTableRowBeforeLabel:"P\u0159idat \u0159\xe1dek p\u0159ed", insertTableRowAfterLabel:"P\u0159idat \u0159\xe1dek za", insertTableColumnBeforeLabel:"P\u0159idat sloupec p\u0159ed", insertTableColumnAfterLabel:"P\u0159idat sloupec za", deleteTableRowLabel:"Odstranit \u0159\xe1dek", deleteTableColumnLabel:"Odstranit sloupec", colorTableCellTitle:"Bu\u0148ka tabulky barev pozad\xed", tableContextMenuTitle:"Kontextov\xe1 nab\xeddka tabulky"}));
+

@@ -1,10 +1,5 @@
-define(["../typematic"], function(){
+//>>built
 
-	/*=====
-	return {
-		// summary:
-		//		Deprecated, for back-compat, just loads top level module
-	};
-	=====*/
-
+define("dijit/_base/typematic", ["../typematic"], function () {
 });
+

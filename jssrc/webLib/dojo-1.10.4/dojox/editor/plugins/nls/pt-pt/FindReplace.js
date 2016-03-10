@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Localizar:",
-	"findTooltip": "Introduzir texto a localizar",
-	"replaceLabel": "Substituir por:",
-	"replaceTooltip": "Introduzir texto de substituição",
-	"findReplace": "Localizar e substituir",
-	"matchCase": "Correspondência de maiúsculas/minúsculas",
-	"matchCaseTooltip": "Correspondência de maiúsculas/minúsculas",
-	"backwards": "Para trás",
-	"backwardsTooltip": "Procura de texto para trás",
-	"replaceAllButton": "Substituir tudo",
-	"replaceAllButtonTooltip": "Substituir todo o texto",
-	"findButton": "Localizar",
-	"findButtonTooltip": "Localizar o texto",
-	"replaceButton": "Substituir",
-	"replaceButtonTooltip": "Substituir o texto",
-	"replaceDialogText": "Foram substituídas ${0} ocorrências.",
-	"eofDialogText": "Última ocorrência ${0}",
-	"eofDialogTextFind": "localizado",
-	"eofDialogTextReplace": "substituído"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/pt-pt/FindReplace", ({"findLabel":"Localizar:", "findTooltip":"Introduzir texto a localizar", "replaceLabel":"Substituir por:", "replaceTooltip":"Introduzir texto de substitui\xe7\xe3o", "findReplace":"Localizar e substituir", "matchCase":"Correspond\xeancia de mai\xfasculas/min\xfasculas", "matchCaseTooltip":"Correspond\xeancia de mai\xfasculas/min\xfasculas", "backwards":"Para tr\xe1s", "backwardsTooltip":"Procura de texto para tr\xe1s", "replaceAllButton":"Substituir tudo", "replaceAllButtonTooltip":"Substituir todo o texto", "findButton":"Localizar", "findButtonTooltip":"Localizar o texto", "replaceButton":"Substituir", "replaceButtonTooltip":"Substituir o texto", "replaceDialogText":"Foram substitu\xeddas ${0} ocorr\xeancias.", "eofDialogText":"\xdaltima ocorr\xeancia ${0}", "eofDialogTextFind":"localizado", "eofDialogTextReplace":"substitu\xeddo"}));
+

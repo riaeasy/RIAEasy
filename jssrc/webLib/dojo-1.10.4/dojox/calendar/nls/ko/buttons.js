@@ -1,10 +1,4 @@
-define( {
-	previousButton: "◄",
-	nextButton: "►",
-	todayButton: "오늘",
-	dayButton: "일",
-	weekButton: "주",
-	fourDaysButton: "4일",
-	monthButton: "월"
-}
-);
+//>>built
+
+define("dojox/calendar/nls/ko/buttons", {previousButton:"\u25c4", nextButton:"\u25ba", todayButton:"\uc624\ub298", dayButton:"\uc77c", weekButton:"\uc8fc", fourDaysButton:"4\uc77c", monthButton:"\uc6d4"});
+

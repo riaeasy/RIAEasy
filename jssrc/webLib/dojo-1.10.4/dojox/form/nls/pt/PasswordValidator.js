@@ -1,6 +1,4 @@
-define(
-({
-        nomatchMessage: "As senhas não correspondem.",
-	badPasswordMessage: "Senha Inválida."
-})
-);
+//>>built
+
+define("dojox/form/nls/pt/PasswordValidator", ({nomatchMessage:"As senhas n\xe3o correspondem.", badPasswordMessage:"Senha Inv\xe1lida."}));
+

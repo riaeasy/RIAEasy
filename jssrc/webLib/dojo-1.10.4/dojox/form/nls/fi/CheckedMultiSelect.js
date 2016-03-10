@@ -1,6 +1,4 @@
-define(
-({
-	invalidMessage: "Ainakin yksi kohde on valittava.",
-	multiSelectLabelText: "{num} kohde(tta) valittu"
-})
-);
+//>>built
+
+define("dojox/form/nls/fi/CheckedMultiSelect", ({invalidMessage:"Ainakin yksi kohde on valittava.", multiSelectLabelText:"{num} kohde(tta) valittu"}));
+

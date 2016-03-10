@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Lisää taulukko",
-	modifyTableTitle: "Muokkaa taulukkoa",
-	rows: "Rivit:",
-	columns: "Sarakkeet:",
-	align: "Tasaus:",
-	cellPadding: "Solun täyttö:",
-	cellSpacing: "Solujen väli:",
-	tableWidth: "Taulukon leveys:",
-	backgroundColor: "Taustaväri:",
-	borderColor: "Kehyksen väri:",
-	borderThickness: "Kehyksen paksuus:",
-	percent: "prosenttia",
-	pixels: "kuvapistettä",
-	"default": "oletus",
-	left: "vasen",
-	center: "keskitetty",
-	right: "oikea",
-	buttonSet: "Aseta", // translated elsewhere?
-	buttonInsert: "Lisää",
-	buttonCancel: "Peruuta",
-	selectTableLabel: "Valitse taulukko",
-	insertTableRowBeforeLabel: "Lisää rivi ennen",
-	insertTableRowAfterLabel: "Lisää rivi jälkeen",
-	insertTableColumnBeforeLabel: "Lisää sarake ennen",
-	insertTableColumnAfterLabel: "Lisää sarake jälkeen",
-	deleteTableRowLabel: "Poista rivi",
-	deleteTableColumnLabel: "Poista sarake",
-	colorTableCellTitle: "Taulukon solun taustaväri",
-	tableContextMenuTitle: "Taulukon pikavalikko"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/fi/TableDialog", ({insertTableTitle:"Lis\xe4\xe4 taulukko", modifyTableTitle:"Muokkaa taulukkoa", rows:"Rivit:", columns:"Sarakkeet:", align:"Tasaus:", cellPadding:"Solun t\xe4ytt\xf6:", cellSpacing:"Solujen v\xe4li:", tableWidth:"Taulukon leveys:", backgroundColor:"Taustav\xe4ri:", borderColor:"Kehyksen v\xe4ri:", borderThickness:"Kehyksen paksuus:", percent:"prosenttia", pixels:"kuvapistett\xe4", "default":"oletus", left:"vasen", center:"keskitetty", right:"oikea", buttonSet:"Aseta", buttonInsert:"Lis\xe4\xe4", buttonCancel:"Peruuta", selectTableLabel:"Valitse taulukko", insertTableRowBeforeLabel:"Lis\xe4\xe4 rivi ennen", insertTableRowAfterLabel:"Lis\xe4\xe4 rivi j\xe4lkeen", insertTableColumnBeforeLabel:"Lis\xe4\xe4 sarake ennen", insertTableColumnAfterLabel:"Lis\xe4\xe4 sarake j\xe4lkeen", deleteTableRowLabel:"Poista rivi", deleteTableColumnLabel:"Poista sarake", colorTableCellTitle:"Taulukon solun taustav\xe4ri", tableContextMenuTitle:"Taulukon pikavalikko"}));
+

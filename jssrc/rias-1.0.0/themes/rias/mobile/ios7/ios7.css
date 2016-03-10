@@ -1,10 +1,7 @@
 @import url("base.css");
-
 /* common styles */
 @import url("../common/domButtons.css");
 @import url("../common/transitions.css");
-
-
 /* widget styles */
 @import url("Accordion.css");
 @import url("Button.css");

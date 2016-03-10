@@ -1,5 +1,4 @@
-define(
-({
-	"blockquote": "Bloc de citation"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/fr/Blockquote", ({"blockquote":"Bloc de citation"}));
+

@@ -128,7 +128,7 @@ define([
 								"persist": false,
 								//"toggleable": false,
 								//toggleOnEnter: true,
-								//toggleOnLeave: false,
+								toggleOnBlur: true,
 								dialogType: "top",
 								//autoClose: 0,
 								minSize: {
@@ -206,7 +206,7 @@ define([
 						dialogType: "top",
 						maxable: false,
 						"toggleOnEnter": true,
-						toggleOnLeave: false,
+						toggleOnBlur: true,
 						//alwaysShowDockNode:true,
 						submitDisplayState: "collapsed",
 						"initDisplayState": "hidden",
@@ -329,7 +329,7 @@ define([
 						maxable: (args.maxable != undefined ? args.maxable : !!asDialog),
 						"toggleable": (args.toggleable != undefined ? args.toggleable : !!asDialog),
 						"toggleOnEnter": (args.toggleOnEnter != undefined ? args.toggleOnEnter : false),
-						toggleOnLeave: (args.toggleOnLeave != undefined ? args.toggleOnLeave : false),
+						toggleOnBlur: (args.toggleOnBlur != undefined ? args.toggleOnBlur : false),
 						alwaysShowDockNode: (args.alwaysShowDockNode != undefined ? args.alwaysShowDockNode : true),
 						//watchTargetState: true,// !args.isRiasd,
 						dockNodeParams: {

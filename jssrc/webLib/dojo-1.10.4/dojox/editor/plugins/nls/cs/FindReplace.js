@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Najít:",
-	"findTooltip": "Zadejte hledaný text.",
-	"replaceLabel": "Nahrazující řetězec:",
-	"replaceTooltip": "Zadejte text pro nahrazení.",
-	"findReplace": "Najít a nahradit",
-	"matchCase": "S rozlišením velkých a malých písmen",
-	"matchCaseTooltip": "S rozlišením velkých a malých písmen",
-	"backwards": "V opačném směru",
-	"backwardsTooltip": "Hledat text v opačném směru",
-	"replaceAllButton": "Nahradit vše",
-	"replaceAllButtonTooltip": "Nahradit všechen text",
-	"findButton": "Najít",
-	"findButtonTooltip": "Najít text",
-	"replaceButton": "Nahradit",
-	"replaceButtonTooltip": "Nahradit text",
-	"replaceDialogText": "Počet nahrazených výskytů: ${0}.",
-	"eofDialogText": "Poslední výskyt ${0}",
-	"eofDialogTextFind": "byl nalezen",
-	"eofDialogTextReplace": "byl nahrazen"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/cs/FindReplace", ({"findLabel":"Naj\xedt:", "findTooltip":"Zadejte hledan\xfd text.", "replaceLabel":"Nahrazuj\xedc\xed \u0159et\u011bzec:", "replaceTooltip":"Zadejte text pro nahrazen\xed.", "findReplace":"Naj\xedt a nahradit", "matchCase":"S rozli\u0161en\xedm velk\xfdch a mal\xfdch p\xedsmen", "matchCaseTooltip":"S rozli\u0161en\xedm velk\xfdch a mal\xfdch p\xedsmen", "backwards":"V opa\u010dn\xe9m sm\u011bru", "backwardsTooltip":"Hledat text v opa\u010dn\xe9m sm\u011bru", "replaceAllButton":"Nahradit v\u0161e", "replaceAllButtonTooltip":"Nahradit v\u0161echen text", "findButton":"Naj\xedt", "findButtonTooltip":"Naj\xedt text", "replaceButton":"Nahradit", "replaceButtonTooltip":"Nahradit text", "replaceDialogText":"Po\u010det nahrazen\xfdch v\xfdskyt\u016f: ${0}.", "eofDialogText":"Posledn\xed v\xfdskyt ${0}", "eofDialogTextFind":"byl nalezen", "eofDialogTextReplace":"byl nahrazen"}));
+

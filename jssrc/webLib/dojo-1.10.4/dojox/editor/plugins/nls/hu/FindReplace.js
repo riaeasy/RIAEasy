@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Keresés:",
-	"findTooltip": "Adja meg a keresett szöveget",
-	"replaceLabel": "Csere:",
-	"replaceTooltip": "Adja meg a cseréhez az új szöveget",
-	"findReplace": "Keresés és csere",
-	"matchCase": "Kis-nagybetűk egyeznek",
-	"matchCaseTooltip": "Kis-nagybetűk egyeznek",
-	"backwards": "Visszafelé",
-	"backwardsTooltip": "Szöveg keresése visszafelé",
-	"replaceAllButton": "Mindent lecserél",
-	"replaceAllButtonTooltip": "Minden szöveg cseréje",
-	"findButton": "Keresés",
-	"findButtonTooltip": "Szöveg keresése",
-	"replaceButton": "Csere",
-	"replaceButtonTooltip": "Szöveg cseréje",
-	"replaceDialogText": "${0} előfordulás cseréje megtörtént.",
-	"eofDialogText": "Legutóbbi előfordulás: ${0}",
-	"eofDialogTextFind": "találat",
-	"eofDialogTextReplace": "cserélve"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/hu/FindReplace", ({"findLabel":"Keres\xe9s:", "findTooltip":"Adja meg a keresett sz\xf6veget", "replaceLabel":"Csere:", "replaceTooltip":"Adja meg a cser\xe9hez az \xfaj sz\xf6veget", "findReplace":"Keres\xe9s \xe9s csere", "matchCase":"Kis-nagybet\u0171k egyeznek", "matchCaseTooltip":"Kis-nagybet\u0171k egyeznek", "backwards":"Visszafel\xe9", "backwardsTooltip":"Sz\xf6veg keres\xe9se visszafel\xe9", "replaceAllButton":"Mindent lecser\xe9l", "replaceAllButtonTooltip":"Minden sz\xf6veg cser\xe9je", "findButton":"Keres\xe9s", "findButtonTooltip":"Sz\xf6veg keres\xe9se", "replaceButton":"Csere", "replaceButtonTooltip":"Sz\xf6veg cser\xe9je", "replaceDialogText":"${0} el\u0151fordul\xe1s cser\xe9je megt\xf6rt\xe9nt.", "eofDialogText":"Legut\xf3bbi el\u0151fordul\xe1s: ${0}", "eofDialogTextFind":"tal\xe1lat", "eofDialogTextReplace":"cser\xe9lve"}));
+

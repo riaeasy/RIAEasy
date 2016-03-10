@@ -1,7 +1,4 @@
-define({      
-//begin v1.x content
-	"ltr": "Direcţie text de la stânga la dreapta",
-	"rtl": "Direcţie text de la dreapta la stânga"
-//end v1.x content
-});
+//>>built
+
+define("dojox/editor/plugins/nls/ro/BidiSupport", {"ltr":"Direc\u0163ie text de la st\xe2nga la dreapta", "rtl":"Direc\u0163ie text de la dreapta la st\xe2nga"});
 

@@ -1,12 +1,6 @@
-define(["./validate/_base"], function(validate){
+//>>built
 
-	/*=====
-	 return {
-	 // summary:
-	 //		Deprecated.  Should require dojox/validate modules directly rather than trying to access them through
-	 //		this module.
-	 };
-	 =====*/
-
-	return validate;
+define("dojox/validate", ["./validate/_base"], function (validate) {
+    return validate;
 });
+

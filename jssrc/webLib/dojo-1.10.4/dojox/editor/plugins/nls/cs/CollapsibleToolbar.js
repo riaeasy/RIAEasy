@@ -1,6 +1,4 @@
-define(
-({
-	"collapse": "Sbalit panel nástrojů editoru",
-	"expand": "Rozbalit panel nástrojů editoru"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/cs/CollapsibleToolbar", ({"collapse":"Sbalit panel n\xe1stroj\u016f editoru", "expand":"Rozbalit panel n\xe1stroj\u016f editoru"}));
+

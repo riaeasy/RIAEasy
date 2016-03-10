@@ -1,9 +1,1 @@
-/* === Gray Knob Button ==*/
-.mblDomButtonGrayKnob {
-	background-image: url(compat/mblDomButtonGrayKnob.png);
-	background-repeat: no-repeat;
-}
-
-.mblDomButtonGrayKnob > div {
-	display: none;
-}
+.mblDomButtonGrayKnob {background-image: url(compat/mblDomButtonGrayKnob.png); background-repeat: no-repeat;}.mblDomButtonGrayKnob > div {display: none;}

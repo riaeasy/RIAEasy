@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Inserare tabel",
-	modifyTableTitle: "Modificare tabel",
-	rows: "Rânduri:",
-	columns: "Coloane:",
-	align: "Aliniere:",
-	cellPadding: "Padding celulă:",
-	cellSpacing: "Spaţiere celulă:",
-	tableWidth: "Lăţime tabelă:",
-	backgroundColor: "Culoare de fundal:",
-	borderColor: "Coloare de bordură:",
-	borderThickness: "Grosime de bordură:",
-	percent: "procent",
-	pixels: "pixeli",
-	"default": "implicit",
-	left: "stânga",
-	center: "centru",
-	right: "dreapta",
-	buttonSet: "Setare", // translated elsewhere?
-	buttonInsert: "Inserare",
-	buttonCancel: "Anulare",
-	selectTableLabel: "Selectare tabelă",
-	insertTableRowBeforeLabel: "Adăugare rând înainte",
-	insertTableRowAfterLabel: "Adăugare rând după",
-	insertTableColumnBeforeLabel: "Adăugare coloană înainte",
-	insertTableColumnAfterLabel: "Adăugare coloană după",
-	deleteTableRowLabel: "Ştergere rând",
-	deleteTableColumnLabel: "Ştergere coloană",
-	colorTableCellTitle: "Celulă tabel culoare fundal",
-	tableContextMenuTitle: "Meniu de context tabel"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/ro/TableDialog", ({insertTableTitle:"Inserare tabel", modifyTableTitle:"Modificare tabel", rows:"R\xe2nduri:", columns:"Coloane:", align:"Aliniere:", cellPadding:"Padding celul\u0103:", cellSpacing:"Spa\u0163iere celul\u0103:", tableWidth:"L\u0103\u0163ime tabel\u0103:", backgroundColor:"Culoare de fundal:", borderColor:"Coloare de bordur\u0103:", borderThickness:"Grosime de bordur\u0103:", percent:"procent", pixels:"pixeli", "default":"implicit", left:"st\xe2nga", center:"centru", right:"dreapta", buttonSet:"Setare", buttonInsert:"Inserare", buttonCancel:"Anulare", selectTableLabel:"Selectare tabel\u0103", insertTableRowBeforeLabel:"Ad\u0103ugare r\xe2nd \xeenainte", insertTableRowAfterLabel:"Ad\u0103ugare r\xe2nd dup\u0103", insertTableColumnBeforeLabel:"Ad\u0103ugare coloan\u0103 \xeenainte", insertTableColumnAfterLabel:"Ad\u0103ugare coloan\u0103 dup\u0103", deleteTableRowLabel:"\u015etergere r\xe2nd", deleteTableColumnLabel:"\u015etergere coloan\u0103", colorTableCellTitle:"Celul\u0103 tabel culoare fundal", tableContextMenuTitle:"Meniu de context tabel"}));
+

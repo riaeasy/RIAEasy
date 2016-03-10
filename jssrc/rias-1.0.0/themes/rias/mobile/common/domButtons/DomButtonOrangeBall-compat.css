@@ -1,8 +1,8 @@
 /* === Orange Ball Button ==*/
 .mblDomButtonOrangeBall {
-	background-image: url(compat/mblDomButtonOrangeBall.png);
-	background-repeat: no-repeat;
+  background-image: url(compat/mblDomButtonOrangeBall.png);
+  background-repeat: no-repeat;
 }
 .mblDomButtonOrangeBall > div {
-	display: none;
+  display: none;
 }

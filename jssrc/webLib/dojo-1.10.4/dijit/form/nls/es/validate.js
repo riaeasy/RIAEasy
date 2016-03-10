@@ -1,7 +1,4 @@
-define(
-({
-	invalidMessage: "El valor especificado no es válido.",
-	missingMessage: "Este valor es necesario.",
-	rangeMessage: "Este valor está fuera del intervalo."
-})
-);
+//>>built
+
+define("dijit/form/nls/es/validate", ({invalidMessage:"El valor especificado no es v\xe1lido.", missingMessage:"Este valor es necesario.", rangeMessage:"Este valor est\xe1 fuera del intervalo."}));
+

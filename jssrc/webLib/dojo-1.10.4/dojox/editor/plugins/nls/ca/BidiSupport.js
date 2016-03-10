@@ -1,7 +1,4 @@
-define({      
-//begin v1.x content
-	"ltr": "Direcció de text esquerra-a-dreta",
-	"rtl": "Direcció de text dreta-a-esquerra"
-//end v1.x content
-});
+//>>built
+
+define("dojox/editor/plugins/nls/ca/BidiSupport", {"ltr":"Direcci\xf3 de text esquerra-a-dreta", "rtl":"Direcci\xf3 de text dreta-a-esquerra"});
 

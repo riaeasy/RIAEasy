@@ -1,10 +1,6 @@
-define(["./highlight/_base"], function(highlight){
-	/*=====
-	 return {
-	 // summary:
-	 //		Deprecated.  Should require dojox/highlight modules directly rather than trying to access them through
-	 //		this module.
-	 };
-	 =====*/
-	return highlight;
+//>>built
+
+define("dojox/highlight", ["./highlight/_base"], function (highlight) {
+    return highlight;
 });
+

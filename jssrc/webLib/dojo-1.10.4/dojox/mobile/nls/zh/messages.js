@@ -1,13 +1,4 @@
-define({      
-//begin v1.x content
-	// Title of the previous button in Carousel
-	"CarouselPrevious": "上一步",
-	// Title of the next button in Carousel
-	"CarouselNext": "下一步",
-	// PageIndicatorLabel: accessibility label for PageIndicator
-	// $0 replaced by the index of the current page
-	// $1 replaced by the total number of pages
-	"PageIndicatorLabel": "第 $0 页（共 $1 页）"
-//end v1.x content
-});
+//>>built
+
+define("dojox/mobile/nls/zh/messages", {"CarouselPrevious":"\u4e0a\u4e00\u6b65", "CarouselNext":"\u4e0b\u4e00\u6b65", "PageIndicatorLabel":"\u7b2c $0 \u9875\uff08\u5171 $1 \u9875\uff09"});
 

@@ -1,8 +1,10 @@
 /* === Arrow Button ==*/
-.mblDomButtonGrayArrow, .mblDomButtonArrow {
-	background-image: url(compat/mblDomButtonGrayArrow.png);
-	background-repeat: no-repeat;
+.mblDomButtonGrayArrow,
+.mblDomButtonArrow {
+  background-image: url(compat/mblDomButtonGrayArrow.png);
+  background-repeat: no-repeat;
 }
-.mblDomButtonGrayArrow div, .mblDomButtonArrow div {
-	display: none;
+.mblDomButtonGrayArrow div,
+.mblDomButtonArrow div {
+  display: none;
 }

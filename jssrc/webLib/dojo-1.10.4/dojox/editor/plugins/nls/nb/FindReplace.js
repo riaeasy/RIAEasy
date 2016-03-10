@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Søk:",
-	"findTooltip": "Skriv inn teksten du vil søke etter",
-	"replaceLabel": "Erstatt med:",
-	"replaceTooltip": "Skriv inn teksten du vil erstatte med",
-	"findReplace": "Søk og erstatt",
-	"matchCase": "Skill mellom store og små bokstaver",
-	"matchCaseTooltip": "Skill mellom store og små bokstaver",
-	"backwards": "Bakover",
-	"backwardsTooltip": "Søk bakover etter tekst",
-	"replaceAllButton": "Erstatt alle",
-	"replaceAllButtonTooltip": "Erstatt all tekst",
-	"findButton": "Søk",
-	"findButtonTooltip": "Søk etter teksten",
-	"replaceButton": "Erstatt",
-	"replaceButtonTooltip": "Erstatt teksten",
-	"replaceDialogText": "Erstattet ${0} forekomster.",
-	"eofDialogText": "Siste forekomst ${0}",
-	"eofDialogTextFind": "funnet",
-	"eofDialogTextReplace": "erstattet"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/nb/FindReplace", ({"findLabel":"S\xf8k:", "findTooltip":"Skriv inn teksten du vil s\xf8ke etter", "replaceLabel":"Erstatt med:", "replaceTooltip":"Skriv inn teksten du vil erstatte med", "findReplace":"S\xf8k og erstatt", "matchCase":"Skill mellom store og sm\xe5 bokstaver", "matchCaseTooltip":"Skill mellom store og sm\xe5 bokstaver", "backwards":"Bakover", "backwardsTooltip":"S\xf8k bakover etter tekst", "replaceAllButton":"Erstatt alle", "replaceAllButtonTooltip":"Erstatt all tekst", "findButton":"S\xf8k", "findButtonTooltip":"S\xf8k etter teksten", "replaceButton":"Erstatt", "replaceButtonTooltip":"Erstatt teksten", "replaceDialogText":"Erstattet ${0} forekomster.", "eofDialogText":"Siste forekomst ${0}", "eofDialogTextFind":"funnet", "eofDialogTextReplace":"erstattet"}));
+

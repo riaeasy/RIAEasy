@@ -793,7 +793,7 @@ define([
 		}
 
 		pos = (around ?
-			_riasPlaceAround(node, around, args.orient || rias.orient, ltr, null) :
+			_riasPlaceAround(node, around, (rias.isString(args.orient) ? [args.orient] : args.orient) || rias.orient, ltr, null) :
 			//rias.placeAt(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["MM"], args.padding, null));
 			_riasPlaceAround(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["center"], ltr, null));
 		return pos;

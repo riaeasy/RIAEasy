@@ -1,13 +1,4 @@
-define({      
-//begin v1.x content
-	// Title of the previous button in Carousel
-	"CarouselPrevious": "ก่อนหน้านี้",
-	// Title of the next button in Carousel
-	"CarouselNext": "ถัดไป",
-	// PageIndicatorLabel: accessibility label for PageIndicator
-	// $0 replaced by the index of the current page
-	// $1 replaced by the total number of pages
-	"PageIndicatorLabel": "หน้า $0 จาก $1"
-//end v1.x content
-});
+//>>built
+
+define("dojox/mobile/nls/th/messages", {"CarouselPrevious":"\u0e01\u0e48\u0e2d\u0e19\u0e2b\u0e19\u0e49\u0e32\u0e19\u0e35\u0e49", "CarouselNext":"\u0e16\u0e31\u0e14\u0e44\u0e1b", "PageIndicatorLabel":"\u0e2b\u0e19\u0e49\u0e32 $0 \u0e08\u0e32\u0e01 $1"});
 

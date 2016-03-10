@@ -82,7 +82,7 @@ define([
 		autoClose: 0,
 
 		templateString:
-			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter:_onDomNodeEnter, onmouseleave:_onDomNodeLeave' aria-labelledby='${id}_captionNode'>"+
+			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter: _onDomNodeEnter' aria-labelledby='${id}_captionNode'>"+
 				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></span>"+
@@ -462,25 +462,8 @@ define([
 				}
 			});
 		},
-		_restore: function(){
-			var self = this;
-			if(self._needPosition){
-				var pos = rias.dom.positionAt(self, self.initPlaceToArgs);
-				self._needPosition = !pos;
-				if(pos){
-					self._size0 = {
-						t: pos.y,
-						l: pos.x,
-						h: pos.h,
-						w: pos.w
-					};
-				}
-			}
-			this.inherited(arguments);
-		},
 		restore: function(){
-			var self = this,
-				pos;
+			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(result === self){
 					self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
@@ -491,12 +474,6 @@ define([
 			if(this.dockTo){
 				return;
 			}
-			this.inherited(arguments);
-		},
-		_onDomNodeLeave: function(e){
-			//if(this.dockTo && this.dockTo.findTarget(this)){
-			//	return;
-			//}
 			this.inherited(arguments);
 		},
 

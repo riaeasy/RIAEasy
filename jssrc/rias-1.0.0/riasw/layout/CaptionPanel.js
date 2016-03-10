@@ -5,9 +5,9 @@ define([
 	"rias",
 	"rias/riasw/layout/ContentPanel",
 	"rias/riasw/widget/_BadgeMixin",
-	"rias/riasw/layout/_panelBase",
+	"rias/riasw/layout/_PanelBase",
 	"rias/riasw/layout/DockBar"
-], function(rias, ContentPanel, _BadgeMixin, _panelBase, DockBar){
+], function(rias, ContentPanel, _BadgeMixin, _PanelBase, DockBar){
 
 	rias.theme.loadRiasCss([
 		"layout/CaptionPanel.css"
@@ -16,7 +16,7 @@ define([
 	var riasType = "rias.riasw.layout.CaptionPanel";
 	var Widget = rias.declare(riasType, [ContentPanel, _BadgeMixin], {
 		templateString:
-			"<div role='region' data-dojo-attach-event='onmouseenter:_onDomNodeEnter, onmouseleave:_onDomNodeLeave'>"+
+			"<div role='region' data-dojo-attach-event='onmouseenter: _onDomNodeEnter, onmouseleave: _onBlur'>"+
 				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' tabindex='-1'" +
 					" data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
@@ -57,7 +57,7 @@ define([
 		//selectable: true,
 		toggleable: false,
 		toggleOnEnter: false,
-		toggleOnLeave: false,
+		toggleOnBlur: false,
 		maxable: false,
 		closable: false,
 		//movable: false,
@@ -113,7 +113,7 @@ define([
 			);
 			self.inherited(arguments);
 			self._initAttr(["caption", "captionClass", "contentClass", "showCaption", "splitter",
-				"toggleable", "toggleOnEnter", "toggleOnLeave", "closable", "maxable", "dockTo", "alwaysShowDockNode"]);
+				"toggleable", "toggleOnEnter", "toggleOnBlur", "closable", "maxable", "dockTo", "alwaysShowDockNode"]);
 		},
 		destroy: function(){//FIXME:zensst. dojo 2.0 才开始支持 destroyRecursive()，目前只 destroy 自身.
 			if(this._autoToggleDelay){
@@ -207,7 +207,7 @@ define([
 			rias.dom.toggleClass(this.domNode, this.baseClass + "WithCaption", !!this.showCaption);
 		},
 		_onMaxable: function(value, oldValue){
-			this.maxable = !!value;
+			this.maxable = !!value && !this.region;
 			rias.dom.visible(this.maxNode, this.maxable);
 		},
 		_onClosable: function(value, oldValue){
@@ -226,7 +226,7 @@ define([
 			this.toggleOnEnter = !!value;
 		},
 		_onToggleOnLeave: function(value, oldValue){
-			this.toggleOnLeave = !!value;
+			this.toggleOnBlur = !!value;
 		},
 		_onSplitter: function(value, oldValue){
 			this.splitter = !!value;
@@ -253,10 +253,6 @@ define([
 				if(this.alwaysShowDockNode){
 					this.dockTo.addTarget(this);
 				}
-				//if(this.displayState === _panelBase.displayCollapsed){
-				//	this.collapse();
-				//}
-				//}
 			}else{
 				//console.warn("The dockTo of '" + value + "' not exists or not the DockBar Widget.");
 				this.dockTo = null;
@@ -316,6 +312,14 @@ define([
 				this.hide();
 			}
 		},
+		restore: function(){
+			var self = this;
+			return rias.when(self.inherited(arguments), function(result){
+				if(result === self){
+					self.focus();
+				}
+			});
+		},
 
 		_stopEvent: function(/*Event*/e){
 			e.preventDefault();
@@ -331,25 +335,6 @@ define([
 				this._onToggleClick(e);
 			}
 		},
-		/*toggle: function(){
-			if(this.toggleable){
-				if(this.dockTo){
-					if(this.isDocked()){
-						this.restore();
-					}else{
-						this.dock();
-					}
-				}else{
-					if(this.isCollapsed()){
-						this.expand();
-					}else{
-						this.collapse();
-					}
-				}
-			}else{
-				this.restore();
-			}
-		},*/
 		toggle: function(){
 			if(this.toggleable){
 				if(this.isHidden()){
@@ -395,7 +380,7 @@ define([
 				}, rias.autoToggleDuration);
 			}
 		},
-		_onDomNodeLeave: function(e){
+		_onBlur: function(e){
 			//e.preventDefault();
 			//e.stopPropagation();
 			var self = this;
@@ -403,7 +388,8 @@ define([
 				self._autoToggleDelay.remove();
 				delete self._autoToggleDelay;
 			}
-			if(self.toggleOnLeave && self.toggleable && !self._playing){
+			self.inherited(arguments);
+			if(self.toggleOnBlur && self.toggleable && !self._playing){
 				if(!self.isCollapsed()){
 					self.collapse();
 				}

@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Søg:",
-	"findTooltip": "Indtast tekst, du vil søge efter",
-	"replaceLabel": "Erstat med:",
-	"replaceTooltip": "Indtast tekst, du vil erstatte med",
-	"findReplace": "Søg og erstat",
-	"matchCase": "Forskel på store og små bogstaver",
-	"matchCaseTooltip": "Forskel på store og små bogstaver",
-	"backwards": "Baglæns",
-	"backwardsTooltip": "Søg baglæns i teksten",
-	"replaceAllButton": "Erstat alle",
-	"replaceAllButtonTooltip": "Erstat i hele teksten",
-	"findButton": "Søg",
-	"findButtonTooltip": "Find teksten",
-	"replaceButton": "Erstat",
-	"replaceButtonTooltip": "Erstat teksten",
-	"replaceDialogText": "${0} forekomster erstattet.",
-	"eofDialogText": "Sidste forekomst ${0}",
-	"eofDialogTextFind": "fundet",
-	"eofDialogTextReplace": "erstattet"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/da/FindReplace", ({"findLabel":"S\xf8g:", "findTooltip":"Indtast tekst, du vil s\xf8ge efter", "replaceLabel":"Erstat med:", "replaceTooltip":"Indtast tekst, du vil erstatte med", "findReplace":"S\xf8g og erstat", "matchCase":"Forskel p\xe5 store og sm\xe5 bogstaver", "matchCaseTooltip":"Forskel p\xe5 store og sm\xe5 bogstaver", "backwards":"Bagl\xe6ns", "backwardsTooltip":"S\xf8g bagl\xe6ns i teksten", "replaceAllButton":"Erstat alle", "replaceAllButtonTooltip":"Erstat i hele teksten", "findButton":"S\xf8g", "findButtonTooltip":"Find teksten", "replaceButton":"Erstat", "replaceButtonTooltip":"Erstat teksten", "replaceDialogText":"${0} forekomster erstattet.", "eofDialogText":"Sidste forekomst ${0}", "eofDialogTextFind":"fundet", "eofDialogTextReplace":"erstattet"}));
+

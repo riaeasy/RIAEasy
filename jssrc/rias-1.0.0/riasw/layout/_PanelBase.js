@@ -30,33 +30,51 @@ define([
 		intClosed = -1,
 		intTransparent = -2;
 	function displayStateInt(displayState){
-		if(displayState === displayHidden || displayState === intHidden){
-			return intHidden;//0;
-		}else if(displayState === displayClosed || displayState === intClosed){
-			return intClosed;//-1;
-		}else if(displayState === displayTransparent || displayState === intTransparent){
-			return intTransparent;//-2;
-		}else if(displayState === displayShowMax || displayState === intShowMax){
-			return intShowMax;//2;
-		}else if(displayState === displayCollapsed || displayState === intCollapsed){
-			return intCollapsed;//3;
+		switch(displayState){
+			case intShowNormal://1:
+			case displayShowNormal://1:
+				return intShowNormal;
+			case intHidden://0:
+			case displayHidden://0:
+				return intHidden;
+			case intClosed://-1:
+			case displayClosed://-1:
+				return intClosed;
+			case intTransparent://-2:
+			case displayTransparent://-2:
+				return intTransparent;
+			case intShowMax://2:
+			case displayShowMax://2:
+				return intShowMax;
+			case intCollapsed://3:
+			case displayCollapsed://3:
+				return intCollapsed;
+			default:
+				return undefined;
 		}
-		return intShowNormal;
 	}
 	function displayStateStr(displayState){
 		switch(displayState){
+			case intShowNormal://1:
+			case displayShowNormal://1:
+				return displayShowNormal;
 			case intHidden://0:
+			case displayHidden://0:
 				return displayHidden;
 			case intClosed://-1:
+			case displayClosed://-1:
 				return displayClosed;
 			case intTransparent://-2:
+			case displayTransparent://-2:
 				return displayTransparent;
 			case intShowMax://2:
+			case displayShowMax://2:
 				return displayShowMax;
 			case intCollapsed://3:
+			case displayCollapsed://3:
 				return displayCollapsed;
 			default:
-				return displayShowNormal;
+				return undefined;
 		}
 	}
 
@@ -145,7 +163,7 @@ define([
 			if(this.maxSize.h > 0){
 				rias.dom.setStyle(this.domNode, "max-height", this.maxSize.h);
 			}
-
+			this._size0 = {};
 		},
 		postCreate: function(){
 			var self = this;
@@ -325,7 +343,7 @@ define([
 
 		_loadFromCookie: function(){
 			var a;
-			this._size0 = rias.mixin(this._size0, this.initDisplayBox || {});
+			//this._size0 = rias.mixin(this._size0, this.initDisplayBox || {});
 			if(this.persist && this.cookieName){
 				var c = rias.cookie(this.cookieName);
 				try{
@@ -353,7 +371,6 @@ define([
 			if(this.persist && this._started){
 				var c = {
 					s: this._size0,
-					//a: (this._displayState0 >= 0) ? this._displayState0 : this.__state0
 					a: Widget.displayStateInt(this.displayState)
 				};
 				if(!this.cookieName){
@@ -527,7 +544,7 @@ define([
 				if(rg || !noheight || !nowidth){
 					_floor(box = dom.getContentBox(node, cs));
 					node = this.containerNode;
-					if(!noheight){
+					if(this.captionNode && this.showCaption){
 						//h = (this.showCaption && this.captionNode ? this._captionHeight = rias.dom.getMarginBox(this.captionNode).h : this._captionHeight = 0);
 						/*h = (this.showCaption && this.captionNode ?
 							//this._captionHeight = rias.dom.getMarginBox(this.captionNode)[(this.region == "left" || this.region == "right") ? "h" : "w"] :
@@ -542,10 +559,8 @@ define([
 						dom.setMarginBox(this.wrapperNode, _getBox(box), cs);
 						box = dom.marginBox2contentBox(this.wrapperNode, box, cs);
 					}
-					if(!noheight){
-						if(this._actionBar){
-							box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
-						}
+					if(this._actionBar){
+						box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
 					}
 					cs = dom.getComputedStyle(node);
 					dom.setMarginBox(node, _getBox(box), cs);
@@ -615,7 +630,7 @@ define([
 			//s, pb,
 				box,
 				dom,
-				ns,
+				dns,
 			//cs,
 			//h,
 				isV = (this.region == "left" || this.region == "right"),
@@ -634,7 +649,7 @@ define([
 			this.beforeResize();
 			dom = rias.dom;
 			node = this.domNode;
-			ns = node.style;
+			dns = node.style;
 			//cs = dom.getComputedStyle(node);
 			//pb = (dom.boxModel == "border-box" ? {w:0, h:0} : dom.getPadBorderExtents(node, cs));
 			box = rias.mixin(this._changeSize, changeSize, box);
@@ -651,7 +666,7 @@ define([
 			if(this.displayState === Widget.displayCollapsed){
 				///这里处理可以防止 move 和 resize 的时候改变，同时允许先改变 大小 和 约束
 				if(isV){
-					ns.width = this._captionHeight + "px";
+					dns.width = this._captionHeight + "px";
 					if(this.showCaption && this.captionNode){
 						rias.dom.setMarginBox(this.captionNode, {
 							w: this._captionHeight,
@@ -659,13 +674,13 @@ define([
 						});
 					}
 				}else if(this.region == "top" || this.region == "bottom"){
-					ns.height = this._captionHeight + "px";
+					dns.height = this._captionHeight + "px";
 				}else{
-					ns.height = this._captionHeight + "px";
+					dns.height = this._captionHeight + "px";
 					if(this.collapsedWidth > 60){
-						ns.width = this.collapsedWidth + "px";
-					}else if(this._size0 && this._size0.w > 0){
-						ns.width = (this._size0.w - rias.dom.getMarginBorderBox(node).w) + "px";
+						dns.width = this.collapsedWidth + "px";
+					//}else if(this._size0 && this._size0.w > 0){
+					//	dns.width = (this._size0.w - rias.dom.getMarginBorderBox(node).w) + "px";
 					}
 				}
 			}else{
@@ -674,13 +689,10 @@ define([
 				}else{
 					this._captionHeight = 0;
 				}
-				///TODO:zensst.由于 container 是动态的、自动布局的，设置后不能自动布局。
-				//if(this.displayState === Widget.displayShowNormal && this._isVisible()){
 				if(this.displayState === Widget.displayShowNormal){
-					//if(rg || ns.height !== "" || ns.width !== ""){
 					if(!rias.objContains(this._size0, box)){
 						this._size0 = rias.mixinDeep(this._size0, box);
-						this._needPosition = false;
+						//this._needPosition = false;
 						this._saveToCookie();
 					}
 				}
@@ -690,7 +702,6 @@ define([
 
 			this.afterResize();
 			//console.debug(c, this.id, "resize out:", r + " - " + rias.toJson(box));
-			return;
 		},
 		_checkRestrict: function(box){
 			var changed = false;
@@ -778,7 +789,7 @@ define([
 		_onDisplayState: function(value, oldValue){
 			var self = this;
 			if(rias.isNumber(value)){
-				value = Widget.displayStateStr(value);
+				value = Widget.displayStateStr(value) || displayShowNormal;
 			}
 			value = self.onDisplayStateChanging(value, oldValue);
 			//if(this._started){
@@ -857,19 +868,21 @@ define([
 			var self = this,
 				df = rias.newDeferred(),
 				canPlay = self._started && self.animated && self._isVisible(),
-				oldState = self._displayState0,
-				dn = self.domNode,
+				oldState = self._displayState0,//不能取 this.displayState，因为已经改变了。
+				dn = self.domNode, dns = dn.style,
 				cn = self.wrapperNode ? self.wrapperNode : self.containerNode,
 				cpn = self.captionNode,
 				duration = self.duration,
-				parentSize = rias.dom.getContentBox(dn.parentNode || (rias.webApp ? rias.webApp.domNode : rias.body(rias.doc))),
-				mb = rias.dom.getMarginBorderBox(dn),
 				_playContent,
 				r = (self.restrictPadding > 0 ? self.restrictPadding : 0),
 				isV = (self.region == "left" || self.region == "right"),
 				oldSize = self._size0;
 
+			function _mb(){
+				return rias.dom.getMarginBorderBox(dn);
+			}
 			function expandParam(){
+				var mb = _mb();
 				return {
 					__fxparamname: "expandParam",
 					node: dn,
@@ -886,7 +899,7 @@ define([
 					},
 					beforeBegin: function(){
 						rias.dom.visible(cn, true);
-						doExpanded(true);
+						doExpand(true);
 					},
 					onEnd: function() {
 						self._resizeParent();
@@ -910,7 +923,7 @@ define([
 					beforeBegin: function(){
 					},
 					onEnd: function(){
-						doExpanded(false);
+						doExpand(false);
 					}
 				};
 			}
@@ -932,9 +945,6 @@ define([
 					node: dn,
 					duration: duration,
 					beforeBegin: function(){
-						if(!oldState || oldState <= intHidden || oldState === intShowMax){
-							self._restore();
-						}
 						doShow(newState, 0);
 					},
 					onEnd: function(){
@@ -942,6 +952,8 @@ define([
 				};
 			}
 			function sizeMAxParam(){
+				var parentSize = rias.dom.getContentBox(dn.parentNode || (rias.webApp ? rias.webApp.domNode : rias.body(rias.doc)));
+				var mb = _mb();
 				return {
 					__fxparamname: "sizeMAxParam",
 					//method: "combine",
@@ -972,6 +984,7 @@ define([
 				};
 			}
 			function sizeNormalParam(){
+				var mb = _mb();
 				return {
 					__fxparamname: "sizeNormalParam",
 					//method: "combine",
@@ -1007,6 +1020,9 @@ define([
 				rias.dom.visible(cn, value > 0);
 				rias.dom.visible(dn, value > 0, opacity);
 				if(value > 0){
+					if(oldState !== intShowNormal){
+						self._restore(true);
+					}
 					self._show(value);
 				}else{
 					self._hide(value);
@@ -1019,9 +1035,8 @@ define([
 					self._restore();
 				}
 			}
-			function doExpanded(value){
+			function doExpand(value){
 				value = !!value;
-				//var dns = dn.style;
 				rias.dom.visible(cn, value);
 				rias.dom.visible(dn, true);
 
@@ -1039,6 +1054,7 @@ define([
 					//}
 				}
 				if(value){
+					self._restore(true);
 					self._expand();
 				}else{
 					self._collapse();
@@ -1055,6 +1071,7 @@ define([
 				}
 				if(_nextState){
 					df.resolve(false);
+					self._displayState0 = Widget.displayStateInt(self.displayState);
 					self._doPlay(_nextState, true);
 				}else{
 					delete self._playing;///先 delete，df.resolve 中要检测
@@ -1068,15 +1085,16 @@ define([
 			}
 
 			self._stopPlay();
-			this._playingDeferred = rias.newDeferred();
+			self._playingDeferred = rias.newDeferred();
 			newState = Widget.displayStateInt(newState);
+			isNaN(newState) && (newState = intShowNormal);
 			if(self._riasrDestroying || self._beingDestroyed || !forcePlay && oldState === newState){
 				df.resolve(false);
 				return df.promise;
 			}
-			///onShow 等事件中需要使用 this.displayState，提前设置.
+			///onShow 等事件中需要使用 self.displayState，提前设置.
 			self._displayState0 = newState;
-			self.displayState = Widget.displayStateStr(newState);
+			self.displayState = Widget.displayStateStr(newState) || displayShowNormal;
 			if(newState <= intHidden){
 				///hide...
 				if(canPlay && self._playingHide){
@@ -1100,27 +1118,24 @@ define([
 						if(oldState == intCollapsed){
 							///collapsed
 							if(canPlay && self._playingSize && self._playingExpand){
-								//self._playing = rias.fx.chain([
-								//	self._playingExpand(expandParam),
-								//	self._playingSize(sizeMAxParam())
-								//]);
+								self.displayState = "showNormal";
 								self._playing = self._playingExpand(expandParam);
 								_nextState = "showMax";
 							}else{
-								doExpanded(true);
+								doExpand(true);
 								doMax(true);
 							}
-						}else if(!oldState || oldState <= intHidden){
+						}else if(isNaN(oldState) || oldState <= intHidden){
 							///hide...
 							if(canPlay && self._playingSize && self._playingShow){
 								//self._playing = rias.fx.chain([
 								//	self._playingShow(showParam()),
 								//	self._playingSize(sizeMAxParam())
 								//]);
+								self.displayState = "showNormal";
 								self._playing = self._playingShow(showParam());
 								_nextState = "showMax";
 							}else{
-								self._restore();
 								doShow(newState, 1);
 								doMax(true);
 							}
@@ -1146,36 +1161,33 @@ define([
 						///showMax
 						if(canPlay && self._playingCollapse && self._playingSize){
 							_playContent = true;
-							//self._playing = rias.fx.chain([
-							//	self._playingSize(sizeNormalParam()),
-							//	self._playingCollapse(collapseParam())
-							//]);
+							self.displayState = "showNormal";
 							self._playing = self._playingSize(sizeNormalParam());
 							_nextState = "collapsed";
 						}else{
 							doMax(false);
-							doExpanded(false);
+							doExpand(false);
 						}
-					}else if(!oldState || oldState <= intHidden){
+					}else if(isNaN(oldState) || oldState <= intHidden){
 						///hide...
 						if(canPlay && self._playingCollapse && self._playingShow){
 							//self._playing = rias.fx.chain([
 							//	self._playingShow(showParam()),
 							//	self._playingCollapse(collapseParam())
 							//]);
+							self.displayState = "showNormal";
 							self._playing = self._playingShow(showParam());
 							_nextState = "collapsed";
 						}else{
-							self._restore();
 							doShow(newState, 1);
-							doExpanded(false);
+							doExpand(false);
 						}
 					}else{
 						///showNormal
 						if(canPlay && self._playingCollapse){
 							self._playing = self._playingCollapse(collapseParam());
 						}else{
-							doExpanded(false);
+							doExpand(false);
 						}
 					}
 				}else{
@@ -1194,14 +1206,13 @@ define([
 						if(canPlay && self._playingExpand){
 							self._playing = self._playingExpand(expandParam());
 						}else{
-							doExpanded(true);
+							doExpand(true);
 						}
 					}else{
 						///hide...
 						if(canPlay && self._playingShow){
 							self._playing = self._playingShow(showParam());
 						}else{
-							self._restore();
 							doShow(newState, 1);
 						}
 					}
@@ -1276,13 +1287,15 @@ define([
 		},
 		_show: function(){
 			this._wasShown = true;//this._isVisible();
+			if(this._needPosition){
+				this._needPosition = !rias.dom.positionAt(this, this.initPlaceToArgs);
+			}
 			///需要计算 Height，用 _refreshDisplayState
 			this._refreshDisplayState();///在 play.onEnd 中调用
 			this._needResize = true;
 			this._internalResize(this._changeSize, this._resultSize);
 			this._onShow.apply(this, arguments);
 			this._resizeParent();
-			//this.focus();
 			return this.isShown();
 		},
 		show: function(){
@@ -1295,7 +1308,11 @@ define([
 
 		onRestore: function(){
 		},
-		_restore: function(){
+		_restore: function(noResize){
+			if(noResize){
+				this.onRestore.apply(this, arguments);
+				return;
+			}
 			///需要计算 Height，用 _refreshDisplayState
 			this._refreshDisplayState();///在 play.onEnd 中调用
 			this._needResize = true;
@@ -1304,7 +1321,6 @@ define([
 			this._resizeParent();
 		},
 		restore: function(){
-			var self = this;
 			this.set("displayState", Widget.displayShowNormal);
 			if(this._playingDeferred){
 				return this._playingDeferred;
@@ -1319,8 +1335,16 @@ define([
 			var dns = this.domNode.style,
 				mb = rias.dom.getMarginBorderBox(this.domNode);
 			if(this._size0){
-				dns.width = (this._size0.w - mb.w) + "px";
-				dns.height = (this._size0.h - mb.h) + "px";
+				if(this._size0.hasH){
+					dns.height = (this._size0.h - mb.h) + "px";
+				}else{
+					dns.height = "";
+				}
+				if(this._size0.hasW){
+					dns.width = (this._size0.w - mb.w) + "px";
+				}else{
+					dns.width = "";
+				}
 			}
 			///需要计算 Height，用 _refreshDisplayState
 			this._refreshDisplayState();///在 play.onEnd 中调用
@@ -1346,8 +1370,10 @@ define([
 		},
 		_collapse: function(){
 			var dns = this.domNode.style;
+			this._size0.hasH = dns.height != "";
+			this._size0.hasW = dns.width != "";
 			//var h = (this.showCaption && this.captionNode ? rias.dom.getMarginBox(this.captionNode).h : 0);
-			var h = (this.showCaption && this.captionNode ? this._captionHeight : 0);
+			/*var h = (this.showCaption && this.captionNode ? this._captionHeight : 0);
 			if(this.region == "left" || this.region == "right"){
 				dns.width = h + "px";
 			}else if(this.region == "top" || this.region == "bottom"){
@@ -1356,10 +1382,10 @@ define([
 				dns.height = h + "px";
 				if(this.collapsedWidth > 60){
 					dns.width = this.collapsedWidth + "px";
-				}else if(this._size0 && this._size0.w > 0){
-					dns.width = (this._size0.w - rias.dom.getMarginBorderBox(this.domNode).w) + "px";
+				//}else if(this._size0 && this._size0.w > 0){
+				//	dns.width = (this._size0.w - rias.dom.getMarginBorderBox(this.domNode).w) + "px";
 				}
-			}
+			}*/
 			///需要计算 Height，用 _refreshDisplayState
 			this._refreshDisplayState();///在 play.onEnd 中调用
 			this._needResize = true;

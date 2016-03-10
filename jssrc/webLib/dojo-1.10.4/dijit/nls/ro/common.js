@@ -1,8 +1,4 @@
-define(
-({
-	buttonOk: "OK",
-	buttonCancel: "Anulare",
-	buttonSave: "Salvare",
-	itemClose: "Închidere"
-})
-);
+//>>built
+
+define("dijit/nls/ro/common", ({buttonOk:"OK", buttonCancel:"Anulare", buttonSave:"Salvare", itemClose:"\xcenchidere"}));
+

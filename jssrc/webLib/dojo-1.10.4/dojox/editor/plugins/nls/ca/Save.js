@@ -1,5 +1,4 @@
-define(
-({
-	"save": "Desa"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/ca/Save", ({"save":"Desa"}));
+

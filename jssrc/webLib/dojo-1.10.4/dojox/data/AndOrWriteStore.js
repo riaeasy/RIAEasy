@@ -1,11 +1,6 @@
-define(["dojo/_base/declare", "dojo/data/ItemFileWriteStore", "./AndOrReadStore"],
-  function(declare, ItemFileWriteStore, AndOrReadStore){
+//>>built
 
-// module:
-//		dojox/data/AndOrWriteStore
-// summary:
-//		TODOC
-
-return declare("dojox.data.AndOrWriteStore", [ItemFileWriteStore, AndOrReadStore], {});
-
+define("dojox/data/AndOrWriteStore", ["dojo/_base/declare", "dojo/data/ItemFileWriteStore", "./AndOrReadStore"], function (declare, ItemFileWriteStore, AndOrReadStore) {
+    return declare("dojox.data.AndOrWriteStore", [ItemFileWriteStore, AndOrReadStore], {});
 });
+

@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Vložiť tabuľku",
-	modifyTableTitle: "Upraviť tabuľku",
-	rows: "Riadky:",
-	columns: "Stĺpce:",
-	align: "Zarovnanie:",
-	cellPadding: "Výplň buniek:",
-	cellSpacing: "Rozstup buniek:",
-	tableWidth: "Šírka tabuľky:",
-	backgroundColor: "Farba pozadia:",
-	borderColor: "Farba rámika:",
-	borderThickness: "Hrúbka rámika:",
-	percent: "percent",
-	pixels: "pixlov",
-	"default": "predvolené",
-	left: "vľavo",
-	center: "stred",
-	right: "vpravo",
-	buttonSet: "Nastaviť", // translated elsewhere?
-	buttonInsert: "Vložiť",
-	buttonCancel: "Zrušiť",
-	selectTableLabel: "Vybrať tabuľku",
-	insertTableRowBeforeLabel: "Pridať riadok pred",
-	insertTableRowAfterLabel: "Pridať riadok za",
-	insertTableColumnBeforeLabel: "Pridať stĺpec pred",
-	insertTableColumnAfterLabel: "Pridať stĺpec za",
-	deleteTableRowLabel: "Vymazať riadok",
-	deleteTableColumnLabel: "Vymazať stĺpec",
-	colorTableCellTitle: "Farba pozadia bunky tabuľky",
-	tableContextMenuTitle: "Kontextová ponuka tabuľky"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sk/TableDialog", ({insertTableTitle:"Vlo\u017ei\u0165 tabu\u013eku", modifyTableTitle:"Upravi\u0165 tabu\u013eku", rows:"Riadky:", columns:"St\u013apce:", align:"Zarovnanie:", cellPadding:"V\xfdpl\u0148 buniek:", cellSpacing:"Rozstup buniek:", tableWidth:"\u0160\xedrka tabu\u013eky:", backgroundColor:"Farba pozadia:", borderColor:"Farba r\xe1mika:", borderThickness:"Hr\xfabka r\xe1mika:", percent:"percent", pixels:"pixlov", "default":"predvolen\xe9", left:"v\u013eavo", center:"stred", right:"vpravo", buttonSet:"Nastavi\u0165", buttonInsert:"Vlo\u017ei\u0165", buttonCancel:"Zru\u0161i\u0165", selectTableLabel:"Vybra\u0165 tabu\u013eku", insertTableRowBeforeLabel:"Prida\u0165 riadok pred", insertTableRowAfterLabel:"Prida\u0165 riadok za", insertTableColumnBeforeLabel:"Prida\u0165 st\u013apec pred", insertTableColumnAfterLabel:"Prida\u0165 st\u013apec za", deleteTableRowLabel:"Vymaza\u0165 riadok", deleteTableColumnLabel:"Vymaza\u0165 st\u013apec", colorTableCellTitle:"Farba pozadia bunky tabu\u013eky", tableContextMenuTitle:"Kontextov\xe1 ponuka tabu\u013eky"}));
+

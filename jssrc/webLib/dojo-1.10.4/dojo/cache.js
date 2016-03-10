@@ -1,7 +1,6 @@
-define(["./_base/kernel", "./text"], function(dojo){
-	// module:
-	//		dojo/cache
+//>>built
 
-	// dojo.cache is defined in dojo/text
-	return dojo.cache;
+define("dojo/cache", ["./_base/kernel", "./text"], function (dojo) {
+    return dojo.cache;
 });
+

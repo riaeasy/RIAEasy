@@ -1,11 +1,4 @@
-define(
-({
-	"nodeActions": "Akcie pre ${nodeName}",
-	"selectContents": "Vybrať obsah",
-	"selectElement": "Vybrať prvok",
-	"deleteElement": "Vymazať prvok",
-	"deleteContents": "Vymazať obsah",
-	"moveStart": "Presunúť kurzor na začiatok",
-	"moveEnd": "Presunúť kurzor na koniec"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sk/Breadcrumb", ({"nodeActions":"Akcie pre ${nodeName}", "selectContents":"Vybra\u0165 obsah", "selectElement":"Vybra\u0165 prvok", "deleteElement":"Vymaza\u0165 prvok", "deleteContents":"Vymaza\u0165 obsah", "moveStart":"Presun\xfa\u0165 kurzor na za\u010diatok", "moveEnd":"Presun\xfa\u0165 kurzor na koniec"}));
+

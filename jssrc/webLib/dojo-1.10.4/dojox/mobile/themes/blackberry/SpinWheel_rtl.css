@@ -1,5 +1,1 @@
-/* dojox.mobile.SpinWheel Rtl */
-.mblSpinWheelSlotRtl,
-.mblSpinWheelRtl .mblSpinWheelSlot {
-  float: right;
-}
+.mblSpinWheelSlotRtl,.mblSpinWheelRtl .mblSpinWheelSlot {float: right;}

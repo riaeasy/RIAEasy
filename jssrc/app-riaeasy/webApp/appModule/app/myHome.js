@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 43,
+	"_rsfVersion": 45,
 	"_riaswVersion": "0.7",
 	"caption": {
 		"$refObj": "rias.i18n.webApp.myHome.caption"
@@ -17,6 +17,7 @@ define([
 				"border": "0px",
 				"padding": "0px"
 			},
+			"region": "center",
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.layout.CaptionPanel",

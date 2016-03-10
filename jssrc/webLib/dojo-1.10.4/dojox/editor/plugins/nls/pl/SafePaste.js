@@ -1,5 +1,4 @@
-define(
-({
-	"instructions": "Wklejanie bezpośrednie jest wyłączone. Wklej treść do tego okna dialogowego za pomocą standardowych skrótów klawiszowych przeglądarki lub opcji Wklej w menu. Po uzyskaniu odpowiedniej treści do wstawienia kliknij przycisk Wklej. Aby przerwać wstawianie treści, kliknij przycisk Anuluj."
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/pl/SafePaste", ({"instructions":"Wklejanie bezpo\u015brednie jest wy\u0142\u0105czone. Wklej tre\u015b\u0107 do tego okna dialogowego za pomoc\u0105 standardowych skr\xf3t\xf3w klawiszowych przegl\u0105darki lub opcji Wklej w menu. Po uzyskaniu odpowiedniej tre\u015bci do wstawienia kliknij przycisk Wklej. Aby przerwa\u0107 wstawianie tre\u015bci, kliknij przycisk Anuluj."}));
+

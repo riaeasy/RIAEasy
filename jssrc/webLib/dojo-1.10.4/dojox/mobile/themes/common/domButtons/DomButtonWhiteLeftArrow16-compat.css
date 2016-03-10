@@ -1,8 +1,1 @@
-/* === WhiteLeftArrow16 ==*/
-.mblDomButtonWhiteLeftArrow16 {
-	background-image: url(compat/mblDomButtonWhiteLeftArrow16.png);
-	background-repeat: no-repeat;
-}
-.mblDomButtonWhiteLeftArrow16 > div {
-	display: none;
-}
+.mblDomButtonWhiteLeftArrow16 {background-image: url(compat/mblDomButtonWhiteLeftArrow16.png); background-repeat: no-repeat;}.mblDomButtonWhiteLeftArrow16 > div {display: none;}

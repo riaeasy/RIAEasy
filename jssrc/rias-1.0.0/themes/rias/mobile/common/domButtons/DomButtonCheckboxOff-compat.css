@@ -1,8 +1,8 @@
 /* === Check Button (OFF) ==*/
 .mblDomButtonCheckboxOff {
-	background-image: url(compat/mblDomButtonCheckboxOff.png);
-	background-repeat: no-repeat;
+  background-image: url(compat/mblDomButtonCheckboxOff.png);
+  background-repeat: no-repeat;
 }
 .mblDomButtonCheckboxOff div {
-	display: none;
+  display: none;
 }

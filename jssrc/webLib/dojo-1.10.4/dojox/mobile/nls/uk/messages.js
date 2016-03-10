@@ -1,13 +1,4 @@
-define({      
-//begin v1.x content
-	// Title of the previous button in Carousel
-	"CarouselPrevious": "Назад",
-	// Title of the next button in Carousel
-	"CarouselNext": "Далі",
-	// PageIndicatorLabel: accessibility label for PageIndicator
-	// $0 replaced by the index of the current page
-	// $1 replaced by the total number of pages
-	"PageIndicatorLabel": "стор. $0 з $1"
-//end v1.x content
-});
+//>>built
+
+define("dojox/mobile/nls/uk/messages", {"CarouselPrevious":"\u041d\u0430\u0437\u0430\u0434", "CarouselNext":"\u0414\u0430\u043b\u0456", "PageIndicatorLabel":"\u0441\u0442\u043e\u0440. $0 \u0437 $1"});
 

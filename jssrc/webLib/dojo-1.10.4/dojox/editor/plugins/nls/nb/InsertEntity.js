@@ -1,5 +1,4 @@
-define(
-({
-	insertEntity: "Sett inn symbol"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/nb/InsertEntity", ({insertEntity:"Sett inn symbol"}));
+

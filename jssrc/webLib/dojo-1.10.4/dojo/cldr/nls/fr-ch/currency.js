@@ -1,7 +1,4 @@
-define(
-//begin v1.x content
-{
-	"CHF_symbol": "CHF"
-}
-//end v1.x content
-);
+//>>built
+
+define("dojo/cldr/nls/fr-ch/currency", {"CHF_symbol":"CHF"});
+

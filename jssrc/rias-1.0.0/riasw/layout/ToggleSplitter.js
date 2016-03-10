@@ -42,11 +42,12 @@ define([
 
 		baseClass: "riaswToggleSplitter",
 
-		templateString: '<div dojoAttachEvent="onkeypress:_onKeyPress,onmousedown:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse">' +
-							'<div dojoAttachPoint="toggleNode" class="riaswToggleSplitterThumb" tabIndex="0" role="separator" ' +
-								'dojoAttachEvent="onmousedown:_onToggleNodeMouseDown,onclick:_toggle,onmouseenter:_onToggleNodeMouseMove,onmouseleave:_onToggleNodeMouseMove,onfocus:_onToggleNodeMouseMove,onblur:_onToggleNodeMouseMove">' +
-								'<span class="riaswToggleSplitterA11y" dojoAttachPoint="a11yText"></span></div>' +
-						'</div>',
+		templateString:
+			'<div data-dojo-attach-event="onkeypress:_onKeyPress,onmousedown:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse">' +
+				'<div role="separator" data-dojo-attach-point="toggleNode" class="riaswToggleSplitterThumb" tabIndex="0" ' +
+					'data-dojo-attach-event="onmousedown:_onToggleNodeMouseDown, onclick:_toggle, onmouseenter:_onToggleNodeMouseMove, onmouseleave:_onToggleNodeMouseMove, onfocus:_onToggleNodeMouseMove, onblur:_onToggleNodeMouseMove">' +
+				'<span data-dojo-attach-point="a11yText" class="riaswToggleSplitterA11y"></span></div>' +
+			'</div>',
 
 		postCreate: function(){
 			this.inherited(arguments);

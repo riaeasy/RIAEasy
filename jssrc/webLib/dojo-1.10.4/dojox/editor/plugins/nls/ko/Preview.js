@@ -1,5 +1,4 @@
-define(
-({
-	"preview": "미리보기"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/ko/Preview", ({"preview":"\ubbf8\ub9ac\ubcf4\uae30"}));
+

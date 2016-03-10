@@ -1,4 +1,1 @@
-/* dojox.mobile.GridLayout Rtl */
-.mblGridLayoutRtl > div {
-  float: right;
-}
+.mblGridLayoutRtl > div {float: right;}

@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Tablo Ekle",
-	modifyTableTitle: "Tabloyu Değiştir",
-	rows: "Satırlar:",
-	columns: "Sütunlar:",
-	align: "Hizala:",
-	cellPadding: "Hücre Doldurma:",
-	cellSpacing: "Hücre Aralığı:",
-	tableWidth: "Tablo Genişliği",
-	backgroundColor: "Arka Plan Rengi:",
-	borderColor: "Kenarlık Rengi:",
-	borderThickness: "Kenarlık Kalınlığı:",
-	percent: "yüzde",
-	pixels: "piksel",
-	"default": "varsayılan",
-	left: "sol",
-	center: "orta",
-	right: "sağ",
-	buttonSet: "Ayarla", // translated elsewhere?
-	buttonInsert: "Ekle",
-	buttonCancel: "İptal",
-	selectTableLabel: "Tablo Seç",
-	insertTableRowBeforeLabel: "Satırı Önüne Ekle",
-	insertTableRowAfterLabel: "Satırı Arkasına Ekle",
-	insertTableColumnBeforeLabel: "Sütunu Önüne Ekle",
-	insertTableColumnAfterLabel: "Sütunu Arkasına Ekle",
-	deleteTableRowLabel: "Satırı Sil",
-	deleteTableColumnLabel: "Sütunu Sil",
-	colorTableCellTitle: "Arka Plan Rengi Tablo Hücresi",
-	tableContextMenuTitle: "Tablo Bağlam Menüsü"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/tr/TableDialog", ({insertTableTitle:"Tablo Ekle", modifyTableTitle:"Tabloyu De\u011fi\u015ftir", rows:"Sat\u0131rlar:", columns:"S\xfctunlar:", align:"Hizala:", cellPadding:"H\xfccre Doldurma:", cellSpacing:"H\xfccre Aral\u0131\u011f\u0131:", tableWidth:"Tablo Geni\u015fli\u011fi", backgroundColor:"Arka Plan Rengi:", borderColor:"Kenarl\u0131k Rengi:", borderThickness:"Kenarl\u0131k Kal\u0131nl\u0131\u011f\u0131:", percent:"y\xfczde", pixels:"piksel", "default":"varsay\u0131lan", left:"sol", center:"orta", right:"sa\u011f", buttonSet:"Ayarla", buttonInsert:"Ekle", buttonCancel:"\u0130ptal", selectTableLabel:"Tablo Se\xe7", insertTableRowBeforeLabel:"Sat\u0131r\u0131 \xd6n\xfcne Ekle", insertTableRowAfterLabel:"Sat\u0131r\u0131 Arkas\u0131na Ekle", insertTableColumnBeforeLabel:"S\xfctunu \xd6n\xfcne Ekle", insertTableColumnAfterLabel:"S\xfctunu Arkas\u0131na Ekle", deleteTableRowLabel:"Sat\u0131r\u0131 Sil", deleteTableColumnLabel:"S\xfctunu Sil", colorTableCellTitle:"Arka Plan Rengi Tablo H\xfccresi", tableContextMenuTitle:"Tablo Ba\u011flam Men\xfcs\xfc"}));
+

@@ -1,26 +1,10 @@
-define([
-	"dojo/_base/declare"
-], function(declare){
+//>>built
 
-	// module:
-	//		dojox/mobile/dh/StringDataSource
-
-	return declare("dojox.mobile.dh.StringDataSource", null, {
-		// summary:
-		//		A component that simply returns the given text.
-
-		text: "",
-
-		constructor: function(/*String*/ text){
-			// summary:
-			//		Creates a new instance of the class.
-			this.text = text;
-		},
-
-		getData: function(){
-			// summary:
-			//		Returns the given text.			
-			return this.text;
-		}
-	});
+define("dojox/mobile/dh/StringDataSource", ["dojo/_base/declare"], function (declare) {
+    return declare("dojox.mobile.dh.StringDataSource", null, {text:"", constructor:function (text) {
+        this.text = text;
+    }, getData:function () {
+        return this.text;
+    }});
 });
+

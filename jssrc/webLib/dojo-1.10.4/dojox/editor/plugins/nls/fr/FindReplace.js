@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Rechercher :",
-	"findTooltip": "Entrez le texte à rechercher",
-	"replaceLabel": "Remplacer par :",
-	"replaceTooltip": "Entrez le texte de remplacement",
-	"findReplace": "Rechercher et remplacer",
-	"matchCase": "Respecter la casse",
-	"matchCaseTooltip": "Respecter la casse",
-	"backwards": "Vers l'arrière",
-	"backwardsTooltip": "Recherchez le texte vers l'arrière",
-	"replaceAllButton": "Remplacer tout",
-	"replaceAllButtonTooltip": "Remplacez tout le texte",
-	"findButton": "Rechercher",
-	"findButtonTooltip": "Recherchez le texte",
-	"replaceButton": "Remplacer",
-	"replaceButtonTooltip": "Remplacez le texte",
-	"replaceDialogText": "${0} occurrence(s) remplacée(s)",
-	"eofDialogText": "Dernière occurrence ${0}",
-	"eofDialogTextFind": "trouvé",
-	"eofDialogTextReplace": "remplacé"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/fr/FindReplace", ({"findLabel":"Rechercher :", "findTooltip":"Entrez le texte \xe0 rechercher", "replaceLabel":"Remplacer par :", "replaceTooltip":"Entrez le texte de remplacement", "findReplace":"Rechercher et remplacer", "matchCase":"Respecter la casse", "matchCaseTooltip":"Respecter la casse", "backwards":"Vers l'arri\xe8re", "backwardsTooltip":"Recherchez le texte vers l'arri\xe8re", "replaceAllButton":"Remplacer tout", "replaceAllButtonTooltip":"Remplacez tout le texte", "findButton":"Rechercher", "findButtonTooltip":"Recherchez le texte", "replaceButton":"Remplacer", "replaceButtonTooltip":"Remplacez le texte", "replaceDialogText":"${0} occurrence(s) remplac\xe9e(s)", "eofDialogText":"Derni\xe8re occurrence ${0}", "eofDialogTextFind":"trouv\xe9", "eofDialogTextReplace":"remplac\xe9"}));
+

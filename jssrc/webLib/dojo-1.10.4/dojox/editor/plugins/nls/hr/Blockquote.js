@@ -1,5 +1,4 @@
-define(
-({
-	"blockquote": "Dugi citat"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/hr/Blockquote", ({"blockquote":"Dugi citat"}));
+

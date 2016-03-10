@@ -1,23 +1,4 @@
-define(
-({
-	"findLabel": "Hľadať:",
-	"findTooltip": "Zadajte text na nájdenie",
-	"replaceLabel": "Nahradiť s:",
-	"replaceTooltip": "Zadajte text na nahradenie",
-	"findReplace": "Hľadať a nahradiť",
-	"matchCase": "Rozlišovať veľkosť písmen",
-	"matchCaseTooltip": "Rozlišovať veľkosť písmen",
-	"backwards": "Dozadu",
-	"backwardsTooltip": "Hľadať text dozadu",
-	"replaceAllButton": "Nahradiť všetko",
-	"replaceAllButtonTooltip": "Nahradiť všetok text",
-	"findButton": "Hľadať",
-	"findButtonTooltip": "Hľadať text",
-	"replaceButton": "Nahradiť",
-	"replaceButtonTooltip": "Nahradiť text",
-	"replaceDialogText": "Nahradilo sa ${0} výskytov.",
-	"eofDialogText": "Posledný výskyt ${0}",
-	"eofDialogTextFind": "nájdený",
-	"eofDialogTextReplace": "nahradený"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sk/FindReplace", ({"findLabel":"H\u013eada\u0165:", "findTooltip":"Zadajte text na n\xe1jdenie", "replaceLabel":"Nahradi\u0165 s:", "replaceTooltip":"Zadajte text na nahradenie", "findReplace":"H\u013eada\u0165 a nahradi\u0165", "matchCase":"Rozli\u0161ova\u0165 ve\u013ekos\u0165 p\xedsmen", "matchCaseTooltip":"Rozli\u0161ova\u0165 ve\u013ekos\u0165 p\xedsmen", "backwards":"Dozadu", "backwardsTooltip":"H\u013eada\u0165 text dozadu", "replaceAllButton":"Nahradi\u0165 v\u0161etko", "replaceAllButtonTooltip":"Nahradi\u0165 v\u0161etok text", "findButton":"H\u013eada\u0165", "findButtonTooltip":"H\u013eada\u0165 text", "replaceButton":"Nahradi\u0165", "replaceButtonTooltip":"Nahradi\u0165 text", "replaceDialogText":"Nahradilo sa ${0} v\xfdskytov.", "eofDialogText":"Posledn\xfd v\xfdskyt ${0}", "eofDialogTextFind":"n\xe1jden\xfd", "eofDialogTextReplace":"nahraden\xfd"}));
+

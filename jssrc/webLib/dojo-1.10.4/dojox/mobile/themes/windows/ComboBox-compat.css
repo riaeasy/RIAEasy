@@ -1,7 +1,1 @@
-/* dojox.mobile.ComboBox */
-.dj_gecko .dijitPopup.mblComboBoxMenuPopup {
-  -moz-box-shadow: none;
-}
-.dj_gecko .mblComboBoxMenuItemSelected {
-  background-image: none;
-}
+.dj_gecko .dijitPopup.mblComboBoxMenuPopup {-moz-box-shadow: none;}.dj_gecko .mblComboBoxMenuItemSelected {background-image: none;}

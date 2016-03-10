@@ -1,6 +1,4 @@
-define(
-({
-	loadingState: "Läser in...",
-	errorState: "Det har inträffat ett fel."
-})
-);
+//>>built
+
+define("dijit/nls/sv/loading", ({loadingState:"L\xe4ser in...", errorState:"Det har intr\xe4ffat ett fel."}));
+

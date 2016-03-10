@@ -1,6 +1,4 @@
-define(
-({
-		previousMessage: "Scelte precedenti",
-		nextMessage: "Scelte successive"
-})
-);
+//>>built
+
+define("dijit/form/nls/it/ComboBox", ({previousMessage:"Scelte precedenti", nextMessage:"Scelte successive"}));
+

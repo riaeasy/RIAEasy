@@ -251,18 +251,6 @@ define([
 			var self = this,
 				df = rias.newDeferred();
 
-			/*if(oldWidget){
-				rias.when(self._hideChild(oldWidget), function(){
-					rias.when(self._showChild(newWidget), function(){
-						df.resolve();
-					});
-				});
-			}else{
-				rias.when(self._showChild(newWidget), function(){
-					df.resolve();
-				});
-			}*/
-
 			if(rias.has("ie") < 8){
 				// workaround animation bugs by not animating; not worth supporting animation for IE6 & 7
 				animate = false;

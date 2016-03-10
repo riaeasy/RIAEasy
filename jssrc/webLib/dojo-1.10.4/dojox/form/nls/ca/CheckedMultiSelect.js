@@ -1,6 +1,4 @@
-define(
-({
-	invalidMessage: "Cal seleccionar, com a mínim, un element.",
-	multiSelectLabelText: "{num} element(s) seleccionat(s)"
-})
-);
+//>>built
+
+define("dojox/form/nls/ca/CheckedMultiSelect", ({invalidMessage:"Cal seleccionar, com a m\xednim, un element.", multiSelectLabelText:"{num} element(s) seleccionat(s)"}));
+

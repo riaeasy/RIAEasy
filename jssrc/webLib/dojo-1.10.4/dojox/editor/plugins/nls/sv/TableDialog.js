@@ -1,33 +1,4 @@
-define(
-({
-	insertTableTitle: "Infoga tabell",
-	modifyTableTitle: "Ändra tabell",
-	rows: "Rader:",
-	columns: "Kolumner:",
-	align: "Justera:",
-	cellPadding: "Cellutfyllnad:",
-	cellSpacing: "Cellavstånd:",
-	tableWidth: "Tabellbredd:",
-	backgroundColor: "Bakgrundsfärg:",
-	borderColor: "Ramfärg:",
-	borderThickness: "Kantlinjetjocklek:",
-	percent: "procent",
-	pixels: "bildpunkter",
-	"default": "standard",
-	left: "vänsterjustera",
-	center: "centrera",
-	right: "högerjustera",
-	buttonSet: "Ange", // translated elsewhere?
-	buttonInsert: "Infoga",
-	buttonCancel: "Avbryt",
-	selectTableLabel: "Välj tabell",
-	insertTableRowBeforeLabel: "Lägg till rad före",
-	insertTableRowAfterLabel: "Lägg till rad efter",
-	insertTableColumnBeforeLabel: "Lägg till kolumn före",
-	insertTableColumnAfterLabel: "Lägg till kolumn efter",
-	deleteTableRowLabel: "Ta bort rad",
-	deleteTableColumnLabel: "Ta bort kolumn",
-	colorTableCellTitle: "Bakgrundsfärg för tabellcell",
-	tableContextMenuTitle: "Kontextmeny för tabell"
-})
-);
+//>>built
+
+define("dojox/editor/plugins/nls/sv/TableDialog", ({insertTableTitle:"Infoga tabell", modifyTableTitle:"\xc4ndra tabell", rows:"Rader:", columns:"Kolumner:", align:"Justera:", cellPadding:"Cellutfyllnad:", cellSpacing:"Cellavst\xe5nd:", tableWidth:"Tabellbredd:", backgroundColor:"Bakgrundsf\xe4rg:", borderColor:"Ramf\xe4rg:", borderThickness:"Kantlinjetjocklek:", percent:"procent", pixels:"bildpunkter", "default":"standard", left:"v\xe4nsterjustera", center:"centrera", right:"h\xf6gerjustera", buttonSet:"Ange", buttonInsert:"Infoga", buttonCancel:"Avbryt", selectTableLabel:"V\xe4lj tabell", insertTableRowBeforeLabel:"L\xe4gg till rad f\xf6re", insertTableRowAfterLabel:"L\xe4gg till rad efter", insertTableColumnBeforeLabel:"L\xe4gg till kolumn f\xf6re", insertTableColumnAfterLabel:"L\xe4gg till kolumn efter", deleteTableRowLabel:"Ta bort rad", deleteTableColumnLabel:"Ta bort kolumn", colorTableCellTitle:"Bakgrundsf\xe4rg f\xf6r tabellcell", tableContextMenuTitle:"Kontextmeny f\xf6r tabell"}));
+
