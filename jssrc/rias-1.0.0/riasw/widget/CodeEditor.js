@@ -17,8 +17,8 @@ define([
 
 	Widget._riasdMeta = {
 		visual: true,
-		iconClass: "riaswTextareaIcon",
-		iconClass16: "riaswTextareaIcon16",
+		iconClass: "riaswCodeEditorIcon",
+		iconClass16: "riaswCodeEditorIcon16",
 		defaultParams: {
 			//content: "<div></div>",
 			filename: ""

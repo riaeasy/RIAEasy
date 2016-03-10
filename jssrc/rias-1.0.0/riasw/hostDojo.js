@@ -29,6 +29,8 @@ define([
 	"dojo/parser",
 	"dojo/query",
 	"dojo/cookie",
+	"dojo/hash",
+	"dojo/ready",
 
 	"dijit/dijit",//打包出来的文件
 	"dijit/_base",
@@ -48,7 +50,7 @@ define([
 	"dijit/form/_AutoCompleterMixin"
 ], function(rias, on, touch, keys, mouse, gestureTap, gestureSwipe, connect, event, basewin, win,
 			_html, html, dom, domConstruct, domGeom, domClass, domStyle, domAttr, domProp,
-			css3, parser, query, cookie,
+			css3, parser, query, cookie, hash, ready,
 			dijit, dijitbase, registry, a11y, selection, focus, place, Viewport, layoutUtils,
 			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _Container, _FormWidgetMixin, _AutoCompleterMixin) {
 
@@ -78,6 +80,10 @@ define([
 	rias.body = basewin.body;
 	rias.withDoc = basewin.withDoc;
 
+	rias.cookie = cookie;
+	rias.hash = hash;
+	rias.ready = ready;
+
 	rias.dom = {};
 
 	rias.dom.getWindow = win.get;
@@ -87,7 +93,6 @@ define([
 	rias.dom.parse = rias.hitch(parser, parser.parse);///调用了 this，需要 hitch
 	rias.dom.css3 = css3;
 	rias.dom.query = query;
-	rias.cookie = cookie;
 
 	if(rias.has("ie")){
 		rias.dom.byId = dom.byId = function(id, doc){

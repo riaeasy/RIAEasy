@@ -32,16 +32,13 @@ define([
 	"dojo/promise/all",
 	"dojo/when",
 	"dojo/topic",
-	"dojo/cache",
-
-	"dojo/ready"
+	"dojo/cache"
 ], function(rias, riasi18n,
 			has, lang, array, json,
 			dateLocale, dateStamp,
 			createError, number, string,
 			declare, config,
-			aspect, Promise, Deferred, all, when, topic, cache,
-			ready) {
+			aspect, Promise, Deferred, all, when, topic, cache) {
 
 	//var rias = lang.getObject("rias", true);
 	//rias._scopeName = "rias";
@@ -1278,8 +1275,6 @@ define([
 	rias.subscribe = topic.subscribe;
 
 	rias.cache = cache;
-
-	rias.ready = ready;
 
 	return rias;
 

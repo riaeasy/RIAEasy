@@ -10,10 +10,10 @@ var profile = (function(){
 		//设置那些不是层的模块的压缩设置，默认为false，其他值和layerOptimize相同///dojo1.7+建议用closure。
 		optimize: "comments.keeplines",
 		//处理CSS的优化。默认为false。若为comments则去除注释和换行，并连接任何@import命令。其他可选的值有comments.keeplines，剔除注释和连接@import命令，但是保留换行。
-		cssOptimize: "comments",
+		cssOptimize: "comments.keeplines",
 		//决定编译过程中是否最小化。如果为真则标记为miniExcludes的文件被排除在外就像tests那样，demo和其他元素对于编译不是必需的。默认的为false。
 		mini: true,
-		stripConsole: "none",///处理输出代码中的conole语名， 默认为"normal", 会删除所以console语句，除了console.error 和 console.warn.最需注意的是，这个特征只在优化级别时才适用。否则它会被忽略。 另外可能的值为"none", "warn" 和"all"
+		stripConsole: "none",///处理输出代码中的console语名， 默认为"normal", 会删除所有console语句，除了console.error 和 console.warn.最需注意的是，这个特征只在优化级别时才适用。否则它会被忽略。 另外可能的值为"none", "warn" 和"all"
 		//selectorEngine: "lite",///标识默认的选择器引擎。这不会直接使代码变小，它确保选择器引擎不包含其他的调用。默认没有设置，Dojo包含两个引擎lite和acme。
 
 		defaultConfig: {///应用中的 html 中需要的 dojoConfig
@@ -123,9 +123,11 @@ var profile = (function(){
 					"dojo/Deferred",
 					"dojo/promise/tracer",
 					"dojo/promise/Promise",
+					"dojo/promise/instrumentation",
 					"dojo/promise/all",
 					"dojo/when",
 					"dojo/topic",
+					"dojo/hash",
 
 					"dojo/date/locale",
 					"dojo/date/stamp",
@@ -160,15 +162,32 @@ var profile = (function(){
 					"dojo/dom-attr",
 					"dojo/dom-prop",
 					"dojo/dom-form",
+					"dojo/NodeList-fx",
 
 					"dojo/query",
 					"dojo/ready",
 					"dojo/cookie",
 					//"dojo/throttle",
 
+					//"dojo/dnd/Avatar",
+					//"dojo/dnd/Mover",
+					//"dojo/dnd/common",
+					//"dojo/dnd/Container",
+					//"dojo/dnd/Manager",
+					"dojo/dnd/Moveable",
+					"dojo/dnd/Selector",
+					"dojo/dnd/Source",
+					"dojo/dnd/Target",
+					"dojo/dnd/TimedMoveable",
+
 					"dojo/_base/xhr",
 					"dojo/io-query",
 					"dojo/request",
+					"dojo/request/util",
+					"dojo/request/watch",
+					"dojo/request/xhr",
+					"dojo/io/iframe",
+					"dojo/io/script",
 
 					"dojo/regexp",
 
@@ -180,9 +199,9 @@ var profile = (function(){
 					"dojox/fx/_base"
 				],
 				exclude: [///不合并到打包后的文件，即使上面 include 有定义或递归引用
-					"dojo/_base/kernel",
-					"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
-					"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
+					//"dojo/_base/kernel",
+					//"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
+					//"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
 				],
 				customBase: true,///最好只把 dojo/dojo 设为 customBase，未做深入解析。
 				boot: true///同上
@@ -248,10 +267,10 @@ var profile = (function(){
 					//"dijit/layout/TabContainer"
 				],
 				exclude: [
-					"dojo/dojo",
-					"dojo/_base/kernel",
-					"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
-					"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
+					"dojo/dojo"//,
+					//"dojo/_base/kernel",
+					//"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
+					//"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
 				]
 			/*},
 			"dijit/Editor": {

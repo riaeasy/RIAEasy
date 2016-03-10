@@ -455,7 +455,7 @@ define([
 					if(self._playingDeferred){
 						self._playingDeferred.then(function(){
 							self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
-						})
+						});
 					}else{
 						self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 					}

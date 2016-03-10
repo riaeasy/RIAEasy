@@ -39,6 +39,9 @@
 .riaswCheckedMultiSelectIcon{
 	background: url('./imagesw48/CheckedMultiSelect.png') no-repeat;
 }
+.riaswCodeEditorIcon{
+	background: url('./imagesw48/CodeEditor.png') no-repeat;
+}
 .riaswColorPaletteIcon{
 	background: url('./imagesw48/ColorPalette.png') no-repeat;
 }
@@ -393,6 +396,9 @@
 }
 .riaswCheckedMultiSelectIcon16{
 	background: url('./imagesw16/CheckedMultiSelect.png') no-repeat;
+}
+.riaswCodeEditorIcon16{
+	background: url('./imagesw16/CodeEditor.gif') no-repeat;
 }
 .riaswColorPaletteIcon16{
 	background: url('./imagesw16/ColorPalette.gif') no-repeat;
