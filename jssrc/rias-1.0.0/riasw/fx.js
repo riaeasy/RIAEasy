@@ -275,7 +275,7 @@ define([
 					}
 				}
 			}, args);
-			delete anim1.onEnd;
+			anim1.onEnd = undefined;
 			anim1 = fxbase.animateProperty(anim1);
 			var anim2 = rias.mixin({
 				properties: {
@@ -293,8 +293,8 @@ define([
 					}
 				}
 			}, args);
-			delete anim2.beforeBegin;
-			delete anim2.onBegin;
+			anim2.beforeBegin = undefined;
+			anim2.onBegin = undefined;
 			anim2 = fxbase.animateProperty(anim2);
 
 			var anim = rias.fx[(args.method == "combine" ? "combine" : "chain")]([anim1, anim2]);

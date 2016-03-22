@@ -14,12 +14,14 @@ define([
 	var riasType = "rias.riasw.store.StoreBase";
 	var Widget = rias.declare(riasType, [rias.ObjectBase], {
 
+		idAttribute: "id",
+		labelAttribute: "label",
 		childrenAttribute: 'children',
 
 		postCreate: function(args) {
 			this.clearOnClose = true;
-			this.idProperty = args.idAttribute || "id";
-			this.labelProperty = args.labelAttribute || "id";
+			this.idProperty = args.idAttribute || this.idAttribute;
+			this.labelProperty = args.labelAttribute || this.labelAttribute;
 			///FIXME:zensst. Observable 是委托出来的 store，需要修改。
 			Observable(this);
 			/*results.observe(function(object, removedFrom, insertedInto){

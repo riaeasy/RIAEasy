@@ -18,11 +18,14 @@ define([
 		///为了隔离 var，独立设置一个 function 实现闭包。
 		if(rias.has("dom") && (rias.has("dojo-inject-api") || rias.has("dojo-dom-ready-api"))){
 			var insertPointSibling = 0,
-				doc = dojo.global.document,///rias.doc 尚未取得
+				doc = dojo.global.document,///rias.dom.doc 尚未取得
 				makeError = function(error, info){
-					return rias.mixin(new Error(error), {src:"dojoLoader", info:info});
+					return rias.mixin(new Error(error), {
+						src:"dojoLoader/rias.require.injectNode",
+						info:info
+					});
 				},
-				domOn = function(node, eventName, ieEventName, handler){
+				/*domOn = function(node, eventName, ieEventName, handler){
 					// Add an event listener to a DOM node using the API appropriate for the current browser;
 					// return a function that will disconnect the listener.
 					if(!rias.has("ie-event-behavior")){
@@ -36,10 +39,10 @@ define([
 							node.detachEvent(ieEventName, handler);
 						};
 					}
-				},
-				windowOnLoadListener = domOn(window, "load", "onload", function(){
+				},*/
+				windowOnLoadListener = rias.dom.domOn(window, "load", "onload", function(){
 					rias.require.pageLoaded = 1;
-					doc.readyState!="complete" && (doc.readyState = "complete");
+					doc.readyState != "complete" && (doc.readyState = "complete");
 					windowOnLoadListener();
 				});
 
@@ -82,8 +85,8 @@ define([
 								callback && callback();
 							}
 						},
-						loadDisconnector = domOn(node, "load", "onreadystatechange", onLoad),
-						errorDisconnector = domOn(node, "error", "onerror", function(e){
+						loadDisconnector = rias.dom.domOn(node, "load", "onreadystatechange", onLoad),
+						errorDisconnector = rias.dom.domOn(node, "error", "onerror", function(e){
 							loadDisconnector();
 							errorDisconnector();
 							if(rias.indexOf(url, "rias/riasd") >= 0){
@@ -108,25 +111,6 @@ define([
 		}
 	})();
 
-	//rias.getId = function(/*DOMNode|Dijit|riasWidget*/widget) {
-	//	return widget.id;
-	//};
-	///注意：在 _WidgetBase.postCreate() 之前（包含 _WidgetBase.postCreate()） obj._created都为 false，故 rias.isDijit() 为 false。
-	///建议在 _WidgetBase.startUp() 之后使用。
-	//rias.byId = function(/*String*/id){////TODO:zensst.暂时屏蔽，以后可能要用这个名字来 by 所有对象，而不只是DOMNode|Dijit|riasWidget
-	//	if(!id || !rias.isString(id)){
-	//		return undefined;
-	//	}
-	//	var w, m;
-	//	w = (rias.webApp && rias.webApp.byId(id)) || rias.registry.byId(id) || rias.getObject(id);
-	//	if(!w){
-	//		w = dojo.byId(id);//查找DOMNode.
-	//		if(w){
-	//			w = rias.registry.byNode(w) || registry.getEnclosingWidget(w) || w;
-	//		}
-	//	}
-	//	return w;
-	//};
 	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
 		if(!any){
 			return undefined;
@@ -193,29 +177,6 @@ define([
 		}
 		return w;
 	};
-
-	//rias.placeRiasw = function(/*riasWidget*/child, /*riasWidget*/parent, /*String|Number?*/position) {
-	//	//先删除原来的父节点，因为有可能是移动位置
-	//	child = rias.by(child);
-	//	if(child){
-	//		if(rias.isDijit(child) && (rias.isDijit(parent) || rias.isDomNode(parent))){
-	//			child.placeAt(parent, position);
-	//		//}else if(rias.isRiasw(parent)){
-	//		//	//rias.orphan(child);
-	//		//	rias.own(parent, child, position);
-	//		}else{///其它，仅仅是 Object
-	//			///暂时没有什么可以处理的。
-	//			//child._riasrParent = rias.by(parent);
-	//		}
-	//	}
-	//	return child;
-	//};
-	//rias.removeRiasw = function(/*riasWidget*/child){
-	//	child = rias.by(child);
-	//	if(child){
-	//		rias.orphan(child, child.removeChild);
-	//	}
-	//};
 
 	rias.riasdParams = {
 		moduleMeta: "",
@@ -748,12 +709,12 @@ define([
 			d.resolve(m);
 			return d.promise;
 		}
-		ownerRiasw = rias.by(ownerRiasw) || rias.dom.byId(ownerRiasw) || rias.webApp || rias.body(rias.doc);
+		ownerRiasw = rias.by(ownerRiasw) || rias.dom.byId(ownerRiasw) || rias.webApp;
 
 		function _placeRiasw(_obj, _parent, _pp, index){
 			if(_parent){
-				var _pi = 0, p;
-				while((_pi < _pp.length) && (index >= _pp[_pi]) /*&& (index < _pp[_pi + 1])*/){
+				/*var _pi = 0, p;
+				while((_pi < _pp.length) && (index >= _pp[_pi])){//&& (index < _pp[_pi + 1])){
 					_pi++;
 				}
 				_pp.splice(_pi, 0, index);
@@ -767,6 +728,17 @@ define([
 					}else{///其它，仅仅是 Object
 						///暂时没有什么可以处理的。
 						//child._riasrParent = rias.by(ownerRiasw);
+					}
+				}catch(e){
+					console.error(e.message, rias.getStackTrace(e), _obj);
+					errf(e);
+				}*/
+				try{
+					if(rias.isDijit(_obj) && (rias.isDijit(_parent) || rias.isDomNode(_parent))){
+						//_obj._riasrParent = _parent;
+						//_obj.set("riasrParentNode", _parent.domNode);
+						//_obj.startup();
+						_obj.placeAt(_parent, _obj.position || index);
 					}
 				}catch(e){
 					console.error(e.message, rias.getStackTrace(e), _obj);
@@ -920,7 +892,7 @@ define([
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams(_params)) :
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params),//不应该修改 meta.defaultParams，故mixinDeep({},..}
 					///FIXME:zensst. 使用 refNode 后，id 会重复。
-						refNode;// = rias.dom.byId(params.refNodeId || params.id);
+						refNode = rias.dom.byId(params.refNodeId || params.id);
 
 					delete params.refNodeId;
 					//delete params._riaswType;
@@ -976,6 +948,7 @@ define([
 							if(rias.isInstanceOf(_ownerRiasw, rias.Destroyable)){
 								params.ownerRiasw = _ownerRiasw;
 							}
+							refNode || (refNode = rias.dom.create("div", {style: params.style}, _ownerRiasw.domNode, params.position));
 							//_obj = meta.create(params, refNode, errf);
 							_obj = rias.createRiasw(ctor, params, refNode, errf);
 							_params._riasrWidget = _obj;///给 params(_params) 设置运行期实例。
@@ -1079,7 +1052,7 @@ define([
 			ref, refs = [], pl,
 			_o;
 		rias.publish("riaswLoading/start", {});
-		ownerRiasw = rias.by(ownerRiasw) || rias.dom.byId(ownerRiasw) || rias.webApp || rias.body(rias.doc);
+		ownerRiasw = rias.by(ownerRiasw) || rias.dom.byId(ownerRiasw) || rias.webApp;
 		var pp = [],
 			pi = (ownerRiasw.containerNode && ownerRiasw.containerNode.childNodes && (ownerRiasw.containerNode.childNodes.length > 0))
 				? ownerRiasw.containerNode.childNodes.length : 0,

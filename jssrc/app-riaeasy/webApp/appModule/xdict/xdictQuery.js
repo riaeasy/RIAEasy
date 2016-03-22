@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 222,
+	"_rsfVersion": 225,
 	"_riaswVersion": "0.7",
 	"query": {
 		"parentId": "1"
@@ -19,7 +19,7 @@ define([
 			"region": "center",
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.grid.GridX",
+					"_riaswType": "rias.riasw.grid.Grid",
 					"_riaswIdOfModule": "grid",
 					"cellIdOps": [
 						{
@@ -41,8 +41,8 @@ define([
 							"tooltip": "复制并新增"
 						}
 					],
-					"opColumnWidth": "8em",
 					"columnLockCount": 2,
+					"opColumnWidth": "9em",
 					"query": {
 						"$refScript": "return module.query;"
 					},
@@ -95,9 +95,7 @@ define([
 						}
 					],
 					"style": {
-						"border": "1px #b1badf solid",
-						"height": "100%",
-						"weith": "100%"
+						"border": "1px #b1badf solid"
 					},
 					"target": "act/xdict/query",
 					"topBtns": [

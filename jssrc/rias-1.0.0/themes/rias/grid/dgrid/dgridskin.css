@@ -1,0 +1,61 @@
+.rias .dgrid {
+  background: #fff;
+  border-color: #aaa;
+  color: #000;
+}
+.rias .dgrid-header,
+.rias .dgrid-footer {
+  background: #e6e6fa;
+}
+.rias .dgrid-header .dgrid-cell {
+  border-color: #bbb;
+  font-weight: bold;
+}
+.rias .dgrid-header .dgrid-cell:hover {
+  background: #ffd700;
+}
+.rias .dgrid-header-scroll {
+  background-color: #e6e6fa;
+}
+.rias .dgrid-header-tools {
+  border-bottom: 1px solid #c0c0c0;
+  background: #e6e6fa;
+}
+.rias .dgrid-selector {
+  background: #e6e6fa;
+}
+.rias .dgrid-opcolumn {
+  background: #e6e6fa;
+}
+.rias .dgrid-opcolumn .dijitButton {
+  padding: 0 0 0 0.25em;
+}
+.rias .dgrid-opcolumn .dijitButtonNode {
+  padding: 0;
+}
+.rias .dgrid-opcolumn .mblButton {
+  height: auto;
+  line-height: 1em;
+  padding: 0;
+  border-width: 0;
+}
+.rias .dgrid-row {
+  transition-duration: 0.2s;
+  transition-property: background-color, border-color;
+}
+.rias .dgrid-row:hover {
+  background-color: #ffd700;
+}
+.rias .dgrid-selected {
+  background-color: #87ceeb;
+}
+.rias .dgrid-selected:hover {
+  background-color: #ffd700;
+}
+.rias .dgrid-highlight {
+  background-color: #ff6;
+}
+.rias .dgrid-cell {
+  padding: 0.5em 0.25em;
+  border-color: #c0c0c0;
+}

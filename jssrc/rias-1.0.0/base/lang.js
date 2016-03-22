@@ -47,6 +47,9 @@ define([
 ///lang******************************************************************************///
 
 	rias.noop = function(){};
+	rias.ifnull = function(any, nullValue){
+		return any == null ? nullValue : any;
+	};
 
 	// use the function constructor so our eval is scoped close to (but not in) in the global space with minimal pollution
 	var _eval = new Function('return eval(arguments[0]);');
@@ -153,7 +156,7 @@ define([
 		return !!(rias.hostBrowser && obj && obj._created && (!!obj.domNode) && rias.isInstanceOf(obj, "dijit._WidgetBase"));
 	};
 	rias.isRiasd = function(obj){
-		return !!obj._riaswType;
+		return !!(rias.isObjectSimple(obj) && obj._riaswType);
 		//return !!_getRiaswMapper(obj);
 	};
 	rias.isRiasw = function(obj){
@@ -184,7 +187,7 @@ define([
 		return rias.getObject(id);
 	};
 
-	rias.objContains = function(srcObj, likeObj){
+	rias.objLike = function(srcObj, likeObj){
 		var name,
 			ok = rias.isObject(srcObj) && rias.isObject(likeObj);
 		if(ok){
@@ -250,7 +253,7 @@ define([
 	}
 	rias.delete = function(/*Object*/dest, /*Object..*/refs) {
 		if(!dest){
-			dest = {};
+			return {};
 		}
 		for(var i = 1, l = arguments.length; i < l; i++){
 			_delete(dest, arguments[i]);
@@ -261,7 +264,7 @@ define([
 		//针对下级含有object（不包含数组、函数）的object的mixin，可以保留下级object原有的属性，而不是直接覆盖替换
 		//数组和函数任然直接覆盖
 		if(!dest){
-			dest = {};
+			return {};
 		}
 		for(var i = 1, l = arguments.length; i < l; i++){
 			//_mixin(dest, arguments[i], undefined, rias.toInt(deep, 99));
@@ -270,6 +273,23 @@ define([
 		return dest; // Object
 	};
 
+	rias.mixin_notexists = function(/*Object*/dest, /*Object..*/sources){
+		var n;
+		function _mix(src){
+			for(n in src){
+				if(!(n in dest)){
+					dest[n] = src[n];
+				}
+			}
+		}
+		if(!dest){
+			dest = {};
+		}
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_mix(arguments[i]);
+		}
+		return dest;
+	};
 	function _mixin(dest, source, copyFunc, /*Integer*/deep, ord, exact, onlyCopy){
 		// the (!(name in empty) || empty[name] !== s) condition avoids copying properties in "source"
 		// inherited from Object.prototype. For example, if dest has a custom toString() method,
@@ -277,10 +297,10 @@ define([
 		//deep是嵌套的层数.
 		var name, s, i, empty = {}, a = [];
 		function _mix1(name){
-			s = source[name];
-			if(exact && !s){
+			if(exact && !(name in source)){
 				return;
 			}
+			s = source[name];
 			if(!(name in dest) || (dest[name] !== s && (!(name in empty) || empty[name] !== s))){
 				if (deep > 0){
 					try{
@@ -360,6 +380,13 @@ define([
 		}
 		return dest; // Object
 	}
+	rias.mixin_notexists = function(/*Object*/dest, /*Object..*/sources){
+		if(!dest){ dest = {}; }
+		for(var i = 1, l = arguments.length; i < l; i++){
+			_mixin(dest, arguments[i]);
+		}
+		return dest; // Object
+	};
 	rias.mixin = function(/*Object*/dest, /*Object..*/sources) {
 		if(!dest){ dest = {}; }
 		for(var i = 1, l = arguments.length; i < l; i++){
@@ -419,8 +446,6 @@ define([
 	};
 	rias.copy = function(/*Object*/dest, /*Object..*/sources){
 		//只获取 dest 中已有的属性
-		//针对下级含有object（包含数组、不包含函数?）的object的 copy，可以保留下级object原有的属性，而不是直接覆盖替换
-		//函数任然直接覆盖
 		if(!dest){
 			dest = {};
 		}
@@ -558,13 +583,14 @@ define([
 		return rias.toNumber(number + Math.pow(10, -length)).toFixed(length - 2);
 	};
 	rias.toInt = function(n, def, trunc){
-		n = rias.toNumber(n, def);
 		if(trunc){
-			return rias.trunc(n);
+			return rias.trunc(n, def);
 		}
+		n = rias.toNumber(n, def);
 		return number.round(n);
 	};
-	rias.trunc = function(x) {
+	rias.trunc = function(x, def) {
+		x = rias.toNumber(x, def);
 		return x < 0 ? Math.ceil(x) : Math.floor(x);
 	};
 	rias.toStr = function(obj){
@@ -655,6 +681,10 @@ define([
 		return path;
 	};
 
+	var _langCache = {};
+	function buildFn(fn){
+		return _langCache[fn] = new Function("item", "index", "array", fn); // Function
+	}
 	rias.toArray = lang._toArray;
 	rias.every = array.every;
 	rias.some = array.some;
@@ -703,7 +733,41 @@ define([
 	};
 	rias.map = array.map;
 	rias.filter = array.filter;
-	rias.forEach = array.forEach;
+	//rias.forEach = array.forEach;
+	rias.each = rias.forEach = function(arrayOrObject, callback, context){
+		if (!arrayOrObject) {
+			return;
+		}
+		if(typeof callback == "string") {
+			callback = _langCache[callback] || buildFn(callback);
+		}
+		var i = 0, l;
+		if(rias.isNumber(arrayOrObject.length)){
+			l = arrayOrObject.length || 0;
+			if(l && rias.isString(arrayOrObject)) {
+				arrayOrObject = arrayOrObject.split("");
+			}
+			if(context){
+				for(; i < l; ++i){
+					callback.call(context, arrayOrObject[i], i, arrayOrObject);
+				}
+			}else{
+				for(; i < l; ++i){
+					callback(arrayOrObject[i], i, arrayOrObject);
+				}
+			}
+		}else{
+			if(context){
+				for (i in arrayOrObject) {
+					callback.call(context, arrayOrObject[i], i, arrayOrObject);
+				}
+			}else{
+				for (i in arrayOrObject) {
+					callback(arrayOrObject[i], i, arrayOrObject);
+				}
+			}
+		}
+	};
 	function _concat(dest, src, uni){
 		if(rias.isArray(dest) && rias.isArrayLike(src)){
 			var i, l = src.length, item;
@@ -961,11 +1025,12 @@ define([
 					}
 					// generic object code path
 					if(rias.indexOf(objPath, it) >= 0){
-						console.error("rias.toJson(it): it has circular reference.", it);
 						if(args.loopToString != true){
+							console.error("rias.toJson(it): it has circular reference.", it);
 							throw rias.mixin(new Error("rias.toJson(it): it has circular reference."), {it: it});
 						}else{
-							return it.toString();
+							console.debug("rias.toJson(it): it has circular reference.", it);
+							return it.toString() + " (circular reference.)";
 							/*return rias.toJson(it, {
 								prettyPrint: args.prettyPrint,
 								includeFunc: args.includeFunc,
@@ -1192,7 +1257,7 @@ define([
 		}
 		/*var ns, n, s, m, i = 0;
 		if(rias.hostBrowser){
-			ns = rias.doc.getElementsByTagName("script");
+			ns = rias.dom.scripts;
 			for(; i < ns.length; i++){
 				n = ns[i];
 				if(n.type){

@@ -85,8 +85,8 @@ define([
 				h: rias.webApp._contentBox ? rias.webApp._contentBox.h : rias.webApp.domNode.innerHeight,
 				w: rias.webApp._contentBox ? rias.webApp._contentBox.w : rias.webApp.domNode.innerWidth
 			} : {
-				h: rias.global.innerHeight||rias.doc.documentElement.clientHeight||rias.doc.documentElement.offsetHeight,
-				w: rias.global.innerWidth||rias.doc.documentElement.clientWidth||rias.doc.documentElement.offsetWidth
+				h: rias.global.innerHeight || rias.dom.doc.documentElement.clientHeight || rias.dom.doc.documentElement.offsetHeight,
+				w: rias.global.innerWidth || rias.dom.doc.documentElement.clientWidth || rias.dom.doc.documentElement.offsetWidth
 			};
 		},
 

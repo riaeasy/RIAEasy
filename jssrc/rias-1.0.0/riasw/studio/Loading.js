@@ -92,8 +92,8 @@ define([
 			this.inherited(arguments);
 			rias.dom.positionAt(this, {
 				around: {
-					x: rias.webApp ? rias.webApp.appClientWidth >> 1 : rias.body(rias.doc).clientWidth >> 1,
-					y: rias.webApp ? rias.webApp.appClientHeight >> 1 : rias.body(rias.doc).clientHeight >> 1
+					x: rias.dom.webAppNode.clientWidth >> 1,
+					y: rias.dom.webAppNode.clientHeight >> 1
 				},
 				orient: ["centered"]
 			});
@@ -139,7 +139,7 @@ define([
 			}]);
 			if(self.hasVisuals){
 				if(self.attachToPointer){
-					self._pointerConnect = rias.on(rias.doc, rias.touch.move, rias.hitch(self, "onMouseMove"));
+					self._pointerConnect = rias.on(rias.dom.doc, rias.touch.move, rias.hitch(self, "onMouseMove"));
 				}
 				rias.dom.setStyle(self.domNode, {
 					opacity: 0

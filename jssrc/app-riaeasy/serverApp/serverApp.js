@@ -18,7 +18,7 @@ define([
 			//"cacheGzipMaxSize": 1 * 1024 * 1024,///server.rsCache 启动Gzip的最大字节数
 			"respGzipMinSize": 1 * 1024, ///server.response 启动Gzip的最小字节数
 			"respGzipMaxSize": 1 * 1024 * 1024, ///server.response 启动Gzip的最大字节数
-			"serverId": "11",
+			//"serverId": "11",
 			minThreads: 10,
 			maxThreads: 50,
 			maxFormContentSize: 4 * 1024 * 1024, /// form 提交的最大字节数

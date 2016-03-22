@@ -72,19 +72,19 @@ define([
 			this.inherited(arguments);
 		},
 		destroy: function(){
-			delete this.targetWidget._riasrDockNode;
+			this.targetWidget._riasrDockNode = undefined;
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
-				delete this._autoToggleDelay;
+				this._autoToggleDelay = undefined;
 			}
 			rias.forEach(this._hBadge, function(item){
 				item.remove();
 			});
-			delete this._hBadge;
+			this._hBadge = undefined;
 			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
 				this.targetWidget.restore();
 			}
-			delete this.targetWidget;
+			this.targetWidget = undefined;
 			this.inherited(arguments);
 		},
 
@@ -181,7 +181,7 @@ define([
 				self._autoToggleDelay = self.defer(function(){
 					if(self._autoToggleDelay){
 						self._autoToggleDelay.remove();
-						delete self._autoToggleDelay;
+						self._autoToggleDelay = undefined;
 					}
 					if(target.isHidden() || target.isCollapsed()){
 						target.restore();
@@ -194,7 +194,7 @@ define([
 		_onMouseLeave: function(e){
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
-				delete this._autoToggleDelay;
+				this._autoToggleDelay = undefined;
 			}
 		}
 

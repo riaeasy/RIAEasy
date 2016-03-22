@@ -52,7 +52,7 @@ define([
 			if(this._xhrDfd && (this._xhrDfd.fired == -1)){
 				this._xhrDfd.cancel();
 			}
-			delete this._xhrDfd; // garbage collect
+			this._xhrDfd = undefined; // garbage collect
 
 			//this.onLoadDeferred = null;
 			this.inherited(arguments);
@@ -69,7 +69,8 @@ define([
 					if(self._beingDestroyed){
 						return;
 					}
-					//self.defer(function(){
+					self.defer(function(){
+						///需要等待 给 _started 赋值
 						if(!self._riaswChildren || self._riaswChildren.length < 1){
 							self._setContent(self.loadingMessage).then(function(){
 								if(self.moduleMeta){
@@ -84,7 +85,7 @@ define([
 							self._initSize();
 							self._afterLoaded(self._riasrChildren);
 						}
-					//});
+					});
 				});
 			}
 			return r;
@@ -123,11 +124,11 @@ define([
 					}else{
 						self.cancelLoad();
 					}
-					delete self._xhrDfd;
+					self._xhrDfd = undefined;
 					return err;
 				}
 			).then(function(){
-					delete self._xhrDfd;
+					self._xhrDfd = undefined;
 					return returnedHtml;
 				});
 		},

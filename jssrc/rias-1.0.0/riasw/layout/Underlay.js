@@ -78,7 +78,7 @@ define([
 			// window and then we are called to resize)
 			this.domNode.style.display = "none";
 
-			var box = rias.dom.getMarginBox(this.domNode.parentNode || rias.body(this.ownerDocument));
+			var box = rias.dom.getMarginBox(this.getParentNode());
 			box.t = 0;
 			box.l = 0;
 			rias.dom.setMarginBox(this.domNode, box);
@@ -108,19 +108,12 @@ define([
 			this.resize();
 			this.bgIframe = new BackgroundIframe(this.domNode);
 
-			var win = rias.dom.getWindow(this.ownerDocument);
-			///考虑到可以 hide / show 的时候动态解除绑定，故不用 own()
-			//this._modalConnects = [
-			//	//rias.dom.Viewport.on("resize", rias.debounce(this.id + "_show", this.resize, this, 50)),
-			//	//rias.on(win, "scroll", rias.debounce(this.id + "_show", this.resize, this, 50))
-			//];
-
 		},
 
 		hide: function(){
 			if(this.bgIframe){
 				this.bgIframe.destroy();
-				delete this.bgIframe;
+				this.bgIframe = undefined;
 			}
 			this.domNode.style.display = "none";
 			//while(this._modalConnects.length){ (this._modalConnects.pop()).remove(); }

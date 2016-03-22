@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 32,
+	"_rsfVersion": 34,
 	"_riaswVersion": "0.7",
 	"region": "center",
 	"query": {
@@ -22,7 +22,7 @@ define([
 			},
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.grid.GridX",
+					"_riaswType": "rias.riasw.grid.Grid",
 					"_riaswIdOfModule": "grid",
 					"cellIdOps": [
 						{
@@ -45,6 +45,7 @@ define([
 						}
 					],
 					"columnLockCount": 2,
+					"opColumnWidth": "9em",
 					"query": {
 						"$refScript": "return module.query;"
 					},

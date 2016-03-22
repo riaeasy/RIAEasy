@@ -118,7 +118,7 @@ define([
 		destroy: function(){//FIXME:zensst. dojo 2.0 才开始支持 destroyRecursive()，目前只 destroy 自身.
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
-				delete this._autoToggleDelay;
+				this._autoToggleDelay = undefined;
 			}
 			if(this.dockTo && this.dockTo.removeTarget){/// this.dockTo 可能不是正常的 DockBar
 				this.dockTo.removeTarget(this);
@@ -218,6 +218,8 @@ define([
 			this.toggleable = !!value;
 			//rias.dom.visible(this.toggleNode, this.toggleable);
 			rias.dom.setStyle(this.toggleNode, "width", this.toggleable ? "" : "0");///需要支持 badge
+			this._onMinSize(this.minSize);
+			this._onMaxSize(this.maxSize);
 			if(this._riasrParent && this._riasrParent._setupChild){
 				this._setupChild(this);
 			}
@@ -239,7 +241,6 @@ define([
 		//	this.inherited(arguments);
 		//},
 		_onDockTo: function(value, oldValue){
-			//value = rias.by(value) || (rias.webApp && rias.webApp.mainDock);
 			value = rias.by(value);///因为没有 dockable 属性，dockTo 即表示是否 dockable，所以允许为 undefined
 			if(!value && this.dockTo){
 				if(this.dockTo.removeTarget){///担心 this.dockTo 可能不是正常的
@@ -309,7 +310,7 @@ define([
 		_collapse: function(){
 			this.inherited(arguments);
 			if(this.dockTo){
-				this.hide();
+				this.defer(this.hide);
 			}
 		},
 		restore: function(){
@@ -372,7 +373,7 @@ define([
 				self._autoToggleDelay = self.defer(function(){
 					if(self._autoToggleDelay){
 						self._autoToggleDelay.remove();
-						delete self._autoToggleDelay;
+						self._autoToggleDelay = undefined;
 					}
 					if(self.isCollapsed()){
 						self.restore();
@@ -386,7 +387,7 @@ define([
 			var self = this;
 			if(self._autoToggleDelay){
 				self._autoToggleDelay.remove();
-				delete self._autoToggleDelay;
+				self._autoToggleDelay = undefined;
 			}
 			self.inherited(arguments);
 			if(self.toggleOnBlur && self.toggleable && !self._playing){

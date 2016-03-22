@@ -31,7 +31,7 @@ define([
 		_createMaskImage: function(){
 			if(this._timer){
 				this._timer.remove();
-				delete this._timer;
+				this._timer = undefined;
 			}
 			if(this._hasMaskImage){ return; }
 			var w = rias.dom.getStyle(this.domNode,"width"),

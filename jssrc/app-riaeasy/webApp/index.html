@@ -61,16 +61,6 @@
 				rias.require([
 					"webApp"
 				], function(webApp){
-					rias.ready(1000, function(){
-						if(rias.has("ie") < 11){
-							rias.info({
-								dialogType: "modal",
-								content: "为了得到更好的效果，请使用 ie11+ 或者 chrome/firefox 内核的浏览器。"
-							});
-						}
-						rias.webApp.moduleMeta = "appModule/app/app";
-						rias.webApp.startup();
-					});
 				});
 			});
 		});

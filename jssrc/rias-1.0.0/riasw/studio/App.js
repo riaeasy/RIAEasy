@@ -28,8 +28,7 @@ define([
 		},
 		buildRendering: function(){
 			this.inherited(arguments);
-			this.appClientHeight = this.domNode.clientHeight;
-			this.appClientWidth = this.domNode.clientWidth;
+			rias.dom.webAppNode = this.domNode;
 			//rias.dom.addClass(this.domNode, "webApp");
 			if(rias.hostMobile){
 				rias.dom.addClass(this.domNode, "mobileBody");
@@ -54,10 +53,10 @@ define([
 				if(params.widget){
 					self.addWidget(params.widget);
 				}
-			}),rias.subscribe("_riaswOrphan", function(params){
-				if(params.widget){
-					self.removeWidget(params.widget);
-				}
+			//}),rias.subscribe("_riaswOrphan", function(params){
+			//	if(params.widget){
+			//		self.removeWidget(params.widget);
+			//	}
 			}),rias.subscribe("_riaswDestroy", function(params){
 				if(params.widget){
 					self.destroyWidget(params.widget);
@@ -107,7 +106,7 @@ define([
 		},
 		_afterFiler: function(){
 			var self = this;
-			rias.doc.title = self.appTitle;
+			rias.dom.doc.title = self.appTitle;
 			//if(!rias.hostMobile){
 				self.own(self._appLoading = rias.createRiasw(Loading, {
 					ownerRiasw: self,
@@ -209,10 +208,8 @@ define([
 				return;
 			}
 
-			rias.dom.setMarginBox(this.domNode, rias.dom.getContentBox(this.domNode.parentNode || rias.body(this.ownerDocument)));
+			rias.dom.setMarginBox(this.domNode, rias.dom.getContentBox(this.getParentNode()));
 			//this._contentBox = rias.dom.getContentBox(this.domNode);
-			this.appClientHeight = this.domNode.clientHeight;
-			this.appClientWidth = this.domNode.clientWidth;
 
 			this.layout();
 			//console.debug(this.id, "resize out.");

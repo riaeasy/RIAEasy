@@ -28,6 +28,8 @@ define({
 		cancel: "取消",
 		yes: "是的",
 		no: "不是",
+
+		action: "操作",
 		help: "帮助",
 		open: "打开",
 		edit: "编辑",

@@ -3,9 +3,9 @@
 
 define([
 	"rias",
-	"dijit/_Widget",
+	"dijit/_WidgetBase",
 	"rias/riasw/layout/_PanelBase"
-], function(rias, _Widget, _PanelBase){
+], function(rias, _WidgetBase, _PanelBase){
 
 	//rias.theme.loadRiasCss([
 	//	//"layout/Panel.css"
@@ -61,17 +61,17 @@ define([
 			rias.forEach(this.__reserved_page, function(child){
 				child.destroyRecursive(preserveDom);
 			}, this);
-			delete this.__reserved_page;
+			this.__reserved_page = undefined;
 			this._descendantsBeingDestroyed = false;
 		},
 		destroy: function(){
 			if(this._animation){
 				this._animation.stop();
-				delete this._animation;
+				this._animation = undefined;
 			}
 			if(this._transitionDeferred){
 				this._transitionDeferred.cancel();
-				delete this._transitionDeferred;
+				this._transitionDeferred = undefined;
 			}
 			this.inherited(arguments);
 		},
@@ -197,7 +197,7 @@ define([
 			this.inherited(arguments);
 
 			rias.dom.destroy(page._wrapper);
-			delete page._wrapper;
+			page._wrapper = undefined;
 
 			if(this._started){
 				rias.publish(this.id + "-removeChild", page);
@@ -258,7 +258,7 @@ define([
 			if(self._animation){
 				// there's an in-progress animation.  speedily end it so we can do the newly requested one
 				self._animation.stop(true);
-				delete self._animation;
+				self._animation = undefined;
 			}
 			if(self._transitionDeferred){
 				self._transitionDeferred.cancel();
@@ -446,16 +446,16 @@ define([
 		//		CSS Class specifying icon to use in label associated with this pane.
 		iconClass: "dijitNoIcon",
 
-		// showTitle: Boolean
+		// showCaption: Boolean
 		//		When true, display title of this widget as tab label etc., rather than just using
 		//		icon specified in iconClass
-		showTitle: true
+		showCaption: true
 	};
 
 	// Since any widget can be specified as a StackPanel child, mix them
 	// into the base widget class.  (This is a hack, but it's effective.)
 	// This is for the benefit of the parser.   Remove for 2.0.  Also, hide from doc viewer.
-	rias.extend(_Widget, /*===== {} || =====*/ Widget.ChildWidgetProperties);
+	rias.extend(_WidgetBase, /*===== {} || =====*/ Widget.ChildWidgetProperties);
 
 	Widget._riasdMeta = {
 		visual: true,

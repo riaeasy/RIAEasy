@@ -140,7 +140,7 @@ define([
 				tooltip: rias.i18n.action.refresh,
 				iconClass: "refreshIcon",
 				onClick: function(evt){
-					this.grid.refreshGrid();
+					this.grid.refresh();
 				}
 			},
 			_btnAdd = {
@@ -348,6 +348,7 @@ define([
 				nested: false
 			};
 		}
+		delete gp.treeColumns;
 
 		gp.cellIdOnClick = function(grid, name, widget){
 			var g = grid,
@@ -377,7 +378,7 @@ define([
 					onSubmit: function(){
 						var m = this,
 							def = rias.newDeferred();
-						g.refreshGrid();
+						g.refresh();
 						def.resolve(1);
 						return def.promise;
 					}
@@ -417,7 +418,7 @@ define([
 				}, meta, params.moduleParams));
 			}
 		};
-		gp.refreshGrid = function(query){
+		gp.refresh = function(query){
 			var g = this;
 			//g.select.row.clear();
 			//if(g.model.clearLazyData){
@@ -469,7 +470,7 @@ define([
 				onSubmit: function(){
 					var m = this,
 						d = rias.newDeferred();
-					g.refreshGrid();
+					g.refresh();
 					d.resolve(1);
 					return d.promise;
 				}
@@ -495,7 +496,7 @@ define([
 									if(!result.success || result.success < 1){
 										rias.warn("删除失败...");
 									}else{
-										g.refreshGrid();
+										g.refresh();
 									}
 								}
 							);

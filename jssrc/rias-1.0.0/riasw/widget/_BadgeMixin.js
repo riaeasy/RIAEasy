@@ -17,8 +17,7 @@ define([
 
 			this.badgeText = rias.dom.create("span", {
 				"class": "riaswBadgeText riaswBadgeRed"
-			});
-			this.badgeNode.appendChild(this.badgeText);
+			}, this.badgeNode);
 		},
 		postCreate: function(){
 			this.inherited(arguments);
@@ -26,7 +25,7 @@ define([
 		},
 		destroy: function(){
 			this.inherited(arguments);
-			delete this.badgeText;
+			this.badgeText = undefined;
 		},
 		_getBadgeStyleAttr: function(){
 			return this.badgeStyle;

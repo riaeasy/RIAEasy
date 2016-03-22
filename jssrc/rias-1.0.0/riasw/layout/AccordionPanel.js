@@ -231,8 +231,8 @@ define([
 				w.remove();//w.unwatch();//Remove unwatch in dojo2.0
 			});
 
-			delete this.contentWidget._buttonWidget;
-			delete this.contentWidget._wrapperWidget;
+			this.contentWidget._buttonWidget = undefined;
+			this.contentWidget._wrapperWidget = undefined;
 
 			this.inherited(arguments);
 		},
@@ -391,7 +391,7 @@ define([
 			if(child._wrapperWidget){
 				rias.dom.place(child.domNode, child._wrapperWidget.domNode, "after");
 				child._wrapperWidget.destroy();
-				delete child._wrapperWidget;
+				child._wrapperWidget = undefined;
 			}
 
 			rias.dom.removeClass(child.domNode, "dijitHidden");
@@ -409,7 +409,7 @@ define([
 		destroy: function(){
 			if(this._animation){
 				this._animation.stop();
-				delete self._animation;
+				this._animation = undefined;
 			}
 			rias.forEach(this.getChildren(), function(child){
 				// If AccordionContainer has been started, then each child has a wrapper widget which
@@ -445,7 +445,7 @@ define([
 			if(self._animation){
 				// there's an in-progress animation.  speedily end it so we can do the newly requested one
 				self._animation.stop(true);
-				delete self._animation;
+				self._animation = undefined;
 			}
 
 			///先 hide，以保证 showChild 取 大小 正确，同时调整 动画 处理
@@ -490,7 +490,7 @@ define([
 						}
 					},
 					onEnd: function(){
-						delete self._animation;
+						self._animation = undefined;
 						newContents.style.height = "auto";
 						oldWidget._wrapperWidget.containerNode.style.display = "none";
 						oldContents.style.height = "auto";

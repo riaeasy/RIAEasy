@@ -347,7 +347,7 @@ define([
 				anim = new rias.fx.Animation({
 					beforeBegin: function(){
 						if(this.curve){
-							delete this.curve;
+							this.curve = undefined;
 						}
 						var oldS = w.scrollLeft,
 							newS = self._convertToScrollLeft(x);
@@ -499,7 +499,7 @@ define([
 			if(this.dropDown){
 				this._popupStateNode.removeAttribute("aria-owns");	// remove ref to node that we are about to delete
 				this.dropDown.destroyRecursive();
-				delete this.dropDown;
+				this.dropDown = undefined;
 			}
 		}
 	});

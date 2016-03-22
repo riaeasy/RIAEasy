@@ -35,7 +35,7 @@ define([
 					}
 				}
 			}
-			g.refreshGrid();
+			g.refresh();
 		}
 		//_query(grid);
 		_query(m.daccGrid);

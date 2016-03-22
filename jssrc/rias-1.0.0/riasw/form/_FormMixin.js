@@ -13,8 +13,17 @@ define([
 		name: "",
 		state: "",
 
+		constructor: function(params){
+			this.submitDeferred = rias.newDeferred();
+		},
 		postMixInProperties: function(){
 			this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : "";
+			this.inherited(arguments);
+		},
+		destroy: function(){
+			if(!this.submitDeferred.isFulfilled){
+				this.submitDeferred.cancel();
+			}
 			this.inherited(arguments);
 		},
 		startup: function(){
@@ -203,7 +212,7 @@ define([
 					this._onChangeDelayTimer.remove();
 				}
 				this._onChangeDelayTimer = this.defer(function(){
-					delete this._onChangeDelayTimer;
+					this._onChangeDelayTimer = undefined;
 					this._set("value", this.get("value"));
 				}, 10);
 			}
@@ -241,6 +250,7 @@ define([
 				e.preventDefault();
 			}
 			return rias.when(self.onSubmit.apply(self, arguments), function(result){
+				self.submitDeferred.resolve(result);
 				if(!(result === false)){
 					rias.when(self.afterSubmit(result), function(result){
 						if(self.submitDisplayState){
@@ -250,6 +260,8 @@ define([
 						}
 					});
 				}
+			}, function(){
+				self.submitDeferred.reject();
 			});
 		},
 		onCancel: function(){

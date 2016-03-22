@@ -87,7 +87,7 @@ define([
 	rias.removeChild = function(parent, child){
 		if(child._riasrParent == parent){
 			//console.debug(parent, child);
-			delete child._riasrParent;
+			child._riasrParent = undefined;
 		}
 		if(!rias.isDijit(child) && !rias.isDomNode(child)){
 			return;
@@ -170,15 +170,6 @@ define([
 			//}
 
 			if(!w._riaswType){
-				/*if(!params._riaswType){
-					s = "No _riaswType in params.";
-					console.error(s, params, w);
-					if(rias.isFunction(errCall)){
-						rias.hitch(this, errCall)(new Error(s + params));
-					}
-					return;
-				}
-				w._riaswType = params._riaswType || w.declaredClass;*/
 				w._riaswType = w.declaredClass;
 			}
 			//w._riaswVersion 保留原生的 _riaswVersion
@@ -189,12 +180,6 @@ define([
 			}
 			if(w._riaswParams){
 				///保留设计值，删除运行期值
-				/*delete w._riaswParams._riaswVersion;
-				delete w._riaswParams._riaswType;
-				delete w._riaswParams._riaswIdOfModule;
-				delete w._riaswParams._riaswModuleMeta;*/
-				//delete w._riaswParams._riaswChildren;///如果 rias.riasd.module.outlineEditor 的 getRiasd() 是取运行期的 _riaswChildren ，则保留。
-				//delete w._riaswParams._riasrWidget;///如果 rias.riasd.module.outlineEditor 的 getRiasd() 是取运行期的 _riaswChildren ，则保留。
 				rias._deleDP(w._riaswParams, true, true, true);
 			}
 
@@ -218,7 +203,7 @@ define([
 					}
 				}
 			}
-			//delete w.ownerRiasw;
+			//w.ownerRiasw = undefined;
 			if(rias.isDebug && !w._riasrModule && !rias.isRiasWebApp(w)){///new App() 时，webApp 尚未赋值。
 				console.debug("The widget('" + (w.id || w.name || w._riaswType) + "')._riasrModule is undefined.", params);
 			}
@@ -379,9 +364,7 @@ define([
 				owner = rias.by(owner);
 			}
 			if(rias.isInstanceOf(owner, Destroyable)){
-				//this._set("ownerRiasw", owner);
 				owner.own(this);
-				//delete this.ownerRiasw;
 			}else{
 				throw new Error("The owner of " + owner + " is not isInstanceOf rias.Destroyable.");
 			}
@@ -407,7 +390,7 @@ define([
 						this._riasrOwner._riasrChildren[i]._remove.remove();
 						this._riasrOwner._riasrChildren.splice(i, 1);
 					}
-					delete this._riasrOwner;
+					this._riasrOwner = undefined;
 					/// 暂时不考虑 rias.webApp.removeWidget.
 					//rias.publish("_riaswOrphan", {
 					//	widget: this
@@ -658,7 +641,7 @@ define([
 					};
 				}
 				if(_init && rias.isFunction(self["_on" + N])){
-					self["_on" + N](self[name], self[name]);
+					self["_on" + N](self[name]);
 				}
 			}
 		}

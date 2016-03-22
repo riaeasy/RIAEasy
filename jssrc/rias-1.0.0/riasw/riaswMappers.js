@@ -130,6 +130,9 @@ define([
 		//gauge
 		//grid
 		{
+			riasType: ["rias.riasw.grid.Grid"],
+			requires: "rias/riasw/grid/DGrid"
+		},{
 			riasType: ["rias.riasw.grid.GridX"],
 			requires: "rias/riasw/grid/GridX"
 		},{

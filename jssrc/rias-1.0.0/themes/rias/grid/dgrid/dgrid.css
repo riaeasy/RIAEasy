@@ -60,8 +60,6 @@
   vertical-align: top;
   border: 1px solid #ddd;
   border-top-style: none;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 .dgrid-content {
@@ -176,18 +174,10 @@ html.has-mozilla .dgrid-focus {
   height: 16px;
 }
 .dgrid-tree-container {
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  -ms-transition-duration: 0.3s;
   transition-duration: 0.3s;
   overflow: hidden;
 }
 .dgrid-tree-container.dgrid-tree-resetting {
-  -webkit-transition-duration: 0;
-  -moz-transition-duration: 0;
-  -o-transition-duration: 0;
-  -ms-transition-duration: 0;
   transition-duration: 0;
 }
 .dgrid-hider-toggle {
@@ -245,7 +235,7 @@ html.has-mozilla .dgrid-focus {
 .dgrid-column-resizer {
   cursor: col-resize;
   position: absolute;
-  width: 2px;
+  width: 4px;
   background-color: #666;
   z-index: 1000;
 }
@@ -257,7 +247,7 @@ html.has-mozilla .dgrid-focus {
   top: -4px;
   cursor: col-resize;
   z-index: 999;
-  border-left: 5px solid transparent;
+  border-left: 6px solid transparent;
   outline: none;
 }
 .dgrid-resize-header-container {

@@ -49,7 +49,7 @@ define([
 		destroy: function(){
 			if(this._resizer){
 				this._resizer.destroyRecursive();
-				delete this._resizer;
+				this._resizer = undefined;
 			}
 			this.inherited(arguments);
 		},
@@ -104,7 +104,7 @@ define([
 				}
 			}else if(this._resizer){
 				this._resizer.destroyRecursive();
-				delete this._resizer;
+				this._resizer = undefined;
 			}
 			//if(this._started){
 			//}

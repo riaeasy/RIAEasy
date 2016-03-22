@@ -123,7 +123,7 @@ define([
 			//		(from an href, or from set('content', ...))... but deferred until
 			//		the ContentPane is visible
 
-			delete this._needLayout;
+			this._needLayout = undefined;
 
 			// For the TabContainer --> BorderContainer --> ContentPane case, _onShow() is
 			// never called directly, so resize() is our trigger to do the initial href download (see [20099]).
@@ -232,8 +232,22 @@ define([
 	var Widget = rias.declare(riasType, [_Widget, _Container, _Contained, _ContentPaneResizeMixin, _CssStateMixin],{
 		doLayout: false,///不建议自动 layout()。
 		postscript: function(/*Object?*/params, /*DomNode|String*/srcNodeRef){
-			this.inherited(arguments, [params, srcNodeRef || rias.dom.create(params.tagType || "div", params.attrs)]);
+			if(!params.tagType){
+				params.tagType = "div";
+			}
+			//this.inherited(arguments, [params, srcNodeRef || rias.dom.create(params.tagType || "div", params.attrs)]);
+			this.inherited(arguments);
 			this.tagType = this.containerNode.tagName.toLowerCase();
+		},
+		buildRendering:function () {
+			if (!this.domNode) {
+				if(this.srcNodeRef && this.srcNodeRef.tagName.toLowerCase() === this.tagType){
+					this.domNode = this.srcNodeRef;
+				}else{
+					this.domNode = rias.dom.create(this.tagType || "div", this.attrs);///强制按 tagType 生成新的 domNode，而不采用 srcNodeRef
+				}
+			}
+			this.inherited(arguments);
 		},
 		_getContentAttr: function(){
 			return this.containerNode.innerHTML;

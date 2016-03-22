@@ -63,7 +63,7 @@ define([
 			rias.connect.publish("/dojox/mobile/resizeAll", [evt, root]); // back compat
 			rias.connect.publish("/dojox/mobile/beforeResizeAll", [evt, root]);
 			if(common._resetMinHeight){
-				rias.body().style.minHeight = common.getScreenSize().h + "px";
+				rias.dom.webAppNode.style.minHeight = common.getScreenSize().h + "px";
 			}
 			common.updateOrient();
 			common.detectScreenSize();

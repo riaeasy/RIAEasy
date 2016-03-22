@@ -66,8 +66,8 @@ define([
 			}
 
 			var prog = ProgressIndicator.getInstance();
-			//rias.body().appendChild(prog.domNode);
-			(rias.webApp && rias.webApp.domNode || rias.body(rias.doc)).appendChild(prog.domNode);
+			//rias.dom.body.appendChild(prog.domNode);
+			rias.dom.webAppNode.appendChild(prog.domNode);
 			prog.start();
 
 			this.model.getChildren(li.item,
@@ -99,8 +99,7 @@ define([
 					var newView = ScrollableView({
 						id: newViewId,
 						dir: this.isLeftToRight() ? "ltr" : "rtl"
-					//}, rias.dom.create("div", null, rias.body()));
-					}, rias.dom.create("div", null, (rias.webApp && rias.webApp.domNode || rias.body(rias.doc))));
+					}, rias.dom.create("div", null, rias.dom.webAppNode));
 					newView.addChild(heading);
 					newView.addChild(list);
 					newView.startup();

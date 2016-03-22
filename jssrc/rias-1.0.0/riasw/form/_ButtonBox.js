@@ -118,7 +118,7 @@ define([
 					// Do it on a delay so that we don't steal back focus from the dropdown.
 					this._focusDropDownTimer = this.defer(function(){
 						dropDown.focus();
-						delete this._focusDropDownTimer;
+						this._focusDropDownTimer = undefined;
 					});
 				}
 			}else{
@@ -174,7 +174,7 @@ define([
 
 		_onKeyUp: function(){
 			if(this._toggleOnKeyUp){
-				delete this._toggleOnKeyUp;
+				this._toggleOnKeyUp = undefined;
 				this.toggleDropDown();
 				var d = this.dropDown;	// drop down may not exist until toggleDropDown() call
 				if(d && d.focus){
@@ -228,7 +228,7 @@ define([
 			}
 			if(this.dropDown){
 				rias.destroy(this.dropDown);
-				delete this.dropDown;
+				this.dropDown = undefined;
 			}
 			this.inherited(arguments);
 		},
@@ -298,11 +298,7 @@ define([
 			args.ownerEditor = self;
 			!args._riaswIdOfModule && self._riaswIdOfModule && (args._riaswIdOfModule = self._riaswIdOfModule + "_popup");
 			args.dialogType = args.dialogType ? args.dialogType : "modal";
-			//args.parent = args.parent || rias.webApp || rias.body(rias.doc);
-			args.parent = (args.parent != undefined ? args.parent :
-				//rias.isRiaswModule(args.ownerRiasw) ? args.ownerRiasw :
-				//	args.ownerRiasw && rias.isRiaswModule(args.ownerRiasw._riasrModule) ? args.ownerRiasw._riasrModule :
-						rias.webApp || rias.body(rias.doc));
+			args.parent = (args.parent != undefined ? args.parent : rias.dom.webAppNode);
 			//args.id = self.id + "_popup";
 			args.around = around;
 			args.autoClose = 0;
@@ -323,14 +319,14 @@ define([
 			self.beforeDropDown(args);
 			if(self.dropDown){
 				rias.destroy(self.dropDown);
-				delete self.dropDown;
+				self.dropDown = undefined;
 			}
 			self.dropDown = rias.select(args);
 			var dd = self.dropDown,
 				ddNode = dd.domNode;
 
 			dd.own(rias.after(dd, "onClose", function(){
-				delete self.dropDown;///先 delete ，避免 closeDropDown 自循环
+				self.dropDown = undefined;///先 delete ，避免 closeDropDown 自循环
 				self.closeDropDown(true);
 				//h.remove();
 			}, false));
@@ -369,7 +365,7 @@ define([
 
 			if(this._focusDropDownTimer){
 				this._focusDropDownTimer.remove();
-				delete this._focusDropDownTimer;
+				this._focusDropDownTimer = undefined;
 			}
 
 			if(this._opened){

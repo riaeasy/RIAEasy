@@ -533,7 +533,7 @@ define([
 	//需要判断 g.domNode
 	ExtendedSelectBase.extend({
 		load: function(){
-			var t = this, g = t.grid, doc = rias.doc;
+			var t = this, g = t.grid, doc = rias.dom.doc;
 			g.domNode.setAttribute('aria-multiselectable', true);
 			t._refSelectedIds = [];
 			t.subscribe('gridClearSelection_' + g.id, function(type){
@@ -591,7 +591,7 @@ define([
 
 	rias.theme.loadRiasCss([
 		"form/Button.css",
-		"gridx/extend/Gridx.css"
+		"grid/gridx/extend/Gridx.css"
 	]);
 
 	var riasType = "rias.riasw.grid.GridX";

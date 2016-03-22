@@ -48,7 +48,6 @@ define([
 
 		//loadOnStartup: false,
 
-		//_startZ: _startZ,
 		isTopmost: false,
 
 		_size: undefined,
@@ -180,27 +179,27 @@ define([
 		destroy: function(){
 			if(this._actionBar){
 				rias.destroy(this._actionBar);
-				delete this._actionBar;
+				this._actionBar = undefined;
 			}
 			if(this._onMouseOverHandle){
 				this._onMouseOverHandle.remove();
-				delete this._onMouseOverHandle;
+				this._onMouseOverHandle = undefined;
 			}
 			if(this._doRestrictSizeHandle){
 				this._doRestrictSizeHandle.remove();
-				delete this._doRestrictSizeHandle;
+				this._doRestrictSizeHandle = undefined;
 			}
 			if(this._moveHandle){
 				this._moveHandle.destroy();///没有 destroyRecursive();
-				delete this._moveHandle;
+				this._moveHandle = undefined;
 			}
 			if(this._riasrUnderlay){
 				rias.destroy(this._riasrUnderlay);
-				delete this._riasrUnderlay;
+				this._riasrUnderlay = undefined;
 			}
 			if(this.bgIframe){
 				this.bgIframe.destroy();
-				delete this.bgIframe;
+				this.bgIframe = undefined;
 			}
 			this.inherited(arguments);
 			var i = rias.indexOf(_allWin, this);
@@ -225,7 +224,7 @@ define([
 				args = arguments;
 			if(self._actionBar){
 				self._actionBar.destroyRecursive();
-				delete self._actionBar;
+				self._actionBar = undefined;
 			}
 			if(self.actionBar && self.actionBar.length){
 				var i, l, p, w,
@@ -422,11 +421,11 @@ define([
 			}else{
 				if(self._moveHandle){
 					self._moveHandle.destroy();///没有 destroyRecursive();
-					delete self._moveHandle;
+					self._moveHandle = undefined;
 				}
 				if(self._doRestrictSizeHandle){
 					self._doRestrictSizeHandle.remove();
-					delete self._doRestrictSizeHandle;
+					self._doRestrictSizeHandle = undefined;
 				}
 			}
 			//if(self._started){
@@ -525,7 +524,7 @@ define([
 			h.set("zIndex", z);
 			if(h.get("isTopmost") != value){
 				h.set("isTopmost", !!value);
-				h._onBringToTop();
+				h.defer(h._onBringToTop);
 			}
 		}
 		/*function _isFocused(id){

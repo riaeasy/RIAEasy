@@ -5,7 +5,7 @@
 }
 .dojoDndItemAnchor,
 .dojoDndItemSelected {
-	background-color: #B8CBEC;
+	background-color: skyblue;
 }
 
 
@@ -34,30 +34,29 @@ table.dojoDndAvatar {
 	padding: 2px;
 }
 .dojoDndMove .dojoDndAvatarHeader	{
-	background-color: #f58383;
+	background-color: tomato;
 	background-image: url(images/dndNoMove.png);
 	background-repeat: no-repeat;
 	background-position: 2px center;
 }
 .dojoDndCopy .dojoDndAvatarHeader	{
-	background-color: #f58383;
+	background-color: tomato;
 	background-image: url(images/dndNoCopy.png);
 	background-repeat: no-repeat;
 	background-position: 2px center;
 }
 .dojoDndMove .dojoDndAvatarCanDrop .dojoDndAvatarHeader	{
-	background-color: #97e68d;
+	background-color: lightgreen;
 	background-image: url(images/dndMove.png);
 	background-repeat: no-repeat;
 	background-position: 2px center;
 }
 .dojoDndCopy .dojoDndAvatarCanDrop .dojoDndAvatarHeader	{
-	background-color: #97e68d;
+	background-color: lightgreen;
 	background-image: url(images/dndCopy.png);
 	background-repeat: no-repeat;
 	background-position: 2px center;
 }
-
 
 /* TextVertical ====================================*/
 .riaswTextHorizontal,

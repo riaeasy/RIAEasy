@@ -28,6 +28,8 @@ define({
 		cancel: "cancel",
 		yes: "yes",
 		no: "no",
+
+		action: "Action",
 		help: "Help",
 		open: "Open",
 		edit: "Edit",

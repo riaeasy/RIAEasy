@@ -127,7 +127,7 @@ define([
 					this._resizerHelper = new _ResizerHelper({
 						ownerRiasw: rias.webApp,
 						id: 'riaswGlobalResizeHelper'
-					}).placeAt(rias.webApp || rias.body(rias.doc));
+					}).placeAt(rias.dom.webAppNode);
 					rias.dom.addClass(this._resizerHelper.domNode, this.activeResizeClass);
 				}
 			}else{
@@ -153,7 +153,7 @@ define([
 			//rias.forEach(this._pconnects, function(h){
 			//	h.remove();
 			//});
-			//delete this._pconnects;
+			//this._pconnects = undefined;
 		},
 
 		_setDisabledAttr: function(value){
@@ -162,23 +162,23 @@ define([
 			if(value){
 				if(this._boxResizerMoveHandle){
 					this._boxResizerMoveHandle.remove();
-					delete this._boxResizerMoveHandle;
+					this._boxResizerMoveHandle = undefined;
 				}
 				if(this._resizerMoveHandle){
 					this._resizerMoveHandle.remove();
-					delete this._resizerMoveHandle;
+					this._resizerMoveHandle = undefined;
 				}
 				if(this._boxResizerPressHandle){
 					this._boxResizerPressHandle.remove();
-					delete this._boxResizerPressHandle;
+					this._boxResizerPressHandle = undefined;
 				}
 				if(this._moveHandle){
 					this._moveHandle.remove();
-					delete this._moveHandle;
+					this._moveHandle = undefined;
 				}
 				if(this._releaseHandle){
 					this._releaseHandle.remove();
-					delete this._releaseHandle;
+					this._releaseHandle = undefined;
 				}
 				this._resizerHelper.hide();
 			}else{
@@ -226,7 +226,7 @@ define([
 				rias.dom.setStyle(this.targetDomNode, "cursor", cursor);
 				if(this._boxResizerPressHandle){
 					this._boxResizerPressHandle.remove();
-					delete this._boxResizerPressHandle;
+					this._boxResizerPressHandle = undefined;
 				}
 				if(cursor){
 					this._boxResizerPressHandle = this.own(rias.on(this.targetDomNode, rias.touch.press, function(evt){
@@ -246,7 +246,7 @@ define([
 			}
 			if(this._boxResizerMoveHandle){
 				this._boxResizerMoveHandle.remove();
-				delete this._boxResizerMoveHandle;
+				this._boxResizerMoveHandle = undefined;
 			}
 			rias.publish(this.startTopic, [this]);
 
@@ -301,14 +301,14 @@ define([
 
 			if(this._moveHandle){
 				this._moveHandle.remove();
-				delete this._moveHandle;
+				this._moveHandle = undefined;
 			}
-			this._moveHandle = this.own(rias.on(rias.doc, rias.touch.move, rias.hitch(this, this._updateSizing)))[0];
+			this._moveHandle = this.own(rias.on(rias.dom.doc, rias.touch.move, rias.hitch(this, this._updateSizing)))[0];
 			if(this._releaseHandle){
 				this._releaseHandle.remove();
-				delete this._releaseHandle;
+				this._releaseHandle = undefined;
 			}
-			this._releaseHandle = this.own(rias.on(rias.doc, rias.touch.release, rias.hitch(this, this._endSizing)))[0];
+			this._releaseHandle = this.own(rias.on(rias.dom.doc, rias.touch.release, rias.hitch(this, this._endSizing)))[0];
 
 			rias.event.stop(e);
 		},
@@ -488,11 +488,11 @@ define([
 			var self = this;
 			if(this._moveHandle){
 				this._moveHandle.remove();
-				delete this._moveHandle;
+				this._moveHandle = undefined;
 			}
 			if(this._releaseHandle){
 				this._releaseHandle.remove();
-				delete this._releaseHandle;
+				this._releaseHandle = undefined;
 			}
 
 			var pub = rias.partial(rias.publish, this.endTopic, [this]);
@@ -507,7 +507,7 @@ define([
 			this.onResize(e);
 			if(this._boxResizerMoveHandle){
 				this._boxResizerMoveHandle.remove();
-				delete this._boxResizerMoveHandle;
+				this._boxResizerMoveHandle = undefined;
 			}
 			if(!this.disabled && this.isBoxResizer){
 				this._boxResizerMoveHandle = this.own(rias.on(this.targetDomNode, rias.touch.move, function(evt){

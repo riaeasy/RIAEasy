@@ -31,11 +31,11 @@ define([
 		destroy: function(){
 			if(this._timeout){
 				clearTimeout(this._timeout);
-				delete this._timeout;
+				this._timeout = undefined;
 			}
 			//if(this.__busyImg){
 			//	this.containerNode.removeChild(this.__busyImg);
-			//	delete this.__busyImg;
+			//	this.__busyImg = undefined;
 			//}
 			this.inherited(arguments);
 		},
@@ -47,14 +47,14 @@ define([
 			var self = this;
 			if(self._timeout){
 				clearTimeout(self._timeout);
-				delete self._timeout;
+				self._timeout = undefined;
 			}
 			if(value > 0){
 				if(value >= 1000){
 					value = 1000;
 				}
 				self._timeout = setTimeout(function(){
-					delete self._timeout;
+					self._timeout = undefined;
 					if(self.get("timeout") > 1000){
 						if(self.busyLabel){
 							self.set("label", self.formatBusyLabel());
@@ -87,15 +87,15 @@ define([
 				self.timeout = 0;
 				if(self._timeout){
 					clearTimeout(self._timeout);
-					delete self._timeout;
+					self._timeout = undefined;
 				}
 				if("_disabled0" in self){
 					self.set("disabled", self._disabled0 ? self._disabled0 : false);
-					delete self._disabled0;
+					self._disabled0 = undefined;
 				}
 				if("_label0" in self){
 					self.set("label", self._label0);
-					delete self._label0;
+					self._label0 = undefined;
 				}
 			}
 		},

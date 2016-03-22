@@ -25,7 +25,7 @@ define([
 				if(dropDownNode){
 					this.dropDown = rias.registry.byNode(dropDownNode);
 				}
-				delete this.dropDownContainer;
+				this.dropDownContainer = undefined;
 			}
 			if(this.dropDown){
 				popup.hide(this.dropDown);

@@ -72,23 +72,25 @@ define([
 
 	rias.html = html;
 
-	rias.global = basewin.global;
-	rias.setContext = basewin.setContext;
-	rias.withGlobal = basewin.withGlobal;
-	rias.doc = basewin.doc;
-	rias.doc.title = rias.studioTitle;
-	rias.body = basewin.body;
-	rias.withDoc = basewin.withDoc;
-
 	rias.cookie = cookie;
 	rias.hash = hash;
 	rias.ready = ready;
 
+	rias.global = basewin.global;
+	rias.setContext = basewin.setContext;
+	rias.withGlobal = basewin.withGlobal;
 	rias.dom = {};
+	rias.dom.doc = basewin.doc;
+	//rias.dom.withDoc = basewin.withDoc;
+	rias.dom.documentBody = basewin.body;
+	rias.dom.body = rias.dom.documentBody(rias.dom.doc);
+	rias.dom.webAppNode = rias.webApp ? rias.webApp.domNode : rias.dom.body;
+	rias.dom.heads = rias.dom.doc.getElementsByTagName('head');
+	rias.dom.scripts = rias.dom.doc.getElementsByTagName('script');
 
-	rias.dom.getWindow = win.get;
-	rias.dom.getWindowBox = win.getBox;
-	rias.dom.scrollIntoView = rias.hitch(window, win.scrollIntoView);///调用了 this，需要 hitch
+	//rias.dom.getWindow = win.get;
+	//rias.dom.getWindowBox = win.getBox;
+	rias.dom.scrollIntoView = rias.hitch(win, win.scrollIntoView);///调用了 this，需要 hitch
 
 	rias.dom.parse = rias.hitch(parser, parser.parse);///调用了 this，需要 hitch
 	rias.dom.css3 = css3;
@@ -99,14 +101,14 @@ define([
 			if(typeof id != "string"){
 				return rias.isDomNode(id) ? id : null;
 			}
-			var _d = doc || rias.doc,
-				te = id && _d.getElementById(id);
+			var _doc = doc || rias.dom.doc,
+				te = id && _doc.getElementById(id);
 			// attributes.id.value is better than just id in case the
 			// user has a name=id inside a form
 			if(te && (te.attributes.id.value == id || te.id == id)){
 				return rias.isDomNode(te) ? te : null;
 			}else{
-				var eles = _d.all[id];
+				var eles = _doc.all[id];
 				if(!eles || eles.nodeName){
 					eles = [eles];
 				}
@@ -123,7 +125,7 @@ define([
 		rias.dom.byId = dom.byId = function(id, doc){
 			// inline'd type check.
 			// be sure to return null per documentation, to match IE branch.
-			id = (typeof id == "string") ? (doc || rias.doc).getElementById(id) : id;
+			id = (typeof id == "string") ? (doc || rias.dom.doc).getElementById(id) : id;
 			return rias.isDomNode(id) ? id : null; // DOMNode
 		};
 	}
@@ -131,7 +133,44 @@ define([
 	rias.dom.setSelectable = dom.setSelectable;
 
 	rias.dom.toDom = domConstruct.toDom;
-	rias.dom.place = domConstruct.place;
+	rias.dom.domOn = function(node, eventName, ieEventName, handler){
+		// Add an event listener to a DOM node using the API appropriate for the current browser;
+		// return a function that will disconnect the listener.
+		if(!rias.has("ie-event-behavior")){
+			node.addEventListener(eventName, handler, false);
+			return function(){
+				node.removeEventListener(eventName, handler, false);
+			};
+		}else{
+			node.attachEvent(ieEventName, handler);
+			return function(){
+				node.detachEvent(ieEventName, handler);
+			};
+		}
+	};
+	rias.dom.place = function(node, refNode, position, callback){
+		if(callback){
+			var loadDisconnector = rias.dom.domOn(node, "load", "onreadystatechange", function(e){
+					e = e || window.event;
+					var n = e.target || e.srcElement;
+					if(e.type === "load" || /complete|loaded/.test(n.readyState)){
+						loadDisconnector();
+						errorDisconnector();
+						callback && callback();
+					}
+				}),
+				errorDisconnector = rias.dom.domOn(node, "error", "onerror", function(e){
+					loadDisconnector();
+					errorDisconnector();
+					rias.require.signal("error", rias.mixin(new Error("injectUrl error: "), {
+						src:"dojoLoader/rias.require.injectNode",
+						info:[node, e]
+					}));
+					callback && callback();
+				});
+		}
+		return domConstruct.place(node, refNode || rias.dom.webAppNode, position);
+	};
 	rias.dom.create = domConstruct.create;
 	rias.dom.empty = domConstruct.empty;
 	rias.dom.destroy = domConstruct.destroy;
@@ -364,17 +403,12 @@ define([
 		return obj;
 	};
 	rias.dom.styleToString = function(obj) {
-		if(!rias.isObjectSimple(obj)){
-			return "";
+		if(rias.isString(obj)){
+			return obj;
 		}
 		var str = "", pn;
 		for(pn in obj){
-			if(obj.hasOwnProperty(pn)){
-				str += " " + pn + ": " + obj[pn] + ";";
-			}
-		}
-		if(str.charAt(0) === " "){
-			str = str.substr(1);
+			str += pn + ":" + obj[pn] + ";";
 		}
 		return str;
 	};
@@ -424,7 +458,7 @@ define([
 
 		// get {x: 10, y: 10, w: 100, h:100} type obj representing position of
 		// viewport over document
-		var view = rias.dom.getContentBox(node.parentNode || rias.body(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument);
+		var view = rias.dom.getContentBox(node.parentNode || rias.dom.documentBody(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument);
 
 		// This won't work if the node is inside a <div style="position: relative">,
 		// so reattach it to <body>.	 (Otherwise, the positioning will be wrong
@@ -538,7 +572,7 @@ define([
 
 		var top = best.y,
 			side = best.x,
-			body = rias.body(node.ownerDocument);
+			body = rias.dom.documentBody(node.ownerDocument);
 
 		if(/relative|absolute/.test(rias.dom.getStyle(body, "position"))){
 			// compensate for margin on <body>, see #16148
@@ -714,7 +748,7 @@ define([
 			}
 			parent = node.getParent();
 			if(!_parent && !parent){
-				node.placeAt(rias.webApp || rias.body(rias.doc));
+				node.placeAt(rias.dom.webAppNode);
 			}else if(_parent){
 				if(rias.isDijit(_parent)){
 					if(parent !== _parent){
@@ -733,7 +767,7 @@ define([
 		}else if(rias.isDomNode(node)){
 			parent = rias.by(node.parentNode);
 			if(!_parent && !parent){
-				rias.dom.place(node, rias.webApp && rias.webApp.domNode || rias.body(rias.doc));
+				rias.dom.place(node);
 			}else if(_parent){
 				if(rias.isDijit(_parent)){
 					if(parent !== _parent){
@@ -774,7 +808,7 @@ define([
 		}
 		var //orient = args.orient || ["below", "below-alt", "above", "above-alt"],
 			ltr = parent ? parent.isLeftToRight() : rias.dom.isBodyLtr(node.ownerDocument),
-			viewport = rias.dom.getContentBox(node.parentNode || rias.body(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument),
+			viewport = rias.dom.getContentBox(node.parentNode || rias.dom.documentBody(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument),
 
 		var maxHeight,
 			pos = rias.dom.position(node);
@@ -1036,49 +1070,6 @@ define([
 ///dijit******************************************************************************///
 	rias.a11y = a11y;
 	rias.registry = registry;
-	/*rias.registry.toArray = registry.toArray;
-	rias.registry.add = function(widget){
-		if(rias.registry._hash[widget.id]){
-			//try{
-			//	if(rias.isFunction(widget.destroyRecursive)){
-			//		widget.destroyRecursive();
-			//	}
-			//}catch(e){
-			//	console.error("Widget(id of '" + widget.id + "') destroyRecursive error.", widget);
-			//	throw "Widget(id of '" + widget.id + "') destroyRecursive error.";
-			//}
-			throw "Tried to register widget with id['" + widget.id + "'],\n but that id is already registered.";
-		}
-		rias.registry._hash[widget.id] = widget;
-		rias.registry.length++;
-	};
-	rias.registry.remove = registry.remove;
-	rias.registry.findWidgets = registry.findWidgets;
-	rias.registry.getEnclosingWidget = registry.getEnclosingWidget;
-	rias.registry.getUniqueId = registry.getUniqueId;
-	rias.registry._destroyAll = registry._destroyAll;
-	rias.registry.byId = registry.byId;
-	rias.registry.byNode = registry.byNode;*/
-
-	//rias.getId = function(/*DOMNode|Dijit|riasWidget*/widget) {
-	//	return widget.id;
-	//};
-	///注意：在 _WidgetBase.postCreate() 之前（包含 _WidgetBase.postCreate()） obj._created都为 false，故 rias.isDijit() 为 false。
-	///建议在 _WidgetBase.startUp() 之后使用。
-	//rias.byId = function(/*String*/id){////TODO:zensst.暂时屏蔽，以后可能要用这个名字来 by 所有对象，而不只是DOMNode|Dijit|riasWidget
-	//	if(!id || !rias.isString(id)){
-	//		return undefined;
-	//	}
-	//	var w, m;
-	//	w = (rias.webApp && rias.webApp.byId(id)) || rias.registry.byId(id) || rias.getObject(id);
-	//	if(!w){
-	//		w = dojo.byId(id);//查找DOMNode.
-	//		if(w){
-	//			w = rias.registry.byNode(w) || registry.getEnclosingWidget(w) || w;
-	//		}
-	//	}
-	//	return w;
-	//};
 
 	_WidgetBase.extend({
 		/*own: function(position, handles){
@@ -1149,6 +1140,7 @@ define([
 				rias.registry.remove(this.id);
 			}
 			this._riasrDestroying = false;
+			this._destroyed = true;
 			this.inherited(arguments);
 		},
 		destroyDescendants: function(/*Boolean?*/ preserveDom){
@@ -1156,7 +1148,7 @@ define([
 			rias.forEach(self.getChildren(), function(widget){
 				if(!widget._riasrOwner || widget._riasrOwner == self){
 					if(widget._riasrParent){
-						delete widget._riasrParent;
+						widget._riasrParent = undefined;
 					}
 					rias.destroy(widget, preserveDom);
 				}else if(widget._riasrOwner && widget._riasrOwner != self){
@@ -1214,7 +1206,6 @@ define([
 				p = child.getParent();
 				///ref 不一定是 p，故最好不要设置 _riasrParent
 				///child._riasrParent = p;
-				// TODO: for 2.0 maybe it should also start the widget when this.getParent() returns null??
 				if(!child._started){
 					if(!p || p._started){
 						child.startup();
@@ -1265,6 +1256,9 @@ define([
 					return null; // so this works well: handle = handle.remove();
 				}
 			};
+		},
+		getParentNode: function(){
+			return this.domNode.parentNode || rias.dom.webAppNode;
 		}
 	});
 
@@ -1315,7 +1309,7 @@ define([
 
 						// Cleanup flag set above, just in case
 						if(this.containerNode && this.containerNode.stopParser){
-							delete this.containerNode.stopParser;
+							this.containerNode.stopParser = undefined;
 						}
 					}));
 
@@ -1386,7 +1380,7 @@ define([
 
 	_Container.extend({
 		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex){
-			if(this._started){
+			if(added && this._started){
 				if(!child._started){
 					child.startup();
 				}
@@ -1442,7 +1436,7 @@ define([
 			if(child){
 				if(child._riasrParent == p){
 					//console.debug(parent, child);
-					delete child._riasrParent;
+					child._riasrParent = undefined;
 				}
 				var n = (child.domNode ? child.domNode : child);
 				if(n && n.parentNode){

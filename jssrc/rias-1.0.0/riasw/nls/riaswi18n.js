@@ -58,6 +58,7 @@ define({root: {
 		VSlider: "Vertical Slider",
 		//gauge
 		//grid
+		Grid: "Grid",
 		GridX: "GridX",
 		DGrid: "DGrid",
 		LazyTreeGrid: "Lazy TreeGrid",
@@ -226,6 +227,7 @@ define({root: {
 		VSlider: "RIAStudio Client Widget - VerticalSlider.",
 		//gauge
 		//grid
+		Grid: "RIAStudio Client Widget - Grid.",
 		GridX: "RIAStudio Client Widget - GridX.",
 		DGrid: "RIAStudio Client Widget - DGrid.",
 		LazyTreeGrid: "RIAStudio Client Widget - LazyTreeGrid.",

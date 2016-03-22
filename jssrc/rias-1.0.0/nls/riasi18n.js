@@ -19,7 +19,6 @@ define({root: {
 		home: "Home",
 		download: "Download",
 		doc: "Document",
-
 		loading: "Loading...",
 		load: "Load",
 		search: "Search",
@@ -30,6 +29,8 @@ define({root: {
 		cancel: "cancel",
 		yes: "yes",
 		no: "no",
+
+		action: "Action",
 		help: "Help",
 		open: "Open",
 		edit: "Edit",

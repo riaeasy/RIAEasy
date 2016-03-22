@@ -128,7 +128,7 @@ define([
 								"persist": false,
 								//"toggleable": false,
 								//toggleOnEnter: true,
-								toggleOnBlur: true,
+								//toggleOnBlur: true,
 								dialogType: "top",
 								//autoClose: 0,
 								minSize: {
@@ -152,11 +152,6 @@ define([
 									newFile:	"act/riasd/newAppModule",
 									//rename:		"act/riasd/renameAppModule",
 									dele:		"act/riasd/deleAppModule"
-								},
-								onRestore: function(){
-									this.resize({
-										h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
-									})
 								},
 								afterSubmit: function(){
 									var m = this._riasrModule,
@@ -230,11 +225,6 @@ define([
 							"width": "30em",
 							height: "60em"// rias.toInt(this.domNode.clientHeight * 0.8, 480) + "px"//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
 						},
-						onRestore: function(){
-							this.resize({
-								h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
-							})
-						},
 						"_riaswChildren": []
 					},{
 						moduleMeta: "appModule/app/workbench",
@@ -245,7 +235,7 @@ define([
 
 						"closable": false
 					}]).then(function(){
-						m.mainMenu.loadMenu();
+						//m.mainMenu.loadMenu();
 						if(rias.isFunction(okcall)){
 							okcall(rias.webApp.logged, rias.webApp.oper);
 						}
@@ -338,7 +328,7 @@ define([
 					});
 					if(moduleParams.dockTo == self.appDock || moduleParams.dockTo == self.appDock._riaswIdOfModule){
 						moduleParams.dockNodeParams.iconLayoutTop = true;
-						moduleParams.dockNodeParams.style.width = "5em";
+						moduleParams.dockNodeParams.style.width = "6em";
 					}
 					moduleParams.style = rias.dom.styleToObject(moduleParams.style);
 					if(asDialog){
@@ -362,7 +352,7 @@ define([
 											rias.when(parent.selectChild(target, true), function(){
 												if(self._autoToggleDelay){
 													self._autoToggleDelay.remove();
-													delete self._autoToggleDelay;
+													self._autoToggleDelay = undefined;
 												}
 											});
 										}, rias.autoToggleDuration);
@@ -622,7 +612,7 @@ define([
 							}
 						},
 					"onHideChild": function (page){
-							delete page.isTopmost;
+							page.isTopmost = undefined;
 							if(page._riasrDockNode){
 								page._riasrDockNode.setTargetState();
 							}

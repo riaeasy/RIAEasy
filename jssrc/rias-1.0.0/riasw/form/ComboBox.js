@@ -211,7 +211,7 @@ define([
 			}
 			if(params.idAttribute){
 				params.store.idAttribute = params.idAttribute;
-				//delete params.idAttribute;
+				//params.idAttribute = undefined;
 			}
 			return params;
 		},

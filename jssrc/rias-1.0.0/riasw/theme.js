@@ -6,7 +6,7 @@ define([
 ], function(rias) {
 
 ///theme******************************************************************************///
-	function _load(self, links, names, theme, isMobile, isWebApp, loaded){
+	function _load(self, links, names, theme, isMobile, isWebApp, loaded, callback){
 		loaded = loaded || rias.getObject(theme, true, self._loaded);
 		rias.forEach(names, function(name){
 			if(!self._loaded._all[name]){
@@ -26,43 +26,41 @@ define([
 				return;
 			}
 
-			rias.withDoc(rias.doc, function(){
-				var newLink = rias.dom.create('link', {
-					rel: 'stylesheet',
-					type: 'text/css',
-					href: name
-				});
-				loaded[name] = newLink;
-				// Make sure app.css is the after library CSS files
-				// FIXME: Shouldn't hardcode this sort of thing
-				var headElem = rias.doc.getElementsByTagName('head')[0],
-					isAppCss = name.indexOf(self.appCss) > -1,
-					//isRiasdCss = name.indexOf("riasd.css") > -1,
-					appCssLink, riasdCssLink;
-				rias.forEach(links, function(link) {
-					if(link.href.indexOf(self.appCss) > -1){
-						appCssLink = link;
-					}
-					if(link.href.indexOf("riasd.css") > -1){
-						riasdCssLink = link;
-					}
-				});
-				if(isAppCss){
-					headElem.appendChild(newLink);
-				}else if(!appCssLink){
-					if(!riasdCssLink){
-						headElem.appendChild(newLink);
-					}else{
-						headElem.insertBefore(newLink, riasdCssLink);
-					}
-				}else{
-					if(!riasdCssLink){
-						headElem.insertBefore(newLink, appCssLink);
-					}else{
-						headElem.insertBefore(newLink, riasdCssLink);
-					}
+			var newLink = rias.dom.create('link', {
+				rel: 'stylesheet',
+				type: 'text/css',
+				href: name
+			});
+			loaded[name] = newLink;
+			// Make sure app.css is the after library CSS files
+			// FIXME: Shouldn't hardcode this sort of thing
+			var headElem = rias.dom.heads[0],
+				isAppCss = name.indexOf(self.appCss) > -1,
+				//isRiasdCss = name.indexOf("riasd.css") > -1,
+				appCssLink, riasdCssLink;
+			rias.forEach(links, function(link) {
+				if(link.href.indexOf(self.appCss) > -1){
+					appCssLink = link;
+				}
+				if(link.href.indexOf("riasd.css") > -1){
+					riasdCssLink = link;
 				}
 			});
+			if(isAppCss){
+				rias.dom.place(newLink, headElem, "", callback);
+			}else if(!appCssLink){
+				if(!riasdCssLink){
+					rias.dom.place(newLink, headElem, "", callback);
+				}else{
+					rias.dom.place(newLink, riasdCssLink, "before", callback);
+				}
+			}else{
+				if(!riasdCssLink){
+					rias.dom.place(newLink, appCssLink, "before", callback);
+				}else{
+					rias.dom.place(newLink, riasdCssLink, "before", callback);
+				}
+			}
 		});
 	}
 
@@ -101,7 +99,7 @@ define([
 			}
 			return rias.xhr.toUrl(rias.formatPath(isWebApp ? this.webAppUrl : this.riasUrl) + theme.location + "/" + url);
 		},
-		loadRiasCss: function(names, isMobile){
+		loadRiasCss: function(names, isMobile, callback){
 			var self = this,
 				links = rias.dom.query('link'),
 				theme;
@@ -112,11 +110,11 @@ define([
 					//if(!self.currentTheme){
 					//	self.currentTheme = theme;
 					//}
-					_load(self, links, names, theme, isMobile, false, rias.getObject(theme, true, self._loaded));
+					_load(self, links, names, theme, isMobile, false, rias.getObject(theme, true, self._loaded), callback);
 				}
 			}
 		},
-		loadWebAppCss: function(names, isMobile){
+		loadWebAppCss: function(names, isMobile, callback){
 			var self = this,
 				links = rias.dom.query('link'),
 				theme;
@@ -127,7 +125,7 @@ define([
 					//if(!self.currentTheme){
 					//	self.currentTheme = theme;
 					//}
-					_load(self, links, names, theme, isMobile, true, rias.getObject(theme, true, self._loaded));
+					_load(self, links, names, theme, isMobile, true, rias.getObject(theme, true, self._loaded), callback);
 				}
 			}
 		},
@@ -166,8 +164,116 @@ define([
 			}
 			this.loadRiasCss(names);
 			this.loadRiasCss(namesM, true);
+		},
+
+		extraRules: [],
+		addCssRule: function (selector, css) {
+			// summary:
+			//		Dynamically adds a style rule to the document.  Returns an object
+			//		with a remove method which can be called to later remove the rule.
+
+			if (!extraSheet) {
+				// First time, create an extra stylesheet for adding rules
+				extraSheet = rias.dom.create('style');
+				rias.dom.heads[0].appendChild(extraSheet);
+				// Keep reference to actual StyleSheet object (`styleSheet` for IE < 9)
+				extraSheet = extraSheet.sheet || extraSheet.styleSheet;
+				// Store name of method used to remove rules (`removeRule` for IE < 9)
+				removeMethod = extraSheet.deleteRule ? 'deleteRule' : 'removeRule';
+				// Store name of property used to access rules (`rules` for IE < 9)
+				rulesProperty = extraSheet.cssRules ? 'cssRules' : 'rules';
+			}
+
+			var extraRules = this.extraRules,
+				index = extraRules.length;
+			extraRules[index] = (extraSheet.cssRules || extraSheet.rules).length;
+			extraSheet.addRule ? extraSheet.addRule(selector, css) : extraSheet.insertRule(selector + '{' + css + '}', extraRules[index]);
+
+			return {
+				get: function (prop) {
+					return extraSheet[rulesProperty][extraRules[index]].style[prop];
+				},
+				set: function (prop, value) {
+					if (typeof extraRules[index] !== 'undefined') {
+						extraSheet[rulesProperty][extraRules[index]].style[prop] = value;
+					}
+				},
+				remove: function () {
+					var realIndex = extraRules[index],
+						i, l;
+					if (realIndex === undefined) {
+						return; // already removed
+					}
+
+					// remove rule indicated in internal array at index
+					extraSheet[removeMethod](realIndex);
+
+					// Clear internal array item representing rule that was just deleted.
+					// NOTE: we do NOT splice, since the point of this array is specifically
+					// to negotiate the splicing that occurs in the stylesheet itself!
+					extraRules[index] = undefined;
+
+					// Then update array items as necessary to downshift remaining rule indices.
+					// Can start at index + 1, since array is sparse but strictly increasing.
+					for (i = index + 1, l = extraRules.length; i < l; i++) {
+						if (extraRules[i] > realIndex) {
+							extraRules[i]--;
+						}
+					}
+				}
+			};
+		},
+		escapeCssIdentifier: function (id, replace) {
+			// summary:
+			//		Escapes normally-invalid characters in a CSS identifier (such as . or :);
+			//		see http://www.w3.org/TR/CSS2/syndata.html#value-def-identifier
+			// id: String
+			//		CSS identifier (e.g. tag name, class, or id) to be escaped
+			// replace: String?
+			//		If specified, indicates that invalid characters should be
+			//		replaced by the given string rather than being escaped
+
+			return typeof id === 'string' ? id.replace(invalidCssChars, replace || '\\$1') : id;
 		}
 	};
+
+	var element = rias.dom.create('div');
+	function getScrollbarSize(element) {
+		rias.dom.body.appendChild(element);
+		element.style.cssText = rias.dom.styleToString({
+			width: "100px",
+			height: "100px",
+			overflow: "scroll",
+			position: "absolute",
+			top: "-9999px"
+		});
+		rias.theme.scrollbarWidth = element.offsetWidth - element.clientWidth;
+		rias.theme.scrollbarHeight = element.offsetHeight - element.clientHeight;
+		if (rias.has('ie')) {
+			rias.theme.scrollbarWidth++;
+			rias.theme.scrollbarHeight++;
+		}
+
+		element.setAttribute('dir', 'rtl');
+		var div = rias.dom.create('div');
+		element.appendChild(div);
+		rias.theme.scrollbarLeft = !!rias.has('ie') || !!rias.has('trident') || /\bEdge\//.test(navigator.userAgent) ||
+			div.offsetLeft >= rias.theme.scrollbarWidth;
+		rias.dom.destroy(div);
+		element.removeAttribute('dir');
+		element.style.cssText = "";
+		if (element.parentNode) {
+			element.parentNode.removeChild(element);
+		}
+	}
+	getScrollbarSize(element);
+
+	var invalidCssChars = /([^A-Za-z0-9_\u00A0-\uFFFF-])/g;
+	var extraSheet = rias.dom.create('style');
+	rias.dom.heads[0].appendChild(extraSheet);
+	extraSheet = extraSheet.sheet || extraSheet.styleSheet;// Keep reference to actual StyleSheet object (`styleSheet` for IE < 9)
+	var removeMethod = extraSheet.deleteRule ? 'deleteRule' : 'removeRule',// Store name of method used to remove rules (`removeRule` for IE < 9)
+		rulesProperty = extraSheet.cssRules ? 'cssRules' : 'rules';// Store name of property used to access rules (`rules` for IE < 9)
 
 	return rias;
 

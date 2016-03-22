@@ -46,23 +46,43 @@ define([
 		}
 		return 0;
 	};
+	rias.createWebApp = function(params, refNode){
+		var d = rias.newDeferred();
+		rias.require([
+			"rias/riasw/studio/App",
+			"rias/riasw/studio/Module",
+			"rias/riasw/studio/DefaultError"
+		], function(App){
+			rias.webApp = rias.createRiasw(App, params, refNode || rias.dom.body);
+			rias.ready(1000, function(){
+				if(rias.has("ie") < 11){
+					rias.info({
+						dialogType: "modal",
+						content: "为了得到更好的效果，请使用 ie11+ 或者 chrome/firefox 内核的浏览器。"
+					});
+				}
+				d.resolve(rias.webApp);
+			});
+		});
+		return d.promise;
+	};
 
 	if(!rias.require.packs.gridx){
-		rias.require.packs.gridx = {name: 'gridx', location: '/webLib/gridx-1.3.7'};
+		rias.require.packs.gridx = {name: "gridx", location: "../../gridx-1.3.7"};
 	}
 	if(!rias.require.packs.dgrid){
-		rias.require.packs.dgrid = {name: 'dgrid', location: '/webLib/dgrid-1.0.0'};
+		rias.require.packs.dgrid = {name: "dgrid", location: "../../dgrid-1.0.0"};
 	}
 	if(!rias.require.packs.dstore){
-		rias.require.packs.dstore = {name: 'dstore', location: '/webLib/dstore-1.1.1'};
+		rias.require.packs.dstore = {name: "dstore", location: "../../dstore-1.1.1"};
 	}
 
 	if(!rias.require.packs.orion){
-		rias.require.packs.orion = {name: 'orion', location: '/webLib/orion-7.0/orion'};
-		rias.require.packs.webtools = {name: 'webtools', location: '/webLib/orion-7.0/webtools'};
-		rias.require.packs.javascript = {name: 'javascript', location: '/webLib/orion-7.0/javascript'};
-		rias.require.packs.csslint = {name: 'csslint', location: '/webLib/orion-7.0/csslint', main: "csslint"};
-		rias.require.packs.i18n = {name: 'i18n', location: '/webLib/orion-7.0/orion', main: "i18n"};
+		rias.require.packs.orion = {name: "orion", location: "../../orion-7.0/orion"};
+		rias.require.packs.webtools = {name: "webtools", location: "../../orion-7.0/webtools"};
+		rias.require.packs.javascript = {name: "javascript", location: "../../orion-7.0/javascript"};
+		rias.require.packs.csslint = {name: "csslint", location: "../../orion-7.0/csslint", main: "csslint"};
+		rias.require.packs.i18n = {name: "i18n", location: "../../orion-7.0/orion", main: "i18n"};
 	}
 
 	rias.has.add("rias-riasd", 0);
@@ -101,7 +121,7 @@ define([
 				], function(riaswMappers){
 					if(riaswMappers == "not-a-module"){
 						rias.has.add("rias-riasd", 0, 0, 1);
-						d.reject(riaswMappers);
+						d.reject(rias.riasd);
 					}else{
 						rias.registerRiaswMappers(1, riaswMappers);
 						rias.require([
@@ -109,56 +129,53 @@ define([
 						], function(riasdi18n){
 							rias.i18n.riasd = riasdi18n;
 							rias.riasd = {
-								loadRiasdCss: function(url) {
-									var doc = rias.doc,
-										links = rias.dom.query('link');
+								loadRiasdCss: function(url, callback) {
+									var links = rias.dom.query("link");
 
 									var csses = rias.isArray(url) ? url : url ? [url] : [];//url.split(",");
 									rias.forEach(csses, function(css){
 										css = rias.xhr.toUrl(css);
 										if (links.some(function(val) {
-											return val.getAttribute('href') === css;
+											return val.getAttribute("href") === css;
 										})) {
 											// don't add if stylesheet is already loaded in the page
 											return;
 										}
 
-										rias.withDoc(doc, function() {
-											var newLink = rias.dom.create('link', {
-												rel: 'stylesheet',
-												type: 'text/css',
-												href: css
-											});
-											// Make sure app.css is the after library CSS files, and content.css is after app.css
-											// FIXME: Shouldn't hardcode this sort of thing
-											var headElem = doc.getElementsByTagName('head')[0],
-												isAppCss = css.indexOf(rias.theme.appCss) > -1,
-												isRiasdCss = css.indexOf("riasd.css") > -1,
-												appCssLink, riasdCssLink;
-											rias.forEach(links, function(link) {
-												if(link.href.indexOf(rias.theme.appCss) > -1){
-													appCssLink = link;
-												}
-												if(link.href.indexOf("riasd.css") > -1){
-													riasdCssLink = link;
-												}
-											});
-											if(isAppCss){
-												headElem.appendChild(newLink);
-											}else if(!appCssLink){
-												if(!riasdCssLink){
-													headElem.appendChild(newLink);
-												}else{
-													headElem.insertBefore(newLink, riasdCssLink);
-												}
-											}else{
-												if(!riasdCssLink){
-													headElem.insertBefore(newLink, appCssLink);
-												}else{
-													headElem.insertBefore(newLink, riasdCssLink);
-												}
+										var newLink = rias.dom.create("link", {
+											rel: "stylesheet",
+											type: "text/css",
+											href: css
+										});
+										// Make sure app.css is the after library CSS files, and content.css is after app.css
+										// FIXME: Shouldn't hardcode this sort of thing
+										var headElem = rias.dom.heads[0],
+											isAppCss = css.indexOf(rias.theme.appCss) > -1,
+											isRiasdCss = css.indexOf("riasd.css") > -1,
+											appCssLink, riasdCssLink;
+										rias.forEach(links, function(link) {
+											if(link.href.indexOf(rias.theme.appCss) > -1){
+												appCssLink = link;
+											}
+											if(link.href.indexOf("riasd.css") > -1){
+												riasdCssLink = link;
 											}
 										});
+										if(isAppCss){
+											rias.dom.place(newLink, headElem, "", callback);
+										}else if(!appCssLink){
+											if(!riasdCssLink){
+												rias.dom.place(newLink, headElem, "", callback);
+											}else{
+												rias.dom.place(newLink, riasdCssLink, "before", callback);
+											}
+										}else{
+											if(!riasdCssLink){
+												rias.dom.place(newLink, appCssLink, "before", callback);
+											}else{
+												rias.dom.place(newLink, riasdCssLink, "before", callback);
+											}
+										}
 									});
 								}
 							};
@@ -166,13 +183,13 @@ define([
 							rias.riasd.loadRiasdCss([
 								rias.getRiasdUrl("rias/riasd/resources/riasd.css")
 							]);
-							d.resolve();
+							d.resolve(rias.riasd);
 						});
 					}
 				});
 			}catch(e){
 				rias.has.add("rias-riasd", 0, 0, 1);
-				d.reject(riaswMappers);
+				d.reject(rias.riasd);
 			}
 			return d.promise;
 		};
@@ -215,7 +232,7 @@ define([
 					}
 					///先 remove()，避免多次 on 而没有 remove()
 					t.removeTarget(self.focusNode);
-					delete self.focusNode._riasrTooltip;
+					//delete self.focusNode._riasrTooltip;
 					///node 可能没有 id，采用 self.id
 					rias.forEach(t.__h[self.id], function(h){
 						rias.forEach(h, function(_h){
@@ -226,7 +243,7 @@ define([
 						if(self.textDir && self.enforceTextDirWithUcc){///即 dojo.has("dojo-bidi")
 							tooltip = self.enforceTextDirWithUcc(null, tooltip);
 						}
-						self.focusNode._riasrTooltip = tooltip;
+						//self.focusNode._riasrTooltip = tooltip;
 						t.addTarget(self.focusNode);
 						/*t.__h[self.id] = t.own(
 							///用 self(dijit) 而不是 node，可以在 disabled 的情况下也能响应.
@@ -302,7 +319,7 @@ define([
 			args.parent = (args.parent != undefined ? args.parent :
 				rias.isRiaswModule(args.ownerRiasw) ? args.ownerRiasw :
 					args.ownerRiasw && rias.isRiaswModule(args.ownerRiasw._riasrModule) ? args.ownerRiasw._riasrModule :
-						rias.webApp || rias.body(rias.doc));
+						rias.dom.webAppNode);
 			//args.id = args.id;
 			//args.caption = args.caption;
 			//args.moduleMeta = args.moduleMeta;
@@ -521,7 +538,7 @@ define([
 			var date = rias.dateStamp.fromISOString(bd);
 			if (date) {
 				bd = rias.dateLocale.format(date, {
-					formatLength : 'medium'
+					formatLength : "medium"
 				});
 			}
 			if (bd) {
@@ -538,7 +555,6 @@ define([
 				//dialogType: "tip",
 				around: around,
 				ownerRiasw: rias.webApp,
-				//parent: rias.webApp || rias.body(rias.doc),
 				resizable: false,
 				autoClose: 0,
 				caption: (rias.webApp ? rias.webApp.appTitle : rias.i18n.studio.about),

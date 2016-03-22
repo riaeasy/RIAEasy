@@ -88,7 +88,7 @@ define([
 				if(!this._popup._destroyed){
 					this._popup.destroyRecursive(preserveDom);
 				}
-				delete this._popup;
+				this._popup = undefined;
 			}
 			this.inherited(arguments);
 		}

@@ -77,7 +77,7 @@ define([
 
 		templateString:
 			'<div class="dijitTreeNode" role="presentation">' +
-				'<div role="presentation" data-dojo-attach-point="rowNode,focusNode" class="dijitTreeRow" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">' +
+				'<div role="presentation" data-dojo-attach-point="rowNode,focusNode" class="dijitTreeRow" data-dojo-attach-event="onclick:toggle,onmouseenter:_onToggleMouseEnter,onmouseleave:_onToggleMouseLeave">' +
 					'<span role="presentation" data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando"></span>' +
 					'<span role="presentation" data-dojo-attach-point="expandoNodeText" class="dijitExpandoText"></span>' +
 					'<span role="presentation" data-dojo-attach-point="contentNode" class="dijitTreeContent">' +
@@ -159,19 +159,19 @@ define([
 		destroy: function(){
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
-				delete this._autoToggleDelay;
+				this._autoToggleDelay = undefined;
 			}
 			if(this._loadDeferred){
 				this._loadDeferred.cancel("destroy node");//resolve(false);
-				delete this._loadDeferred;
+				this._loadDeferred = undefined;
 			}
 			if(this._expandDeferred){
 				this._expandDeferred.cancel("destroy node");//resolve(false);
-				delete this._expandDeferred;
+				this._expandDeferred = undefined;
 			}
 			if(this._collapseDeferred){
 				this._collapseDeferred.cancel("destroy node");//resolve(false);
-				delete this._collapseDeferred;
+				this._collapseDeferred = undefined;
 			}
 			this.inherited(arguments);
 		},
@@ -274,7 +274,10 @@ define([
 			return shimmedPromise(def);		// dojo/promise/Promise
 		},*/
 
-		toggle: function (){
+		toggle: function (evt){
+			if(evt.target == this.expandoNode){
+				return;
+			}
 			if(this.tree.toggleOnClick && this.tree.model.mayHaveChildren(this.item)){
 				if(this.isExpanded){
 					this.tree._collapseNode(this);
@@ -284,7 +287,7 @@ define([
 			}
 		},
 
-		_onMouseEnter: function(e){
+		_onToggleMouseEnter: function(e){
 			var self = this,
 				tree = self.tree;
 			if(tree && (tree.expandOnEnter || tree.collapseOnEnter) && !self._autoToggleDelay && tree.model.mayHaveChildren(self.item)){
@@ -294,7 +297,7 @@ define([
 					self._autoToggleDelay = self.defer(function(){
 						if(self._autoToggleDelay){
 							self._autoToggleDelay.remove();
-							delete self._autoToggleDelay;
+							self._autoToggleDelay = undefined;
 						}
 						if(self.isExpanded){
 							if(tree.collapseOnEnter){
@@ -309,10 +312,10 @@ define([
 				}
 			}
 		},
-		_onMouseLeave: function(e){
+		_onToggleMouseLeave: function(e){
 			if(this._autoToggleDelay){
 				this._autoToggleDelay.remove();
-				delete this._autoToggleDelay;
+				this._autoToggleDelay = undefined;
 			}
 		}
 
@@ -327,7 +330,7 @@ define([
 		destroy: function(){
 			if(this._curSearch){
 				this._curSearch.timer.remove();
-				delete this._curSearch;
+				this._curSearch = undefined;
 			}
 			if(this.expandChildrenDeferred){
 				this.expandChildrenDeferred.cancel();
@@ -423,7 +426,7 @@ define([
 
 			if(self._curSearch){
 				self._curSearch.timer.remove();
-				delete self._curSearch;
+				self._curSearch = undefined;
 			}
 			if(self.rootNode){
 				self.rootNode.destroyRecursive();

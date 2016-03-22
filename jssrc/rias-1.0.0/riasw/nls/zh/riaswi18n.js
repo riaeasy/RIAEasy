@@ -57,6 +57,7 @@ define({
 		VSlider: "Vertical Slider",
 		//gauge
 		//grid
+		Grid: "Grid",
 		GridX: "GridX",
 		DGrid: "DGrid",
 		LazyTreeGrid: "Lazy TreeGrid",
@@ -225,6 +226,7 @@ define({
 		VSlider: "RIAStudio 客户端控件 - VerticalSlider.",
 		//gauge
 		//grid
+		Grid: "RIAStudio 客户端控件 - Grid.",
 		GridX: "RIAStudio 客户端控件 - GridX.",
 		DGrid: "RIAStudio 客户端控件 - DGrid.",
 		LazyTreeGrid: "RIAStudio 客户端控件 - LazyTreeGrid.",

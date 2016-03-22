@@ -20,7 +20,7 @@ define([
 			"_riaswIdOfModule": "main",
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.grid.GridX",
+					"_riaswType": "rias.riasw.grid.Grid",
 					"_riaswIdOfModule": "grid",
 					"cellIdOps": [
 						{
@@ -146,7 +146,7 @@ define([
 					}
 				}
 			}
-			g.refreshGrid(q);
+			g.refresh(q);
 		}
 	},
 									"_riaswType": "rias.riasw.form.Button",
@@ -166,7 +166,7 @@ define([
 			if(m.qTable && m.qTable.reset){
 				m.qTable.reset();
 			}
-			g.refreshGrid(m.query);
+			g.refresh(m.query);
 		}
 	}
 								}

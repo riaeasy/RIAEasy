@@ -54,10 +54,10 @@ define([
 
 		destroy: function(){
 			this._cleanupHandlers();
-			delete this.child;
-			delete this.container;
-			delete this.cover;
-			delete this.fake;
+			this.child = undefined;
+			this.container = undefined;
+			this.cover = undefined;
+			this.fake = undefined;
 			this.inherited(arguments);
 		},
 

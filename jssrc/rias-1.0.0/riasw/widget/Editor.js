@@ -131,7 +131,7 @@ define([
 			this._plugins = [];
 			if(this.toolbar){
 				this.toolbar.destroyRecursive();
-				delete this.toolbar;
+				this.toolbar = undefined;
 			}
 			this.inherited(arguments);
 		}

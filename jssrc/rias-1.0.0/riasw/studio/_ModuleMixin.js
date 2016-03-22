@@ -67,7 +67,7 @@ define([
 				rias.forEach(this._contentSetter.parseResults, function(widget){
 					rias.destroy(widget, preserveDom);
 				});
-				delete this._contentSetter.parseResults;
+				this._contentSetter.parseResults = undefined;
 			}
 			this.inherited(arguments);
 			if(!preserveDom){
@@ -141,7 +141,7 @@ define([
 			d.then(function(){
 				if(self._needLoadedAndShown && self._wasResized){
 					self.afterLoadedAndShown();
-					delete self._needLoadedAndShown;
+					self._needLoadedAndShown = undefined;
 				}
 			});
 			return d.promise;
@@ -163,9 +163,10 @@ define([
 					if(self._beingDestroyed){
 						return false;
 					}
-					//self.defer(function(){
+					self.defer(function(){
+						///需要等待 给 _started 赋值
 						self._loadModuleMeta();
-					//});
+					});
 				});
 			}
 			return r;
@@ -248,7 +249,7 @@ define([
 
 			return rias.when(p && p.then ? p : self._contentSetter.parseDeferred, function(){
 				// setter params must be pulled afresh from the ContentPane each time
-				delete self._contentSetterParams;
+				self._contentSetterParams = undefined;
 			});
 		},
 
@@ -332,7 +333,7 @@ define([
 			var self = this;
 			self.cancelLoad();
 			if(self.beforeLoad() != false){
-				delete self._needLoad;
+				self._needLoad = undefined;
 				self.isLoading = true;
 				self.isLoaded = false;
 				self.onLoadDeferred = rias.newDeferred(rias.hitch(self, "cancelLoad"));
@@ -507,7 +508,7 @@ define([
 				r = rias.isString(r) ? [r] : rias.isArray(r) ? r : [];
 				c = rias.isString(c) ? [c] : rias.isArray(c) ? c : [];
 				if(c.length > 0){
-					rias.theme.loadWebAppCss(c);
+					rias.theme.loadRiasCss(c);
 				}
 				try{
 					if(r.length > 0){

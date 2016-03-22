@@ -162,7 +162,8 @@ define([
 			var containerNode = rias.by(self.containerId).containerNode,
 				paneToButtonAttr = {
 					"title": "label",
-					"showtitle": "showLabel",
+					"label": "label",
+					"showcaption": "showLabel",
 					"iconclass": "iconClass",
 					"closable": "closeButton",
 					"tooltip": "title",
@@ -200,15 +201,15 @@ define([
 					id: this.id + "_" + (page._riaswIdOfModule ? page._riaswIdOfModule : page.id),
 					name: this.id + "_" + (page._riaswIdOfModule ? page._riaswIdOfModule : page.id), // note: must match id used in page2button()
 					label: page.caption || page.title,
-					disabled: page.disabled,
+					disabled: (page.disabled == undefined ? true : !!page.disabled),
 					ownerDocument: this.ownerDocument,
 					dir: page.dir,
 					tabPosition: this.tabPosition,
 					lang: page.lang,
 					textDir: page.textDir || this.textDir,
-					showLabel: page.showTitle,
-					iconClass: page.iconClass,
-					closeButton: page.closable,
+					showLabel: (page.showCaption == undefined ? true : !!page.showCaption),
+					iconClass: page.iconClass || "dijitNoIcon",
+					closeButton: (page.closable == undefined ? true : !!page.closable),
 					tooltip: page.tooltip || page.caption || page.title,
 					//watchTargetState: (page.watchTargetState != undefined ? page.watchTargetState : true),
 					page: page
@@ -241,7 +242,7 @@ define([
 				this.removeChild(button);
 				button.destroy();
 			}
-			delete page.controlButton;
+			page.controlButton = undefined;
 		},
 
 		onSelectChild: function(/*dijit/_WidgetBase*/ page){

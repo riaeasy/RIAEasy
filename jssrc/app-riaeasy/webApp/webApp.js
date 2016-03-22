@@ -3,11 +3,8 @@
 define([
 	"rias",
 	"dojo/i18n!./nls/appi18n",
-	"./riaswMappers",
-	"rias/riasw/studio/App",
-	"rias/riasw/studio/Module",
-	"rias/riasw/studio/DefaultError"
-], function(rias, appi18n, riaswMappers, App) {
+	"./riaswMappers"
+], function(rias, appi18n, riaswMappers) {
 
 	rias.registerRiaswMappers(riaswMappers);
 	rias.i18n.webApp = appi18n;
@@ -16,22 +13,23 @@ define([
 		"webApp.css"
 	]);
 
-	var body = rias.body(rias.doc),
-		params = body.id ? undefined : {
-			id: "webApp"
-		};
+	var d = rias.newDeferred();
 	if(!rias.webApp){
-		rias.webApp = rias.createRiasw(App, params, body);
+		rias.createWebApp({
+			id: rias.dom.body.id ? rias.dom.body.id : "webApp"
+		}).then(function(webApp){
+			rias.setObject("webApp", webApp);
+			webApp._scopeName = "webApp";
+			dojo.scopeMap.webApp = ["webApp", webApp];
 
-		rias.setObject("webApp", rias.webApp);
-		rias.webApp._scopeName = "webApp";
-		dojo.scopeMap.webApp = ["webApp", rias.webApp];
-
-		rias.webApp.own(rias.webApp._onBeforeUnload = rias.on(window, "beforeunload", function(e){
-			return "是否退出并关闭[" + rias.webApp.appTitle + "]?";
-		}));
+			webApp.own(webApp._onBeforeUnload = rias.on(window, "beforeunload", function(e){
+				return "是否退出并关闭[" + webApp.appTitle + "]?";
+			}));
+			webApp.moduleMeta = "appModule/app/app";
+			webApp.startup();
+		});
 	}
 
-	return rias.webApp;
+	return d.promise;
 
 });
