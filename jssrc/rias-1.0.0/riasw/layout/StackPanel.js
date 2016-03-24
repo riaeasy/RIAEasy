@@ -43,7 +43,7 @@ define([
 				rias.on(self.domNode, "keydown", rias.hitch(self, "_onKeyDown")),
 				rias.subscribe(self.id + "-startup", function(params){
 					if(params.selected){
-						self._transition(params.selected, params.selected);
+						self._transition(params.selected);
 						rias.publish(self.id + "-selectChild", params.selected);
 					}
 				}),
@@ -340,6 +340,10 @@ define([
 		onShowChild: function(page){
 		},
 		_onShowChild: function(page){
+			//this._needResize = true;
+			this.needLayout = true;//this._isShown();
+			//this.layout();
+			this._resizeParent();
 			this.onShowChild(page);
 		},
 		_showChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ animate){
@@ -372,9 +376,6 @@ define([
 			}*/
 			this._onShowChild(page);
 
-			//this._needResize = true;
-			this.needLayout = true;//this._isShown();
-			this.layout();
 			if(animate != false){
 				return this._doPlayContent().then(function(){
 					(page._show && page._show()) || (page._onShow && page._onShow());

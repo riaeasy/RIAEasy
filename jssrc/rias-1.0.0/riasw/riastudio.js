@@ -85,120 +85,6 @@ define([
 		rias.require.packs.i18n = {name: "i18n", location: "../../orion-7.0/orion", main: "i18n"};
 	}
 
-	rias.has.add("rias-riasd", 0);
-	rias.has.add("rias-riasd-local", 0);
-	rias.riasdUrlBase = (rias.has("rias-riasd-local") ? "" : "http://www.riaeasy.com:8081/");
-	rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
-		url += "";
-		var p = url.lastIndexOf("/"),
-			n;
-		if (p > -1) {
-			n = url.substring(p + 1);
-		} else {
-			n = url;
-		}
-		p = n.lastIndexOf(".");
-		if (p > -1) {
-			n = n.substring(p + 1);
-		} else {
-			n = "";
-		}
-		if(rias.riasdUrlBase){
-			if (n){
-				url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url, dojo));
-			}else{
-				url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url + ".js", dojo));
-			}
-		}
-		return url;
-	};
-	if(rias.has("rias-riasd")){
-		rias.initRiasd = function(){
-			var d = rias.newDeferred();
-			try{
-				rias.require([
-					rias.getRiasdUrl("rias/riasd/riaswMappers")
-				], function(riaswMappers){
-					if(riaswMappers == "not-a-module"){
-						rias.has.add("rias-riasd", 0, 0, 1);
-						d.reject(rias.riasd);
-					}else{
-						rias.registerRiaswMappers(1, riaswMappers);
-						rias.require([
-							"dojo/i18n!" + rias.getRiasdUrl("rias/riasd/nls/riasdi18n")
-						], function(riasdi18n){
-							rias.i18n.riasd = riasdi18n;
-							rias.riasd = {
-								loadRiasdCss: function(url, callback) {
-									var links = rias.dom.query("link");
-
-									var csses = rias.isArray(url) ? url : url ? [url] : [];//url.split(",");
-									rias.forEach(csses, function(css){
-										css = rias.xhr.toUrl(css);
-										if (links.some(function(val) {
-											return val.getAttribute("href") === css;
-										})) {
-											// don't add if stylesheet is already loaded in the page
-											return;
-										}
-
-										var newLink = rias.dom.create("link", {
-											rel: "stylesheet",
-											type: "text/css",
-											href: css
-										});
-										// Make sure app.css is the after library CSS files, and content.css is after app.css
-										// FIXME: Shouldn't hardcode this sort of thing
-										var headElem = rias.dom.heads[0],
-											isAppCss = css.indexOf(rias.theme.appCss) > -1,
-											isRiasdCss = css.indexOf("riasd.css") > -1,
-											appCssLink, riasdCssLink;
-										rias.forEach(links, function(link) {
-											if(link.href.indexOf(rias.theme.appCss) > -1){
-												appCssLink = link;
-											}
-											if(link.href.indexOf("riasd.css") > -1){
-												riasdCssLink = link;
-											}
-										});
-										if(isAppCss){
-											rias.dom.place(newLink, headElem, "", callback);
-										}else if(!appCssLink){
-											if(!riasdCssLink){
-												rias.dom.place(newLink, headElem, "", callback);
-											}else{
-												rias.dom.place(newLink, riasdCssLink, "before", callback);
-											}
-										}else{
-											if(!riasdCssLink){
-												rias.dom.place(newLink, appCssLink, "before", callback);
-											}else{
-												rias.dom.place(newLink, riasdCssLink, "before", callback);
-											}
-										}
-									});
-								}
-							};
-							//rias.theme.loadTheme(rias.theme.currentTheme || "rias", rias.theme.currentTheme || "rias", "", "ios7");
-							rias.riasd.loadRiasdCss([
-								rias.getRiasdUrl("rias/riasd/resources/riasd.css")
-							]);
-							d.resolve(rias.riasd);
-						});
-					}
-				});
-			}catch(e){
-				rias.has.add("rias-riasd", 0, 0, 1);
-				d.reject(rias.riasd);
-			}
-			return d.promise;
-		};
-	}else{
-		rias.initRiasd = function(){
-			return false;
-		}
-	}
-
 	///需要延迟加载
 	rias.require([
 		"dijit/_WidgetBase",
@@ -342,17 +228,6 @@ define([
 			args.afterLoaded = function(result){
 				///DialogPanel 自己 loadModuleMeta，而不是创建一个 Module 作为 child，故不需要额外处理（关联） submit、cancel
 				var cc = 1;
-				/*d.own(rias.after(d, "onShow", function(){
-					//if(d._isShown() && d._isVisible()){
-					//	d.bringToTop(d);
-					//	if(!d.isTip()){
-					//		d.focus();
-					//	}
-					//}
-					if (rias.isFunction(_onShow)) {
-						rias.hitch(d, _onShow)();
-					}
-				}, true));*/
 				if(_hookAfterSubmit){
 					d.own(rias.before(d, "afterSubmit", function(){
 						if (rias.isFunction(_hookAfterSubmit)) {
@@ -418,6 +293,7 @@ define([
 			delete args.x;
 			delete args.y;
 			var d = rias.createRiasw(DialogPanel, args);
+			//d._needPosition = !rias.dom.positionAt(d, d.initPlaceToArgs) || !rias.dom.visible(d);/// self 不可见时，positionAt 定位不正确。
 			d.startup();
 			return d;
 		}
@@ -551,6 +427,7 @@ define([
 			//	content: formHTML
 			//});
 			return rias.info({
+				_riaswIdOfModule: "about",
 				dialogType: "modal",
 				//dialogType: "tip",
 				around: around,
@@ -562,6 +439,177 @@ define([
 				content: formHTML
 			});
 		};
+
+		rias.has.add("rias-riasd", 0);
+		rias.has.add("rias-riasd-local", 0);
+		rias.riasdUrlBase = (rias.has("rias-riasd-local") ? "" : "http://www.riaeasy.com:8081/");
+		rias.getRiasdUrl = function(url){///不用 toUrl 这个名字，避免混淆，因为 toUrl 检测了 cacheBust
+			url += "";
+			var p = url.lastIndexOf("/"),
+				n;
+			if (p > -1) {
+				n = url.substring(p + 1);
+			} else {
+				n = url;
+			}
+			p = n.lastIndexOf(".");
+			if (p > -1) {
+				n = n.substring(p + 1);
+			} else {
+				n = "";
+			}
+			if(rias.riasdUrlBase){
+				if (n){
+					url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url, dojo));
+				}else{
+					url = rias.xhr.toUrl(rias.riasdUrlBase + rias.toUrl(url + ".js", dojo));
+				}
+			}
+			return url;
+		};
+		if(rias.has("rias-riasd")){
+			rias.initRiasd = function(){
+				var d = rias.newDeferred();
+				try{
+					rias.require([
+						rias.getRiasdUrl("rias/riasd/riaswMappers")
+					], function(riaswMappers){
+						if(riaswMappers == "not-a-module"){
+							rias.has.add("rias-riasd", 0, 0, 1);
+							d.reject(rias.riasd);
+						}else{
+							rias.registerRiaswMappers(1, riaswMappers);
+							rias.require([
+								"dojo/i18n!" + rias.getRiasdUrl("rias/riasd/nls/riasdi18n")
+							], function(riasdi18n){
+								rias.i18n.riasd = riasdi18n;
+								rias.riasd = {
+									loadRiasdCss: function(url, callback) {
+										var links = rias.dom.query("link");
+
+										var csses = rias.isArray(url) ? url : url ? [url] : [];//url.split(",");
+										rias.forEach(csses, function(css){
+											css = rias.xhr.toUrl(css);
+											if (links.some(function(val) {
+												return val.getAttribute("href") === css;
+											})) {
+												// don't add if stylesheet is already loaded in the page
+												return;
+											}
+
+											var newLink = rias.dom.create("link", {
+												rel: "stylesheet",
+												type: "text/css",
+												href: css
+											});
+											// Make sure app.css is the after library CSS files, and content.css is after app.css
+											// FIXME: Shouldn't hardcode this sort of thing
+											var headElem = rias.dom.heads[0],
+												isAppCss = css.indexOf(rias.theme.appCss) > -1,
+												isRiasdCss = css.indexOf("riasd.css") > -1,
+												appCssLink, riasdCssLink;
+											rias.forEach(links, function(link) {
+												if(link.href.indexOf(rias.theme.appCss) > -1){
+													appCssLink = link;
+												}
+												if(link.href.indexOf("riasd.css") > -1){
+													riasdCssLink = link;
+												}
+											});
+											if(isAppCss){
+												rias.dom.place(newLink, headElem, "", callback);
+											}else if(!appCssLink){
+												if(!riasdCssLink){
+													rias.dom.place(newLink, headElem, "", callback);
+												}else{
+													rias.dom.place(newLink, riasdCssLink, "before", callback);
+												}
+											}else{
+												if(!riasdCssLink){
+													rias.dom.place(newLink, appCssLink, "before", callback);
+												}else{
+													rias.dom.place(newLink, riasdCssLink, "before", callback);
+												}
+											}
+										});
+									}
+								};
+								//rias.theme.loadTheme(rias.theme.currentTheme || "rias", rias.theme.currentTheme || "rias", "", "ios7");
+								rias.riasd.loadRiasdCss([
+									rias.getRiasdUrl("rias/riasd/resources/riasd.css")
+								]);
+								if(!rias.webApp.launchRiasd){
+									rias.webApp.launchRiasd = function(modulename){//moduleMeta, _riaswIdOfModule, caption, moduleParams, reCreate, id
+										return rias.webApp.launch({
+											isRiasd: true,
+											moduleMeta: rias.getRiasdUrl("rias/riasd/module/visualEditor"),
+											_riaswIdOfModule: "ve_" + modulename.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
+											caption: modulename,
+											moduleParams: {
+												_riasdModulename: modulename
+											},
+											//reCreate: false,
+											id: "ve_" + modulename.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
+											iconClass: "riasdIcon"
+										});
+									};
+								}
+								if(!rias.webApp.launchRiasdFileSelector){
+									rias.webApp.launchRiasdFileSelector = function(params){
+										return rias.webApp.launch(rias.mixinDeep({
+											requireLogged: false,
+											"_riaswType": "rias.riasw.layout.DialogPanel",
+											dialogType: "top",
+											caption: rias.i18n.riasd.visualEditor,//"资源管理器",
+											tooltip: rias.i18n.riasd.visualEditor + '<br/>IE11及以下版本只能使用部分功能',
+											iconClass: "outlineIcon",
+											//autoClose: 0,
+											closable: false,
+											maxable: false,
+											style: {
+												width: "30em",
+												height: "80em",
+												"padding": "0px"
+											},
+											moduleMeta: {
+												$refScript: "return rias.getRiasdUrl('rias/riasd/module/fileSelector');"
+											},
+											afterSubmit: function(){
+												var m = this._riasrModule,
+													item = this.get("_riasrModuleResult"),
+													mn;
+												if(!item){
+													//请选择一个节点
+													return false;
+												}else if(item.itemType === "file"){
+													mn = item.pathname.replace(/\.js$/gi, "").replace(/\.rsf$/gi, "").replace(/\./gi, "/");
+													rias.undef(mn);
+													///先获取文件锁，然后再打开
+													//rias.xhrPost({
+													//
+													//});
+													return rias.webApp.launchRiasd(mn);
+												}
+											}
+										}, params));
+									};
+								}
+								d.resolve(rias.riasd);
+							});
+						}
+					});
+				}catch(e){
+					rias.has.add("rias-riasd", 0, 0, 1);
+					d.reject(rias.riasd);
+				}
+				return d.promise;
+			};
+		}else{
+			rias.initRiasd = function(){
+				return false;
+			}
+		}
+
 	});
 
 	return rias;

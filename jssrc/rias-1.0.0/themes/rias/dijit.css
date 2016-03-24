@@ -1228,6 +1228,11 @@ body .dijitAlignClient { position: absolute; }
 	border:1px solid black;
 	background-color: white;
 }
+.dijitMenuActive {
+}
+.dijitMenuPassive {
+	display: none;
+}
 .dijitMenuTable {
 	border-collapse:collapse;
 	border-width:0;

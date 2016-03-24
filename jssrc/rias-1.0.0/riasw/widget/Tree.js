@@ -88,9 +88,6 @@ define([
 				'<div role="presentation" data-dojo-attach-point="containerNode" class="dijitTreeNodeContainer" style="display: none;" aria-labelledby="${id}_label"></div>' +
 			'</div>',
 
-		isFocusable: function(){
-			return !this.disabled && this.focusNode && (rias.dom.getStyle(this.domNode, "display") != "none");
-		},
 		_setDisabledAttr: function(/*Boolean*/ value){
 			value = !!value;
 			this._set("disabled", value);

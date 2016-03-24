@@ -49,14 +49,6 @@ define([
 			"_buttonNode": "dijitDownArrowButton"
 		},
 
-		//_setReadOnlyAttr: function(/*Boolean*/ value){
-		//	rias.dom.setAttr(this.focusNode, 'readOnly', value || !this.canEdit);
-		//	this._set("readOnly", value);
-		//},
-		//_setCanEditAttr: function(value){
-		//	this._set("canEdit", !!value);
-		//	rias.dom.setAttr(this.textbox, "readonly", (this.readOnly || !value));
-		//},
 		_setHasDownArrowAttr: function(/*Boolean*/ val){
 			this._set("hasDownArrow", val);
 			this._buttonNode.style.display = val ? "" : "none";
@@ -285,6 +277,7 @@ define([
 				// Set width of drop down if necessary, so that dropdown width + width of scrollbar (from popup wrapper)
 				// matches width of aroundNode
 				var resizeArgs = rias.dom.getMarginBox(ddNode);
+				resizeArgs = rias.dom.getBoxOfStyle(resizeArgs, ddNode.style);
 				if(self.forceWidth || (self.autoWidth && around.offsetWidth > dd.domNode.offsetWidth)){
 					resizeArgs.w = around.offsetWidth;
 				}

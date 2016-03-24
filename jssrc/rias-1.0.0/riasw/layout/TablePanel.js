@@ -130,6 +130,9 @@ define([
 		},
 
 		_internalLayou: function(){
+			if(this._riasrDestroying || this._beingDestroyed){
+				return;
+			}
 			var self = this,
 				fn = this._focusedNode || rias.dom.focusedNode,/// this.focused 时，没有 this._focusedNode， 取 rias.dom.focusedNode
 				tn = self.tableNode,// ? self.tableNode : self.tableNode = rias.dom.create("table", self._tableAttr),// self.tableNode,

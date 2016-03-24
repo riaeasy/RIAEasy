@@ -253,10 +253,13 @@ define([
 				self.submitDeferred.resolve(result);
 				if(!(result === false)){
 					rias.when(self.afterSubmit(result), function(result){
+						self.closeResult = 1;
 						if(self.submitDisplayState){
-							self.closeResult = 1;
-							//self.close(self.closeResult);
-							self.set("displayState", self.submitDisplayState);
+							if(!self.isDisplayState(self.submitDisplayState)){
+								self.set("displayState", self.submitDisplayState);
+							}
+						}else{
+							self.close(self.closeResult);
 						}
 					});
 				}

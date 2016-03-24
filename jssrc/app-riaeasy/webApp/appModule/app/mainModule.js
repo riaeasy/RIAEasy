@@ -44,23 +44,6 @@ define([
 					}
 				};
 			}
-			if(!rias.webApp.launchRiasd){
-				rias.webApp.launchRiasd = function(modulename, owner){//moduleMeta, _riaswIdOfModule, caption, moduleParams, reCreate, id
-					rias.webApp.launch({
-						isRiasd: true,
-						moduleMeta: rias.getRiasdUrl("rias/riasd/module/visualEditor"),
-						_riaswIdOfModule: "ve_" + modulename.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
-						caption: modulename,
-						moduleParams: {
-							ownerRiasw: owner || m,
-							_riasdModulename: modulename
-						},
-						//reCreate: false,
-						id: "ve_" + modulename.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
-						iconClass: "riasdIcon"
-					});
-				};
-			}
 			m.showLogInfo();
 		},
 	"afterLoaded": function (){
@@ -102,19 +85,8 @@ define([
 				rias.webApp.launch(meta).then(function(){
 					rias.when(rias.initRiasd(), function(result){
 						if(result != false){
-							rias.webApp.launch({
-								requireLogged: false,
-								"_riaswType": "rias.riasw.layout.DialogPanel",
+							rias.webApp.launchRiasdFileSelector({
 								"_riaswIdOfModule": "riasdFileSelector",
-								"$refNote": "",
-								"caption": {
-									$refObj: "rias.i18n.riasd.visualEditor"
-								},
-								"tooltip": {
-									$refScript: "return rias.i18n.riasd.visualEditor + '<br/>IE11及以下版本只能使用部分功能';"
-								},
-								"closable": false,
-								submitDisplayState: "collapsed",
 								"initDisplayState": "hidden",
 								"initPlaceToArgs": {
 									parent: m,
@@ -124,54 +96,17 @@ define([
 								"dockTo": {
 									"$refObj": "appMainDockTop"
 								},
-								"maxable": false,
-								"persist": false,
-								//"toggleable": false,
-								//toggleOnEnter: true,
-								//toggleOnBlur: true,
 								dialogType: "top",
-								//autoClose: 0,
-								minSize: {
-									h: 360,
-									w: 240
-								},
+								//toggleable: false,
+								//toggleOnEnter: true,
+								toggleOnBlur: true,
+								submitDisplayState: "collapsed",
 								style: {
 									width: "30em",
 									height: rias.toInt(m.domNode.clientHeight * 0.7, 600) + "px",//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
 									"padding": "0px"
-								},
-								moduleMeta: {
-									$refScript: "return rias.getRiasdUrl('rias/riasd/module/fileSelector');"
-								},
-								rootId: "appModule",
-								//onlyDir: true,
-								actions: {
-									get:		"act/riasd/getAppModule",
-									//save:		"act/riasd/saveAppModule",
-									newDir:		"act/riasd/newAppModuleDir",
-									newFile:	"act/riasd/newAppModule",
-									//rename:		"act/riasd/renameAppModule",
-									dele:		"act/riasd/deleAppModule"
-								},
-								afterSubmit: function(){
-									var m = this._riasrModule,
-										item = this.get("_riasrModuleResult"),
-										mn;
-									if(!item){
-										//请选择一个节点
-										return false;
-									}else if(item.itemType === "file"){
-										mn = item.pathname.replace(/\.js$/gi, "").replace(/\.rsf$/gi, "").replace(/\./gi, "/");
-										rias.undef(mn);
-										///先获取文件锁，然后再打开
-										//rias.xhrPost({
-										//
-										//});
-										return rias.webApp.launchRiasd(mn);
-									}
 								}
-							}).then(function(){
-								});
+							});
 						}
 					});
 				});
@@ -193,6 +128,9 @@ define([
 						"moduleMeta": "appModule/app/mainMenu",
 						"_riaswType": "rias.riasw.layout.DialogPanel",
 						_riaswIdOfModule: "mainMenu",
+						"caption": rias.i18n.webApp.menu,
+						"tooltip": rias.i18n.webApp.menu,
+						"iconClass": "menuIcon",
 						//caption: "菜单",
 						moduleParams: {},
 						reCreate: true,
@@ -200,32 +138,22 @@ define([
 
 						dialogType: "top",
 						maxable: false,
-						"toggleOnEnter": true,
+						//"toggleOnEnter": true,
 						toggleOnBlur: true,
 						//alwaysShowDockNode:true,
 						submitDisplayState: "collapsed",
 						"initDisplayState": "hidden",
-						//"initDisplayBox": {
-						//	"h": 360,
-						//	"w": 240
-						//},
 						"initPlaceToArgs": {
 							parent: m,
 							around: "mainMenu._riasrDockNode",
 							orient: ["after"]
 						},
-						"minSize": {
-							"h": 360,
-							"w": 240
-						},
-
 						"style": {
 							//"display": "none",
 							"padding": "0px",
 							"width": "30em",
 							height: "60em"// rias.toInt(this.domNode.clientHeight * 0.8, 480) + "px"//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
-						},
-						"_riaswChildren": []
+						}
 					},{
 						moduleMeta: "appModule/app/workbench",
 						_riaswIdOfModule: "tabWorkbench",
@@ -343,7 +271,7 @@ define([
 									}else{
 										parent.selectChild(target, true);
 									}
-								},
+								/*},
 								_onMouseEnter: function(e){
 									var self = this,
 										target = self.targetWidget;
@@ -357,7 +285,7 @@ define([
 											});
 										}, rias.autoToggleDuration);
 									}
-								}
+								*/}
 							}
 						});
 					}
@@ -605,7 +533,6 @@ define([
 						"padding": "0px"
 					},
 					"onShowChild": function (page){
-							this._resizeParent();
 							page.isTopmost = true;
 							if(page._riasrDockNode){
 								page._riasrDockNode.setTargetState();

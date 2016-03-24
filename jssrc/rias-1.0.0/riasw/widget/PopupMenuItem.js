@@ -36,7 +36,7 @@ define([
 		_fillContent: function(){
 			if(!this.dropDownContainer){
 				if(this.srcNodeRef){
-					var nodes = query("*", this.srcNodeRef);
+					var nodes = rias.dom.query("*", this.srcNodeRef);
 					this.inherited(arguments, [nodes[0]]);
 					this.dropDownContainer = this.srcNodeRef;
 				}

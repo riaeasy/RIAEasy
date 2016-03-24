@@ -164,7 +164,7 @@ define([
 		},
 		toggle: function(){
 			var target = this.targetWidget;
-			if(target){
+			if(target && !target._playing){
 				//if(target.isShown() && !target.isTopmost && rias.isFunction(target.bringToTop)){
 				if(target.isShown() && target._wasResized && !target.isTopmost && rias.isFunction(target.bringToTop)){
 					target.bringToTop();

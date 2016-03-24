@@ -1,6 +1,6 @@
 .rias .dgrid {
   background: #fff;
-  border-color: #aaa;
+  border-color: #c0c0c0;
   color: #000;
 }
 .rias .dgrid-header,
@@ -8,7 +8,7 @@
   background: #e6e6fa;
 }
 .rias .dgrid-header .dgrid-cell {
-  border-color: #bbb;
+  border-color: #c0c0c0;
   font-weight: bold;
 }
 .rias .dgrid-header .dgrid-cell:hover {
@@ -38,6 +38,9 @@
   line-height: 1em;
   padding: 0;
   border-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold;
 }
 .rias .dgrid-row {
   transition-duration: 0.2s;
@@ -53,7 +56,7 @@
   background-color: #ffd700;
 }
 .rias .dgrid-highlight {
-  background-color: #ff6;
+  background-color: #ff0;
 }
 .rias .dgrid-cell {
   padding: 0.5em 0.25em;

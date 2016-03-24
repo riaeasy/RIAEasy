@@ -123,7 +123,7 @@ define([
 		},
 		_setEditableAttr: function(value){
 			this._set("editable", !!value);
-			rias.dom.setAttr(this.textbox, "readonly", (this.readOnly || !value));
+			rias.dom.setAttr(this.textbox, "readOnly", (this.readOnly || !value));
 		},
 
 		startup: function(){

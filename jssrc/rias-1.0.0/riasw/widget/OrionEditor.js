@@ -145,7 +145,6 @@ define([
 		defaultContent: "",
 
 		_setDisabledAttr: function(/*Boolean*/ value){
-			///TODO:zensst.暂时为实现.
 			var w = this.editor,
 				t = (w ? w._textView : undefined);
 			value = !!value;
@@ -211,7 +210,7 @@ define([
 			if (!this.editor) {
 				this._createEditor();
 			}
-			this.containerNode = this.domNode.firstChild;
+			this.containerNode = this.editor._domNode;
 			rias.dom.addClass(this.containerNode, "riaswTextBoxContainer");
 			//this.watch("readonly", rias.hitch(this, "_setStateClass"));
 		},
@@ -562,6 +561,14 @@ define([
 
 			editor.getTextView().focus();
 
+		},
+
+		resize: function(box){
+			var w = this.editor;
+			rias.dom.setMarginBox(this.domNode, box);
+			if(w && w._textView){
+				w._textView.resize();
+			}
 		}
 
 	});

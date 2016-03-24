@@ -329,7 +329,7 @@ define([
 					// Using domGeometry.getMarginSize() rather than domGeometry.position() since claro has 1px bottom margin
 					// to separate accordion panes.  Not sure that works perfectly, it's probably putting a 1px
 					// margin below the bottom pane (even though we don't want one).
-					totalCollapsedHeight += child._buttonWidget.getTitleHeight();
+					child._buttonWidget && (totalCollapsedHeight += child._buttonWidget.getTitleHeight());
 				}
 			});
 			this._verticalSpace = mySize.h - totalCollapsedHeight - wrapperDomNodeMargin.h

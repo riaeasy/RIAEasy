@@ -807,7 +807,7 @@ define([
 					label: rias.i18n.action.action,
 					field: "id",
 					"className": "dgrid-opcolumn",
-					width: p.opColumnWidth || "6em",
+					width: p.opColumnWidth || "9em",
 					renderCell: function(data, cellData, cell, options){
 						var result,
 							grid = this.grid,

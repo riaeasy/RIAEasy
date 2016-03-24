@@ -509,7 +509,7 @@ define([
 			ws, ms, ts;
 
 		function _visible(d){
-			return d.isShown() && d._isVisible();///TODO:zensst. _wasResized ?
+			return d.isShown() && d.get("visible");///TODO:zensst. _wasResized ?
 		}
 		function _topmost(h, value, z){
 			if(value){

@@ -11,6 +11,11 @@
 }
 
 .riaswUnderlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 998;
+	display: none;
 	background: darkgray;
 	opacity: 0.33;
 }

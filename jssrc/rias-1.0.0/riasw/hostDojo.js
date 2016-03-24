@@ -291,6 +291,14 @@ define([
 		};
 	};
 	rias.dom.setContentSize = domGeom.setContentSize;
+	rias.dom.getBoxOfStyle = function(box, style){
+		return box ? {
+			t: box.t,
+			l: box.l,
+			w: style.width ? box.w : undefined,
+			h: style.height ? box.h : undefined
+		} : {};
+	};
 	rias.dom.position = domGeom.position;
 	//rias.coords = dojo.coords; /// = domGeom.position?
 	rias.dom.isBodyLtr = domGeom.isBodyLtr;
@@ -803,7 +811,7 @@ define([
 		//}else if(rias.isDomNode(node)){
 		//	parent = rias.by(node.parentNode);
 		}
-		if(!rias.dom.visibleFull(parent) || (rias.isDomNode(around) && !rias.dom.visibleFull(around))){
+		if(!rias.dom.isVisible(parent, true) || (rias.isDomNode(around) && !rias.dom.isVisible(around, true))){
 			return false;
 		}
 		var //orient = args.orient || ["below", "below-alt", "above", "above-alt"],
@@ -884,28 +892,57 @@ define([
 	//	widget = rias.isDomNode(widget) ? widget : (widget = rias.by(widget)) ? widget.domNode : undefined;
 	//	return rias.a11y._isElementShown(widget) && !rias.dom.hasClass(widget, "dijitHidden");
 	//};
-	rias.dom.visibleFull = function(node){
+	rias.dom.isVisible = function(node, includeParent){
 		node = rias.domNodeBy(node);
-		var //node = this.domNode,
-		//parent = this.domNode.parentNode,
-		//v = (node.style.display != 'none') && (node.style.visibility != 'hidden') && !rias.dom.hasClass(node, "dijitHidden") &&
-		//	parent && parent.style && (parent.style.display != 'none');
-			v = node && node.parentNode && rias.dom.visible(node);
-		while(v && (node = node.parentNode)){
-			v = rias.dom.visible(node);
+		var v = node && node.parentNode && rias.dom.visible(node);
+		if(includeParent){
+			while(v && node && (node.parentNode !== node.ownerDocument) && (node = node.parentNode)){
+				v = rias.dom.visible(node);
+			}
+			v = v && node && node.parentNode === node.ownerDocument;
 		}
 		return !!v;
 	};
 
 	rias.dom.selection = selection;
 	rias.dom.focusManager = focus;
+	focus._setStack = function (newStack, by) {
+		var oldStack = this.activeStack, lastOldIdx = oldStack.length - 1, lastNewIdx = newStack.length - 1;
+		if (newStack[lastNewIdx] == oldStack[lastOldIdx] && lastOldIdx === lastNewIdx) {
+			/// 如果 length 不同也需要重置。
+			return;
+		}
+		this.set("activeStack", newStack);
+		var widget, i;
+		/// 修改 dijit 原来的重置机制，允许长度不同时重置。
+		/// 全部扫描一遍，排除已经 focused。
+		for (i = lastOldIdx; i >= 0; i--) {
+			if(newStack.indexOf(oldStack[i]) < 0){
+				widget = rias.registry.byId(oldStack[i]);
+				if (widget) {
+					widget._hasBeenBlurred = true;
+					widget.set("focused", false);
+					if (widget._focusManager == this) {
+						widget._onBlur(by);
+					}
+					this.emit("widget-blur", widget, by);
+				}
+			}
+		}
+		for (i = 0; i <= lastNewIdx; i++) {
+			if(oldStack.indexOf(newStack[i]) < 0){
+				widget = rias.registry.byId(newStack[i]);
+				if (widget) {
+					widget.set("focused", true);
+					if (widget._focusManager == this) {
+						widget._onFocus(by);
+					}
+					this.emit("widget-focus", widget, by);
+				}
+			}
+		}
+	};
 	rias.dom.focus = focus.focus = function(/*Object|DomNode */ handle){
-		// summary:
-		//		Sets the focused node and the selection according to argument.
-		//		To set focus to an iframe's content, pass in the iframe itself.
-		// handle:
-		//		object returned by get(), or a DomNode
-
 		if(!handle){
 			return;
 		}
@@ -915,10 +952,8 @@ define([
 			openedForWindow = handle.openedForWindow,
 			collapsed = bookmark ? bookmark.isCollapsed : false;
 
-		// Set the focus
-		// Note that for iframe's we need to use the <iframe> to follow the parentNode chain,
-		// but we need to set focus to iframe.contentWindow
 		if(node){
+			///允许使用 dijit
 			if(rias.isDijit(node)){
 				node = node.focusNode || node.containerNode || node.domNode;
 			}
@@ -933,10 +968,6 @@ define([
 			focus._onFocusNode(node);
 		}
 
-		// set the selection
-		// do not need to restore if current selection is not empty
-		// (use keyboard to select a menu item) or if previous selection was collapsed
-		// as it may cause focus shift (Esp in IE).
 		if(bookmark && win.withGlobal(openedForWindow || win.global, dijit.isCollapsed) && !collapsed){
 			if(openedForWindow){
 				openedForWindow.focus();
@@ -1069,6 +1100,24 @@ define([
 
 ///dijit******************************************************************************///
 	rias.a11y = a11y;
+	a11y.effectiveTabIndex = function (elem, onlySelf) {
+		elem = rias.isDomNode(elem) ? elem : rias.isDijit(elem) ? elem.focusNode || elem.domNode : undefined;
+		if (elem && (domAttr.get(elem, "disabled") || domAttr.get(elem, "readOnly") || !rias.dom.isVisible(elem, !onlySelf))) {
+			return undefined;
+		} else {
+			if (domAttr.has(elem, "tabIndex")) {
+				return +domAttr.get(elem, "tabIndex");
+			} else {
+				return a11y.hasDefaultTabStop(elem) ? 0 : undefined;
+			}
+		}
+	};
+	a11y.isTabNavigable = function (elem, onlySelf) {
+		return a11y.effectiveTabIndex(elem, onlySelf) >= 0;
+	};
+	a11y.isFocusable = function (elem, onlySelf) {
+		return a11y.effectiveTabIndex(elem, onlySelf) >= -1;
+	};
 	rias.registry = registry;
 
 	_WidgetBase.extend({
@@ -1098,6 +1147,24 @@ define([
 		},
 		postMixInProperties: function(){
 			this.inherited(arguments);
+		},
+		buildRendering:function () {
+			if (!this.domNode) {
+				this.domNode = this.srcNodeRef || this.ownerDocument.createElement("div");
+			}
+			if(!this.domNode.parentNode){
+				rias.dom.place(this.domNode, rias.dom.documentBody(this.ownerDocument));
+			}
+			this._riasrParent = this._riasrParent || rias.by(this.domNode.parentNode);
+			if (this.baseClass) {
+				var classes = this.baseClass.split(" ");
+				if (!this.isLeftToRight()) {
+					classes = classes.concat(array.map(classes, function (name) {
+						return name + "Rtl";
+					}));
+				}
+				domClass.add(this.domNode, classes);
+			}
 		},
 		postCreate: function(){
 			if(this.domNode){
@@ -1161,7 +1228,20 @@ define([
 		_setVisibleAttr: function(value){
 			value = !!value;
 			this._set("visible", value);
-			rias.dom.visible(this, value);
+			rias.dom.visible(this.domNode, value);
+		},
+		_getVisibleAttr: function(){
+			/// isVisible 需要判断 parent 是否可见
+			///? self 可能是 StackContainer.child，可能在不可见 页，所以不要判断 parent 的可见性。
+			return rias.dom.isVisible(this.domNode, true);
+		},
+		focus: function(){
+			if(this.isFocusable()){
+				rias.dom.focus(this.focusNode || this.domNode);
+			}
+		},
+		isFocusable: function () {
+			return this.focus && !this.disabled && !this.readOnly && rias.a11y.isFocusable(this.focusNode || this.domNode, true);
 		},
 		placeAt: function(/* String|DomNode|_Widget */ reference, /* String|Int? */ position){
 			//FIXME:zensst.修正position为"only"时，没有调用addChild()的错误.
@@ -1180,9 +1260,6 @@ define([
 				//if(p.removeChild && p != child.(parent)){
 				//	p.removeChild(child);
 				//}
-				if(!child._riasrModule){
-
-				}
 				p.addChild(child, position);
 				///这里还是不处理好些，放到 addChild 中处理，与 removeChild 配对。
 				//child._riasrParent = p;
@@ -1204,8 +1281,7 @@ define([
 				//}
 				child.set("riasrParentNode", ref);
 				p = child.getParent();
-				///ref 不一定是 p，故最好不要设置 _riasrParent
-				///child._riasrParent = p;
+				child._riasrParent = p;
 				if(!child._started){
 					if(!p || p._started){
 						child.startup();
@@ -1354,6 +1430,10 @@ define([
 					this.set('tabIndex', this.tabIndex);
 				}
 			}
+		},
+		isFocusable: function () {
+			//return this.focus && !this.disabled && !this.readOnly && rias.a11y.isFocusable(this.focusNode || this.domNode, true);
+			this.inherited(arguments);
 		}
 	});
 
@@ -1379,6 +1459,37 @@ define([
 	});
 
 	_Container.extend({
+		_onBlur: function(){
+			if(rias.dom.isDescendant(rias.dom.focusedNode, this.domNode)){
+				this._focusedNode = rias.dom.focusedNode;
+			}
+		},
+		_onFocus: function(){
+			this._focusedNode = undefined;
+		},
+		_getFocusItems: function(){
+			var elems = rias.a11y._getTabNavigable(this.domNode);
+			this._firstFocusNode = elems.lowest || elems.first || this.closeButtonNode || this.domNode;
+			this._lastFocusNode = elems.last || elems.highest || this._firstFocusNode;
+		},
+		focus: function(){
+			var node;
+			if(!this.focused){
+				if(this._focusedNode && rias.a11y.isFocusable(this._focusedNode)){
+					rias.dom.focus(this._focusedNode);
+					return;
+				}
+				if(this.activeNode){
+					node = rias.by(this.activeNode, this);
+					if(node && rias.a11y.isFocusable(node)){
+						rias.dom.focus(node);
+						return;
+					}
+				}
+				this._getFocusItems();
+				rias.dom.focus(this._firstFocusNode);
+			}
+		},
 		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex){
 			if(added && this._started){
 				if(!child._started){

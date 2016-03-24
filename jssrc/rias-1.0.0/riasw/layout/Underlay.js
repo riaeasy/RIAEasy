@@ -13,7 +13,7 @@ define([
 
 	var Widget = rias.declare(riasType, [_Widget, _TemplatedMixin], {
 
-		templateString: "<div class='riaswUnderlayWrapper'><div class='riaswUnderlay' tabIndex='-1' data-dojo-attach-point='containerNode'></div></div>",
+		templateString: "<div class='riaswUnderlay' tabIndex='-1' data-dojo-attach-point='containerNode'></div>",
 
 		dialog: null,
 
@@ -31,12 +31,10 @@ define([
 			}).join(" "));
 			this._onKeyDown = rias.hitch(dlg, "_onKey");
 			if(this.open){
-				if(dlg){
-					if(dlg.parent){
-						this.placeAt(dlg.parent);
-					}else{
-						this.placeAt(dlg._riasrParent);
-					}
+				if(dlg && dlg.parent){
+					this.placeAt(dlg.parent);
+				}else if(dlg && dlg._riasrParent){
+					this.placeAt(dlg._riasrParent);
 				}else{
 					this.placeAt(this.ownerDocument);
 				}
@@ -78,7 +76,7 @@ define([
 			// window and then we are called to resize)
 			this.domNode.style.display = "none";
 
-			var box = rias.dom.getMarginBox(this.getParentNode());
+			var box = rias.dom.getContentBox(this.getParentNode());
 			box.t = 0;
 			box.l = 0;
 			rias.dom.setMarginBox(this.domNode, box);
@@ -91,12 +89,10 @@ define([
 
 		show: function(){
 			var dlg = this.dialog;
-			if(dlg){
-				if(dlg.parent){
-					this.placeAt(dlg.parent);
-				}else{
-					this.placeAt(dlg._riasrParent);
-				}
+			if(dlg && dlg.parent){
+				this.placeAt(dlg.parent);
+			}else if(dlg && dlg._riasrParent){
+				this.placeAt(dlg._riasrParent);
 			}else{
 				this.placeAt(this.ownerDocument);
 			}

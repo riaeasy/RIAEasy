@@ -1,14 +1,14 @@
 //@require 'nib/gradients';
 //@require 'nib/vendor';
 
-$dgrid-background ?= #fff;
-$dgrid-color ?= #000;
-$dgrid-border-color ?= #aaa;
+$dgrid-background ?= white;
+$dgrid-color ?= black;
+$dgrid-border-color ?= silver;
 
 $dgrid-header-background ?= lavender;
 //$dgrid-header-background-image ?= linear-gradient(top, #ebf0f5 0%,#d5e0ea 100%);
 //$dgrid-header-filter ?= unquote("progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf0f5', endColorstr='#d5e0ea',GradientType=0 )");
-$dgrid-header-cell-border-color ?= #bbb;
+$dgrid-header-cell-border-color ?= silver;
 $dgrid-header-cell-font-weight ?= bold;
 $dgrid-header-cell-hover-background ?= gold;
 //$dgrid-header-cell-hover-background-image ?= linear-gradient(top, #ffffff 0%,#d2e0eb 100%);
@@ -23,7 +23,7 @@ $dgrid-body-row-hover-background-color ?= gold;
 $dgrid-selected-background-color ?= skyblue;
 $dgrid-selected-hover-background-color ?= gold;
 
-$dgrid-highlight-background-color ?= #ff6;
+$dgrid-highlight-background-color ?= yellow;
 
 .rias {
 
@@ -95,6 +95,9 @@ $dgrid-highlight-background-color ?= #ff6;
       padding: 0;
       //margin-left: 0.5em;
       border-width: 0;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: bold;
     }
   }
 

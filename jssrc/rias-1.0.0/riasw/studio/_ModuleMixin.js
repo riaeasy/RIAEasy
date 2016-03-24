@@ -95,14 +95,6 @@ define([
 			}
 			self.inherited(arguments);
 		},
-		///在为完成 child.loaded 之前，this.isLoaded 不准确。
-		/*_checkRestrict: function(box){
-			var change = false;
-			if(!this.isLoaded){
-				return change;
-			}
-			return this.inherited(arguments);
-		},*/
 		_show: function(newState){
 			var self = this,
 				arg = arguments,
@@ -265,11 +257,11 @@ define([
 					this.set("region", params.region);
 				}
 			}*/
-			if(this._resizeParent){
-				//this.needLayout = true;///_loadModuleMeta 后，强行 layout()
-				//this.resize();///先 resize 确定自身位置大小，再 parent.resize();
-				this._resizeParent();
-			}
+			//if(this._resizeParent){
+			//	//this.needLayout = true;///_loadModuleMeta 后，强行 layout()
+			//	//this.resize();///先 resize 确定自身位置大小，再 parent.resize();
+			//	this._resizeParent();
+			//}
 		},
 		_beforeLoadMeta: function(){
 			this._beforeUpdateSize(this.id + " - _beforeLoadMeta.");
@@ -477,7 +469,6 @@ define([
 				/// parames.style 是设置 domNode 的，在 create 中已经设置了，这里不能 mixin
 				/// CaptionPanel/DialogPanel 等有 CaptionNode 存在，不应该设置 domNode.style，而应该设置 containerNode
 				rias.dom.setStyle(self.containerNode, p.style);
-				self._initSize();
 				rias.deleteDeep(p, _p);
 				delete p.style;
 				///先混合 meta，避免执行 _setXXXAttr 出现错误。此时不会触发 _onXXX()。
@@ -497,6 +488,7 @@ define([
 					}
 				}
 				rias.mixinDeep(self, _p);
+				self._initSize();
 				for(pn in p){
 					//if(p.hasOwnProperty(pn) && rias.isFunction(self["_set" + rias.upperCaseFirst(pn) + "Attr"])){
 					if(p.hasOwnProperty(pn) && self["_set" + rias.upperCaseFirst(pn) + "Attr"]){/// _setClassAttr 不是 function

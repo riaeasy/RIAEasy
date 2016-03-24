@@ -129,16 +129,166 @@ define([
 		delete p._riasrChildren;
 		delete p._riasrParent;
 	};
-	//if(rias.hostBrowser){
-		rias.setObject("rias.Destroyable", Destroyable);
-	//}else{
-	//	Destroyable = rias.declare("rias.Destroyable", null, {});
-	//}
 	var __riasrId = 0;
-	Destroyable.extend({
-
+	rias.setObject("rias.Stateful", Stateful);
+	Stateful.extend({
 		toString: function(){
-			return "[object RiasWidget]";
+			return "[object RiasStateful]";
+		},
+		///attributeMap, _introspect, _applyAttributes 与 _WidgetBase 相互独立，没有继承关系。
+		attributeMap: {},
+		postscript: function(/*Object?*/ params){
+			if(/*rias.isDebug &&*/ !this.__riasrId){
+				this.__riasrId = __riasrId++;
+			}
+			try{
+				this.create.apply(this, arguments);
+			}catch(e){
+				this._riasrCreateError = e;
+				console.error(rias.getStackTrace(e), this);
+			}
+		},
+		create: function(params){
+			this._introspect();
+			if(params){
+				this.params = params;
+				//rias.safeMixin(this, params);
+				rias.mixin(this, params);
+			}
+			this._applyAttributes();
+		},
+		_get: function(name, names){
+			// summary:
+			//		Private function that does a get based off a hash of names
+			// names:
+			//		Hash of names of custom attributes
+			return (names && typeof this[names.g] === "function") ? this[names.g]() : this[name];
+		},
+		_introspect: function(){
+			// summary:
+			//		Collect metadata about this widget (only once per class, not once per instance):
+			//
+			//			- list of attributes with custom setters, storing in this.constructor._setterAttrs
+			//			- generate this.constructor._onMap, mapping names like "mousedown" to functions like onMouseDown
+
+			var ctor = this.constructor;
+			if(!ctor._setterAttrs){
+				var proto = ctor.prototype,
+					attrs = ctor._setterAttrs = [], // attributes with custom setters
+					onMap = (ctor._onMap = {});
+
+				// Items in this.attributeMap are like custom setters.  For back-compat, remove for 2.0.
+				for(var name in proto.attributeMap){
+					attrs.push(name);
+				}
+
+				// Loop over widget properties, collecting properties with custom setters and filling in ctor._onMap.
+				for(name in proto){
+					if(/^on/.test(name)){
+						onMap[name.substring(2).toLowerCase()] = name;
+					}
+
+					if(/^_set[A-Z](.*)Attr$/.test(name)){
+						name = name.charAt(4).toLowerCase() + name.substr(5, name.length - 9);
+						if(!proto.attributeMap || !(name in proto.attributeMap)){
+							attrs.push(name);
+						}
+					}
+				}
+
+				// Note: this isn't picking up info on properties like aria-label and role, that don't have custom setters
+				// but that set() maps to attributes on this.domNode or this.focusNode
+			}
+		},
+		_applyAttributes: function(){
+			// summary:
+			//		Step during widget creation to copy  widget attributes to the
+			//		DOM according to attributeMap and _setXXXAttr objects, and also to call
+			//		custom _setXXXAttr() methods.
+			//
+			//		Skips over blank/false attribute values, unless they were explicitly specified
+			//		as parameters to the widget, since those are the default anyway,
+			//		and setting tabIndex="" is different than not setting tabIndex at all.
+			//
+			//		For backwards-compatibility reasons attributeMap overrides _setXXXAttr when
+			//		_setXXXAttr is a hash/string/array, but _setXXXAttr as a functions override attributeMap.
+			// tags:
+			//		private
+
+			// Call this.set() for each property that was either specified as parameter to constructor,
+			// or is in the list found above.	For correlated properties like value and displayedValue, the one
+			// specified as a parameter should take precedence.
+			// Particularly important for new DateTextBox({displayedValue: ...}) since DateTextBox's default value is
+			// NaN and thus is not ignored like a default value of "".
+
+			// Step 1: Save the current values of the widget properties that were specified as parameters to the constructor.
+			// Generally this.foo == this.params.foo, except if postMixInProperties() changed the value of this.foo.
+			var params = {};
+			for(var key in this.params || {}){
+				params[key] = this._get(key);
+			}
+
+			// Step 2: Call set() for each property with a non-falsy value that wasn't passed as a parameter to the constructor
+			rias.forEach(this.constructor._setterAttrs, function(key){
+				if(!(key in params)){
+					var val = this._get(key);
+					if(val){
+						this.set(key, val);
+					}
+				}
+			}, this);
+
+			// Step 3: Call set() for each property that was specified as parameter to constructor.
+			// Use params hash created above to ignore side effects from step #2 above.
+			for(key in params){
+				this.set(key, params[key]);
+			}
+		},
+		_initAttr: function(name){
+			var self = this,
+				N, _init = true;
+			if(rias.isArray(name)){
+				rias.forEach(name, function(n){
+					self._initAttr(n);
+				});
+			}
+			if(rias.isObject(name)){
+				_init = (name.initialize == undefined || name.initialize);
+				name = name.name;
+			}
+			if(rias.isString(name)){
+				N = rias.upperCaseFirst(name);
+				if(!rias.isFunction(self["_set" + N + "Attr"])){
+					self["_set" + N + "Attr"] = function(value){
+						//if(self[name] !== value){
+						self._set(name, value);///触发 watch()
+						//}
+					};
+					if(rias.isFunction(self["_on" + N])){
+						self.own(self.watch(name, function(_name, oldValue, value){
+							if(self._riasrDestroying || self._beingDestroyed){
+								return undefined;
+							}
+							return self["_on" + N](value, oldValue);
+						}));
+						//self["_on" + N](undefined, self[name]);
+					}
+				}
+				if(!rias.isFunction(self["_get" + N + "Attr"])){
+					self["_get" + N + "Attr"] = function(){
+						return self[name];
+					};
+				}
+				if(_init && rias.isFunction(self["_on" + N])){
+					self["_on" + N](self[name]);
+				}
+			}
+		}
+	});
+	rias.setObject("rias.Destroyable", Destroyable);
+	Destroyable.extend({
+		toString: function(){
+			return "[object RiasDestroyable]";
 		},
 
 		///是简单对象，不是类工厂。
@@ -496,15 +646,9 @@ define([
 			return hds;		// arguments
 		}
 	});
-	rias.setObject("rias.Stateful", Stateful);
-	Stateful.extend({
-		///attributeMap, _introspect, _applyAttributes 与 _WidgetBase 相互独立，没有继承关系。
-		attributeMap: {},
-		postscript: function(/*Object?*/ params){
-			//if(params){
-			//	this.set(params);
-			//}
-			this.inherited(arguments);
+	rias.ObjectBase = rias.declare([Destroyable, Stateful], {
+		toString: function(){
+			return "[object RiasWidget]";
 		},
 		create: function(params){
 			this._introspect();
@@ -517,136 +661,7 @@ define([
 			this._applyAttributes();
 
 			this.postCreate(params);
-		},
-		_get: function(name, names){
-			// summary:
-			//		Private function that does a get based off a hash of names
-			// names:
-			//		Hash of names of custom attributes
-			return (names && typeof this[names.g] === "function") ? this[names.g]() : this[name];
-		},
-		_introspect: function(){
-			// summary:
-			//		Collect metadata about this widget (only once per class, not once per instance):
-			//
-			//			- list of attributes with custom setters, storing in this.constructor._setterAttrs
-			//			- generate this.constructor._onMap, mapping names like "mousedown" to functions like onMouseDown
-
-			var ctor = this.constructor;
-			if(!ctor._setterAttrs){
-				var proto = ctor.prototype,
-					attrs = ctor._setterAttrs = [], // attributes with custom setters
-					onMap = (ctor._onMap = {});
-
-				// Items in this.attributeMap are like custom setters.  For back-compat, remove for 2.0.
-				for(var name in proto.attributeMap){
-					attrs.push(name);
-				}
-
-				// Loop over widget properties, collecting properties with custom setters and filling in ctor._onMap.
-				for(name in proto){
-					if(/^on/.test(name)){
-						onMap[name.substring(2).toLowerCase()] = name;
-					}
-
-					if(/^_set[A-Z](.*)Attr$/.test(name)){
-						name = name.charAt(4).toLowerCase() + name.substr(5, name.length - 9);
-						if(!proto.attributeMap || !(name in proto.attributeMap)){
-							attrs.push(name);
-						}
-					}
-				}
-
-				// Note: this isn't picking up info on properties like aria-label and role, that don't have custom setters
-				// but that set() maps to attributes on this.domNode or this.focusNode
-			}
-		},
-		_applyAttributes: function(){
-			// summary:
-			//		Step during widget creation to copy  widget attributes to the
-			//		DOM according to attributeMap and _setXXXAttr objects, and also to call
-			//		custom _setXXXAttr() methods.
-			//
-			//		Skips over blank/false attribute values, unless they were explicitly specified
-			//		as parameters to the widget, since those are the default anyway,
-			//		and setting tabIndex="" is different than not setting tabIndex at all.
-			//
-			//		For backwards-compatibility reasons attributeMap overrides _setXXXAttr when
-			//		_setXXXAttr is a hash/string/array, but _setXXXAttr as a functions override attributeMap.
-			// tags:
-			//		private
-
-			// Call this.set() for each property that was either specified as parameter to constructor,
-			// or is in the list found above.	For correlated properties like value and displayedValue, the one
-			// specified as a parameter should take precedence.
-			// Particularly important for new DateTextBox({displayedValue: ...}) since DateTextBox's default value is
-			// NaN and thus is not ignored like a default value of "".
-
-			// Step 1: Save the current values of the widget properties that were specified as parameters to the constructor.
-			// Generally this.foo == this.params.foo, except if postMixInProperties() changed the value of this.foo.
-			var params = {};
-			for(var key in this.params || {}){
-				params[key] = this._get(key);
-			}
-
-			// Step 2: Call set() for each property with a non-falsy value that wasn't passed as a parameter to the constructor
-			rias.forEach(this.constructor._setterAttrs, function(key){
-				if(!(key in params)){
-					var val = this._get(key);
-					if(val){
-						this.set(key, val);
-					}
-				}
-			}, this);
-
-			// Step 3: Call set() for each property that was specified as parameter to constructor.
-			// Use params hash created above to ignore side effects from step #2 above.
-			for(key in params){
-				this.set(key, params[key]);
-			}
-		},
-		_initAttr: function(name){
-			var self = this,
-				N, _init = true;
-			if(rias.isArray(name)){
-				rias.forEach(name, function(n){
-					self._initAttr(n);
-				});
-			}
-			if(rias.isObject(name)){
-				_init = (name.initialize == undefined || name.initialize);
-				name = name.name;
-			}
-			if(rias.isString(name)){
-				N = rias.upperCaseFirst(name);
-				if(!rias.isFunction(self["_set" + N + "Attr"])){
-					self["_set" + N + "Attr"] = function(value){
-						//if(self[name] !== value){
-						self._set(name, value);///触发 watch()
-						//}
-					};
-					if(rias.isFunction(self["_on" + N])){
-						self.own(self.watch(name, function(_name, oldValue, value){
-							if(self._riasrDestroying || self._beingDestroyed){
-								return undefined;
-							}
-							return self["_on" + N](value, oldValue);
-						}));
-						//self["_on" + N](undefined, self[name]);
-					}
-				}
-				if(!rias.isFunction(self["_get" + N + "Attr"])){
-					self["_get" + N + "Attr"] = function(){
-						return self[name];
-					};
-				}
-				if(_init && rias.isFunction(self["_on" + N])){
-					self["_on" + N](self[name]);
-				}
-			}
 		}
-	});
-	rias.ObjectBase = rias.declare([Destroyable, Stateful], {
 	});
 
 	return rias;

@@ -5,10 +5,13 @@ define([
 	"_rsfVersion": 32,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "1.0",
-	"caption": {
-		"$refObj": "rias.i18n.webApp.menu"
-	},
+		"caption": rias.i18n.webApp.menu,
+		"tooltip": rias.i18n.webApp.menu,
 	"iconClass": "menuIcon",
+		"minSize": {
+			"h": 360,
+			"w": 240
+		},
 	"style": {
 		"width": "240px"
 	},
@@ -54,7 +57,7 @@ define([
 			isSource: false,
 			accept: [],
 			toggleOnClick: true,
-			expandOnEnter: true,
+			//expandOnEnter: true,
 			collapseOnEnter: false,
 			//style: {
 			//	padding: "1px",

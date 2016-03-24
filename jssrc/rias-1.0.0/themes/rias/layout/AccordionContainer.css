@@ -13,9 +13,9 @@
 
 .rias .dijitAccordionTitle {
 	/*background:#fafafa url("/rias/themes/rias/images/titleBar.png") repeat-x top left; zensst*/
-	background-color: lavender;
+	/*background-color: lavender;*/
 	/*border-top: 1px solid #b9bbdd; zensst*/
-	border: 1px solid silver;
+	border-bottom: 1px solid silver;
 	/*padding: 5px 4px 6px 8px;
 	font-size: 0.9em;*/
 	font-weight: bold;
@@ -30,7 +30,7 @@
 	background-color: inherit;
 	border: 1px solid #759dc0;
 	margin: 0 2px 2px; zensst*/
-	background-color: inherit;
+	/*background-color: inherit;*/
 	border: 1px solid silver;
 }
 

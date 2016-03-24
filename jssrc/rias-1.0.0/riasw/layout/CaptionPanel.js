@@ -134,17 +134,9 @@ define([
 		},
 
 		/*_layoutChildren: function(){
-			if(this._started) && !this.__updateSize && this._isVisible()){
-				console.debug(this.id);
-				console.trace();
-			}
 			return this.inherited(arguments);
 		},
 		_internalResize: function(){
-			if(this._started && !this.__updateSize && this._isVisible()){
-				console.debug(this.id);
-				console.trace();
-			}
 			this.inherited(arguments);
 		},*/
 
