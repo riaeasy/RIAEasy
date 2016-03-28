@@ -2,11 +2,12 @@
 /* TablePanel */
 
 .riaswTablePanel{
-	display: block;
+	/*display: block;
 	position: relative;
 	background: inherit;
 	margin:0;
-	overflow: auto;
+	overflow: auto;*/
+	border: 0px solid lightgray;
 }
 
 .riaswTablePanelSelected,

@@ -77,8 +77,6 @@ define([
 			this.domNode.style.display = "none";
 
 			var box = rias.dom.getContentBox(this.getParentNode());
-			box.t = 0;
-			box.l = 0;
 			rias.dom.setMarginBox(this.domNode, box);
 			if(this.containerNode != this.domNode){
 				rias.dom.setMarginBox(this.containerNode, box);

@@ -439,7 +439,7 @@ define([
 		};
 	};
 
-	rias.orient = [
+	rias.tooltipPositions = [
 		"below-centered", "below", "below-alt",
 		"above-centered", "above", "above-alt",
 		"after", "after-centered",
@@ -738,7 +738,7 @@ define([
 	rias.dom.placeTo = function(node, args){
 		//args.parent: dijit
 		//args.around: dijit or domNode
-		//args.orient: around:["below", "below-alt", "above", "above-alt"] or at:["MM", "TL", "TR"...]
+		//args.positions: around:["below", "below-alt", "above", "above-alt"] or at:["MM", "TL", "TR"...]
 		//args.maxHeight: Number(without "px")
 		//args.padding: Number(without "px")
 		//args.x: Number(without "px")
@@ -791,7 +791,7 @@ define([
 	rias.dom.positionAt = function(node, args){
 		//args.parent: dijit
 		//args.around: dijit or domNode
-		//args.orient: around:["below", "below-alt", "above", "above-alt"] or at:["MM", "TL", "TR"...]
+		//args.positions: around:["below", "below-alt", "above", "above-alt"] or at:["MM", "TL", "TR"...]
 		//args.maxHeight: Number(without "px")
 		//args.padding: Number(without "px")
 		//args.x: Number(without "px")
@@ -814,8 +814,7 @@ define([
 		if(!rias.dom.isVisible(parent, true) || (rias.isDomNode(around) && !rias.dom.isVisible(around, true))){
 			return false;
 		}
-		var //orient = args.orient || ["below", "below-alt", "above", "above-alt"],
-			ltr = parent ? parent.isLeftToRight() : rias.dom.isBodyLtr(node.ownerDocument),
+		var ltr = parent ? parent.isLeftToRight() : rias.dom.isBodyLtr(node.ownerDocument),
 			viewport = rias.dom.getContentBox(node.parentNode || rias.dom.documentBody(node.ownerDocument));// Viewport.getEffectiveBox(node.ownerDocument),
 
 		var maxHeight,
@@ -840,7 +839,7 @@ define([
 		}
 
 		pos = (around ?
-			_riasPlaceAround(node, around, (rias.isString(args.orient) ? [args.orient] : args.orient) || rias.orient, ltr, null) :
+			_riasPlaceAround(node, around, (rias.isString(args.positions) ? [args.positions] : args.positions) || rias.tooltipPositions, ltr, null) :
 			//rias.placeAt(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["MM"], args.padding, null));
 			_riasPlaceAround(node, {x: viewport.w >> 1, y: viewport.h >> 1}, ["center"], ltr, null));
 		return pos;

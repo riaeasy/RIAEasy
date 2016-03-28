@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - TextArea
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/TextArea"
 ], function(rias, _Widget){
 

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - Accordion(mobile)
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/Accordion"
 ], function(rias, _Widget){
 

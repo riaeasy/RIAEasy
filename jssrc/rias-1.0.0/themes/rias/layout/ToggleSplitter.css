@@ -7,7 +7,7 @@
 	z-index: 10;		/* above the panes so that splitter focus is visible on FF, see #7583*/
 	/*background-color: lavender;*/
 	background-color: inherit;
-	border-color: silver;
+	border-color: lightgray;
 	border-style: solid;
 	border-width: 0px;
 }

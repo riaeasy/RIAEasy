@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - RoundRectList
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/RoundRectList",
 	"dojox/mobile/_EditableListMixin",
 	"rias/riasw/mobile/ListItem"

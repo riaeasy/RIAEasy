@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - Heading
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/Heading",
 	"rias/riasw/mobile/ToolBarButton",
 	"rias/riasw/mobile/View"

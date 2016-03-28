@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - Button
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"rias/riasw/mobile/BaseMixin",
 	"dojox/mobile/Button"
 ], function(rias, BaseMixin, _Widget){

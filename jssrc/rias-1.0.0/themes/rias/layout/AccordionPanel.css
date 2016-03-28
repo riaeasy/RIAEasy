@@ -1,0 +1,86 @@
+/**
+ * dijit.layout.Accordioncontainer
+ *
+ */
+
+.riaswAccordionPanel {
+	/*border: none;/*zensst 有 border 时，第二次显示有问题*/
+	border: 0px solid lightgray;
+	/*background-color: inherit;#dfefff zensst*/
+}
+
+/* common */
+
+.riaswAccordionInnerContainer {
+	background-color: inherit;
+	/*border: 1px solid lightgray;*/
+}
+
+.riaswAccordionTitle {
+	/*background-color: lavender;*/
+	/*border-top: 1px solid #b9bbdd; zensst*/
+	/*border-bottom: 1px solid lightgray;
+	padding: 5px 4px 6px 8px;
+	font-size: 0.9em;*/
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswAccordionTitleFocusNode {
+	padding: 4px;
+	margin: 0px;
+}
+
+.riaswAccordionChildWrapper {
+	/* this is the node whose height is adjusted */
+	/*overflow: hidden;*/
+	/*background-color: #ffffff;
+	background-color: inherit;
+	border: 1px solid #759dc0;
+	margin: 0 2px 2px; zensst*/
+	/*background-color: inherit;*/
+	border: 1px solid lightgray;
+}
+
+.riaswAccordionTitleHover  {
+	background-color: gold;
+}
+.riaswAccordionTitleSelected  {
+	cursor: default;
+	background-color: lavender;
+}
+
+.riaswAccordionArrow {
+	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -30px top;*/
+	background: url('./images/CaptionPanelBtn.png') no-repeat -24px center;
+	width: 24px;
+	height: 24px;
+	margin-top: -1px;
+}
+
+.riaswAccordionTitleSelected .riaswAccordionArrow {
+	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -15px top;*/
+	background: url('./images/CaptionPanelBtn.png') no-repeat -72px center;
+}
+
+.riaswAccordionText {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.riaswAccordionTitle .arrowTextUp,
+.riaswAccordionTitle .arrowTextDown {
+	display: none;
+	font-size: 0.65em;
+	font-weight: normal !important;
+}
+
+.dj_a11y .riaswAccordionTitle .arrowTextUp,
+.dj_a11y .riaswAccordionTitleSelected .arrowTextDown {
+	display: inline;
+}
+
+.dj_a11y .riaswAccordionTitleSelected .arrowTextUp {
+	display: none;
+}
+

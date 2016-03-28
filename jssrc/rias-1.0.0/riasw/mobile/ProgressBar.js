@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ProgressBar
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ProgressBar"
 ], function(rias, _Widget){
 

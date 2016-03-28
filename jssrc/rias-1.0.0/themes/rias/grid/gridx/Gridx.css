@@ -11,13 +11,13 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
 .gridxHeader,
 .gridxFooter {
   overflow: hidden;
-  background-color: lavender;
+  background-color: whitesmoke;
 }
 .gridxHeader {
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid lightgray;
 }
 .gridxFooter {
-  border-top: 1px solid silver;
+  border-top: 1px solid lightgray;
 }
 .gridxLoad {
   display: none;
@@ -80,7 +80,7 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
 .gridxHeaderRow .gridxCell {
   border-width: 0px 1px 0px 0px;
   border-style: solid;
-  border-color: lightsteelblue;
+  border-color: lightgray;
   padding: 6px 4px;
   text-align: left;
   overflow: hidden;
@@ -146,7 +146,7 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
 .gridxRowHeaderRow table .gridxCell,
 .gridxRow .gridxRowTable .gridxCell {
   border-style: solid;
-  border-color: lightsteelblue;
+  border-color: lightgray;
   border-width: 0px 1px 1px 0px;
   padding: 6px 4px;
   text-align: left;
@@ -251,7 +251,7 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
   top: 0;
   height: 100%;
   overflow: hidden;
-  border-right: 1px solid silver;
+  border-right: 1px solid lightgray;
   -moz-box-sizing: border-box;
   /* ff2 */
   -ms-box-sizing: border-box;
@@ -272,7 +272,7 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
 .gridxRowHeaderRow {
   overflow: hidden;
   width: 100%;
-  background: lavender;
+  background: whitesmoke;
 }
 .gridxRowHeaderHeader .gridxHeaderCellFocus {
   border-top: 1px dashed darkblue;
@@ -283,7 +283,7 @@ Skipped data-uri embedding of images/claro-grid-header-onepixel.gif because file
   border-color: transparent;
 }
 .gridxRowHeaderCell {
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid lightgray;
   padding: 6px 2px;
 }
 .gridxRowHeaderRow .gridxCellFocus {

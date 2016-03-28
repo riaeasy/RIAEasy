@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ToolBarButton
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ToolBarButton"
 ], function(rias, _Widget){
 

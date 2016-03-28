@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ToggleButton
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ToggleButton"
 ], function(rias, _Widget){
 

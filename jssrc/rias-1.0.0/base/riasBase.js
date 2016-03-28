@@ -130,7 +130,7 @@ define([
 		delete p._riasrParent;
 	};
 	var __riasrId = 0;
-	rias.setObject("rias.Stateful", Stateful);
+	rias.setObject("rias.riasw.Stateful", Stateful);
 	Stateful.extend({
 		toString: function(){
 			return "[object RiasStateful]";
@@ -285,7 +285,7 @@ define([
 			}
 		}
 	});
-	rias.setObject("rias.Destroyable", Destroyable);
+	rias.setObject("rias.riasw.Destroyable", Destroyable);
 	Destroyable.extend({
 		toString: function(){
 			return "[object RiasDestroyable]";
@@ -501,14 +501,6 @@ define([
 			});
 		},
 
-		//setOwner: function(owner){
-		//	if(rias.isInstanceOf(owner, Destroyable)){
-		//		this._set("_riasrOwner", owner);
-		//		owner.own(this);
-		//	}else{
-		//		throw new Error("The owner of " + owner + " is not isInstanceOf rias.Destroyable.");
-		//	}
-		//},
 		_setOwnerRiaswAttr: function(owner){
 			if(rias.isString(owner)){
 				owner = rias.by(owner);
@@ -516,7 +508,7 @@ define([
 			if(rias.isInstanceOf(owner, Destroyable)){
 				owner.own(this);
 			}else{
-				throw new Error("The owner of " + owner + " is not isInstanceOf rias.Destroyable.");
+				throw new Error("The owner of " + owner + " is not isInstanceOf rias.riasw.Destroyable.");
 			}
 		},
 		_getOwnerRiaswAttr: function(){

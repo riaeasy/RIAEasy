@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - View
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"rias/riasw/layout/_PanelBase",///_PanelBase.displayShowNormal
 	"dojox/mobile/ViewController",
 	"dojox/mobile/common",

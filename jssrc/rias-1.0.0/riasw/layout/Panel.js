@@ -16,7 +16,7 @@ define([
 	var Widget = rias.declare(riasType, [_PanelBase, _TemplatedMixin], {
 
 		templateString:
-			"<div role='region' data-dojo-attach-point='containerNode,focusNode' class='dijitReset dijitContainer riaswPanelContent'>"+
+			"<div role='region' data-dojo-attach-point='containerNode,focusNode' class='dijitReset riaswPanelContent'>"+
 			"</div>",
 		baseClass: "riaswPanel",
 		//cssStateNodes: {

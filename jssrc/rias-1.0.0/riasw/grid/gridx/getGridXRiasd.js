@@ -130,7 +130,7 @@ define([
 				style: {
 					width: "auto",
 					height: "auto",
-					"border-bottom": "1px solid silver"
+					"border-bottom": "1px solid lightgray"
 				}
 			},
 			_btnRefresh = {
@@ -359,7 +359,7 @@ define([
 					dialogType: "top",
 					ownerRiasw: g,
 					around: widget,
-					orient: ["after-centered", "below", "above", "before"],
+					positions: ["after-centered", "below", "above", "before"],
 					moduleMeta: g.viewModule,
 					resizable: false,
 					//restrictPadding: 0,

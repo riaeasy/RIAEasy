@@ -12,7 +12,7 @@
 .rias .dijitTabContainerLeftChildWrapper,
 .rias .dijitTabContainerRightChildWrapper {
 	background-color: inherit;
-	border: 0px solid silver;
+	border: 0px solid lightgray;
 }
 
 .rias .dijitTabContainer .tabStripRBtn {
@@ -29,21 +29,21 @@
 /* Tabs, shared classes */
 .rias .dijitTabPaneWrapper {
 	/*background-color: inherit;#dfefff zensst*/
-	border-color: silver;
+	border-color: lightgray;
 	border-style: solid;
 	border-width: 0px;
 	margin: 0px;
-	padding: 2px;
+	padding: 0.25em;
 }
 
 .rias .dijitTab {
 	padding: 0.5em;
 	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -351px;*/
-	background-color: transparent;
+	/*background-color: transparent;*/
 	position: relative;
-	line-height:normal;
+	line-height: normal;
 	/*margin:0 2px 0 0;	/* space between one tab and the next in top/bottom mode zensst*/
-	border: 1px silver solid;
+	border: 1px lightgray solid;
 }
 
 /* hovered tab */
@@ -56,7 +56,7 @@
 .rias .dijitTabChecked {
 	/*background: url("../images/tabContainerSprite.gif") repeat-x 0 -501px;*//*zensst*/
 	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
-	background-color: whitesmoke;
+	/*background-color: whitesmoke;*/
 	/*border-width: 2px 2px 0px 2px;*/
 	border-color: steelblue;
 	/*border-style: solid;*/
@@ -66,7 +66,7 @@
 .rias .tabStrip-enabled .dijitTabController {
 	margin-bottom: 0px;
 	padding-bottom: 0px;
-	background: lavender;
+	/*background: whitesmoke;*/
 }
 .rias .dijitTabListWrapper {
 	z-index: 10;
@@ -111,14 +111,14 @@
 	top: 2px;*/
 }
 .rias .tabStrip-enabled .dijitTabContainerTop-tabs {
-	border-top: 0px solid silver;
+	border-top: 0px solid lightgray;
 }
 /* container */
 .rias .dijitTabContainerTop-container {
 	border-top: none;
 }
 .rias .dijitTabListContainer-top {
-	border-bottom: 0px solid silver;
+	border-bottom: 0px solid lightgray;
 }
 
 /* ================================ */
@@ -139,21 +139,21 @@
 	top: -2px;*/
 }
 .rias .tabStrip-enabled .dijitTabContainerBottom-tabs {
-	border-bottom: 0px solid silver;
+	border-bottom: 0px solid lightgray;
 }
 /* container */
 .rias .dijitTabContainerBottom-container {
 	border-bottom: none;
 }
 .rias .dijitTabListContainer-bottom {
-	border-bottom: 0px solid silver;
+	border-bottom: 0px solid lightgray;
 }
 /* top/bottom strip */
 .rias .dijitTabContainerBottom-spacer,
 .rias .dijitTabContainerTop-spacer {
 	height: 2px;
-	border: 0px solid silver;
-	background-color: silver;
+	border: 0px solid lightgray;
+	background-color: inherit;
 }
 
 /* ================================ */
@@ -174,7 +174,7 @@
 	left: -2px;*/
 }
 .rias .tabStrip-enabled .dijitTabContainerRight-tabs {
-	border-right: 0px solid silver;
+	border-right: 0px solid lightgray;
 }
 /* container */
 .rias .dijitTabContainerRight-container {
@@ -215,7 +215,7 @@
 	left: 2px;*/
 }
 .rias .tabStrip-enabled .dijitTabContainerLeft-tabs {
-	border-left: 0px solid silver;
+	border-left: 0px solid lightgray;
 }
 /* container */
 .rias .dijitTabContainerLeft-container {
@@ -226,7 +226,7 @@
 .rias .dijitTabContainerLeft-spacer,
 .rias .dijitTabContainerRight-spacer {
 	width: 0px;
-	border: 0px solid silver;
+	border: 0px solid lightgray;
 	background-color: inherit;
 }
 /* ================================ */
@@ -244,10 +244,10 @@
 /* ================================ */
 /* Menu and slider control styles */
 .rias .dijitTabContainer .tabStripButton {
-	background-color: whitesmoke;
+	/*background-color: whitesmoke;*/
 	padding: 4px 4px 4px 4px;
 	margin-right: 0;
-	border: 1px silver solid;
+	border: 1px lightgray solid;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -260,7 +260,7 @@
 }
 .rias .dijitTabContainer .tabStripButtonDisabled {
 	background-color: inherit;
-	border: solid 1px silver;
+	border: solid 1px lightgray;
 	filter: grayscale(100%) opacity(30%);
 	-webkit-filter: grayscale(100%) opacity(30%);
 	-webkit-filter: grayscale(1) opacity(0.3);
@@ -282,7 +282,7 @@
 .rias .dijitTabContainer .tabStripButton-bottom {
 	background: transparent url(./images/tabBottomEnabledSpriteLR.gif) no-repeat scroll left bottom;
 	border-bottom: medium none;
-	border-top: 1px solid silver;
+	border-top: 1px solid lightgray;
 }
 
 .rias .dijitTabContainer .tabStripButton-bottom .dijitTab {
@@ -311,7 +311,7 @@
 
 /* Nested Tabs */
 .rias .dijitTabContainerTabListNested {
-	background: lavender;
+	/*background: whitesmoke;*/
 }
 .rias .dijitTabContainerTabListNested .dijitTab {
 	/*background: none;

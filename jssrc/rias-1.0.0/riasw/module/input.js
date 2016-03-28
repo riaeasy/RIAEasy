@@ -9,7 +9,6 @@ define([
 	"iconClass": "inputIcon",
 	"infos": "",
 	"style": {
-		"border": "0px silver solid",
 		"padding": "0px",
 		"width": "25em"
 	},

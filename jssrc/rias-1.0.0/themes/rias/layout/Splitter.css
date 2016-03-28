@@ -13,7 +13,7 @@
 	z-index: 10;		/* above the panes so that splitter focus is visible on FF, see #7583*/
 	/*background-color: lavender;*/
 	background-color: inherit;
-	border-color: silver;
+	border-color: lightgray;
 	border-style: solid;
 	border-width: 0px;
 }
@@ -80,18 +80,18 @@
 	height: 12px;
 }
 .riaswSplitterH .riaswSplitterThumb {
-	overflow:hidden;
-	position:absolute;
+	overflow: hidden;
+	position: absolute;
 	left:45%;
-	background:silver none;
-	height:0px;
-	top:3px;
-	width:10%;
+	background: none;
+	height: 0px;
+	top: 3px;
+	width: 10%;
 }
 .dj_ios .riaswSplitterH .riaswSplitterThumb,
 .dj_android .riaswSplitterH .riaswSplitterThumb{
-	height:2px;
-	top:5px;
+	height: 2px;
+	top: 5px;
 }
 
 .riaswSplitterV,
@@ -111,7 +111,7 @@
 	overflow:hidden;
 	position:absolute;
 	top:45%;
-	background:silver none;
+	background: none;
 	height:10%;
 	left:3px;
 	width:0px;

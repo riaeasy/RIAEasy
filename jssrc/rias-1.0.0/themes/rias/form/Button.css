@@ -1,30 +1,31 @@
 /* Button | DropDownButton | ComboButton | ToggleButton
- * 
+ *
  * Styling Buttons mainly includes:
- * 
+ *
  * 1. Containers
  * 		.dijitButton
  * 		.dijitDropDownButton
  * 		.dijitComboButton
- * 		.dijitButtonNode - common button/arrow wrapper shared across all three button types 
+ * 		.dijitButtonNode - common button/arrow wrapper shared across all three button types
  *
  * 2. Button text
  * 		.dijitButtonText
- * 
+ *
  * 3. Arrows - only for DropDownButton and ComboButton
  * 	     There are total four directions arrows - down, left, right, up:
  * 		.dijitArrowButtonInner - down arrow by default
  *      .dijitLeftArrowButton .dijitArrowButtonInner - left arrow
  *      .dijitRightArrowButton .dijitArrowButtonInner - right arrow
  *      .dijitUpArrowButton .dijitArrowButtonInner - up arrow
- * 
+ *
  * 4. States - Hover, Active, Disabled, e.g.
  * 		.dijitButtonHover .dijitButtonNode
  * 		.dijitButtonActive .dijitButtonNode
  * 		.dijitButtonDisabled .dijitButtonNode
- *      
- *      .dijitDisabled .dijitArrowButtonInner  - disabled arrow states 
+ *
+ *      .dijitDisabled .dijitArrowButtonInner  - disabled arrow states
  */
+
 
 @import url("./Checkbox.css");
 @import url("./RadioButton.css");/*换为 CheckButton 了*/
@@ -66,13 +67,6 @@
 	display: inline-block;
 }
 
-.riaswCheckButton .dijitButtonNode,
-.riaswRadioButton .dijitButtonNode {
-	border: 0px solid silver;
-	padding: 4px 4px;
-	color: #000000;
-	background-color: inherit;
-}
 .riaswCheckButton .dijitCheckBoxIcon {
 	background-image: url('./images/spriteCheckbox.png');
 	background-position: -16px;
@@ -122,7 +116,6 @@
 .riaswCheckButtonDisabled .dijitButtonNode,
 .riaswRadioButtonDisabled .dijitButtonNode {
 	background-color: inherit;
-	border: solid 0px silver;
 	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -132,24 +125,10 @@
 }
 
 /*=============================================*/
-.rias .dijitButtonNode {
-  /* rules for dijit.form.*Button widgets and arrow nodes on ComboBox, Spinner etc. */
-
-  -webkit-transition-property: background-color;
-  -moz-transition-property: background-color;
-  transition-property: background-color;
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-.rias .dijitButton .dijitButtonNode,
-.rias .dijitDropDownButton .dijitButtonNode,
-.rias .dijitComboButton .dijitButtonNode,
-.rias .dijitToggleButton .dijitButtonNode {
-  /* rules for the dijit.form.*Button widgets (see also ComboButton section below) */
-	border: 1px solid silver;
+.dijitButtonNode {
+	border: 1px solid lightgray;
 	padding: 0.25em 0.25em;
-	color: #000000;
+	color: inherit;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -157,13 +136,16 @@
 	-moz-box-shadow: 0 rgba(0, 0, 0, 0.15);
 	box-shadow: 0 rgba(0, 0, 0, 0.15);
 	background-color: inherit;
-  /*background-image: url("images/buttonEnabled.png");
-  background-repeat: repeat-x;
-  background-image: -moz-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
-  background-image: -webkit-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
-  background-image: -o-linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
-  background-image: linear-gradient(#ffffff 0px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0.75) 100%);
-  _background-image: none;  zensst*/
+	-webkit-transition-property: background-color;
+	-moz-transition-property: background-color;
+	transition-property: background-color;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+.riaswCheckButton .dijitButtonNode,
+.riaswRadioButton .dijitButtonNode {
+	border-width: 0px;
 }
 
 .rias .dijitComboButtonDisabled .dijitArrowButton {
@@ -329,7 +311,6 @@
 .rias .dijitComboButtonDisabled .dijitButtonNode,
 .rias .dijitToggleButtonDisabled .dijitButtonNode {
 	background-color: inherit;
-	border: solid 1px silver;
 	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	box-shadow: 0 0 0 rgba(0, 0, 0, 0);

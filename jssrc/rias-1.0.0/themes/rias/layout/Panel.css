@@ -3,13 +3,12 @@
 /* ContentPanel */
 
 .riaswPanel {
-	display: block;
-	position: relative;
-	background-color: inherit;
+	/*display: block;*/
+	/*position: relative;*/
+	/*background-color: inherit;
 	padding: 0px;
-	margin:0;
-	/*overflow: hidden;*/
-	border: 0px solid silver;
+	margin:0;*/
+	border: 0px solid lightgray;
 }
 .riaswPanelSelected,
 .riaswPanelFocused {

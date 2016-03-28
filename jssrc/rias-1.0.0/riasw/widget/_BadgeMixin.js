@@ -85,6 +85,9 @@ define([
 			var n = this.badgeNode.nextSibling;
 			this.badgeText.innerHTML = value;
 			rias.dom.toggleClass(this.badgeNode, "riaswBadgeVisible", !!value);
+			while(n && !rias.dom.visible(n)){
+				n = n.nextSibling;
+			}
 			if(n){
 				rias.dom.toggleClass(n, "riaswButtonNodeBadgeStretch", !!value);
 			}

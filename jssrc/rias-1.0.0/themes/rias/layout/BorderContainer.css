@@ -14,7 +14,7 @@
 	/* By default put borders on all children of BorderContainer,
 	 *  to give illusion of borders on the splitters themselves.
 	 */
-	/*border-bottom: 0px solid silver; /*zensst*/
+	/*border-bottom: 0px solid lightgray; /*zensst*/
 }
 
 .rias .dijitBorderContainer-dijitTabContainerTop,

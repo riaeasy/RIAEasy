@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - Tooltip
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/Tooltip"
 ], function(rias, _Widget){
 

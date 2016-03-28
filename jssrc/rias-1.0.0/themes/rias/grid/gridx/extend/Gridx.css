@@ -10,13 +10,13 @@
 .gridxHeader,
 .gridxFooter {
   overflow: hidden;
-  background-color: lavender;
+  background-color: whitesmoke;
 }
 .gridxHeader {
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid lightgray;
 }
 .gridxFooter {
-  border-top: 1px solid silver;
+  border-top: 1px solid lightgray;
 }
 .gridxLoad {
   display: none;
@@ -79,7 +79,7 @@
 .gridxHeaderRow .gridxCell {
   border-width: 0px 1px 0px 0px;
   border-style: solid;
-  border-color: lightsteelblue;
+  border-color: lightgray;
   padding: 6px 4px;
   text-align: left;
   overflow: hidden;
@@ -145,7 +145,7 @@
 .gridxRowHeaderRow table .gridxCell,
 .gridxRow .gridxRowTable .gridxCell {
   border-style: solid;
-  border-color: lightsteelblue;
+  border-color: lightgray;
   border-width: 0px 1px 1px 0px;
   padding: 6px 4px;
   text-align: left;
@@ -250,7 +250,7 @@
   top: 0;
   height: 100%;
   overflow: hidden;
-  border-right: 1px solid silver;
+  border-right: 1px solid lightgray;
   -moz-box-sizing: border-box;
   /* ff2 */
   -ms-box-sizing: border-box;
@@ -271,7 +271,7 @@
 .gridxRowHeaderRow {
   overflow: hidden;
   width: 100%;
-  background: lavender;
+  background: whitesmoke;
 }
 .gridxRowHeaderHeader .gridxHeaderCellFocus {
   border-top: 1px dashed darkblue;
@@ -282,7 +282,7 @@
   border-color: transparent;
 }
 .gridxRowHeaderCell {
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid lightgray;
   padding: 6px 2px;
 }
 .gridxRowHeaderRow .gridxCellFocus {
@@ -2043,7 +2043,7 @@ body .gridxSlantedHeader .gridxHeaderRow {
   border-top: 0px solid #FFFFFF;
   border-bottom: 0px solid #FFFFFF;
   clear: both;
-  background-color: lavender;
+  background-color: whitesmoke;
   font-weight: bold;
 }
 .rias .gridx .gridxHeader .gridxHeaderRow .gridxHeaderCellFocus {
@@ -2072,14 +2072,14 @@ body .gridxSlantedHeader .gridxHeaderRow {
   border-color: #EDF2F7 #BCBCBC #BCBCBC #FFFFFF;
 }
 .rias .gridxHeaderRow .gridxCell {
-  border-color: silver;
+  border-color: lightgray;
   border-width: 0px 1px 0px 0px;
 }
 .rias .gridxHeaderRow .gridxSubHeader {
   border-top-color: #FFFFFF;
 }
 .rias .gridxHeaderRow {
-  background-color: lavender;
+  background-color: whitesmoke;
 }
 .rias .gridxDesktop .gridxHeaderRow .gridxCell:hover,
 .rias .gridxDesktop .gridxHeaderRow .gridxGroupHeader:hover {
@@ -2117,7 +2117,7 @@ body .gridxSlantedHeader .gridxHeaderRow {
 }
 .rias .gridxRow:first-child > .gridxRowTable .gridxCell,
 .rias .gridxBodyFirstRow .gridxCell {
-  border-top-color: silver;
+  border-top-color: lightgray;
   border-top-width: 0px;
 }
 .rias {
@@ -2164,13 +2164,13 @@ body .gridxSlantedHeader .gridxHeaderRow {
 }
 .rias .gridxLockedCell,
 .rias .gridxRow .gridxLockedCell {
-  background-color: lavender;
-  border-color: silver;
+  background-color: whitesmoke;
+  border-color: lightgray;
 }
 .rias .gridxHeaderRow .gridxLockedCell,
 .rias.gridxColumnResizing .gridx .gridxHeader .gridxHeaderRow .gridxLockedCell:hover {
-  background-color: lavender;
-  border-color: silver;
+  background-color: whitesmoke;
+  border-color: lightgray;
 }
 .rias {
   /* row select */

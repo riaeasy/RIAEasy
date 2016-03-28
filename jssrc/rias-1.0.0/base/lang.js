@@ -56,12 +56,12 @@ define([
 	rias._eval = function(scope, text, hint){
 		return _eval.call(scope, text + "\r\n////@ sourceURL=" + hint);
 	};
-	rias.$ref = rias.run = function(scope, text, hint){
+	rias.$run = function(scope, text, hint){
 		return (new Function(
 			'rias',
 			text + "\r\n////@ sourceURL=" + hint))(scope, rias);
 	};
-	rias.$refByModule = rias.runByModule = function(module, text, hint){
+	rias.$runByModule = function(module, text, hint){
 		var r = new Function(
 			'rias',
 			'module',
@@ -72,7 +72,7 @@ define([
 		//}
 		r = r.call(module, rias, module);
 		if(r && r.$refScript){
-			r = rias.$refByModule(module, r.$refScript, hint);
+			r = rias.$runByModule(module, r.$refScript, hint);
 		}
 		return r;
 	};

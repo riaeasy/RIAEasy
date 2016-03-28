@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - TextBox
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/TextBox"
 ], function(rias, _Widget){
 

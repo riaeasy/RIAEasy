@@ -67,9 +67,9 @@ define([
 		return d.promise;
 	};
 
-	if(!rias.require.packs.gridx){
-		rias.require.packs.gridx = {name: "gridx", location: "../../gridx-1.3.7"};
-	}
+	//if(!rias.require.packs.gridx){
+	//	rias.require.packs.gridx = {name: "gridx", location: "../../gridx-1.3.7"};
+	//}
 	if(!rias.require.packs.dgrid){
 		rias.require.packs.dgrid = {name: "dgrid", location: "../../dgrid-1.0.0"};
 	}
@@ -160,7 +160,7 @@ define([
 		//	id: "",///如果有值，则先 rias.by
 		//	parent: parent,
 		//	around: around,
-		//	orient: ["below-centered", "above-centered", "after-centered", "before-centered"],//rias.tooltipPosition
+		//	positions: ["below-centered", "above-centered", "after-centered", "before-centered"],//rias.tooltipPosition
 		//	content: content,
 		//	contentType: -1/0/1/2("innerHTML"/"info"/"warn"/"error")内部使用
 		//	innerHTML: innerHTML,
@@ -281,13 +281,13 @@ define([
 			args.initPlaceToArgs = {
 				parent: args.parent,
 				around: args.around ? args.around : args.x && args.y ? {x: args.x, y: args.y} : undefined,
-				orient: args.orient,
+				positions: args.positions,
 				maxHeight: args.maxHeight,
 				padding: args.padding
 			};
 			delete args.parent;
 			delete args.around;
-			delete args.orient;
+			delete args.positions;
 			delete args.maxHeight;
 			delete args.padding;
 			delete args.x;

@@ -1,33 +1,16 @@
 
 /* DockBar */
-.riaswDockBarDefault {
-	position: absolute;
-	/*bottom:0px;*/
-	left: 0px;
-	overflow: hidden;
-	/*margin:0;
-	margin-bottom:3px; */
-	padding: 0px;
-	width: 100%;
-	/*z-index:99; /* position the dock _just_ below the lowest pane */
-	background: transparent;
-	/* background-color:#fff; 
-	border-top:1px solid #ccc; 
-	*/
-}
 
 .riaswDockBar {
 	display: inline-block;
-	border: 0px solid silver;
-	//position: absolute;
+	/*position: absolute;
+	margin: 0px;*/
 	padding: 1px;
-	margin: 0px;
-	/*background: #fcfcfc;*/
-	/*background-color: inherit;#dfefff zensst*/
+	border: 0px solid lightgray;
 }
 
 .riaswDockNode {
-	border: 1px solid silver;
+	border: 1px solid lightgray;
 	margin: 1px;
 	padding: 0.25em 0.25em;
 	-webkit-border-radius: 4px;
@@ -46,7 +29,7 @@
 	background-color: inherit;
 }
 .riaswDockNodeShown {
-	background-color: lightsteelblue;
+	background-color: lavender;
 }
 .riaswDockNodeTopmost {
 	background-color: skyblue;

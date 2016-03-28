@@ -878,7 +878,7 @@ body .dijitAlignClient { position: absolute; }
 	z-index: 10;		/* above the panes so that splitter focus is visible on FF, see #7583*/
 	/*background-color: lavender;*/
 	background-color: inherit;
-	border-color: silver;
+	border-color: lightgray;
 	border-style: solid;
 	border-width: 0px;
 }
@@ -916,15 +916,15 @@ body .dijitAlignClient { position: absolute; }
 
 .dijitSplitterH {
 	height: 7px;
-	/*border-top: 1px solid silver;
-	border-bottom: 1px solid silver;*/
+	/*border-top: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;*/
 	cursor: row-resize;
 	-webkit-tap-highlight-color: transparent;
 }
 .dijitSplitterV {
 	width: 7px;
-	/*border-left: 1px solid silver;
-	border-right: 1px solid silver;*/
+	/*border-left: 1px solid lightgray;
+	border-right: 1px solid lightgray;*/
 	cursor: col-resize;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -1542,7 +1542,7 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 	/* children of TabContainer, StackContainer, and AccordionContainer shouldn't have borders
 	 * b/c a border is already there from the TabContainer/StackContainer/AccordionContainer itself.
 	 */
-    border: none !important;
+    /*border: none !important;*/
 }
 
 /* InlineEditBox */

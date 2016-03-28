@@ -37,8 +37,7 @@ define([
 			rangeMessage: rias.i18n.message.range,
 			constraints: {locale: ""},
 			editOptions: {pattern: "#.######"},
-			scrollOnFocus: true,
-			tooltipPosition: []
+			scrollOnFocus: true
 		},
 		initialSize: {},
 		resizable: "width",
@@ -124,25 +123,6 @@ define([
 				"defaultValue": "\"{\\\"locale\\\":\\\"\\\"}\"",
 				"title": "Constraints",
 				"hidden": true
-			},
-			"tooltipPosition": {
-				"datatype": "array",
-				"option": [
-					{
-						"value": "[before]"
-					},
-					{
-						"value": "[after]"
-					},
-					{
-						"value": "[above]"
-					},
-					{
-						"value": "[below]"
-					}
-				],
-				"defaultValue": "[]",
-				"title": "Tooltip Position"
 			},
 			"rangeMessage": {
 				"datatype": "string",

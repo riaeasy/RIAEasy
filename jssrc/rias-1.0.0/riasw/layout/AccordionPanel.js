@@ -12,7 +12,7 @@ define([
 ], function(rias, _Widget, _Container, _TemplatedMixin, _CssStateMixin, StackPanel){
 
 	rias.theme.loadRiasCss([
-		"layout/AccordionContainer.css"
+		"layout/AccordionPanel.css"
 	]);
 
 	var AccordionButton = rias.declare("rias.riasw.layout._AccordionButton", [_Widget, _TemplatedMixin, _CssStateMixin], {
@@ -22,18 +22,18 @@ define([
 		// tags:
 		//		private
 
-		baseClass: "dijitAccordionTitle",
+		baseClass: "riaswAccordionTitle",
 
 		templateString:
-			'<div data-dojo-attach-event="ondijitclick:_onTitleClick" class="dijitAccordionTitle" role="presentation">' +
-				'<div role="tab" data-dojo-attach-point="titleNode,focusNode" class="dijitAccordionTitleFocusNode" data-dojo-attach-event="onkeydown:_onTitleKeyDown" aria-expanded="false">' +
-				'<span role="presentation" class="dijitInline dijitAccordionArrow"></span>' +
-				'<span role="presentation" class="arrowTextUp">+</span>' +
-				'<span role="presentation" class="arrowTextDown">-</span>' +
-				'<span role="presentation" class="dijitInline dijitIcon" data-dojo-attach-point="iconNode"></span>' +
-				'<span role="presentation" data-dojo-attach-point="titleTextNode, textDirNode" class="dijitAccordionText"></span>' +
+			'<div data-dojo-attach-event="ondijitclick:_onTitleClick" role="presentation">' +
+				'<div role="tab" data-dojo-attach-point="titleNode,focusNode" class="riaswAccordionTitleFocusNode" data-dojo-attach-event="onkeydown:_onTitleKeyDown" aria-expanded="false">' +
+					'<span role="presentation" class="dijitInline riaswAccordionArrow"></span>' +
+					'<span role="presentation" class="arrowTextUp">+</span>' +
+					'<span role="presentation" class="arrowTextDown">-</span>' +
+					'<span role="presentation" class="dijitInline dijitIcon" data-dojo-attach-point="iconNode"></span>' +
+					'<span role="presentation" data-dojo-attach-point="titleTextNode, textDirNode" class="riaswAccordionText"></span>' +
 				'</div>' +
-				'</div>',
+			'</div>',
 
 		gutters: false,
 
@@ -132,7 +132,7 @@ define([
 		 contentWidget: null,
 		 =====*/
 
-		baseClass: "dijitAccordionInnerContainer",
+		baseClass: "riaswAccordionInnerContainer",
 
 		// tell nested layout widget that we will take care of sizing
 		isLayoutContainer: true,
@@ -168,9 +168,7 @@ define([
 				parent: this.parent
 			})).placeAt(this.domNode);
 
-			// and then the actual content widget (changing it from prior-sibling to last-child),
-			// wrapped by a <div class=dijitAccordionChildWrapper>
-			this.containerNode = rias.dom.place("<div class='dijitAccordionChildWrapper' role='tabpanel' style='display:none'>", this.domNode);
+			this.containerNode = rias.dom.place("<div class='riaswAccordionChildWrapper' role='tabpanel' style='display:none'>", this.domNode);
 			this.containerNode.setAttribute("aria-labelledby", this.button.id);
 
 			rias.dom.place(this.contentWidget.domNode, this.containerNode);
@@ -287,7 +285,7 @@ define([
 		 //		(my content box size minus the cumulative size of all the title bars)
 		 _verticalSpace: 0,
 		 =====*/
-		baseClass: "dijitAccordionContainer",
+		baseClass: "riaswAccordionPanel",
 
 		buildRendering: function(){
 			this.inherited(arguments);
@@ -384,17 +382,17 @@ define([
 		removeChild: function(child){
 			// Overrides _LayoutWidget.removeChild().
 
+			rias.dom.removeClass(child.domNode, "dijitHidden");
+
 			// Destroy wrapper widget first, before StackPanel.getChildren() call.
 			// Replace wrapper widget with true child widget (ContentPane etc.).
 			// This step only happens if the AccordionContainer has been started; otherwise there's no wrapper.
 			// (TODO: since StackPanel destroys child._wrapper, maybe it can do this step too?)
 			if(child._wrapperWidget){
-				rias.dom.place(child.domNode, child._wrapperWidget.domNode, "after");
+				//rias.dom.place(child.domNode, child._wrapperWidget.domNode, "after");
 				child._wrapperWidget.destroy();
 				child._wrapperWidget = undefined;
 			}
-
-			rias.dom.removeClass(child.domNode, "dijitHidden");
 
 			this.inherited(arguments);
 		},
@@ -416,6 +414,7 @@ define([
 				// also needs to be destroyed.
 				if(child._wrapperWidget){
 					child._wrapperWidget.destroy();
+					child._wrapperWidget = undefined;
 				}else{
 					child.destroyRecursive();
 				}
@@ -457,7 +456,8 @@ define([
 			}
 
 			///需要另行计算 _verticalSpace
-			if(animate){
+			///oldWidget 可能已经 destroy
+			if(animate && oldWidget){
 				var newContents = newWidget._wrapperWidget.containerNode,
 					oldContents = oldWidget._wrapperWidget.containerNode;
 

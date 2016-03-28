@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - PageIndicator
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/PageIndicator"
 ], function(rias, _Widget){
 

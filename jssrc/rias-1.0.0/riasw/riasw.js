@@ -233,7 +233,7 @@ define([
 						}
 					}else if(p.$refScript){//
 						try{
-							_o = rias.$refByModule(module, p.$refScript, module.id + "[" + pn + "]");
+							_o = rias.$runByModule(module, p.$refScript, module.id + "[" + pn + "]");
 						}catch(e){
 							_o = undefined;
 						}
@@ -260,7 +260,7 @@ define([
 								}
 							}else if(p[i].$refScript){//
 								try{
-									_o = rias.$refByModule(module, p[i].$refScript, module.id + "[" + ppn + "." + i + "]");
+									_o = rias.$runByModule(module, p[i].$refScript, module.id + "[" + ppn + "." + i + "]");
 								}catch(e){
 									_o = undefined;
 								}
@@ -818,7 +818,7 @@ define([
 								}
 							}else if(p.$refScript){
 								try{
-									_o = rias.$refByModule(_module, p.$refScript, params.id + "[" + ppn + "]");
+									_o = rias.$runByModule(_module, p.$refScript, params.id + "[" + ppn + "]");
 								}catch(e){
 									_o = undefined;
 								}
@@ -854,7 +854,7 @@ define([
 										}
 									}else if(p[i].$refScript){//
 										try{
-											_o = rias.$refByModule(_module, p[i].$refScript, params.id + "[" + pn + "]");
+											_o = rias.$runByModule(_module, p[i].$refScript, params.id + "[" + pn + "]");
 										}catch(e){
 											_o = undefined;
 										}
@@ -945,14 +945,14 @@ define([
 							params._riaswParams = _params;
 							params._riaswChildren = _params._riaswChildren;///前面 rias._deleDP 已经删除
 							params._riasrModule = _module;
-							if(rias.isInstanceOf(_ownerRiasw, rias.Destroyable)){
+							if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
 								params.ownerRiasw = _ownerRiasw;
 							}
 							refNode || (refNode = rias.dom.create("div", {style: params.style}, _ownerRiasw.domNode, params.position));
 							//_obj = meta.create(params, refNode, errf);
 							_obj = rias.createRiasw(ctor, params, refNode, errf);
 							_params._riasrWidget = _obj;///给 params(_params) 设置运行期实例。
-							if(rias.isInstanceOf(_ownerRiasw, rias.Destroyable)){
+							if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
 								//_ownerRiasw.own(_obj);
 							}else {
 								_owners.push([_obj, _ownerRiasw]);
@@ -1079,7 +1079,7 @@ define([
 							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
 						}else if(ref[0].$refScript){
 							try{
-								_o = rias.$refByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
+								_o = rias.$runByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
 							}catch(e){
 								_o = undefined;
 							}
@@ -1094,7 +1094,7 @@ define([
 							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
 						}else if(ref[0].$refScript){
 							try{
-								_o = rias.$refByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
+								_o = rias.$runByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
 							}catch(e){
 								_o = undefined;
 							}

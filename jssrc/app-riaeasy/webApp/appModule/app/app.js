@@ -63,7 +63,7 @@ define([
 				_riaswIdOfModule: "winLogin",
 				iconClass: "loginIcon",
 				around: around,
-				//orient: ["below-alt"],
+				//positions: ["below-alt"],
 				dialogType: "modal",
 				//id: "winLogin",
 				caption: rias.i18n.webApp.login,
@@ -135,7 +135,6 @@ define([
 				"region": "center",
 				"moduleMeta": "appModule/app/mainModule",
 				"style": {
-					"border": "4px solid lavender",
 					"padding": "0px"
 				}
 			},

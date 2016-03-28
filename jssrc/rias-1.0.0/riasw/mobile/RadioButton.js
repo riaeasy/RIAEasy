@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - RadioButton
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/RadioButton"
 ], function(rias, _Widget){
 

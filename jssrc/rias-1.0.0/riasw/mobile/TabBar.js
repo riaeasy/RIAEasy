@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - TabBar
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/TabBar"
 ], function(rias, _Widget){
 

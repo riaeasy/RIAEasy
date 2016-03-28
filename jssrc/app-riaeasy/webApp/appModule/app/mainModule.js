@@ -61,7 +61,7 @@ define([
 					"moduleMeta": "appModule/tools/infos",
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					_riaswIdOfModule: "appInfos",
-					//caption: "公告",
+					caption: "公告",/// 提前赋值，以确定 dockNode 的显示
 					moduleParams: {},
 					//reCreate: true,
 					closable: false,
@@ -91,7 +91,7 @@ define([
 								"initPlaceToArgs": {
 									parent: m,
 									around: "riasdFileSelector._riasrDockNode",
-									orient: ["below-centered"]
+									positions: ["below-centered"]
 								},
 								"dockTo": {
 									"$refObj": "appMainDockTop"
@@ -131,7 +131,7 @@ define([
 						"caption": rias.i18n.webApp.menu,
 						"tooltip": rias.i18n.webApp.menu,
 						"iconClass": "menuIcon",
-						//caption: "菜单",
+						caption: "菜单",
 						moduleParams: {},
 						reCreate: true,
 						closable: false,
@@ -146,7 +146,7 @@ define([
 						"initPlaceToArgs": {
 							parent: m,
 							around: "mainMenu._riasrDockNode",
-							orient: ["after"]
+							positions: ["after"]
 						},
 						"style": {
 							//"display": "none",
@@ -198,7 +198,7 @@ define([
 				d = rias.newDeferred(),
 				asDialog = (args._riaswType === "rias.riasw.layout.DialogPanel"),
 				parentModule = args._riasrModule || (args.moduleParams && args.moduleParams._riasrModule ? args.moduleParams._riasrModule : self),
-				parent = (asDialog ? (rias.by(args.parent) || (args.initPlaceToArgs && rias.by(args.initPlaceToArgs.parent)) || self.mainCenter) : self.tabs),
+				parent = (rias.by(args.parent) || (args.initPlaceToArgs && rias.by(args.initPlaceToArgs.parent))) || (asDialog ? self.mainCenter : self.tabs),
 				c, cs = (args.caption || "").split("/"), ts = "",
 				i, l;
 			function _getStyle(moduleParams, meta){
@@ -381,7 +381,7 @@ define([
 			"design": "headline",
 			"persist": false,
 			"gutters": false,
-			"class": "webAppHeader riaswShadow",
+			"class": "webAppHeader",
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.layout.Panel",
@@ -453,7 +453,7 @@ define([
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "mainBottom",
-			"class": "webAppFooter riaswShadow",
+			"class": "webAppFooter",
 			"design": "sidebar",
 			"gutters": false,
 			"persist": false,
@@ -468,8 +468,8 @@ define([
 					"content": "尚未登录",
 					"region": "left",
 					"style": {
-						"border": "1px solid silver",
-						"line-height": "2em",
+						//"border": "1px solid lightgray",
+						//"line-height": "2em",
 						"margin": "0px",
 						"padding": "0px",
 						"width": "16em"
@@ -491,14 +491,14 @@ define([
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "appDockPanel",
-			"class": "webAppDockPanel riaswShadow",
+			"class": "webAppDockPanel",
 			"region": "left",
 			"layoutPriority": 0,
 			"gutters": false,
 			"initDisplayState": "hidden",
 			"splitter": false,
 			"style": {
-				"border": "0px solid silver"
+				//"border": "0px solid lightgray"
 			},
 			"_riaswChildren": [
 				{
@@ -513,7 +513,7 @@ define([
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "mainCenter",
-			"class": "webAppCenter riaswShadow",
+			"class": "webAppCenter",
 			"design": "headline",
 			"gutters": false,
 			"persist": false,

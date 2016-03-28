@@ -22,7 +22,7 @@ define([
 			},
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.grid.Grid",
+					"_riaswType": "rias.riasw.grid.DGrid",
 					"_riaswIdOfModule": "grid",
 					"cellIdOps": [
 						{

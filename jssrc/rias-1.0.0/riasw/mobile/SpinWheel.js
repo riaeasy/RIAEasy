@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - SpinWheel
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/SpinWheel",
 	"rias/riasw/mobile/scrollable"
 ], function(rias, _Widget){

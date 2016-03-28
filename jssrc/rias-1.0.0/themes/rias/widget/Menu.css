@@ -2,7 +2,7 @@
 /* Menu */
 .rias .dijitMenu,
 .rias .dijitMenuBar {
-	border: 2px solid silver;
+	border: 2px solid lightgray;
 	margin: 0;
 	padding: 0;
 	/*background-color: lightyellow;zensst*/
@@ -16,14 +16,14 @@
 
 .rias .dijitMenu,
 .rias .dijitMenuBar {
-	border: 2px solid silver;
+	border: 2px solid lightgray;
 	margin: 0;
 	padding: 0;
 	/*background-color: lightyellow;zensst*/
 }
 
 .rias .dijitBorderContainer .dijitMenuBar {
-	border:1px solid silver;
+	border:1px solid lightgray;
 }
 
 .rias .dijitMenuItem {

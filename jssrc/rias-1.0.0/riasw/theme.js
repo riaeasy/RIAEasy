@@ -6,6 +6,13 @@ define([
 ], function(rias) {
 
 ///theme******************************************************************************///
+	var invalidCssChars = /([^A-Za-z0-9_\u00A0-\uFFFF-])/g;
+	var extraSheet = rias.dom.create('style');
+	rias.dom.heads[0].appendChild(extraSheet);
+	extraSheet = extraSheet.sheet || extraSheet.styleSheet;// Keep reference to actual StyleSheet object (`styleSheet` for IE < 9)
+	var removeMethod = extraSheet.deleteRule ? 'deleteRule' : 'removeRule',// Store name of method used to remove rules (`removeRule` for IE < 9)
+		rulesProperty = extraSheet.cssRules ? 'cssRules' : 'rules';// Store name of property used to access rules (`rules` for IE < 9)
+
 	function _load(self, links, names, theme, isMobile, isWebApp, loaded, callback){
 		loaded = loaded || rias.getObject(theme, true, self._loaded);
 		rias.forEach(names, function(name){
@@ -172,21 +179,10 @@ define([
 			//		Dynamically adds a style rule to the document.  Returns an object
 			//		with a remove method which can be called to later remove the rule.
 
-			if (!extraSheet) {
-				// First time, create an extra stylesheet for adding rules
-				extraSheet = rias.dom.create('style');
-				rias.dom.heads[0].appendChild(extraSheet);
-				// Keep reference to actual StyleSheet object (`styleSheet` for IE < 9)
-				extraSheet = extraSheet.sheet || extraSheet.styleSheet;
-				// Store name of method used to remove rules (`removeRule` for IE < 9)
-				removeMethod = extraSheet.deleteRule ? 'deleteRule' : 'removeRule';
-				// Store name of property used to access rules (`rules` for IE < 9)
-				rulesProperty = extraSheet.cssRules ? 'cssRules' : 'rules';
-			}
-
+			css = rias.dom.styleToString(css);
 			var extraRules = this.extraRules,
 				index = extraRules.length;
-			extraRules[index] = (extraSheet.cssRules || extraSheet.rules).length;
+			extraRules[index] = extraSheet[rulesProperty].length;
 			extraSheet.addRule ? extraSheet.addRule(selector, css) : extraSheet.insertRule(selector + '{' + css + '}', extraRules[index]);
 
 			return {
@@ -234,19 +230,43 @@ define([
 			//		replaced by the given string rather than being escaped
 
 			return typeof id === 'string' ? id.replace(invalidCssChars, replace || '\\$1') : id;
+		},
+
+		testElement: function(parentNode, callback){
+			parentNode.appendChild(element);
+			element.style.cssText = rias.dom.styleToString({
+				width: "10em",
+				height: "10em",
+				margin: "1em 2em",
+				padding: "1em",
+				border: "1px solid black",
+				overflow: "scroll",
+				position: "absolute",
+				top: "-9999px",
+				opacity: 0
+			});
+			if(callback){
+				callback(element);
+			}
+			element.style.cssText = "";
+			if (element.parentNode) {
+				element.parentNode.removeChild(element);
+			}
 		}
 	};
 
 	var element = rias.dom.create('div');
-	function getScrollbarSize(element) {
+	function getThemeSize(element) {
 		rias.dom.body.appendChild(element);
 		element.style.cssText = rias.dom.styleToString({
-			width: "100px",
-			height: "100px",
+			width: "10em",
+			height: "10em",
 			overflow: "scroll",
 			position: "absolute",
 			top: "-9999px"
 		});
+		rias.theme.emWidth = element.scrollWidth / 10;
+		rias.theme.emHeight = element.scrollHeight / 10;
 		rias.theme.scrollbarWidth = element.offsetWidth - element.clientWidth;
 		rias.theme.scrollbarHeight = element.offsetHeight - element.clientHeight;
 		if (rias.has('ie')) {
@@ -266,14 +286,7 @@ define([
 			element.parentNode.removeChild(element);
 		}
 	}
-	getScrollbarSize(element);
-
-	var invalidCssChars = /([^A-Za-z0-9_\u00A0-\uFFFF-])/g;
-	var extraSheet = rias.dom.create('style');
-	rias.dom.heads[0].appendChild(extraSheet);
-	extraSheet = extraSheet.sheet || extraSheet.styleSheet;// Keep reference to actual StyleSheet object (`styleSheet` for IE < 9)
-	var removeMethod = extraSheet.deleteRule ? 'deleteRule' : 'removeRule',// Store name of method used to remove rules (`removeRule` for IE < 9)
-		rulesProperty = extraSheet.cssRules ? 'cssRules' : 'rules';// Store name of property used to access rules (`rules` for IE < 9)
+	getThemeSize(element);
 
 	return rias;
 

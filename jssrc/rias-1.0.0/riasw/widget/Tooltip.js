@@ -6,9 +6,9 @@ define([
 ], function(rias, Tooltip) {
 
 	///dijit/Tooltip
-	rias.showTooltip = Tooltip.show = dijit.showTooltip = function(innerHTML, aroundNode, position, rtl, textDir, onMouseEnter, onMouseLeave){
-		if(position){
-			position = rias.map(position, function(val){
+	rias.showTooltip = function(args){
+		if(args.positions){
+			args.positions = rias.map(args.positions, function(val){
 				return {after: "after-centered", before: "before-centered"}[val] || val;
 			});
 		}
@@ -20,7 +20,19 @@ define([
 				_riaswIdOfModule: "_MasterTooltip"
 			});
 		}
-		return Tooltip._masterTT.show(innerHTML, aroundNode, position, rtl, textDir, onMouseEnter, onMouseLeave);
+		//return Tooltip._masterTT.show(innerHTML, aroundNode, position, rtl, textDir, onMouseEnter, onMouseLeave);
+		return Tooltip._masterTT.show(args.content, args.around, args.positions, args.rtl, args.textDir, args.onMouseEnter, args.onMouseLeave);
+	};
+	Tooltip.show = dijit.showTooltip = function(innerHTML, aroundNode, position, rtl, textDir, onMouseEnter, onMouseLeave){
+		return rias.showTooltip({
+			content: innerHTML,
+			around: aroundNode,
+			positions: position,
+			rtl: rtl,
+			textDir: textDir,
+			onMouseEnter: onMouseEnter,
+			onMouseLeave: onMouseLeave
+		});
 	};
 	rias.hideTooltip = dijit.hideTooltip;// = Tooltip.hide;//hideTooltip = function(aroundNode)
 

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - CheckBox
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/CheckBox"
 ], function(rias, _Widget){
 

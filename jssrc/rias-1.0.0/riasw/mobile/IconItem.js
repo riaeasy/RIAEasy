@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - IconItem
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/IconItem"
 ], function(rias, _Widget){
 

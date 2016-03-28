@@ -40,13 +40,6 @@
 .riaswRadioButton .dijitCheckBoxIcon {
 	background-image: url('./images/spriteRadio.png');
 }
-.riaswCheckButton .dijitButtonNode,
-.riaswRadioButton .dijitButtonNode {
-	border: 0px solid silver;
-	padding: 4px 4px 4px 4px;
-	color: #000000;
-	background-color: inherit;
-}
 
 .rias .dijitCheckBox,
 .rias .dijitToggleButton .dijitCheckBoxIcon,

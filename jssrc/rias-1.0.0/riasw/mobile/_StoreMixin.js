@@ -2,11 +2,11 @@
 //RIAStudio client runtime widget - RoundRectStoreList
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/_StoreMixin"
-], function(rias, _Widget){
+], function(rias, Widget){
 
-	var Widget = rias.getObject("dojox.mobile._StoreMixin");
+	//var Widget = rias.getObject("dojox.mobile._StoreMixin");
 	Widget.extend({
 
 		autoRefresh: true,

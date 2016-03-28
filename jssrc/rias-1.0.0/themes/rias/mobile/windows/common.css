@@ -1,10 +1,4 @@
-html.mobile,
-.mobile body {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-.mobile body {
+.mobileBody {
   overflow-x: hidden;
   -webkit-text-size-adjust: none;
   background-color: black;

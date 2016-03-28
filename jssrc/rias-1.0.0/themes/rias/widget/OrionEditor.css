@@ -9,7 +9,7 @@
 @import "../../../../webLib/orion-7.0/orion/editor/themes/tierra.css";
 
 .riaswOrionEditor {
-	border: 0px solid silver;
+	border: 0px solid lightgray;
 	width: 20em;
 	vertical-align: middle;
 	display: inline-block;

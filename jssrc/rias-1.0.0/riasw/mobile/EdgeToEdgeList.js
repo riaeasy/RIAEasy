@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - EdgeToEdgeList
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/EdgeToEdgeList"
 ], function(rias, _Widget){
 

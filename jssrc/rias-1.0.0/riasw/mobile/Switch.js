@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - Switch
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/Switch",
 	"dojox/mobile/_maskUtils"
 ], function(rias, _Widget, _maskUtils){

@@ -7,6 +7,7 @@ define([
 	"rias/riasw/mobile/Button",
 	"dgrid/List",
 	"dgrid/Grid",
+
 	"dgrid/OnDemandGrid",
 	//"dgrid/Grid",
 	//"dgrid/_StoreMixin",
@@ -60,6 +61,10 @@ define([
 			rias.theme.addCssRule('.dgrid-rtl-swap .dgrid-header-row', 'left: ' + rias.theme.scrollbarWidth + 'px');
 		}
 	});
+
+	misc.addCssRule = function(selector, css){
+		return rias.theme.addCssRule(selector, css);
+	};
 
 	List.extend({
 
@@ -122,7 +127,7 @@ define([
 				this._class = cls;
 			}
 
-			this._applyAttributes();///需要在 buildRendering 之后。
+			//this._applyAttributes();///需要在 buildRendering 之后。
 			this.postCreate(params);
 
 			// remove srcNodeRef instance property post-create
@@ -354,7 +359,145 @@ define([
 		}
 	});
 
+	ColumnSet.extend({
+		styleColumnSet: function (colsetId, css) {
+			// summary:
+			//		Dynamically creates a stylesheet rule to alter a columnset's style.
+
+			///增加 this._columnSetRules
+			var rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
+				' .dgrid-column-set-' + misc.escapeCssIdentifier(colsetId, '-'), css);
+			this._columnSetRules[colsetId] = rule;
+			this._positionScrollers();
+			return rule;
+		},
+		renderHeader: function () {
+			// summary:
+			//		Setup the headers for the grid
+			this.inherited(arguments);
+
+			var columnSets = this.columnSets,
+				scrollers = this._columnSetScrollers,
+				grid = this;
+
+			function _addw(p, ws){
+				if(ws.indexOf("em") >= 0){
+					rias.theme.testElement(p, function(el){
+						w += (parseFloat(ws) * rias.dom.getPadExtents(el).t);
+					});
+				}else{
+					w += parseFloat(ws);
+				}
+			}
+			///增加 this._columnSetRules
+			this._columnSetRules = {};
+			///允许 column.width 为 string
+			if (this.fixedColumnWidth) {
+				///增加 this._columnSetRules
+				this._columnSetRules["0"] = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
+					' .dgrid-column-set-' + misc.escapeCssIdentifier("0", '-'), {
+					width: this.fixedColumnWidth
+				});
+			}else{
+				var w = 2,
+					c, ws,
+					i, l;
+				for(i = 0, l = this.subRows.headerRows[0].length; i < l; i++){
+					c = this.subRows.headerRows[0][i];
+					if(c._riasrSelectorColumn || c._riasrOpColumn || c._riasrFixedColumn){
+						ws = c.width;
+						if(rias.isNumber(ws)){
+							w += rias.toNumber(ws);
+						}else if(ws && rias.isString(ws)){
+							/*if(ws.indexOf("em")){
+								rias.theme.testElement(c.headerNode, function(el){
+									w += (parseFloat(ws) * el.scrollWidth / 10);
+								});
+							}else{
+								w += parseFloat(ws);
+							}*/
+							_addw(c.headerNode, ws);
+						}else if(c._riasrOpColumn){
+							rias.forEach(c._riasrOpColumn, function(item){
+								_addw(c.headerNode, (item.text + " ").length + "em");
+							});
+						}else{
+							w += 20;
+						}
+					}else{
+						break;
+					}
+				}
+				///增加 this._columnSetRules
+				this._columnSetRules["0"] = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
+					' .dgrid-column-set-' + misc.escapeCssIdentifier("0", '-'), {
+					width: w + "px"
+				});
+			}
+
+			function reposition() {
+				grid._positionScrollers();
+			}
+
+			this._columnSetScrollerContents = {};
+			this._columnSetScrollLefts = {};
+
+			if (scrollers) {
+				// this isn't the first time; destroy existing scroller nodes first
+				for (i in scrollers) {
+					rias.dom.destroy(scrollers[i]);
+				}
+			} else {
+				// first-time-only operations: hook up event/aspected handlers
+				rias.after(this, 'resize', reposition, true);
+				rias.after(this, 'styleColumn', reposition, true);
+				this._columnSetScrollerNode = rias.dom.create('div', {
+					className: 'dgrid-column-set-scroller-container'
+				}, this.footerNode, 'after');
+			}
+
+			// reset to new object to be populated in loop below
+			scrollers = this._columnSetScrollers = {};
+
+			for (i = 0, l = columnSets.length; i < l; i++) {
+				this._putScroller(columnSets[i], i);
+			}
+
+			this._positionScrollers();
+		},
+		destroy: function () {
+			this.inherited(arguments);
+
+			///增加 this._columnSetRules
+			for (var name in this._columnSetRules) {
+				this._columnSetRules[name].remove();
+			}
+		}
+	});
+
 	ColumnResizer.extend({
+		configStructure: function () {
+			var oldSizes = this._oldColumnSizes = rias.mixin({}, this._columnSizes), // shallow clone
+				k;
+
+			this._resizedColumns = false;
+			///增加 this._columnSizes 判断
+			if(!this._columnSizes){
+				this._columnSizes = {};
+			}
+
+			this.inherited(arguments);
+
+			// Remove old column styles that are no longer relevant; this is specifically
+			// done *after* calling inherited so that _columnSizes will contain keys
+			// for all columns in the new structure that were assigned widths.
+			for (k in oldSizes) {
+				if (!(k in this._columnSizes)) {
+					oldSizes[k].remove();
+				}
+			}
+			delete this._oldColumnSizes;
+		},
 		_configColumn: function (column) {
 			this.inherited(arguments);
 
@@ -367,7 +510,8 @@ define([
 				if ((rule = this._oldColumnSizes[colId])) {
 					rule.set('width', column.width + 'px');
 				}else {
-					rule = misc.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
+					///改为用 this.addCssRule
+					rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
 						' .dgrid-column-' + misc.escapeCssIdentifier(colId, '-'),
 						'width: ' + (rias.isNumber(column.width) ? column.width + 'px;' : column.width + ';'));
 				}
@@ -497,6 +641,56 @@ define([
 		}
 	}
 	Grid.extend({
+		destroy: function () {
+			// Run _destroyColumns first to perform any column plugin tear-down logic.
+			this._destroyColumns();
+			if (this._sortListener) {
+				this._sortListener.remove();
+			}
+
+			this.inherited(arguments);
+
+			///增加 this._columnSizes
+			for (var name in this._columnSizes) {
+				this._columnSizes[name].remove();
+			}
+		},
+		styleColumn: function (colId, css) {
+			// summary:
+			//		Dynamically creates a stylesheet rule to alter a column's style.
+
+			///增加 this._columnSizes
+			var rule = this._columnSizes[colId];
+			if (rule) {
+				rule.remove();
+			}
+			rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) + ' .dgrid-column-' + misc.escapeCssIdentifier(colId, '-'), css);
+			this._columnSizes[colId] = rule;
+			return rule;
+		},
+		configStructure: function () {
+			///增加 this._columnSizes
+			if(!this._columnSizes){
+				this._columnSizes = {};
+			}
+
+			// configure the columns and subRows
+			var subRows = this.subRows,
+				columns = this._columns = this.columns;
+
+			// Reset this.columns unless it was already passed in as an object
+			this.columns = !columns || columns instanceof Array ? {} : columns;
+
+			if (subRows) {
+				// Process subrows, which will in turn populate the this.columns object
+				for (var i = 0; i < subRows.length; i++) {
+					subRows[i] = this._configColumns(i + '-', subRows[i]);
+				}
+			}
+			else {
+				this.subRows = [this._configColumns('', columns)];
+			}
+		},
 		_createBodyRowCell: function (cellElement, column, item, options) {
 			var cellData = item;
 
@@ -652,8 +846,14 @@ define([
 		}
 	});
 	var riasType = "rias.riasw.grid.DGrid";
-	var Widget = rias.declare(riasType, [_WidgetBase, _Widget, ColumnResizer, ColumnHider, ColumnReorder,// ColumnSet, Pagination,
+	///注意 继承链顺序：CompoundColumns, ColumnSet....。CompoundColumns 应该在最底层。
+	var Widget = rias.declare(riasType, [_WidgetBase, _Widget, CompoundColumns, ColumnSet, ColumnResizer, ColumnHider, ColumnReorder,// Pagination,
 		Keyboard, Selection, Selector, Editor, Tree], {
+
+		renderHeader: function () {
+			this.inherited(arguments);
+			rias.dom.place(this.hiderToggleNode, this.headerScrollNode);
+		},
 
 		_setCollection: function (collection) {
 			if(!collection.fetchRange){
@@ -684,41 +884,6 @@ define([
 		}
 	});
 
-	function columnFormatter(cellData, data){
-		var col = this,
-			field = col.field,
-			format = col.format,
-			v;
-		if(data[field] === undefined){
-			return data[field];
-		}
-		try{
-			if(rias.isFunction(format)){
-				return format.apply(col, [cellData, data]);
-			}else if(rias.isString(format)){
-				switch(format){
-					case "text":
-						return data[field];
-					case "date":
-						return rias.datetime.format(data[field], rias.datetime.defaultDateFormatStr);
-					case "time":
-						return rias.datetime.format(data[field], rias.datetime.defaultTimeFormatStr);
-					case "datetime":
-						return rias.datetime.format(data[field], rias.datetime.defaultFormatStr);
-					case "boolean":
-						return (data[field] != false ? "是" : "否");
-					default:
-						if(/^number/.test(format)){
-							v = data[field];
-							return rias.toFixed(v, rias.toInt(format.substring(6), 0));
-						}
-						return data[field];
-				}
-			}
-		}catch(e){
-			return e;
-		}
-	}
 	Widget._riasdMeta = {
 		visual: true,
 		iconClass: "riaswGridIcon",
@@ -727,14 +892,52 @@ define([
 			var p = rias.mixinDeep({}, params),
 				i, l, n, b,
 				treeColumns = (rias.isArray(p.treeColumns) ? p.treeColumns : rias.isString(p.treeColumns) ? [p.treeColumns] : []),
-				opColumn = [], gridOps = [], item;
+				opColumn = [], gridOps = [], item,
+				set1 = [], set2 = [], lset1 = 0;
 
 			if(!p._riaswIdOfModule){
 				p._riaswIdOfModule = "grid";
 			}
 
+			p._customColumnFormatter = function(cellData, data){
+				var col = this,
+					field = col.field,
+					format = col.format,
+					v;
+				if(data[field] === undefined){
+					return data[field];
+				}
+				try{
+					if(rias.isFunction(format)){
+						return format.apply(col, [cellData, data]);
+					}else if(rias.isString(format)){
+						switch(format){
+							case "text":
+								return data[field];
+							case "date":
+								return rias.datetime.format(data[field], rias.datetime.defaultDateFormatStr);
+							case "time":
+								return rias.datetime.format(data[field], rias.datetime.defaultTimeFormatStr);
+							case "datetime":
+								return rias.datetime.format(data[field], rias.datetime.defaultFormatStr);
+							case "boolean":
+								return (data[field] != false ? "是" : "否");
+							default:
+								if(/^number/.test(format)){
+									v = data[field];
+									return rias.toFixed(v, rias.toInt(format.substring(6), 0));
+								}
+								return data[field];
+						}
+					}
+				}catch(e){
+					return e;
+				}
+			};
 			function _column(arr){
-				rias.forEach(arr, function(item){
+				var i = arr.length - 1;
+				for(; i >= 0; i--){
+					item = arr[i];
 					if(rias.isArray(item)){
 						_column(item);
 					}else{
@@ -749,20 +952,27 @@ define([
 						}
 						if(item.format && !item.formatter){
 							item.formatter = function(cellData, data){
-								return columnFormatter.apply(this, arguments);
+								return this._customColumnFormatter(cellData, data);
 							}
 						}
+						if(item.fixed){
+							item.resizable = false;
+							item._riasrFixedColumn = true;
+							set1.unshift(item);
+							lset1 += 10;
+							arr.splice(i, 1);
+						}
 					}
-				});
+				}
 			}
 			if(!p.columns){
 				if(p.structure){
 					p.columns = p.structure;
-					_column(p.columns);
 				}else{
 					p.columns = [];
 				}
 			}
+			_column(p.columns);
 			delete p.structure;
 			delete p.treeColumns;
 
@@ -804,10 +1014,12 @@ define([
 			delete p.cellIdOps;
 			function _getOpColumn(){
 				return {
+					_riasrOpColumn: opColumn,
 					label: rias.i18n.action.action,
 					field: "id",
 					"className": "dgrid-opcolumn",
-					width: p.opColumnWidth || "9em",
+					//width: p.opColumnWidth || "9em",
+					resizable: false,
 					renderCell: function(data, cellData, cell, options){
 						var result,
 							grid = this.grid,
@@ -816,20 +1028,8 @@ define([
 						for(i = 0, l = opColumn.length; i < l; i++){
 							item = opColumn[i];
 							if(item && item.name){
-								/*item = new Button({
-									//_riaswType: "rias.riasw.form.Button",
-									ownerRiasw: grid,
-									//"class": "dgrid-selector-btn",
-									name: item.name,
-									label: item.text,
-									tooltip: item.tooltip,
-									onClick: function(){
-										console.debug("click:" + this.label, data.id);
-									}
-								});
-								item = item.domNode;*/
 								item = rias.dom.create("button", {
-									"class": "mblButton",
+									//"class": "dgrid-opcolumn-button",
 									name: item.name,
 									title: item.tooltip,
 									innerHTML: item.text,
@@ -867,7 +1067,7 @@ define([
 				};
 			}
 			if(opColumn.length > 0){
-				if(rias.isObjectExact(p.columns)){
+				/*if(rias.isObjectExact(p.columns)){
 					p.columns = rias.mixin({
 						"": _getOpColumn()
 					}, p.columns);
@@ -875,7 +1075,12 @@ define([
 					p.columns.unshift(_getOpColumn());
 				}else{
 					p.columns = [_getOpColumn()];
+				}*/
+				set1.unshift(_getOpColumn());
+				for(i = 0, l = opColumn.length; i < l; i++){
+					lset1 = lset1 + (opColumn[i].text.length + 0.5);
 				}
+				lset1 += 1;
 			}
 			delete p.opColumnWidth;
 			p.cellIdOnClick = function(grid, name, cell, data){
@@ -886,7 +1091,7 @@ define([
 						dialogType: "top",
 						ownerRiasw: grid,
 						around: cell,
-						orient: ["after-centered", "below", "above", "before"],
+						positions: ["after-centered", "below", "above", "before"],
 						moduleMeta: grid.viewModule,
 						resizable: false,
 						//restrictPadding: 0,
@@ -960,14 +1165,17 @@ define([
 			delete p.selectRowMultiple;
 			function _getSelector(){
 				return {
+					_riasrSelectorColumn: true,
 					label: "",
 					field: "id",
 					width: "2em",
+					minWidth: 20,
+					resizable: false,
 					selector: (p.selectionMode === "single" ? "radio" : "checkbox")
 				};
 			}
 			if(p.selectionMode !== "none"){
-				if(rias.isObjectExact(p.columns)){
+				/*if(rias.isObjectExact(p.columns)){
 					p.columns = rias.mixin({
 						"": _getSelector()
 					}, p.columns);
@@ -975,9 +1183,18 @@ define([
 					p.columns.unshift(_getSelector());
 				}else{
 					p.columns = [_getSelector()];
-				}
+				}*/
+				set1.unshift(_getSelector());
+				lset1 += 2;
 			}
 			p.deselectOnRefresh = rias.ifnull(p.deselectOnRefresh, false);
+
+			if(set1.length > 0){
+				set2 = set2.concat(p.columns);
+				delete p.columns;
+				p.columnSets = [[set1], [set2]];
+				//p.fixedColumnWidth = p.fixedColumnWidth || lset1 + "em";
+			}
 
 			var _btnRefresh = {
 					_riaswType: "rias.riasw.form.Button",
@@ -1150,7 +1367,7 @@ define([
 
 	rias.on(rias.webApp.domNode, "dgrid-error", function(evt){
 		evt.preventDefault(); // Suppress console.error
-		console.error("document received dgrid-error: " + evt.error, evt);
+		console.error("document received dgrid-error: ", evt.error ? rias.getStackTrace(evt.error) : evt);
 	});
 
 	return Widget;

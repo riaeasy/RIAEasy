@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ContentPane(mobile)
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"rias/riasw/mobile/BaseMixin",
 	"dojox/mobile/ContentPane"
 ], function(rias, BaseMixin, _Widget){

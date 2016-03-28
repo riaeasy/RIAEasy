@@ -95,7 +95,7 @@ define([
 					x: rias.dom.webAppNode.clientWidth >> 1,
 					y: rias.dom.webAppNode.clientHeight >> 1
 				},
-				orient: ["centered"]
+				positions: ["centered"]
 			});
 		},
 
@@ -124,7 +124,7 @@ define([
 					x: e.clientX + this._offset,
 					y: e.clientY + this._offset + this._offset
 				},
-				orient: ["centered"]
+				positions: ["centered"]
 			});
 		},
 		_show: function(){

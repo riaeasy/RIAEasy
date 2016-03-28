@@ -220,7 +220,7 @@ define([
 				self.setData(data);
 				self._currentDfd = null;
 				d.resolve(data);
-				results.total = range && k + range[1];
+				results.total = range && k + rias.toNumber(range[1]);
 				return results.total
 			}
 			function _err(e){

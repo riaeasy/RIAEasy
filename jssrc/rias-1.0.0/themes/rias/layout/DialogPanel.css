@@ -8,14 +8,13 @@
 	background-color: whitesmoke;
 	padding: 0px;
 	margin:0;
-	/*overflow: hidden;*/
 	/*min-height: 8em;
 	min-width: 16em;*/
 	-moz-box-shadow: 0.25em 0.25em 1em 0em #333;
 	-webkit-box-shadow: 0.25em 0.25em 1em 0em #333;
 	box-shadow: 0.25em 0.25em 1em 0em #333;
 	border-width: 4px;
-	border-color: lightsteelblue;
+	border-color: lavender;
 	border-style: solid;
 	border-radius: 4px;
 }
@@ -36,7 +35,7 @@
 }
 
 .riaswDialogPanelWrapper {
-	border: 1px solid silver;
+	border: 0px solid lightgray;
 	overflow: hidden;
 	position: relative;
 	padding: 0px;
@@ -61,7 +60,7 @@
 }*/
 
 .riaswDialogPanelWithCaption {
-	/*border: 0px solid silver;
+	/*border: 0px solid lightgray;
 	padding:1.5em 4px 4px 4px;
 	margin: 1em 4px 4px 4px;
 	-moz-border-radius: 9px;
@@ -75,15 +74,15 @@
 	padding: 1em 1em 1em 1em;
 	text-align: right;
 	margin: 0;
-	/*border-: 1px solid silver;*/
+	/*border-: 1px solid lightgray;*/
 	display: block;
 }
 .riaswDialogPanelActionBarTop {
 	padding: 0.5em 1em 0.5em 1em;
 	text-align: left;
 	margin: 0;
-	/*border-: 1px solid silver;*/
-	border-bottom: 1px solid silver;
+	/*border-: 1px solid lightgray;*/
+	border-bottom: 1px solid lightgray;
 	display: block;
 }
 

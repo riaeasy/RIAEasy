@@ -533,7 +533,7 @@ define([
 					self.moduleMeta = rias.getObject(self.moduleMeta.$refObj, 0, self) || rias.getObject(self.moduleMeta.$refObj) || rias.by(self.moduleMeta.$refObj);
 				}else if(self.moduleMeta.$refScript){//
 					try{
-						self.moduleMeta = rias.$refByModule(self, self.moduleMeta.$refScript, self.id + "[moduleMeta]");
+						self.moduleMeta = rias.$runByModule(self, self.moduleMeta.$refScript, self.id + "[moduleMeta]");
 					}catch(e){
 						self.moduleMeta = {};
 					}

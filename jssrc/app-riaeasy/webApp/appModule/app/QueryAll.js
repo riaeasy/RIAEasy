@@ -75,7 +75,6 @@ define([
 					"region": "top",
 					"splitter": false,
 					"style": {
-						"border": "0px solid silver",
 						"padding": "4px 1em"
 					},
 					"_riaswChildren": [

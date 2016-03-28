@@ -23,7 +23,6 @@ define([
 			rangeMessage: rias.i18n.message.range,
 			constraints: {locale: ""},
 			editOptions: {pattern: "#.######"},
-			tooltipPosition: [],
 			defaultTimeout: 500,
 			timeoutChangeRate: 0.9,
 			smallDelta: 1,
@@ -105,12 +104,6 @@ define([
 				"datatype": "json",
 				"defaultValue": "\"{\\\"locale\\\":\\\"\\\"}\"",
 				"title": "Constraints",
-				"hidden": true
-			},
-			"tooltipPosition": {
-				"datatype": "array",
-				"defaultValue": "[]",
-				"title": "Tooltip Positions",
 				"hidden": true
 			},
 			"rangeMessage": {

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ScrollableView
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	//"dojox/mobile/ScrollableView",
 	"rias/riasw/mobile/View",
 	"dojox/mobile/_ScrollableMixin",

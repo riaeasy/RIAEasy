@@ -37,8 +37,7 @@ define([
 				selector: "date",
 				fullYear: true
 			},
-			scrollOnFocus: true,
-			tooltipPosition: []
+			scrollOnFocus: true
 		},
 		initialSize: {},
 		resizable: "width",
@@ -112,12 +111,6 @@ define([
 				"datatype": "json",
 				"defaultValue": "\"{\\\"locale\\\":\\\"\\\",\\\"selector\\\":\\\"date\\\",\\\"fullYear\\\":true}\"",
 				"title": "Constraints",
-				"hidden": true
-			},
-			"tooltipPosition": {
-				"datatype": "array",
-				"defaultValue": "[]",
-				"title": "Tooltip Positions",
 				"hidden": true
 			},
 			"rangeMessage": {

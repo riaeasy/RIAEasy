@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - RoundRectStoreList
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/RoundRectStoreList",
 	"rias/riasw/mobile/ListItem",
 	///"rias/riasw/mobile/_StoreMixin", //貌似 mixin 的类，修改基类不起作用，改为直接在这里 覆盖

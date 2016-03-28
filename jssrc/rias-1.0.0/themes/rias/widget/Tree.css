@@ -14,30 +14,29 @@
 
 .rias .dijitTreeLabel {
 	font-weight: normal;
-	margin-left: 0.3em;
 	vertical-align: middle;
 }
 
 .rias .dijitTreeIsRoot {
-	margin-left: 0;
+	/*margin-left: 0;*/
 	background-image: none;
 }
 
 .rias .dijitTreeExpando {
-	width: 18px;
-	height: 18px;
+	width: 24px;
+	height: 24px;
 }
 
 .rias .dijitTreeRow {
 	/* so insert line shows up on IE when dropping after a target element */
 	/*padding-bottom: 2px;*/
-	padding: 0.1em 0.2em 0.2em 0.2em;
+	padding: 0 0.25em 0.25em 0.25em;
 	vertical-align: middle;
 }
 
 .rias .dijitTreeContent {
-	min-height: 18px;
-	min-width: 18px;
+	min-height: 24px;
+	min-width: 24px;
 	padding-left:1px;
 	vertical-align: middle;
 }
@@ -57,7 +56,7 @@
 }
 
 .rias .dijitTreeExpandoOpened {
-	background: url('images/spriteTree.png') no-repeat -18px top;
+	background: url('images/spriteTree.png') no-repeat -24px top;
 }
 
 .rias .dijitTreeExpandoClosed {
@@ -65,7 +64,7 @@
 }
 
 .rias .dijitTreeExpandoLeaf {
-	background: url('images/spriteTree.png') no-repeat -36px top;
+	background: url('images/spriteTree.png') no-repeat -48px top;
 }
 
 .rias .dijitTreeExpandoLoading {
@@ -130,10 +129,10 @@
 .riaswTreeMenu .dijitTreeRow {
 	/* so insert line shows up on IE when dropping after a target element */
 	padding: .5em .5em;
-	border-bottom: 0px solid lavender;
+	/*border-bottom: 0px solid lightgray;*/
 }
 .riaswTreeMenu .dijitTreeNodeDisabled .dijitTreeRow {
-	border-bottom-color: silver;
+	/*border-bottom-color: lightgray;*/
 }
 /*.riaswTreeMenu .dijitTreeExpando {
 	display: none;

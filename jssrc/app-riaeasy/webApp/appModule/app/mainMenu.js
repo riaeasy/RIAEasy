@@ -153,7 +153,7 @@ define([
 		var m = this;
 		m.currentItem = item;
 		if(item && item.cmd && !node.tree.model.mayHaveChildren(item)){
-			rias.runByModule(m, item.cmd, "mainMenu_" + item.id);
+			rias.$runByModule(m, item.cmd, "mainMenu_" + item.id);
 		}
 	},
 	"_riaswChildren": [

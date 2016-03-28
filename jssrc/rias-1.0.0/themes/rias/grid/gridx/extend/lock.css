@@ -1,10 +1,10 @@
 .rias .gridxLockedCell,
 .rias .gridxRow .gridxLockedCell {
-  background-color: lavender;
-  border-color: silver;
+  background-color: whitesmoke;
+  border-color: lightgray;
 }
 .rias .gridxHeaderRow .gridxLockedCell,
 .rias.gridxColumnResizing .gridx .gridxHeader .gridxHeaderRow .gridxLockedCell:hover {
-  background-color: lavender;
-  border-color: silver;
+  background-color: whitesmoke;
+  border-color: lightgray;
 }

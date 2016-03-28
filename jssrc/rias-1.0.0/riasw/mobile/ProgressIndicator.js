@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ProgressIndicator
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ProgressIndicator"
 ], function(rias, _Widget){
 

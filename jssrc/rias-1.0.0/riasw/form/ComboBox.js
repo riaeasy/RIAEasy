@@ -189,7 +189,6 @@ define([
 				invalidMessage: rias.i18n.message.invalid,
 				constraints: {locale: ""},
 				regExp: ".*",
-				tooltipPosition: [],
 				//pageSize: null,
 				query: {},
 				queryExpr: "${0}*",
@@ -307,12 +306,6 @@ define([
 				"datatype": "string",
 				"defaultValue": ".*",
 				"title": "Regular Expression",
-				"hidden": true
-			},
-			"tooltipPosition": {
-				"datatype": "array",
-				"defaultValue": "[]",
-				"title": "Tooltip Positions",
 				"hidden": true
 			},
 			"pageSize": {

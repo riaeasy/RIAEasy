@@ -8,6 +8,7 @@
 	margin:0;	
 	/*overflow: hidden;*/
 	overflow: auto;
+	border: none;
 }
 .mobileBody .riaswModule {
 	overflow: hidden;

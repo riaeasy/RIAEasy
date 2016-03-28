@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ListItem
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ListItem"
 ], function(rias, _Widget){
 

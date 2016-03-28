@@ -8,7 +8,7 @@
 	padding: 0px;
 	margin:0;
 	/*overflow: hidden;*/
-	border: 1px solid silver;
+	border: 0px solid lightgray;
 }
 .riaswFormSelected,
 .riaswFormFocused {

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - RoundRectCategory
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/RoundRectCategory"
 ], function(rias, _Widget){
 

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - SwapView
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	//"dojox/mobile/SwapView",
 	"rias/riasw/mobile/View",
 	"dojox/mobile/_ScrollableMixin",

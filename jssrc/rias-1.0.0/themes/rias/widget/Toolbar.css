@@ -1,3 +1,4 @@
+
 .rias .dijitToolbar {
 	border-bottom: 1px solid #ccc;
 	background:#eaeaea url("../layout/images/titleBar.png") repeat-x top left;
@@ -29,16 +30,17 @@
 
 .rias .dijitToolbar .dijitButtonChecked,
 .rias .dijitToolbar .dijitToggleButtonChecked {
-	background-color:#d8e5f8;
-	border:1px solid #316ac5;
+	background-color: lavender;
+	border-width: 1px;
+	border-color: steelblue;
 	padding: 0;
 }
 
 .rias .dijitToolbar .dijitButtonCheckedHover,
 .rias .dijitToolbar .dijitToggleButtonCheckedHover
  {
-	background-color:skyblue;
-	border:1px solid silver;
+	background-color: skyblue;
+	border-width: 1px;
 	padding: 0;
 }
 
@@ -48,7 +50,7 @@
 .rias .dijitToolbar .dijitComboButton .dijitButtonContentsHover,
 .rias .dijitToolbar .dijitComboButton .dijitDownArrowButtonHover {
 	/* TODO: change this from Hover to Selected so that button is still highlighted while drop down is being used */
-	border: 1px solid silver;
+	border-width: 1px;
 	padding: 0;
 	background-color:skyblue;
 }

@@ -188,7 +188,7 @@ define([
 							"x": 300,
 							"y": 120
 						},
-						"orient": "after"
+						"positions": "after"
 					},
 					"layoutPriority": 0,
 					"liveSplitters": true,

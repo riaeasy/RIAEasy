@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - TreeView
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	//"dojox/mobile/TreeView",
 	"rias/riasw/mobile/ScrollableView",
 	"rias/riasw/mobile/Heading",

@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ComboBox
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/scrollable"
 ], function(rias, _Widget){
 

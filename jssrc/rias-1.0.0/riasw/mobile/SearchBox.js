@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - SearchBox
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/SearchBox"
 ], function(rias, _Widget){
 

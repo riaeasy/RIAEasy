@@ -37,7 +37,7 @@
 .rias .dijitDialogPaneContent {
 	/*background: #dfefff repeat-x top left;zensst*/
 	background-color: whitesmoke;
-  /*border-top: 1px solid silver;*/
+  /*border-top: 1px solid lightgray;*/
   padding: 0px;
   position: relative;
 }
@@ -52,7 +52,7 @@
 	padding: 1.5em 1em 0.5em 1.5em;
 	text-align: right;
 	margin: 0;
-	/*border-: 1px solid silver;*/
+	/*border-: 1px solid lightgray;*/
 }
 .rias .dijitDialogPaneContent .dijitDialogPaneActionBar {
 }
@@ -131,7 +131,7 @@
 }
 .rias .dijitTooltipFocusNode {
 	padding: 0px;
-	border: 1px solid silver;
+	border: 1px solid lightgray;
 }
 .rias .dijitTooltipContainer {
   /* the part with the text */
@@ -142,7 +142,7 @@
   background-image: linear-gradient(bottom, rgba(207, 229, 250, 0.1) 0px, #ffffff 10px);
   background-position: bottom; zensst*/
 	background-color: white;
-	border: 2px solid silver;
+	border: 2px solid lightgray;
 	padding: 8px 8px;
 	-moz-border-radius: 9px;
 	-webkit-border-radius: 8px;

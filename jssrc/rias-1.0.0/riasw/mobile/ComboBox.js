@@ -2,7 +2,7 @@
 //RIAStudio client runtime widget - ComboBox
 
 define([
-	"rias/riasw/mobile/mobileBase",
+	"rias",
 	"dojox/mobile/ComboBox",
 	"dojox/mobile/_ComboBoxMenu",
 	"rias/riasw/form/_AutoCompleterMixin",

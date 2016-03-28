@@ -171,16 +171,13 @@ define([
 									"childLabelWidth": "6em",
 									"childShowLabel": true,
 									"childStyle": {
-										"border": "0px solid silver",
 										"height": "2em",
-										"padding": "0px",
-										"width": "100%"
+										"padding": "0px"
 									},
 									"cols": 1,
 									"region": "center",
 									"splitter": false,
 									"style": {
-										"border": "0px solid silver",
 										"padding": "0.5em 3em 0.5em 1em"
 									},
 									"_riaswChildren": [

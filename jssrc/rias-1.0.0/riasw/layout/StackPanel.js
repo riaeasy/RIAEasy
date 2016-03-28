@@ -194,6 +194,16 @@ define([
 				this.__reserved_page.push(page);
 				page._wrapper.removeChild(page.domNode);
 			}
+			if(this.selectedChildWidget === page){
+				this.selectedChildWidget = undefined;
+				if(this._started){
+					//var children = this.getChildren();
+					//if(children.length){
+					//	this.selectChild(children[Math.max(idx - 1, 0)]);
+					//}
+					this.back();
+				}
+			}
 			this.inherited(arguments);
 
 			rias.dom.destroy(page._wrapper);
@@ -205,15 +215,6 @@ define([
 
 			if(this._descendantsBeingDestroyed){
 				return;
-			}
-			if(this.selectedChildWidget === page){
-				this.selectedChildWidget = undefined;
-				if(this._started){
-					var children = this.getChildren();
-					if(children.length){
-						this.selectChild(children[Math.max(idx - 1, 0)]);
-					}
-				}
 			}
 		},
 
