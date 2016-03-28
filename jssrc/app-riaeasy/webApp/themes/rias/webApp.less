@@ -1,224 +1,368 @@
 
 /* rias.webApp */
+
+//.mobile .mobileBody {
+//	font-family: Helvetica;
+//	font-size: 15px;
+//}
+
+@appBackgroundColor: darkslategray;
+@appAreaColor: whitesmoke;
+@appDockColor: whitesmoke;
+@toolbarBackgroundColor: ghostwhite;
+@inputBackgroundColor: white;
+@highlightColor: lightgray;
+@selectedColor: skyblue;
+@hoverColor: gold;
+@borderColor: lightgray;
+
 .webApp{
-	background-color: lightgray;
+	background-color: @appBackgroundColor;
+	border-color: 0px solid @borderColor;
 	/*height: 100px;
 	width: 100px;*/
 	font-family: Helvetica;
 	font: menu;
 	display: block;
 	/*position: relative;*/
-	margin:0;
+	padding: 0.25em;
 	overflow: hidden;
 	/*overflow: auto;*/
 }
 
-.webAppContent {
-	//background-color: whitesmoke;
-	//border-top: 0px solid lightgray;
-	//padding: 0px;
-}
+.rias {
 
-.mblComboBoxMenuItem {
-	height: 1.5em;
-}
-
-.mobile .mobileBody {
-	font-family: Helvetica;
-	font-size: 15px;
-}
-
-.webAppHeader {
-	font-size: 15px;
-	//background-color: lightgray;
-	border-bottom: 1px solid lightgray;
-	height: 2.5em;
-	padding: 0px 0px 0px 0px;
-	margin-top: 0.25em !important;
-	margin-left: 0.25em !important;
-
-	.dijitIcon {
-		//display: none;
+	.webAppContent {
+		//background-color: whitesmoke;
+		//border-top: 0px solid lightgray;
+		//padding: 0px;
 	}
 
-	.dijitButtonText {
-		padding: 0 0.3em;
-		text-align: center;
-		color: steelblue;
+	.mblComboBoxMenuItem {
+		height: 1.5em;
+	}
+
+	.webAppHeader {
+		font-size: 125%;
+		//background-color: lightgray;
+		//border-bottom: 1px solid whitesmoke;
+		height: 2.5em;
+		padding: 0px 0px 0px 0px;
+		//margin-top: 0.25em !important;
+		//margin-left: 0.25em !important;
 		font-weight: bold;
-	}
-	.dijitButtonDisabled .dijitButtonText {
-		//color: gray;
+		//margin: 0m 0em 0em 0em;
+		//-webkit-box-shadow: 0.25em 0.25em 1em 0em #333;
+		//box-shadow: 0.25em 0.25em 1em 0em #333;
+		color: @selectedColor;
+
+		.dijitIcon {
+			//display: none;
+		}
+
+		.dijitButtonText {
+			padding: 0 0.3em;
+			text-align: center;
+			//color: steelblue;
+			//font-weight: bold;
+		}
+		.dijitButtonDisabled .dijitButtonText {
+			//color: gray;
+		}
+
+		.dijitButton .dijitButtonNode,
+		.dijitDropDownButton .dijitButtonNode,
+		.dijitComboButton .dijitButtonNode,
+		.dijitToggleButton .dijitButtonNode {
+			border-color: transparent;
+			border-bottom: 2px solid @selectedColor;
+			margin: 1px 0.5em;
+			padding: 2px 4px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			background-color: inherit;
+			color: inherit;
+		}
+		.dijitButtonHover .dijitButtonNode,
+		.dijitButtonActive .dijitButtonNode,
+		.dijitButtonNodeHover,
+		.dijitDropDownButtonHover .dijitButtonNode,
+		.dijitDropDownButtonActive .dijitButtonNode,
+		.dijitComboButton .dijitButtonNodeHover,
+		.dijitComboButton .dijitDownArrowButtonHover,
+		.dijitToggleButtonHover .dijitButtonNode,
+		.dijitComboButtonActive .dijitButtonNode,
+		.dijitToggleButtonActive .dijitButtonNode,
+		.dijitToggleButtonChecked .dijitButtonNode,
+		.dijitUpArrowButtonHover,
+		.dijitDownArrowButtonHover {
+			background-color: @hoverColor;
+			border-color: @hoverColor;
+			color: black;
+			//-webkit-transition-duration: 0.1s;
+			//-moz-transition-duration: 0.1s;
+			//transition-duration: 0.1s;
+		}
+		.dijitUpArrowButtonActive,
+		.dijitDownArrowButtonActive {
+			background-color: @hoverColor;
+		}
+
+		/* disabled status */
+		.dijitButtonDisabled,
+		.dijitDropDownButtonDisabled,
+		.dijitComboButtonDisabled,
+		.dijitToggleButtonDisabled {
+			background-color: inherit;
+			background-image: none;
+			/*outline: none;*/
+			color: inherit;
+		}
+
+		.riaswDockNode {
+			border-color: transparent;
+			border-bottom: 2px solid @selectedColor;
+			margin: 2px 0.5em;
+			padding: 2px 4px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			background-color: inherit;
+			color: inherit;
+			//height: auto;
+		}
+		//.riaswDockNodeShown {
+		//	border-color: steelblue;
+		//}
+		.riaswDockNodeHover {
+			background-color: @hoverColor;
+			border-color: @hoverColor;
+			color: black;
+		}
+		.riaswDockNodeTitle {
+			//color: steelblue;
+			//font-weight: bold;
+		}
+
+		a {
+			//width: 108px;
+			padding: 2px 8px 2px 8px;
+			display: inline-block;
+		}
 	}
 
-	.dijitButton .dijitButtonNode,
-	.dijitDropDownButton .dijitButtonNode,
-	.dijitComboButton .dijitButtonNode,
-	.dijitToggleButton .dijitButtonNode {
-		border: 1px solid transparent;
-		border-bottom: 2px solid steelblue;
-		margin: 1px 0.5em;
-		padding: 2px 4px;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		background-color: inherit;
-		//height: 20px;
-	}
-	.dijitButtonHover .dijitButtonNode,
-	.dijitButtonNodeHover,
-	.dijitDropDownButtonHover .dijitButtonNode,
-	.dijitComboButton .dijitButtonNodeHover,
-	.dijitComboButton .dijitDownArrowButtonHover,
-	.dijitToggleButtonHover .dijitButtonNode,
-	.dijitUpArrowButtonHover,
-	.dijitDownArrowButtonHover {
-		background-color: gold;
-		border-color: gold;
-	}
-	/* active, checked status */
-	.dijitButtonActive .dijitButtonNode,
-	.dijitDropDownButtonActive .dijitButtonNode,
-	.dijitComboButtonActive .dijitButtonNode,
-	.dijitToggleButtonActive .dijitButtonNode,
-	.dijitToggleButtonChecked .dijitButtonNode {
-		background-color: gold;
-		-webkit-transition-duration: 0.1s;
-		-moz-transition-duration: 0.1s;
-		transition-duration: 0.1s;
-	}
-	.dijitUpArrowButtonActive,
-	.dijitDownArrowButtonActive {
-		background-color: gold;
-	}
-
-	/* disabled status */
-	.dijitButtonDisabled,
-	.dijitDropDownButtonDisabled,
-	.dijitComboButtonDisabled,
-	.dijitToggleButtonDisabled {
-		background-color: inherit;
-		background-image: none;
-		/*outline: none;*/
-		color: inherit;
-	}
-	.dijitButtonDisabled .dijitButtonNode,
-	.dijitDropDownButtonDisabled .dijitButtonNode,
-	.dijitComboButtonDisabled .dijitButtonNode,
-	.dijitToggleButtonDisabled .dijitButtonNode {
-		filter: none;
-		-webkit-filter: none;
-	}
-	.dijitButtonDisabled .dijitButtonNode .dijitIcon,
-	.dijitDropDownButtonDisabled .dijitButtonNode .dijitIcon,
-	.dijitComboButtonDisabled .dijitButtonNode .dijitIcon,
-	.dijitToggleButtonDisabled .dijitButtonNode .dijitIcon,
-	.dijitButtonDisabled .dijitButtonNode .dijitButtonText,
-	.dijitDropDownButtonDisabled .dijitButtonNode .dijitButtonText,
-	.dijitComboButtonDisabled .dijitButtonNode .dijitButtonText,
-	.dijitToggleButtonDisabled .dijitButtonNode .dijitButtonText {
-		filter: grayscale(100%) opacity(30%);
-		-webkit-filter: grayscale(100%) opacity(30%);
-		-webkit-filter: grayscale(1) opacity(0.3);
-	}
-
-	.riaswDockNode {
-		border: 1px solid transparent;
-		border-bottom: 2px solid steelblue;
-		margin: 2px 0.5em;
-		padding: 2px 4px;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		background-color: inherit;
-		height: auto;
-	}
-	.riaswDockNodeShown {
-		border-color: steelblue;
-	}
-	.riaswDockNodeHover {
-		background-color: gold;
-		border-color: gold;
-	}
-	.riaswDockNodeTitle {
-		color: steelblue;
-		font-weight: bold;
-	}
-
-	a {
-		//width: 108px;
+	.webAppHeaderLogo {
+		width: 180px;
 		padding: 2px 8px 2px 8px;
-		display: inline-block;
+		background: url("./images/RIAStudio.png") no-repeat 0px center;
 	}
-}
-
-.webAppHeaderLogo {
-	width: 180px;
-	padding: 2px 8px 2px 8px;
-	background: url("./images/RIAStudio.png") no-repeat 0px center;
-}
-.webAppHeaderDockBar {
-	padding: 1px;
-}
-.webAppFooterDockBar {
-	padding: 1px;
-}
-.webAppHeaderBtns {
-	width: 18em;
-	padding: 0px;
-	margin: 0px;
-}
-
-.webAppDockPanel {
-	//background-color: lightgray;
-	padding: 0.25em 0.25em;
-	margin-left: 0.25em !important;
-	width: 7em;
-	//height: 3.5em
-}
-.webAppDockPanel .riaswDockNode {
-	border-width: 1px 1px 3px 1px;
-	border-color: steelblue;
-	//width: 5em;
-	//min-height: 2em;
-}
-
-.webAppCenter {
-	background-color: whitesmoke;
-	border: 0.5em solid whitesmoke;
-	padding: 0em;
-	margin: 0.25em;
-}
-.webAppCenterStack {
-	.appModuleCaption {
+	.webAppHeaderDockBar {
+		padding: 1px;
 	}
-	.appModuleContent {
-		margin: 0.5em 0em 0em 0em;
+	.webAppFooterDockBar {
+		padding: 1px;
 	}
-}
+	.webAppHeaderBtns {
+		width: 18em;
+		padding: 0px;
+		margin: 0px;
+	}
 
-.webAppFooter {
-	//background-color: lightgray;
-	//border-top: 1px solid lightgray;
-	height: 2.5em;
-	line-height: 2.5em;
-	padding: 1px;
-	margin-left: 0.25em !important;
+	.webAppDockPanel {
+		background-color: @appDockColor;
+		padding: 0.25em 0.25em;
+		//margin-left: 0.25em !important;
+		margin: 0 0.25em;
+		width: 7em;
+		//height: 3.5em
+	}
+	.webAppDockPanel .riaswDockNode {
+		border-width: 1px;
+		//border-color: @borderColor;
+		//width: 5em;
+		//min-height: 2em;
+	}
 
+	.webAppCenter {
+		background-color: @appAreaColor;
+		//border: 0.5em solid whitesmoke;
+		padding: 0.5em;
+		margin: 0 0.25em;
+	}
+	.webAppCenterStack {
+		.appModuleCaption {
+		}
+		.appModuleContent {
+			//margin: 0.5em 0em 0em 0em;
+		}
+		.riaswCaptionPanel {
+			//border-width: 0px;
+		}
+	}
+
+	.webAppFooter {
+		//background-color: whitesmoke;
+		color: white;
+		//border-top: 1px solid lightgray;
+		height: 2.5em;
+		line-height: 2.5em;
+		padding: 1px;
+		//margin-left: 0.25em !important;
+
+		.riaswDockNode {
+			border-width: 1px 1px 3px 1px;
+			//border-color: steelblue;
+		}
+	}
+
+	.webAppHeaderXC {
+		background-color: red;
+		overflow: hidden;
+	}
+	.webAppHeaderLogoXC {
+		width: 180px;
+		width: 180px;
+		padding: 4px 8px 2px 8px;
+		background: url("./images/XCIndex.png") no-repeat 0px center;
+	}
+
+	.dijitButtonNode,
+	.mblButton,
+	.riaswTextBoxContainer,
+	.riaswToggleSplitter,
+	.riaswPanel,
+	.riaswCaptionPanel,
+	.dijitTabPaneWrapper,
+	.dijitTab,
+	.riaswAccordionPanel,
+	.riaswAccordionChildWrapper,
+	.riaswTablePanel,
+	.riaswDockBar,
+	.riaswDockNode,
+	.dijitTree,
+	.riaswOrionEditor {
+		border-color: @borderColor;
+	}
+	.riaswCaptionPanelCaptionNode,
+	.riaswDialogPanelCaptionNode,
+	.riaswDialogPanelWrapper,
+	.riaswDialogPanelActionBarTop {
+		border-color: @borderColor;
+	}
+	.riaswDialogPanel,
+	.riaswDialogPanelContent {
+		background-color: @appAreaColor;
+		border-width: 0.25em;
+		border-color: @highlightColor;
+	}
+	.riaswCaptionPanelCaptionNode,
+	.riaswDockNodeShown,
+	.riaswAccordionTitleSelected  {
+		background-color: @highlightColor;
+	}
+	.riaswDialogPanelCaptionNode {
+		background-color: @highlightColor;
+	}
+	.riaswDialogPanelHover {
+		border-color: @hoverColor;
+	}
+	.riaswDockNodeHover,
+	.riaswAccordionTitleHover,
+	.riaswCaptionPanelCaptionNodeHover,
+	.riaswDialogPanelCaptionNodeHover {
+		background-color: @hoverColor;
+	}
+	.riaswDialogPanelTopmost {
+		border-color: @selectedColor;
+	}
+	.riaswDockNodeTopmost,
+	.riaswDialogPanelCaptionNodeTopmost {
+		background-color: @selectedColor;
+	}
 	.riaswDockNode {
-		border-width: 1px 1px 3px 1px;
-		border-color: steelblue;
+		border-width: 1px;
 	}
-}
 
-.webAppHeaderXC {
-	background-color: red;
-	overflow: hidden;
-}
-.webAppHeaderLogoXC {
-	width: 180px;
-	width: 180px;
-	padding: 4px 8px 2px 8px;
-	background: url("./images/XCIndex.png") no-repeat 0px center;
-}
+	.dijitTabChecked {
+		background-color: @appAreaColor;
+	}
+	.dijitTabChecked,
+	.dijitTabContainerTop-tabs,
+	.dijitTabContainerBottom-tabs,
+	.dijitTabContainerLeft-tabs,
+	.dijitTabContainerRight-tabs {
+		border-color: steelblue;// @selectedColor;
+	}
+	.dijitTreeRowSelected {
+		background-color: @selectedColor;
+	}
 
+	.dgrid {
+		//border-width: 0px;
+		border-color: @borderColor;
+	}
+	.dgrid-header .dgrid-cell,
+	.dgrid-cell {
+		//border-width: 1px;
+		border-color: @borderColor;
+		padding: 0.5em 0.25em;
+	}
+	.dgrid-header {
+		//border-width: 1px 1px 0px 1px;
+		//border-color: @borderColor;
+		.dojoDndItem {
+			padding: 0;///需要覆盖 .dgrid-header .dgrid-cell
+		}
+	}
+	.dgrid-scroller {
+		//border-width: 1px;
+		//border-color: @borderColor;
+	}
+	.dgrid-row {
+		background-color: @inputBackgroundColor;
+	}
+	.dgrid-row-odd {
+		background-color: snow;
+	}
+	.dgrid-selected {
+		background-color: @selectedColor;
+	}
+	.dgrid-header-tools {
+		padding: 0.25em;
+		border-bottom-width: 1px;
+	}
+	.dgrid-opcolumn {
+		.dijitButton {
+			padding: 0 0 0 0.25em;
+		}
+		.dijitButtonNode {
+			padding: 0;
+		}
+		> button {
+			height: auto;
+			line-height: 1em;
+			padding: 0;
+			//margin-left: 0.5em;
+			border-width: 0;
+			font-family: inherit;
+			font-size: inherit;
+			font-weight: bold;
+			cursor: pointer;
+			text-decoration: underline;
+		}
+		> button:hover {
+			color: darkorange;
+		}
+	}
+	.dgrid-header,
+	.dgrid-selector,
+	.dgrid-opcolumn {
+		background-color: @toolbarBackgroundColor;
+	}
+	.dgrid-header-scroll,
+	.dgrid-column-set-scroller-container {
+		background-color: lavender;
+	}
+
+}
