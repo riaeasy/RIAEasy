@@ -6,12 +6,12 @@
 //	font-size: 15px;
 //}
 
-@appBackgroundColor: darkslategray;
+@appBackgroundColor: dimgray;
 @appAreaColor: whitesmoke;
 @appDockColor: whitesmoke;
 @toolbarBackgroundColor: ghostwhite;
 @inputBackgroundColor: white;
-@highlightColor: lightgray;
+@highlightColor: lavender;
 @selectedColor: skyblue;
 @hoverColor: gold;
 @borderColor: lightgray;
@@ -171,9 +171,9 @@
 
 	.webAppDockPanel {
 		background-color: @appDockColor;
-		padding: 0.25em 0.25em;
+		padding: 0.25em 0 0.25em 0.25em;
 		//margin-left: 0.25em !important;
-		margin: 0 0.25em;
+		//margin: 0 0.25em;
 		width: 7em;
 		//height: 3.5em
 	}
@@ -188,7 +188,7 @@
 		background-color: @appAreaColor;
 		//border: 0.5em solid whitesmoke;
 		padding: 0.5em;
-		margin: 0 0.25em;
+		//margin: 0 0.25em;
 	}
 	.webAppCenterStack {
 		.appModuleCaption {
@@ -227,9 +227,19 @@
 		background: url("./images/XCIndex.png") no-repeat 0px center;
 	}
 
-	.dijitButtonNode,
 	.mblButton,
+	.dijitButtonNode {
+		border-width: 0 0 2px 0;
+		border-color: @selectedColor;
+	}
+	.riaswCheckButton .dijitButtonNode,
+	.riaswRadioButton  .dijitButtonNode {
+		border-width: 0;
+	}
 	.riaswTextBoxContainer,
+	.dijitArrowButton,
+	.dijitArrowButtonContainer,
+	.dijitSpinnerButtonContainer,
 	.riaswToggleSplitter,
 	.riaswPanel,
 	.riaswCaptionPanel,
@@ -250,22 +260,25 @@
 	.riaswDialogPanelActionBarTop {
 		border-color: @borderColor;
 	}
-	.riaswDialogPanel,
-	.riaswDialogPanelContent {
+	.riaswCaptionPanelContent {
+		padding: 0.5em;
+	}
+	.riaswDialogPanel {
 		background-color: @appAreaColor;
 		border-width: 0.25em;
 		border-color: @highlightColor;
 	}
 	.riaswCaptionPanelCaptionNode,
-	.riaswDockNodeShown,
-	.riaswAccordionTitleSelected  {
+	.riaswAccordionTitle,
+	.riaswDockNodeShown {
 		background-color: @highlightColor;
 	}
 	.riaswDialogPanelCaptionNode {
 		background-color: @highlightColor;
 	}
-	.riaswDialogPanelHover {
-		border-color: @hoverColor;
+	.riaswDialogPanelActionBar,
+	.riaswDialogPanelActionBarTop {
+		//background-color: @highlightColor;
 	}
 	.riaswDockNodeHover,
 	.riaswAccordionTitleHover,
@@ -273,17 +286,27 @@
 	.riaswDialogPanelCaptionNodeHover {
 		background-color: @hoverColor;
 	}
+	.riaswDialogPanelHover {
+		border-color: @hoverColor;
+	}
+	.riaswCaptionPanelCaptionNodeSelected,
+	.riaswCaptionPanelCaptionNodeFocused,
+	.riaswDialogPanelCaptionNodeSelected,
+	.riaswDialogPanelCaptionNodeFocused,
+	.riaswDialogPanelCaptionNodeTopmost,
+	.riaswAccordionTitleSelected,
+	.riaswDockNodeTopmost {
+		background-color: @selectedColor;
+	}
 	.riaswDialogPanelTopmost {
 		border-color: @selectedColor;
-	}
-	.riaswDockNodeTopmost,
-	.riaswDialogPanelCaptionNodeTopmost {
-		background-color: @selectedColor;
 	}
 	.riaswDockNode {
 		border-width: 1px;
 	}
 
+
+	.riaswStackPanelChildWrapper,
 	.dijitTabChecked {
 		background-color: @appAreaColor;
 	}
@@ -306,18 +329,21 @@
 	.dgrid-cell {
 		//border-width: 1px;
 		border-color: @borderColor;
+		border-left-width: 0;
 		padding: 0.5em 0.25em;
 	}
-	.dgrid-header {
+	.dgrid-spacer-row {
 		//border-width: 1px 1px 0px 1px;
 		//border-color: @borderColor;
-		.dojoDndItem {
+		.dgrid-cell {
 			padding: 0;///需要覆盖 .dgrid-header .dgrid-cell
 		}
 	}
 	.dgrid-scroller {
 		//border-width: 1px;
 		//border-color: @borderColor;
+		//overflow-x: auto;
+		//overflow-y: auto;///要引起 右上角 错位
 	}
 	.dgrid-row {
 		background-color: @inputBackgroundColor;
@@ -332,6 +358,10 @@
 		padding: 0.25em;
 		border-bottom-width: 1px;
 	}
+	.dgrid-rownumcolumn {
+		//margin: auto;
+		//text-align: center;
+	}
 	.dgrid-opcolumn {
 		.dijitButton {
 			padding: 0 0 0 0.25em;
@@ -343,7 +373,7 @@
 			height: auto;
 			line-height: 1em;
 			padding: 0;
-			//margin-left: 0.5em;
+			margin-left: 0.5em;
 			border-width: 0;
 			font-family: inherit;
 			font-size: inherit;
@@ -355,9 +385,11 @@
 			color: darkorange;
 		}
 	}
+	.grid-summary-row,
 	.dgrid-header,
 	.dgrid-selector,
-	.dgrid-opcolumn {
+	.dgrid-opcolumn,
+	.dgrid-rownumcolumn {
 		background-color: @toolbarBackgroundColor;
 	}
 	.dgrid-header-scroll,

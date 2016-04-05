@@ -62,7 +62,7 @@ define([
 			if(self._currentDfd){
 				self._currentDfd.cancel();
 			}
-			var results = rias.xhr("GET", {
+			var results = rias.xhrGet({
 				url: self.target + (query || ""),
 				handleAs: "json",
 				timeout: options.timeout || self.timeout || rias.xhr.defaultTimeout,
@@ -90,6 +90,7 @@ define([
 					}
 				}
 				self._currentDfd = null;
+				self.dataTotal = results.total;
 				return range && k + range[1];
 			});
 			return QueryResults(results);

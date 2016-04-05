@@ -40,7 +40,7 @@ define([
 			]);
 		}catch(e){
 			dfs = [];
-			console.error("datas.loadDatas() error.", rias.getStackTrace(e));
+			console.error("datas.loadDatas() error.", rias.captureStackTrace(e));
 		}
 		return rias.all(dfs).then(function(){
 			m.dataLoaded = true;

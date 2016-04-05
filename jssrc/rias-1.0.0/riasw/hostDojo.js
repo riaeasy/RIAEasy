@@ -175,6 +175,7 @@ define([
 	rias.dom.empty = domConstruct.empty;
 	rias.dom.destroy = domConstruct.destroy;
 
+	var nilExtents = {l: 0, t: 0, w: 0, h: 0};
 	function isButtonTag(/*DomNode*/ node, tagName){
 		tagName = tagName || node.tagName.toLowerCase();
 		return tagName == "button" || tagName == "input" && (node.getAttribute("type") || "").toLowerCase() == "button"; // boolean
@@ -197,19 +198,33 @@ define([
 	};
 	rias.dom.setBox = function(node, box, /*String?*/ unit){
 		unit = unit || "px";
-		var s = node.style;
+		var r = {},
+			s = node.style;
 		if(!isNaN(box.l)){
-			s.left = box.l + unit;
+			if(s.left != box.l + unit){
+				s.left = box.l + unit;
+				r.__l = box.l + unit;
+			}
 		}
 		if(!isNaN(box.t)){
-			s.top = box.t + unit;
+			if(s.top != box.t + unit){
+				s.top = box.t + unit;
+				r.__t = box.t + unit;
+			}
 		}
 		if(box.w >= 0){
-			s.width = box.w + unit;
+			if(s.width != box.w + unit){
+				s.width = box.w + unit;
+				r.__w = box.w + unit;
+			}
 		}
 		if(box.h >= 0){
-			s.height = box.h + unit;
+			if(s.height != box.h + unit){
+				s.height = box.h + unit;
+				r.__h = box.h + unit;
+			}
 		}
+		return r;
 	};
 	rias.dom.getPadExtents = domGeom.getPadExtents;
 	rias.dom.getBorderExtents = domGeom.getBorderExtents;
@@ -221,7 +236,7 @@ define([
 	rias.dom.getMarginBorderBox = function(/*DomNode*/ node, /*Object*/ computedStyle){
 		node = dom.byId(node);
 		var s = computedStyle || domStyle.getComputedStyle(node),
-			pb = rias.dom.usesBorderBox(node) ? {l: 0, t: 0, w: 0, h: 0} : domGeom.getPadBorderExtents(node, s),
+			pb = rias.dom.usesBorderBox(node) ? nilExtents : domGeom.getPadBorderExtents(node, s),
 			mb = domGeom.getMarginExtents(node, s);
 		if(rias.has("webkit")){
 			// on Safari (3.1.2), button nodes with no explicit size have a default margin
@@ -244,9 +259,39 @@ define([
 			h: pb.h + mb.h
 		};
 	};
-	rias.dom.setMarginBox = domGeom.setMarginBox;
+	rias.dom.setMarginBox = domGeom.setMarginBox = function(node, box, computedStyle) {
+		node = dom.byId(node);
+		var s = computedStyle || domStyle.getComputedStyle(node),
+			w = box.w,
+			h = box.h,
+			pb = rias.dom.usesBorderBox(node) ? nilExtents : domGeom.getPadBorderExtents(node, s),
+			mb = domGeom.getMarginExtents(node, s);
+		if (rias.has("webkit")) {
+			if (isButtonTag(node)) {
+				var ns = node.style;
+				if (w >= 0 && !ns.width) {
+					ns.width = "4px";
+				}
+				if (h >= 0 && !ns.height) {
+					ns.height = "4px";
+				}
+			}
+		}
+		if (w >= 0) {
+			w = Math.max(w - pb.w - mb.w, 0);
+		}
+		if (h >= 0) {
+			h = Math.max(h - pb.h - mb.h, 0);
+		}
+		return rias.dom.setBox(node, {
+			l: box.l,
+			t: box.t,
+			w: w,
+			h: h
+		});
+	};
 	/// getContentBox 取内容容器的大小，去掉 padding 和 marging
-	rias.dom.getContentBox = domGeom.getContentBox = function getContentBox(node, computedStyle){
+	rias.dom.getContentBox = domGeom.getContentBox = function(node, computedStyle){
 		// summary:
 		//		Returns an object that encodes the width, height, left and top
 		//		positions of the node's content box, irrespective of the
@@ -290,7 +335,20 @@ define([
 			sh: node.scrollHeight
 		};
 	};
-	rias.dom.setContentSize = domGeom.setContentSize;
+	rias.dom.setContentSize = domGeom.setContentSize = function(node, box, computedStyle) {
+		node = dom.byId(node);
+		var w = box.w, h = box.h;
+		if (rias.dom.usesBorderBox(node)) {
+			var pb = domGeom.getPadBorderExtents(node, computedStyle);
+			if (w >= 0) {
+				w += pb.w;
+			}
+			if (h >= 0) {
+				h += pb.h;
+			}
+		}
+		return rias.dom.setBox(node, {t: NaN, l: NaN, w: w, h: h});
+	};
 	rias.dom.getBoxOfStyle = function(box, style){
 		return box ? {
 			t: box.t,
@@ -305,6 +363,50 @@ define([
 	rias.dom.docScroll = domGeom.docScroll;
 	rias.dom.getIeDocumentElementOffset = domGeom.getIeDocumentElementOffset;
 	rias.dom.fixIeBiDiScrollLeft = domGeom.fixIeBiDiScrollLeft;
+	var none = "none";
+	rias.dom.box2marginBox = function(node, box, computedStyle) {
+		node = dom.byId(node);
+		var s = computedStyle || domStyle.getComputedStyle(node),
+			me = domGeom.getMarginExtents(node, s),
+			l = box.l,
+			t = box.t,
+			p = node.parentNode,
+			px = domStyle.toPixelValue,
+			pcs;
+		if(!isNaN(l) || !isNaN(t)){
+			if (rias.has("mozilla")) {
+				if (p && p.style) {
+					pcs = domStyle.getComputedStyle(p);
+					if (pcs.overflow != "visible") {
+						if(!isNaN(l)){
+							l += pcs.borderLeftStyle != none ? px(node, pcs.borderLeftWidth) : 0;
+						}
+						if(!isNaN(t)){
+							t += pcs.borderTopStyle != none ? px(node, pcs.borderTopWidth) : 0;
+						}
+					}
+				}
+			} else {
+				if (rias.has("opera") || (rias.has("ie") == 8 && !rias.has("quirks"))) {
+					if (p) {
+						pcs = domStyle.getComputedStyle(p);
+						if(!isNaN(l)){
+							l -= pcs.borderLeftStyle != none ? px(node, pcs.borderLeftWidth) : 0;
+						}
+						if(!isNaN(t)){
+							t -= pcs.borderTopStyle != none ? px(node, pcs.borderTopWidth) : 0;
+						}
+					}
+				}
+			}
+		}
+		return {
+			l: l,
+			t: t,
+			w: box.w + me.w,
+			h: box.h + me.h
+		};
+	};
 	rias.dom.box2contentBox = function(/*DomNode*/ node, /*Object*/ mb, /*Object*/ computedStyle){
 		var cs = computedStyle || domStyle.getComputedStyle(node);
 		//var me = domGeom.getMarginExtents(node, cs);
@@ -314,6 +416,37 @@ define([
 			t: pe.t,
 			w: mb.w - (pe.w),
 			h: mb.h - (pe.h)
+		};
+	};
+	rias.dom.marginBox2box = function(node, box, computedStyle) {
+		node = dom.byId(node);
+		var s = computedStyle || domStyle.getComputedStyle(node),
+			w = box.w,
+			h = box.h,
+			pb = rias.dom.usesBorderBox(node) ? nilExtents : domGeom.getPadBorderExtents(node, s),
+			mb = domGeom.getMarginExtents(node, s);
+		if (rias.has("webkit")) {
+			if (isButtonTag(node)) {
+				var ns = node.style;
+				if (w >= 0 && !ns.width) {
+					ns.width = "4px";
+				}
+				if (h >= 0 && !ns.height) {
+					ns.height = "4px";
+				}
+			}
+		}
+		if (w >= 0) {
+			w = Math.max(w - pb.w - mb.w, 0);
+		}
+		if (h >= 0) {
+			h = Math.max(h - pb.h - mb.h, 0);
+		}
+		return {
+			l: box.l,
+			t: box.t,
+			w: w,
+			h: h
 		};
 	};
 	rias.dom.marginBox2contentBox = layoutUtils.marginBox2contentBox = function(/*DomNode*/ node, /*Object*/ mb, /*Object*/ computedStyle){
@@ -1004,7 +1137,10 @@ define([
 		}
 		function size(widget, _dim){
 			// size the child
-			var newSize = widget.resize ? widget.resize(_dim) : rias.dom.setMarginBox(widget.domNode, _dim);
+			//var newSize = widget.resize ? widget.resize(_dim) : rias.dom.setMarginBox(widget.domNode, _dim);
+			/// rias.dom.setMarginBox 有返回值，只能取 widget.resize
+			var newSize;
+			widget.resize ? newSize = widget.resize(_dim) : rias.dom.setMarginBox(widget.domNode, _dim);
 
 			// record child's size
 			if(newSize){
@@ -1312,7 +1448,7 @@ define([
 						try{
 							fcn.apply(self, args || []);///IE8 不支持 args = undefined。
 						}catch(e){
-							console.error("this.defer()", rias.getStackTrace(e), args, fcn.toString());
+							console.error("this.defer()", rias.captureStackTrace(e), args, fcn.toString());
 						}
 					}
 				}, delay || 0);

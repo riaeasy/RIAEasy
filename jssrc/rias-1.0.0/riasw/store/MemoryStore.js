@@ -56,6 +56,7 @@ define([
 
 		queryEngine: function(query, options){
 			// create our matching query function
+			var self = this;
 			switch(typeof query){
 				default:
 					throw new Error("Can not query with a " + typeof query);
@@ -119,6 +120,7 @@ define([
 					results = results.slice(options.start || 0, (options.start || 0) + (options.count || Infinity));
 					results.total = total;
 				}
+				self.dataTotal = results.total;
 				return results;
 			}
 			execute.matches = query;

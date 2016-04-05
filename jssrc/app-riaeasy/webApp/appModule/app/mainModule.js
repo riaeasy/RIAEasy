@@ -70,6 +70,11 @@ define([
 					//"cookieName": "appInfos",
 					//"persist": false,
 					"initDisplayState": "hidden",
+					"initPlaceToArgs": {
+						parent: m,
+						around: "appInfos._riasrDockNode",
+						positions: ["below-centered"]
+					},
 					"dockTo": {
 						"$refObj": "appMainDockTop"
 					},
@@ -128,15 +133,16 @@ define([
 						"moduleMeta": "appModule/app/mainMenu",
 						"_riaswType": "rias.riasw.layout.DialogPanel",
 						_riaswIdOfModule: "mainMenu",
+						showCaption: false,
 						"caption": rias.i18n.webApp.menu,
 						"tooltip": rias.i18n.webApp.menu,
 						"iconClass": "menuIcon",
-						caption: "菜单",
 						moduleParams: {},
 						reCreate: true,
 						closable: false,
 
 						dialogType: "top",
+						resizable: false,
 						maxable: false,
 						//"toggleOnEnter": true,
 						toggleOnBlur: true,

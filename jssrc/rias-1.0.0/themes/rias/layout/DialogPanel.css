@@ -35,10 +35,10 @@
 }
 
 .riaswDialogPanelWrapper {
-	border: 0px solid lightgray;
+	border: 0 solid lightgray;
 	overflow: hidden;
 	position: relative;
-	padding: 0px;
+	padding: 0;
 	margin:0;
 	min-height: 6em;
 	min-width: 16em;
@@ -52,7 +52,7 @@
 	background-color: whitesmoke;/*避免 wrapper 造成 transparent*/
 	overflow: auto;
 	position: relative;
-	padding: 0px;
+	padding: 0;
 	-webkit-overflow-scrolling: touch;
 }
 /*.mobileBody .riaswDialogPanelContent {
@@ -71,16 +71,16 @@
 /* ActionBar ========================= */
 
 .riaswDialogPanelActionBar {
-	padding: 1em 1em 1em 1em;
+	padding: 1em;
 	text-align: right;
-	margin: 0;
-	/*border-: 1px solid lightgray;*/
+	/*margin: 0;*/
+	/*border-top: 1px solid lightgray;*/
 	display: block;
 }
 .riaswDialogPanelActionBarTop {
-	padding: 0.5em 1em 0.5em 1em;
+	padding: 0.5em 1em;
 	text-align: left;
-	margin: 0;
+	/*margin: 0;*/
 	/*border-: 1px solid lightgray;*/
 	border-bottom: 1px solid lightgray;
 	display: block;

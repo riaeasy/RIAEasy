@@ -8,7 +8,10 @@ define([
 	"dojo/fx",
 	"dojo/fx/easing",
 	"dojo/fx/Toggler",
-	"dojox/fx/_base"
+	"dojox/fx/_base",
+	"dojox/fx/split",
+	"dojox/fx/flip",
+	"dojox/fx/scroll"
 ], function(rias, fxbase, fx, fxEasing, fxToggler, fxbasex) {
 
 ///fx========================================================///
@@ -42,7 +45,7 @@ define([
 						// amuck, potentially pegging the CPU. I'm not a fan of this
 						// squelch, but hopefully logging will make it clear what's
 						// going on
-						console.error("exception in animation handler for:", evt, rias.getStackTrace(e));
+						console.error("exception in animation handler for:", evt, rias.captureStackTrace(e));
 					}
 				}
 			}
@@ -310,7 +313,22 @@ define([
 		//	|	dojox.fx.highlight({ node:"foo" }).play();
 		highlight: fxbasex.highlight,
 		//		|	dojox.fx.wipeTo({ node: "nodeId", height: 200 }).play();
-		wipeTo: fxbasex.wipeTo
+		wipeTo: fxbasex.wipeTo,
+		explode: fxbasex.explode,
+		converge: fxbasex.converge,
+		disintegrate: fxbasex.disintegrate,
+		build: fxbasex.build,
+		shear: fxbasex.shear,
+		unShear: fxbasex.unShear,
+		pinwheel: fxbasex.pinwheel,
+		unPinwheel: fxbasex.unPinwheel,
+		blockFadeOut: fxbasex.blockFadeOut,
+		blockFadeIn: fxbasex.blockFadeIn,
+		flip: fxbasex.flip,
+		flipCube: fxbasex.flipCube,
+		flipPage: fxbasex.flipPage,
+		flipGrid: fxbasex.flipGrid,
+		smoothScroll: fxbasex.smoothScroll
 	};
 
 	return rias;

@@ -26,7 +26,7 @@
 	overflow: auto;
 	position: relative;
 	-webkit-overflow-scrolling: touch;
-	padding: 0.5em 0 0 0;
+	padding: 0;
 }
 /*.mobileBody .riaswCaptionPanelContent {
 	overflow: hidden;

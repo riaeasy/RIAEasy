@@ -78,7 +78,7 @@ define([
 	};
 
 	//rias.raise = dojo.raise;//没有 dojo.raise
-	rias.getStackTrace = function(e) {
+	rias.captureStackTrace = function(e) {
 		if(e.stack){
 			return e.stack;
 		}
@@ -180,11 +180,22 @@ define([
 	};
 
 	///这里只做 Object 的 by，dom 和 Widget 的 by 在 riasw 中实现。
-	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/id){
-		if(!id || !rias.isString(id)){
+	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, context){
+		var w;
+		if(rias.isObjectSimple(any) && any.$refObj){
+			any = rias.by(any.$refObj, context) || any.$refObj;
+		}
+		if(rias.isString(any)){
+			w = rias.getObject(any, false, context);
+			if(!w && !/^module.|^context./.test(any)){
+				w = rias.getObject(any);
+			}
+			any = w;
+		}
+		if(!any){
 			return undefined;
 		}
-		return rias.getObject(id);
+		return any;
 	};
 
 	rias.objLike = function(srcObj, likeObj){
@@ -234,7 +245,7 @@ define([
 							delete dest[name];
 						}
 					}catch(e){
-						console.error(rias.getStackTrace(e));
+						console.error(rias.captureStackTrace(e));
 						throw e;
 					}
 				}else{
@@ -330,7 +341,7 @@ define([
 							dest[name] = copyFunc ? copyFunc(s) : s;
 						}
 					}catch(e){
-						console.error(rias.getStackTrace(e));
+						console.error(rias.captureStackTrace(e));
 						throw e;
 					}
 				}else{
@@ -1108,7 +1119,7 @@ define([
 		try{
 			return eval("(" + js + ")"); // Object
 		}catch(e){
-			console.error(e, rias.getStackTrace(e));
+			console.error(e, rias.captureStackTrace(e));
 			throw e;
 		}
 	};
@@ -1122,7 +1133,7 @@ define([
 				try{
 					fcn.apply(scope, args);
 				}catch(e){
-					console.error(rias.getStackTrace(e));
+					console.error(rias.captureStackTrace(e));
 				}
 			}, delay || 0);
 		return {
@@ -1242,9 +1253,9 @@ define([
 	rias.require = require;
 	require.on("error", function(arg){
 		try{
-			console.error("require error: ", arg.info, arg.src, arg.message, rias.getStackTrace(arg));
+			console.error("require error: ", arg.info, arg.src, arg.message, rias.captureStackTrace(arg));
 		}catch(e){
-			console.error("require error: ", arg, rias.getStackTrace(arg));
+			console.error("require error: ", arg, rias.captureStackTrace(arg));
 		}
 	});
 

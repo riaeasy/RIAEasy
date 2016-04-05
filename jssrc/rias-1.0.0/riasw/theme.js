@@ -186,17 +186,28 @@ define([
 			extraSheet.addRule ? extraSheet.addRule(selector, css) : extraSheet.insertRule(selector + '{' + css + '}', extraRules[index]);
 
 			return {
+				_rule: extraSheet[rulesProperty][extraRules[index]],
 				get: function (prop) {
-					return extraSheet[rulesProperty][extraRules[index]].style[prop];
+					if(prop){
+						return extraSheet[rulesProperty][extraRules[index]].style[prop];
+					}else{
+						return extraSheet[rulesProperty][extraRules[index]].style;
+					}
 				},
 				set: function (prop, value) {
 					if (typeof extraRules[index] !== 'undefined') {
-						extraSheet[rulesProperty][extraRules[index]].style[prop] = value;
+						if(arguments.length > 1){
+							extraSheet[rulesProperty][extraRules[index]].style[prop] = value;
+						}else{
+							value = rias.dom.styleToObject(prop);
+							rias.mixinDeep(extraSheet[rulesProperty][extraRules[index]].style, value);
+						}
 					}
 				},
 				remove: function () {
 					var realIndex = extraRules[index],
 						i, l;
+					this._rule = undefined;
 					if (realIndex === undefined) {
 						return; // already removed
 					}

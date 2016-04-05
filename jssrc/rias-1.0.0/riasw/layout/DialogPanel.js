@@ -69,7 +69,7 @@ define([
 		resizable: "xy",
 		movable: true,
 		closable: true,
-		animated: true,
+		animate: true,
 
 		minSize: {
 			w: 180,

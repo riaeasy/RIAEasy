@@ -52,7 +52,7 @@ define([
 		caption: "",
 		showCaption: true,
 
-		animated: true,
+		animate: true,
 		splitter: false,
 		//selectable: true,
 		toggleable: false,

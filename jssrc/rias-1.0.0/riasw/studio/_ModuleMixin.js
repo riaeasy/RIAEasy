@@ -20,8 +20,10 @@ define([
 		loadOnStartup: true,
 		//_lazyLoad: true,// false,
 		onLoadDeferred: null,
-		loadingMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingIcon'></span>${rias.i18n.message.loading}</span>",
-		errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${rias.i18n.message.loadError}</span>",
+		_loadingMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingIcon'></span>${0}</span>",
+		_errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${0}</span>",
+		loadingMessage: rias.i18n.message.loading,
+		errorMessage: rias.i18n.message.loadError,
 		isLoading: false,
 		isLoaded: false,
 
@@ -42,8 +44,8 @@ define([
 		stopParser: true,
 
 		postMixInProperties: function(){
-			this.loadingMessage = rias.substitute(this.loadingMessage);
-			this.errorMessage = rias.substitute(this.errorMessage);
+			this.loadingMessage = rias.substitute(this._loadingMessage, [this.loadingMessage]);
+			this.errorMessage = rias.substitute(this._errorMessage, [this.errorMessage]);
 			this.inherited(arguments);
 		},
 		buildRendering: function(){
@@ -79,7 +81,7 @@ define([
 			try{
 				this._beforeDestroy();
 			}catch(e){
-				console.error(rias.getStackTrace(e));
+				console.error(rias.captureStackTrace(e));
 			}
 			this.inherited(arguments);
 		},
@@ -378,7 +380,7 @@ define([
 				try{
 					func.apply(self, rias.toArray(arguments, 1));
 				}catch(e){
-					console.error(e, self, rias.getStackTrace(e));
+					console.error(e, self, rias.captureStackTrace(e));
 					if(e instanceof Error){
 						errs += e.message + "\n";
 					}else{
@@ -394,7 +396,7 @@ define([
 			}
 			function _e(s, e){
 				if(e instanceof Error){
-					console.error(s, self, rias.getStackTrace(e));
+					console.error(s, self, rias.captureStackTrace(e));
 				}else{
 					console.error(s, self);
 				}

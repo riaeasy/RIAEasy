@@ -122,7 +122,7 @@ define([
 
 		//movable: false,
 		//resizable: "",
-		animated: false,
+		animate: false,
 
 		//canClose: false,
 
@@ -313,7 +313,6 @@ define([
 				parent = this.getParent();
 
 			this._childOfLayoutWidget = parent && parent.isLayoutContainer;
-			//this._needResize = !this._childOfLayoutWidget;
 
 			if(this._onResizeHandle){
 				rias.destroy(this._onResizeHandle);
@@ -400,8 +399,8 @@ define([
 		_getOrderedChildren: function(){
 			var self = this,
 				wrappers = rias.map(this.getChildren(), function(child, idx){
-					if(self._needResize){
-						child._needResize = true;
+					if(self._needResizeChild){
+						child._needResizeChild = true;
 					}
 					return {
 						panel: child,
@@ -472,6 +471,7 @@ define([
 			var box,
 				dom = rias.dom,
 				node = this.domNode,
+				cn = this.containerNode,
 				cs,
 				rg = this.region,
 				noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center"),
@@ -526,20 +526,26 @@ define([
 					///box = dom.getContentBox(this.containerNode);
 					box = dom.marginBox2contentBox(node, box, cs);
 				}else{
-					box = undefined;
-					//node = this.containerNode;
-					//cs = dom.getComputedStyle(node);
-					//box = dom.getMarginBox(node, cs);
-					//box = dom.marginBox2contentBox(node, box, cs);
+					/// CaptionPanel/DialogPanel 等，如果直接设置 moduleMeta时，是设置 containerNode，所以需要继续判断 containerNode.
+					node = this.containerNode;
+					noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center");
+					nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
+					if(!noheight || !nowidth){
+						cs = dom.getComputedStyle(node);
+						_floor(box = dom.getContentBox(node, cs));
+						box = dom.marginBox2contentBox(node, _getBox(box), cs);
+					}else{
+						box = undefined;
+					}
 				}
 			}
 			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
 				Math.abs(box.w - this._contentBox.w) > 0.5 || Math.abs(box.h - this._contentBox.h) > 0.5){
 				////if(this.needLayout || !box || !this._contentBox || box.w != this._contentBox.w || box.h != this._contentBox.h){
-				this._contentBox = box;//_getBox(box);
+				this._contentBox = box;
 				this.needLayout = true;
 			}
-			return this.beforeLayout(this.needLayout || this._needResize);
+			return this.beforeLayout(this.needLayout || this._needResizeChild);
 		},
 		afterLayout: function(){
 		},
@@ -552,7 +558,7 @@ define([
 				vfy;
 			v = this._started && !this.__updateSize && this.get("visible");
 			if(!v){
-				this._needResize = true;
+				this.needLayout = true;
 				return;
 			}
 			//if(!this._isShown()){
@@ -573,6 +579,7 @@ define([
 		afterResize: function(){
 		},
 		_internalResize: function(changeSize, resultSize){
+			//var curr = new Date().valueOf();
 			//_cnt++;
 			//console.debug(this.id, _cnt, "resize in.");
 			var r;
@@ -591,7 +598,7 @@ define([
 				node;
 			v = this._started && !this.__updateSize && this.get("visible");
 			if(!v){
-				this._needResize = true;
+				//this._needResize = true;
 				this._changeSize = rias.mixin(this._changeSize, changeSize);
 				this._resultSize = rias.mixin(this._resultSize, resultSize);
 				//console.debug(c, this.id, "resize out:", r);
@@ -650,8 +657,9 @@ define([
 				r = (r = this.layout()) ? "layoutChildren" : "layout";
 			}
 
-			this._needResize = false;
+			//this._needResize = false;
 			this.afterResize();
+			//console.debug("_internalResize: ", this.id, new Date().valueOf() - curr);
 			//console.debug(c, this.id, "resize out:", r + " - " + rias.toJson(box));
 		},
 		_checkRestrict: function(box){
@@ -727,9 +735,7 @@ define([
 		///displayState:	1=shown(showNormal, restore, expand), 2=showMax, 3=collapsed(showMin, shrunk),
 		//			0=hideen(display=none), -1=closed(destroy), -2=hideen(but display)
 		_refreshDisplayState: function(state){
-			this._needResize = true;
-			//this._internalResize(box);
-			this._riasrParent && (this._riasrParent.needLayout = true);
+			this.needLayout = true;
 			if(state && this._splitterWidget && rias.isFunction(this._splitterWidget._setStateAttr)){
 				this._splitterWidget.set("state", state);
 			}else{
@@ -792,17 +798,20 @@ define([
 				cn = self.wrapperNode ? self.wrapperNode : self.containerNode,
 				duration = self.duration / 2;
 			if(show == false){
-				this._playingContent = this._playingHide({
+				self._playingContent = self._playingHide({
 					node: cn,
 					duration: duration,
 					beforeBegin: function(){
 					},
 					onEnd: function(){
 						df.resolve();
+					},
+					onStop: function(){
+						df.resolve();
 					}
 				});
 			}else{
-				this._playingContent = this._playingShow({
+				self._playingContent = self._playingShow({
 					node: cn,
 					duration: duration,
 					beforeBegin: function(){
@@ -811,16 +820,19 @@ define([
 					},
 					onEnd: function(){
 						df.resolve();
+					},
+					onStop: function(){
+						df.resolve();
 					}
 				});
 			}
-			this._playingContent.play();
+			self._playingContent.play();
 			return df;
 		},
 		_doPlay: function(newState, forcePlay){
 			var self = this,
 				df = rias.newDeferred(),
-				canPlay = self._started && self.animated && self.get("visible"),
+				canPlay = self._started && self.animate && self.get("visible"),
 				oldState = self._displayState0,//不能取 this.displayState，因为已经改变了。
 				dn = self.domNode, dns = dn.style,
 				cn = self.wrapperNode ? self.wrapperNode : self.containerNode,
@@ -855,7 +867,7 @@ define([
 						doExpand(true);
 					},
 					onEnd: function() {
-						self._resizeParent();
+						//self._resizeParent();
 					}
 				};
 			}
@@ -1028,7 +1040,7 @@ define([
 				}else{
 					self._playing = undefined;///先 delete，df.resolve 中要检测
 					df.resolve(self.displayState);
-					if(_playContent && newState >= intHidden){
+					if(self.animate && _playContent && newState >= intHidden){
 						self.defer(function(){
 							self._doPlayContent();
 						});
@@ -1144,7 +1156,7 @@ define([
 					}
 				}else{
 					///showNormal
-					canPlay = self._started && self.animated;
+					canPlay = self._started && self.animate;
 					_playContent = true;
 					if(oldState == intShowMax){
 						///showMax
@@ -1178,6 +1190,7 @@ define([
 						self._playingDeferred.resolve(self);
 					}
 				};
+				console.debug(this.id, this._playing);
 				self._playing.play();
 			}else{
 				_onEnd();
@@ -1200,9 +1213,9 @@ define([
 			}else if(newState === intTransparent){
 				//this.onHide();
 			}else{
+				this._refreshDisplayState();
 				this.onHide();
 			}
-			this._resizeParent();
 		},
 		hide: function(){
 			this.set("displayState", Widget.displayHidden);

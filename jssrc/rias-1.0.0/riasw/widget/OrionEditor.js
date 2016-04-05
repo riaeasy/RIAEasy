@@ -156,7 +156,10 @@ define([
 				rias.dom.query("._textviewDOMReady", this.domNode).style("backgroundColor", "");
 			}
 			///必须针对 textView 进行设置
-			if(t){
+			if(!t){
+				this._needDisabled = true;
+			}else{
+				this._needDisabled = undefined;
 				t._setReadOnly(value);
 				var preventIEfocus = rias.has("ie");// && (this.isLoaded || !this.focusOnLoad);
 				if(preventIEfocus){
@@ -191,7 +194,10 @@ define([
 			value = !!value;
 			this._set("readOnly", value);
 			if(w && w._textView){
+				this._needReadOnly = undefined;
 				w._textView._setReadOnly(value);
+			}else{
+				this._needReadOnly = true;
 			}
 		},
 		_setValueAttr: function(value){
@@ -477,6 +483,15 @@ define([
 
 			editor.installTextView();
 			var textView = editor._textView;
+			if(this._needDisabled){
+				this.set("disabled", this.get("disabled"));
+			}
+			if(this._needReadOnly){
+				this.set("readOnly", this.get("readOnly"));
+			}
+			if(this._needResize){
+				this.resize();
+			}
 			editor._listener = {
 				onModelChanged: function(e) {
 					editor.checkDirty();
@@ -567,7 +582,10 @@ define([
 			var w = this.editor;
 			rias.dom.setMarginBox(this.domNode, box);
 			if(w && w._textView){
+				this._needResize = undefined;
 				w._textView.resize();
+			}else{
+				this._needResize = true;
 			}
 		}
 

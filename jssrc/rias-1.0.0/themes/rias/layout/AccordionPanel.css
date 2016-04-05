@@ -17,7 +17,7 @@
 }
 
 .riaswAccordionTitle {
-	/*background-color: lavender;*/
+	background-color: lavender;
 	/*border-top: 1px solid #b9bbdd; zensst*/
 	/*border-bottom: 1px solid lightgray;
 	padding: 5px 4px 6px 8px;
@@ -47,7 +47,7 @@
 }
 .riaswAccordionTitleSelected  {
 	cursor: default;
-	background-color: lavender;
+	background-color: skyblue;
 }
 
 .riaswAccordionArrow {

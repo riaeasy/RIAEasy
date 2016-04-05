@@ -13,20 +13,18 @@ define([
 	var riasType = "rias.riasw.studio.Loading";
 
 	var Widget = rias.declare(riasType, [_Widget, _TemplatedMixin], {
-		hasVisuals: true,
 
+		content: rias.i18n.message.loading,
+		hasVisuals: true,
 		// attachToPointer
 		//		true to use visual indicator where cursor is
 		attachToPointer: true,
-
 		// duration: Integer
 		//		time in ms to toggle in/out the visual load indicator
 		duration: rias.defaultDuration,
-
 		// _offset: Integer
 		//		distance in px from the mouse pointer to show attachToPointer avatar
 		_offset: 16,
-
 		// holder for mousemove connection
 		_pointerConnect: null,
 

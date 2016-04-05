@@ -3,8 +3,8 @@
 		"sessionid": ""
 	},
 	"_count": 49,
-	"position": 2,
-	"rsfVersion": 225,
+	"position": 3,
+	"rsfVersion": 226,
 	"items": [
 		{
 			"rsfVersion": 223,
@@ -22,6 +22,13 @@
 		},
 		{
 			"rsfVersion": 225,
+			"reload": true,
+			"pix": "",
+			"isMobileApp": false,
+			"rotate": false
+		},
+		{
+			"rsfVersion": 226,
 			"reload": true,
 			"pix": "",
 			"isMobileApp": false,

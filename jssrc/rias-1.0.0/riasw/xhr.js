@@ -44,7 +44,7 @@ define([
 		if(err && err.response){
 			s = err.response.url + "<br/>";
 		}
-		console.error(s, rias.getStackTrace(err));
+		console.error(s, rias.captureStackTrace(err));
 		if(rias.isFunction(callback)){
 			callback(err);
 		}else if(!silence){

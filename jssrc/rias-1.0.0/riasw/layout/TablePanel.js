@@ -305,6 +305,7 @@ define([
 				if(rias.isFunction(child.resize)){
 					child.resize();
 				}
+				self._resizeParent();/// layoutChildren 之后，TablePanel 的尺寸一般会改变，需要 _resizeParent
 				if(fn && rias.dom.isDescendant(fn, child.domNode ? child.domNode : child) && fn.focus){
 					fn.focus();
 				}

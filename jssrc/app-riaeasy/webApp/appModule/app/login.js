@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 102,
+	"_rsfVersion": 108,
 	"_riaswVersion": "0.7",
 	"actions": {
 		"login": "act/login",
@@ -12,7 +12,6 @@ define([
 	"caption": "登录",
 	"op": "login",
 	"style": {
-		"height": "13em",
 		"padding": "0px",
 		"width": "26em"
 	},
@@ -72,7 +71,6 @@ define([
 			"_riaswType": "rias.riasw.layout.ContentPanel",
 			"_riaswIdOfModule": "mTitle",
 			"content": "<font color='darkblue'><b>(当前没有开通用户，请直接点击【确定】登录。)</b></font>",
-			"region": "top",
 			"style": {
 				"padding": "4px"
 			}
@@ -92,7 +90,6 @@ define([
 				"width": "100%"
 			},
 			"cols": 1,
-			"region": "center",
 			"splitter": false,
 			"style": {
 				"padding": "0.5em 3em 0.5em 1em"
@@ -108,9 +105,7 @@ define([
 						"row": 0
 					},
 					"tooltip": "用户id",
-					"value": {
-						"$refObj": "oper.operCode"
-					},
+					"value": "developer",
 					"onKeyDown": function (evt){
 		var m = this._riasrModule;
 		if(evt.keyCode == rias.keys.ENTER){
@@ -143,7 +138,6 @@ define([
 			"_riaswType": "rias.riasw.layout.Panel",
 			"_riaswIdOfModule": "btns",
 			"class": "riaswDialogPanelActionBar",
-			"region": "bottom",
 			"style": {
 			},
 			"_riaswChildren": [

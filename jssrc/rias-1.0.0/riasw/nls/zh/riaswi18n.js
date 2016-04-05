@@ -342,6 +342,12 @@ define({
 		CssClassStore: "RIAStudio Client Widget - CssClassStore.",
 		CsvStore: "RIAStudio 客户端控件 - CsvStore.\nThe CsvStore implements the dojo/data/api/Read API and reads\ndata from files in CSV (Comma Separated Values) format.",
 		Memory: "RIAStudio 客户端控件 - Memory.\nThis is a basic in-memory object store. It implements dojo/store/api/Store."
+	},
+
+	grid: {
+		DGrid: {
+			rowNumLabel: "行号"
+		}
 	}
 
 });

@@ -157,7 +157,7 @@ define([
 			return this.inherited(arguments);
 		},
 
-		_layoutChildren: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
+		_layoutChildren: function(/*String?*/ changedChildId, /*Object?*/ changedChildSize){
 			if(!this._contentBox || typeof(this._contentBox.l) == "undefined"){
 				return true;
 			}
@@ -178,10 +178,11 @@ define([
 
 				// Compute size to make each of my children.
 				// children[2] is the margin-box size of this.containerNode, set by layoutChildren() call above
-				this._containerContentBox = rias.dom.marginBox2contentBox(this.containerNode, children[2]);
-				this._containerContentBox.t = 0;
-				this._containerContentBox.l = 0;
 				if(child && child.resize){
+					/// child.parentNode 是 child._wrapper，
+					this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, children[2]);
+					//this._containerContentBox.t = 0;
+					//this._containerContentBox.l = 0;
 					child.needLayout = true;
 					child.resize(this._containerContentBox);
 				}
@@ -213,7 +214,7 @@ define([
 				this._contentBox = box;
 				this.needLayout = true;
 			}
-			return this.beforeLayout(this.needLayout || this._needResize);
+			return this.beforeLayout(this.needLayout || this._needResizeChild);
 		},
 		resize: function(changeSize, resultSize){
 			//this._refreshTablist();

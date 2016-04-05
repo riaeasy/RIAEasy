@@ -54,7 +54,7 @@ define([
 	var Widget = rias.declare(riasType, [_PanelBase], {
 
 		isLayoutContainer: true,
-		animated: false,
+		animate: false,
 
 		startup: function(){
 			var self = this;

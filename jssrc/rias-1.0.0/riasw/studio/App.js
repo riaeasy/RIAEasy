@@ -13,7 +13,7 @@ define([
 		baseClass: "webApp",
 		//isLayoutContainer: true,
 
-		animated: false,
+		animate: false,
 		//moduleMeta 要参与 isRiaswModule() 判断，不能在 rias.riasw.studio._ModuleMixin 中初始化，可以在 rias.riasw.studio.Module 和 rias.riasw.studio.App 中初始化。
 		moduleMeta: "",
 
@@ -112,7 +112,7 @@ define([
 					ownerRiasw: self,
 					_riaswIdOfModule: "loading"
 				}));
-				self._appLoading.set("content", rias.i18n.message.loading);
+				//self._appLoading.set("content", rias.i18n.message.loading);
 				self._appLoading.placeAt(self);
 			//}
 			self.inherited(arguments);

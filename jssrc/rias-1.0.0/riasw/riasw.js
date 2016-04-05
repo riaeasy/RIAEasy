@@ -111,18 +111,20 @@ define([
 		}
 	})();
 
-	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+	rias.by = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
 		if(!any){
 			return undefined;
 		}
 		var w;
 		if(rias.isObjectSimple(any) && any.$refObj){
-			any = rias.by(any.$refObj, module) || any.$refObj;
+			any = rias.by(any.$refObj, context) || any.$refObj;
 		}
 		if(rias.isString(any)){
-			w = rias.getObject(any, false, module) || (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any);
-			if(!w){
-				w = rias.dom.byId(any);//查找DOMNode.
+			w = rias.getObject(any, false, context);
+			if(!w && !/^module.|^context./.test(any)){
+				w = (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any)
+					|| rias.dom.byId(any)
+					|| rias.getObject(any);
 			}
 			any = w;
 		}
@@ -142,7 +144,7 @@ define([
 		}
 		return undefined;
 	};
-	rias.domNodeBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
+	rias.domNodeBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
 		var node = rias.dom.byId(any);
 		if(node){
 			return node;
@@ -153,25 +155,25 @@ define([
 		}
 		return undefined;
 	};
-	rias.byUntil = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
-		var w = rias.by(any);
+	rias.byUntil = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
+		var w = rias.by(any, context);
 		if(!w){
 			w = rias.dom.byId(any);
-			if(rias.isDomNode(any)){
-				w = arguments.callee(any.parentNode, module);
+			if(rias.isDomNode(any, context)){
+				w = arguments.callee(any.parentNode, context);
 			}
 		}
 		return w;
 	};
-	rias.riasrParentBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
-		var w = rias.byUntil(any);
+	rias.riasrParentBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
+		var w = rias.byUntil(any, context);
 		if(w){
 			w = w._riasrParent;
 		}
 		return w;
 	};
-	rias.riasrModuleBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/module){
-		var w = rias.byUntil(any);
+	rias.riasrModuleBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
+		var w = rias.byUntil(any, context);
 		if(w){
 			w = w._riasrModule;
 		}
@@ -419,7 +421,7 @@ define([
 					w.postscript.apply(w, [params, refNode]);
 				}
 			}catch(e){
-				console.error(rias.getStackTrace(e), w);
+				console.error(rias.captureStackTrace(e), w);
 				if(rias.isFunction(errCall)){
 					rias.hitch(this, errCall)(e);
 				}
@@ -436,7 +438,7 @@ define([
 					//rias.filer(params._riaswChildren, w, w._riasrModule);
 				}
 			}catch(e){
-				console.error(rias.getStackTrace(e), params, w);
+				console.error(rias.captureStackTrace(e), params, w);
 				if(rias.isFunction(errCall)){
 					rias.hitch(this, errCall)(e);
 				}
@@ -455,7 +457,7 @@ define([
 				}
 			}*/
 			//console.error("Error occurred when creating dijitWidget, params: " + params + "\n" + e.message, e, params);
-			console.error(rias.getStackTrace(e), params);
+			console.error(rias.captureStackTrace(e), params);
 			if(w && params.id){
 				if(w == rias.registry._hash[params.id]){
 					delete rias.registry._hash[params.id];
@@ -730,7 +732,7 @@ define([
 						//child._riasrParent = rias.by(ownerRiasw);
 					}
 				}catch(e){
-					console.error(e.message, rias.getStackTrace(e), _obj);
+					console.error(e.message, rias.captureStackTrace(e), _obj);
 					errf(e);
 				}*/
 				try{
@@ -741,7 +743,7 @@ define([
 						_obj.placeAt(_parent, _obj.position || index);
 					}
 				}catch(e){
-					console.error(e.message, rias.getStackTrace(e), _obj);
+					console.error(e.message, rias.captureStackTrace(e), _obj);
 					errf(e);
 				}
 			}

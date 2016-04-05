@@ -70,7 +70,7 @@ define([
 				}
 				return this.filter(this.textbox.value);
 			}catch(e){
-				console.error(this.item, "_getDisplayedValueAttr() error: ", rias.getStackTrace(e));
+				console.error(this.item, "_getDisplayedValueAttr() error: ", rias.captureStackTrace(e));
 				return this.searchAttr;
 			}
 		},
@@ -82,7 +82,7 @@ define([
 				}
 				return (store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr].toString()) ; // String
 			}catch(e){
-				console.error(item, "labelFunc() error: ", rias.getStackTrace(e));
+				console.error(item, "labelFunc() error: ", rias.captureStackTrace(e));
 				return this.searchAttr;
 			}
 		},

@@ -1,6 +1,6 @@
 /* rias.webApp */
 .webApp {
-  background-color: darkslategray;
+  background-color: dimgray;
   border-color: 0px solid lightgray;
   /*height: 100px;
 	width: 100px;*/
@@ -109,8 +109,7 @@
 }
 .rias .webAppDockPanel {
   background-color: whitesmoke;
-  padding: 0.25em 0.25em;
-  margin: 0 0.25em;
+  padding: 0.25em 0 0.25em 0.25em;
   width: 7em;
 }
 .rias .webAppDockPanel .riaswDockNode {
@@ -119,7 +118,6 @@
 .rias .webAppCenter {
   background-color: whitesmoke;
   padding: 0.5em;
-  margin: 0 0.25em;
 }
 .rias .webAppFooter {
   color: white;
@@ -139,9 +137,19 @@
   padding: 4px 8px 2px 8px;
   background: url("images/XCIndex.png") no-repeat 0px center;
 }
-.rias .dijitButtonNode,
 .rias .mblButton,
+.rias .dijitButtonNode {
+  border-width: 0 0 2px 0;
+  border-color: skyblue;
+}
+.rias .riaswCheckButton .dijitButtonNode,
+.rias .riaswRadioButton .dijitButtonNode {
+  border-width: 0;
+}
 .rias .riaswTextBoxContainer,
+.rias .dijitArrowButton,
+.rias .dijitArrowButtonContainer,
+.rias .dijitSpinnerButtonContainer,
 .rias .riaswToggleSplitter,
 .rias .riaswPanel,
 .rias .riaswCaptionPanel,
@@ -162,22 +170,21 @@
 .rias .riaswDialogPanelActionBarTop {
   border-color: lightgray;
 }
-.rias .riaswDialogPanel,
-.rias .riaswDialogPanelContent {
+.rias .riaswCaptionPanelContent {
+  padding: 0.5em;
+}
+.rias .riaswDialogPanel {
   background-color: whitesmoke;
   border-width: 0.25em;
-  border-color: lightgray;
+  border-color: lavender;
 }
 .rias .riaswCaptionPanelCaptionNode,
-.rias .riaswDockNodeShown,
-.rias .riaswAccordionTitleSelected {
-  background-color: lightgray;
+.rias .riaswAccordionTitle,
+.rias .riaswDockNodeShown {
+  background-color: lavender;
 }
 .rias .riaswDialogPanelCaptionNode {
-  background-color: lightgray;
-}
-.rias .riaswDialogPanelHover {
-  border-color: gold;
+  background-color: lavender;
 }
 .rias .riaswDockNodeHover,
 .rias .riaswAccordionTitleHover,
@@ -185,16 +192,25 @@
 .rias .riaswDialogPanelCaptionNodeHover {
   background-color: gold;
 }
+.rias .riaswDialogPanelHover {
+  border-color: gold;
+}
+.rias .riaswCaptionPanelCaptionNodeSelected,
+.rias .riaswCaptionPanelCaptionNodeFocused,
+.rias .riaswDialogPanelCaptionNodeSelected,
+.rias .riaswDialogPanelCaptionNodeFocused,
+.rias .riaswDialogPanelCaptionNodeTopmost,
+.rias .riaswAccordionTitleSelected,
+.rias .riaswDockNodeTopmost {
+  background-color: skyblue;
+}
 .rias .riaswDialogPanelTopmost {
   border-color: skyblue;
-}
-.rias .riaswDockNodeTopmost,
-.rias .riaswDialogPanelCaptionNodeTopmost {
-  background-color: skyblue;
 }
 .rias .riaswDockNode {
   border-width: 1px;
 }
+.rias .riaswStackPanelChildWrapper,
 .rias .dijitTabChecked {
   background-color: whitesmoke;
 }
@@ -214,9 +230,10 @@
 .rias .dgrid-header .dgrid-cell,
 .rias .dgrid-cell {
   border-color: lightgray;
+  border-left-width: 0;
   padding: 0.5em 0.25em;
 }
-.rias .dgrid-header .dojoDndItem {
+.rias .dgrid-spacer-row .dgrid-cell {
   padding: 0;
 }
 .rias .dgrid-row {
@@ -242,6 +259,7 @@
   height: auto;
   line-height: 1em;
   padding: 0;
+  margin-left: 0.5em;
   border-width: 0;
   font-family: inherit;
   font-size: inherit;
@@ -252,9 +270,11 @@
 .rias .dgrid-opcolumn > button:hover {
   color: darkorange;
 }
+.rias .grid-summary-row,
 .rias .dgrid-header,
 .rias .dgrid-selector,
-.rias .dgrid-opcolumn {
+.rias .dgrid-opcolumn,
+.rias .dgrid-rownumcolumn {
   background-color: ghostwhite;
 }
 .rias .dgrid-header-scroll,

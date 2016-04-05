@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 225,
+	"_rsfVersion": 226,
 	"_riaswVersion": "0.7",
 	"query": {
 		"parentId": "1"
@@ -51,6 +51,7 @@ define([
 						{
 							"field": "id",
 							"name": "id",
+							"fixed": true,
 							"width": "160px"
 						},
 						{

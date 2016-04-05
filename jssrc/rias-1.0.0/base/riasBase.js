@@ -145,7 +145,7 @@ define([
 				this.create.apply(this, arguments);
 			}catch(e){
 				this._riasrCreateError = e;
-				console.error(rias.getStackTrace(e), this);
+				console.error(rias.captureStackTrace(e), this);
 			}
 		},
 		create: function(params){
@@ -304,7 +304,7 @@ define([
 				this.create.apply(this, arguments);
 			}catch(e){
 				this._riasrCreateError = e;
-				console.error(rias.getStackTrace(e), this);
+				console.error(rias.captureStackTrace(e), this);
 			}
 		},
 
@@ -365,7 +365,7 @@ define([
 						w._riasrModule.own(w);
 					}
 				}catch(e){
-					console.error(rias.getStackTrace(e), w);
+					console.error(rias.captureStackTrace(e), w);
 					if(rias.isFunction(errCall)){
 						rias.hitch(this, errCall)(e);
 					}
@@ -420,7 +420,7 @@ define([
 					}
 					//rias.webApp.addWidget(w);
 				}catch(e){
-					console.error(rias.getStackTrace(e), w);
+					console.error(rias.captureStackTrace(e), w);
 					if(rias.isFunction(errCall)){
 						rias.hitch(this, errCall)(e);
 					}

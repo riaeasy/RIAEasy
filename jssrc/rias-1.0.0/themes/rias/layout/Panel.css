@@ -28,3 +28,16 @@
 .riaswPanelFocusNode {
 }
 
+/* riaswStackPanel ============================================*/
+.riaswStackPanelContent {
+	overflow: hidden;
+}
+.riaswStackPanel-child {
+
+}
+.riaswStackPanelChildWrapper {
+	position: absolute;
+}
+.riaswStackPanelChildWrapperTop {
+	z-index: 9;
+}

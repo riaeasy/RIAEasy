@@ -422,13 +422,13 @@ define([
 			this.inherited(arguments);
 		},
 
-		_showChild: function(page, /*Boolean*/ animate){
+		_showChild: function(page, /*Boolean*/ args){
 			// Override StackPanel._showChild() to set visibility of _wrapperWidget.containerNode
 			page._wrapperWidget.containerNode.style.display = "block";
 			return this.inherited(arguments);
 		},
 
-		_hideChild: function(child, /*Boolean*/ animate){
+		_hideChild: function(child, /*Boolean*/ args){
 			// Override StackPanel._showChild() to set visibility of _wrapperWidget.containerNode
 			child._wrapperWidget.containerNode.style.display = "none";
 			return this.inherited(arguments);
@@ -495,7 +495,8 @@ define([
 						oldWidget._wrapperWidget.containerNode.style.display = "none";
 						oldContents.style.height = "auto";
 						///关闭 动画，避免隐藏 containerNode
-						self._hideChild(oldWidget, false);
+						self._hideChild(oldWidget, {
+							animate: false});
 					}
 				});
 				self._animation.onStop = self._animation.onEnd;

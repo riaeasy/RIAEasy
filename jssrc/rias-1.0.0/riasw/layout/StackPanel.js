@@ -7,9 +7,9 @@ define([
 	"rias/riasw/layout/_PanelBase"
 ], function(rias, _WidgetBase, _PanelBase){
 
-	//rias.theme.loadRiasCss([
-	//	//"layout/Panel.css"
-	//]);
+	rias.theme.loadRiasCss([
+		//"layout/Panel.css"
+	]);
 
 	var riasType = "rias.riasw.layout.StackPanel";
 	var Widget = rias.declare(riasType, _PanelBase, {
@@ -19,7 +19,7 @@ define([
 
 		_transitionDeferred: null,
 
-		baseClass: "dijitStackContainer",
+		baseClass: "riaswStackPanel",
 
 		/*=====
 		// selectedChildWidget: [readonly] dijit._Widget
@@ -52,7 +52,7 @@ define([
 		},
 
 		destroyDescendants: function(/*Boolean*/ preserveDom){
-			this._descendantsBeingDestroyed = true;
+			//this._descendantsBeingDestroyed = true;
 			this.selectedChildWidget = undefined;
 			rias.forEach(this.getChildren(), function(child){
 				this.removeChild(child, preserveDom);
@@ -62,11 +62,13 @@ define([
 				child.destroyRecursive(preserveDom);
 			}, this);
 			this.__reserved_page = undefined;
-			this._descendantsBeingDestroyed = false;
+			//this._descendantsBeingDestroyed = false;
 		},
 		destroy: function(){
 			if(this._animation){
-				this._animation.stop();
+				rias.forEach(this._animation, function(item){
+					item.stop();
+				});
 				this._animation = undefined;
 			}
 			if(this._transitionDeferred){
@@ -121,13 +123,18 @@ define([
 		//	this.inherited(arguments);
 		//},
 
-		_layoutChildren: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
-
-			var child = this.selectedChildWidget;
-			if(child){
+		_layoutChildren: function(/*String?*/ changedChildId, /*Object?*/ changedChildSize){
+			var child = rias.by(changedChildId) || this.selectedChildWidget;
+			if(child && !child._beingDestroyed && !child._riasrDestroying){
 				if(child.resize){
-					if(this.doLayout){
-						child.resize(this._containerContentBox || this._contentBox);
+					if(changedChildSize || this.doLayout){
+						//this._containerContentBox = this._contentBox;
+						/// child.parentNode 是 child._wrapper，
+						this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._contentBox);
+						//this._containerContentBox.l = 0;
+						//this._containerContentBox.t = 0;
+						changedChildSize = rias.mixin({}, this._containerContentBox, changedChildSize);
+						child.resize(changedChildSize);
 					}else{
 						child.resize();
 					}
@@ -155,6 +162,7 @@ define([
 			}
 			rias.dom.place(childNode, wrapper);
 			///需要设置 wrapperNode，以在 resize 的时候可以设置 wrapperNode
+			/// 可能存在 child.wrapperNode，比如 CaptionPanel。
 			//child._wrapper = child.wrapperNode = wrapper;	// to set the aria-labelledby in StackController
 			child._wrapper = wrapper;	// to set the aria-labelledby in StackController
 
@@ -213,9 +221,9 @@ define([
 				rias.publish(this.id + "-removeChild", page);
 			}
 
-			if(this._descendantsBeingDestroyed){
-				return;
-			}
+			//if(this._descendantsBeingDestroyed){
+			//	return;
+			//}
 		},
 
 		selectChild: function(/*dijit/_WidgetBase|String*/ page, /*Boolean*/ animate){
@@ -257,47 +265,91 @@ define([
 				animate = false;
 			}
 			if(self._animation){
-				// there's an in-progress animation.  speedily end it so we can do the newly requested one
-				self._animation.stop(true);
+				rias.forEach(this._animation, function(item){
+					item.stop();
+				});
 				self._animation = undefined;
 			}
 			if(self._transitionDeferred){
 				self._transitionDeferred.cancel();
 			}
 			self._transitionDeferred = df;
-			if(oldWidget && rias.isFunction(oldWidget._stopPlay)){
-				//oldWidget._stopPlay();
+			if(oldWidget && (oldWidget._riasrDestroying || oldWidget._beingDestroyed)){
+				oldWidget = undefined;
 			}
-			animate = false;
+			//if(oldWidget && rias.isFunction(oldWidget._stopPlay)){
+			//	oldWidget._stopPlay();
+			//}
+			//animate = false;
 			if(newWidget){
+				rias.dom.toggleClass(newWidget._wrapper, this.baseClass + "ChildWrapperTop", true);
 				if(oldWidget){
+					rias.dom.toggleClass(oldWidget._wrapper, this.baseClass + "ChildWrapperTop", false);
 					if(animate){
-						var newContents = newWidget.domNode,
-							oldContents = oldWidget.domNode;
+						var curr = new Date().valueOf();
+						var newContents = newWidget._wrapper,
+							oldContents = oldWidget._wrapper,
+							box = this._containerContentBox || this._contentBox;
+						console.debug("_transition.begin: ", self.id, new Date().valueOf() - curr);
+						curr = new Date().valueOf();
 
-						self._animation = new rias.fx.slideTo({
-							node: newContents,
-							duration: self.duration / 2,
-							beforeBegin: function(value){
-								self._showChild(newWidget);
-							},
-							onEnd: function(){
-								rias.when(self._hideChild(oldWidget), function(){
-									df.resolve();
+						rias.when(self._showChild(newWidget, {
+							animate: false
+						}), function(){
+							console.debug("_transition._showChild: ", self.id, new Date().valueOf() - curr);
+							curr = new Date().valueOf();
+							//rias.dom.visible(newContents, true, 0);
+							rias.dom.setStyle(newContents, "left", -box.w + "px");
+							self._animation = [rias.fx.combine([
+								rias.fx.slideTo({
+									node: oldContents,
+									duration: self.duration,
+									left: box.w
+								}), rias.fx.slideTo({
+									node: newContents,
+									duration: self.duration,
+									left: 0
+								})
+							])];
+							console.debug("_transition.playBegin: ", self.id, new Date().valueOf() - curr);
+							curr = new Date().valueOf();
+							df.then(function(){
+								rias.when(self._hideChild(oldWidget, {
+									animate: false
+								}), function(){
+									oldContents.style.left = "0px";
+									console.debug("_transition._hideChild: ", self.id, new Date().valueOf() - curr);
+									curr = new Date().valueOf();
 								});
-							}
+							});
+							self._animation[0].onEnd = function(){
+								console.debug("_transition.playEnd: ", self.id, new Date().valueOf() - curr);
+								curr = new Date().valueOf();
+								df.resolve();
+							};
+							self._animation[0].onStop = function(){
+								console.debug("_transition.playStop: ", self.id, new Date().valueOf() - curr);
+								curr = new Date().valueOf();
+								df.resolve();
+							};
+							self._animation[0].play();
 						});
-						self._animation.onStop = self._animation.onEnd;
-						self._animation.play();
+
 					}else{
-						rias.when(self._hideChild(oldWidget), function(){
-							rias.when(self._showChild(newWidget), function(){
+						rias.when(self._hideChild(oldWidget, {
+							animate: true
+						}), function(){
+							rias.when(self._showChild(newWidget, {
+								animate: true
+							}), function(){
 								df.resolve();
 							});
 						});
 					}
 				}else{
-					rias.when(self._showChild(newWidget), function(){
+					rias.when(self._showChild(newWidget, {
+						animate: true
+					}), function(){
 						df.resolve();
 					});
 				}
@@ -341,13 +393,13 @@ define([
 		onShowChild: function(page){
 		},
 		_onShowChild: function(page){
-			//this._needResize = true;
+			//console.debug(this.id + "._onShowChild(" + (page ? page.id : "") + ")");
 			this.needLayout = true;//this._isShown();
 			//this.layout();
 			this._resizeParent();
 			this.onShowChild(page);
 		},
-		_showChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ animate){
+		_showChild: function(/*dijit/_WidgetBase*/ page, /*Object*/ args){
 			// summary:
 			//		Show the specified child by changing it's CSS, and call _onShow()/onShow() so
 			//		it can do any updates it needs regarding loading href's etc.
@@ -375,14 +427,23 @@ define([
 					page.resize();
 				}
 			}*/
+			if(args && args.box){
+				this._layoutChildren(page, args.box);
+			}
 			this._onShowChild(page);
 
-			if(animate != false){
+			if(args && args.animate != false){
 				return this._doPlayContent().then(function(){
 					(page._show && page._show()) || (page._onShow && page._onShow());
 				});
 			}else{
-				return (page._show && page._show()) || (page._onShow && page._onShow()) || true;
+				var d, a = page.animate;
+				if(a == true){
+					page.animate = false;
+				}
+				d = (page._show && page._show()) || (page._onShow && page._onShow()) || true;
+				page.animate = a;
+				return d;
 			}
 		},
 
@@ -391,7 +452,7 @@ define([
 		_onHideChild: function(page){
 			this.onHideChild(page);
 		},
-		_hideChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ animate){
+		_hideChild: function(/*dijit/_WidgetBase*/ page, /*Object*/ args){
 			// summary:
 			//		Hide the specified child by changing it's CSS, and call _onHide() so
 			//		it's notified.
@@ -401,12 +462,18 @@ define([
 				rias.dom.replaceClass(page._wrapper, "dijitHidden", "dijitVisible");
 			}
 			this._onHideChild(page);
-			if(animate != false){
+			if(args && args.animate != false){
 				return this._doPlayContent(false).then(function(){
 					page._hide && page._hide() || page.onHide && page.onHide();
 				});
 			}else{
-				return page._hide && page._hide() || page.onHide && page.onHide() || true;
+				var d, a = page.animate;
+				if(a == true){
+					page.animate = false;
+				}
+				d = page._hide && page._hide() || page.onHide && page.onHide() || true;
+				page.animate = a;
+				return d;
 			}
 		},
 
