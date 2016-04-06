@@ -4,8 +4,6 @@
 define([
 	"rias",
 
-	"dgrid/util/misc",
-	'dojo/has!touch?dgrid/util/touch',
 	"dgrid/List",
 	"dgrid/Grid",
 	"dgrid/OnDemandList",
@@ -23,15 +21,18 @@ define([
 	"dgrid/extensions/ColumnResizer",
 	"dgrid/extensions/ColumnReorder",
 	"dgrid/extensions/CompoundColumns",
-	"dgrid/extensions/DijitRegistry",
-	"dgrid/extensions/Dnd",
-	"dgrid/extensions/Pagination"
+	//"dgrid/extensions/DijitRegistry",
+	//"dgrid/extensions/Dnd",
+	//"dgrid/extensions/Pagination",
+
+	"dgrid/util/misc",
+	"dojo/has!touch?dgrid/util/touch"
 
 ], function(rias,
-            misc, touchUtil,
             List, Grid, OnDemandList, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
-			//GridFromHtml, GridWithColumnSetsFromHtml,
-			ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, DijitRegistry, Dnd, Pagination) {
+            //GridFromHtml, GridWithColumnSetsFromHtml,
+            ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, Dnd, Pagination,
+            misc, touchUtil) {
 
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
 	var autoId = 0;

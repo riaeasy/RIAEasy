@@ -13,16 +13,19 @@ define([
 	});
 
 	return function(params){
-		var p = rias.mixinDeep({}, params),
+		var df = rias.newDeferred(), dfs = [],
+			p = rias.mixinDeep({}, params),
 			i, l, n, b,
 			treeColumns = (rias.isArray(p.treeColumns) ? p.treeColumns : rias.isString(p.treeColumns) ? [p.treeColumns] : []),
 			opColumn = [], gridOps = [], item,
-			set1 = [], set2 = [];
+			set1 = [], set2 = [],
+			editon;
 
 		if(!p._riaswIdOfModule){
 			p._riaswIdOfModule = "grid";
 		}
 
+		//if(p.)
 		p._customColumnFormatter = function(cellData, data){
 			var col = this,
 				field = col.field,
@@ -60,7 +63,8 @@ define([
 		};
 		function _column(arr){
 			var col,
-				i = arr.length - 1;
+				i = arr.length - 1,
+				d, ed, errs = "";
 			for(; i >= 0; i--){
 				col = arr[i];
 				if(rias.isArray(col)){
@@ -84,6 +88,17 @@ define([
 						};
 						if(!col.align && /^number/.test(col.format)){
 							col.align = "right";
+						}
+					}
+					ed = col.editor;
+					if(rias.isString(ed)){
+						if(/^rias\.riasw\.|^dijit\.|^dojox\./.test(ed)){
+							d = rias.requireRiaswCtor(ed, function(err){
+								errs += err;
+							}).then(function(ctor){
+								col.editor = ctor;
+								});
+							dfs.push(d);
 						}
 					}
 					if(col.field.toLowerCase() === "rownum"){
@@ -475,7 +490,11 @@ define([
 			}
 		};
 
-		return p;
+		rias.all(dfs).then(function(){
+			df.resolve(p);
+		});
+
+		return df.promise;
 	}
 
 });

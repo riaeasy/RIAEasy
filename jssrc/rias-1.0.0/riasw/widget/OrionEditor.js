@@ -135,7 +135,8 @@ define([
 		//		The minimum height that the editor should have.
 		minHeight: "1em",
 
-		templateString: "<div data-dojo-attach-point='focusNode' autocomplete='off'></div>",
+		//templateString: "<div data-dojo-attach-point='focusNode' autocomplete='off'></div>",
+		templateString: "<div autocomplete='off'></div>",
 
 		// disabled: Boolean
 		//		The editor is disabled; the text cannot be changed.
@@ -216,8 +217,12 @@ define([
 			if (!this.editor) {
 				this._createEditor();
 			}
-			this.containerNode = this.editor._domNode;
+			this.containerNode = this.editor._textView._rootDiv;
 			rias.dom.addClass(this.containerNode, "riaswTextBoxContainer");
+			///没有 template 时，显式设置 focusNode。
+			if(!this.focusNode){
+				this.focusNode = this.containerNode;
+			}
 			//this.watch("readonly", rias.hitch(this, "_setStateClass"));
 		},
 		postCreate: function(){
@@ -581,6 +586,8 @@ define([
 		resize: function(box){
 			var w = this.editor;
 			rias.dom.setMarginBox(this.domNode, box);
+			box = rias.dom.marginBox2contentBox(this.domNode, box);
+			rias.dom.setMarginBox(this.containerNode, box);
 			if(w && w._textView){
 				this._needResize = undefined;
 				w._textView.resize();

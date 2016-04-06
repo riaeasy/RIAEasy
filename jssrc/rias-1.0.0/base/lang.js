@@ -187,7 +187,7 @@ define([
 		}
 		if(rias.isString(any)){
 			w = rias.getObject(any, false, context);
-			if(!w && !/^module.|^context./.test(any)){
+			if(!w && !/^module\.|^context\./.test(any)){
 				w = rias.getObject(any);
 			}
 			any = w;

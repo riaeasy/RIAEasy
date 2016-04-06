@@ -332,6 +332,10 @@
 		border-left-width: 0;
 		padding: 0.5em 0.25em;
 	}
+	.dgrid-cell-editing {
+		padding: 0;
+		margin: 0;
+	}
 	.dgrid-spacer-row {
 		//border-width: 1px 1px 0px 1px;
 		//border-color: @borderColor;
@@ -344,6 +348,7 @@
 		//border-color: @borderColor;
 		//overflow-x: auto;
 		//overflow-y: auto;///要引起 右上角 错位
+		border-bottom: 1px solid @borderColor;
 	}
 	.dgrid-row {
 		background-color: @inputBackgroundColor;
@@ -384,6 +389,11 @@
 		> button:hover {
 			color: darkorange;
 		}
+	}
+	.grid-summary-row {
+		border-width: 1px 0 0 0;
+		border-color: @borderColor;
+		border-style: solid;
 	}
 	.grid-summary-row,
 	.dgrid-header,

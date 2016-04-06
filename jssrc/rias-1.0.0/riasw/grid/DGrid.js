@@ -8,8 +8,8 @@ define([
 	"rias/riasw/grid/dgrid/SummaryFooter",
 	"rias/riasw/grid/DGridParamExt",
 
-	"dgrid/util/misc",
-	'dojo/has!touch?dgrid/util/touch',
+	//"dgrid/util/misc",
+	//"dojo/has!touch?dgrid/util/touch",
 	"dgrid/List",
 	"dgrid/Grid",
 	"dgrid/OnDemandGrid",
@@ -26,17 +26,17 @@ define([
 	"dgrid/extensions/ColumnResizer",
 	"dgrid/extensions/ColumnReorder",
 	"dgrid/extensions/CompoundColumns",
-	"dgrid/extensions/DijitRegistry",
-	"dgrid/extensions/Dnd",
-	"dgrid/extensions/Pagination",
+	//"dgrid/extensions/DijitRegistry",
+	//"dgrid/extensions/Dnd",
+	//"dgrid/extensions/Pagination",
 
 	"dstore/Trackable"
 
 ], function(rias, DGridBase, _Store, SummaryFooter, DGridParamExt,
-            misc, touchUtil,
+            //misc, touchUtil,
             List, Grid, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
             //GridFromHtml, GridWithColumnSetsFromHtml,
-            ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, DijitRegistry, Dnd, Pagination,
+            ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, //Dnd, //Pagination,
             Trackable) {
 
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
@@ -136,35 +136,34 @@ define([
 		iconClass: "riaswGridIcon",
 		iconClass16: "riaswGridIcon16",
 		defaultParams: function(params){
-			var p = DGridParamExt(params);
+			return rias.when(DGridParamExt(params), function(p){
+				return rias.mixinDeep({
+					indent: 1,
+					inline: true,
+					listType: "grid",
+					cellNavigation: true,
+					tabableHeader: true,
+					showHeader: true,
+					showFooter: true,
 
-			p = rias.mixinDeep({
-				indent: 1,
-				inline: true,
-				listType: "grid",
-				cellNavigation: true,
-				tabableHeader: true,
-				showHeader: true,
-				showFooter: true,
+					minRowsPerPage: 25,
+					maxRowsPerPage: 250,
+					maxEmptySpace: Infinity,
+					bufferRows: 10,
+					farOffRemoval: 1000,
+					queryRowsOverlap: 0,
+					pagingMethod: 'debounce',
+					pagingDelay: 50,
+					//rowsPerPage: 25,
+					//pagingLinks: 3,
+					//keepCurrentPage: true,
+					keepScrollPosition: true,
+					deselectOnRefresh: false,
+					rowHeight: 0,
 
-				minRowsPerPage: 25,
-				maxRowsPerPage: 250,
-				maxEmptySpace: Infinity,
-				bufferRows: 10,
-				farOffRemoval: 1000,
-				queryRowsOverlap: 0,
-				pagingMethod: 'debounce',
-				pagingDelay: 50,
-				//rowsPerPage: 25,
-				//pagingLinks: 3,
-				//keepCurrentPage: true,
-				keepScrollPosition: true,
-				deselectOnRefresh: false,
-				rowHeight: 0,
-
-				collection: null
-			}, p);
-			return p;
+					collection: null
+				}, p);
+			});
 		},
 		initialSize: {},
 		"property": {

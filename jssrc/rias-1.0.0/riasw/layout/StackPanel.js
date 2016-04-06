@@ -129,7 +129,7 @@ define([
 				if(child.resize){
 					if(changedChildSize || this.doLayout){
 						//this._containerContentBox = this._contentBox;
-						/// child.parentNode 是 child._wrapper，
+						/// 尺寸取 this.containerNode 的 contentBox，即 this._contentBox，但是位置是 child._wrapper，
 						this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._contentBox);
 						//this._containerContentBox.l = 0;
 						//this._containerContentBox.t = 0;

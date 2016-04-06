@@ -233,8 +233,15 @@
   border-left-width: 0;
   padding: 0.5em 0.25em;
 }
+.rias .dgrid-cell-editing {
+  padding: 0;
+  margin: 0;
+}
 .rias .dgrid-spacer-row .dgrid-cell {
   padding: 0;
+}
+.rias .dgrid-scroller {
+  border-bottom: 1px solid lightgray;
 }
 .rias .dgrid-row {
   background-color: white;
@@ -269,6 +276,11 @@
 }
 .rias .dgrid-opcolumn > button:hover {
   color: darkorange;
+}
+.rias .grid-summary-row {
+  border-width: 1px 0 0 0;
+  border-color: lightgray;
+  border-style: solid;
 }
 .rias .grid-summary-row,
 .rias .dgrid-header,

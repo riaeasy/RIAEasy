@@ -51,7 +51,10 @@ define([
 			//		renderCell is called with an extra flag,
 			//		so custom implementations can react to it.
 
-			var value = item[column.field] || '';
+			var value = "";
+			if(column.field in item){
+				value = item[column.field];
+			}
 			cell.appendChild(document.createTextNode(value));
 		},
 

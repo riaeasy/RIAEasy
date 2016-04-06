@@ -121,7 +121,7 @@ define([
 		}
 		if(rias.isString(any)){
 			w = rias.getObject(any, false, context);
-			if(!w && !/^module.|^context./.test(any)){
+			if(!w && !/^module\.|^context\./.test(any)){
 				w = (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any)
 					|| rias.dom.byId(any)
 					|| rias.getObject(any);
@@ -772,6 +772,8 @@ define([
 			}
 		}
 		var _createRiasw = function(ctor, _params, _ownerRiasw, _module, _d, _pp, index){
+			var params,
+				pn, ppn, p, ps = [], _dps = [], _ref = [], _o, i, l, _p;
 			function _createError(message){
 				//s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
 				console.error(message, _params);
@@ -890,107 +892,117 @@ define([
 					_d.resolve(_params);
 					//return;
 				}else if(ctor){//} && meta.create){
-					var params = rias.isFunction(ctor._riasdMeta.defaultParams) ?
+					/*var params = rias.isFunction(ctor._riasdMeta.defaultParams) ?
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams(_params)) :
 							rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params),//不应该修改 meta.defaultParams，故mixinDeep({},..}
-					///FIXME:zensst. 使用 refNode 后，id 会重复。
-						refNode = rias.dom.byId(params.refNodeId || params.id);
+						refNode = rias.dom.byId(params.refNodeId || params.id);*/
 
-					delete params.refNodeId;
-					//delete params._riaswType;
-					//delete params._riaswIdOfModule;
-					///最好不在这里设置 params.owner，避免在下面的 params 自动创建中处理
-					//params.owner = _ownerRiasw;
-					delete params.ownerRiasw;///强制使用 _ownerRiasw
-					rias._deleDP(params);
+					var pd;
+					if(rias.isFunction(ctor._riasdMeta.defaultParams)){
+						pd = ctor._riasdMeta.defaultParams(_params);
+					}else{
+						pd = rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params);
+					}
+					rias.when(pd, function(p){
+						params = rias.mixinDeep({}, p);
+						///FIXME:zensst. 使用 refNode 后，id 会重复。
+						var refNode = rias.dom.byId(params.refNodeId || params.id);
 
-					if(_params._riaswIdOfModule && _module[_params._riaswIdOfModule]){
-						s = "Duplication _riaswIdOfModule['" + _params._riaswIdOfModule + "'] in module['" + _module.id + "']";
-						_params._riaswIdOfModule = _params._riaswIdOfModule + "_duplicationId";///id 重复时，会造成循环，需要变更 id。
-						_createError(s);
-						return;
-					}
-					var pn, ppn, p, ps = [], _dps = [], _ref = [], _o, i, l, _p;
-					try{
-						///后面需要引用 params.id
-						params.id = refNode ? refNode.id :
-							params.id ? params.id :
-								_params._riaswIdOfModule ? (_module.id + "_" + _params._riaswIdOfModule) :
-									_ownerRiasw ? rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params)) :
-										rias.getUniqueId(_module.id + "_" + rias._getUniqueCat(_params), _module);
-					}catch(e){
-						_createError(e.message);
-						return;
-					}
-					_decodeParams(params);
-					rias.forEach(ps, function(_p){
-						var _dp = rias.newDeferred();
-						_dps.push(_dp);
-						//此处 _ownerRiasw 用 _params
-						//此处可以不用mixinDeep
-						_requireRiasCtor(_p[0]._riaswType || _p[0].declaredClass, _p[0].requires, errf).then(function(ctor){
-							///params 中的 riasw 由 _obj 自己维护，不执行 placeRiasw()
-							_createRiasw(ctor, _p[0], {id: params.id}, _module, _dp, _pp, index);
-						});
-						_dp.then(function(c){
-							/*if(_p[2] < 0){
-								params[_p[1]] = c;
-							}else{
-								params[_p[1]][_p[3]] = c;
-							}*/
-							rias.setObject(_p[1], c, params);
-						});
-					});
-					rias.all(_dps).then(function(){
-						var _obj;
-						try {
-							params._riaswParams = _params;
-							params._riaswChildren = _params._riaswChildren;///前面 rias._deleDP 已经删除
-							params._riasrModule = _module;
-							if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
-								params.ownerRiasw = _ownerRiasw;
-							}
-							refNode || (refNode = rias.dom.create("div", {style: params.style}, _ownerRiasw.domNode, params.position));
-							//_obj = meta.create(params, refNode, errf);
-							_obj = rias.createRiasw(ctor, params, refNode, errf);
-							_params._riasrWidget = _obj;///给 params(_params) 设置运行期实例。
-							if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
-								//_ownerRiasw.own(_obj);
-							}else {
-								_owners.push([_obj, _ownerRiasw]);
-							}
-						}catch(e){
-							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}\n" + e.message;
+						delete params.refNodeId;
+						//delete params._riaswType;
+						//delete params._riaswIdOfModule;
+						///最好不在这里设置 params.owner，避免在下面的 params 自动创建中处理
+						//params.owner = _ownerRiasw;
+						delete params.ownerRiasw;///强制使用 _ownerRiasw
+						rias._deleDP(params);
+
+						if(_params._riaswIdOfModule && _module[_params._riaswIdOfModule]){
+							s = "Duplication _riaswIdOfModule['" + _params._riaswIdOfModule + "'] in module['" + _module.id + "']";
+							_params._riaswIdOfModule = _params._riaswIdOfModule + "_duplicationId";///id 重复时，会造成循环，需要变更 id。
 							_createError(s);
 							return;
 						}
-						if(!_obj){
-							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
-							_createError(s);
-							return;
-						}
-						rias.forEach(_ref, function(_p){//refs,
-							refs.push([_p[0], _p[1], _p[2], _p[3], _obj]);
-						});
 						try{
-							if(!_obj.id){
-								///简化 id
-								//_obj.id = _obj.id || rias.getUniqueId(_ownerRiasw.id + "_" + _params._riaswType.split('.').slice(-1), _module);
-								//_obj.id = rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params), _module);
-							}
+							///后面需要引用 params.id
+							params.id = refNode ? refNode.id :
+								params.id ? params.id :
+									_params._riaswIdOfModule ? (_module.id + "_" + _params._riaswIdOfModule) :
+										_ownerRiasw ? rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params)) :
+											rias.getUniqueId(_module.id + "_" + rias._getUniqueCat(_params), _module);
 						}catch(e){
 							_createError(e.message);
 							return;
 						}
-						//function _createChildren(_obj, _params, _ownerRiasw, _module, _d)
-						_placeRiasw(_obj, _ownerRiasw, _pp, index);
-						_createChildren(_obj, _params._riaswChildren, _module, _d);
-						//rias.forEach(ps, function(_p){
-						//	rias.placeRiasw(_obj[_p[1]], _obj, "last");
-						//});
-					}, function(){
-						s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
-						_createError(s);
+						_decodeParams(params);
+						rias.forEach(ps, function(_p){
+							var _dp = rias.newDeferred();
+							_dps.push(_dp);
+							//此处 _ownerRiasw 用 _params
+							//此处可以不用mixinDeep
+							_requireRiasCtor(_p[0]._riaswType || _p[0].declaredClass, _p[0].requires, errf).then(function(ctor){
+								///params 中的 riasw 由 _obj 自己维护，不执行 placeRiasw()
+								_createRiasw(ctor, _p[0], {id: params.id}, _module, _dp, _pp, index);
+							});
+							_dp.then(function(c){
+								/*if(_p[2] < 0){
+									params[_p[1]] = c;
+								}else{
+									params[_p[1]][_p[3]] = c;
+								}*/
+								rias.setObject(_p[1], c, params);
+							});
+						});
+						rias.all(_dps).then(function(){
+							var _obj;
+							try {
+								params._riaswParams = _params;
+								params._riaswChildren = _params._riaswChildren;///前面 rias._deleDP 已经删除
+								params._riasrModule = _module;
+								if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
+									params.ownerRiasw = _ownerRiasw;
+								}
+								refNode || (refNode = rias.dom.create("div", {style: params.style}, _ownerRiasw.domNode, params.position));
+								//_obj = meta.create(params, refNode, errf);
+								_obj = rias.createRiasw(ctor, params, refNode, errf);
+								_params._riasrWidget = _obj;///给 params(_params) 设置运行期实例。
+								if(rias.isInstanceOf(_ownerRiasw, rias.riasw.Destroyable)){
+									//_ownerRiasw.own(_obj);
+								}else {
+									_owners.push([_obj, _ownerRiasw]);
+								}
+							}catch(e){
+								s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}\n" + e.message;
+								_createError(s);
+								return;
+							}
+							if(!_obj){
+								s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
+								_createError(s);
+								return;
+							}
+							rias.forEach(_ref, function(_p){//refs,
+								refs.push([_p[0], _p[1], _p[2], _p[3], _obj]);
+							});
+							try{
+								if(!_obj.id){
+									///简化 id
+									//_obj.id = _obj.id || rias.getUniqueId(_ownerRiasw.id + "_" + _params._riaswType.split('.').slice(-1), _module);
+									//_obj.id = rias.getUniqueId(_ownerRiasw.id + "_" + rias._getUniqueCat(_params), _module);
+								}
+							}catch(e){
+								_createError(e.message);
+								return;
+							}
+							//function _createChildren(_obj, _params, _ownerRiasw, _module, _d)
+							_placeRiasw(_obj, _ownerRiasw, _pp, index);
+							_createChildren(_obj, _params._riaswChildren, _module, _d);
+							//rias.forEach(ps, function(_p){
+							//	rias.placeRiasw(_obj[_p[1]], _obj, "last");
+							//});
+						}, function(){
+							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
+							_createError(s);
+						});
 					});
 				}else{
 					s = "Error occurred when creating riasWidget: No Constructor of {id: " + _params.id + ", _riaswType: " + _params._riaswType + "}";

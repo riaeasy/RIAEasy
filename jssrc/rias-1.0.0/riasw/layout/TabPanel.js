@@ -179,8 +179,9 @@ define([
 				// Compute size to make each of my children.
 				// children[2] is the margin-box size of this.containerNode, set by layoutChildren() call above
 				if(child && child.resize){
-					/// child.parentNode 是 child._wrapper，
-					this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, children[2]);
+					/// 尺寸取 this.containerNode 的 contentBox，但是位置是 child._wrapper，
+					this._containerContentBox = rias.dom.marginBox2contentBox(this.containerNode, children[2]);
+					this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._containerContentBox);
 					//this._containerContentBox.t = 0;
 					//this._containerContentBox.l = 0;
 					child.needLayout = true;
