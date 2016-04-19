@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 45,
+	"_rsfVersion": 56,
 	"_riaswVersion": "0.7",
 	"caption": {
 		"$refObj": "rias.i18n.webApp.myHome.caption"
@@ -19,6 +19,16 @@ define([
 			},
 			"region": "center",
 			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.layout.CaptionPanel",
+					"_riaswIdOfModule": "download",
+					"caption": "源码下载",
+					"content": "<p>   源码下载：<a href=\"https://github.com/riaeasy/riaeasy\" target=\"_blank\">https://github.com/riaeasy/riaeasy</a>\n</p>\n",
+					"style": {
+						"height": "8em"
+					},
+					"toggleable": true
+				},
 				{
 					"_riaswType": "rias.riasw.layout.CaptionPanel",
 					"_riaswIdOfModule": "about",
