@@ -66,7 +66,7 @@ define([
 				//ready(100, function())是dojo.parser.parse().
 				//ready(1000, function())是缺省.
 				rias.ready(1000, function(){
-					if(self._beingDestroyed){
+					if(self.isDestroyed(true)){
 						return;
 					}
 					self.defer(function(){

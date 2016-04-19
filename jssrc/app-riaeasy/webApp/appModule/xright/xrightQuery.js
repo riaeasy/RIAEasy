@@ -2,23 +2,21 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 35,
+	"_rsfVersion": 44,
 	"_riaswVersion": "0.7",
-	"region": "center",
 	"query": {
 		"parentId": "1"
 	},
+	"region": "center",
 	"_riaswChildren": [
 		{
-			"_riaswIdOfModule": "main",
 			"_riaswType": "rias.riasw.layout.Panel",
-			"region": "center",
+			"_riaswIdOfModule": "main",
 			"design": "headline",
 			"gutters": true,
+			"region": "center",
 			"style": {
-				"padding": "0px",
-				"width": "100%",
-				"height": "100%"
+				"padding": "0px"
 			},
 			"_riaswChildren": [
 				{
@@ -99,11 +97,11 @@ define([
 						}
 					],
 					"style": {
-						"height": "99%",
-						"padding": "0px",
-						"width": "99%"
+						"padding": "0px"
 					},
-					"target": "act/xright/query",
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/xright/query';"
+					},
 					"topBtns": [
 						"btnAdd",
 						"btnDele"

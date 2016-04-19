@@ -89,10 +89,6 @@ define([
 					testWhileIdle: true//空闲时是否进行验证，检查对象是否有效，默认为false
 				}
 			},
-			//monitorDir: [//只能监控目录，不能监控文件。///是文件系统的路径，不是 dojo 模块名，相对于 appRoot 的路径。
-			//	//"riasLib/riass",
-			//	"serverApp/act"
-			//],
 
 			defaultServletPath: "/",
 			servlet: [{

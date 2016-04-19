@@ -20,8 +20,7 @@ define([
 				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation">'+
 				'</div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode">'+
-					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" tabIndex="0" aria-labelledby="${id}_labelNode" autocomplete="off"'+
-						'${!nameAttrSetting} type="${type}"/>'+
+					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" tabIndex="0" aria-labelledby="${id}_labelNode" autocomplete="off" ${!nameAttrSetting} type="${type}"/>'+
 				'</div>'+
 			'</div>',
 
@@ -138,7 +137,7 @@ define([
 			this.resize();
 		},
 		resize: function(changeSize, resultSize){
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			var dn = this.domNode,

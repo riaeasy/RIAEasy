@@ -486,7 +486,7 @@ define([
 					lang: page.lang,
 					textDir: page.textDir || container.textDir,
 					onClick: function(){
-						container.selectChild(page);
+						container.selectChild(page, true);
 					}
 				});
 				this.dropDown.addChild(menuItem);

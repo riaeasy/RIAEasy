@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 6,
+	"_rsfVersion": 8,
 	"_riaswVersion": "0.7",
 	"query": {
 	},
@@ -132,7 +132,7 @@ define([
 			console.error(error);
 		});
 	},
-		"getRiasrModuleResult": function (){
+	"getRiasrModuleResult": function (){
 			return "_riasrModuleResult" in this ? this._riasrModuleResult : this._riasrInitialModuleResult;
 		},
 	"setRiasrModuleResult": function (item, isLeaf){
@@ -181,9 +181,9 @@ define([
 		m.currentItem = item;
 		if(p){
 			if(node.isExpanded){
-				node.tree._collapseNode(node);
+				//node.tree._collapseNode(node);
 			}else{
-				node.tree._expandNode(node);
+				//node.tree._expandNode(node);
 			}
 		}
 		m.setRiasrModuleResult(item, !p);

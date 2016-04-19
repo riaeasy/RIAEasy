@@ -8,9 +8,18 @@
   font: menu;
   display: block;
   /*position: relative;*/
-  padding: 0.25em;
   overflow: hidden;
   /*overflow: auto;*/
+  -moz-box-sizing: border-box;
+  /* ff2 */
+  -ms-box-sizing: border-box;
+  /* ie8 */
+  -webkit-box-sizing: border-box;
+  /* safari3 */
+  -khtml-box-sizing: border-box;
+  /* konqueror */
+  box-sizing: border-box;
+  /* css3 rec */
 }
 .rias .mblComboBoxMenuItem {
   height: 1.5em;
@@ -125,8 +134,17 @@
   line-height: 2.5em;
   padding: 1px;
 }
-.rias .webAppFooter .riaswDockNode {
-  border-width: 1px 1px 3px 1px;
+.rias .webAppFooter .riaswDockNodeShown {
+  background-color: inherit;
+}
+.rias .webAppFooter .riaswDockNodeHover {
+  background-color: gold;
+  border-color: gold;
+  color: black;
+}
+.rias .webAppFooter .riaswDockNodeTopmost {
+  background-color: skyblue;
+  color: black;
 }
 .rias .webAppHeaderXC {
   background-color: red;
@@ -170,13 +188,23 @@
 .rias .riaswDialogPanelActionBarTop {
   border-color: lightgray;
 }
-.rias .riaswCaptionPanelContent {
-  padding: 0.5em;
-}
 .rias .riaswDialogPanel {
   background-color: whitesmoke;
   border-width: 0.25em;
   border-color: lavender;
+}
+.rias .riaswCaptionPanelContent,
+.rias .riaswDialogPanelContent {
+  padding: 0.25em;
+}
+.rias .riaswDialogPanelContent {
+  background-color: whitesmoke;
+}
+.rias .riaswDialogPanelTypeInfo .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeWarn .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeError .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeAbout .riaswDialogPanelContent {
+  padding: 1.5em 1em 1em 1em;
 }
 .rias .riaswCaptionPanelCaptionNode,
 .rias .riaswAccordionTitle,
@@ -227,6 +255,10 @@
 .rias .dgrid {
   border-color: lightgray;
 }
+.rias .dgrid-selector {
+  text-align: center;
+}
+.rias .dgrid-summary-cell,
 .rias .dgrid-header .dgrid-cell,
 .rias .dgrid-cell {
   border-color: lightgray;
@@ -237,20 +269,36 @@
   padding: 0;
   margin: 0;
 }
+.rias .dgrid-summary-cell-none {
+  border-right-width: 0;
+}
 .rias .dgrid-spacer-row .dgrid-cell {
   padding: 0;
+  border: 0;
 }
 .rias .dgrid-scroller {
+  overflow-y: auto;
   border-bottom: 1px solid lightgray;
+}
+.rias .dgrid-content {
+  border-right: 1px solid lightgray;
 }
 .rias .dgrid-row {
   background-color: white;
+}
+.rias .dgrid-row-table {
+  border-collapse: separate;
+  border-spacing: 0;
 }
 .rias .dgrid-row-odd {
   background-color: snow;
 }
 .rias .dgrid-selected {
   background-color: skyblue;
+}
+.rias .dgrid-hider-toggle {
+  right: auto;
+  left: 0;
 }
 .rias .dgrid-header-tools {
   padding: 0.25em;
@@ -277,12 +325,29 @@
 .rias .dgrid-opcolumn > button:hover {
   color: darkorange;
 }
-.rias .grid-summary-row {
-  border-width: 1px 0 0 0;
+.rias .dgrid-footer-summary-row {
+  position: absolute;
+  left: 0;
+  right: 17px;
+  border-width: 0 0 1px 0;
   border-color: lightgray;
   border-style: solid;
 }
-.rias .grid-summary-row,
+.rias .dgrid-footer-summary-row .dgrid-cell {
+  border-bottom-width: 0;
+}
+.rias .dgrid-footer-summary-scroll {
+  position: absolute;
+  right: 0;
+}
+.rias .dgrid-autoheight .dgrid-footer-summary-scroll {
+  display: none;
+}
+.rias .dgrid-rtl-swap .dgrid-footer-summary-scroll {
+  left: 0px;
+  right: auto;
+}
+.rias .dgrid-footer-summary-row,
 .rias .dgrid-header,
 .rias .dgrid-selector,
 .rias .dgrid-opcolumn,
@@ -290,6 +355,14 @@
   background-color: ghostwhite;
 }
 .rias .dgrid-header-scroll,
-.rias .dgrid-column-set-scroller-container {
-  background-color: lavender;
+.rias .dgrid-footer-summary-scroll,
+.rias .dgrid-column-set-scroller {
+  background-color: ghostwhite;
+  border: 0px solid lightgray;
+}
+.rias .dgrid-header-scroll {
+  border-width: 0 0 1px 1px;
+}
+.rias .dgrid-footer-summary-scroll {
+  border-width: 0 0 1px 0;
 }

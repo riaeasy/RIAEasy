@@ -108,6 +108,11 @@
 	background: -webkit-gradient(linear, left top, left bottom, from(#ffbc1c), to(#ff9000), color-stop(0.5, #FFA000), color-stop(0.5, #FFA000));
 	background: linear-gradient(to bottom, #ffbc1c 0%, #FFA000 50%, #FFa000 50%, #ff9000 100%);
 }
+.riaswBadgeBlack {
+	background: black;
+	background: -webkit-gradient(linear, left top, left bottom, from(#7f7f7f), to(#303030), color-stop(0.5, #303030), color-stop(0.5, #303030));
+	background: linear-gradient(to bottom, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+}
 .riaswBadge > div > div {
 	display: none;
 }

@@ -125,7 +125,7 @@ define([
 
 		_layoutChildren: function(/*String?*/ changedChildId, /*Object?*/ changedChildSize){
 			var child = rias.by(changedChildId) || this.selectedChildWidget;
-			if(child && !child._beingDestroyed && !child._riasrDestroying){
+			if(child && !child.isDestroyed(true)){
 				if(child.resize){
 					if(changedChildSize || this.doLayout){
 						//this._containerContentBox = this._contentBox;
@@ -169,7 +169,7 @@ define([
 			rias.publish(this.id + "-addChild", child, insertIndex);
 			if(this._started){
 				if(child.selected || !this.selectedChildWidget){
-					this.selectChild(child);
+					this.selectChild(child, false);
 				}
 			}
 
@@ -205,10 +205,6 @@ define([
 			if(this.selectedChildWidget === page){
 				this.selectedChildWidget = undefined;
 				if(this._started){
-					//var children = this.getChildren();
-					//if(children.length){
-					//	this.selectChild(children[Math.max(idx - 1, 0)]);
-					//}
 					this.back();
 				}
 			}
@@ -274,7 +270,7 @@ define([
 				self._transitionDeferred.cancel();
 			}
 			self._transitionDeferred = df;
-			if(oldWidget && (oldWidget._riasrDestroying || oldWidget._beingDestroyed)){
+			if(oldWidget && (oldWidget.isDestroyed(true))){
 				oldWidget = undefined;
 			}
 			//if(oldWidget && rias.isFunction(oldWidget._stopPlay)){
@@ -285,18 +281,18 @@ define([
 				rias.dom.toggleClass(newWidget._wrapper, this.baseClass + "ChildWrapperTop", true);
 				if(oldWidget){
 					rias.dom.toggleClass(oldWidget._wrapper, this.baseClass + "ChildWrapperTop", false);
-					if(animate){
+					if(animate != false){
 						var curr = new Date().valueOf();
 						var newContents = newWidget._wrapper,
 							oldContents = oldWidget._wrapper,
 							box = this._containerContentBox || this._contentBox;
-						console.debug("_transition.begin: ", self.id, new Date().valueOf() - curr);
+						//console.debug("_transition.begin: ", self.id, new Date().valueOf() - curr);
 						curr = new Date().valueOf();
 
 						rias.when(self._showChild(newWidget, {
 							animate: false
 						}), function(){
-							console.debug("_transition._showChild: ", self.id, new Date().valueOf() - curr);
+							//console.debug("_transition._showChild: ", self.id, new Date().valueOf() - curr);
 							curr = new Date().valueOf();
 							//rias.dom.visible(newContents, true, 0);
 							rias.dom.setStyle(newContents, "left", -box.w + "px");
@@ -311,24 +307,24 @@ define([
 									left: 0
 								})
 							])];
-							console.debug("_transition.playBegin: ", self.id, new Date().valueOf() - curr);
+							//console.debug("_transition.playBegin: ", self.id, new Date().valueOf() - curr);
 							curr = new Date().valueOf();
 							df.then(function(){
 								rias.when(self._hideChild(oldWidget, {
 									animate: false
 								}), function(){
 									oldContents.style.left = "0px";
-									console.debug("_transition._hideChild: ", self.id, new Date().valueOf() - curr);
+									//console.debug("_transition._hideChild: ", self.id, new Date().valueOf() - curr);
 									curr = new Date().valueOf();
 								});
 							});
 							self._animation[0].onEnd = function(){
-								console.debug("_transition.playEnd: ", self.id, new Date().valueOf() - curr);
+								//console.debug("_transition.playEnd: ", self.id, new Date().valueOf() - curr);
 								curr = new Date().valueOf();
 								df.resolve();
 							};
 							self._animation[0].onStop = function(){
-								console.debug("_transition.playStop: ", self.id, new Date().valueOf() - curr);
+								//console.debug("_transition.playStop: ", self.id, new Date().valueOf() - curr);
 								curr = new Date().valueOf();
 								df.resolve();
 							};

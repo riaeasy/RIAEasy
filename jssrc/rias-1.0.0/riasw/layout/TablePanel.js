@@ -130,7 +130,7 @@ define([
 		},
 
 		_internalLayou: function(){
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			var self = this,

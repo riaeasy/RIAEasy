@@ -20,7 +20,7 @@ define([
 			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {locale: ""},
-			regExp: ".*",
+			//regExp: ".*",
 			//pageSize: null,
 			query: {},
 			queryExpr: "${0}*",

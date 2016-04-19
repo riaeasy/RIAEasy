@@ -154,7 +154,7 @@ define([
 				//ready(100, function())是dojo.parser.parse().
 				//ready(1000, function())是缺省.
 				rias.ready(1000, function(){
-					if(self._beingDestroyed){
+					if(self.isDestroyed(true)){
 						return false;
 					}
 					self.defer(function(){
@@ -182,14 +182,14 @@ define([
 		_startChildren: function(){
 			if(this._started){
 				rias.forEach(this.getChildren(), function(obj){
-					if(!obj._started && !obj._beingDestroyed && rias.isFunction(obj.startup)){
+					if(!obj._started && !obj.isDestroyed(true) && rias.isFunction(obj.startup)){
 						obj.startup();
 						obj._started = true;
 					}
 				});
 				if(this._contentSetter){
 					rias.forEach(this._contentSetter.parseResults, function(obj){
-						if(!obj._started && !obj._beingDestroyed && rias.isFunction(obj.startup)){
+						if(!obj._started && !obj.isDestroyed(true) && rias.isFunction(obj.startup)){
 							obj.startup();
 							obj._started = true;
 						}

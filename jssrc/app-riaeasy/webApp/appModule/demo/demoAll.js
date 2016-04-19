@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 103,
+	"_rsfVersion": 129,
 	"caption": "标题1",
 	"region": "center",
 	"style": {
@@ -23,6 +23,7 @@ define([
 					"region": "left",
 					"splitter": true,
 					"style": {
+						"border": "1px #b1badf solid",
 						"width": "200px"
 					},
 					"_riaswChildren": [
@@ -61,6 +62,7 @@ define([
 					"region": "center",
 					"style": {
 						"height": "100px",
+						"border": "1px #b1badf solid",
 						"width": "100px"
 					},
 					"tabPosition": "right",
@@ -69,36 +71,25 @@ define([
 						{
 							"_riaswType": "rias.riasw.layout.CaptionPanel",
 							"_riaswIdOfModule": "layoutContainer2",
-							"region": "right",
 							"caption": "按钮",
 							"style": {
-								"border": "1px #b1badf solid",
-								"padding": "0px 0px 0px 0px",
-								"width": "60px",
-								"height": "100px"
+								"border": "0px #b1badf solid",
+								"padding": "0px 0px 0px 0px"
 							},
 							"_riaswChildren": [
 								{
-									"region": "center",
+									"_riaswType": "rias.riasw.form.Button",
+									"_riaswIdOfModule": "button0",
 									"label": "请点击我",
 									"style": {
-										"border": "1px #b1badf solid",
-										"padding": "0px 0px 0px 0px",
-										"width": "100px",
-										"height": "100px"
 									},
 									"onClick": function (){
 		rias.info("点击了按钮");
-	},
-									"_riaswType": "rias.riasw.form.Button",
-									"_riaswIdOfModule": "button0"
+	}
 								},
 								{
 									"_riaswType": "rias.riasw.form.TextBox",
 									"_riaswIdOfModule": "textBox2",
-									"region": "top",
-									"layoutAlign": "",
-									"layoutPriority": 0,
 									"style": {
 									}
 								}
@@ -107,12 +98,13 @@ define([
 						{
 							"_riaswType": "rias.riasw.layout.ContentPanel",
 							"_riaswIdOfModule": "contentPane2",
+							"caption": "测试1",
 							"closable": false,
 							"disabled": false,
 							"iconClass": "dijitNoIcon",
+							"region": "center",
 							"selected": false,
 							"showTitle": true,
-							"caption": "测试1",
 							"style": {
 							},
 							"_riaswChildren": [
@@ -143,6 +135,7 @@ define([
 						{
 							"_riaswType": "rias.riasw.layout.ContentPanel",
 							"_riaswIdOfModule": "contentPane1",
+							"caption": "测试4",
 							"closable": false,
 							"disabled": false,
 							"iconClass": "dijitNoIcon",
@@ -258,49 +251,44 @@ define([
 					]
 				},
 				{
+					"_riaswType": "rias.riasw.layout.Panel",
+					"_riaswIdOfModule": "layBottom",
 					"region": "bottom",
 					"style": {
-						"height": "48px",
+						"height": "60px",
 						"width": "100px"
 					},
-					"_riaswType": "rias.riasw.layout.CaptionPanel",
-					"_riaswIdOfModule": "layBottom",
 					"_riaswChildren": [
 						{
 							"_riaswType": "rias.riasw.layout.Panel",
 							"_riaswIdOfModule": "borderContainer0",
-							"region": "center",
 							"gutters": false,
+							"region": "center",
 							"style": {
 								"border": "1px #b1badf solid",
-								"padding": "0px 0px 0px 0px",
-								"width": "100%",
-								"height": "100%"
+								"padding": "0px 0px 0px 0px"
 							},
 							"_riaswChildren": [
 								{
-									"_riaswType": "rias.riasw.layout.CaptionPanel",
+									"_riaswType": "rias.riasw.layout.Panel",
 									"_riaswIdOfModule": "layoutContainer1",
 									"region": "left",
 									"style": {
 										"border": "1px #b1badf solid",
 										"padding": "0px 0px 0px 0px",
-										"width": "280px",
-										"height": "100px"
+										"width": "280px"
 									},
 									"_riaswChildren": [
 										{
 											"_riaswType": "rias.riasw.html.Tag",
 											"_riaswIdOfModule": "tag0",
-											"region": "center",
-											"tagType": "b",
 											"innerHTML": "开发者",
+											"region": "center",
 											"style": {
 												"border": "1px #b1badf solid",
-												"padding": "0px 0px 0px 0px",
-												"width": "100px",
-												"height": "100px"
+												"padding": "0px 0px 0px 0px"
 											},
+											"tagType": "b",
 											"onClick": function (evt){
 		rias.showAbout();
 	}
@@ -309,27 +297,24 @@ define([
 											"_riaswType": "rias.riasw.html.Tag",
 											"_riaswIdOfModule": "tag1",
 											"region": "left",
-											"tagType": "IMG",
 											"src": "rias/resources/images/index_banner.png",
 											"style": {
 												"border": "1px #b1badf solid",
 												"padding": "0px 0px 0px 0px",
-												"width": "100px",
-												"height": "100px"
-											}
+												"width": "100px"
+											},
+											"tagType": "IMG"
 										}
 									]
 								},
 								{
 									"_riaswType": "rias.riasw.layout.ContentPanel",
 									"_riaswIdOfModule": "contentPane0",
+									"content": "状态信息",
 									"region": "center",
-									"innerHTML": "状态信息",
 									"style": {
 										"border": "1px #b1badf solid",
-										"padding": "0px 0px 0px 0px",
-										"width": "100px",
-										"height": "100px"
+										"padding": "0px 0px 0px 0px"
 									}
 								}
 							]

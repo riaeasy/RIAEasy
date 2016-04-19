@@ -120,6 +120,7 @@ define([
 			any = rias.by(any.$refObj, context) || any.$refObj;
 		}
 		if(rias.isString(any)){
+			///TODO:zensst. context => module
 			w = rias.getObject(any, false, context);
 			if(!w && !/^module\.|^context\./.test(any)){
 				w = (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any)
@@ -227,7 +228,14 @@ define([
 					}
 				}else if(rias.isObjectSimple(p)){
 					if(p.$refObj){//
-						_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+						//_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+						if(p.$refObj === "module"){
+							_o = module;
+						}else if(p.$refObj.indexOf("module.") >= 0){
+							_o = rias.getObject(p.$refObj.substring(7), 0, module);
+						}else{
+							_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+						}
 						if(_o != undefined){
 							rias.setObject(pn, _o, params);
 						}else{
@@ -255,7 +263,14 @@ define([
 							}
 						}else if(rias.isObjectSimple(p[i])){
 							if(p[i].$refObj){//
-								_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+								//_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+								if(p[i].$refObj === "module"){
+									_o = module;
+								}else if(p[i].$refObj.indexOf("module.") >= 0){
+									_o = rias.getObject(p[i].$refObj.substring(7), 0, module);
+								}else{
+									_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+								}
 								p[i] = _o;
 								if(_o == undefined){
 									console.warn(module.id, "moduleMeta." + ppn + "." + i + " = undefined.");
@@ -813,7 +828,13 @@ define([
 							}
 						}else if(rias.isObjectSimple(p)){
 							if(p.$refObj){
-								_o = rias.getObject(p.$refObj, 0, _module) || rias.getObject(p.$refObj);
+								if(p.$refObj === "module"){
+									_o = _module;
+								}else if(p.$refObj.indexOf("module.") >= 0){
+									_o = rias.getObject(p.$refObj.substring(7), 0, _module);
+								}else{
+									_o = rias.getObject(p.$refObj, 0, _module) || rias.getObject(p.$refObj);
+								}
 								if(_o != undefined){
 									rias.setObject(pn, _o, _p);
 								}else{
@@ -851,7 +872,14 @@ define([
 									}
 								}else if(rias.isObjectSimple(p[i])){
 									if(p[i].$refObj){//
-										_o = rias.getObject(p[i].$refObj, 0, _module) || rias.getObject(p[i].$refObj);
+										//_o = rias.getObject(p[i].$refObj, 0, _module) || rias.getObject(p[i].$refObj);
+										if(p[i].$refObj === "module"){
+											_o = _module;
+										}else if(p[i].$refObj.indexOf("module.") >= 0){
+											_o = rias.getObject(p[i].$refObj.substring(7), 0, _module);
+										}else{
+											_o = rias.getObject(p[i].$refObj, 0, _module) || rias.getObject(p[i].$refObj);
+										}
 										p[i] = _o;
 										if(_o == undefined){
 											_ref.push([p[i], ppn + "." + i, l, i]);
@@ -1090,7 +1118,14 @@ define([
 					///合并，在前面设置好 ref[1]，包含数组 i
 					//if(ref[2] < 0){///非数组
 						if(ref[0].$refObj){
-							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							//_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							if(ref[0].$refObj === "module"){
+								_o = module;
+							}else if(ref[0].$refObj.indexOf("module.") >= 0){
+								_o = rias.getObject(ref[0].$refObj.substring(7), 0, module);
+							}else{
+								_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							}
 						}else if(ref[0].$refScript){
 							try{
 								_o = rias.$runByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");
@@ -1103,9 +1138,16 @@ define([
 						}
 						//ref[4].set(ref[1], _o);
 						rias.setObject(ref[1], _o, ref[4]);
-					/*}else{///TODO:zensst。目前只支持 push，不支持 index。
+					/*}else{///目前只支持 push，不支持 index。
 						if(ref[0].$refObj){
-							_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							//_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							if(ref[0].$refObj === "module"){
+								_o = module;
+							}else if(ref[0].$refObj.indexOf("module.") >= 0){
+								_o = rias.getObject(ref[0].$refObj.substring(7), 0, module);
+							}else{
+								_o = rias.getObject(ref[0].$refObj, 0, module) || rias.getObject(ref[0].$refObj);
+							}
 						}else if(ref[0].$refScript){
 							try{
 								_o = rias.$runByModule(module, ref[0].$refScript, ref[0].id + "[" + ref[1] + "]");

@@ -9,56 +9,64 @@ var _typeStr = _typeString = "s",
 
 define([
 	"rias"
-], function(rias) {
+], function (rias) {
+
+	//rias.host.SysUtil = com.riastudio.util.SysUtil;
+	//rias.host.DbUtil = com.riastudio.util.DbUtil;
+	//rias.host.ZipUtil = com.riastudio.util.ZipUtil;
+	var SysUtil = com.riastudio.util.SysUtil,
+		WebUtil = com.riastudio.util.WebUtil,
+		FileUtil = com.riastudio.util.FileUtil,
+		DbUtil = com.riastudio.util.DbUtil;
 
 	///dojo.rhino 有 console
-	function _args2str(args){
+	function _args2str(args) {
 		var a = Array.prototype.slice.call(arguments);
 		a = a.join(" ");
 		return a;
 	}
-	if(!console){
+	if (!console) {
 		console = {};
 	}
-	console.log = function(args){
+	console.log = function (args) {
 		rias.log(1, "console", _args2str.apply(this, arguments));
 	};
-	console.debug = function(args){
+	console.debug = function (args) {
 		rias.log(0, "console", _args2str.apply(this, arguments));
 	};
-	console.info = function(args){
+	console.info = function (args) {
 		rias.log(1, "console", _args2str.apply(this, arguments));
 	};
-	console.warn = function(args){
+	console.warn = function (args) {
 		rias.log(2, "console", _args2str.apply(this, arguments));
 	};
-	console.error = function(args){
+	console.error = function (args) {
 		rias.log(3, "console", _args2str.apply(this, arguments));
 	};
 
 	//Rhino中有List类。
 	rias.getObject("rias.host", true);
 
-	rias.host.jsString = rias.host.toString = function(/*java String*/str){
+	rias.host.jsString = rias.host.toString = function (/*java String*/str) {
 		return String(str);
 	};
-	rias.host.jsNumber = rias.host.toNumber = function(/*java Int*/i){
+	rias.host.jsNumber = rias.host.toNumber = function (/*java Int*/i) {
 		return Number(rias.host.jsString(i));///必须先转换为 String，否则 i 为对象时可能不正确。
 	};
-	rias.host.jsBoolean = rias.host.toBoolean = function(/*java Boolean*/b){
+	rias.host.jsBoolean = rias.host.toBoolean = function (/*java Boolean*/b) {
 		return (b != "false" && Boolean(b));///Boolean("false") = true。
 	};
-	rias.host.jsArray = rias.host.toArray = function(/*java Collections*/list){
+	rias.host.jsArray = rias.host.toArray = function (/*java Collections*/list) {
 		var i = 0,
 			l = list && list.size() || 0,
 			arr = [];
-		for(; i < l; ++i){
+		for (; i < l; ++i) {
 			arr.push(list.get(i));
 		}
 		return arr;
 	};
-	rias.host.toType = function(it, type){
-		switch(type){
+	rias.host.toType = function (it, type) {
+		switch (type) {
 			case _typeStr:
 				return rias.host.toString(it);
 			case _typeNum:
@@ -73,24 +81,24 @@ define([
 	};
 
 	//rias.host.Thread = java.lang.Thread;
-	rias.host.newThread = function(func){
+	rias.host.newThread = function (func) {
 		return new java.lang.Thread(func);
 	};
-	rias.host.currentThread = function(){
+	rias.host.currentThread = function () {
 		return java.lang.Thread.currentThread();
 	};
 	//rias.host.String = java.lang.String;
-	rias.host.newString = function(str){
+	rias.host.newString = function (str) {
 		return new java.lang.String(str);
 	};
 
 ///File================================================================///
 	//rias.host.File = java.io.File;
-	rias.host.newFile = function(parent, filename){
+	rias.host.newFile = function (parent, filename) {
 		///parent + filename 或者 pathname
-		if(!filename){
+		if (!filename) {
 			return new java.io.File(parent);
-		}else{
+		} else {
 			return new java.io.File(parent, filename);
 		}
 	};
@@ -100,7 +108,7 @@ define([
 		//}
 		return rias.host.jsString(file.getCanonicalPath()).replace(/\\/g, "/");
 	};
-	rias.host.getFileExt = function(file){
+	rias.host.getFileExt = function (file) {
 		file = rias.host.getFilePathName(file);
 		var p = file.lastIndexOf(".");
 		if (p > -1) {
@@ -109,32 +117,32 @@ define([
 			return "";
 		}
 	};
-	rias.host.fileSize = function(file){
+	rias.host.fileSize = function (file) {
 		return file.length();
 	};
-	rias.host.fileLastModified = function(file){
+	rias.host.fileLastModified = function (file) {
 		return file.lastModified();
 	};
-	rias.host.fileExists = function(file){
+	rias.host.fileExists = function (file) {
 		return file.exists();
 	};
-	rias.host.isFile = function(file){
+	rias.host.isFile = function (file) {
 		return file.isFile();
 	};
-	rias.host.isDirectory = function(file){
+	rias.host.isDirectory = function (file) {
 		return file.isDirectory();
 	};
-	rias.host.createNewFile = function(file){
+	rias.host.createNewFile = function (file) {
 		return file.createNewFile();
 	};
-	rias.host.createNewDir = function(file){
+	rias.host.createNewDir = function (file) {
 		return file.mkdirs();
 	};
-	rias.host.deleteFile = function(file){
+	rias.host.deleteFile = function (file) {
 		return file.delete();
 	};
-	rias.host.copyFile = function(srcfile, desfile){
-		var r = 0;
+	rias.host.copyFile = function (srcfile, desfile, autoRename, isCut) {
+		/*var r = 0;
 		try {
 			var ins = new java.io.FileInputStream(srcfile).getChannel(),
 				outs = new java.io.FileOutputStream(desfile).getChannel();
@@ -155,14 +163,20 @@ define([
 			}
 		}
 		desfile.setLastModified(srcfile.lastModified());
-		return r;
+		return r;*/
+		try{
+			FileUtil.copyFile(srcfile, desfile, !!autoRename, !!isCut);
+			return 1;
+		}catch(e){
+			return 0;
+		}
 	};
 
-	rias.host.readText = function(file, charset){
+	rias.host.readText = function (file, charset) {
 		if(rias.isString(file)){
 			file = new java.io.File(file);
 		}
-		var fs = new java.io.FileInputStream(file),
+		/*var fs = new java.io.FileInputStream(file),
 			bs = rias.host.newBuff(file.length());
 		try {
 			fs.read(bs);
@@ -172,10 +186,14 @@ define([
 				return rias.host.jsString(new java.lang.String(bs, charset));
 		} finally {
 			fs.close();
-		}
+		}*/
+		return rias.host.jsString(FileUtil.readText(file, charset || "utf-8"));
 	};
-	rias.host.writeText = function(file, text, charset){
-		var r = 0,
+	rias.host.writeText = function (file, text, charset) {
+		if(rias.isString(file)){
+			file = new java.io.File(file);
+		}
+		/*var r = 0,
 			os = new java.io.FileOutputStream(file);
 		try {
 			text = new java.lang.String(text);
@@ -188,10 +206,16 @@ define([
 		} finally {
 			os.close();
 		}
-		return r;
+		return r;*/
+		try{
+			FileUtil.writeText(file, text, charset || "utf-8");
+			return 1;
+		}catch(e){
+			return 0;
+		}
 	};
 
-	rias.host.listFiles = function(file){
+	rias.host.listFiles = function (file) {
 		return file.listFiles();
 	};
 	rias.host.sortFiles = function (files, type, desc) {
@@ -259,39 +283,37 @@ define([
 
 
 ///SysUtil======================================================///
-	//rias.host.SysUtil = com.riastudio.util.SysUtil;
-	//rias.host.DbUtil = com.riastudio.util.DbUtil;
-	//rias.host.ZipUtil = com.riastudio.util.ZipUtil;
-	var SysUtil = com.riastudio.util.SysUtil,
-		ZipUtil = com.riastudio.util.ZipUtil;
 
-	rias.host.debugLevel = function(){
+	rias.host.debugLevel = function () {
 		return SysUtil.debugLevel;
 	};
 
-	rias.host.toBuff = function(str, charset){
-		if(charset){
+	rias.host.toBuff = function (str, charset) {
+		if (charset) {
 			return SysUtil.toBuff(str, charset);
 		}
 		return SysUtil.toBuff(str);
 	};
-	rias.host.newBuff = function(len){
+	rias.host.newBuff = function (len) {
 		return SysUtil.newBuff(len);
 	};
-	rias.host.newCache = function(){
+	rias.host.newCache = function () {
 		return SysUtil.newCache();
 	};
 
-	rias.host.inputToOutput = function(input, output){
+	rias.host.inputToOutput = function (input, output) {
 		return SysUtil.isToOs(input, output);
 	};
 
-	rias.host.readStream = function(stream){
+	rias.host.readStream = function (stream) {
 		return rias.host.toString(SysUtil.readString(stream));
 	};
 
+///WebUtil======================================================///
+
 	rias.host.response = function (res, code, data, gzip, charset) {
-		res.setStatus(code);
+		WebUtil.response(res, data, code, !!gzip);
+		/*res.setStatus(code);
 		if (data instanceof java.io.InputStream) {
 			try {
 				rias.host.inputToOutput(data, res.getOutputStream());
@@ -318,7 +340,21 @@ define([
 				res.getOutputStream().write(buff);
 			}
 		}
-		res.flushBuffer();
+		res.flushBuffer();*/
+	};
+
+///DbUtil======================================================///
+
+	rias.host.db = {
+		initConnection: function (dbConnName, dbConnConfig) {
+			return DbUtil.initConnection(rias.toStr(dbConnName), dbConnConfig);
+		},
+		getField: function (rs, index, type, ignoreBlob, toStr) {
+			return DbUtil.getObject(rs, rias.toInt(index), rias.toInt(type), !!ignoreBlob, !!toStr);
+		},
+		toJSONArray: function (rs, maxResultRecords) {
+			return DbUtil.toJSONArray(rs, rias.toInt(maxResultRecords, 999));
+		}
 	};
 
 	return rias;

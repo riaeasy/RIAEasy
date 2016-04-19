@@ -146,8 +146,8 @@ define([
 		defaultContent: "",
 
 		_setDisabledAttr: function(/*Boolean*/ value){
-			var w = this.editor,
-				t = (w ? w._textView : undefined);
+			var //w = this.editor,
+				t = this.textView;// (w ? w._textView : undefined);
 			value = !!value;
 			//if(this.disabled != value){
 			this._set("disabled", value);
@@ -191,12 +191,13 @@ define([
 			}
 		},
 		_setReadOnlyAttr: function(value){
-			var w = this.editor;
+			//var w = this.editor;
 			value = !!value;
 			this._set("readOnly", value);
-			if(w && w._textView){
+			//if(w && w._textView){
+			if(this.textView){
 				this._needReadOnly = undefined;
-				w._textView._setReadOnly(value);
+				this.textView._setReadOnly(value);
 			}else{
 				this._needReadOnly = true;
 			}
@@ -211,13 +212,16 @@ define([
 				//}
 			}
 		},
+		_getValueAttr: function(){
+			return this.getText();
+		},
 
 		buildRendering: function(){
 			this.inherited(arguments);
 			if (!this.editor) {
 				this._createEditor();
 			}
-			this.containerNode = this.editor._textView._rootDiv;
+			this.containerNode = this.textView._rootDiv;// this.editor._textView._rootDiv;
 			rias.dom.addClass(this.containerNode, "riaswTextBoxContainer");
 			///没有 template 时，显式设置 focusNode。
 			if(!this.focusNode){
@@ -227,12 +231,12 @@ define([
 		},
 		postCreate: function(){
 			this.inherited(arguments);
-			if(this.params.value && dojo.isString(this.params.value)){
-				this.setContent(this.params.value);
+			/*if(this.params.value && dojo.isString(this.params.value)){
+				this.setText(this.params.value);
 			}
 			if(this.params.filename && dojo.isString(this.params.filename)){
 				this.setContent(this.params.filename);
-			}
+			}*/
 			topic.publish(rias._scopeName + "/riasw/widget/OrionEditor::init", this);
 		},
 		startup: function(){
@@ -242,35 +246,33 @@ define([
 			this.inherited(arguments);
 			this.set("readOnly", this.readOnly);///延迟设置 readOnly。
 			this.set("disabled", this.disabled);///延迟设置 disabled。
-			this.setContent(this.getDefaultContent());
+			this.setText(this.getDefaultContent());
 		},
 
 		getDefaultContent: function() {
 			return this.defaultContent;
 		},
-		getValue: function(){
+		getText: function(){
 			if(this.editor){
 				return this.editor.getText(0);
 			}
 			return this.getDefaultContent();
 		},
-		getText: function(){
-			return this.getValue(arguments);
-		},
-		setValue: function(value, reset) {
+		setText: function(text, reset){
 			if(this.editor){
-				this.editor.setText(value);
+				this.editor.setText(text);
 				if(reset){
 					this.editor.markClean();
 				}
 			}
 		},
-		setText: function(text, reset){
-			this._setValueAttr(text, reset);
+		getCaretOffset: function() {
+			return this.editor ? this.editor.getCaretOffset() : -1;
 		},
-		setContent: function (content, reset) {
-			//zensst.增加loadFile函数，此处只设置内容(content).
-			this._setValueAttr(content, reset);
+		setCaretOffset: function(caretOffset, show, callback) {
+			if(this.editor){
+				this.editor.setCaretOffset(caretOffset, show, callback);
+			}
 		},
 
 		isDirty: function(){
@@ -282,6 +284,33 @@ define([
 			}
 		},
 
+		getClientArea: function(){
+			if(this.textView){
+				/*{
+					x: scroll.x,
+					y: scroll.y,
+					width: this._getClientWidth(),
+					height: this._getClientHeight()
+				};*/
+				return this.textView.getClientArea();
+			}else{
+				return;
+			}
+		},
+		scrollView: function(pixelX, pixelY, callback){
+			if(this.textView){
+				if(callback){
+					if(rias.isFunction(callback)){
+						this.textView._scrollViewAnimated(pixelX, pixelY, callback);
+					}else{
+						this.textView._scrollViewAnimated(pixelX, pixelY);
+					}
+				}else{
+					this.textView._scrollView(pixelX, pixelY);
+				}
+			}
+		},
+
 		destroy: function () {
 			///orion.Editor 未释放 _contentAssist._mode.widget.parentNode
 			var w = rias.getObject("_contentAssist._mode.widget.parentNode", false, this.editor);
@@ -289,9 +318,6 @@ define([
 				w.parentNode.removeChild(w);
 			}
 			this.inherited(arguments);
-		},
-
-		onChange: function(/*===== newValue =====*/){
 		},
 
 		loadFile: function(filename, preventCache){
@@ -305,7 +331,7 @@ define([
 					//timeout: 30000,
 					handleAs: "text"
 				}, {}, function(content){
-					self.setContent(content);
+					self.setText(content);
 					self.markClean();
 					d.resolve(content);
 				}, function(error) {
@@ -314,7 +340,7 @@ define([
 				}, preventCache);
 			}else{
 				this.setContentType("");
-				self.setContent(self.getDefaultContent());
+				self.setText(self.getDefaultContent());
 				self.markClean();
 				d.resolve(self.getDefaultContent());
 			}
@@ -371,6 +397,13 @@ define([
 			//	editor.setFoldingRulerVisible(options.showFoldingRuler === undefined || options.showFoldingRuler);
 			//}
 
+		},
+
+		onChange: function(evt){
+		},
+		onScroll: function(evt){
+		},
+		onSelection: function(evt){
 		},
 
 		_createEditor: function (options) {
@@ -447,7 +480,9 @@ define([
 				statusReporter: function(message, isError) {
 					//var method = isError ? "error" : "log";
 					//console[method]("orion.editor: " + message);
-					if ( isError ) {
+					if(self.statusReporter){
+						self.statusReporter.apply(self, arguments);
+					}else if ( isError ) {
 						console.error("orion.editor: " + message);
 					}
 				},
@@ -459,7 +494,6 @@ define([
 				textDNDFactory: new mEditorFeatures.TextDNDFactory(),
 				contentAssistFactory: contentAssistFactory,
 				keyBindingFactory: new mEditorFeatures.KeyBindingsFactory(),
-				//statusReporter: options.statusReporter,
 				domNode: parent
 			});
 
@@ -487,7 +521,7 @@ define([
 			if (!contents) { contents=""; }
 
 			editor.installTextView();
-			var textView = editor._textView;
+			var textView = this.textView = editor.getTextView();
 			if(this._needDisabled){
 				this.set("disabled", this.get("disabled"));
 			}
@@ -500,7 +534,7 @@ define([
 			editor._listener = {
 				onModelChanged: function(e) {
 					editor.checkDirty();
-					self.onChange(arguments);
+					self.onChange(e);
 				},
 				onMouseOver: function(e) {
 					editor._listener.onMouseMove(e);
@@ -520,6 +554,7 @@ define([
 							return editor._getTooltipInfo(this.x, this.y);
 						}
 					});
+					self.onMouseMove(e);
 				},
 				onMouseOut: function(e) {
 					var tooltip = mTooltip.Tooltip.getTooltip(textView);
@@ -530,15 +565,18 @@ define([
 					editor._listener.lastMouseX = e.event.clientX;
 					editor._listener.lastMouseY = e.event.clientY;
 					tooltip.setTarget(null);
+					self.onMouseOut(e);
 				},
 				onScroll: function(e) {
 					var tooltip = mTooltip.Tooltip.getTooltip(textView);
 					if (!tooltip) { return; }
 					tooltip.setTarget(null, 0, 0);
+					self.onScroll(e);
 				},
 				onSelection: function(e) {
 					editor._updateCursorStatus();
 					editor._highlightCurrentLine(e.newValue, e.oldValue);
+					self.onSelection(e);
 				}
 			};
 			textView.addEventListener("ModelChanged", editor._listener.onModelChanged); //$NON-NLS-0$
@@ -584,13 +622,14 @@ define([
 		},
 
 		resize: function(box){
-			var w = this.editor;
+			//var w = this.editor;
 			rias.dom.setMarginBox(this.domNode, box);
 			box = rias.dom.marginBox2contentBox(this.domNode, box);
 			rias.dom.setMarginBox(this.containerNode, box);
-			if(w && w._textView){
+			//if(w && w._textView){
+			if(this.textView){
 				this._needResize = undefined;
-				w._textView.resize();
+				this.textView.resize();
 			}else{
 				this._needResize = true;
 			}

@@ -167,7 +167,7 @@ define([
 				me,
 				be,
 				pe;
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			if(changeSize){

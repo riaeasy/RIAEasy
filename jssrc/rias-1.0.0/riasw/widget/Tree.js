@@ -175,7 +175,7 @@ define([
 		removeChild: function(/* treeNode */ node){
 			this.inherited(arguments);
 
-			if(!this._beingDestroyed && !this.tree._beingDestroyed){///避免 collapse
+			if(!this.tree.isDestroyed(true) && !this.isDestroyed(true)){///避免 collapse
 				var children = this.getChildren();
 				if(children.length == 0){
 					this.isExpandable = false;
@@ -594,7 +594,7 @@ define([
 				accept: [],
 				dragThreshold:8,
 				betweenThreshold:5,
-				noDnd: false,
+				noDnd: true,
 				lazyLoad: true,
 				childrenAttr: ["children"]
 			}, params);

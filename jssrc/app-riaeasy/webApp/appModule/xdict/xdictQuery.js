@@ -2,14 +2,18 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 226,
+	"_rsfVersion": 250,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
+	"caption": "系统字典",
+	"iconClass": "menuIcon",
 	"query": {
 		"parentId": "1"
 	},
-	"caption": "系统字典",
-	"iconClass": "menuIcon",
 	"region": "center",
+	"afterLoaded": function (){
+		var m = this;
+	},
 	"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.Panel",
@@ -41,8 +45,6 @@ define([
 							"tooltip": "复制并新增"
 						}
 					],
-					"columnLockCount": 2,
-					"opColumnWidth": "9em",
 					"query": {
 						"$refScript": "return module.query;"
 					},
@@ -50,8 +52,8 @@ define([
 					"structure": [
 						{
 							"field": "id",
-							"name": "id",
 							"fixed": true,
+							"name": "id",
 							"width": "160px"
 						},
 						{
@@ -98,7 +100,9 @@ define([
 					"style": {
 						"border": "1px #b1badf solid"
 					},
-					"target": "act/xdict/query",
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/xdict/query';"
+					},
 					"topBtns": [
 						"btnAdd",
 						"btnDele"

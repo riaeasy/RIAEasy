@@ -25,9 +25,15 @@
 	font: menu;
 	display: block;
 	/*position: relative;*/
-	padding: 0.25em;
+	//padding: 0.25em;
 	overflow: hidden;
 	/*overflow: auto;*/
+
+	-moz-box-sizing: border-box; /* ff2 */
+	-ms-box-sizing: border-box; /* ie8 */
+	-webkit-box-sizing: border-box; /* safari3 */
+	-khtml-box-sizing: border-box; /* konqueror */
+	box-sizing: border-box;/* css3 rec */
 }
 
 .rias {
@@ -211,8 +217,29 @@
 		//margin-left: 0.25em !important;
 
 		.riaswDockNode {
-			border-width: 1px 1px 3px 1px;
-			//border-color: steelblue;
+			//border-width: 1px 1px 3px 1px;
+			//border-color: transparent;
+			//border-bottom: 2px solid @selectedColor;
+			//margin: 2px 0.5em;
+			//padding: 2px 4px;
+			//-webkit-border-radius: 4px;
+			//-moz-border-radius: 4px;
+			//border-radius: 4px;
+			//background-color: inherit;
+			//color: inherit;
+			//height: auto;
+		}
+		.riaswDockNodeShown {
+			background-color: inherit;
+		}
+		.riaswDockNodeHover {
+			background-color: @hoverColor;
+			border-color: @hoverColor;
+			color: black;
+		}
+		.riaswDockNodeTopmost {
+			background-color: @selectedColor;
+			color: black;
 		}
 	}
 
@@ -260,13 +287,26 @@
 	.riaswDialogPanelActionBarTop {
 		border-color: @borderColor;
 	}
-	.riaswCaptionPanelContent {
-		padding: 0.5em;
+	.riaswCaptionPanel {
+		//margin: 0.5em;
 	}
 	.riaswDialogPanel {
 		background-color: @appAreaColor;
 		border-width: 0.25em;
 		border-color: @highlightColor;
+	}
+	.riaswCaptionPanelContent,
+	.riaswDialogPanelContent {
+		padding: 0.25em;
+	}
+	.riaswDialogPanelContent {
+		background-color: @appAreaColor;
+	}
+	.riaswDialogPanelTypeInfo .riaswDialogPanelContent,
+	.riaswDialogPanelTypeWarn .riaswDialogPanelContent,
+	.riaswDialogPanelTypeError .riaswDialogPanelContent,
+	.riaswDialogPanelTypeAbout .riaswDialogPanelContent {
+		padding: 1.5em 1em 1em 1em;
 	}
 	.riaswCaptionPanelCaptionNode,
 	.riaswAccordionTitle,
@@ -325,39 +365,62 @@
 		//border-width: 0px;
 		border-color: @borderColor;
 	}
+	.dgrid-selector {
+		text-align: center;
+	}
+	.dgrid-summary-cell,
 	.dgrid-header .dgrid-cell,
 	.dgrid-cell {
 		//border-width: 1px;
 		border-color: @borderColor;
+		//border-top-style: solid;
+		//border-bottom-width: 0;
 		border-left-width: 0;
 		padding: 0.5em 0.25em;
+		//box-sizing: border-box;
+		//-webkit-box-sizing: content-box;
 	}
 	.dgrid-cell-editing {
 		padding: 0;
 		margin: 0;
+	}
+	.dgrid-summary-cell-none {
+		border-right-width: 0;
 	}
 	.dgrid-spacer-row {
 		//border-width: 1px 1px 0px 1px;
 		//border-color: @borderColor;
 		.dgrid-cell {
 			padding: 0;///需要覆盖 .dgrid-header .dgrid-cell
+			border: 0;
 		}
 	}
 	.dgrid-scroller {
 		//border-width: 1px;
 		//border-color: @borderColor;
 		//overflow-x: auto;
-		//overflow-y: auto;///要引起 右上角 错位
+		overflow-y: auto;///要引起 右上角 错位
 		border-bottom: 1px solid @borderColor;
+	}
+	.dgrid-content {
+		border-right: 1px solid @borderColor;
 	}
 	.dgrid-row {
 		background-color: @inputBackgroundColor;
+	}
+	.dgrid-row-table {
+		border-collapse: separate;
+		border-spacing: 0;
 	}
 	.dgrid-row-odd {
 		background-color: snow;
 	}
 	.dgrid-selected {
 		background-color: @selectedColor;
+	}
+	.dgrid-hider-toggle {
+		right: auto;
+		left: 0;
 	}
 	.dgrid-header-tools {
 		padding: 0.25em;
@@ -390,12 +453,30 @@
 			color: darkorange;
 		}
 	}
-	.grid-summary-row {
-		border-width: 1px 0 0 0;
+	.dgrid-footer-summary-row {
+		position: absolute;
+		left: 0;
+		right: 17px;
+		border-width: 0 0 1px 0;
 		border-color: @borderColor;
 		border-style: solid;
+		.dgrid-cell {
+			//padding: 0;///需要覆盖 .dgrid-header .dgrid-cell
+			border-bottom-width: 0;
+		}
 	}
-	.grid-summary-row,
+	.dgrid-footer-summary-scroll {
+		position: absolute;
+		right: 0;
+	}
+	.dgrid-autoheight .dgrid-footer-summary-scroll {
+		display: none;
+	}
+	.dgrid-rtl-swap .dgrid-footer-summary-scroll {
+		left: 0px;
+		right: auto;
+	}
+	.dgrid-footer-summary-row,
 	.dgrid-header,
 	.dgrid-selector,
 	.dgrid-opcolumn,
@@ -403,8 +484,19 @@
 		background-color: @toolbarBackgroundColor;
 	}
 	.dgrid-header-scroll,
-	.dgrid-column-set-scroller-container {
-		background-color: lavender;
+	.dgrid-footer-summary-scroll,
+	.dgrid-column-set-scroller {
+		background-color: @toolbarBackgroundColor;
+		border: 0px solid @borderColor;
 	}
+	.dgrid-header-scroll {
+		border-width: 0 0 1px 1px;
+	}
+	.dgrid-footer-summary-scroll {
+		border-width: 0 0 1px 0;
+	}
+	//.dgrid-column-set-scroller {
+	//	border-width: 0 1px 0 0;
+	//}
 
 }

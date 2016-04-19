@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 71,
+	"_rsfVersion": 75,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"caption": "",
@@ -11,18 +11,16 @@ define([
 	"title": "数据集",
 	"actions": function (){
 		return {
-			xdict: 'act/xdict/query',		
-			xoper: 'act/xoper/query'		
+			xdict: rias.webApp.dataServerAddr + 'act/xdict/query',		
+			xoper: rias.webApp.dataServerAddr + 'act/xoper/query'		
 		};
 	},
 	"afterLoaded": function (){
 		var m = this;
 		if(rias.hostMobile && rias.mobileShell){
 			m.xdict.target = rias.xhr.toServerUrl(m.actions().xdict);
-			m.xoper.target = rias.xhr.toServerUrl(m.actions().xoper);
 		}else{
 			m.xdict.target = m.actions().xdict;
-			m.xoper.target = m.actions().xoper;
 		}	
 	},
 	"loadDatas": function (querys){
@@ -32,11 +30,9 @@ define([
 		console.debug("begin datas.loadDatas()");
 		try{
 			dfs = (rias.hostMobile && rias.mobileShell ? [
-				//m.loadXdict(querys && querys.xdict),
-				//m.loadXoper(querys && querys.xoper),
+				m.loadXdict(querys && querys.xdict)
 			] : [
-				//m.loadXdict(querys && querys.xdict),
-				//m.loadXoper(querys && querys.xoper),
+				m.loadXdict(querys && querys.xdict)
 			]);
 		}catch(e){
 			dfs = [];
@@ -55,15 +51,7 @@ define([
 			_initData: 1
 		});
 	},
-	"loadXoper": function (query){
-		return this.xoper.loadByHttp(query || {
-			_initData: 1
-		});
-	},
 	"getXdictTextById": function (id){
-		return this.xoper.index[id] ? this.xoper.data[this.xoper.index[id]].text : id;
-	},
-	"getXoperTextById": function (id){
 		return this.xoper.index[id] ? this.xoper.data[this.xoper.index[id]].text : id;
 	},
 	"_riaswChildren": [
@@ -81,25 +69,6 @@ define([
 			"idAttribute": "id",
 			"target": {
 				"$refScript": "return module.actions.xdict;"
-			},
-			"timeout": {
-				"$refScript": "return rias.webApp.defaultTimeout;"
-			}
-		},
-		{
-			"_riaswType": "rias.riasw.store.MemoryStore",
-			"_riaswIdOfModule": "xoper",
-			"defaultData": [
-				{
-					"code": "",
-					"id": "",
-					"text": "无",
-					"typ": ""
-				}
-			],
-			"idAttribute": "id",
-			"target": {
-				"$refScript": "return module.actions.xoper;"
 			},
 			"timeout": {
 				"$refScript": "return rias.webApp.defaultTimeout;"

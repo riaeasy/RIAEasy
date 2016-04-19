@@ -178,6 +178,7 @@ define([
 		if(!args.content){
 			args.content = {};
 		}
+		args.content._method = "GET";
 		//args.postData._method = "GET";
 		return _xhr("GET", args, false, callback, errCall);
 	};

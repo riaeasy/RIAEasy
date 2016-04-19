@@ -1,29 +1,47 @@
 
 define([
-	'dojo/_base/declare',
-	'dojo/_base/lang',
-	'dojo/dom-construct'
-], function (declare, lang, domConstruct) {
-	return declare(null, {
+	"rias"
+], function (rias) {
+	return rias.declare(null, {
 		// summary:
 		//		A mixin for dgrid components which renders
 		//		a row with summary information (e.g. totals).
 
 		// Show the footer area, which will hold the summary row
-		showFooter: true,
+		//showFooter: true,
+
+		adjustVScroll: function(){
+			this.inherited(arguments);
+			///增加
+			//rias.dom.toggleClass(this.footerSummaryScrollNode, "dgrid-scrollbar-width", !!this.bodyNode.style.overflow);
+			if(this.contentNode.scrollHeight > this.contentNode.offsetHeight){
+				rias.dom.visible(this.footerSummaryScrollNode, true);
+				this.footerSummaryNode.style.right = "";
+			}else{
+				rias.dom.visible(this.footerSummaryScrollNode, false);
+				this.footerSummaryNode.style.right = "0";
+			}
+		},
 
 		buildRendering: function () {
 			this.inherited(arguments);
 
-			var areaNode = this.summaryAreaNode =
-				domConstruct.create('div', {
-					className: 'grid-summary-row',
+			var areaNode = this.footerSummaryNode =
+				rias.dom.create('div', {
+					className: 'dgrid-footer-summary-row',
 					role: 'row',
 					style: { overflow: 'hidden' }
-				}, this.footerNode);
+				}, this.domNode);
+			this.footerSummaryScrollNode = rias.dom.create('div', {
+				className: 'dgrid-footer-summary-scroll dgrid-scrollbar-width' + (this.addUiClasses ? ' ui-widget-summary-scroll' : '')
+				//className: 'dgrid-footer-summary-scroll ' + (this.addUiClasses ? ' ui-widget-summary-scroll' : '')
+			}, this.domNode);
 
 			// Keep horizontal alignment in sync
-			this.on('scroll', lang.hitch(this, function () {
+			this.on('scroll', rias.hitch(this, function () {
+				areaNode.scrollLeft = this.getScrollPosition().x;
+			}));
+			this.on('scroll', rias.hitch(this, function () {
 				areaNode.scrollLeft = this.getScrollPosition().x;
 			}));
 
@@ -42,20 +60,13 @@ define([
 			}
 		},
 
-		_renderSummaryCell: function (item, cell, column) {
-			// summary:
-			//		Simple method which outputs data for each
-			//		requested column into a text node in the
-			//		passed cell element.  Honors columns'
-			//		get, formatter, and renderCell functions.
-			//		renderCell is called with an extra flag,
-			//		so custom implementations can react to it.
-
-			var value = "";
+		_renderSummaryCell: function (cell, column, item) {
 			if(column.field in item){
-				value = item[column.field];
+				cell.appendChild(rias.dom.doc.createTextNode(item[column.field]));
+				rias.dom.addClass(cell, "dgrid-summary-cell");
+			}else{
+				rias.dom.addClass(cell, "dgrid-summary-cell-none");
 			}
-			cell.appendChild(document.createTextNode(value));
 		},
 
 		_setSummary: function (data) {
@@ -64,18 +75,18 @@ define([
 			//		updates the cells in the footer row with the
 			//		provided data.
 
-			var tableNode = this.summaryTableNode;
+			var tableNode = this.footerSummaryTableNode;
 
 			this.summary = data;
 
 			// Remove any previously-rendered summary row
 			if (tableNode) {
-				domConstruct.destroy(tableNode);
+				rias.dom.destroy(tableNode);
 			}
 
 			// Render row, calling _renderSummaryCell for each cell
-			tableNode = this.summaryTableNode = this.createRowCells('td', lang.hitch(this, '_renderSummaryCell', data));
-			this.summaryAreaNode.appendChild(tableNode);
+			tableNode = this.footerSummaryTableNode = this.createRowCells('td', rias.hitch(this, '_renderSummaryCell'), undefined, data);
+			this.footerSummaryNode.appendChild(tableNode);
 
 			// Force resize processing,
 			// in case summary row's height changed

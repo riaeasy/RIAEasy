@@ -52,7 +52,7 @@
 	background-color: whitesmoke;/*避免 wrapper 造成 transparent*/
 	overflow: auto;
 	position: relative;
-	padding: 0;
+	padding: 0.25em;
 	-webkit-overflow-scrolling: touch;
 }
 /*.mobileBody .riaswDialogPanelContent {

@@ -2,18 +2,21 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 108,
+	"_rsfVersion": 110,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
-	"actions": {
-		"login": "act/login",
-		"logout": "act/logout"
-	},
 	"activeNode": "edtId",
 	"caption": "登录",
 	"op": "login",
 	"style": {
 		"padding": "0px",
 		"width": "26em"
+	},
+	"actions": function (){
+		return {
+			"login": rias.webApp.dataServerAddr + "act/login",
+			"logout": rias.webApp.dataServerAddr + "act/logout"
+		};
 	},
 	"onSubmit": function (){
 		var m = this,
@@ -25,9 +28,9 @@ define([
 			m.set("_riasrModuleResult", rias.webApp.logged);
 		}
 		if(this.op === "login"){
-			if(m.actions.login){
+			if(m.actions().login){
 				r = rias.xhrPost({
-						url: m.actions.login,
+						url: m.actions().login,
 						handleAs: "json",
 						timeout: rias.webApp.defaultTimeout
 					}, d, function(result){
@@ -44,10 +47,10 @@ define([
 				);
 			}
 		}else if(this.op === "logout"){
-			if(m.actions.logout){
+			if(m.actions().logout){
 				d._idDirty = m.query.code;
 				r = rias.xhrPost({
-						url: m.actions.logout,
+						url: m.actions().logout,
 						handleAs: "json",
 						timeout: rias.webApp.defaultTimeout
 					}, d, function(result){

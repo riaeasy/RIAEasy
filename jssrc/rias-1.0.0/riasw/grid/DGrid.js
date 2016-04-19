@@ -79,18 +79,19 @@ define([
 		},
 		renderHeader: function () {
 			this.inherited(arguments);
-			rias.dom.place(this.hiderToggleNode, this.headerScrollNode);
+			rias.dom.place(this.hiderToggleNode, this.headerNode);
 		},
 
 		_setCollection: function (collection) {
+			var queryObject = collection.queryObject;
 			if(!collection.fetchRange){
 				collection = new _Store({
 					idAttribute: collection.idAttribute,
 					labelAttribute: collection.labelAttribute,
-					objectStore: collection,
-					queryObject: collection.queryObject
+					objectStore: collection
 				});
 			}
+			collection.queryObject = queryObject;
 			if(!collection.track){
 				collection = Trackable.create(collection);
 			}
@@ -102,19 +103,24 @@ define([
 			}
 			this.inherited(arguments);
 		},
+		//getStore: function(){
+		//	return this.collection && this.collection.objectStore ? this.collection.objectStore : this.collection;
+		//},
 		refresh: function(query){
-			var self = this;
+			var self = this,
+				store = this.collection;
 			if(query){
 				this._queryObject0 = query;
 			}
-			this.collection.queryObject = rias.delegate(this._queryObject0);
+			store.queryObject = rias.mixinDeep({}, this._queryObject0);
+
 			rias.when(this.inherited(arguments), function(){
 				var summary = {
 					rownum: rias.toNumber(self._total, 0)
 				};
-				if(self.collection){
-					if(self.collection.getSummary){
-						summary = self.collection.getSummary();
+				if(store){
+					if(store.getSummary){
+						summary = store.getSummary();
 					}
 				}
 				self.set('summary', summary);

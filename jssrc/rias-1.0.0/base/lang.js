@@ -186,6 +186,7 @@ define([
 			any = rias.by(any.$refObj, context) || any.$refObj;
 		}
 		if(rias.isString(any)){
+			///TODO:zensst. context => module
 			w = rias.getObject(any, false, context);
 			if(!w && !/^module\.|^context\./.test(any)){
 				w = rias.getObject(any);
@@ -588,10 +589,12 @@ define([
 		}
 		throw n + " is not Number.";
 	};
-	rias.toFixed = function(number, length){
+	rias.toFixed = function(x, length){
 		length = (length || 0);
 		length = (length >= 0 ? length : 0) + 2;
-		return rias.toNumber(number + Math.pow(10, -length)).toFixed(length - 2);
+		x = rias.toNumber(x) + Math.pow(10, -length);
+		/// Number.toFixed 是返回 String
+		return x.toFixed(length - 2);
 	};
 	rias.toInt = function(n, def, trunc){
 		if(trunc){
@@ -760,21 +763,29 @@ define([
 			}
 			if(context){
 				for(; i < l; ++i){
-					callback.call(context, arrayOrObject[i], i, arrayOrObject);
+					if(arrayOrObject[i] != undefined){
+						callback.call(context, arrayOrObject[i], i, arrayOrObject);
+					}
 				}
 			}else{
 				for(; i < l; ++i){
-					callback(arrayOrObject[i], i, arrayOrObject);
+					if(arrayOrObject[i] != undefined){
+						callback(arrayOrObject[i], i, arrayOrObject);
+					}
 				}
 			}
 		}else{
 			if(context){
 				for (i in arrayOrObject) {
-					callback.call(context, arrayOrObject[i], i, arrayOrObject);
+					if(arrayOrObject[i] != undefined){
+						callback.call(context, arrayOrObject[i], i, arrayOrObject);
+					}
 				}
 			}else{
 				for (i in arrayOrObject) {
-					callback(arrayOrObject[i], i, arrayOrObject);
+					if(arrayOrObject[i] != undefined){
+						callback(arrayOrObject[i], i, arrayOrObject);
+					}
 				}
 			}
 		}
@@ -890,6 +901,9 @@ define([
 		return datetime;
 	};
 	rias.datetime.format = function(datetime, formatStr){
+		if(datetime == undefined){
+			return "";
+		}
 		if(!rias.isDatetime(datetime)){
 			datetime = new Date(datetime);
 		}
@@ -1123,6 +1137,14 @@ define([
 			throw e;
 		}
 	};
+	/*rias.fromJsonFunc = function(js){
+		try{
+			return (new Function("","return " + js))();
+		}catch(e){
+			console.error(e, rias.captureStackTrace(e));
+			throw e;
+		}
+	};*/
 
 	/*rias.defer = function(scope, fcn, delay, args){
 		var timer = setTimeout(function(){
@@ -1172,19 +1194,23 @@ define([
 		//		Returns a function which calls the given callback at most once per
 		//		delay milliseconds.  (Inspired by plugd)
 		id = id + "";
-		return function r(){
+		var r = function (){
 			if(_throttleCache[id]){
 				if(rias.isFunction(callPass)){
 					callPass(r);
 				}
 				return;
 			}
-			_throttleCache[id] = true;
-			callback.apply(scope, arguments);
-			setTimeout(function(){
+			_throttleCache[id] = setTimeout(function(){
 				delete _throttleCache[id];
 			}, delay || rias._defaultThrottleDelay);
+			callback.apply(scope, arguments);
 		};
+		r.remove = function(){
+			clearTimeout(_throttleCache[id]);
+			delete _throttleCache[id];
+		};
+		return r;
 	};
 	var _throttleDelayedCache = {};
 	rias.throttleDelayed = function(id, callback, scope, delay, callPass){
@@ -1195,20 +1221,24 @@ define([
 		//		Like throttle, except that the callback runs after the delay,
 		//		rather than before it.
 		id = id + "";
-		return function r(){
+		var r = function (){
 			if (_throttleDelayedCache[id]) {
 				if(rias.isFunction(callPass)){
 					callPass(r);
 				}
 				return;
 			}
-			_throttleDelayedCache[id] = true;
 			var a = arguments;
-			setTimeout(function () {
+			_throttleDelayedCache[id] = setTimeout(function () {
 				delete _throttleDelayedCache[id];
 				callback.apply(scope, a);
 			}, delay || rias._defaultThrottleDelay);
 		};
+		r.remove = function(){
+			clearTimeout(_throttleDelayedCache[id]);
+			delete _throttleDelayedCache[id];
+		};
+		return r;
 	};
 	var _debounceCache = {};
 	rias.debounce = function(id, callback, scope, delay, callPass){
@@ -1220,7 +1250,7 @@ define([
 		//		Returns a function which calls the given callback only after a
 		//		certain time has passed without successive calls.  (Inspired by plugd)
 		id = id + "";
-		return function r() {
+		var r = function () {
 			if (_debounceCache[id]) {
 				clearTimeout(_debounceCache[id]);
 				delete _debounceCache[id];
@@ -1234,6 +1264,11 @@ define([
 				callback.apply(scope, a);
 			}, delay || rias._defaultThrottleDelay);
 		};
+		r.remove = function(){
+			clearTimeout(_debounceCache[id]);
+			delete _debounceCache[id];
+		};
+		return r;
 	};
 
 	rias.config = config;

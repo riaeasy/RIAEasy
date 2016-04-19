@@ -284,7 +284,7 @@ define([
 				button.set('checked', true);
 			}
 			var container = rias.by(this.containerId);
-			container.selectChild(page);
+			container.selectChild(page, true);
 		},
 
 		onCloseButtonClick: function(/*dijit/_WidgetBase*/ page){

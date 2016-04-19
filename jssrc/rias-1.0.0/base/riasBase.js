@@ -58,6 +58,16 @@ define([
 		}
 	};
 
+	rias.isDestroyed = function(riasw, checkAncestors){
+		riasw = rias.by(riasw);
+		var d = !riasw || (riasw._beingDestroyed || riasw._destroyed);
+		if(checkAncestors){
+			while(!d && riasw._riasrParent && (riasw = riasw._riasrParent)){
+				d = riasw._beingDestroyed || riasw._destroyed;
+			}
+		}
+		return !!d;
+	};
 	rias.destroy = function(/*riasWidget|dijit|DOMNode|String*/ node, preserveDom){
 		var w = rias.by(node);
 		if(w){
@@ -266,7 +276,7 @@ define([
 					};
 					if(rias.isFunction(self["_on" + N])){
 						self.own(self.watch(name, function(_name, oldValue, value){
-							if(self._riasrDestroying || self._beingDestroyed){
+							if(self.isDestroyed(true)){
 								return undefined;
 							}
 							return self["_on" + N](value, oldValue);
@@ -501,6 +511,9 @@ define([
 			});
 		},
 
+		isDestroyed: function(checkAncestors){
+			return rias.isDestroyed(this, checkAncestors != false);
+		},
 		_setOwnerRiaswAttr: function(owner){
 			if(rias.isString(owner)){
 				owner = rias.by(owner);
@@ -636,6 +649,16 @@ define([
 			}, self);
 
 			return hds;		// arguments
+		},
+
+		around: function(target, methodName, advice, receiveArguments){
+			return this.own(rias.around(target, methodName, advice, receiveArguments))[0];
+		},
+		before: function(target, methodName, advice, receiveArguments){
+			return this.own(rias.before(target, methodName, advice, receiveArguments))[0];
+		},
+		after: function(target, methodName, advice, receiveArguments){
+			return this.own(rias.after(target, methodName, advice, receiveArguments))[0];
 		}
 	});
 	rias.ObjectBase = rias.declare([Destroyable, Stateful], {

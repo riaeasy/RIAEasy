@@ -2,11 +2,11 @@
 
 define([
 	"rias",
-	"dijit/form/_TextBoxMixin",
+	//"dijit/form/_TextBoxMixin",
 	"dijit/form/ComboBoxMixin",
 	"dojo/store/util/QueryResults",
 	"rias/riasw/form/ValidationTextBox"///extend(templateString)
-], function(rias, _TextBoxMixin, ComboBoxMixin, QueryResults, ValidationTextBox) {
+], function(rias, /*_TextBoxMixin,*/ ComboBoxMixin, QueryResults, ValidationTextBox) {
 
 	////必须 extend ComboBoxMixin，因为 诸如 dijit.form.FilteringSelect 等控件也使用 ComboBoxMixin。
 	ComboBoxMixin.extend({
@@ -87,6 +87,9 @@ define([
 				'</div>'+
 			'</div>',
 
+		allwaysShowSearch: true,
+		searchAttr: "id",
+
 		destroy: function(){
 			if(this.dropDown){
 				rias.destroy(this.dropDown);
@@ -94,38 +97,74 @@ define([
 			this.inherited(arguments);
 		},
 
+		filter: function(val){
+			if(val === null){
+				return this._blankValue;
+			}
+			if(this.item){
+				val = this.item[this.searchAttr];
+			}
+			if(typeof val != "string"){
+				return val;
+			}
+			if(this.trim){
+				val = rias.trim(val);
+			}
+			if(this.uppercase){
+				val = val.toUpperCase();
+			}
+			if(this.lowercase){
+				val = val.toLowerCase();
+			}
+			if(this.propercase){
+				val = val.replace(/[^\s]+/g, function(word){
+					return word.substring(0, 1).toUpperCase() + word.substring(1);
+				});
+			}
+			return val;
+		},
 		parse: function(value /*=====, constraints =====*/){
 			if(this.item){
-				return this.item[this.searchAttr].toString();
+				return this.item[this.searchAttr];
 			}
 			return value;
 		},
 		_getDisplayedValueAttr: function(){
+			var text = "";
 			try{
+				//return this.filter(this.textbox.value);
 				if(this.item){
-					if(this.labelAttr){
-						return this.filter((this.store._oldAPI ? this.store.getValue(this.item, this.searchAttr) : this.item[this.searchAttr].toString()))
-							+ "(" + (this.store._oldAPI ? this.store.getValue(this.item, this.labelAttr) : this.item[this.labelAttr].toString()) + ")";
-					}
-					return this.filter((this.store._oldAPI ? this.store.getValue(this.item, this.searchAttr) : this.item[this.searchAttr].toString()));
+					text = this.labelFunc(this.item, this.store);
+				}else{
+					text = this.filter(this.value);
 				}
-				return this.filter(this.textbox.value);
 			}catch(e){
-				console.error(this.item, "_getDisplayedValueAttr() error: ", rias.captureStackTrace(e));
-				return this.searchAttr;
+				console.error(this, "_getDisplayedValueAttr() error: ", rias.captureStackTrace(e));
+				text = this.filter(this.value);
 			}
+			return text.toString();
 		},
 		labelFunc: function(item, store){
+			var text = "";
 			try{
+				store = store || this.store;
 				if(this.labelAttr){
-					return (store._oldAPI ? store.getValue(this.searchAttr) + "(" + store.getValue(item, this.labelAttr) + ")" :
-						item[this.searchAttr].toString() + "(" + item[this.labelAttr].toString() + ")");
+					//return (store._oldAPI ? store.getValue(this.searchAttr) + "(" + store.getValue(item, this.labelAttr) + ")" :
+					//	item[this.searchAttr].toString() + "(" + item[this.labelAttr].toString() + ")");
+					if(this.allwaysShowSearch == false){
+						text = store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr];
+					}else{
+						text = this.filter((store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr].toString()))
+							+ "(" + (store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr].toString()) + ")";
+					}
+				}else{
+					text = this.filter(store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]) ;
 				}
-				return (store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr].toString()) ; // String
 			}catch(e){
-				console.error(item, "labelFunc() error: ", rias.captureStackTrace(e));
-				return this.searchAttr;
+				console.error(this, "labelFunc() error: ", rias.captureStackTrace(e));
+				text = this.filter(this.value);
 			}
+			return text.toString();
 		},
 		_getValueField: function(){
 			return this.valueAttr || this.searchAttr;
@@ -133,85 +172,16 @@ define([
 		_getValueAttr: function(){
 			return this.inherited(arguments);
 		},
-		_setValueAttr: function(){
-			this.inherited(arguments);
+		_setValueAttr: function(/*String*/ value, /*Boolean?*/ priorityChange, /*String?*/ displayedValue, /*item?*/ item){
+			displayedValue = (displayedValue == undefined ? this.get("displayedValue") : displayedValue);
+			this.inherited(arguments, [value, priorityChange, displayedValue, item || this.item]);
 		},
-		_setItemAttr: function(/*item*/ item, /*Boolean?*/ priorityChange, /*String?*/ displayedValue){
-			// summary:
-			//		Set the displayed valued in the input box, and the hidden value
-			//		that gets submitted, based on a dojo.data store item.
-			// description:
-			//		Users shouldn't call this function; they should be calling
-			//		set('item', value)
-			// tags:
-			//		private
-			var value = '';
-			if(item){
-				if(!displayedValue){
-					displayedValue = this.get("displayedValue");
+
+		onFocus: function(){
+			if(!this.disabled && !this.readOnly){
+				if(!this.get("editable")){
+					this.loadAndOpenDropDown();
 				}
-				//value = this._getValueField() != this.searchAttr ? this.store.getIdentity(item) : displayedValue;
-				value = item[this._getValueField()];
-			}
-			this.set('value', value, priorityChange, displayedValue, item);
-		},
-		_announceOption: function(/*Node*/ node){
-			// summary:
-			//		a11y code that puts the highlighted option in the textbox.
-			//		This way screen readers will know what is happening in the
-			//		menu.
-
-			if(!node){
-				return;
-			}
-			// pull the text value from the item attached to the DOM node
-			var newValue;
-			if(node == this.dropDown.nextButton ||
-				node == this.dropDown.previousButton){
-				newValue = node.innerHTML;
-				this.item = undefined;
-				this.value = '';
-			}else{
-				var item = this.dropDown.items[node.getAttribute("item")];
-				newValue = this.get("displayedValue");
-				this.set('item', item, false, newValue);
-			}
-			// get the text that the user manually entered (cut off autocompleted text)
-			this.focusNode.value = this.focusNode.value.substring(0, this._lastInput.length);
-			// set up ARIA activedescendant
-			this.focusNode.setAttribute("aria-activedescendant", rias.dom.getAttr(node, "id"));
-			// autocomplete the rest of the option to announce change
-			this._autoCompleteText(newValue);
-		},
-		_autoCompleteText: function(/*String*/ text){
-			// summary:
-			//		Fill in the textbox with the first item from the drop down
-			//		list, and highlight the characters that were
-			//		auto-completed. For example, if user typed "CA" and the
-			//		drop down list appeared, the textbox would be changed to
-			//		"California" and "ifornia" would be highlighted.
-
-			text = this._getDisplayedValueAttr();
-			var fn = this.focusNode;
-
-			// IE7: clear selection so next highlight works all the time
-			_TextBoxMixin.selectInputText(fn, fn.value.length);
-			// does text autoComplete the value in the textbox?
-			var caseFilter = this.ignoreCase ? 'toLowerCase' : 'substr';
-			if(text[caseFilter](0).indexOf(this.focusNode.value[caseFilter](0)) == 0){
-				var cpos = this.autoComplete ? this._getCaretPos(fn) : fn.value.length;
-				// only try to extend if we added the last character at the end of the input
-				if((cpos + 1) > fn.value.length){
-					// only add to input node as we would overwrite Capitalisation of chars
-					// actually, that is ok
-					fn.value = text;//.substr(cpos);
-					// visually highlight the autocompleted characters
-					_TextBoxMixin.selectInputText(fn, cpos);
-				}
-			}else{
-				// text does not autoComplete; replace the whole value and highlight
-				fn.value = text;
-				_TextBoxMixin.selectInputText(fn);
 			}
 		}
 
@@ -229,13 +199,13 @@ define([
 				tabIndex: 0,
 				invalidMessage: rias.i18n.message.invalid,
 				constraints: {locale: ""},
-				regExp: ".*",
+				//regExp: ".*",
 				//pageSize: null,
 				query: {},
 				queryExpr: "${0}*",
 				autoComplete: true,
 				searchDelay: 200,
-				searchAttr: "name",
+				searchAttr: "id",
 				ignoreCase: true,
 				hasDownArrow: true,
 				scrollOnFocus: true,

@@ -239,7 +239,7 @@ define([
 					this.dockTo.removeTarget(this);
 				}
 				this.dockTo = null;
-				this.restore();
+				this.restore(false);
 			}else if(value && rias.isInstanceOf(value, DockBar)){
 				//if(value != this.dockTo){
 				this.dockTo = value;
@@ -305,12 +305,13 @@ define([
 				this.defer(this.hide);
 			}
 		},
-		restore: function(){
+		restore: function(forceVisible){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(result === self){
 					self.focus();
 				}
+				return self;
 			});
 		},
 
@@ -331,14 +332,14 @@ define([
 		toggle: function(){
 			if(this.toggleable){
 				if(this.isHidden()){
-					this.restore();
+					this.restore(true);
 				}else if(this.isCollapsed()){
 					this.expand();
 				}else if(this.isShown()){
 					this.collapse();
 				}
 			}else{
-				this.restore();
+				this.restore(true);
 			}
 		},
 		_onToggleMax: function(e){
@@ -349,12 +350,12 @@ define([
 		toggleMax: function(){
 			if(this.maxable){
 				if(this.isShowMax()){
-					this.restore();
+					this.restore(false);
 				}else{
 					this.showMax();
 				}
 			}else{
-				this.restore();
+				this.restore(false);
 			}
 		},
 		_onDomNodeEnter: function(e){
@@ -368,7 +369,7 @@ define([
 						self._autoToggleDelay = undefined;
 					}
 					if(self.isCollapsed()){
-						self.restore();
+						self.restore(false);
 					}
 				}, rias.autoToggleDuration);
 			}

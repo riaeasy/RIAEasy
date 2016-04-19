@@ -2,13 +2,9 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 82,
+	"_rsfVersion": 84,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
-	"region": "center",
-	"actions": {
-		"dacc": "act/dacc/queryAll",
-		"dmeter": "act/dmeter/queryAll"
-	},
 	"caption": "综合查询",
 	"events": [
 		{
@@ -17,6 +13,13 @@ define([
 			"widget": "btnSearch"
 		}
 	],
+	"region": "center",
+	"actions": function (){
+		return {
+			"dacc": rias.webApp.dataServerAddr + "act/dacc/queryAll",
+			"dmeter": rias.webApp.dataServerAddr + "act/dmeter/queryAll"
+		};
+	},
 	"_queryGrid": function (grid){
 		var m = this,
 			a = {

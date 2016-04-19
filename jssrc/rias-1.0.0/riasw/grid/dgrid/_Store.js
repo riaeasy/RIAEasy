@@ -65,8 +65,7 @@ define([
 				queryOptions.count = rangeArgs.end - ((queryOptions.start = rangeArgs.start) || 0);
 			}
 
-			///增加 this.queryObject，可以传递给 store.query
-			var queryObject = rias.delegate(this.queryObject) || {};
+			var queryObject = {};
 			applyFilter(getQueryArguments('filter'));
 
 			function applyFilter(filtered) {
@@ -87,7 +86,8 @@ define([
 				}
 			}
 
-			var results = this.objectStore.query(queryObject, queryOptions);
+			///增加 this.queryObject，可以传递给 store.query
+			var results = this.objectStore.query(rias.mixinDeep({}, this.queryObject, queryObject), queryOptions);
 			if (results) {
 				// apply the object restoration
 				return new QueryResults(rias.when(results.map(this._restore, this)), {

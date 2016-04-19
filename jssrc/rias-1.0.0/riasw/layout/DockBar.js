@@ -20,12 +20,15 @@ define([
 		targetWidget: null,
 
 		templateString:
-			'<span role="button" data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">'+
+			'<div role="button" data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">'+
 				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				//'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
+				'<span data-dojo-attach-point="closeNode" class="${badgeClass}" data-dojo-attach-event="onclick: close">'+
+					'<span data-dojo-attach-point="closeNodeText" class="riaswBadgeText riaswBadgeBlack">X</span>'+
+				'</span>'+
 				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon riaswDockNodeIconNode"></span>'+
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
-			'</span>',
+			'</div>',
 
 		baseClass: "riaswDockNode",
 		cssStateNodes: {
@@ -68,6 +71,12 @@ define([
 			this.titleNode.title = "";
 		},
 
+		buildRendering: function(){
+			this.inherited(arguments);
+			//rias.dom.setStyle(this.closeNode, {
+			//	display: "none"
+			//});
+		},
 		startup: function(){
 			this.inherited(arguments);
 		},
@@ -82,7 +91,7 @@ define([
 			});
 			this._hBadge = undefined;
 			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
-				this.targetWidget.restore();
+				this.targetWidget.restore(false);
 			}
 			this.targetWidget = undefined;
 			this.inherited(arguments);
@@ -159,7 +168,7 @@ define([
 
 		restore: function(){
 			if(this.targetWidget && rias.isFunction(this.targetWidget.restore)){
-				this.targetWidget.restore();
+				this.targetWidget.restore(true);
 			}
 		},
 		toggle: function(){
@@ -173,22 +182,36 @@ define([
 				}
 			}
 		},
+		close: function(){
+			var target = this.targetWidget;
+			if(target && !target._playing){
+				if(rias.isFunction(target.close)){
+					target.close();
+				}
+			}
+		},
 
 		_onMouseEnter: function(e){
 			var self = this,
 				target = self.targetWidget;
-			if(target && target.toggleOnEnter && target.toggleable && !self._autoToggleDelay && !target._playing){
-				self._autoToggleDelay = self.defer(function(){
-					if(self._autoToggleDelay){
-						self._autoToggleDelay.remove();
-						self._autoToggleDelay = undefined;
-					}
-					if(target.isHidden() || target.isCollapsed()){
-						target.restore();
-					}else if(target.isShown() && !target.get("isTopmost")){
-						target.bringToTop();
-					}
-				}, rias.autoToggleDuration);
+			if(target){
+				if(target.toggleOnEnter && target.toggleable && !self._autoToggleDelay && !target._playing){
+					self._autoToggleDelay = self.defer(function(){
+						if(self._autoToggleDelay){
+							self._autoToggleDelay.remove();
+							self._autoToggleDelay = undefined;
+						}
+						if(target.isHidden() || target.isCollapsed()){
+							target.restore(true);
+						}else if(target.isShown() && !target.get("isTopmost")){
+							target.bringToTop();
+						}
+					}, rias.autoToggleDuration);
+				}
+				if(target.closable){
+					//rias.dom.visible(self.closeNode, true);
+					rias.dom.addClass(this.closeNode, "riaswBadgeVisible");
+				}
 			}
 		},
 		_onMouseLeave: function(e){
@@ -196,6 +219,8 @@ define([
 				this._autoToggleDelay.remove();
 				this._autoToggleDelay = undefined;
 			}
+			//rias.dom.visible(this.closeNode, false);
+			rias.dom.removeClass(this.closeNode, "riaswBadgeVisible");
 		}
 
 	});

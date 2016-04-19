@@ -93,7 +93,7 @@ define([
 				//ready(1000, function())是缺省.
 				//ready(500, function())是 App.
 				rias.ready(500, function(){
-					if(self._beingDestroyed){
+					if(self.isDestroyed(true)){
 						return false;
 					}
 					//self.defer(function(){
@@ -204,7 +204,7 @@ define([
 		_internalResize: function(){
 			//console.debug(this.id, "resize in.");
 			//console.trace();
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 

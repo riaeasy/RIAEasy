@@ -2,20 +2,19 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 32,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 35,
 	"_riaswVersion": "1.0",
-		"caption": rias.i18n.webApp.menu,
-		"tooltip": rias.i18n.webApp.menu,
+	"caption": "菜单",
+	"tooltip": "菜单",
 	"iconClass": "menuIcon",
-		"minSize": {
-			"h": 360,
-			"w": 240
-		},
+	"minSize": {
+		"h": 360,
+		"w": 240
+	},
 	"style": {
 		"width": "240px"
 	},
-		onRestore: function(){
+	"onRestore": function (){
 			this.resize({
 				h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
 			});
@@ -167,7 +166,9 @@ define([
 				{
 					"_riaswType": "rias.riasw.store.JsonRestStore",
 					"_riaswIdOfModule": "menuStore",
-					"target": "act/appMain/getMenu"
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/appMain/getMenu';"
+					}
 				}
 			]
 		}

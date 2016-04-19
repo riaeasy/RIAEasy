@@ -9,6 +9,32 @@ define([
 		"widget/Calendar.css"
 	]);
 
+	_Widget.extend({
+		_createMonthWidget: function(){
+			// summary:
+			//		Creates the drop down button that displays the current month and lets user pick a new one
+
+			return new _Widget._MonthDropDownButton({
+				ownerRiasw: this,
+				id: this.id + "_mddb",
+				tabIndex: -1,
+				onMonthSelect: rias.hitch(this, "_onMonthSelect"),
+				lang: this.lang,
+				dateLocaleModule: this.dateLocaleModule
+			}, this.monthNode);
+		}
+	});
+	_Widget._MonthDropDownButton.extend({
+		postCreate: function(){
+			this.inherited(arguments);
+			this.dropDown = new _Widget._MonthDropDown({
+				ownerRiasw: this,
+				id: this.id + "_mdd", //do not change this id because it is referenced in the template
+				onChange: this.onMonthSelect
+			});
+		}
+	});
+
 	var riasType = "rias.riasw.widget.Calendar";
 	var Widget = rias.declare(riasType, [_Widget], {
 	});

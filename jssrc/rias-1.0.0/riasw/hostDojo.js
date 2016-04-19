@@ -46,13 +46,15 @@ define([
 	"dijit/_Widget",
 	"dijit/_WidgetsInTemplateMixin",
 	"dijit/_Container",
+	"dijit/_HasDropDown",
+	"dijit/form/_TextBoxMixin",
 	"dijit/form/_FormWidgetMixin",
 	"dijit/form/_AutoCompleterMixin"
 ], function(rias, on, touch, keys, mouse, gestureTap, gestureSwipe, connect, event, basewin, win,
 			_html, html, dom, domConstruct, domGeom, domClass, domStyle, domAttr, domProp,
 			css3, parser, query, cookie, hash, ready,
 			dijit, dijitbase, registry, a11y, selection, focus, place, Viewport, layoutUtils,
-			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _Container, _FormWidgetMixin, _AutoCompleterMixin) {
+			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _Container, _HasDropDown, _TextBoxMixin, _FormWidgetMixin, _AutoCompleterMixin) {
 
 ///dom******************************************************************************///
 	rias.on = on;
@@ -1024,11 +1026,11 @@ define([
 	//	widget = rias.isDomNode(widget) ? widget : (widget = rias.by(widget)) ? widget.domNode : undefined;
 	//	return rias.a11y._isElementShown(widget) && !rias.dom.hasClass(widget, "dijitHidden");
 	//};
-	rias.dom.isVisible = function(node, includeParent){
+	rias.dom.isVisible = function(node, checkAncestors){
 		node = rias.domNodeBy(node);
 		var v = node && node.parentNode && rias.dom.visible(node);
-		if(includeParent){
-			while(v && node && (node.parentNode !== node.ownerDocument) && (node = node.parentNode)){
+		if(checkAncestors){
+			while(v && (node.parentNode !== node.ownerDocument) && (node = node.parentNode)){
 				v = rias.dom.visible(node);
 			}
 			v = v && node && node.parentNode === node.ownerDocument;
@@ -1165,7 +1167,7 @@ define([
 			//dim = {};//rias.dom.getContentBox(container);
 		}
 		rias.forEach(children, function(child){
-			if(child._beingDestroyed){
+			if(child.isDestroyed && child.isDestroyed(true)){
 				return;
 			}
 			var node = child.domNode,
@@ -1366,9 +1368,12 @@ define([
 			rias.dom.visible(this.domNode, value);
 		},
 		_getVisibleAttr: function(){
+			return this.isVisible(this.domNode);
+		},
+		isVisible: function(checkAncestors){
 			/// isVisible 需要判断 parent 是否可见
 			///? self 可能是 StackContainer.child，可能在不可见 页，所以不要判断 parent 的可见性。
-			return rias.dom.isVisible(this.domNode, true);
+			return rias.dom.isVisible(this.domNode, checkAncestors);
 		},
 		focus: function(){
 			if(this.isFocusable()){
@@ -1590,8 +1595,105 @@ define([
 			}
 			this._lastInput = key; // Store exactly what was entered by the user.
 			this.inherited(arguments);
+		},
+		_announceOption: function(/*Node*/ node){
+			// summary:
+			//		a11y code that puts the highlighted option in the textbox.
+			//		This way screen readers will know what is happening in the
+			//		menu.
+
+			if(!node){
+				return;
+			}
+			// pull the text value from the item attached to the DOM node
+			var newValue;
+			if(node == this.dropDown.nextButton ||
+				node == this.dropDown.previousButton){
+				newValue = node.innerHTML;
+				this.item = undefined;
+				this.value = '';
+			}else{
+				var item = this.dropDown.items[node.getAttribute("item")];
+				///不转换 value.toString();
+				//newValue = (this.store._oldAPI ? // remove getValue() for 2.0 (old dojo.data API)
+				//	this.store.getValue(item, this.searchAttr) : item[this.searchAttr]).toString();
+				newValue = this.get("displayedValue");
+				this.set('item', item, false);
+			}
+			// get the text that the user manually entered (cut off autocompleted text)
+			this.focusNode.value = this.focusNode.value.substring(0, this._lastInput.length);
+			// set up ARIA activedescendant
+			this.focusNode.setAttribute("aria-activedescendant", rias.dom.getAttr(node, "id"));
+			// autocomplete the rest of the option to announce change
+			this._autoCompleteText(newValue);
+		},
+		onSetItem: function(item){
+
+		},
+		_setItemAttr: function(/*item*/ item, /*Boolean?*/ priorityChange){
+			// summary:
+			//		Set the displayed valued in the input box, and the hidden value
+			//		that gets submitted, based on a dojo.data store item.
+			// description:
+			//		Users shouldn't call this function; they should be calling
+			//		set('item', value)
+			// tags:
+			//		private
+			var value = '';
+			this._set("item", item);
+			if(item){
+				value = (this._getValueField() ? item[this._getValueField()] : this.store.getIdentity(item));
+			}
+			this.set('value', value, priorityChange, this.get("displayedValue"), item);
+			this.onSetItem(item);
+		},
+		onSelectOption: function(){
+			return true;
+		},
+		_selectOption: function(/*DomNode*/ target){
+			// summary:
+			//		Menu callback function, called when an item in the menu is selected.
+			this.closeDropDown();
+			if(target){
+				this._announceOption(target);
+			}
+			this._setCaretPos(this.focusNode, this.focusNode.value.length);
+			this._handleOnChange(this.value, true);
+			// Remove aria-activedescendant since the drop down is no loner visible
+			// after closeDropDown() but _announceOption() adds it back in
+			this.focusNode.removeAttribute("aria-activedescendant");
+			this.onSelectOption();
 		}
 	});
+
+	/*_HasDropDown.extend({
+		onCloseDropDown: function(){
+			return true;
+		},
+		closeDropDown: function(focus){
+			// summary:
+			//		Closes the drop down on this widget
+			// focus:
+			//		If true, refocuses the button widget
+			// tags:
+			//		protected
+
+			if(this._focusDropDownTimer){
+				this._focusDropDownTimer.remove();
+				delete this._focusDropDownTimer;
+			}
+
+			if(this._opened){
+				this._popupStateNode.setAttribute("aria-expanded", "false");
+				if(focus && this.focus){
+					this.focus();
+				}
+				rias.popup.close(this.dropDown);
+				this._opened = false;
+			}
+			this.onCloseDropDown();
+		}
+	});*/
 
 	_Container.extend({
 		_onBlur: function(){

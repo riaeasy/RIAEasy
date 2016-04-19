@@ -2,11 +2,49 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 398,
+	"_rsfVersion": 425,
 	"_riaswVersion": "0.7",
 	"caption": "新的页面模块",
 	"region": "center",
 	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.widget.Menu",
+			"_riaswIdOfModule": "menu1",
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.widget.RadioMenuItem",
+					"_riaswIdOfModule": "radioMenuItem0",
+					"label": "radioMenuItem0",
+					"group": "group1",
+					"style": {
+					}
+				},
+				{
+					"_riaswType": "rias.riasw.widget.RadioMenuItem",
+					"_riaswIdOfModule": "radioMenuItem1",
+					"label": "radioMenuItem1",
+					"group": "group1",
+					"style": {
+					}
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuSeparator",
+					"_riaswIdOfModule": "menuSeparator3",
+					"style": {
+					}
+				},
+				{
+					"_riaswType": "rias.riasw.widget.RadioMenuItem",
+					"_riaswIdOfModule": "radioMenuItem2",
+					"label": "radioMenuItem2",
+					"group": "group2",
+					"style": {
+					}
+				}
+			]
+		},
 		{
 			"_riaswType": "rias.riasw.widget.Menu",
 			"_riaswIdOfModule": "menu0",
@@ -55,42 +93,71 @@ define([
 					},
 					"style": {
 					}
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuSeparator",
+					"_riaswIdOfModule": "menuSeparator2"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem1"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem2"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem3"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem4"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem5"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem6"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem7"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem8"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem9"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem10"
+				},
+				{
+					"_riaswType": "rias.riasw.widget.MenuItem",
+					"_riaswIdOfModule": "menuItem11"
 				}
 			]
 		},
 		{
-			"_riaswType": "rias.riasw.widget.Menu",
-			"_riaswIdOfModule": "menu1",
-			"style": {
-			},
+			"_riaswType": "rias.riasw.widget.MenuBar",
+			"_riaswIdOfModule": "menuBar1",
+			"layoutPriority": 0,
+			"region": "top",
+			"splitter": false,
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.widget.RadioMenuItem",
-					"_riaswIdOfModule": "radioMenuItem0",
-					"label": "radioMenuItem0",
-					"group": "group1",
-					"style": {
-					}
-				},
-				{
-					"_riaswType": "rias.riasw.widget.RadioMenuItem",
-					"_riaswIdOfModule": "radioMenuItem1",
-					"label": "radioMenuItem1",
-					"group": "group1",
-					"style": {
-					}
-				},
-				{
-					"_riaswType": "rias.riasw.widget.MenuSeparator",
-					"_riaswIdOfModule": "menuSeparator3",
-					"style": {
-					}
-				},
-				{
-					"_riaswType": "rias.riasw.widget.RadioMenuItem",
-					"_riaswIdOfModule": "radioMenuItem2",
-					"label": "radioMenuItem2",
-					"group": "group2",
+					"_riaswType": "rias.riasw.widget.PopupMenuItem",
+					"_riaswIdOfModule": "popupMenuItem1",
+					"label": "popupMenuItem1",
+					"popup": {
+						"$refScript": "return module.menu1;"
+					},
 					"style": {
 					}
 				}

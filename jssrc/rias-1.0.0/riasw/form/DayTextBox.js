@@ -2,22 +2,55 @@
 
 define([
 	"rias",
-	"dojox/form/DayTextBox",
-	"rias/riasw/form/_DateTimeTextBox"///extend(templateString)
-], function(rias, _Widget) {
-
-	rias.theme.loadRiasCss([
-		"widget/Calendar.css"
-	]);
+	"rias/riasw/form/DayTextBox",
+	"rias/riasw/form/TextBox",
+	"dojox/widget/DailyCalendar"
+], function(rias, _Widget, TextBox, DailyCalendar) {
 
 	var riasType = "rias.riasw.form.DayTextBox";
 	var Widget = rias.declare(riasType, [_Widget], {
 
+		popupClass: DailyCalendar,
 		constraints: {
 			datePattern: "yyyy-MM-dd",
 			locale: "",
 			selector: "date",
 			fullYear: true
+		},
+
+		parse: function(displayVal){
+			return displayVal;
+		},
+
+		format: function(value){
+			return value.getDate ? value.getDate() : value;
+		},
+		validator: function(value){
+			var num = Number(value);
+			var isInt = /(^-?\d\d*$)/.test(String(value));
+			return value == "" || value == null || (isInt && num >= 1 && num <= 31);
+		},
+
+		_setValueAttr: function(value, priorityChange, formattedValue){
+			if(value){
+				if(value.getDate){
+					value = value.getDate();
+				}
+			}
+			//TextBox.prototype._setValueAttr.call(this, value, priorityChange, formattedValue);
+			this.inherited(arguments);
+		},
+
+		openDropDown: function(){
+			this.inherited(arguments);
+
+			this.dropDown.onValueSelected = rias.hitch(this, function(value){
+				this.focus(); // focus the textbox before the popup closes to avoid reopening the popup
+				setTimeout(rias.hitch(this, "closeDropDown"), 1); // allow focus time to take
+
+				//TextBox.prototype._setValueAttr.call(this, String(value.getDate()), true, String(value.getDate()));
+				this._setValueAttr(value, true, value);
+			});
 		}
 
 	});

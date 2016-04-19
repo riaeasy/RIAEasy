@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 541,
+	"_rsfVersion": 544,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"op": "query",
@@ -13,7 +13,9 @@ define([
 		"padding": "0px",
 		"width": "56em"
 	},
-	"target": "act/xdict/query",
+	"target": {
+		"$refScript": "return rias.webApp.dataServerAddr + 'act/xdict/query';"
+	},
 	"afterLoaded": function (/*{widgets: widgets, parent: parent, module: m}*/result){
 		var m = this;
 		rias.forEach(m.table._widgets, function(child){

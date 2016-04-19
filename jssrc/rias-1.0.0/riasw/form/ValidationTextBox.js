@@ -38,7 +38,7 @@ define([
 			constraints: {
 				locale: ""
 			},
-			regExp: ".*",
+			//regExp: ".*",
 			tooltipPosition: [],
 			scrollOnFocus: true
 		},

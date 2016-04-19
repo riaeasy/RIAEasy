@@ -1,6 +1,21 @@
 
 //RIAStudio client runtime widget - DGrid
 
+
+/// dgrid._StoreMixin.constructor 中 aspect.before -> this.before
+/// dgrid.Selection._initSelectionEvents 中 aspect.before -> this.before
+
+/// dgrid.Keyboard.postCreate 中 aspect.after -> grid.after
+/// dgrid.ColumnSet.postCreate 中 aspect.after -> this.after
+/// dgrid.extensions.Dnd 中 aspect.after -> this.after
+
+/// dgrid.ColumnSet._putScroller 中 grid._listeners.push(on), horizMouseWheel 中 grid._listeners.push(on)
+/// dgrid.Editor._createEditor 中 grid._listeners.push(on)
+/// dgrid.Keyboard.postCreate 中 grid._listeners.push(on)
+/// dgrid.OnDemandList.postCreate 中 grid._listeners.push(on)
+/// dgrid.Selection._initSelectionEvents 中 grid._listeners.push(on)
+/// dgrid.Tree.expand 中 grid._listeners.push(on)
+
 define([
 	"rias",
 
@@ -51,8 +66,10 @@ define([
 			// for modern browsers, we can perform a one-time operation which adds
 			// a rule to account for scrollbar width in all grid headers.
 			rias.theme.addCssRule('.dgrid-header-row', 'right: ' + rias.theme.scrollbarWidth + 'px');
+			rias.theme.addCssRule('.dgrid-footer-summary-row', 'right: ' + rias.theme.scrollbarWidth + 'px');
 			// add another for RTL grids
 			rias.theme.addCssRule('.dgrid-rtl-swap .dgrid-header-row', 'left: ' + rias.theme.scrollbarWidth + 'px');
+			rias.theme.addCssRule('.dgrid-rtl-swap .dgrid-footer-summary-row', 'left: ' + rias.theme.scrollbarWidth + 'px');
 		}
 	});
 
@@ -177,8 +194,8 @@ define([
 			}
 
 			this.headerScrollNode = rias.dom.create('div', {
-				className: 'dgrid-header dgrid-header-scroll dgrid-scrollbar-width' +
-					(addUiClasses ? ' ui-widget-header' : '')
+				className: 'dgrid-header dgrid-header-scroll dgrid-scrollbar-width' + (addUiClasses ? ' ui-widget-header' : '')
+				//className: 'dgrid-header dgrid-header-scroll ' + (addUiClasses ? ' ui-widget-header' : '')
 			}, domNode);
 
 			// Place footer node (initially hidden if showFooter is false).
@@ -305,13 +322,13 @@ define([
 		},
 
 		_internalResize: function(box){
-			console.debug(this.id, box);
+			//console.debug(this.id, box);
 			rias.dom.setMarginBox(this.domNode, box);
 			//box = rias.dom.getMarginBox(node);
 			return box;
 		},
 		resize: function (changeSize, resultSize) {
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			var v,
@@ -335,20 +352,43 @@ define([
 
 			var bodyNode = this.bodyNode,
 				headerNode = this.headerNode,
+				footerSummaryNode = this.footerSummaryNode,
 				footerNode = this.footerNode,
 				headerHeight = headerNode.offsetHeight,
 				footerHeight = this.showFooter ? footerNode.offsetHeight : 0;
 
 			this.headerScrollNode.style.top = (this.topTools ? this.topTools.domNode.offsetHeight : 0) + "px";
 			this.headerScrollNode.style.height = headerHeight + "px";
-			bodyNode.style.height = (this.domNode.clientHeight - rias.theme.scrollbarHeight
-				- (this.topTools ? headerHeight + this.topTools.domNode.offsetHeight : headerHeight) - footerHeight) + 'px';
+			if(footerSummaryNode){
+				footerSummaryNode.style.bottom = footerHeight + "px";
+				this.footerSummaryScrollNode.style.bottom = footerHeight + "px";
+				this.footerSummaryScrollNode.style.height = footerSummaryNode.offsetHeight + "px";
+			}
+
+			//bodyNode.style.height = (this.domNode.clientHeight - rias.theme.scrollbarHeight
+			//	- (this.topTools ? this.topTools.domNode.offsetHeight : 0)
+			//	- headerHeight
+			//	- (footerSummaryNode ? footerSummaryNode.offsetHeight : 0)
+			//	- footerHeight) + 'px';
 			bodyNode.style.marginTop = (this.topTools ? headerHeight + this.topTools.domNode.offsetHeight : headerHeight) + 'px';
-			bodyNode.style.marginBottom = footerHeight + 'px';
+			bodyNode.style.marginBottom = ((footerSummaryNode ? footerSummaryNode.offsetHeight : 0) + footerHeight) + 'px';
+
+			this.adjustVScroll();
 
 			return box;
 		},
 
+		adjustVScroll: function(){
+			///增加
+			//rias.dom.toggleClass(this.headerScrollNode, "dgrid-scrollbar-width", !!this.bodyNode.style.overflow);
+			if(this.contentNode.scrollHeight > this.contentNode.offsetHeight){
+				rias.dom.visible(this.headerScrollNode, true);
+				this.headerNode.style.right = "";
+			}else{
+				rias.dom.visible(this.headerScrollNode, false);
+				this.headerNode.style.right = "0";
+			}
+		},
 		renderArray: function (results, beforeNode, options) {
 			// summary:
 			//		Renders an array of objects as rows, before the given node.
@@ -408,7 +448,8 @@ define([
 			for (var k = 0, numCols = row.length; k < numCols; k++) {
 				var column = row[k];
 				// The column id begins with the column set id.
-				if (column.id != null && column.id.indexOf(idPrefix) === 0) {
+				//if (column.id != null && column.id.indexOf(idPrefix) === 0) {
+				if (column.id != null && column._columnSetPrefix === idPrefix) {
 					column.columnSetId = columnSetId;
 					subsetRow.push(column);
 				}
@@ -503,24 +544,38 @@ define([
 			}
 			return rule;
 		},
-		/*createRowCells: function (tag, each, subRows, object, options) {
+		_configColumns: function (prefix, rowColumns) {
+			for (var i = 0, l = this.columnSets.length; i < l; i++) {
+				var columnSet = this.columnSets[i];
+				for (var j = 0; j < columnSet.length; j++) {
+					for (var k = 0; k < columnSet[j].length; k++) {
+						columnSet[j][k]._columnSetPrefix = i + "-";
+					}
+				}
+			}
+			return this.inherited(arguments);
+		},
+		createRowCells: function (tag, each, subRows, object, options) {
 			var row = rias.dom.create('table', { className: 'dgrid-row-table' });
 			var tbody = rias.dom.create('tbody', null, row);
 			var tr = rias.dom.create('tr', null, tbody);
-			for (var i = 0, l = this.columnSets.length; i < l; i++) {
+			var i, l, cell,
+				columnSetId;///增加 columnSetId
+			for (i = 0, l = this.columnSets.length; i < l; i++) {
 				// iterate through the columnSets
-				var cell = rias.dom.create(tag, {
+				columnSetId = i;
+				cell = rias.dom.create(tag, {
 					className: 'dgrid-column-set-cell dgrid-column-set-' + i
 				}, tr);
 				cell = rias.dom.create('div', {
 					className: 'dgrid-column-set'
 				}, cell);
-				cell.setAttribute(colsetidAttr, i);
-				var subset = getColumnSetSubRows(subRows || this.subRows, i) || this.columnSets[i];
+				cell.setAttribute(colsetidAttr, columnSetId);
+				var subset = getColumnSetSubRows(subRows || this.subRows, columnSetId) || this.columnSets[i];
 				cell.appendChild(this.inherited(arguments, [tag, each, subset, object, options]));
 			}
 			return row;
-		},*/
+		},
 		renderHeader: function () {
 			// summary:
 			//		Setup the headers for the grid
@@ -564,6 +619,57 @@ define([
 			this._positionScrollers();
 		},
 
+		adjustVScroll: function(){
+			///增加
+			this.inherited(arguments);
+			if(this._columnSetScrollers){
+				this._positionScrollers();
+			}
+		},
+
+		_positionScrollers: function () {
+			var domNode = this.domNode,
+				scrollers = this._columnSetScrollers,
+				scrollerContents = this._columnSetScrollerContents,
+				columnSets = this.columnSets,
+				footerSummaryNode = this.footerSummaryNode,
+				footerHeight = this.showFooter ? this.footerNode.offsetHeight : 0,
+				scrollerWidth = 0,
+				numScrollers = 0, // tracks number of visible scrollers (sets w/ overflow)
+				i, l, columnSetElement, contentWidth;
+
+			for (i = 0, l = columnSets.length; i < l; i++) {
+				// iterate through the columnSets
+				columnSetElement = rias.dom.query('.dgrid-column-set[' + colsetidAttr + '="' + i + '"]', domNode)[0];
+				scrollerWidth = columnSetElement.offsetWidth;
+				contentWidth = columnSetElement.firstChild.offsetWidth;
+				scrollerContents[i].style.width = contentWidth + 'px';
+				scrollers[i].style.width = scrollerWidth + 'px';
+
+				if (rias.has('ie') < 9) {
+					// IE seems to need scroll to be set explicitly
+					scrollers[i].style.overflowX = contentWidth > scrollerWidth ? 'scroll' : 'auto';
+				}
+
+				// Keep track of how many scrollbars we're showing
+				if (contentWidth > scrollerWidth) {
+					numScrollers++;
+				}
+			}
+
+			numScrollers = (numScrollers ? rias.theme.scrollbarHeight : 0);
+			if(footerSummaryNode){
+				footerSummaryNode.style.bottom = (footerHeight + numScrollers) + "px";
+				this.footerSummaryScrollNode.style.bottom = (footerHeight + numScrollers) + "px";
+				this.footerSummaryScrollNode.style.height = footerSummaryNode.offsetHeight + "px";
+			}
+			this._columnSetScrollerNode.style.bottom = footerHeight + 'px';
+
+			// Align bottom of body node depending on whether there are scrollbars
+			/// 已经设置了 marginBottom
+			this.bodyNode.style.bottom = numScrollers + 'px';
+		},
+
 		_calColumnSet: function(){
 			function _getsw(node, sw){
 				var w = 0;
@@ -601,6 +707,7 @@ define([
 								rias.forEach(column._riasrOpColumn, function(item){
 									colw += _getsw(column.headerNode, (item.text + " ").length + "em");
 								});
+								colw += 10;
 							}else{
 								colw = rias.dom.getMarginBox(column.headerNode).w;
 							}
@@ -863,6 +970,7 @@ define([
 	});
 
 	Tree.extend({
+
 		_destroyColumns: function () {
 			this.inherited(arguments);
 			var listeners = this._treeColumnListeners;
@@ -973,6 +1081,159 @@ define([
 					}));
 			}
 
+		},
+
+		expand: function (target, expand, noTransition) {
+			// summary:
+			//		Expands the row corresponding to the given target.
+			// target: Object
+			//		Row object (or something resolvable to one) to expand/collapse.
+			// expand: Boolean?
+			//		If specified, designates whether to expand or collapse the row;
+			//		if unspecified, toggles the current state.
+
+			if (!this._treeColumn) {
+				return;
+			}
+
+			var grid = this,
+				row = target.element ? target : this.row(target),
+				isExpanded = !!this._expanded[row.id],
+				hasTransitionend = rias.has('transitionend'),
+				promise;
+
+			target = row.element;
+			target = target.className.indexOf('dgrid-expando-icon') > -1 ? target : rias.dom.query('.dgrid-expando-icon', target)[0];
+
+			noTransition = noTransition || !this.enableTreeTransitions;
+
+			if (target && target.mayHaveChildren && (noTransition || expand !== isExpanded)) {
+				// toggle or set expand/collapsed state based on optional 2nd argument
+				var expanded = expand === undefined ? !this._expanded[row.id] : expand;
+
+				// update the expando display
+				rias.dom.replaceClass(target, 'ui-icon-triangle-1-' + (expanded ? 'se' : 'e'),
+					'ui-icon-triangle-1-' + (expanded ? 'e' : 'se'));
+				rias.dom.toggleClass(row.element, 'dgrid-row-expanded', expanded);
+
+				var rowElement = row.element,
+					container = rowElement.connected,
+					containerStyle,
+					scrollHeight,
+					options = {};
+
+				if (!container) {
+					// if the children have not been created, create a container, a preload node and do the
+					// query for the children
+					container = options.container = rowElement.connected =
+						rias.dom.create('div', { className: 'dgrid-tree-container' }, rowElement, 'after');
+					var query = function (options) {
+						var childCollection = grid._renderedCollection.getChildren(row.data),
+							results;
+						if (grid.sort && grid.sort.length > 0) {
+							childCollection = childCollection.sort(grid.sort);
+						}
+						if (childCollection.track && grid.shouldTrackCollection) {
+							container._rows = options.rows = [];
+
+							childCollection = childCollection.track();
+
+							// remember observation handles so they can be removed when the parent row is destroyed
+							container._handles = [
+								childCollection.tracking,
+								grid._observeCollection(childCollection, container, options)
+							];
+						}
+						if ('start' in options) {
+							var rangeArgs = {
+								start: options.start,
+								end: options.start + options.count
+							};
+							results = childCollection.fetchRange(rangeArgs);
+						} else {
+							results = childCollection.fetch();
+						}
+						return results;
+					};
+					// Include level information on query for renderQuery case
+					if ('level' in target) {
+						query.level = target.level;
+					}
+
+					// Add the query to the promise chain
+					if (this.renderQuery) {
+						promise = this.renderQuery(query, options);
+					}
+					else {
+						// If not using OnDemandList, we don't need preload nodes,
+						// but we still need a beforeNode to pass to renderArray,
+						// so create a temporary one
+						var firstChild = rias.dom.create('div', null, container);
+						promise = this._trackError(function () {
+							return grid.renderQueryResults(
+									query(options),
+									firstChild,
+									rias.mixin({ rows: options.rows },
+										'level' in query ? { queryLevel: query.level } : null
+									)
+								).then(function (rows) {
+									rias.dom.destroy(firstChild);
+									return rows;
+								});
+						});
+					}
+
+					if (hasTransitionend) {
+						// Update height whenever a collapse/expand transition ends.
+						// (This handler is only registered when each child container is first created.)
+						this.own(rias.on(container, hasTransitionend, this._onTreeTransitionEnd));
+					}
+				}
+
+				// Show or hide all the children.
+
+				container.hidden = !expanded;
+				containerStyle = container.style;
+
+				// make sure it is visible so we can measure it
+				if (!hasTransitionend || noTransition) {
+					containerStyle.display = expanded ? 'block' : 'none';
+					containerStyle.height = '';
+					///需要重新调整 Scroll
+					this.adjustVScroll();
+				}
+				else {
+					if (expanded) {
+						containerStyle.display = 'block';
+						scrollHeight = container.scrollHeight;
+						containerStyle.height = '0px';
+					}
+					else {
+						// if it will be hidden we need to be able to give a full height
+						// without animating it, so it has the right starting point to animate to zero
+						rias.dom.addClass(container, 'dgrid-tree-resetting');
+						containerStyle.height = container.scrollHeight + 'px';
+					}
+					// Perform a transition for the expand or collapse.
+					setTimeout(rias.hitch(this, function () {
+						rias.dom.removeClass(container, 'dgrid-tree-resetting');
+						containerStyle.height = expanded ? (scrollHeight ? scrollHeight + 'px' : 'auto') : '0px';
+						///需要重新调整 Scroll
+						this.defer(rias.hitch(this, this.adjustVScroll), 350);
+					}), 0);
+				}
+
+				// Update _expanded map.
+				if (expanded) {
+					this._expanded[row.id] = true;
+				}
+				else {
+					delete this._expanded[row.id];
+				}
+			}
+
+			// Always return a promise
+			return rias.when(promise);
 		}
 
 	});
@@ -1042,6 +1303,7 @@ define([
 			}
 			if(b){
 				this.styleColumn(column.id, style, " .dgrid-content");
+				this.styleColumn(column.id, style, " .dgrid-footer-summary-row");
 			}
 			this.inherited(arguments);
 		},

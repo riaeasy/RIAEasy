@@ -2,7 +2,8 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 10,
+	"_rsfVersion": 14,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"caption": "操作员信息",
 	"op": "query",
@@ -13,7 +14,9 @@ define([
 		"padding": "0px",
 		"width": "56em"
 	},
-	"target": "act/xoper/query",
+	"target": {
+		"$refScript": "return rias.webApp.dataServerAddr + 'act/xoper/query';"
+	},
 	"afterLoaded": function (/*{widgets: widgets, parent: parent, module: m}*/result){
 		var m = this;
 		m.loadData(m.query).then(function(){

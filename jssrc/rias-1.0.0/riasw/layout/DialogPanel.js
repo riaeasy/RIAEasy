@@ -116,7 +116,18 @@ define([
 		postMixInProperties: function(){
 			this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : "";
 			if(!rias.isNumber(this.zIndex)){
-				this.set("zIndex",  Widget._startZ + _allWin.length + 100);
+				//this.set("zIndex",  Widget._startZ + _allWin.length + 100);
+				if(!this.focusOnShow){
+					//
+				}else if(this.isModal()){
+					this.set("zIndex",  Widget._currentZModal);
+				}else if(this.isTip()){
+					this.set("zIndex",  Widget._startZ + _allWin.length + 100);
+				}else if(this.isTop()){
+					this.set("zIndex",  Widget._currentZTop);
+				}else{
+					this.set("zIndex",  Widget._currentZNormal);
+				}
 			}
 			this.inherited(arguments);
 		},
@@ -458,15 +469,18 @@ define([
 					}else{
 						self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 					}
+				}else{
+
 				}
 			});
 		},
-		restore: function(){
+		restore: function(forceVisible){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(result === self){
 					self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 				}
+				return self;
 			});
 		},
 		_onDomNodeEnter: function(e){
@@ -504,6 +518,9 @@ define([
 	});
 
 	Widget._startZ = _startZ;
+	Widget._currentZModal = _startZ;
+	Widget._currentZTop = _startZ;
+	Widget._currentZNormal = _startZ;
 	Widget.bringToTop = function(win){
 		var i, z, zt, h,
 			ws, ms, ts;
@@ -547,7 +564,7 @@ define([
 
 		if(!win || Widget.topmost === win){
 			///不指定 win、或 win 已经 topmost，以及没有 destroy，则直接返回。
-			if(Widget.topmost && !Widget.topmost._beingDestroyed && !Widget.topmost._riasrDestroying && _visible(Widget.topmost)){
+			if(Widget.topmost && !Widget.topmost.isDestroyed(true) && _visible(Widget.topmost)){
 				///已经是 topmost，则不触发 onBringToTop
 				if(!Widget.topmost.isTopmpst){
 					Widget.topmost.isTopmpst = true;
@@ -562,28 +579,31 @@ define([
 		//	Widget.topmost._onBringToTop();
 		//}
 		Widget.topmost = null;
-		if(win && (win.isHidden() || win.isCollapsed())){
-			///TODO:zensst.在非可见页时怎么处理？
+		if(win && win.isDestroyed(true)){
+			win = undefined;
+		}
+		if(win && (!_visible(win) || win.isHidden() || win.isCollapsed())){
 			///非可见时，直接返回，在 restore 后处理。
-			win.restore();
+			win.restore(true);
 			return Widget.topmost;
 		}
 		///因为需要处理 css，应该包含未显示的
 		ws = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasrDestroying && !w.isModal() && !w.isTop();// && (!win || w !== win);
+			return !w.isDestroyed(true) && !w.isModal() && !w.isTop();// && (!win || w !== win);
 		});
 		ms = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasrDestroying && w.isModal();// && (!win || w !== win);
+			return !w.isDestroyed(true) && w.isModal();// && (!win || w !== win);
 		});
 		ts = rias.filter(_allWin, function(w){
-			return !w._beingDestroyed && !w._riasrDestroying && w.isTop();// && (!win || w !== win);
+			return !w.isDestroyed(true) && w.isTop();// && (!win || w !== win);
 		});
 		//Underlay.hide();
 		try{
 			ws.sort(_sort);
 			ms.sort(_sort);
 			ts.sort(_sort);
-			z = zt = Widget._startZ + ((ms.length + ts.length + ws.length + 3) << 1);
+			z = zt = Widget._startZ + ((ms.length + ts.length + ws.length + 6) << 1);
+			Widget._currentZModal = (z -= 2);
 			for(i = ms.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ms[i];
@@ -606,6 +626,7 @@ define([
 			}
 			zt = z;
 			///!win 时，以第一个为 topmost
+			Widget._currentZTop = (z -= 2);
 			for(i = ts.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ts[i];
@@ -616,6 +637,7 @@ define([
 				}
 			}
 			zt = z;
+			Widget._currentZNormal = (z -= 2);
 			for(i = ws.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ws[i];

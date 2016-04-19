@@ -197,7 +197,7 @@ define([
 			//		Destroy the ContentPane and its contents
 
 			// if we have multiple controllers destroying us, bail after the first
-			if(this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			rias.forEach(this.getChildren(), function(child){
@@ -258,7 +258,7 @@ define([
 					//_cnt++;
 					//console.debug(self.id, _cnt, "parentScroll");
 					//rias.debounce(this.id + "_onScroll", function(){
-					if(!self._riasrDestroying && !self._beingDestroyed){
+					if(!self.isDestroyed(true)){
 						self.resize();
 					}
 					//}, this, 800)();
@@ -306,7 +306,7 @@ define([
 
 		//_onParentNodeChanged: function(){
 		_onRiasrParentNode: function(){
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return;
 			}
 			var self = this,
@@ -324,7 +324,7 @@ define([
 					rias.debounce(self.id + "_onViewportResize", function(){
 						//console.debug(self.id, _cnt, "resize");
 						//console.trace();
-						if(!self._riasrDestroying && !self._beingDestroyed){
+						if(!self.isDestroyed(true)){
 							self.resize();
 						}
 					}, self, 200, function(){
@@ -465,7 +465,7 @@ define([
 			return needLayout;
 		},
 		_beforeLayout: function(){
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				return false;
 			}
 			var box,
@@ -583,7 +583,7 @@ define([
 			//_cnt++;
 			//console.debug(this.id, _cnt, "resize in.");
 			var r;
-			if(this._riasrDestroying || this._beingDestroyed){
+			if(this.isDestroyed(true)){
 				//console.debug(c, this.id, "resize out:", r);
 				return;
 			}
@@ -755,7 +755,7 @@ define([
 			//if(this._started){
 			return rias.when(self._doPlay(value), function(result){
 				if(result){
-					if(!self._riasrDestroying && !self._beingDestroyed){
+					if(!self.isDestroyed(true)){
 						self.onDisplayStateChanged(self.displayState);
 						self._saveToCookie();
 						if(self._playingDeferred){
@@ -1026,7 +1026,7 @@ define([
 			}
 			var _nextState;
 			function _onEnd(){
-				if(self._riasrDestroying || self._beingDestroyed){
+				if(self.isDestroyed(true)){
 					return;
 				}
 				if(self._playingEndHandle){
@@ -1052,7 +1052,7 @@ define([
 			self._playingDeferred = rias.newDeferred();
 			newState = Widget.displayStateInt(newState);
 			isNaN(newState) && (newState = intShowNormal);
-			if(self._riasrDestroying || self._beingDestroyed || !forcePlay && oldState === newState){
+			if(self.isDestroyed(true) || !forcePlay && oldState === newState){
 				df.resolve(false);
 				return df.promise;
 			}
@@ -1190,7 +1190,7 @@ define([
 						self._playingDeferred.resolve(self);
 					}
 				};
-				console.debug(this.id, this._playing);
+				//console.debug(this.id, this._playing);
 				self._playing.play();
 			}else{
 				_onEnd();
@@ -1229,7 +1229,7 @@ define([
 			return this.canClose != false;/// _close 在 DialogPanel 中设置
 		},
 		_close: function(){
-			if(!this._beingDestroyed){
+			if(!this.isDestroyed(true)){
 				this.destroyRecursive();
 			}
 		},
@@ -1275,13 +1275,41 @@ define([
 			}
 			this.onRestore.apply(this, arguments);
 		},
-		restore: function(){
-			this.set("displayState", Widget.displayShowNormal);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}else{
-				return true;
+		restore: function(forceVisible){
+			var self = this,
+				d = true,
+				dr = true,
+				ds = true,
+				parent;
+			if(self.isDestroyed(true)){
+				return false;
 			}
+			if(!self.get("visible") && forceVisible){
+				d = rias.newDeferred(),
+				parent = self.getParent();
+				if(!parent.get("visible")){
+					if(rias.isFunction(parent.restore)){
+						dr = parent.restore(forceVisible);
+					}
+				}
+				rias.when(dr, function(){
+					if(rias.isFunction(parent.selectChild)){
+						ds = parent.selectChild(self, true);
+					}
+					return rias.when(ds, function(){
+						d.resolve(self);
+					})
+				})
+			}
+			rias.when(d, function(){
+				self.set("displayState", Widget.displayShowNormal);
+				if(self._playingDeferred){
+					return self._playingDeferred;
+				}else{
+					return true;
+				}
+			});
+			return d.promise || d;
 		},
 
 		onExpand: function(){

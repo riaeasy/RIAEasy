@@ -58,7 +58,8 @@ define([
 					}
 				}
 			}catch(e){
-				return e;
+				console.error(e);
+				return cellData;
 			}
 		};
 		function _column(arr){
@@ -158,6 +159,36 @@ define([
 		}
 		delete p.query;
 
+		if(!p.selectionMode){
+			if(p.selectRowTriggerOnCell == false){
+				p.selectionMode = "none";
+			}else{
+				if(p.selectRowMultiple == true){
+					p.selectionMode = "toggle";
+				}else{
+					p.selectionMode = "single";
+				}
+			}
+		}
+		delete p.selectRowTriggerOnCell;
+		delete p.selectRowMultiple;
+		if(p.selectionMode !== "none"){
+			set1.unshift({
+				_riasrSelectorColumn: true,
+				id: "_selecol",
+				label: "",
+				field: "id",
+				width: "2em",
+				minWidth: 20,
+				resizable: false,
+				sortable: false,
+				reorderable: false,
+				unhidable: true,
+				selector: (p.selectionMode === "single" ? "radio" : "checkbox")
+			});
+		}
+		p.deselectOnRefresh = rias.ifnull(p.deselectOnRefresh, false);
+
 		if(rias.isArray(p.cellIdOps)){
 			opColumn = opColumn.concat(p.cellIdOps);
 		}
@@ -165,13 +196,14 @@ define([
 		function _getOpColumn(){
 			return {
 				_riasrOpColumn: opColumn,
-				label: rias.i18n.action.action,
+				id: "_opcol",
+				label: "",//rias.i18n.action.action,
 				field: "id",
 				className: "dgrid-opcolumn",
 				//width: p.opColumnWidth || "9em",
 				//resizable: false,
 				sortable: false,
-				//reorderable: false,
+				reorderable: false,
 				unhidable: true,
 				renderCell: function(data, cellData, cell, options){
 					var grid = this.grid,
@@ -229,6 +261,7 @@ define([
 				meta = {
 					dialogType: "top",
 					ownerRiasw: grid,
+					parent: grid.viewModuleParent || undefined,
 					around: cell,
 					positions: ["after-centered", "below", "above", "before"],
 					moduleMeta: grid.viewModule,
@@ -292,22 +325,26 @@ define([
 		if(p.showRowNum != false){
 			set1.unshift(rias.mixinDeep({
 				_riasrRowNumColumn: true,
+				id: "_rownumcol",
 				className: "dgrid-rownumcolumn",
 				label: "",//rias.i18n.riasw.grid.DGrid.rowNumLabel,
 				field: "rownum",
 				width: "4em",
 				//minWidth: 20,
+				align: "right",
 				//resizable: false,
 				//sortable: false,
-				//reorderable: false,
+				reorderable: false,
 				unhidable: true,
 				renderCell: function(data, cellData, cell, options){
 					var grid = this.grid,
-						//module = grid._riasrModule,
+					//module = grid._riasrModule,
 						level;
 					level = Number(options && options.queryLevel) + 1;
 					if(!isNaN(level)){
-						cell.style["text-indent"] = level + "em";
+						///cell.style["text-indent"] = level + "em";/// align: left
+						///cell.style["padding-left"] = level + "em";
+						cell.style["padding-right"] = level + "em";
 					}
 					cell.appendChild(rias.dom.doc.createTextNode(options.rowNum));
 				}
@@ -315,35 +352,6 @@ define([
 		}else{
 			p._rownumColumn = undefined;
 		}
-
-		if(!p.selectionMode){
-			if(p.selectRowTriggerOnCell == false){
-				p.selectionMode = "none";
-			}else{
-				if(p.selectRowMultiple == true){
-					p.selectionMode = "toggle";
-				}else{
-					p.selectionMode = "single";
-				}
-			}
-		}
-		delete p.selectRowTriggerOnCell;
-		delete p.selectRowMultiple;
-		if(p.selectionMode !== "none"){
-			set1.unshift({
-				_riasrSelectorColumn: true,
-				label: "",
-				field: "id",
-				width: "2em",
-				minWidth: 20,
-				resizable: false,
-				sortable: false,
-				reorderable: false,
-				unhidable: true,
-				selector: (p.selectionMode === "single" ? "radio" : "checkbox")
-			});
-		}
-		p.deselectOnRefresh = rias.ifnull(p.deselectOnRefresh, false);
 
 		if(set1.length > 0){
 			set2 = set2.concat(p.columns);
@@ -431,6 +439,7 @@ define([
 		p.addRecord = function(grid, around){
 			rias.show({
 				ownerRiasw: grid,
+				parent: grid.viewModuleParent || undefined,
 				_riaswIdOfModule: grid._riaswIdOfModule + "_addDlg",
 				moduleMeta: grid.viewModule,
 				dialogType: "modal",

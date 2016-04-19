@@ -3,7 +3,7 @@
 define([
 	"rias",
 	"dijit/form/_DateTimeTextBox",
-	"rias/riasw/form/TextBox"///extend(templateString)
+	"rias/riasw/form/TextBox"///extend()
 ], function(rias, _Widget) {
 
 	_Widget.extend({
@@ -21,7 +21,41 @@ define([
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode">'+
 					'<input class="dijitReset dijitInputInner" type="text" autocomplete="off" data-dojo-attach-point="textbox,focusNode" role="textbox" ${!nameAttrSetting}/>'+
 				'</div>'+
-			'</div>'
+			'</div>',
+
+		openDropDown: function(/*Function*/ callback){
+			// rebuild drop down every time, so that constraints get copied (#6002)
+			if(this.dropDown){
+				this.dropDown.destroy();
+			}
+			var PopupProto = rias.isString(this.popupClass) ? rias.getObject(this.popupClass, false) : this.popupClass,
+				textBox = this,
+				value = this.get("value");
+			this.dropDown = new PopupProto({
+				ownerRiasw: this,
+				onChange: function(value){
+					// this will cause InlineEditBox and other handlers to do stuff so make sure it's last
+					textBox.set('value', value, true);
+				},
+				id: this.id + "_popup",
+				dir: textBox.dir,
+				lang: textBox.lang,
+				value: value,
+				textDir: textBox.textDir,
+				currentFocus: !this._isInvalidDate(value) ? value : this.dropDownDefaultValue,
+				constraints: textBox.constraints,
+				filterString: textBox.filterString, // for TimeTextBox, to filter times shown
+				datePackage: textBox.datePackage,
+				isDisabledDate: function(/*Date*/ date){
+					// summary:
+					//		disables dates outside of the min/max of the _DateTimeTextBox
+					return !textBox.rangeCheck(date, textBox.constraints);
+				}
+			});
+
+			this.inherited(arguments);
+		}
+
 	});
 
 	return _Widget;

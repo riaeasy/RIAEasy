@@ -2,13 +2,10 @@
 
 define([
 	"rias",
-	"dijit/form/DateTextBox",
-	"rias/riasw/form/_DateTimeTextBox"///extend(templateString)
-], function(rias, _Widget) {
-
-	rias.theme.loadRiasCss([
-		"widget/Calendar.css"
-	]);
+	//"dijit/form/DateTextBox",
+	"rias/riasw/form/_DateTimeTextBox",///extend(templateString)
+	"rias/riasw/widget/Calendar"
+], function(rias, _Widget, Calendar) {
 
 	var riasType = "rias.riasw.form.DateTextBox";
 	var Widget = rias.declare(riasType, [_Widget], {
@@ -18,7 +15,21 @@ define([
 			locale: "",
 			selector: "date",
 			fullYear: true
-		}
+		},
+
+		baseClass: "dijitTextBox dijitComboBox dijitDateTextBox",
+		popupClass: Calendar,
+		_selector: "date",
+
+		// Prevent scrollbar on Calendar dropdown.  On iPad it often gets a scrollbar unnecessarily because Viewport
+		// thinks the keyboard is showing.  Even if the keyboard is showing, it disappears when the calendar gets focus.
+		maxHeight: Infinity,
+
+		// value: Date
+		//		The value of this widget as a JavaScript Date object, with only year/month/day specified.
+		//		If specified in markup, use the format specified in `stamp.fromISOString`.
+		//		set("value", ...) accepts either a Date object or a string.
+		value: new Date("")	// value.toString()="NaN"
 
 	});
 

@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 311,
+	"_rsfVersion": 318,
 	"_riaswVersion": "0.7",
 	"query": {
 	},
@@ -91,11 +91,11 @@ define([
 						}
 					],
 					"style": {
-						"border": "1px #b1badf solid",
-						"height": "100%",
-						"weith": "100%"
+						"border": "1px #b1badf solid"
 					},
-					"target": "act/xoper/query",
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/xoper/query';"
+					},
 					"topBtns": [
 						"btnAdd",
 						"btnDele"
@@ -110,6 +110,7 @@ define([
 					"caption": "查询条件",
 					"region": "right",
 					"splitter": true,
+					"toggleable": true,
 					"style": {
 						"padding": "0px",
 						"width": "160px"

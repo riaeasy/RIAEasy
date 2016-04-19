@@ -20,7 +20,8 @@
 	list-style: none;
 	/*height: 1.5em;*/
 	width: auto;
-	/*min-width: 4em;*/
+	min-width: 20px;
+	min-height: 20px;
 	/*float: left;*/
 	background-color: inherit;
 	display: inline-block;
@@ -35,8 +36,40 @@
 	background-color: skyblue;
 }
 
+.riaswDockNodeCloseIcon {
+	position: absolute;
+	display: inline-block;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -196px center;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	/*float: left;*/
+	margin: 0px;
+}
+.riaswDockNodeCloseText {
+	position: absolute;
+	/*display: -webkit-inline-box;*/
+	/*display: -webkit-box;*/
+	/*display: inline-block;*/
+	padding: 0px 4px;
+	/*top: 0px;
+	right: 0px;*/
+	color: white;
+	border: 0.15em solid white;
+	border-radius: 1em;
+	/*text-align: right;
+	font-family: Helvetica;*/
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	background-clip: padding-box;
+	-moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+	box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+}
+
 .riaswDockNodeIcon {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -32px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -52px center;
 	width: 16px;
 	height: 16px;
 	overflow: hidden;
@@ -44,19 +77,19 @@
 	margin: 1px 4px 1px 0px;
 }
 .riaswDockNodeIconDefault {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -32px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -52px center;
 }
 .riaswDockNodeShown .riaswDockNodeIcon,
 .riaswDockNodeIconShown {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -80px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -124px center;
 }
 .riaswDockNodeHidden .riaswDockNodeIcon,
 .riaswDockNodeIconHidden {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -16px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -28px center;
 }
 .riaswDockNodeTopmost .riaswDockNodeIcon,
 .riaswDockNodeIconTopmost {
-	background: url('./images/CaptionPanelBtn.png') no-repeat -96px center;
+	background: url('./images/CaptionPanelBtn.png') no-repeat -148px center;
 }
 
 .riaswDockNodeTitle {
