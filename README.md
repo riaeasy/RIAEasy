@@ -13,3 +13,9 @@
 <p style="font-size: 15px; line-height: 1.5em; text-indent: 2em;">
     RIAEasy是面向跨平台的单页应用设计平台，与传统的网页设计模式差别较大，反而更接近传统的C/S桌面应用设计模式。尽管RIAEasy也可以用来快速设计传统的网页，但这显然不是其真正的优势。正如RIAEasy的名称已经表明的，这是一个用来做RIA的工具。如果您做过C/S桌面应用，用过Delphi、C++Builder、VisualStudio这些工具，那么就更容易理解RIAEasy。
 </p>
+<p>
+    <img alt="设计器图示" src="http://www.riaeasy.com:8081/app-riaeasy/webApp/appModule/demo/demoAll_0.png" style="height: 100%; text-align: center; width: 100%;"/>
+</p>
+<p>
+    <img alt="设计器图示" src="http://www.riaeasy.com:8081/app-riaeasy/webApp/appModule/demo/demoAll_1.png" style="height: 100%; text-align: center; width: 100%;"/>
+</p>
