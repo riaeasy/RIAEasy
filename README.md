@@ -1,3 +1,8 @@
+
+<p>
+    演示站点：<a href="http://www.riaeasy.com:8081" target=\"_blank\">http://www.riaeasy.com:8081</a>
+</p>
+
 <p style="font-size: 15px; line-height: 1.5em; text-indent: 2em;">
     RIAEasy - A lightweight, modular, mobile-ready, data-driven for single-page-application.模块化、轻量的富客户/单页应用框架。
 </p>
