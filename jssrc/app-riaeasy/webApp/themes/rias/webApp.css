@@ -366,3 +366,6 @@
 .rias .dgrid-footer-summary-scroll {
   border-width: 0 0 1px 0;
 }
+.rias .dgrid-hider-menu {
+  left: 17px;
+}
