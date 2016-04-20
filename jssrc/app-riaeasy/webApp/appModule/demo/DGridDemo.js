@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 45,
+	"_rsfVersion": 46,
 	"requires": [
 	],
 	"moduleCss": [

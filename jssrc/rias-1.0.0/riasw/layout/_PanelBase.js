@@ -1517,35 +1517,22 @@ define([
 
 			this.inherited(arguments);
 
-			///FIXME:zensst. playing 时如何处理，参见 dijit.TitlePane._setContentAttr
-			if(self._started){
-				/// self.get("visible") 在 resize 中判断
-				/*if(child._isShown && child._isShown()){
-					self.needLayout = true;
-					if(child.region || child.layoutAlign){
-						self.resize();
-						//self.layout();
-					}else{
-						self.resize();
-					}
-				}*/
-				self.needLayout = true;
-				//rias.debounce(this.id + "_setupChild", function(){
-				//	self.resize();
-				//}, self, 300)();
-				if(child.region || child.layoutAlign){
-					//self.resize();
-					self.layout();
-				}else{
-					self.resize();
-				}
-			}
 		},
 		onAddChild: function(child, insertIndex){
 		},
 		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex){
 			this.onAddChild.apply(this, arguments);
 			this.inherited(arguments);
+			///必须在 _setupChild 完成后才能明确 resize
+			if(this._started){
+				this.needLayout = true;
+				if(child.region || child.layoutAlign){
+					//this.resize();
+					this.layout();
+				}else{
+					this.resize();
+				}
+			}
 		},
 		onRemoveChild: function(child){
 		},
@@ -1555,6 +1542,16 @@ define([
 			if(child && child._splitterWidget){
 				rias.destroy(child._splitterWidget);
 				child._splitterWidget = undefined;
+			}
+			///必须在 _setupChild 完成后才能明确 resize
+			if(this._started){
+				this.needLayout = true;
+				if(child.region || child.layoutAlign){
+					//this.resize();
+					this.layout();
+				}else{
+					this.resize();
+				}
 			}
 		}
 
