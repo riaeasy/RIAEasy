@@ -33,6 +33,10 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
+			///_TemplatedMixin 之后才有 containerNode
+			if(this.containerStyle){
+				rias.dom.setStyle(this.containerNode, this.containerStyle);
+			}
 		},
 		postCreate: function(){
 			//this._onSelectable(this.selectable);

@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 138,
+	"_rsfVersion": 166,
 	"_riaswVersion": "0.8",
 	"badge": "3",
 	"caption": "新的页面模块",
@@ -87,6 +87,7 @@ define([
 					"badge": 5,
 					"caption": "LeftSide 左对齐 test",
 					"closable": true,
+					"initDisplayState": "collapsed",
 					"layoutPriority": 0,
 					"liveSplitters": true,
 					"maxable": true,
@@ -159,41 +160,109 @@ define([
 					"toggleable": true,
 					"_riaswChildren": [
 						{
-							"_riaswType": "rias.riasw.html.Tag",
-							"_riaswIdOfModule": "tag5",
-							"innerHTML": "内容  竖排</br>测试长度 abcdefg hihif wlf;wefkj;welkfwel;fk",
-							"layoutPriority": 0,
-							"region": "center",
-							"splitter": false,
-							"style": {
-								"-mov-writin-mode": "vertical-lr",
-								"-webkit-writing-mode": "vertical-lr",
-								"writing-mode": "vertical-lr"
+							"_riaswType": "rias.riasw.grid.DGrid",
+							"_riaswIdOfModule": "dGridTree",
+							"cellIdOps": [
+								{
+									"func": "cellIdOnClick",
+									"name": "view",
+									"text": "查看",
+									"tooltip": "查看详细信息"
+								},
+								{
+									"func": "cellIdOnClick",
+									"name": "modi",
+									"text": "修改",
+									"tooltip": "修改详细信息"
+								},
+								{
+									"func": "cellIdOnClick",
+									"name": "copy",
+									"text": "复制",
+									"tooltip": "复制并新增"
+								}
+							],
+							"query": {
+								"parentId": "1"
 							},
-							"tagType": "label"
-						},
-						{
-							"_riaswType": "rias.riasw.layout.CaptionPanel",
-							"_riaswIdOfModule": "captionPanel1",
-							"layoutPriority": 1,
-							"region": "top",
-							"splitter": false,
+							"region": "center",
+							"structure": [
+								{
+									"field": "id",
+									"fixed": true,
+									"name": "id",
+									"width": "10em"
+								},
+								{
+									"field": "text",
+									"name": "条目名称",
+									"width": "12em"
+								},
+								{
+									"field": "idp",
+									"name": "上级id",
+									"width": "8em"
+								},
+								{
+									"field": "code",
+									"name": "条目编码",
+									"width": "8em"
+								},
+								{
+									"field": "typ",
+									"name": "条目类型",
+									"width": "6em"
+								},
+								{
+									"field": "dtyp",
+									"name": "值类型",
+									"width": "6em"
+								},
+								{
+									"field": "dval",
+									"name": "值",
+									"width": "12em"
+								},
+								{
+									"field": "ord",
+									"name": "顺序号",
+									"width": "5em"
+								},
+								{
+									"field": "children",
+									"name": "子项数",
+									"width": "5em"
+								}
+							],
 							"style": {
-								"height": "6em"
-							}
+								"border": "1px #b1badf solid"
+							},
+							"target": {
+								"$refScript": "return rias.webApp.dataServerAddr + 'act/xdict/query';"
+							},
+							"topBtns": [
+								"btnAdd",
+								"btnDele"
+							],
+							"treeColumns": [
+								"id"
+							],
+							"viewModule": "appModule/xdict/xdictForm"
 						}
 					]
 				},
 				{
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					"_riaswIdOfModule": "floatPanel",
-					"toggleOnEnter": true,
 					"caption": "float(自动展开)",
-					"initDisplayBox": {
-						"h": 240,
-						"w": 240
-					},
 					"initDisplayState": "collapsed",
+					"initPlaceToArgs": {
+						"around": {
+							"x": 120,
+							"y": 200
+						},
+						"positions": "after"
+					},
 					"layoutPriority": 0,
 					"liveSplitters": true,
 					"maxable": true,
@@ -201,10 +270,11 @@ define([
 					"splitter": true,
 					"style": {
 						"height": "8em",
-						"left": "26em",
+						"left": "10em",
 						"top": "8em",
 						"width": "20em"
 					},
+					"toggleOnEnter": true,
 					"toggleable": true,
 					"_riaswChildren": [
 						{

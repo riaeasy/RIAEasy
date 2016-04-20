@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 250,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 251,
 	"_riaswVersion": "0.7",
 	"caption": "系统字典",
 	"iconClass": "menuIcon",
@@ -54,47 +53,47 @@ define([
 							"field": "id",
 							"fixed": true,
 							"name": "id",
-							"width": "160px"
+							"width": "10em"
 						},
 						{
 							"field": "text",
 							"name": "条目名称",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "idp",
 							"name": "上级id",
-							"width": "120px"
+							"width": "8em"
 						},
 						{
 							"field": "code",
 							"name": "条目编码",
-							"width": "100px"
+							"width": "8em"
 						},
 						{
 							"field": "typ",
 							"name": "条目类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dtyp",
 							"name": "值类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dval",
 							"name": "值",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "ord",
 							"name": "顺序号",
-							"width": "48px"
+							"width": "5em"
 						},
 						{
 							"field": "children",
 							"name": "子项数",
-							"width": "48px"
+							"width": "5em"
 						}
 					],
 					"style": {

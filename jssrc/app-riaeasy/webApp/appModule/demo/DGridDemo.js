@@ -2,18 +2,17 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 40,
-	"_riaswType": "rias.riasw.studio.Module",
-	"_riaswVersion": "1.0",
-	"caption": "新的页面模块",
-	"moduleCss": [
-	],
-	"region": "center",
+	"_rsfVersion": 45,
 	"requires": [
 	],
+	"moduleCss": [
+	],
+	"_riaswVersion": "1.0",
+	"region": "center",
+	"caption": "新的页面模块",
+	"title": "新的页面模块",
 	"style": {
 	},
-	"title": "新的页面模块",
 	"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.CaptionPanel",
@@ -28,7 +27,7 @@ define([
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.grid.DGrid",
-					"_riaswIdOfModule": "dGridTree",
+					"_riaswIdOfModule": "gridTree",
 					"cellIdOps": [
 						{
 							"func": "cellIdOnClick",
@@ -58,47 +57,47 @@ define([
 							"field": "id",
 							"fixed": true,
 							"name": "id",
-							"width": "160px"
+							"width": "10em"
 						},
 						{
 							"field": "text",
 							"name": "条目名称",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "idp",
 							"name": "上级id",
-							"width": "120px"
+							"width": "8em"
 						},
 						{
 							"field": "code",
 							"name": "条目编码",
-							"width": "100px"
+							"width": "8em"
 						},
 						{
 							"field": "typ",
 							"name": "条目类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dtyp",
 							"name": "值类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dval",
 							"name": "值",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "ord",
 							"name": "顺序号",
-							"width": "48px"
+							"width": "5em"
 						},
 						{
 							"field": "children",
 							"name": "子项数",
-							"width": "48px"
+							"width": "5em"
 						}
 					],
 					"style": {
@@ -114,7 +113,16 @@ define([
 					"treeColumns": [
 						"id"
 					],
-					"viewModule": "appModule/xdict/xdictForm"
+					"viewModule": "appModule/xdict/xdictForm",
+					"onSelect": function (e){
+		var d = e.rows[0];
+		d = d && d.data;
+		if(d){
+			this._riasrModule.grid.refresh({
+				id: d.id + "%"
+			});
+		}
+	}
 				}
 			]
 		},
@@ -130,7 +138,7 @@ define([
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.grid.DGrid",
-					"_riaswIdOfModule": "dGrid1",
+					"_riaswIdOfModule": "grid",
 					"cellIdOps": [
 						{
 							"func": "cellIdOnClick",
@@ -153,47 +161,47 @@ define([
 							"field": "id",
 							"fixed": true,
 							"name": "id",
-							"width": "160px"
+							"width": "10em"
 						},
 						{
 							"field": "text",
 							"name": "条目名称",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "idp",
 							"name": "上级id",
-							"width": "120px"
+							"width": "8em"
 						},
 						{
 							"field": "code",
 							"name": "条目编码",
-							"width": "100px"
+							"width": "8em"
 						},
 						{
 							"field": "typ",
 							"name": "条目类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dtyp",
 							"name": "值类型",
-							"width": "80px"
+							"width": "6em"
 						},
 						{
 							"field": "dval",
 							"name": "值",
-							"width": "160px"
+							"width": "12em"
 						},
 						{
 							"field": "ord",
 							"name": "顺序号",
-							"width": "48px"
+							"width": "5em"
 						},
 						{
 							"field": "children",
 							"name": "子项数",
-							"width": "48px"
+							"width": "5em"
 						}
 					],
 					"style": {
