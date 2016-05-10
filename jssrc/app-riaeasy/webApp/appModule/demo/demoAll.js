@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 129,
+	"_rsfVersion": 130,
 	"caption": "标题1",
 	"region": "center",
 	"style": {
@@ -84,7 +84,7 @@ define([
 									"style": {
 									},
 									"onClick": function (){
-		rias.info("点击了按钮");
+		rias.message("点击了按钮");
 	}
 								},
 								{
@@ -111,9 +111,9 @@ define([
 								{
 									"_riaswType": "rias.riasw.studio.Module",
 									"_riaswIdOfModule": "module0",
-									"region": "center",
 									"caption": "测试模块1",
-									"moduleMeta": "appModule/demo/formEditor",
+									"moduleMeta": "appModule/demo/formEdit",
+									"region": "center",
 									"style": {
 										"border": "0px #b1badf solid",
 										"height": "100px",

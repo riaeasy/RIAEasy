@@ -9,7 +9,7 @@ define([
 ], function(rias, StackController, Menu, MenuItem){
 
 	var _riasType = "rias.riasw.layout._TabButton";
-	var TabButton = rias.declare(_riasType + (rias.has("dojo-bidi") ? "_NoBidi" : ""), StackController.StackButton, {
+	var TabButton = rias.declare(_riasType + (rias.has("dojo-bidi") ? "_NoBidi" : ""), [StackController.StackButton], {
 		// summary:
 		//		A tab (the thing you click to select a pane).
 		// description:
@@ -28,7 +28,7 @@ define([
 		},
 
 		templateString:
-			'<div role="presentation" data-dojo-attach-point="focusNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">' +
+			'<div role="presentation" data-dojo-attach-point="focusNode,buttonNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">' +
 				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitIcon dijitTabButtonIcon"></span>' +
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="tabLabel"></span>' +

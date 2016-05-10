@@ -63,7 +63,7 @@ define([
 		if(m.target){
 			if(m.op === "add"){
 				rias.xhrPost(m.target, v, _cb);
-			}else if(m.op === "modi"){
+			}else if(m.op === "modify"){
 				v._idDirty = m.query.id;
 				rias.xhrPut(m.target, v, _cb);
 			}else{

@@ -4,12 +4,30 @@
 	<property  name="filename" value="logs/RIAStudio" />
 
     <!-- 控制台输出 -->
-	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="CONSOLE.ERR" class="ch.qos.logback.core.ConsoleAppender">
+        <param name="target" value="System.err" />
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-6level[%date][%thread] %logger - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </layout>
-	</appender>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="CONSOLE.OUT" class="ch.qos.logback.core.ConsoleAppender">
+        <param name="target" value="System.out" />
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-6level[%date][%thread] %logger - %msg%n</Pattern>
+            <charset>UTF-8</charset>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
 
 	<!-- 时间滚动输出 level为 DEBUG 日志 -->
 	<appender name="file-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -85,7 +103,7 @@
 		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
 		<discardingThreshold >0</discardingThreshold>
 		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-		<queueSize>512</queueSize>
+		<queueSize>256</queueSize>
 		<!-- 添加附加的appender,最多只能添加一个 -->
 		<appender-ref ref ="file-debug"/>
 	</appender>
@@ -122,9 +140,10 @@
 			<level value="DEBUG" />
 		</logger>
 	-->
-	<root level="INFO">
+	<root level="WARN">
 		<appender-ref ref ="ASYNC"/>
-		<appender-ref ref="stdout" />
+        <appender-ref ref="CONSOLE.ERR" />
+        <appender-ref ref="CONSOLE.OUT" />
 		<!--
 		<appender-ref ref="file-error" />
 		<appender-ref ref="file-debug" />

@@ -3,7 +3,6 @@ define([
 	"dijit/_Widget"
 ], function(rias, _Widget){
 
-	///TODO:zensst.改为左右下角（或者四角）都可以拉动。
 	rias.theme.loadRiasCss([
 		"layout/Resizer.css"
 	]);
@@ -26,7 +25,7 @@ define([
 	var Widget = rias.declare(riasType, [_Widget], {
 
 		isBoxResizer: false,
-		resizeBorderWidth: 8,
+		resizeBorderWidth: 12,
 
 		// targetId: String
 		//		id of the Widget OR DomNode that I will size
@@ -85,8 +84,6 @@ define([
 				// should we modify the css for the cursor hover to n-resize nw-resize and w-resize?
 				var addClass = rias.partial(rias.dom.addClass, this.resizeHandle);
 				if(this.resizeX && this.resizeY){
-					// FIXME: need logic to determine NW or NE class to see
-					// based on which [todo] corner is clicked
 					this.isLeftToRight() ? this._resizeRight = true : this._resizeLeft = true;
 					this._resizeBottom = true;
 					addClass("riaswResizerNW");
@@ -105,24 +102,13 @@ define([
 		},
 		postCreate: function(){
 			var self = this;
-			if(!this.disabled){
-				//if(this.isBoxResizer){
-					this._boxResizerMoveHandle = this.own(rias.on(this.targetDomNode, rias.touch.move, function(evt){
-						self._getBoxResizeHandle(evt);
-					}))[0];
-				//}else{
-					//this.connect(this.resizeHandle, rias.touch.press, "_beginSizing");
-					this._resizerMoveHandle = this.own(rias.on(this.resizeHandle, rias.touch.press, function(evt){
-						self._beginSizing(evt);
-					}))[0];
-				//}
-			}
+			this.set("disabled", this.disabled);
 			if(!this.activeResize){
 				// there shall be only a single resize rubberbox that at the top
 				// level so that we can overlay it on anything whenever the user
 				// resizes something. Since there is only one mouse pointer he
 				// can't at once resize multiple things interactively.
-				this._resizerHelper = rias.by('riaswGlobalResizeHelper');///FIXME:zensst.目前不能保证是 riasw，故用 rias.registry.byId， 以后改为 rias.by。
+				this._resizerHelper = rias.by('riaswGlobalResizeHelper');
 				if(!this._resizerHelper){
 					this._resizerHelper = new _ResizerHelper({
 						ownerRiasw: rias.webApp,
@@ -199,9 +185,9 @@ define([
 			}
 			var box = rias.dom.position(this.targetDomNode, true);
 			var self = this,
-				dtop = evt.y - box.y,
+				dtop = evt.pageY - box.y,
 				dbottom = box.h - dtop,
-				dleft = evt.x - box.x,
+				dleft = evt.pageX - box.x,
 				dright = box.w - dleft,
 				oldCursor = rias.dom.getComputedStyle(this.targetDomNode).cursor,
 				cursor;

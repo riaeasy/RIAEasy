@@ -8,10 +8,11 @@ define([
 	"dijit/_Contained",
 	"dijit/_CssStateMixin",
 	"dijit/_TemplatedMixin",
+	"dijit/_KeyNavContainer",
 	"rias/riasw/layout/_Gutter",
 	"rias/riasw/layout/_Splitter",
 	"rias/riasw/layout/ToggleSplitter"
-], function(rias, _Widget, _Container, _Contained, _CssStateMixin, _TemplatedMixin, _Gutter, _Splitter, ToggleSplitter){
+], function(rias, _Widget, _Container, _Contained, _CssStateMixin, _TemplatedMixin, _KeyNavContainer, _Gutter, _Splitter, ToggleSplitter){
 
 	var _cnt = 0;
 
@@ -197,7 +198,7 @@ define([
 			//		Destroy the ContentPane and its contents
 
 			// if we have multiple controllers destroying us, bail after the first
-			if(this.isDestroyed(true)){
+			if(this.isDestroyed(false)){
 				return;
 			}
 			rias.forEach(this.getChildren(), function(child){
@@ -236,15 +237,21 @@ define([
 
 		_beforeUpdateSize: function(id){
 			this.__updateSize ? this.__updateSize++ : this.__updateSize = 1;
+			if(!id){
+				id = this.id + " - _updateSize."
+			}
 			this.__updateSizes ? this.__updateSizes.push(id) : (this.__updateSizes = []).push(id);
 		},
 		_afterUpdateSize: function(id, doResize){
 			this.__updateSize ? this.__updateSize-- : this.__updateSize = 0;
-			this.__updateSizes ? this.__updateSizes.pop(id) : this.__updateSizes = [];
+			if(!id){
+				id = this.id + " - _updateSize."
+			}
+			this.__updateSizes ? this.__updateSizes.pop() : this.__updateSizes = [];
 			///不建议自动 resize。
-			//if(doResize && !this.__updateSize){
-			//	this._internalResize(this._changeSize, this._resultSize);
-			//}
+			if(doResize && !this.__updateSize){
+				this._internalResize();
+			}
 		},
 
 		_handleOnScroll: function(){
@@ -257,11 +264,11 @@ define([
 				this.own(this._onScrollHandle = rias.on(this.domNode.parentNode, "scroll", function(){
 					//_cnt++;
 					//console.debug(self.id, _cnt, "parentScroll");
-					//rias.debounce(this.id + "_onScroll", function(){
-					if(!self.isDestroyed(true)){
-						self.resize();
-					}
-					//}, this, 800)();
+					rias.debounce(self.id + "_onScroll", function(){
+						if(!self.isDestroyed(true)){
+							self.resize();
+						}
+					}, self, 150)();
 				}));
 			}
 		},
@@ -327,7 +334,7 @@ define([
 						if(!self.isDestroyed(true)){
 							self.resize();
 						}
-					}, self, 200, function(){
+					}, self, 150, function(){
 						//console.debug(self.id, _cnt, "resizePass");
 						//console.trace();
 					})();
@@ -361,10 +368,7 @@ define([
 			//	a = 2;
 			//}
 			this.set("displayState", a);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
 		_saveToCookie: function(){
 			if(this.persist && this._started){
@@ -443,12 +447,12 @@ define([
 			rias.dom.setStyle(cn, "overflow", "hidden");
 
 			///不要传 this._contentBox，避免被修改
-			rias.dom.layoutChildren(cn, this._contentBox ? {
-				t: Math.floor(this._contentBox.t),
-				l: Math.floor(this._contentBox.l),
-				w: Math.floor(this._contentBox.w),
-				h: Math.floor(this._contentBox.h)
-			} : undefined, childrenAndSplitters, changedChildId, changedChildSize);
+			rias.dom.layoutChildren(cn, this._contentBox ? rias.dom.floorBox({
+				t: this._contentBox.t,
+				l: this._contentBox.l,
+				w: this._contentBox.w,
+				h: this._contentBox.h
+			}) : undefined, childrenAndSplitters, changedChildId, changedChildSize);
 
 			if(vf !== undefined){
 				rias.dom.setStyle(cn, "overflow", vf);
@@ -476,31 +480,14 @@ define([
 				rg = this.region,
 				noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center"),
 				nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
-			function _getBox(b){
-				return b ? {
-					t: b.t,
-					l: b.l,
-					w: nowidth ? undefined : b.w,
-					h: noheight ? undefined : b.h
-				} : {};
-			}
-			function _floor(b){
-				if(b.h){
-					b.h = Math.floor(b.h);
-				}
-				if(b.w){
-					b.w = Math.floor(b.w);
-				}
-				return b;
-			}
 
 			cs = dom.getComputedStyle(node);
 			if(node === this.containerNode){
-				_floor(box = dom.getMarginBox(node, cs));
+				box = dom.getMarginBox(node, cs);
 				box = dom.marginBox2contentBox(node, box, cs);
 			}else{
 				if(rg || !noheight || !nowidth){
-					_floor(box = dom.getContentBox(node, cs));
+					box = dom.getContentBox(node, cs);
 					node = this.containerNode;
 					if(this.captionNode && this.showCaption){
 						//h = (this.showCaption && this.captionNode ? this._captionHeight = rias.dom.getMarginBox(this.captionNode).h : this._captionHeight = 0);
@@ -514,14 +501,15 @@ define([
 					}
 					if(this.wrapperNode){
 						cs = dom.getComputedStyle(this.wrapperNode);
-						dom.setMarginBox(this.wrapperNode, _getBox(box), cs);
+						dom.setMarginBox(this.wrapperNode, box, cs);
 						box = dom.marginBox2contentBox(this.wrapperNode, box, cs);
 					}
 					if(this._actionBar){
 						box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
 					}
 					cs = dom.getComputedStyle(node);
-					dom.setMarginBox(node, _getBox(box), cs);
+					rias.dom.floorBox(box);
+					dom.setMarginBox(node, box, cs);
 					///由于在缩小的时候，有 overflow 存在，重新获取 box 的话，导致 _contentBox 失真
 					///box = dom.getContentBox(this.containerNode);
 					box = dom.marginBox2contentBox(node, box, cs);
@@ -532,15 +520,16 @@ define([
 					nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
 					if(!noheight || !nowidth){
 						cs = dom.getComputedStyle(node);
-						_floor(box = dom.getContentBox(node, cs));
-						box = dom.marginBox2contentBox(node, _getBox(box), cs);
+						box = dom.getContentBox(node, cs);
+						box = dom.marginBox2contentBox(node, box, cs);
 					}else{
 						box = undefined;
 					}
 				}
 			}
+			rias.dom.floorBox(box);
 			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
-				Math.abs(box.w - this._contentBox.w) > 0.5 || Math.abs(box.h - this._contentBox.h) > 0.5){
+				Math.abs(box.w - this._contentBox.w) > 0.01 || Math.abs(box.h - this._contentBox.h) > 0.01){
 				////if(this.needLayout || !box || !this._contentBox || box.w != this._contentBox.w || box.h != this._contentBox.h){
 				this._contentBox = box;
 				this.needLayout = true;
@@ -552,7 +541,7 @@ define([
 		layout: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
 			var self = this,
 				cn = this.containerNode,
-				v,// = (this.isLoaded != false) && !this.__updateSize && this.get("visible"),
+				v,
 				vf,
 				vfx,
 				vfy;
@@ -561,15 +550,9 @@ define([
 				this.needLayout = true;
 				return;
 			}
-			//if(!this._isShown()){
-			//	this.needLayout = true;
-			//	return;
-			//}
 			if(v = this._beforeLayout()){
 				this._layoutChildren(changedChildId, changedChildSize);
-
 				this.needLayout = false;
-
 				this.afterLayout();
 			}
 			return v;
@@ -579,21 +562,14 @@ define([
 		afterResize: function(){
 		},
 		_internalResize: function(changeSize, resultSize){
-			//var curr = new Date().valueOf();
-			//_cnt++;
-			//console.debug(this.id, _cnt, "resize in.");
-			var r;
+			//var dt0 = new Date();
 			if(this.isDestroyed(true)){
-				//console.debug(c, this.id, "resize out:", r);
 				return;
 			}
-			var v,// = (this.isLoaded != false) && !this.__updateSize && this.get("visible"),
-			//s, pb,
+			var v,
 				box,
 				dom,
 				dns,
-			//cs,
-			//h,
 				isV = (this.region == "left" || this.region == "right"),
 				node;
 			v = this._started && !this.__updateSize && this.get("visible");
@@ -601,7 +577,6 @@ define([
 				//this._needResize = true;
 				this._changeSize = rias.mixin(this._changeSize, changeSize);
 				this._resultSize = rias.mixin(this._resultSize, resultSize);
-				//console.debug(c, this.id, "resize out:", r);
 				return;
 			}
 			this._wasResized = true;
@@ -654,34 +629,15 @@ define([
 					}
 				}
 
-				r = (r = this.layout()) ? "layoutChildren" : "layout";
+				this.layout();
 			}
 
-			//this._needResize = false;
 			this.afterResize();
-			//console.debug("_internalResize: ", this.id, new Date().valueOf() - curr);
-			//console.debug(c, this.id, "resize out:", r + " - " + rias.toJson(box));
+			//console.debug(this.id + " resize: " + (new Date() - dt0) + " ms.");
 		},
 		_checkRestrict: function(box){
 			var dns = this.domNode.style;
-			/*if(this.minSize.h >= 0 && box.h < this.minSize.h){
-				box.h = this.minSize.h;
-				//changed = true;///防止自动布局时修改 style，改为设置 domNode 的 min-height
-			}
-			if(this.maxSize.h > 0 && box.h > this.maxSize.h){
-				box.h = this.maxSize.h;
-				//changed = true;
-			}
-			if(this.minSize.w >= 0 && box.w < this.minSize.w){
-				box.w = this.minSize.w;
-				//changed = true;
-			}
-			if(this.maxSize.w > 0 && box.w > this.maxSize.w){
-				box.w = this.maxSize.w;
-				//changed = true;
-			}*/
 			if(this.restrictPadding >= 0 || this.isShowMax()){
-				///TODO:zensst. 是否解耦 webApp?
 				var r = this.restrictPadding,
 					p = rias.dom.getContentBox(this.getParentNode());
 				///先判断 height，然后才能判断 top。
@@ -746,6 +702,16 @@ define([
 			return value;
 		},
 		onDisplayStateChanged: function(value){},
+		_setDisplayStateAttr: function(value){
+			value = displayStateStr(value);
+			if(value === displayClosed){
+				rias.when(this.onClose(), rias.hitch(this, function(){
+					this._set("displayState", value);
+				}));
+			}else{
+				this._set("displayState", value);
+			}
+		},
 		_onDisplayState: function(value, oldValue){
 			var self = this;
 			if(rias.isNumber(value)){
@@ -1219,13 +1185,10 @@ define([
 		},
 		hide: function(){
 			this.set("displayState", Widget.displayHidden);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
 
-		onClose: function(closeResult){
+		onClose: function(){
 			return this.canClose != false;/// _close 在 DialogPanel 中设置
 		},
 		_close: function(){
@@ -1234,14 +1197,8 @@ define([
 			}
 		},
 		close: function(){
-			if(this.onClose(this.closeResult)){
-				this.set("displayState", Widget.displayClosed);
-				//if(this._playingDeferred){
-				//	return this._playingDeferred;
-				//}
-				return true;
-			}
-			return false;
+			this.set("displayState", Widget.displayClosed);
+			return this._playingDeferred || this.canClose;
 		},
 
 		onShow: function(){
@@ -1261,10 +1218,7 @@ define([
 		},
 		show: function(){
 			this.set("displayState", Widget.displayShowNormal);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
 
 		onRestore: function(){
@@ -1285,7 +1239,7 @@ define([
 				return false;
 			}
 			if(!self.get("visible") && forceVisible){
-				d = rias.newDeferred(),
+				d = rias.newDeferred();
 				parent = self.getParent();
 				if(!parent.get("visible")){
 					if(rias.isFunction(parent.restore)){
@@ -1303,11 +1257,7 @@ define([
 			}
 			rias.when(d, function(){
 				self.set("displayState", Widget.displayShowNormal);
-				if(self._playingDeferred){
-					return self._playingDeferred;
-				}else{
-					return true;
-				}
+				return self._playingDeferred || true;
 			});
 			return d.promise || d;
 		},
@@ -1334,10 +1284,7 @@ define([
 		},
 		expand: function(){
 			this.set("displayState", Widget.displayShowNormal);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
 
 		onCollapse: function(){
@@ -1365,10 +1312,7 @@ define([
 		},
 		collapse: function(){
 			this.set("displayState", Widget.displayCollapsed);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
 		//shrink: function(){
 		//	this.set("displayState", Widget.displayCollapsed);
@@ -1387,18 +1331,8 @@ define([
 		},
 		showMax: function(){
 			this.set("displayState", Widget.displayShowMax);
-			if(this._playingDeferred){
-				return this._playingDeferred;
-			}
-			return true;
+			return this._playingDeferred || true;
 		},
-		//maximize: function(){
-		//	this.set("displayState", Widget.displayShowMax);
-		//	if(this._playingDeferred){
-		//		return this._playingDeferred;
-		//	}
-		//	return true;
-		//},
 
 		isDisplayState: function(state){
 			switch(state){
@@ -1451,7 +1385,7 @@ define([
 			return this.isDisplayState(Widget.displayTransparent);
 		},
 
-		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex){
+		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex, resize){
 			var self = this,
 				region = child.region,
 				ltr = child.isLeftToRight();
@@ -1517,26 +1451,33 @@ define([
 
 			this.inherited(arguments);
 
+			if(resize != false && this._started && !this.isDestroyed(true)){
+				this.needLayout = true;
+				//var self = this;
+				//rias.debounce(this.id + "addChild", function(){
+				//	self.resize();
+				//}, self, 15)();
+				this.resize();
+			}
 		},
 		onAddChild: function(child, insertIndex){
 		},
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex){
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
 			this.onAddChild.apply(this, arguments);
 			this.inherited(arguments);
 			///必须在 _setupChild 完成后才能明确 resize
-			if(this._started){
+			/*if(this._started){
 				this.needLayout = true;
-				if(child.region || child.layoutAlign){
-					//this.resize();
-					this.layout();
-				}else{
-					this.resize();
-				}
-			}
+				//var self = this;
+				//rias.debounce(this.id + "addChild", function(){
+				//	self.resize();
+				//}, self, 15)();
+				this.defer("resize");
+			}*/
 		},
 		onRemoveChild: function(child){
 		},
-		removeChild: function(/*dijit/_WidgetBase*/ child){
+		removeChild: function(/*dijit/_WidgetBase*/ child, resize){
 			this.onRemoveChild(arguments);
 			this.inherited(arguments);
 			if(child && child._splitterWidget){
@@ -1544,15 +1485,14 @@ define([
 				child._splitterWidget = undefined;
 			}
 			///必须在 _setupChild 完成后才能明确 resize
-			if(this._started){
+			/*if(this._started){
 				this.needLayout = true;
-				if(child.region || child.layoutAlign){
-					//this.resize();
-					this.layout();
-				}else{
-					this.resize();
-				}
-			}
+				//var self = this;
+				//rias.debounce(this.id + "removeChild", function(){
+				//	self.resize();
+				//}, self, 15)();
+				this.defer("resize");
+			}*/
 		}
 
 	});

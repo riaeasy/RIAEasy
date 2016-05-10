@@ -31,6 +31,12 @@ define([
 			//rias.mixin(this, options);
 		},
 
+		postMixInProperties: function(){
+			if(!this.ownerRiasw || !this._riasrOwner){
+				this.ownerRiasw = this.objectStore.ownerRiasw || this.objectStore._riasrOwner;
+			}
+			this.inherited(arguments);
+		},
 		postCreate: function(params){
 			this.serverStore = this.objectStore.serverStore;
 			this.inherited(arguments);

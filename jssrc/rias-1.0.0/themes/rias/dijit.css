@@ -86,7 +86,7 @@ TABLE.dijitSelect {
 .dijitTextBox .dijitSpinnerButtonContainer,
 .dijitTextBox .dijitArrowButtonContainer,
 .dijitValidationTextBox .dijitValidationContainer {
-	float: right;
+	/*float: right;*/
 	text-align: center;
 }
 .dijitSelect input.dijitInputField,
@@ -427,10 +427,11 @@ div.dijitArrowButton {
 	/* for when an <input> is embedded inside an inline-block <div> with a size and border */
 	border:0 !important;
 	background-color:transparent !important;
-	width:100% !important;
+	width: 100% !important;
+	height: 100% !important;
 	/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
-	padding-left: 0 !important;
-	padding-right: 0 !important;
+	padding-left: 0.25em !important;
+	padding-right: 0.25em !important;
 	margin-left: 0 !important;
 	margin-right: 0 !important;
 }

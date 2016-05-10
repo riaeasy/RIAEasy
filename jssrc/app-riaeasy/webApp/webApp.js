@@ -16,7 +16,7 @@ define([
 	var d = rias.newDeferred();
 	if(!rias.webApp){
 		rias.createWebApp({
-			id: rias.dom.body.id ? rias.dom.body.id : "webApp"
+			id: rias.dom.docBody.id ? rias.dom.docBody.id : "webApp"
 		}).then(function(webApp){
 			rias.setObject("webApp", webApp);
 			webApp._scopeName = "webApp";

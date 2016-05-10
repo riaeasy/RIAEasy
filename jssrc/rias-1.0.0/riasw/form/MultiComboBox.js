@@ -2,31 +2,59 @@
 
 define([
 	"rias",
-	"dojox/form/MultiComboBox",
-	"rias/riasw/form/ComboBox"///extend(templateString)
-], function(rias, _Widget) {
-
-	_Widget.extend({
-		templateString:
-			'<div class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}" role="combobox" aria-haspopup="true" data-dojo-attach-point="_popupStateNode">'+
-				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation">'+
-				'</div>'+
-				'<div class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer"'+
-					'data-dojo-attach-point="_buttonNode" role="presentation">'+
-					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660;" type="text" tabIndex="-1" readonly="readonly" role="button presentation" aria-hidden="true"'+
-						'${_buttonInputDisabled}/>'+
-				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
-				'</div>'+
-				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode">'+
-					'<input class="dijitReset dijitInputInner" type="text" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" autocomplete="off" role="textbox" ${!nameAttrSetting}/>'+
-				'</div>'+
-			'</div>'
-	});
+	"rias/riasw/form/ValidationTextBox",
+	"rias/riasw/form/ComboBoxMixin"
+], function(rias, _Widget, ComboBoxMixin) {
 
 	var riasType = "rias.riasw.form.MultiComboBox";
-	var Widget = rias.declare(riasType, [_Widget], {
+	var Widget = rias.declare(riasType, [_Widget, ComboBoxMixin], {
+
+		delimiter: ",",
+
+		_previousMatches: false,
+
+		_setValueAttr: function(value){
+			if(this.delimiter && value.length != 0){
+				value = value + this.delimiter+" ";
+				arguments[0] = this._addPreviousMatches(value);
+			}
+			this.inherited(arguments);
+		},
+
+		_addPreviousMatches: function(/*String*/ text){
+			if(this._previousMatches){
+				if(!text.match(new RegExp("^" + this._previousMatches))){
+					text = this._previousMatches+text;
+				}
+				text = this._cleanupDelimiters(text);
+			}
+			return text; // String
+		},
+
+		_cleanupDelimiters: function(/*String*/ text){
+			if(this.delimiter){
+				text = text.replace(new RegExp("  +"), " ");
+				text = text.replace(new RegExp("^ *" + this.delimiter+"* *"), "");
+				text = text.replace(new RegExp(this.delimiter+" *" + this.delimiter), this.delimiter);
+			}
+			return text;
+		},
+
+		_autoCompleteText: function(/*String*/ text){
+			arguments[0] = this._addPreviousMatches(text);
+			this.inherited(arguments);
+		},
+
+		_startSearch: function(/*String*/ text){
+			text = this._cleanupDelimiters(text);
+			var re = new RegExp("^.*" + this.delimiter+" *");
+
+			if((this._previousMatches = text.match(re))){
+				arguments[0] = text.replace(re, "");
+			}
+			this.inherited(arguments);
+		}
+
 	});
 
 	Widget._riasdMeta = {
@@ -47,7 +75,7 @@ define([
 			queryExpr: "${0}*",
 			autoComplete: true,
 			searchDelay: 200,
-			searchAttr: "name",
+			//searchAttr: "id",
 			ignoreCase: true,
 			hasDownArrow: true,
 			delimiter: ",",
@@ -175,7 +203,7 @@ define([
 			},
 			"searchAttr": {
 				"datatype": "string",
-				"defaultValue": "name",
+				"defaultValue": "id",
 				"title": "Search Attribute"
 			},
 			"queryExpr": {

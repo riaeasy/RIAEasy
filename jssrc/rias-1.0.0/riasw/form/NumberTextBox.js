@@ -14,9 +14,9 @@ define([
 				'</div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode">'+
 					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" autocomplete="off" type="${type} ${!nameAttrSetting}"/>'+
-				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
+						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'</div>'+
 				'</div>'+
 			'</div>'
 	});

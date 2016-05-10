@@ -24,18 +24,18 @@ define([
 			{
 				"_riaswType": "rias.riasw.studio.Module",
 				"_riaswIdOfModule": "baseModule",
-				"disabled": {
-					"$refObj": "disabled"
+				"initDisabled": {
+					"$refObj": "module.initDisabled"
 				},
 				"moduleMeta": "appModule/xright/xrightBase",
 				"op": {
-					"$refScript": "return module.op;"
+					"$refObj": "module.op"
 				},
 				"query": {
-					"$refScript": "return module.query;"
+					"$refObj": "module.query"
 				},
-				"readOnly": {
-					"$refObj": "readOnly"
+				"initReadOnly": {
+					"$refObj": "module.initReadOnly"
 				},
 				"region": "center"
 			}

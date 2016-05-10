@@ -17,8 +17,7 @@ define([
 	var Widget = rias.declare(riasType, [ContentPanel, _BadgeMixin], {
 		templateString:
 			"<div role='region' data-dojo-attach-event='onmouseenter: _onDomNodeEnter, onmouseleave: _onBlur'>"+
-				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' tabindex='-1'" +
-					" data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown'>"+
+				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' tabindex='-1' data-dojo-attach-event='ondblclick:_onToggleMax, onkeydown:_onToggleKeydown' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswCaptionPanelIconNode riaswCaptionPanelToggleIconNode riaswCaptionPanelToggleIcon' role='presentation'></span>"+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
@@ -239,12 +238,19 @@ define([
 					this.dockTo.removeTarget(this);
 				}
 				this.dockTo = null;
-				this.restore(false);
-			}else if(value && rias.isInstanceOf(value, DockBar)){
-				//if(value != this.dockTo){
-				this.dockTo = value;
-				if(this.alwaysShowDockNode){
-					this.dockTo.addTarget(this);
+				if(this.isCollapsed()){
+					this.restore(false);
+				}
+			}else if(value){
+				value = rias.by(value);
+				if(rias.isInstanceOf(value, DockBar)){
+					//if(value != this.dockTo){
+					this.dockTo = value;
+					if(this.alwaysShowDockNode){
+						this.dockTo.addTarget(this);
+					}
+				}else{
+					this.dockTo = null;
 				}
 			}else{
 				//console.warn("The dockTo of '" + value + "' not exists or not the DockBar Widget.");
@@ -265,8 +271,8 @@ define([
 		},
 
 		_onKey: function(/*Event*/ evt){
-			if(evt.keyCode == rias.keys.TAB){
-				var fn = rias.dom.focusedNode;///不需要判断 this._focusedNode ？
+			/*if(evt.keyCode == rias.keys.TAB){
+				var fn = rias.dom.focusedNode;
 				//if(rias.dom.isDescendant(fn, this.domNode) && fn.focus){
 				//	fn.focus();
 				//}
@@ -292,7 +298,7 @@ define([
 					evt.stopPropagation();
 					evt.preventDefault();
 				}
-			}else if(this.closable && evt.keyCode == rias.keys.ESCAPE){
+			}else*/ if(this.closable && evt.keyCode == rias.keys.ESCAPE){
 				this.defer(this.cancel);
 				evt.stopPropagation();
 				evt.preventDefault();
@@ -322,7 +328,11 @@ define([
 		_onToggleClick: function(/*Event*/e){
 			e.preventDefault();
 			e.stopPropagation();
-			this.toggle();
+			//if(this.maxable){
+			//	this.toggleMax();
+			//}else{
+				this.toggle();
+			//}
 		},
 		_onToggleKeydown: function(/*Event*/ e){
 			if(e.keyCode == rias.keys.DOWN_ARROW || e.keyCode == rias.keys.UP_ARROW){

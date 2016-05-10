@@ -242,7 +242,7 @@ define([
 	});
 
 	if(rias.has("dojo-bidi")){
-		AccordionInnerContainer = rias.declare("rias.riasw.layout._AccordionInnerContainer", AccordionInnerContainer, {
+		AccordionInnerContainer = rias.declare("rias.riasw.layout._AccordionInnerContainer", [AccordionInnerContainer], {
 			postCreate: function(){
 				this.inherited(arguments);
 
@@ -353,12 +353,9 @@ define([
 			return true;
 		},
 
-		_setupChild: function(child, added){
-			// Overrides _LayoutWidget._setupChild().
-			// Put wrapper widget around the child widget, showing title
-
+		_setupChild: function(child, added, insertIndex, resize){
 			if(added && !child._wrapperWidget){
-				child._wrapperWidget = AccordionInnerContainer({
+				child._wrapperWidget = new AccordionInnerContainer({
 					ownerRiasw: this,
 					contentWidget: child,
 					buttonWidget: this.buttonWidget,
@@ -373,15 +370,21 @@ define([
 			this.inherited(arguments);
 
 			if(added){
-				// Since we are wrapping children in AccordionInnerContainer, replace the default
-				// wrapper that we created in StackPanel.
 				rias.dom.place(child.domNode, child._wrapper, "replace");
 			}
 		},
-
-		removeChild: function(child){
-			// Overrides _LayoutWidget.removeChild().
-
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
+			this.inherited(arguments, [child, insertIndex, false]);
+			if(this._started && !this.isDestroyed(true)){
+				this.needLayout = true;
+				//var self = this;
+				//rias.debounce(this.id + "addChild", function(){
+				//	self.resize();
+				//}, self, 15)();
+				this.defer("resize");
+			}
+		},
+		removeChild: function(child, resize){
 			rias.dom.removeClass(child.domNode, "dijitHidden");
 
 			// Destroy wrapper widget first, before StackPanel.getChildren() call.
@@ -395,6 +398,14 @@ define([
 			}
 
 			this.inherited(arguments);
+			if(this._started && !this.isDestroyed(true)){
+				this.needLayout = true;
+				//var self = this;
+				//rias.debounce(this.id + "addChild", function(){
+				//	self.resize();
+				//}, self, 15)();
+				this.defer("resize");
+			}
 		},
 
 		getChildren: function(){

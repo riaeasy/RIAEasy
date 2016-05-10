@@ -4,84 +4,30 @@ define([
 	"rias",
 	"dijit/form/Select",
 	"dijit/form/_FormSelectWidget",
+	"rias/riasw/widget/MenuItem",
+	"rias/riasw/widget/MenuSeparator",
 	"rias/riasw/store/StoreBase",
 	"rias/riasw/store/ObjectStore"
-], function(rias, _Widget, _FormSelectWidget, StoreBase, ObjectStore) {
-
-	_FormSelectWidget.extend({
-		_setStoreAttr: function(val){
-			var store = val;
-			if(this._created){		// don't repeat work that will happen in postCreate()
-				if(!store.getFeatures && rias.isInstanceOf(store, StoreBase)){
-					val = new ObjectStore({
-						idProperty: store.idAttribute || "id",
-						labelProperty: store.labelAttribute || "label",
-						objectStore: store
-					});
-				}
-				this._deprecatedSetStore(val);
-			}
-		},
-		postCreate: function(){
-			// summary:
-			//		sets up our event handling that we need for functioning
-			//		as a select
-			this.inherited(arguments);
-
-			// Make our event connections for updating state
-			this.own(rias.after(this, "onChange", rias.hitch(this, "_updateSelection")));
-
-			//		Connects in our store, if we have one defined
-			var store = this.store;
-			if(store && (store.getIdentity || store.getFeatures()["dojo.data.api.Identity"])){
-				// Temporarily set our store to null so that it will get set
-				// and connected appropriately
-				this.store = null;
-				if(!store.getFeatures && rias.isInstanceOf(store, StoreBase)){
-					this._deprecatedSetStore(new ObjectStore({
-						idProperty: store.idAttribute || "id",
-						labelProperty: store.labelAttribute || "label",
-						objectStore: store
-					}), this._oValue, {query: this.query, queryOptions: this.queryOptions});
-				}else{
-					this._deprecatedSetStore(store, this._oValue, {query: this.query, queryOptions: this.queryOptions});
-				}
-			}
-
-			this._storeInitialized = true;
-		}
-	});
+], function(rias, _Widget, _FormSelectWidget, MenuItem, MenuSeparator) {
 
 	_Widget.extend({
 		templateString:
-			'<div data-dojo-attach-point="_popupStateNode" class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}" role="combobox" aria-haspopup="true">'+
-				'<div data-dojo-attach-point="labelNode" class="dijitReset riaswTextBoxLabel" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation">'+
-				'</div>'+
-				'<div data-dojo-attach-point="validationNode" class="dijitReset dijitValidationContainer">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
-				'</div>'+
-				'<div data-dojo-attach-point="containerNode,textDirNode,_aroundNode" class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" role="presentation">'+
-					'<input type="text" data-dojo-attach-point="textbox,focusNode" class="dijitReset dijitInputInner" aria-labelledby="${id}_labelNode" role="textbox" readonly="readonly" ${!nameAttrSetting}/>'+
+			'<div class="dijit dijitReset dijitInline dijitLeft" data-dojo-attach-point="_buttonNode,_popupStateNode" id="widget_${id}" role="listbox" aria-haspopup="true">'+
+				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation"></div>'+
+				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode,focusNode,textDirNode,_aroundNode" role="presentation">'+
+					'<input type="text" class="dijitReset dijitInputInner" data-dojo-attach-point="textbox" aria-labelledby="${id}_labelNode" role="textbox" readonly="readonly" ${!nameAttrSetting}/>'+
 					'<input type="hidden" data-dojo-attach-point="valueNode" value="${value}" aria-hidden="true" ${!nameAttrSetting}/>'+
+					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
+						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'</div>'+
 				'</div>'+
-				'<div data-dojo-attach-point="_buttonNode" class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" role="presentation">'+
+				'<div class="dijitReset dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="titleNode" role="presentation">'+
 					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660; " type="text" tabIndex="-1" readonly="readonly" role="presentation" aria-hidden="true" ${_buttonInputDisabled}/>'+
 				'</div>'+
 			'</div>',
 
 		cssStateNodes: {
-			"_buttonNode": "dijitDownArrowButton"
-		},
-
-		_setDisplay: function(/*String*/ newDisplay){
-			// summary:
-			//		sets the display for the given value (or values)
-
-			var lbl = (this.labelType === 'text' ? (newDisplay || '')
-				.replace(/&/g, '&amp;').replace(/</g, '&lt;') :
-				newDisplay) || this.emptyLabel;
-			//this.containerNode.innerHTML = '<span role="option" class="dijitReset dijitInline ' + this.baseClass.replace(/\s+|$/g, "Label ") + '">' + lbl + '</span>';
-			this.textbox.value = lbl;
+			"titleNode": "dijitDownArrowButton"
 		},
 
 		label: "",
@@ -146,6 +92,106 @@ define([
 			}
 		},
 
+		_setDisplay: function(/*String*/ newDisplay){
+			// summary:
+			//		sets the display for the given value (or values)
+
+			var lbl = (this.labelType === 'text' ? (newDisplay || '').replace(/&/g, '&amp;').replace(/</g, '&lt;') : newDisplay) || this.emptyLabel;
+			//this.containerNode.innerHTML = '<span role="option" class="dijitReset dijitInline ' + this.baseClass.replace(/\s+|$/g, "Label ") + '">' + lbl + '</span>';
+			///修改了 containerNode，用 textbox
+			this.textbox.value = lbl;
+		},
+		_fillContent: function(){
+			// summary:
+			//		Set the value to be the first, or the selected index
+			this.inherited(arguments);
+			// set value from selected option
+			if(this.options.length && !this.value && this.srcNodeRef){
+				var si = this.srcNodeRef.selectedIndex || 0; // || 0 needed for when srcNodeRef is not a SELECT
+				this._set("value", this.options[si >= 0 ? si : 0].value);
+			}
+			// Create the dropDown widget
+			this.dropDown = new _Widget._Menu({
+				///增加 ownerRiasw
+				ownerRiasw: this,
+				id: this.id + "_menu",
+				parentWidget: this
+			});
+			rias.dom.addClass(this.dropDown.domNode, this.baseClass.replace(/\s+|$/g, "Menu "));
+		},
+		_getMenuItemForOption: function(/*_FormSelectWidget.__SelectOption*/ option){
+			// summary:
+			//		For the given option, return the menu item that should be
+			//		used to display it.  This can be overridden as needed
+			if(!option.value && !option.label){
+				// We are a separator (no label set for it)
+				return new MenuSeparator({
+					ownerRiasw: this,
+					ownerDocument: this.ownerDocument
+				});
+			}else{
+				// Just a regular menu option
+				var click = rias.hitch(this, "_setValueAttr", option);
+				var item = new MenuItem({
+					ownerRiasw: this,
+					option: option,
+					label: (this.labelType === 'text'
+						? (option.label || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;')
+						: option.label) || this.emptyLabel,
+					onClick: click,
+					ownerDocument: this.ownerDocument,
+					dir: this.dir,
+					textDir: this.textDir,
+					disabled: option.disabled || false
+				});
+				item.focusNode.setAttribute("role", "option");
+				return item;
+			}
+		},
+		_loadChildren: function(/*Boolean*/ loadMenuItems){
+			// summary:
+			//		Resets the menu and the length attribute of the button - and
+			//		ensures that the label is appropriately set.
+			// loadMenuItems: Boolean
+			//		actually loads the child menu items - we only do this when we are
+			//		populating for showing the dropdown.
+
+			if(loadMenuItems === true){
+				// this.inherited destroys this.dropDown's child widgets (MenuItems).
+				// Avoid this.dropDown (Menu widget) having a pointer to a destroyed widget (which will cause
+				// issues later in _setSelected). (see #10296)
+				if(this.dropDown){
+					delete this.dropDown.focusedChild;
+					this.focusedChild = null;
+				}
+				if(this.options.length){
+					this.inherited(arguments);
+				}else{
+					// Drop down menu is blank but add one blank entry just so something appears on the screen
+					// to let users know that they are no choices (mimicing native select behavior)
+					rias.forEach(this._getChildren(), function(child){
+						child.destroyRecursive();
+					});
+					var item = new MenuItem({
+						ownerRiasw: this,
+						ownerDocument: this.ownerDocument,
+						label: this.emptyLabel
+					});
+					this.dropDown.addChild(item);
+				}
+			}else{
+				this._updateSelection();
+			}
+
+			this._isLoaded = false;
+			this._childrenLoaded = true;
+
+			if(!this._loadingStore){
+				// Don't call this if we are loading - since we will handle it later
+				this._setValueAttr(this.value, false);
+			}
+		},
+
 		startup: function(){
 			if(this._started){
 				return;
@@ -158,43 +204,48 @@ define([
 			this.resize();
 		},
 		resize: function(changeSize, resultSize){
-			var dn = this.domNode,
-				ln = this.labelNode,
-				bn = this._buttonNode,
-				cn = this.containerNode,
-				mb = resultSize || {},
-				cs,
-				me,
-				be,
-				pe;
 			if(this.isDestroyed(true)){
 				return;
 			}
+			var dn = this.domNode,
+				ln = this.labelNode,
+				bn = this.titleNode,///注意，不是 buttonNode
+				cn = this.containerNode,
+				cs,
+				h;
 			if(changeSize){
 				rias.dom.setMarginBox(dn, changeSize);
 			}
-			rias.mixin(mb, changeSize || {}); // changeSize overrides resultSize
-			if(!("h" in mb) || !("w" in mb)){
-				mb = rias.mixin(rias.dom.getMarginBox(dn), mb); // just use domGeometry.setMarginBox() to fill in missing values
-			}
+			changeSize = rias.dom.getContentBox(dn);
+			changeSize.h = h = Math.floor(changeSize.h);
+			changeSize.w = Math.floor(changeSize.w);
+			//if(rias.has("ff")){
+				--changeSize.w;
+			//}
 
-			this._contentBox = rias.dom.getContentBox(dn);
 			if(bn){
-				this._contentBox.w -= rias.dom.getMarginBox(bn).w;
 				cs = rias.dom.getComputedStyle(bn);
-				me = rias.dom.getMarginExtents(bn, cs);
-				be = rias.dom.getBorderExtents(bn, cs);
-				pe = rias.dom.getPadExtents(bn, cs);
-				rias.dom.setStyle(bn, "height", (this._contentBox.h - me.h - be.h - pe.h) + "px");
+				resultSize = rias.dom.getMarginBox(bn, cs);
+				changeSize.w -= resultSize.w;
+				rias.dom.setMarginBox(bn, {
+					h: h
+				}, cs);
 			}
 			if(this.showLabel){
-				this._contentBox.w -= rias.dom.getMarginBox(ln).w;
-				rias.dom.setStyle(ln, "height", this._contentBox.h + "px");
-				rias.dom.setStyle(ln, "line-height", this._contentBox.h + "px");
+				cs = rias.dom.getComputedStyle(ln);
+				resultSize = rias.dom.getMarginBox(ln, cs);
+				changeSize.w -= resultSize.w;
+				rias.dom.setStyle(ln, "line-height", h + "px");
+				rias.dom.setMarginBox(ln, {
+					h: h
+				}, cs);
 			}
-			rias.dom.setMarginBox(cn, this._contentBox);
-			rias.dom.setStyle(this.textbox, "height", this._contentBox.h + "px");
-			rias.dom.setStyle(this.textbox, "line-height", this._contentBox.h + "px");
+			/// dijit.Editor 打包（Build）后，dijit.form.TextBox 不能 hack。
+			rias.dom.setMarginBox(cn, {
+				h: h,
+				w: Math.floor(changeSize.w)
+			});
+			rias.dom.setStyle(this.textbox, "line-height", h + "px");
 		},
 		layout: function(){
 			this.resize();

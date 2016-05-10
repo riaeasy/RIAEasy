@@ -44,10 +44,10 @@ define([
 	"dojo/has!touch?dgrid/util/touch"
 
 ], function(rias,
-            List, Grid, OnDemandList, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
-            //GridFromHtml, GridWithColumnSetsFromHtml,
-            ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, Dnd, Pagination,
-            misc, touchUtil) {
+			List, Grid, OnDemandList, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
+			//GridFromHtml, GridWithColumnSetsFromHtml,
+			ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, Dnd, Pagination,
+			misc, touchUtil) {
 
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
 	var autoId = 0;
@@ -104,7 +104,7 @@ define([
 			this._introspect();
 
 			this.ownerDocument = this.ownerDocument || (srcNodeRef ? srcNodeRef.ownerDocument : rias.dom.doc);
-			this.ownerDocumentBody = rias.dom.documentBody(this.ownerDocument);
+			this.ownerDocumentBody = rias.dom.body(this.ownerDocument);
 			var domNode = this.domNode = srcNodeRef || rias.dom.create('div'),
 				cls;
 
@@ -161,8 +161,8 @@ define([
 				isRTL;
 
 			// Detect RTL on html/body nodes; taken from dojo/dom-geometry
-			isRTL = this.isRTL = (rias.dom.body.dir || rias.dom.doc.documentElement.dir ||
-				rias.dom.body.style.direction).toLowerCase() === 'rtl';
+			isRTL = this.isRTL = (rias.dom.docBody.dir || rias.dom.doc.documentElement.dir ||
+				rias.dom.docBody.style.direction).toLowerCase() === 'rtl';
 
 			// Clear out className (any pre-applied classes will be re-applied via the
 			// class / className setter), then apply standard classes/attributes
@@ -750,8 +750,8 @@ define([
 				return;
 			}
 			var columnSetId = columnSetNode.getAttribute(colsetidAttr),
-				// columnSetNode's offsetLeft is not always correct,
-				// so get the columnScroller to check offsetLeft against
+			// columnSetNode's offsetLeft is not always correct,
+			// so get the columnScroller to check offsetLeft against
 				columnScroller = this._columnSetScrollers[columnSetId],
 				elementEdge = focusedNode.offsetLeft - columnScroller.scrollLeft + focusedNode.offsetWidth;
 
@@ -1052,7 +1052,7 @@ define([
 					if ((!grid.collection.mayHaveChildren || grid.collection.mayHaveChildren(row.data))
 						&& (event.type !== 'keydown' || event.keyCode === 32)
 						&& !(event.type === 'dblclick' && clicked && clicked.count > 1 && row.id === clicked.id
-							&& event.target.className.indexOf('dgrid-expando-icon') > -1)) {
+						&& event.target.className.indexOf('dgrid-expando-icon') > -1)) {
 						clicked && clicked.count++;///FIX#1255
 						grid.expand(row);
 					}
@@ -1341,6 +1341,31 @@ define([
 				appendIfNode(cellElement, column.renderCell(item, cellData, cellElement, options));
 			}else {
 				this._defaultRenderCell.call(column, item, cellData, cellElement, options);
+			}
+		},*/
+		/*_createHeaderRowCell: function (cellElement, column) {
+			var contentNode = column.headerNode = cellElement;
+			var field = column.field;
+			if(column._riasrRowNumColumn){
+				this._riasrRowNumColumn = column;
+			}else if(column._riasrOpColumn){
+				this._riasrOpColumn = column;
+			}else if(column._riasrSelectorColumn){
+				this._riasrSelectorColumn = column;
+			}
+			if (field) {
+				cellElement.field = field;
+			}
+			// allow for custom header content manipulation
+			if (column.renderHeaderCell) {
+				appendIfNode(contentNode, column.renderHeaderCell(contentNode));
+			}
+			else if ('label' in column || column.field) {
+				contentNode.appendChild(document.createTextNode('label' in column ? column.label : column.field));
+			}
+			if (column.sortable !== false && field && field !== '_item') {
+				cellElement.sortable = true;
+				cellElement.className += ' dgrid-sortable';
 			}
 		},*/
 

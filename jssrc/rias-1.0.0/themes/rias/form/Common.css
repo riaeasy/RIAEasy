@@ -66,7 +66,7 @@
 	width: 0px;
 	height: 100%;
 	top: 0px;
-	right: 10px;
+	right: 9px;
 }
 
 .dijitSpinner .dijitSpinnerButtonContainer,
@@ -124,10 +124,10 @@
 }
 
 /*==========================================*/
-.rias .dijitInputContainer input {
-	margin: 0 0.1em;
+/*.rias .dijitInputContainer input {
+	margin: 0 1px;
 	text-indent: 0 !important;;
-}
+}*/
 .rias .dijitSelectLabel {
 	/* for when an <input> is embedded inside an inline-block <div> with a size and border */
 	border:0 !important;
@@ -153,7 +153,8 @@
 	border-width: 1px;
 	border-style: solid;
 	border-color: lightgray;
-	position: absolute;
+	/*position: absolute;*/
+	display: inline-block;
 }
 
 .rias .dijitTextBoxReadOnly,
@@ -191,12 +192,14 @@
 .rias .dijitSelect .dijitButtonNode,
 .rias .dijitComboBox .dijitButtonNode,
 .rias .dijitTextBox .dijitButtonNode {
-	padding: 0 0.2em;
+	padding: 0 0.25em;
+	margin: 0;
 	/* line between the input area and the drop down button */
 	/*border-color: lightgray;*/
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
+	display: inline-block;
 }
 
 /* Validation errors  */
@@ -209,7 +212,7 @@
 	/* prevent height change when widget goes from valid to invalid state */
 	/*width: 16px;
 	background: transparent url('../images/warning.png') no-repeat center center;*/
-	width: 9px;
+	width: 10px;
 	height: 100%;
 	background: url('./images/error.png') no-repeat;
 }
@@ -219,9 +222,9 @@
 .rias .dijitTextAreaBoxHover .riaswTextBoxContainer,
 .rias .dijitValidationTextBoxErrorHover .riaswTextBoxContainer {
 	border-color: gold;
-	-moz-box-shadow: 0em 0em 0.3em 0.1em gold inset;
-	-webkit-box-shadow: 0em 0em 0.3em 0.1em gold inset;
-	box-shadow: 0em 0em 0.3em 0.1em gold inset;
+	-moz-box-shadow: 0em 0em 0.25em 0.1em gold inset;
+	-webkit-box-shadow: 0em 0em 0.25em 0.1em gold inset;
+	box-shadow: 0em 0em 0.25em 0.1em gold inset;
 }
 
 /* Focused */
@@ -231,9 +234,9 @@
 .rias .dijitValidationTextBoxErrorFocused .riaswTextBoxContainer {
 	/* input field when focused (ie: typing affects it) */
 	border-color: skyblue;
-	-moz-box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
-	-webkit-box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
-	box-shadow: 0em 0em 0.3em 0.1em skyblue inset;
+	-moz-box-shadow: 0em 0em 0.25em 0.1em skyblue inset;
+	-webkit-box-shadow: 0em 0em 0.25em 0.1em skyblue inset;
+	box-shadow: 0em 0em 0.25em 0.1em skyblue inset;
 }
 .rias .dijitTextBoxFocused .dijitButtonNode,
 .rias .dijitSelectFocused .dijitButtonNode,

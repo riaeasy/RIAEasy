@@ -35,6 +35,11 @@
 .riaswDockNodeTopmost {
 	background-color: skyblue;
 }
+.riaswDockNode * {
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
 
 .riaswDockNodeCloseIcon {
 	position: absolute;
@@ -90,12 +95,6 @@
 .riaswDockNodeTopmost .riaswDockNodeIcon,
 .riaswDockNodeIconTopmost {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -148px center;
-}
-
-.riaswDockNodeTitle {
-	padding: 0 0em;
-	text-align: center;
-	overflow: hidden;
 }
 
 .riaswDockNodeHover {

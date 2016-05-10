@@ -192,6 +192,20 @@
 	width: 16px;
 	height: 16px;
 }
+.importIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -448px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.exportIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: -480px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
 .openIcon {
 	background-image: url(./images/btn_Images.png);
 	background-position: -32px 0px;

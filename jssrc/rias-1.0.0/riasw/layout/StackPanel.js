@@ -55,13 +55,13 @@ define([
 			//this._descendantsBeingDestroyed = true;
 			this.selectedChildWidget = undefined;
 			rias.forEach(this.getChildren(), function(child){
-				this.removeChild(child, preserveDom);
+				this.removeChild(child, true, preserveDom);
 				child.destroyRecursive(preserveDom);
 			}, this);
-			rias.forEach(this.__reserved_page, function(child){
-				child.destroyRecursive(preserveDom);
-			}, this);
-			this.__reserved_page = undefined;
+			//rias.forEach(this.__reserved_page, function(child){
+			//	child.destroyRecursive(preserveDom);
+			//}, this);
+			//this.__reserved_page = undefined;
 			//this._descendantsBeingDestroyed = false;
 		},
 		destroy: function(){
@@ -167,14 +167,9 @@ define([
 			child._wrapper = wrapper;	// to set the aria-labelledby in StackController
 
 			rias.publish(this.id + "-addChild", child, insertIndex);
-			if(this._started){
-				if(child.selected || !this.selectedChildWidget){
-					this.selectChild(child, false);
-				}
-			}
 
 			// child may have style="display: none" (at least our test cases do), so remove that
-			if(childNode.style.display == "none"){
+			if(added && childNode.style.display == "none"){
 				childNode.style.display = "block";
 			}
 
@@ -184,24 +179,29 @@ define([
 			this.inherited(arguments);
 		},
 
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex){
-			var p = this,
-				cs = p.getChildren();
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
+			var //cs = this.getChildren(),
+				p = this;
 			this.inherited(arguments);
-			var i = rias.indexOf(this.__reserved_page, child);
-			if(i >= 0){
-				this.__reserved_page.splice(i, 1);
+			if(this._started){
+				if(child.selected || !this.selectedChildWidget){
+					this.selectChild(child, false);
+				}
 			}
+			//var i = rias.indexOf(this.__reserved_page, child);
+			//if(i >= 0){
+			//	this.__reserved_page.splice(i, 1);
+			//}
 		},
-		removeChild: function(/*dijit/_WidgetBase*/ page, reserve){
+		removeChild: function(/*dijit/_WidgetBase*/ page, resize, reserve){
 			var idx = rias.indexOf(this.getChildren(), page);
-			if(!this.__reserved_page){
-				this.__reserved_page = [];
-			}
-			if(reserve){
-				this.__reserved_page.push(page);
-				page._wrapper.removeChild(page.domNode);
-			}
+			//if(!this.__reserved_page){
+			//	this.__reserved_page = [];
+			//}
+			//if(reserve){
+			//	this.__reserved_page.push(page);
+			//	page._wrapper.removeChild(page.domNode);
+			//}
 			if(this.selectedChildWidget === page){
 				this.selectedChildWidget = undefined;
 				if(this._started){
@@ -234,6 +234,9 @@ define([
 			//page = rias.registry.byId(page);
 			page = rias.by(page);
 
+			if(!page){
+				page = this.getChildren()[0];
+			}
 			if(self.selectedChildWidget != page){
 				///先设置 selectedChildWidget，以保证在 _transition.showChild 中 selectedChildWidget 正确
 				///同时，注意 _transition 的 new 和 old 是否正确

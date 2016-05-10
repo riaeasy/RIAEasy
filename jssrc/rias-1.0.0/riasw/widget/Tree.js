@@ -275,11 +275,15 @@ define([
 			if(evt.target == this.expandoNode){
 				return;
 			}
-			if(this.tree.toggleOnClick && this.tree.model.mayHaveChildren(this.item)){
+			if(this.tree.model.mayHaveChildren(this.item)){
 				if(this.isExpanded){
-					this.tree._collapseNode(this);
+					if(this.tree.collapseOnToggle){
+						this.tree._collapseNode(this);
+					}
 				}else{
-					this.tree._expandNode(this);
+					if(this.tree.expandOnToggle){
+						this.tree._expandNode(this);
+					}
 				}
 			}
 		},
@@ -320,7 +324,8 @@ define([
 
 	_Widget.extend({
 
-		toggleOnClick: true,
+		expandOnToggle: true,
+		collapseOnToggle: false,
 		expandOnEnter: false,
 		collapseOnEnter: false,
 

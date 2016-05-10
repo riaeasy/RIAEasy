@@ -3,11 +3,9 @@
 
 define([
 	"rias/base/riasBase",
-
 	"dojo/_base/xhr",
 	"dojo/io-query",
 	"dojo/request",
-
 	"dojo/dom-form"
 ], function(rias, xhr, ioq, request, domForm) {
 
@@ -162,7 +160,7 @@ define([
 	rias.xhrGet = function(/*url|args*/url, query, callback, errCall, preventCache, handleAs){
 		var args;
 		if(typeof url === "object"){
-			args = url;
+			args = rias.mixinDeep({}, url);
 		}else{
 			args = {
 				url: url,
@@ -170,7 +168,7 @@ define([
 			};
 		}
 		if(query != undefined){
-			args.content = query;
+			args.content = rias.mixinDeep({}, query);
 		}
 		if(preventCache != undefined){
 			args.preventCache = preventCache;
@@ -185,13 +183,13 @@ define([
 	function _xhrPost(method, /*url|args*/url, postData, callback, errCall){
 		var args;
 		if(typeof url === "object"){
-			args = url;
+			args = rias.mixinDeep({}, url);
 		}else{
 			args = {
 				url: url
 			};
 		}
-		args.postData = postData == undefined ? {} : postData;
+		args.postData = postData == undefined ? {} : rias.mixinDeep({}, postData);
 		args.postData._method = method;
 		if(!args.handleAs){
 			args.handleAs = "json";
@@ -212,6 +210,80 @@ define([
 	};
 	rias.xhrSave = function(/*url|args*/url, postData, callback, errCall){
 		return _xhrPost("SAVE", url, postData, callback, errCall);
+	};
+
+	rias.xhrIframe = function(method, options, data, callback, errCall){
+		var name = "_riasrGlobalIframe";
+		if(method !== "GET" && method !== "POST"){
+			//method = "POST";
+			throw new Error(method + ' not supported by rias.xhrIframe');
+		}
+		//options.postData = data == undefined ? {} : data;
+		//options.postData._method = method;
+		//if(!options.handleAs){
+		//	options.handleAs = "json";
+		//}
+
+		function getFrame(onloadstr){
+			if(rias.global.frames[name]){
+				return rias.global.frames[name];
+			}
+			var uri = rias.has("ie") ? "javascript:''" : "about:blank";
+			var frame = rias.dom.place('<iframe id="' + name + '" name="' + name + '" src="' + uri + //'" onload="' + onloadstr +
+					'" style="position: absolute; left: 1px; top: 1px; height: 1px; width: 1px; visibility: hidden">',
+				rias.webApp ? rias.webApp.domNode : rias.dom.docBody);
+			rias.on(frame, "load", function(result){
+				console.debug("_riasrGlobalIframe.onload:", result);
+			});
+			rias.global[name] = frame;
+			return frame;
+		}
+		function getForm(target){
+			var form,
+				dn;
+			if(rias.isObjectExact(options.form)){
+				form = options.form;
+			}else{
+				form = rias.dom.byId(name + "_form");
+				if(form){
+					while (form.childNodes.length !== 0){
+						form.removeChild(form.childNodes[0]);
+					}
+				}else{
+					form = rias.dom.create("form", {
+						id: name + "_form",
+						name: name + "_form",
+						style: {
+							position: "absolute",
+							top: "-1000px",
+							left: "-1000px"
+						}
+					}, rias.webApp ? rias.webApp.domNode : rias.dom.docBody);
+				}
+				rias.dom.setAttr(form, {
+					encoding: options.isUpload ? "multipart/form-data" : "application/x-www-form-urlencoded",
+					action: options.url,
+					method: method,
+					target: options.isDownload ? name : "_blank"
+				});
+				if (rias.isObjectSimple(data)) {
+					for (dn in data) {
+						if(data.hasOwnProperty(dn)){
+							rias.dom.create("input", {
+								name: dn,
+								type: "hidden",
+								value: data[dn]
+							}, form);
+						}
+					}
+				}
+			}
+			return form;
+		}
+		if(!rias.xhrIframe._frame){
+			rias.xhrIframe._frame = getFrame(onload + '();');
+		}
+		getForm().submit();
 	};
 
 	return rias;

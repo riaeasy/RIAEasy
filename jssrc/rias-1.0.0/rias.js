@@ -32,45 +32,13 @@ define([
 			rias.require(["dijit/dijit"], function () {
 				rias.require([
 					"rias/riasw/riastudio",
-					"rias/base/validate"
+					"rias/riasw/validate"
 				], function (rias) {
 					_d.resolve(rias);
 				});
 			});
 		} else if (has("host-rhino") || has("host-node")) {
 			rias.require(["rias/riass/riass"], function (rias) {
-				/*if (has("host-rhino")) {
-					var timeouts = [];
-					clearTimeout = function(idx){
-						if(!timeouts[idx]){ return; }
-						timeouts[idx].stop();
-					};
-
-					setTimeout = function(func, delay){
-						var def = {
-							sleepTime:delay,
-							hasSlept:false,
-
-							run:function(){
-								if(!this.hasSlept){
-									this.hasSlept = true;
-									//java.lang.Thread.currentThread().sleep(this.sleepTime);
-									java.lang.Thread.sleep(this.sleepTime);
-								}
-								try{
-									func();
-								}catch(e){
-									console.debug("Error running setTimeout thread:" + e);
-								}
-							}
-						};
-
-						var runnable = new java.lang.Runnable(def);
-						var thread = new java.lang.Thread(runnable);
-						thread.start();
-						return timeouts.push(thread) - 1;
-					};
-				}*/
 				_d.resolve(rias);
 			});
 		}else{

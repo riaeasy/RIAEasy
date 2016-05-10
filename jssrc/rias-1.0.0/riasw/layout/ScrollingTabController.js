@@ -432,7 +432,7 @@ define([
 		baseClass: "dijitTab tabStripButton",
 
 		templateString:
-			'<div role="button" data-dojo-attach-point="focusNode" data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents">' +
+			'<div role="button" data-dojo-attach-point="focusNode,buttonNode" data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents">' +
 				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitTabStripIcon"></span>' +
 				'<span data-dojo-attach-point="containerNode,titleNode" class="dijitButtonText"></span>' +

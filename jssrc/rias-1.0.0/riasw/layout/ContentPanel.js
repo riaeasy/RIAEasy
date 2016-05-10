@@ -85,7 +85,7 @@ define([
 							self._initSize();
 							self._afterLoaded(self._riasrChildren);
 						}
-					});
+					}, 150);
 				});
 			}
 			return r;

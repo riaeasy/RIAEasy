@@ -24,144 +24,13 @@
 .rias .mblComboBoxMenuItem {
   height: 1.5em;
 }
-.rias .webAppHeader {
-  font-size: 125%;
-  height: 2.5em;
-  padding: 0px 0px 0px 0px;
-  font-weight: bold;
-  color: skyblue;
-  /* disabled status */
-}
-.rias .webAppHeader .dijitButtonText {
-  padding: 0 0.3em;
-  text-align: center;
-}
-.rias .webAppHeader .dijitButton .dijitButtonNode,
-.rias .webAppHeader .dijitDropDownButton .dijitButtonNode,
-.rias .webAppHeader .dijitComboButton .dijitButtonNode,
-.rias .webAppHeader .dijitToggleButton .dijitButtonNode {
-  border-color: transparent;
-  border-bottom: 2px solid skyblue;
-  margin: 1px 0.5em;
-  padding: 2px 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  background-color: inherit;
-  color: inherit;
-}
-.rias .webAppHeader .dijitButtonHover .dijitButtonNode,
-.rias .webAppHeader .dijitButtonActive .dijitButtonNode,
-.rias .webAppHeader .dijitButtonNodeHover,
-.rias .webAppHeader .dijitDropDownButtonHover .dijitButtonNode,
-.rias .webAppHeader .dijitDropDownButtonActive .dijitButtonNode,
-.rias .webAppHeader .dijitComboButton .dijitButtonNodeHover,
-.rias .webAppHeader .dijitComboButton .dijitDownArrowButtonHover,
-.rias .webAppHeader .dijitToggleButtonHover .dijitButtonNode,
-.rias .webAppHeader .dijitComboButtonActive .dijitButtonNode,
-.rias .webAppHeader .dijitToggleButtonActive .dijitButtonNode,
-.rias .webAppHeader .dijitToggleButtonChecked .dijitButtonNode,
-.rias .webAppHeader .dijitUpArrowButtonHover,
-.rias .webAppHeader .dijitDownArrowButtonHover {
-  background-color: gold;
-  border-color: gold;
-  color: black;
-}
-.rias .webAppHeader .dijitUpArrowButtonActive,
-.rias .webAppHeader .dijitDownArrowButtonActive {
-  background-color: gold;
-}
-.rias .webAppHeader .dijitButtonDisabled,
-.rias .webAppHeader .dijitDropDownButtonDisabled,
-.rias .webAppHeader .dijitComboButtonDisabled,
-.rias .webAppHeader .dijitToggleButtonDisabled {
-  background-color: inherit;
-  background-image: none;
-  /*outline: none;*/
-  color: inherit;
-}
-.rias .webAppHeader .riaswDockNode {
-  border-color: transparent;
-  border-bottom: 2px solid skyblue;
-  margin: 2px 0.5em;
-  padding: 2px 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  background-color: inherit;
-  color: inherit;
-}
-.rias .webAppHeader .riaswDockNodeHover {
-  background-color: gold;
-  border-color: gold;
-  color: black;
-}
-.rias .webAppHeader a {
-  padding: 2px 8px 2px 8px;
-  display: inline-block;
-}
-.rias .webAppHeaderLogo {
-  width: 180px;
-  padding: 2px 8px 2px 8px;
-  background: url("images/RIAStudio.png") no-repeat 0px center;
-}
-.rias .webAppHeaderDockBar {
-  padding: 1px;
-}
-.rias .webAppFooterDockBar {
-  padding: 1px;
-}
-.rias .webAppHeaderBtns {
-  width: 18em;
-  padding: 0px;
-  margin: 0px;
-}
-.rias .webAppDockPanel {
-  background-color: whitesmoke;
-  padding: 0.25em 0 0.25em 0.25em;
-  width: 7em;
-}
-.rias .webAppDockPanel .riaswDockNode {
-  border-width: 1px;
-}
-.rias .webAppCenter {
-  background-color: whitesmoke;
-  padding: 0.5em;
-}
-.rias .webAppFooter {
-  color: white;
-  height: 2.5em;
-  line-height: 2.5em;
-  padding: 1px;
-}
-.rias .webAppFooter .riaswDockNodeShown {
-  background-color: inherit;
-}
-.rias .webAppFooter .riaswDockNodeHover {
-  background-color: gold;
-  border-color: gold;
-  color: black;
-}
-.rias .webAppFooter .riaswDockNodeTopmost {
-  background-color: skyblue;
-  color: black;
-}
-.rias .webAppHeaderXC {
-  background-color: red;
-  overflow: hidden;
-}
-.rias .webAppHeaderLogoXC {
-  width: 180px;
-  padding: 4px 8px 2px 8px;
-  background: url("images/XCIndex.png") no-repeat 0px center;
-}
 .rias .mblButton,
 .rias .dijitButtonNode {
   border-width: 0 0 2px 0;
   border-color: skyblue;
 }
-.rias .riaswCheckButton .dijitButtonNode,
-.rias .riaswRadioButton .dijitButtonNode {
+.rias .riaswCheckButton,
+.rias .riaswRadioButton {
   border-width: 0;
 }
 .rias .riaswTextBoxContainer,
@@ -174,6 +43,8 @@
 .rias .dijitTabPaneWrapper,
 .rias .dijitTab,
 .rias .riaswAccordionPanel,
+.rias .riaswAccordionInnerContainer,
+.rias .riaswAccordionTitle,
 .rias .riaswAccordionChildWrapper,
 .rias .riaswTablePanel,
 .rias .riaswDockBar,
@@ -235,9 +106,6 @@
 .rias .riaswDialogPanelTopmost {
   border-color: skyblue;
 }
-.rias .riaswDockNode {
-  border-width: 1px;
-}
 .rias .riaswStackPanelChildWrapper,
 .rias .dijitTabChecked {
   background-color: whitesmoke;
@@ -251,6 +119,143 @@
 }
 .rias .dijitTreeRowSelected {
   background-color: skyblue;
+}
+.rias .webAppHeader {
+  font-size: 125%;
+  height: 2.5em;
+  line-height: 2.5em;
+  padding: 0px;
+  font-weight: bold;
+  color: skyblue;
+  /*.dijitButton .dijitButtonNode,
+		.dijitDropDownButton .dijitButtonNode,
+		.dijitComboButton .dijitButtonNode,
+		.dijitToggleButton .dijitButtonNode,*/
+  /*.dijitButtonHover .dijitButtonNode,
+		.dijitButtonActive .dijitButtonNode,
+		.dijitDropDownButtonHover .dijitButtonNode,
+		.dijitDropDownButtonActive .dijitButtonNode,
+		.dijitComboButton .dijitButtonNodeHover,
+		.dijitComboButton .dijitDownArrowButtonHover,
+		.dijitToggleButtonHover .dijitButtonNode,
+		.dijitComboButtonActive .dijitButtonNode,
+		.dijitToggleButtonActive .dijitButtonNode,
+		.dijitToggleButtonChecked .dijitButtonNode,*/
+  /* disabled status */
+}
+.rias .webAppHeader .dijitButtonNode {
+  border-color: skyblue;
+  border-width: 0 0 2px 0;
+  margin: 0.25em;
+  padding: 0em 0.25em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: inherit;
+  color: inherit;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+.rias .webAppHeader .dijitButtonNodeHover,
+.rias .webAppHeader .dijitButtonNodeActive,
+.rias .webAppHeader .dijitButtonNodeChecked,
+.rias .webAppHeader .dijitUpArrowButtonHover,
+.rias .webAppHeader .dijitDownArrowButtonHover {
+  background-color: gold;
+  border-color: gold;
+  color: black;
+}
+.rias .webAppHeader .dijitUpArrowButtonActive,
+.rias .webAppHeader .dijitDownArrowButtonActive {
+  background-color: gold;
+}
+.rias .webAppHeader .dijitButtonDisabled,
+.rias .webAppHeader .dijitDropDownButtonDisabled,
+.rias .webAppHeader .dijitComboButtonDisabled,
+.rias .webAppHeader .dijitToggleButtonDisabled {
+  background-color: inherit;
+  background-image: none;
+  /*outline: none;*/
+  color: inherit;
+}
+.rias .webAppHeader .riaswDockNode {
+  border-color: skyblue;
+  border-width: 0 0 2px 0;
+  margin: 0.25em;
+  padding: 0em 0.25em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: inherit;
+  color: inherit;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+.rias .webAppHeader .riaswDockNodeHover {
+  background-color: gold;
+  border-color: gold;
+  color: black;
+}
+.rias .webAppHeader a {
+  padding: 2px 8px 2px 8px;
+  display: inline-block;
+}
+.rias .webAppHeaderLogo {
+  width: 180px;
+  padding: 2px 8px 2px 8px;
+  background: url("images/RIAStudio.png") no-repeat 0px center;
+}
+.rias .webAppHeaderDockBar {
+  padding: 1px;
+}
+.rias .webAppFooterDockBar {
+  padding: 1px;
+}
+.rias .webAppHeaderBtns {
+  width: 18em;
+  padding: 1px;
+  margin: 0px;
+}
+.rias .webAppDockPanel {
+  background-color: whitesmoke;
+  padding: 0.25em 0 0.25em 0.25em;
+}
+.rias .webAppDockPanel .riaswDockBar {
+  border-right: 3px solid skyblue;
+  padding: 0;
+  width: 10em;
+}
+.rias .webAppDockPanel .riaswDockNode {
+  display: block;
+  margin: 2px 0 2px 2px;
+  border-radius: 8px 0 0 8px;
+  border-width: 1px 0 1px 1px;
+}
+.rias .webAppCenter {
+  background-color: whitesmoke;
+  padding: 0.5em;
+}
+.rias .webAppFooter {
+  color: white;
+  height: 2.5em;
+  line-height: 2.5em;
+  padding: 0px;
+}
+.rias .webAppFooter .riaswDockNode {
+  margin: 1px;
+  padding: 0.15em;
+}
+.rias .webAppFooter .riaswDockNodeShown {
+  background-color: inherit;
+}
+.rias .webAppFooter .riaswDockNodeHover {
+  background-color: gold;
+  border-color: gold;
+  color: black;
+}
+.rias .webAppFooter .riaswDockNodeTopmost {
+  background-color: skyblue;
+  color: black;
 }
 .rias .dgrid {
   border-color: lightgray;
@@ -280,9 +285,6 @@
   overflow-y: auto;
   border-bottom: 1px solid lightgray;
 }
-.rias .dgrid-content {
-  border-right: 1px solid lightgray;
-}
 .rias .dgrid-row {
   background-color: white;
 }
@@ -311,6 +313,7 @@
   padding: 0;
 }
 .rias .dgrid-opcolumn > button {
+  background-color: inherit;
   height: auto;
   line-height: 1em;
   padding: 0;

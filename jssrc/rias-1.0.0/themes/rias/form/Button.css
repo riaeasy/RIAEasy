@@ -113,8 +113,8 @@
 	background-position: -64px;
 }
 
-.riaswCheckButtonDisabled .dijitButtonNode,
-.riaswRadioButtonDisabled .dijitButtonNode {
+.riaswCheckButtonDisabled,
+.riaswRadioButtonDisabled {
 	background-color: inherit;
 	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -128,6 +128,7 @@
 .dijitButtonNode {
 	border: 1px solid lightgray;
 	padding: 0.25em 0.25em;
+	margin: 1px;
 	color: inherit;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -143,8 +144,8 @@
 	-moz-transition-duration: 0.3s;
 	transition-duration: 0.3s;
 }
-.riaswCheckButton .dijitButtonNode,
-.riaswRadioButton .dijitButtonNode {
+.riaswCheckButton,
+.riaswRadioButton {
 	border-width: 0px;
 }
 
@@ -157,18 +158,15 @@
 	/* override dijit.css so that ComboBox rounded corners work */
 
 }
-.rias .dijitComboButton .dijitStretch {
-	-moz-border-radius: 4px 0 0 4px;
-	-webkit-border-radius: 4px 0 0 4px;
-	border-radius: 4px 0 0 4px;
-}
 .rias .dijitComboButton .dijitArrowButton {
-	border-left-width: 0;
-	padding: 4px 2px 4px 2px;
-	/* TODO: still needed? */
-	-moz-border-radius: 0 4px 4px 0;
-	-webkit-border-radius: 0 4px 4px 0;
-	border-radius: 0 4px 4px 0;
+	height: 16px;
+	border-width: 0;
+	padding: 0 0.25em;
+	/* border-color: lightgray; */
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	display: inline-block;
 }
 
 /*arrow styles for down/up/left/right directions*/
@@ -232,16 +230,16 @@
 
 
 .rias .dijitButtonText {
-	padding: 0 0.3em;
+	padding: 0 0.25em;
 	text-align: center;
 }
 /* hover status */
-.rias .dijitButtonHover .dijitButtonNode,
 .rias .dijitButtonNodeHover,
+/*.rias .dijitButtonHover .dijitButtonNode,
 .rias .dijitDropDownButtonHover .dijitButtonNode,
 .rias .dijitComboButton .dijitButtonNodeHover,
 .rias .dijitComboButton .dijitDownArrowButtonHover,
-.rias .dijitToggleButtonHover .dijitButtonNode,
+.rias .dijitToggleButtonHover .dijitButtonNode,*/
 .rias .dijitUpArrowButtonHover,
 .rias .dijitDownArrowButtonHover {
 	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
@@ -253,12 +251,12 @@
 	box-shadow: 0em 0em 0.2em darkorange inset;*/
 }
 /* focused status */
-.rias .dijitButtonFocused .dijitButtonNode,
 .rias .dijitButtonNodeFocused,
+/*.rias .dijitButtonFocused .dijitButtonNode,
 .rias .dijitDropDownButtonFocused .dijitButtonNode,
 .rias .dijitComboButton .dijitButtonNodeFocused,
 .rias .dijitComboButton .dijitDownArrowButtonFocused,
-.rias .dijitToggleButtonFocused .dijitButtonNode,
+.rias .dijitToggleButtonFocused .dijitButtonNode,*/
 .rias .dijitUpArrowButtonFocused,
 .rias .dijitDownArrowButtonFocused {
 	/*background: url("../images/accordionItemActive.png") repeat-x top;/*zensst*/
@@ -270,12 +268,14 @@
 	box-shadow: 0em 0em 0.2em darkorange inset;*/
 }
 /* active, checked status */
-.rias .dijitButtonActive .dijitButtonNode,
+/*.rias .dijitButtonActive .dijitButtonNode,
 .rias .dijitDropDownButtonActive .dijitButtonNode,
 .rias .dijitComboButtonActive .dijitButtonNode,
 .rias .dijitToggleButtonActive .dijitButtonNode,
-.rias .dijitToggleButtonChecked .dijitButtonNode {
-	background-color: skyblue;
+.rias .dijitToggleButtonChecked .dijitButtonNode,*/
+.rias .dijitButtonNodeActive,
+.rias .dijitButtonNodeChecked {
+	/*background-color: skyblue;*/
 	/*border-color: darkorange;
 	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
 	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;
@@ -306,10 +306,11 @@
 	color: inherit;
 }
 
-.rias .dijitButtonDisabled .dijitButtonNode,
+/*.rias .dijitButtonDisabled .dijitButtonNode,
 .rias .dijitDropDownButtonDisabled .dijitButtonNode,
 .rias .dijitComboButtonDisabled .dijitButtonNode,
-.rias .dijitToggleButtonDisabled .dijitButtonNode {
+.rias .dijitToggleButtonDisabled .dijitButtonNode,*/
+.rias .dijitButtonNodeDisabled {
 	background-color: inherit;
 	-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 	-moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -342,8 +343,7 @@
 	display: block;
 	margin: auto !important;
 }
-.riaswButtonIconTop .dijitButtonText,
-.riaswButtonIconTop .riaswDockNodeTitle {
+.riaswButtonIconTop .dijitButtonText {
 	display: block;
 	margin: auto !important;
 }

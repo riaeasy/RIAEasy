@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 126,
+	"_rsfVersion": 127,
 	"_riaswVersion": "1.0",
 	"gutters": false,
 	"region": "center",
@@ -262,7 +262,7 @@ define([
 					});
 					if(moduleParams.dockTo == self.appDock || moduleParams.dockTo == self.appDock._riaswIdOfModule){
 						moduleParams.dockNodeParams.iconLayoutTop = true;
-						moduleParams.dockNodeParams.style.width = "6em";
+						//moduleParams.dockNodeParams.style.width = "10em";
 					}
 					moduleParams.style = rias.dom.styleToObject(moduleParams.style);
 					if(asDialog){
@@ -411,8 +411,6 @@ define([
 					"class": "webAppHeaderBtns",
 					"layoutPriority": 0,
 					"region": "right",
-					"style": {
-					},
 					"_riaswChildren": [
 						{
 							"_riaswType": "rias.riasw.form.Button",
@@ -436,7 +434,7 @@ define([
 							"iconClass": "optionIcon",
 							"disabled": true,
 							"onClick": function (evt){
-									rias.info("暂时未提供...", this);
+									rias.message("暂时未提供...", this);
 								}
 						},
 						{
@@ -449,7 +447,7 @@ define([
 							"iconClass": "helpIcon",
 							"disabled": true,
 							"onClick": function (evt){
-									rias.info("暂时未提供...", this);
+									rias.message("暂时未提供...", this);
 								}
 						}
 					]
@@ -474,8 +472,6 @@ define([
 					"content": "尚未登录",
 					"region": "left",
 					"style": {
-						//"border": "1px solid lightgray",
-						//"line-height": "2em",
 						"margin": "0px",
 						"padding": "0px",
 						"width": "16em"
@@ -486,11 +482,7 @@ define([
 					"_riaswType": "rias.riasw.layout.DockBar",
 					"_riaswIdOfModule": "appMainDockBottom",
 					"class": "webAppFooterDockBar",
-					"region": "center",
-					"style": {
-						"margin": "0px",
-						"padding": "0px"
-					}
+					"region": "center"
 				}
 			]
 		},
@@ -504,15 +496,11 @@ define([
 			"initDisplayState": "hidden",
 			"splitter": false,
 			"style": {
-				//"border": "0px solid lightgray"
 			},
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.layout.DockBar",
-					"_riaswIdOfModule": "appDock",
-					"style": {
-						"padding": "0px 0em"
-					}
+					"_riaswIdOfModule": "appDock"
 				}
 			]
 		},
@@ -535,9 +523,6 @@ define([
 					"tabPosition": "top",
 					"tabStrip": true,
 					"nested": false,
-					"style": {
-						"padding": "0px"
-					},
 					"onShowChild": function (page){
 							page.isTopmost = true;
 							if(page._riasrDockNode){

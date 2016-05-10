@@ -6,13 +6,13 @@ define([
 	"dijit/form/_RadioButtonMixin"
 ], function(rias, CheckButton, _RadioButtonMixin) {
 
-	rias.theme.loadRiasCss([
-		"form/Button.css"
-	]);
+	//rias.theme.loadRiasCss([
+	//	"form/Button.css"
+	//]);
 
 	var riasType = "rias.riasw.form.RadioButton";
 	var Widget = rias.declare(riasType, [CheckButton, _RadioButtonMixin], {
-		baseClass: "riaswRadioButton"
+		baseClass: "riaswRadioButton dijitButtonNode"
 	});
 
 	Widget._riasdMeta = {

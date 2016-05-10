@@ -77,7 +77,7 @@ define([
 				moduleMeta: "appModule/app/login",
 				afterSubmit: function(){
 					if(!rias.webApp.logged){
-						rias.info({
+						rias.message({
 							dialogType: "modal",
 							around: around,
 							content: "未能登录，请重新登录."
@@ -96,7 +96,7 @@ define([
 			});
 		},
 	"logout": function (around, callback){
-			rias.choice({
+			rias.choose({
 				ownerRiasw: m,//rias.webApp,
 				_riaswIdOfModule: "winLogout",
 				around: around,

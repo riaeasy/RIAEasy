@@ -13,7 +13,12 @@ define([
 	var riasType = "rias.riasw.form.ToggleButton";
 	var Widget = rias.declare(riasType, [Button, _ToggleButtonMixin], {
 
-		baseClass: "dijitToggleButton"
+		baseClass: "dijitToggleButton dijitButtonNode",
+
+		cssStateNodes: {
+			//"buttonNode": "dijitButtonNode",
+			"titleNode": "dijitButtonContents"
+		}
 
 	});
 

@@ -20,14 +20,14 @@ define([
 		targetWidget: null,
 
 		templateString:
-			'<div role="button" data-dojo-attach-point="focusNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">'+
+			'<div role="button" data-dojo-attach-point="focusNode,buttonNode" class="riaswDockNode" data-dojo-attach-event="onclick:toggle,onmouseenter:_onMouseEnter,onmouseleave:_onMouseLeave">'+
 				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
 				//'<span data-dojo-attach-point="toggleIcon" class="dijitReset dijitInline riaswDockNodeIcon"></span>'+
 				'<span data-dojo-attach-point="closeNode" class="${badgeClass}" data-dojo-attach-event="onclick: close">'+
 					'<span data-dojo-attach-point="closeNodeText" class="riaswBadgeText riaswBadgeBlack">X</span>'+
 				'</span>'+
 				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon riaswDockNodeIconNode"></span>'+
-				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="riaswDockNodeTitle"></span>'+
+				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText"></span>'+
 			'</div>',
 
 		baseClass: "riaswDockNode",
@@ -174,10 +174,16 @@ define([
 		toggle: function(){
 			var target = this.targetWidget;
 			if(target && !target._playing){
-				//if(target.isShown() && !target.isTopmost && rias.isFunction(target.bringToTop)){
-				if(target.isShown() && target._wasResized && !target.isTopmost && rias.isFunction(target.bringToTop)){
+				//if(target.isShown() && target._wasResized && !target.isTopmost && rias.isFunction(target.bringToTop)){
+				///某些时候，target 被隐藏，但任然是 isTopmost
+				/*if(target.isShown() && target._wasResized && rias.isFunction(target.bringToTop)){
 					target.bringToTop();
 				}else if(rias.isFunction(target.toggle)){
+					target.toggle();
+				}*/
+				if(rias.isFunction(target.bringToTop) && (!target.get("visible") || !target.isTopmost)){
+					target.bringToTop();
+				}else{
 					target.toggle();
 				}
 			}
@@ -227,15 +233,11 @@ define([
 
 	var riasType = "rias.riasw.layout.DockBar";
 	var Widget = rias.declare(riasType, [Panel],{
-		// summary:
-		//		A widget that attaches to a node and keeps track of incoming / outgoing FloatingPanes
-		//		and handles layout
 
 		///直接使用 Panel。
 		//templateString: '<div class="DockBar"><ul data-dojo-attach-point="containerNode" class="dijitReset riaswDockBarList"></ul></div>',
+		baseClass: "riaswDockBar",
 
-		// _docked: [private] Array
-		//		array of panes currently in our dock
 		///这里申明，是在 ctor 里面，_docked.push() 是对 ctor 操作。
 		//_docked: [],
 

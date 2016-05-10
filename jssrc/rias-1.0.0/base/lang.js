@@ -286,6 +286,8 @@ define([
 	};
 
 	rias.mixin_notexists = function(/*Object*/dest, /*Object..*/sources){
+		///只 mixin dest 中不存在的
+		/// 没有 Deep
 		var n;
 		function _mix(src){
 			for(n in src){
@@ -894,13 +896,13 @@ define([
 	rias.datetime.defaultDateFormatStr = "yyyy-MM-dd";
 	rias.datetime.defaultTimeFormatStr = "HH:mm:ss";
 	rias.datetime.defaultFormatStr = rias.datetime.defaultDateFormatStr + " " + rias.datetime.defaultTimeFormatStr;
-	rias.datetime.toDatetime = function(datetime){
+	rias.toDatetime = rias.datetime.toDatetime = function(datetime){
 		if(!rias.isDatetime(datetime)){
 			return new Date(datetime);
 		}
 		return datetime;
 	};
-	rias.datetime.format = function(datetime, formatStr){
+	rias.formatDatetime = rias.datetime.format = function(datetime, formatStr){
 		if(datetime == undefined){
 			return "";
 		}
@@ -1326,6 +1328,7 @@ define([
 			}
 		}
 		rias.require.undef(moduleId, referenceModule);
+		console.debug("rias.undef: " + moduleId);
 	};
 	rias.declare = declare;
 	function getProp(/*Array*/parts, /*Boolean*/create, /*Object*/context){

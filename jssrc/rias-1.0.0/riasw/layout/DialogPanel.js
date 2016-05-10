@@ -82,7 +82,7 @@ define([
 
 		templateString:
 			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter: _onDomNodeEnter' aria-labelledby='${id}_captionNode'>"+
-				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleClick, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
+				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleMax, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></span>"+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
@@ -90,8 +90,8 @@ define([
 					"<span data-dojo-attach-point='closeNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelCloseIcon'></span>"+
 					"<span data-dojo-attach-point='maxNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelMaximizeIcon'></span>"+
 				"</div>"+
-				"<div data-dojo-attach-point='wrapperNode' class='dijitReset riaswDialogPanelWrapper' role='region' id='${id}_wrapper' ${!nameAttrSetting}>"+
-					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' ${!nameAttrSetting}></div>"+
+				"<div data-dojo-attach-point='wrapperNode' class='dijitReset riaswDialogPanelWrapper' role='region' id='${id}_wrapper'>"+
+					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' aria-labelledby='${id}_captionNode'></div>"+
 					//"<div data-dojo-attach-point='actionBarNode' class='dijitReset riaswDialogPanelActionBar' role='region' id='${id}_actionBar'></div>"+
 				"</div>"+
 			"</div>",
@@ -174,9 +174,6 @@ define([
 			}
 			self.inherited(arguments);
 			self.own(
-				//rias.after(self, "onFocus", function(){
-				//	self.bringToTop();
-				//}),
 				rias.after(self.captionNode, "onmousedown", function(evt){
 					//self.defer(function(){
 					////focus 会导致其他 popup 失去焦点，最好判断一下
@@ -400,26 +397,27 @@ define([
 						}
 					), {
 						onMoving: function(mover, leftTop){
-							if(self.restrictPadding >= 0){
-								var p = self.domNode.parentNode,
-									//r = (self.restrictPadding >= Widget.prototype.restrictPadding ? self.restrictPadding : Widget.prototype.restrictPadding);
-									r = self.restrictPadding;
-								if(leftTop.t < r){
-									leftTop.t = r;
-								}
-								if(leftTop.l < r){
-									leftTop.l = r;
-								}
+							var p = self.domNode.parentNode,
+								r = (self.restrictPadding >= 0 ? self.restrictPadding : 0);
+							if(p){
 								p = rias.dom.getContentBox(p);
-								if(leftTop.t > p.h - r){
-									leftTop.t = p.h - r;
+								if(leftTop.t < p.st + r){
+									leftTop.t = p.st + r;
 								}
-								if(leftTop.l > p.w - r){
-									leftTop.l = p.w - r;
+								if(leftTop.l < p.sl + r){
+									leftTop.l = p.sl + r;
+								}
+								if(self.restrictPadding >= 0){
+									if(leftTop.t > p.h + p.st - r){
+										leftTop.t = p.h + p.st - r;
+									}
+									if(leftTop.l > p.w + p.sl - r){
+										leftTop.l = p.w + p.sl - r;
+									}
 								}
 							}
-						},
-						onMoved: function(/*===== mover, leftTop =====*/){
+						//},
+						//onMoved: function(/*===== mover, leftTop =====*/){
 						}
 					});
 					self.own(self._moveHandle);
@@ -461,13 +459,14 @@ define([
 				if(self._riasrUnderlay){
 					self._riasrUnderlay.show();
 				}
-				if(self.focusOnShow && !(self.autoClose > 0) && !self.isTip()){
+				if(self.isShown() && self.focusOnShow && !(self.autoClose > 0) && !self.isTip()){
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
 					if(self._playingDeferred){
-						self._playingDeferred.then(function(){
-							self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+						rias.when(self._playingDeferred, function(){
+							self.bringToTop();
 						});
 					}else{
-						self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+						self.bringToTop();
 					}
 				}else{
 
@@ -477,8 +476,15 @@ define([
 		restore: function(forceVisible){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
-				if(result === self){
-					self.bringToTop();///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+				if(result === self && self.isShown()){///防止无限递归
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					if(self._playingDeferred){
+						rias.when(self._playingDeferred, function(){
+							self.bringToTop();
+						});
+					}else{
+						self.bringToTop();
+					}
 				}
 				return self;
 			});
@@ -499,9 +505,15 @@ define([
 			this.inherited(arguments);
 		},
 
+		_onBlur: function(){
+			this.inherited(arguments);
+		},
 		_onFocus: function(){
 			this.inherited(arguments);
 			this.bringToTop();
+		},
+		focus: function(){
+			this.inherited(arguments);
 		},
 		onBringToTop: function(isTopmost){
 		},
@@ -526,7 +538,7 @@ define([
 			ws, ms, ts;
 
 		function _visible(d){
-			return d.isShown() && d.get("visible");///TODO:zensst. _wasResized ?
+			return d.isShown() && d.get("visible");
 		}
 		function _topmost(h, value, z){
 			if(value){

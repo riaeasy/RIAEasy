@@ -2,93 +2,26 @@
 
 define([
 	"rias",
-	//"dijit/form/_TextBoxMixin",
-	"dijit/form/ComboBoxMixin",
-	"dojo/store/util/QueryResults",
-	"rias/riasw/form/ValidationTextBox"///extend(templateString)
-], function(rias, /*_TextBoxMixin,*/ ComboBoxMixin, QueryResults, ValidationTextBox) {
-
-	////必须 extend ComboBoxMixin，因为 诸如 dijit.form.FilteringSelect 等控件也使用 ComboBoxMixin。
-	ComboBoxMixin.extend({
-		templateString:
-			'<div class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}" role="combobox" aria-haspopup="true" data-dojo-attach-point="_popupStateNode">'+
-				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation"></div>'+
-				'<div class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="_buttonNode" role="presentation">'+
-					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660;" type="text" tabIndex="-1" readonly="readonly" role="button presentation" aria-hidden="true" ${_buttonInputDisabled}/>'+
-				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
-				'</div>'+
-				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode,_aroundNode">'+
-					'<input class="dijitReset dijitInputInner" type="text" autocomplete="off" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" role="textbox" ${!nameAttrSetting}/>'+
-				'</div>'+
-			'</div>',
-
-		_setStoreAttr: function(store){
-			// For backwards-compatibility, accept dojo.data store in addition to dojo/store/api/Store.  Remove in 2.0.
-			if(store && !store.get){
-				rias.mixin(store, {
-					_oldAPI: true,
-					get: function(id){
-						// summary:
-						//		Retrieves an object by it's identity. This will trigger a fetchItemByIdentity.
-						//		Like dojo/store/DataStore.get() except returns native item.
-						var deferred = rias.newDeferred();
-						this.fetchItemByIdentity({
-							identity: id,
-							onItem: function(object){
-								deferred.resolve(object);
-							},
-							onError: function(error){
-								deferred.reject(error);
-							}
-						});
-						return deferred.promise;
-					},
-					query: function(query, options){
-						// summary:
-						//		Queries the store for objects.   Like dojo/store/DataStore.query()
-						//		except returned Deferred contains array of native items.
-						var deferred = rias.newDeferred(function(){ fetchHandle.abort && fetchHandle.abort(); });
-						deferred.total = rias.newDeferred();
-						var fetchHandle = this.fetch(rias.mixin({
-							query: query,
-							onBegin: function(count){
-								deferred.total.resolve(count);
-							},
-							onComplete: function(results){
-								deferred.resolve(results);
-							},
-							onError: function(error){
-								deferred.reject(error);
-							}
-						}, options));
-						return QueryResults(deferred);
-					}
-				});
-			}
-			this._set("store", store);
-		}
-	});
+	"rias/riasw/form/ValidationTextBox",
+	"rias/riasw/form/ComboBoxMixin",
+	"dojo/store/util/QueryResults"
+], function(rias, _Widget, ComboBoxMixin, QueryResults) {
 
 	var riasType = "rias.riasw.form.ComboBox";
-	var Widget = rias.declare(riasType, [ValidationTextBox, ComboBoxMixin], {
-		templateString:
-			'<div class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}" role="combobox" aria-haspopup="true" data-dojo-attach-point="_popupStateNode">'+
+	var Widget = rias.declare(riasType, [_Widget, ComboBoxMixin], {
+		/*templateString:
+			'<div class="dijit dijitReset dijitInline dijitLeft" data-dojo-attach-point="_popupStateNode" id="widget_${id}" role="combobox" aria-haspopup="true">'+
 				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation"></div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode,_aroundNode">'+
-					'<input class="dijitReset dijitInputInner" type="text" autocomplete="off" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" role="textbox" ${!nameAttrSetting}/>'+
+					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" type="text" autocomplete="off" aria-labelledby="${id}_labelNode" role="textbox" ${!nameAttrSetting}/>'+
+					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
+						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'</div>'+
 				'</div>'+
-				'<div class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="_buttonNode" role="presentation">'+
+				'<div class="dijitReset dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="_buttonNode" role="presentation">'+
 					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660;" type="text" tabIndex="-1" readonly="readonly" role="button presentation" aria-hidden="true" ${_buttonInputDisabled}/>'+
 				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
-				'</div>'+
-			'</div>',
-
-		allwaysShowSearch: true,
-		searchAttr: "id",
+			'</div>',*/
 
 		destroy: function(){
 			if(this.dropDown){
@@ -97,12 +30,16 @@ define([
 			this.inherited(arguments);
 		},
 
-		filter: function(val){
+		/*filter: function(val, item){
 			if(val === null){
 				return this._blankValue;
 			}
-			if(this.item){
-				val = this.item[this.searchAttr];
+			if(item && this.allwaysFilter){
+				if(this.labelAttr){
+					val = item[this.labelAttr].toString();
+				}else{
+					val = item[this.searchAttr].toString();
+				}
 			}
 			if(typeof val != "string"){
 				return val;
@@ -122,14 +59,14 @@ define([
 				});
 			}
 			return val;
-		},
-		parse: function(value /*=====, constraints =====*/){
-			if(this.item){
-				return this.item[this.searchAttr];
-			}
-			return value;
-		},
-		_getDisplayedValueAttr: function(){
+		},*/
+		//parse: function(value /*=====, constraints =====*/){
+		//	if(this.item && this.allwaysFilter){
+		//		return this.item[this.searchAttr];
+		//	}
+		//	return value;
+		//},
+		/*_getDisplayedValueAttr: function(){
 			var text = "";
 			try{
 				//return this.filter(this.textbox.value);
@@ -140,42 +77,21 @@ define([
 				}
 			}catch(e){
 				console.error(this, "_getDisplayedValueAttr() error: ", rias.captureStackTrace(e));
-				text = this.filter(this.value);
+				text = this.filter(this.value, this.item);
 			}
 			return text.toString();
-		},
-		labelFunc: function(item, store){
-			var text = "";
-			try{
-				store = store || this.store;
-				if(this.labelAttr){
-					//return (store._oldAPI ? store.getValue(this.searchAttr) + "(" + store.getValue(item, this.labelAttr) + ")" :
-					//	item[this.searchAttr].toString() + "(" + item[this.labelAttr].toString() + ")");
-					if(this.allwaysShowSearch == false){
-						text = store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr];
-					}else{
-						text = this.filter((store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr].toString()))
-							+ "(" + (store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr].toString()) + ")";
-					}
-				}else{
-					text = this.filter(store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]) ;
-				}
-			}catch(e){
-				console.error(this, "labelFunc() error: ", rias.captureStackTrace(e));
-				text = this.filter(this.value);
-			}
-			return text.toString();
-		},
-		_getValueField: function(){
+		},*/
+		/*_getValueField: function(){
 			return this.valueAttr || this.searchAttr;
 		},
 		_getValueAttr: function(){
 			return this.inherited(arguments);
 		},
-		_setValueAttr: function(/*String*/ value, /*Boolean?*/ priorityChange, /*String?*/ displayedValue, /*item?*/ item){
+		_setValueAttr: function(value, priorityChange, displayedValue, item){
+			this.value = value;
 			displayedValue = (displayedValue == undefined ? this.get("displayedValue") : displayedValue);
 			this.inherited(arguments, [value, priorityChange, displayedValue, item || this.item]);
-		},
+		},*/
 
 		onFocus: function(){
 			if(!this.disabled && !this.readOnly){
@@ -205,7 +121,7 @@ define([
 				queryExpr: "${0}*",
 				autoComplete: true,
 				searchDelay: 200,
-				searchAttr: "id",
+				//searchAttr: "id",
 				ignoreCase: true,
 				hasDownArrow: true,
 				scrollOnFocus: true,
@@ -346,7 +262,7 @@ define([
 			},
 			"searchAttr": {
 				"datatype": "string",
-				"defaultValue": "name",
+				"defaultValue": "id",
 				"title": "Search Attribute"
 			},
 			"queryExpr": {

@@ -408,7 +408,7 @@ define([
 			if(toWidget){
 				// perform view transition keeping the scroll position
 				if(this.keepScrollPos && !this.getParent()){
-					var scrollTop = rias.dom.body.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
+					var scrollTop = rias.dom.docBody.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
 					fromNode._scrollTop = scrollTop;
 					var toTop = (detail.transitionDir == 1) ? 0 : (toNode._scrollTop || 0);
 					toNode.style.top = "0px";
@@ -510,7 +510,7 @@ define([
 				var scrollTop, posX, posY;
 				if(transition.indexOf("swirl") != -1 || transition.indexOf("zoom") != -1){
 					if(this.keepScrollPos && !this.getParent()){
-						scrollTop = rias.dom.body.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
+						scrollTop = rias.dom.docBody.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
 					}else{
 						scrollTop = -rias.dom.position(fromNode, true).y;
 					}
@@ -521,7 +521,7 @@ define([
 					var viewPos = rias.dom.position(fromNode, true);
 					posX = ((this.clickedPosX !== undefined) ? this.clickedPosX : rias.global.innerWidth / 2) - viewPos.x;
 					if(this.keepScrollPos && !this.getParent()){
-						scrollTop = rias.dom.body.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
+						scrollTop = rias.dom.docBody.scrollTop || rias.dom.doc.documentElement.scrollTop || rias.global.pageYOffset || 0;
 					}else{
 						scrollTop = -viewPos.y;
 					}

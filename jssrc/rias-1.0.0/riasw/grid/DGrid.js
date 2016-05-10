@@ -77,7 +77,20 @@ define([
 		},
 		onCellFocusout: function(){
 		},
+		_createHeaderRowCell: function (cellElement, column) {
+			if(column._riasrRowNumColumn){
+				this._riasrRowNumColumn = column;
+			}else if(column._riasrOpColumn){
+				this._riasrOpColumn = column;
+			}else if(column._riasrSelectorColumn){
+				this._riasrSelectorColumn = column;
+			}
+			this.inherited(arguments);
+		},
 		renderHeader: function () {
+			this._riasrRowNumColumn = undefined;
+			this._riasrOpColumn = undefined;
+			this._riasrSelectorColumn = undefined;
 			this.inherited(arguments);
 			rias.dom.place(this.hiderToggleNode, this.headerNode);
 		},
@@ -120,7 +133,7 @@ define([
 				};
 				if(store){
 					if(store.getSummary){
-						summary = store.getSummary();
+						summary = rias.mixin(summary, store.getSummary());
 					}
 				}
 				self.set('summary', summary);
@@ -141,8 +154,8 @@ define([
 		visual: true,
 		iconClass: "riaswGridIcon",
 		iconClass16: "riaswGridIcon16",
-		defaultParams: function(params){
-			return rias.when(DGridParamExt(params), function(p){
+		defaultParams: function(params, module){
+			return rias.when(DGridParamExt(params, module), function(p){
 				return rias.mixinDeep({
 					indent: 1,
 					inline: true,

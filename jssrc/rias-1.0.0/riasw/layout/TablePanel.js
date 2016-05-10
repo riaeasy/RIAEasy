@@ -134,7 +134,7 @@ define([
 				return;
 			}
 			var self = this,
-				fn = this._focusedNode || rias.dom.focusedNode,/// this.focused 时，没有 this._focusedNode， 取 rias.dom.focusedNode
+				fn = rias.dom.focusedNode,/// this.focused 时，没有 this._focusedNode， 取 rias.dom.focusedNode
 				tn = self.tableNode,// ? self.tableNode : self.tableNode = rias.dom.create("table", self._tableAttr),// self.tableNode,
 				tr = tn.childNodes[0], td = tr.childNodes[0],
 				r, c, rc = self.rows - 1, cc = self.cols - 1, cx, rx,
@@ -327,7 +327,9 @@ define([
 			p = 1;//rias.dom.getStyle(cn, "opacity");
 			rias.dom.setStyle(cn, "opacity", 0);
 
+			//console.debug(self.id + " _layoutChildren...");
 			rias.debounce(this.id + "_layoutChildren", function(){
+				//console.debug(self.id + " _layoutChildren debounce callback...");
 				vf = rias.dom.getStyle(cn, "overflow");
 				vfx = rias.dom.getStyle(cn, "overflow-x");
 				vfy = rias.dom.getStyle(cn, "overflow-y");
@@ -344,7 +346,8 @@ define([
 					}
 				}
 				rias.dom.setStyle(cn, "opacity", p);
-			}, self, 50, function(){
+			}, self, 210, function(){
+				//console.debug(self.id + " _layoutChildren debounce pass...");
 			})();
 		},
 		resize: function(changeSize, resultSize){
@@ -376,6 +379,7 @@ define([
 					child.set("style", rias.mixinDeep({}, self.childStyle, rias.dom.styleToObject(child.style)));
 				}
 				////self.inherited 会导致 self._children 改变，所以先执行 self._children
+				//console.debug(this.id + " addChild...");
 				self.inherited(arguments);///保证 _riasrOwner 及 _riasrChildren 的正确。
 			}
 		},
@@ -385,6 +389,7 @@ define([
 				i = (rias.isNumber(child) ? child : rias.indexOf(t, child));
 			if(i >= 0){
 				t.splice(i, 1);///删除缓冲。
+				//console.debug(this.id + " removeChild...");
 				self.inherited(arguments);///保证 _riasrOwner 及 _riasrChildren 的正确。
 			}
 		}

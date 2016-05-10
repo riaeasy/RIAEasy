@@ -66,7 +66,7 @@ define([
 			}
 
 			var prog = ProgressIndicator.getInstance();
-			//rias.dom.body.appendChild(prog.domNode);
+			//rias.dom.docBody.appendChild(prog.domNode);
 			rias.dom.webAppNode.appendChild(prog.domNode);
 			prog.start();
 

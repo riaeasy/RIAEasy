@@ -274,15 +274,15 @@ define([
 						self._set(name, value);///触发 watch()
 						//}
 					};
-					if(rias.isFunction(self["_on" + N])){
-						self.own(self.watch(name, function(_name, oldValue, value){
-							if(self.isDestroyed(true)){
-								return undefined;
-							}
-							return self["_on" + N](value, oldValue);
-						}));
-						//self["_on" + N](undefined, self[name]);
-					}
+				}
+				if(rias.isFunction(self["_on" + N])){
+					self.own(self.watch(name, function(_name, oldValue, value){
+						if(self.isDestroyed(true)){
+							return undefined;
+						}
+						return self["_on" + N](value, oldValue);
+					}));
+					//self["_on" + N](undefined, self[name]);
 				}
 				if(!rias.isFunction(self["_get" + N + "Attr"])){
 					self["_get" + N + "Attr"] = function(){

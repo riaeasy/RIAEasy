@@ -22,7 +22,7 @@ define([
 		structure = [],
 		treeColumns = [],
 		topBtns = [],
-		cellIdOps = [];
+		cellOpParams = [];
 
 	var SPECIAL_CHARS = ['<a', 'a/>', '&', '!', '#', '*', '^', '%'];
 	var toSpecialchars = function(str){
@@ -106,7 +106,7 @@ define([
 		};*/
 
 		gp._riaswIdOfModule = gp._riaswIdOfModule || "grid";
-		//gp.columnLockCount = gp.columnLockCount || 1;///移到 cellIdOps 中处理。
+		//gp.columnLockCount = gp.columnLockCount || 1;///移到 cellOpParams 中处理。
 		gp.pagination = gp.pagination || true;
 		gp.filter = gp.filter || false;
 		gp.edit = gp.edit || false;
@@ -160,7 +160,7 @@ define([
 				tooltip: rias.i18n.action.dele,
 				iconClass: "deleIcon",
 				onClick: function(evt){
-					this.grid.deleRecoreds(this.grid, this.grid.select.row.getSelected(), this);
+					this.grid.deleteRecoreds(this.grid, this.grid.select.row.getSelected(), this);
 				}
 			},
 			btn, _btn;
@@ -171,7 +171,7 @@ define([
 			_btn = undefined;
 			btn = gp.topBtns.shift();// gp.topBtns[i];
 			if(rias.isObjectSimple(btn)){
-				_btn = rias.mixinDeep({}, btn.name === "btnAdd" ? _btnAdd : btn.name === "btnDele" ? _btnDele : {
+				_btn = rias.mixinDeep({}, btn.name === "btnAdd" ? _btnAdd : btn.name === "btnDelete" ? _btnDele : {
 					_riaswType: "rias.riasw.form.Button",
 					//_riaswIdOfModule: "btnCancel",
 					//label: rias.i18n.action.cancel,
@@ -183,7 +183,7 @@ define([
 			}else if(rias.isString(btn)){
 				if(btn == "btnAdd"){
 					_btn = _btnAdd;
-				}else if(btn == "btnDele"){
+				}else if(btn == "btnDelete"){
 					_btn = _btnDele;
 				}
 			}else if(btn != "btnRefresh"){
@@ -202,13 +202,13 @@ define([
 		gp.btnAdd = {
 			"$refScript": "return module." + gp._riaswIdOfModule + "_btnAdd;"
 		};
-		gp.btnDele = {
+		gp.btnDelete = {
 			"$refScript": "return module." + gp._riaswIdOfModule + "_btnDele;"
 		};
 
 		gp.opColumnWidth = gp.opColumnWidth || "8em";
-		//gp.cellIdOps = gp.cellIdOps;// || cellIdOps;
-		if(rias.isArray(gp.cellIdOps)){
+		//gp.cellOpParams = gp.cellOpParams;// || cellOpParams;
+		if(rias.isArray(gp.cellOpParams)){
 			gp.structure = [
 				{field: gp.store.idAttribute,		name: "操作",			width: gp.opColumnWidth,
 					//expandLevel: 'all',
@@ -227,10 +227,10 @@ define([
 								+ "data-dojo-attach-point='${0}' "
 								+ "data-dojo-props='tagType: \"a\", name: \"${0}\", tooltip: \"${1}\"'>${2}"
 								+ "</a>",
-							item, i, l = grid.cellIdOps.length;
+							item, i, l = grid.cellOpParams.length;
 						str = "";
 						for(i = 0; i < l; i++){
-							item = grid.cellIdOps[i];
+							item = grid.cellOpParams[i];
 							if(item && item.name){
 								str = str + (str ? "  " : "") + rias.substitute(s, [item.name, item.tooltip, item.text]);
 							}
@@ -242,19 +242,19 @@ define([
 						var cell = widget,
 							grid = widget.cell.grid,
 							module = grid._riasrModule,
-							item, i, l = grid.cellIdOps.length;
+							item, i, l = grid.cellOpParams.length;
 						function _click(evt){
 							item = {
-								func: "cellIdOnClick"
+								func: "cellOpOnClick"
 							};//evt.target是innerHtml，this才是A
 							for(i = 0; i < l; i++){
-								if(grid.cellIdOps[i].name === this.name){
-									item = grid.cellIdOps[i];
+								if(grid.cellOpParams[i].name === this.name){
+									item = grid.cellOpParams[i];
 								}
 							}
-							if(item.func == "cellIdOnClick"){
-								//grid.cellIdOnClick(grid, this.name, widget);//这里的this是evt的this
-								grid.cellIdOnClick.apply(grid, [grid, this.name, widget]);
+							if(item.func == "cellOpOnClick"){
+								//grid.cellOpOnClick(grid, this.name, widget);//这里的this是evt的this
+								grid.cellOpOnClick.apply(grid, [grid, this.name, widget]);
 							}else if(rias.isFunction(item.func)){
 								//rias.hitch(module, item.func)(grid, this.name, widget);//这里的this是evt的this
 								item.func.apply(module, [grid, this.name, widget]);
@@ -269,7 +269,7 @@ define([
 						//widget.view.domNode.innerHTML = "查看";
 						//widget.view.domNode.onclick = _click;
 						for(i = 0; i < l; i++){
-							item = grid.cellIdOps[i];
+							item = grid.cellOpParams[i];
 							widget[item.name].opParams = item;
 							if(item && item.name && widget[item.name]){
 								if(item.visible === undefined || item.visible == true ||
@@ -315,11 +315,11 @@ define([
 								case "text":
 									return rawData[col.field];
 								case "date":
-									return rias.datetime.format(rawData[col.field], rias.datetime.defaultDateFormatStr);
+									return rias.formatDatetime(rawData[col.field], rias.datetime.defaultDateFormatStr);
 								case "time":
-									return rias.datetime.format(rawData[col.field], rias.datetime.defaultTimeFormatStr);
+									return rias.formatDatetime(rawData[col.field], rias.datetime.defaultTimeFormatStr);
 								case "datetime":
-									return rias.datetime.format(rawData[col.field], rias.datetime.defaultFormatStr);
+									return rias.formatDatetime(rawData[col.field], rias.datetime.defaultFormatStr);
 								case "boolean":
 									return (rawData[col.field] != false ? "是" : "否");
 								default:
@@ -350,7 +350,7 @@ define([
 		}
 		delete gp.treeColumns;
 
-		gp.cellIdOnClick = function(grid, name, widget){
+		gp.cellOpOnClick = function(grid, name, widget){
 			var g = grid,
 				id = widget.cell.row[gp.store.idAttribute],
 				d = widget.cell.model.byId(id),
@@ -384,7 +384,7 @@ define([
 					}
 				};
 			d = (d && d.item[gp.store.labelAttribute] ? "[" + d.item[gp.store.labelAttribute] + "]" : "");
-			if(name == "modi"){
+			if(name == "modify"){
 				rias.show(rias.mixinDeep({
 					_riaswIdOfModule: (g._riaswIdOfModule ? g._riaswIdOfModule + "_modi_" + id : undefined),
 					caption: params.tooltip + id + d,
@@ -392,8 +392,8 @@ define([
 						"btnSave",
 						"btnCancel"
 					],
-					disabled: false,
-					readOnly: false
+					initDisabled: false,
+					initReadOnly: false
 				}, meta, params.moduleParams));
 			}else if(name == "copy"){
 				rias.show(rias.mixinDeep({
@@ -403,8 +403,8 @@ define([
 						"btnSave",
 						"btnCancel"
 					],
-					disabled: false,
-					readOnly: false
+					initDisabled: false,
+					initReadOnly: false
 				}, meta, params.moduleParams));
 			}else{
 				rias.show(rias.mixinDeep({
@@ -413,8 +413,8 @@ define([
 					actionBar: [
 						"btnClose"
 					],
-					disabled: true,
-					readOnly: true
+					initDisabled: true,
+					initReadOnly: true
 				}, meta, params.moduleParams));
 			}
 		};
@@ -432,7 +432,7 @@ define([
 			g.model._cache.options.query = g.query;
 			//g.model.when(g.query, function(){
 				//console.debug("refresh");
-				//rias.info({
+				//rias.message({
 				//	dialogType: "tip",
 				//	ownerRiasw: g,
 				//	around: g.btnRefresh && rias.dom.visible(g.btnRefresh) ? g.btnRefresh : undefined,
@@ -476,11 +476,11 @@ define([
 				}
 			});
 		};
-		gp.deleRecoreds = function(grid, ids, around){
+		gp.deleteRecoreds = function(grid, ids, around){
 			var g = grid;
 			ids = (rias.isArray(ids) ? ids : rias.isString(ids) ? [ids] : []);
 			if(ids.length){
-				rias.choice({
+				rias.choose({
 					_riaswIdOfModule: g._riaswIdOfModule + "_dele",
 					ownerRiasw: g,
 					dialogType: "modal",

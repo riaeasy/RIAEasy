@@ -19,8 +19,8 @@ define([
 	"afterLoaded": function (/*{widgets: widgets, parent: parent, module: m}*/result){
 		var m = this;
 		rias.forEach(m.table._widgets, function(child){
-			child.set("disabled", m.disabled || child.disabled);
-			child.set("readOnly", m.readOnly || child.readOnly);
+			child.set("disabled", m.initDisabled || child.disabled);
+			child.set("readOnly", m.initReadOnly || child.readOnly);
 		});
 		m.loadData(m.query).then(function(){
 		});
@@ -69,7 +69,7 @@ define([
 		if(m.target){
 			if(m.op === "add" || m.op === "copy"){
 				rias.xhrPost(m.target, v, _cb);
-			}else if(m.op === "modi"){
+			}else if(m.op === "modify"){
 				v._idDirty = m.query.id;
 				rias.xhrPut(m.target, v, _cb);
 			}else{

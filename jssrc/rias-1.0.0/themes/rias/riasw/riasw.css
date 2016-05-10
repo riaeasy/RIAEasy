@@ -183,6 +183,9 @@
 .riaswModuleIcon{
 	background: url('./imagesw48/Module.png') no-repeat;
 }
+.riaswMultiComboBoxIcon{
+	background: url('./imagesw48/MultiComboBox.png') no-repeat;
+}
 .riaswMultiSelectIcon{
 	background: url('./imagesw48/MultiSelect.png') no-repeat;
 }
@@ -540,6 +543,9 @@
 }
 .riaswModuleIcon16{
 	background: url('./imagesw16/Module.png') no-repeat;
+}
+.riaswMultiComboBoxIcon16{
+	background: url('./imagesw16/MultiComboBox.png') no-repeat;
 }
 .riaswMultiSelectIcon16{
 	background: url('./imagesw16/MultiSelect.png') no-repeat;

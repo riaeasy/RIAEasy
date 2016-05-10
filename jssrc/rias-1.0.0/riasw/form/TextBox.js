@@ -144,51 +144,41 @@ define([
 				ln = this.labelNode,
 				bn = this._buttonNode,
 				cn = this.containerNode,// || this.domNode,///兼容 dijit.form.TextBox
-				mb = resultSize || {},
 				cs,
-				me,
-				be,
-				pe;
+				h;
 			if(changeSize){
 				rias.dom.setMarginBox(dn, changeSize);
 			}
-			rias.mixin(mb, changeSize || {}); // changeSize overrides resultSize
-			if(!("h" in mb) || !("w" in mb)){
-				mb = rias.mixin(rias.dom.getMarginBox(dn), mb); // just use domGeometry.setMarginBox() to fill in missing values
-			}
+			changeSize = rias.dom.getContentBox(dn);
+			changeSize.h = h = Math.floor(changeSize.h);
+			changeSize.w = Math.floor(changeSize.w);
+			//if(rias.has("ff")){
+				--changeSize.w;
+			//}
 
-			this._contentBox = rias.dom.getContentBox(dn);
 			if(bn){
-				this._contentBox.w -= Math.ceil(rias.dom.getMarginBox(bn).w);
 				cs = rias.dom.getComputedStyle(bn);
-				me = rias.dom.getMarginExtents(bn, cs);
-				be = rias.dom.getBorderExtents(bn, cs);
-				pe = rias.dom.getPadExtents(bn, cs);
-				rias.dom.setStyle(bn, "height", (this._contentBox.h - me.h - be.h - pe.h) + "px");
+				resultSize = rias.dom.getMarginBox(bn, cs);
+				changeSize.w -= resultSize.w;
+				rias.dom.setMarginBox(bn, {
+					h: h
+				}, cs);
 			}
 			if(this.showLabel){
-				this._contentBox.w -= Math.ceil(rias.dom.getMarginBox(ln).w);
 				cs = rias.dom.getComputedStyle(ln);
-				me = rias.dom.getMarginExtents(ln, cs);
-				be = rias.dom.getBorderExtents(ln, cs);
-				pe = rias.dom.getPadExtents(ln, cs);
-				rias.dom.setStyle(ln, "height", (this._contentBox.h - me.h - be.h - pe.h) + "px");
-				rias.dom.setStyle(ln, "line-height", (this._contentBox.h - me.h - be.h - pe.h) + "px");
+				resultSize = rias.dom.getMarginBox(ln, cs);
+				changeSize.w -= resultSize.w;
+				rias.dom.setStyle(ln, "line-height", h + "px");
+				rias.dom.setMarginBox(ln, {
+					h: h
+				}, cs);
 			}
 			/// dijit.Editor 打包（Build）后，dijit.form.TextBox 不能 hack。
-			//cn = cn || dn;
-			cs = rias.dom.getComputedStyle(cn);
-			me = rias.dom.getMarginExtents(cn, cs);
-			be = rias.dom.getBorderExtents(cn, cs);
-			pe = rias.dom.getPadExtents(cn, cs);
 			rias.dom.setMarginBox(cn, {
-				h: this._contentBox.h > 0 ? this._contentBox.h : undefined,
-				w: this._contentBox.w
+				h: h,
+				w: Math.floor(changeSize.w)
 			});
-			if(this._contentBox.h > 0){
-				rias.dom.setStyle(this.textbox, "height", this._contentBox.h + "px");
-				rias.dom.setStyle(this.textbox, "line-height", this._contentBox.h + "px");
-			}
+			rias.dom.setStyle(this.textbox, "line-height", h + "px");
 		},
 		layout: function(){
 			this.resize();

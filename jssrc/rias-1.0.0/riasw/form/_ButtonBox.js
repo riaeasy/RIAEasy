@@ -18,13 +18,12 @@ define([
 				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" tabIndex="-1" readonly="readonly" role="presentation"></div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode,_aroundNode">'+
 					'<input class="dijitReset dijitInputInner" type="text" autocomplete="off" data-dojo-attach-point="textbox,focusNode" role="textbox" ${!nameAttrSetting}/>'+
+					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
+						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'</div>'+
 				'</div>'+
-				'<div class="dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="_buttonNode,_arrowWrapperNode" role="presentation">'+
-					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660; " type="text" tabIndex="-1" readonly="readonly" role="button presentation" aria-hidden="true"'+
-						'${_buttonInputDisabled}/>'+
-				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+				'<div class="dijitReset dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer" data-dojo-attach-point="_buttonNode,_arrowWrapperNode" role="presentation">'+
+					'<input class="dijitReset dijitInputField dijitArrowButtonInner" value="&#9660; " type="text" tabIndex="-1" readonly="readonly" role="button presentation" aria-hidden="true" ${_buttonInputDisabled}/>'+
 				'</div>'+
 			'</div>',
 
@@ -271,7 +270,7 @@ define([
 		},
 		openDropDown: function(){
 			var self = this,
-				args = rias.mixinDeep({}, self.dropDownArgs),
+				args = {},
 				around = self._aroundNode || self.containerNode || self.domNode;
 			function _size(){
 				// Set width of drop down if necessary, so that dropdown width + width of scrollbar (from popup wrapper)
@@ -286,6 +285,11 @@ define([
 				}else{
 					rias.dom.setMarginBox(ddNode, resizeArgs);
 				}
+			}
+			if(rias.isFunction(self.dropDownArgs)){
+				args = rias.mixinDeep(args, self.dropDownArgs());
+			}else{
+				args = rias.mixinDeep(args, self.dropDownArgs);
 			}
 			args.ownerRiasw = self;
 			args.ownerEditor = self;

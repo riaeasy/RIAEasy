@@ -120,12 +120,28 @@ define([
 			any = rias.by(any.$refObj, context) || any.$refObj;
 		}
 		if(rias.isString(any)){
-			///TODO:zensst. context => module
-			w = rias.getObject(any, false, context);
-			if(!w && !/^module\.|^context\./.test(any)){
-				w = (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any)
-					|| rias.dom.byId(any)
-					|| rias.getObject(any);
+			if(any.indexOf("module.") >= 0){
+				if(rias.isRiaswModule(context)){
+					w = rias.getObject(any.substring(7), 0, context);
+				}else if(context && context._riasrModule){
+					w = rias.getObject(any.substring(7), 0, context._riasrModule);
+				}else{
+					w = undefined;
+				}
+			}else if(any.indexOf("context.") >= 0){
+				if(context){
+					w = rias.getObject(any.substring(8), 0, context);
+				}else{
+					w = undefined;
+				}
+			}else{
+				w = rias.getObject(any, false, context);
+				//if(!w && !/^module\.|^context\./.test(any)){
+				if(!w){
+					w = (rias.webApp && rias.webApp.byId && rias.webApp.byId(any)) || rias.registry.byId(any)
+						|| rias.dom.byId(any)
+						|| rias.getObject(any);
+				}
 			}
 			any = w;
 		}
@@ -198,6 +214,86 @@ define([
 		//_riaspChildren: []
 	};
 
+	rias.decodeRiaswParam = function(module, params, name, pathname){
+		///TODO:zensst. 未实现 params 中包含 _riaswType。
+		var p,
+			_o, i, l;
+		if(!params || !name || !params[name]){
+			return;
+		}
+		p = params[name];
+		if(!module){
+			module = rias.webApp;
+		}
+		if(rias.isRiasw(p)){
+			if(!p._riasrModule || p._riasrModule !== module){
+				p._riasrModule = module;
+			}
+		}else if(rias.isObjectSimple(p)){
+			if(p.$refObj){
+				//_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+				if(p.$refObj === "module"){
+					_o = module;
+				}else if(p.$refObj.indexOf("module.") >= 0){
+					_o = rias.getObject(p.$refObj.substring(7), 0, module);
+				}else{
+					_o = rias.getObject(p.$refObj, 0, module) || rias.getObject(p.$refObj);
+				}
+				params[name] = _o;
+				if(_o == undefined){
+					console.warn(module.id, pathname + " = undefined.");
+				}
+			}else if(p.$refScript){
+				try{
+					_o = rias.$runByModule(module, p.$refScript, module.id + "[" + pathname + "]");
+				}catch(e){
+					_o = undefined;
+				}
+				params[name] = _o;
+				if(_o == undefined){
+					console.warn(module.id, pathname + " = undefined.");
+				}
+			}else{
+				rias.decodeRiaswParams(module, p, pathname);
+			}
+		}else if(rias.isArray(p)){
+			for(i = 0, l = p.length; i < l; i++){
+				if(rias.isRiasw(p[i])){
+					if(!p[i]._riasrModule || p[i]._riasrModule === rias.webApp){
+						p[i]._riasrModule = module;
+					}
+				}else if(rias.isObjectSimple(p[i])){
+					if(p[i].$refObj){
+						//_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+						if(p[i].$refObj === "module"){
+							_o = module;
+						}else if(p[i].$refObj.indexOf("module.") >= 0){
+							_o = rias.getObject(p[i].$refObj.substring(7), 0, module);
+						}else{
+							_o = rias.getObject(p[i].$refObj, 0, module) || rias.getObject(p[i].$refObj);
+						}
+						p[i] = _o;
+						if(_o == undefined){
+							console.warn(module.id, pathname + "." + i + " = undefined.");
+						}
+					}else if(p[i].$refScript){
+						try{
+							_o = rias.$runByModule(module, p[i].$refScript, module.id + "[" + pathname + "." + i + "]");
+						}catch(e){
+							_o = undefined;
+						}
+						p[i] = _o;
+						if(_o == undefined){
+							console.warn(module.id, pathname + "." + i + " = undefined.");
+						}
+					}else{
+						rias.decodeRiaswParams(module, p[i], pathname + "." + i);
+					}
+				}
+			}
+		}
+		return p;
+	};
 	rias.decodeRiaswParams = function(module, params, _pn){
 		///TODO:zensst. 未实现 params 中包含 _riaswType。
 		var pn, ppn, p,
@@ -221,8 +317,8 @@ define([
 			}
 			if (params.hasOwnProperty(pn)) {
 				ppn = (_pn ? _pn + "." + pn : pn);
-				p = params[pn];
-				if(rias.isRiasw(p)){
+				rias.decodeRiaswParam(module, params, pn, ppn);
+				/*if(rias.isRiasw(p)){
 					if(!p._riasrModule || p._riasrModule === rias.webApp){
 						p._riasrModule = module;
 					}
@@ -239,7 +335,7 @@ define([
 						if(_o != undefined){
 							rias.setObject(pn, _o, params);
 						}else{
-							console.warn(module.id, "moduleMeta." + ppn + " = undefined.");
+							console.warn(module.id, ppn + " = undefined.");
 						}
 					}else if(p.$refScript){//
 						try{
@@ -250,7 +346,7 @@ define([
 						if(_o != undefined){
 							rias.setObject(pn, _o, params);
 						}else{
-							console.warn(module.id, "moduleMeta." + ppn + " = undefined.");
+							console.warn(module.id, ppn + " = undefined.");
 						}
 					}else{
 						arguments.callee(p, ppn);
@@ -273,7 +369,7 @@ define([
 								}
 								p[i] = _o;
 								if(_o == undefined){
-									console.warn(module.id, "moduleMeta." + ppn + "." + i + " = undefined.");
+									console.warn(module.id, ppn + "." + i + " = undefined.");
 								}
 							}else if(p[i].$refScript){//
 								try{
@@ -283,14 +379,14 @@ define([
 								}
 								p[i] = _o;
 								if(_o == undefined){
-									console.warn(module.id, "moduleMeta." + ppn + "." + i + " = undefined.");
+									console.warn(module.id, ppn + "." + i + " = undefined.");
 								}
 							}else{
 								arguments.callee(p[i], ppn + "." + i);
 							}
 						}
 					}
-				}
+				}*/
 			}
 		}
 		return params;
@@ -750,6 +846,9 @@ define([
 					console.error(e.message, rias.captureStackTrace(e), _obj);
 					errf(e);
 				}*/
+				//if(rias.isFunction(_parent._beforeUpdateSize)){
+				//	_parent._beforeUpdateSize(_parent.id + " - placeAt");
+				//}
 				try{
 					if(rias.isDijit(_obj) && (rias.isDijit(_parent) || rias.isDomNode(_parent))){
 						//_obj._riasrParent = _parent;
@@ -761,6 +860,9 @@ define([
 					console.error(e.message, rias.captureStackTrace(e), _obj);
 					errf(e);
 				}
+				//if(rias.isFunction(_parent._afterUpdateSize)){
+				//	_parent._afterUpdateSize(_parent.id + " - placeAt");
+				//}
 			}
 		}
 		function _createChildren(_obj, _children, _module, _d){
@@ -776,10 +878,16 @@ define([
 						_pp.push(_pp.length);
 					}
 				}
+				//if(rias.isFunction(_obj._beforeUpdateSize)){
+				//	_obj._beforeUpdateSize(_obj.id + " - _createRiasdChildren");
+				//}
 				_createRiasdChildren(_children, _obj, _module, refs, _pp, _pi).then(function(c){
 					if(c && c.errors){
 						errf(c.errors);
 					}
+					//if(rias.isFunction(_obj._afterUpdateSize)){
+					//	_obj._afterUpdateSize(_obj.id + " - _createRiasdChildren");
+					//}
 					_d.resolve(_obj);
 				});
 			}else{
@@ -927,7 +1035,7 @@ define([
 
 					var pd;
 					if(rias.isFunction(ctor._riasdMeta.defaultParams)){
-						pd = ctor._riasdMeta.defaultParams(_params);
+						pd = ctor._riasdMeta.defaultParams(_params, _module);
 					}else{
 						pd = rias.mixinDeep({}, ctor._riasdMeta.defaultParams, _params);
 					}
@@ -1024,9 +1132,6 @@ define([
 							//function _createChildren(_obj, _params, _ownerRiasw, _module, _d)
 							_placeRiasw(_obj, _ownerRiasw, _pp, index);
 							_createChildren(_obj, _params._riaswChildren, _module, _d);
-							//rias.forEach(ps, function(_p){
-							//	rias.placeRiasw(_obj[_p[1]], _obj, "last");
-							//});
 						}, function(){
 							s = "Error occurred when creating riasWidget: {id: " + params.id + ", _riaswType: " + _params._riaswType + "}";
 							_createError(s);
@@ -1049,7 +1154,6 @@ define([
 			children = [children];
 		}
 		//var pi = (ownerRiasw.containerNode && ownerRiasw.containerNode.childNodes && ownerRiasw.containerNode.childNodes.length > 0) ? ownerRiasw.containerNode.childNodes.length : 0;
-		//FIXME:zensst.改进为按顺序创建.
 		rias.forEach(children, function(child, index){
 			if(child){
 				var _d = rias.newDeferred();

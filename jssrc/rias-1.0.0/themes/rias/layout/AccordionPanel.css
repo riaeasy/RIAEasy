@@ -4,22 +4,23 @@
  */
 
 .riaswAccordionPanel {
-	/*border: none;/*zensst 有 border 时，第二次显示有问题*/
-	border: 0px solid lightgray;
-	/*background-color: inherit;#dfefff zensst*/
+	border-style: solid;
+	border-color: lightgray;
+	border-width: 0 0 1px 0;
 }
 
 /* common */
 
 .riaswAccordionInnerContainer {
 	background-color: inherit;
-	/*border: 1px solid lightgray;*/
+	border-style: solid;
+	border-color: lightgray;
+	border-width: 1px 1px 0 1px;
 }
 
 .riaswAccordionTitle {
 	background-color: lavender;
-	/*border-top: 1px solid #b9bbdd; zensst*/
-	/*border-bottom: 1px solid lightgray;
+	/*border: 0px solid lightgray;
 	padding: 5px 4px 6px 8px;
 	font-size: 0.9em;*/
 	font-weight: bold;
@@ -32,14 +33,9 @@
 }
 
 .riaswAccordionChildWrapper {
-	/* this is the node whose height is adjusted */
-	/*overflow: hidden;*/
-	/*background-color: #ffffff;
-	background-color: inherit;
-	border: 1px solid #759dc0;
-	margin: 0 2px 2px; zensst*/
+	/*margin: 0 2px 2px; zensst*/
 	/*background-color: inherit;*/
-	border: 1px solid lightgray;
+	border: 0px solid lightgray;
 }
 
 .riaswAccordionTitleHover  {

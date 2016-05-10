@@ -46,7 +46,7 @@
 .riaswDialogPanelCaptionNode {
 	background-color: lavender;
 	border: 0px solid lightgray;
-	border-bottom-width: 1px;
+	/*border-bottom-width: 1px;*/
 	padding: 0.25em;
 	cursor: pointer;
 	/*font-size: 1em;*/

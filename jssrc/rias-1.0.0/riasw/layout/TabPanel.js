@@ -121,12 +121,10 @@ define([
 				var v = rias.dom.visible(this.tablist.domNode);
 				if(this.getChildren().length > 0){
 					if(!v){
-						this.needLayout = true;
 						rias.dom.visible(this.tablist.domNode, true);
 					}
 				}else{
 					if(v){
-						this.needLayout = true;
 						rias.dom.visible(this.tablist.domNode, false);
 					}
 				}
@@ -210,8 +208,9 @@ define([
 			var box,
 				node = this.domNode;
 			box = rias.dom.getContentBox(node);
-			if(!box || !this._contentBox || box.l != this._contentBox.l || box.t != this._contentBox.t || box.w != this._contentBox.w || box.h != this._contentBox.h){
-				//if(this.needLayout || !box || !this._contentBox || box.w != this._contentBox.w || box.h != this._contentBox.h){
+			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
+				Math.abs(box.w - this._contentBox.w) > 0.01 || Math.abs(box.h - this._contentBox.h) > 0.01){
+				////if(this.needLayout || !box || !this._contentBox || box.w != this._contentBox.w || box.h != this._contentBox.h){
 				this._contentBox = box;
 				this.needLayout = true;
 			}

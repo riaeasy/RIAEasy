@@ -12,12 +12,10 @@ define([
 				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation">'+
 				'</div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode">'+
-					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" autocomplete="off"'+
-						'${!nameAttrSetting} type="${type}"/>'+
-				'</div>'+
-				'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
-					'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner"'+
-						'value="&#935; " type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" aria-labelledby="${id}_labelNode" autocomplete="off" ${!nameAttrSetting} type="${type}"/>'+
+					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
+						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
+					'</div>'+
 				'</div>'+
 			'</div>'
 	});

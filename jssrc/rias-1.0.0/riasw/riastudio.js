@@ -53,10 +53,10 @@ define([
 			"rias/riasw/studio/Module",
 			"rias/riasw/studio/DefaultError"
 		], function(App){
-			rias.webApp = rias.createRiasw(App, params, refNode || rias.dom.body);
+			rias.webApp = rias.createRiasw(App, params, refNode || rias.dom.docBody);
 			rias.ready(1000, function(){
 				if(rias.has("ie") < 11){
-					rias.info({
+					rias.message({
 						dialogType: "modal",
 						content: "为了得到更好的效果，请使用 ie11+ 或者 chrome/firefox 内核的浏览器。"
 					});
@@ -256,13 +256,12 @@ define([
 						}
 					}, true));
 				}
-				d.own(rias.after(d, "onClose", function(mr){
-					mr = (mr == undefined /*|| mr == null*/ ? d.modalResult : mr);
+				d.own(rias.after(d, "onClose", function(){
 					if(args.parent && d.__parentCanClose){
 						args.parent.canClose = d.__parentCanClose;
 					}
 					if (cc && rias.isFunction(_onClose)) {
-						cc = rias.hitch(d, _onClose)(mr);
+						cc = rias.hitch(d, _onClose)();
 					}
 					//console.info("cc:", cc);
 					return cc;
@@ -333,7 +332,7 @@ define([
 			_args.contentType = (_args.contentType != undefined ? _args.contentType : contentType);
 			_args.restrictPadding = (_args.restrictPadding >= 0 ? _args.restrictPadding : 12);
 			if(!_args.caption){
-				_args.caption = caption || rias.i18n.action.info;
+				_args.caption = caption || rias.i18n.action.message;
 			}
 			if(rias.isBoolean(autoClose) || rias.isNumber(autoClose)){
 				_args.autoClose = autoClose;
@@ -346,8 +345,8 @@ define([
 		rias.show = function(args) {
 			return _doShowDlg(_toShowArgs(args));
 		};
-		rias.info = function(args) {
-			return _doShowDlg(_toShowArgs(args, "tip", 1, rias.i18n.action.info, undefined, ["btnOk"]));
+		rias.message = function(args) {
+			return _doShowDlg(_toShowArgs(args, "tip", 1, rias.i18n.action.message, undefined, ["btnOk"]));
 		};
 		rias.warn = function(args) {
 			return _doShowDlg(_toShowArgs(args, "modal", 2, rias.i18n.action.warn, undefined, ["btnOk"]));
@@ -355,9 +354,12 @@ define([
 		rias.error = function(args) {
 			return _doShowDlg(_toShowArgs(args, "modal", 3, rias.i18n.action.error, undefined, ["btnOk"]));
 		};
-		rias.choice = function(args) {
-			return _doShowDlg(_toShowArgs(args, "modal", 1, rias.i18n.action.choice, 0, ["btnYes", "btnNo"]));
+		rias.choose = function(args) {
+			return _doShowDlg(_toShowArgs(args, "modal", 1, rias.i18n.action.choose, 0, ["btnYes", "btnNo"]));
 		};
+		//rias.wait = function(args) {
+		//	return _doShowDlg(_toShowArgs(args, "modal", 1, rias.i18n.action.choose, 0, ["btnYes", "btnNo"]));
+		//};
 		rias.input = function(args){
 			var _args;
 			if(rias.isString(args) || rias.isNumber(args)){
@@ -374,7 +376,7 @@ define([
 			//	"btnCancel"
 			//];
 			_args.actionBarPosition = (_args.actionBarPosition != undefined ? _args.actionBarPosition : "bottom");
-			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choice, 0, ["btnOk", "btnCancel"]));
+			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choose, 0, ["btnOk", "btnCancel"]));
 		};
 		rias.getSelectTreeModeInt = function(mode){
 			if(rias.isString(mode)){
@@ -399,7 +401,7 @@ define([
 			//	"btnCancel"
 			//];
 			_args.actionBarPosition = (_args.actionBarPosition != undefined ? _args.actionBarPosition : "bottom");
-			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choice, 0, ["btnOk", "btnCancel"]));
+			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choose, 0, ["btnOk", "btnCancel"]));
 		};
 		rias.showAbout = function(around) {
 			var homeLink = "<a href='" + rias.studioHome + "' target='_blank'>" + rias.studioHome + "</a>";
@@ -423,10 +425,10 @@ define([
 			//var revisionLink = "<a href='" + rias.studioHome + "' target='_blank'>" + rias.studioVersion  + "</a>";
 			//formHTML += "<div class='about_build'>" + rias.substitute(rias.i18n.studio.build, [revisionLink]) + "</div>";
 			formHTML += "</div>";
-			//return rias.info({
+			//return rias.message({
 			//	content: formHTML
 			//});
-			return rias.info({
+			return rias.message({
 				_riaswIdOfModule: "about",
 				dialogType: "modal",
 				//dialogType: "tip",

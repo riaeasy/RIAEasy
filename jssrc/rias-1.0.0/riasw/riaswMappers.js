@@ -34,18 +34,27 @@ define([
 			riasType: ["rias.riasw.form.CurrencyTextBox", "dijit.form.CurrencyTextBox"],
 			requires: "rias/riasw/form/CurrencyTextBox"
 		},{
+			riasType: ["rias.riasw.form.ButtonBox"],
+			requires: "rias/riasw/form/ButtonBox"
+		},{
 			riasType: ["rias.riasw.form.ComboBox", "dijit.form.ComboBox"],
 			requires: "rias/riasw/form/ComboBox"
 		},{
-			riasType: ["rias.riasw.form.ButtonBox"],
-			requires: "rias/riasw/form/ButtonBox"
+			riasType: ["rias.riasw.form.MultiComboBox", "dojox.form.MultiComboBox"],
+			requires: "rias/riasw/form/MultiComboBox"
+		},{
+			riasType: ["rias.riasw.form.FilteringSelect", "dijit.form.FilteringSelect"],
+			requires: "rias/riasw/form/FilteringSelect"
 		/*},{
 			riasType: ["rias.riasw.form.Select"],
 			requires: "rias/riasw/form/Select"
 		},{
+			riasType: ["rias.riasw.form.MultiSelect", "dijit.form.MultiSelect"],
+			requires: "rias/riasw/form/MultiSelect"
+		*/},{
 			riasType: ["rias.riasw.form.CheckedMultiSelect", "dojox.form.CheckedMultiSelect"],
 			requires: "rias/riasw/form/CheckedMultiSelect"
-		*/},{
+		},{
 			riasType: ["rias.riasw.form.Button", "dijit.form.Button"],
 			requires: "rias/riasw/form/Button"
 		},{
@@ -96,15 +105,6 @@ define([
 		},{
 			riasType: ["rias.riasw.form.ExpandingTextArea", "dijit.form.Textarea"],
 			requires: "rias/riasw/form/ExpandingTextArea"
-		//},{
-		//	riasType: ["rias.riasw.form.MultiComboBox", "dojox.form.MultiComboBox"],
-		//	requires: "rias/riasw/form/MultiComboBox"
-		//},{
-		//	riasType: ["rias.riasw.form.MultiSelect", "dijit.form.MultiSelect"],
-		//	requires: "rias/riasw/form/MultiSelect"
-		},{
-			riasType: ["rias.riasw.form.FilteringSelect", "dijit.form.FilteringSelect"],
-			requires: "rias/riasw/form/FilteringSelect"
 		},{
 			riasType: ["rias.riasw.form.Rating", "dojox.form.Rating"],
 			requires: "rias/riasw/form/Rating"

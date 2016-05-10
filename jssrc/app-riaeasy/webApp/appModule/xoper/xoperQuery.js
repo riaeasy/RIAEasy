@@ -21,16 +21,16 @@ define([
 				{
 					"_riaswType": "rias.riasw.grid.DGrid",
 					"_riaswIdOfModule": "grid",
-					"cellIdOps": [
+					"cellOpParams": [
 						{
-							"func": "cellIdOnClick",
-							"name": "modi",
+							"func": "cellOpOnClick",
+							"name": "modify",
 							"text": "修改",
 							"tooltip": "修改详细信息"
 						}
 					],
 					"query": {
-						"$refScript": "return module.query;"
+						"$refObj": "module.query"
 					},
 					"region": "center",
 					"structure": [
@@ -98,7 +98,7 @@ define([
 					},
 					"topBtns": [
 						"btnAdd",
-						"btnDele"
+						"btnDelete"
 					],
 					"treeColumns": [
 					],

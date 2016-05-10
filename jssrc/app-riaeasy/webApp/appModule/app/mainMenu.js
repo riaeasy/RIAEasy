@@ -55,9 +55,9 @@ define([
 			showRoot: false,
 			isSource: false,
 			accept: [],
-			toggleOnClick: true,
+			//toggleOnClick: true,
 			//expandOnEnter: true,
-			collapseOnEnter: false,
+			//collapseOnEnter: false,
 			//style: {
 			//	padding: "1px",
 			//	width: "100%",

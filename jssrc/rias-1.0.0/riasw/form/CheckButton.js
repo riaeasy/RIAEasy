@@ -2,16 +2,15 @@
 
 define([
 	"rias",
-	"rias/riasw/form/ToggleButton",
-	"rias/riasw/widget/_BadgeMixin"
-], function(rias, _Widget, _BadgeMixin) {
+	"rias/riasw/form/ToggleButton"
+], function(rias, _Widget) {
 
-	rias.theme.loadRiasCss([
-		"form/Button.css"
-	]);
+	//rias.theme.loadRiasCss([
+	//	"form/Button.css"
+	//]);
 
 	var riasType = "rias.riasw.form.CheckButton";
-	var Widget = rias.declare(riasType, [_Widget, _BadgeMixin], {
+	var Widget = rias.declare(riasType, [_Widget], {
 
 		// type: [private] String
 		//		type attribute on `<input>` node.
@@ -31,41 +30,21 @@ define([
 		//_setIconClassAttr: null,
 		//_setNameAttr: "focusNode",
 
-		baseClass: "riaswCheckButton",
-		iconClass: "dijitCheckBoxIcon",
-
 		templateString:
-			'<span class="dijit dijitReset dijitInline" role="presentation">'+
-				'<span data-dojo-attach-point="focusNode" class="dijitReset dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
-					'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
-					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
-					//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
-					'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
-				'</span>'+
+			'<span data-dojo-attach-point="focusNode,buttonNode" class="dijitReset dijitInline dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
+				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+				//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
+				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
 				'<input data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" role="presentation" aria-hidden="true" ${!nameAttrSetting}/>'+
 			'</span>',
+
+		baseClass: "riaswCheckButton dijitButtonNode",
+		iconClass: "dijitCheckBoxIcon",
 
 		_setReadOnlyAttr: function(/*Boolean*/ value){
 			this._set("readOnly", value);
 			rias.dom.setAttr(this.focusNode, 'readOnly', value);
-		},
-		///注意 if(has("dojo-bidi")) 是两个不同的类，用 rias.isFunction(this.applyTextDir) 来判断
-		_setLabelAttr: function(/*String*/ content){
-			this.inherited(arguments);
-			if(this.tooltip){
-				this.titleNode.title = "";
-			}else{
-				if(!this.showLabel && !("title" in this.params)){
-					this.titleNode.title = rias.trim(this.containerNode.innerText || this.containerNode.textContent || "");
-				}
-				if(this.titleNode.title && rias.isFunction(this.applyTextDir)){
-					this.applyTextDir(this.titleNode, this.titleNode.title);
-				}
-			}
-		},
-		_setTooltipAttr: function(/*String*/ tooltip){
-			this.inherited(arguments);
-			this.titleNode.title = "";
 		},
 
 		_getSubmitValue: function(/*String*/ value){

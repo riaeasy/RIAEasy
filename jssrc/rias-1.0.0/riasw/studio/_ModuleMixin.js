@@ -160,7 +160,7 @@ define([
 					self.defer(function(){
 						///需要等待 给 _started 赋值
 						self._loadModuleMeta();
-					});
+					}, 170);
 				});
 			}
 			return r;
@@ -202,10 +202,6 @@ define([
 			var self = this;
 
 			///this._stopPlay();/// _stopPlay 会导致显示不正确。
-			///TODO:zensst.闪烁问题。需要支持自动 height，不能固定 height。
-			//rias.dom.setBox(this.containerNode, {
-			//	h: rias.dom.getBox(this.containerNode).h
-			//});
 			self.destroyDescendants();
 
 			if(rias.isDijit(content) || rias.isDomNode(content)){

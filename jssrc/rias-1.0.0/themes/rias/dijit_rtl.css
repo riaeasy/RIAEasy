@@ -47,7 +47,7 @@
 .dijitTextBoxRtl .dijitSpinnerButtonContainer,
 .dijitValidationTextBoxRtl .dijitValidationContainer,
 .dijitTextBoxRtl .dijitArrowButtonContainer {
-	float: left;
+	/*float: left;*/
 }
 
 div.dijitNumberTextBoxRtl {

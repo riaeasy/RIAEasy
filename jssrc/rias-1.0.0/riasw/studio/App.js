@@ -16,6 +16,7 @@ define([
 		animate: false,
 		//moduleMeta 要参与 isRiaswModule() 判断，不能在 rias.riasw.studio._ModuleMixin 中初始化，可以在 rias.riasw.studio.Module 和 rias.riasw.studio.App 中初始化。
 		moduleMeta: "",
+		dataServerAddr: "",
 
 		constructor: function(params){
 			this.__riasrWidgetsCount = 0;
@@ -96,10 +97,10 @@ define([
 					if(self.isDestroyed(true)){
 						return false;
 					}
-					//self.defer(function(){
+					self.defer(function(){
 						self._loadModuleMeta().then(function(result){
 						});
-					//});
+					}, 50);
 				});
 			}
 			return r;

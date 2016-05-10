@@ -9,6 +9,29 @@ define([
 
 	var riasType = "rias.riasw.form.CheckedMultiSelect";
 	var Widget = rias.declare(riasType, [_Widget], {
+
+		_addOptionItem: function(/*dojox.form.__SelectOption*/ option){
+			var item;
+			if(this.dropDown){
+				item = new dojox.form._CheckedMultiSelectMenuItem({
+					ownerRiasw: this,
+					option: option,
+					parent: this.dropDownMenu
+				});
+				this.dropDownMenu.addChild(item);
+			}else{
+				item = new dojox.form._CheckedMultiSelectItem({
+					ownerRiasw: this,
+					option: option,
+					parent: this,
+					disabled: this.disabled,
+					readOnly: this.readOnly
+				});
+				this.wrapperDiv.appendChild(item.domNode);
+			}
+			this.onAfterAddOptionItem(item, option);
+		}
+
 	});
 
 	Widget._riasdMeta = {

@@ -24,28 +24,28 @@ define([
 				{
 					"_riaswType": "rias.riasw.grid.DGrid",
 					"_riaswIdOfModule": "grid",
-					"cellIdOps": [
+					"cellOpParams": [
 						{
-							"func": "cellIdOnClick",
+							"func": "cellOpOnClick",
 							"name": "view",
 							"text": "查看",
 							"tooltip": "查看详细信息"
 						},
 						{
-							"func": "cellIdOnClick",
-							"name": "modi",
+							"func": "cellOpOnClick",
+							"name": "modify",
 							"text": "修改",
 							"tooltip": "修改详细信息"
 						},
 						{
-							"func": "cellIdOnClick",
+							"func": "cellOpOnClick",
 							"name": "copy",
 							"text": "复制",
 							"tooltip": "复制并新增"
 						}
 					],
 					"query": {
-						"$refScript": "return module.query;"
+						"$refObj": "module.query"
 					},
 					"region": "center",
 					"structure": [
@@ -104,7 +104,7 @@ define([
 					},
 					"topBtns": [
 						"btnAdd",
-						"btnDele"
+						"btnDelete"
 					],
 					"treeColumns": [
 						"id"

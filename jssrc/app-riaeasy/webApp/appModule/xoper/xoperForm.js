@@ -27,10 +27,10 @@ define([
 			"layoutPriority": 0,
 			"moduleMeta": "appModule/xoper/xoperBase",
 			"op": {
-				"$refScript": "return module.op;"
+				"$refObj": "module.op"
 			},
 			"query": {
-				"$refScript": "return module.query;"
+				"$refObj": "module.query"
 			},
 			"region": "center",
 			"style": {

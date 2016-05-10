@@ -268,7 +268,7 @@ define([
 
 	var element = rias.dom.create('div');
 	function getThemeSize(element) {
-		rias.dom.body.appendChild(element);
+		rias.dom.docBody.appendChild(element);
 		element.style.cssText = rias.dom.styleToString({
 			width: "10em",
 			height: "10em",

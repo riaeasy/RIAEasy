@@ -5,6 +5,11 @@ define([
 	"dijit/MenuSeparator"
 ], function(rias, _Widget) {
 
+	_Widget.extend({
+		_setSelected: function(selected){
+		}
+	});
+
 	rias.theme.loadRiasCss([
 		"widget/Menu.css"
 	]);
