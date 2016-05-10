@@ -345,7 +345,7 @@ define([
 		rias.show = function(args) {
 			return _doShowDlg(_toShowArgs(args));
 		};
-		rias.message = function(args) {
+		rias.message = rias.info = function(args) {
 			return _doShowDlg(_toShowArgs(args, "tip", 1, rias.i18n.action.message, undefined, ["btnOk"]));
 		};
 		rias.warn = function(args) {

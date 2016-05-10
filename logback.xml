@@ -109,7 +109,7 @@
 	</appender>
 
 	<logger name="com.riastudio">
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</logger>
 	<logger name="java.sql.Connection">
 		<level value="INFO" />

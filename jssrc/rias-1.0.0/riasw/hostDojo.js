@@ -1558,25 +1558,26 @@ define([
 		},
 		defer: function(fcn, delay, args){
 			var self = this,
-				timer = setTimeout(function(){
-					if(!timer){
-						return;
-					}
-					timer = null;
-					if(!self._destroyed){
-						try{
-							fcn.apply(self, args || []);///IE8 不支持 args = undefined。
-						}catch(e){
-							console.error("this.defer()", rias.captureStackTrace(e), args, fcn.toString());
-						}
-					}
-				}, delay || 0);
+				timer = null;
 			if(rias.isString(fcn)){
 				if(!self[fcn]){
 					throw(['Widget.defer: this["', fcn, '"] is null (this="', self, '")'].join(''));
 				}
 				fcn = self[fcn];
 			}
+			timer = setTimeout(function(){
+				if(!timer){
+					return;
+				}
+				timer = null;
+				if(!self._destroyed){
+					try{
+						fcn.apply(self, args || []);///IE8 不支持 args = undefined。
+					}catch(e){
+						console.error("this.defer()", rias.captureStackTrace(e), args, fcn.toString());
+					}
+				}
+			}, delay || 0);
 			return {
 				remove: function(){
 					if(timer){

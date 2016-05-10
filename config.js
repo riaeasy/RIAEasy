@@ -27,7 +27,7 @@ var riasServerConfig = {
 		"respGzipMaxSize": 1 * 1024 * 1024, ///server.response 启动Gzip的最大字节数
 		//"serverId": "11",
 		minThreads: 5,
-		maxThreads: 50,
+		maxThreads: 20,
 		maxFormContentSize: 4 * 1024 * 1024, /// form 提交的最大字节数
 		//maxUploadSize: 10 * 1024 * 1024,
 		port: 8088,
@@ -104,8 +104,8 @@ var riasServerConfig = {
 			//defaultReadOnly: false,//对于数据库是否只能读取, 默认值为 false
 			//defaultAutoCommit: true,//对于事务是否 autoCommit, 默认值为 true
 			initialSize: 5, //连接池启动时创建的连接数量，默认为8
-			maxTotal: 50, //同一时间可以从池分配的最多连接数量。设置为0时表示无限制。
-			maxIdle: 20, //池里不会被释放的最多空闲连接数量。设置为0时表示无限制。
+			maxTotal: 30, //同一时间可以从池分配的最多连接数量。设置为0时表示无限制。
+			maxIdle: 10, //池里不会被释放的最多空闲连接数量。设置为0时表示无限制。
 			minIdle: 5, //在不新建连接的条件下，池中保持空闲的最少连接数。
 			maxWait: 15000, //在抛出异常之前，池等待连接被回收的最长时间（当没有可用连接时）, 单位为 ms。设置为-1表示无限等待。
 			//minEvictableIdleTimeMillis: 1000 * 60 * 30,//连接保持空闲而不被驱逐的最长时间。大于0 ，进行连接空闲时间判断，或为0，对空闲的连接不进行验证；默认30分钟
