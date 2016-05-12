@@ -2,25 +2,27 @@
 //RIAStudio client runtime widget - DGrid
 
 
-/// dgrid._StoreMixin.constructor 中 aspect.before -> this.before
-/// dgrid.Selection._initSelectionEvents 中 aspect.before -> this.before
+/// dgrid._StoreMixin.constructor 中 aspect.before -> this.before		//// constructor 无法 extend
 
-/// dgrid.Keyboard.postCreate 中 aspect.after -> grid.after
-/// dgrid.ColumnSet.postCreate 中 aspect.after -> this.after
-/// dgrid.extensions.Dnd 中 aspect.after -> this.after
+/// ///dgrid.Selection._initSelectionEvents 中 aspect.before -> this.before
 
-/// dgrid.ColumnSet._putScroller 中 grid._listeners.push(on), horizMouseWheel 中 grid._listeners.push(on)
-/// dgrid.Editor._createEditor 中 grid._listeners.push(on)
-/// dgrid.Keyboard.postCreate 中 grid._listeners.push(on)
-/// dgrid.OnDemandList.postCreate 中 grid._listeners.push(on)
-/// dgrid.Selection._initSelectionEvents 中 grid._listeners.push(on)
-/// dgrid.Tree.expand 中 grid._listeners.push(on)
+/// ///dgrid.Keyboard.postCreate 中 aspect.after -> grid.after
+/// ///dgrid.ColumnSet.postCreate 中 aspect.after -> this.after
+/// ///dgrid.extensions.Dnd 中 aspect.after -> this.after
+
+/// ///dgrid.ColumnSet._putScroller 中 grid._listeners.push(on), horizMouseWheel 中 grid._listeners.push(on)
+/// ///dgrid.Editor._createEditor 中 grid._listeners.push(on)
+/// ///dgrid.Keyboard.postCreate 中 grid._listeners.push(on)
+/// ///dgrid.OnDemandList.postCreate 中 grid._listeners.push(on)
+/// ///dgrid.Selection._initSelectionEvents 中 grid._listeners.push(on)
+/// ///dgrid.Tree.expand 中 grid._listeners.push(on)
 
 define([
 	"rias",
 
 	"dgrid/List",
 	"dgrid/Grid",
+	"dgrid/_StoreMixin",
 	"dgrid/OnDemandList",
 	"dgrid/OnDemandGrid",
 	"dgrid/CellSelection",
@@ -37,17 +39,18 @@ define([
 	"dgrid/extensions/ColumnReorder",
 	"dgrid/extensions/CompoundColumns",
 	//"dgrid/extensions/DijitRegistry",
-	//"dgrid/extensions/Dnd",
+	"dgrid/extensions/DnD",
 	//"dgrid/extensions/Pagination",
 
 	"dgrid/util/misc",
 	"dojo/has!touch?dgrid/util/touch"
 
 ], function(rias,
-			List, Grid, OnDemandList, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
+			List, Grid, _StoreMixin, OnDemandList, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
 			//GridFromHtml, GridWithColumnSetsFromHtml,
 			ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, Dnd, Pagination,
-			misc, touchUtil) {
+			DnD,
+			miscUtil, touchUtil) {
 
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
 	var autoId = 0;
@@ -73,7 +76,7 @@ define([
 		}
 	});
 
-	misc.addCssRule = function(selector, css){
+	miscUtil.addCssRule = function(selector, css){
 		return rias.theme.addCssRule(selector, css);
 	};
 
@@ -208,7 +211,7 @@ define([
 					(rias.has('dom-rtl-scrollbar-left') ? ' dgrid-rtl-swap' : '');
 			}
 
-			this.own(rias.on(bodyNode, 'scroll', function (event) {
+			this._listeners.push(rias.on(bodyNode, 'scroll', function (event) {
 				if (self.showHeader) {
 					// keep the header aligned with the body
 					headerNode.scrollLeft = event.scrollLeft || bodyNode.scrollLeft;
@@ -225,7 +228,7 @@ define([
 			}, this.bodyNode);
 
 			// add window resize handler, with reference for later removal if needed
-			this._listeners.push(this._resizeHandle = rias.dom.Viewport.on("resize", misc.throttleDelayed(function(){
+			this._listeners.push(this._resizeHandle = rias.dom.Viewport.on("resize", miscUtil.throttleDelayed(function(){
 				if (this._started) {
 					this.resize();
 				}
@@ -429,8 +432,44 @@ define([
 
 	});
 
+	/*_StoreMixin.extend({
+		//// constructor 无法 extend
+		constructor: function () {
+			// Create empty objects on each instance, not the prototype
+			this.dirty = {};
+			this._updating = {}; // Tracks rows that are mid-update
+			this._columnsWithSet = {};
+
+			// Reset _columnsWithSet whenever column configuration is reset
+			this.before(this, 'configStructure', rias.hitch(this, function () {
+				this._columnsWithSet = {};
+			}));
+		},
+	});*/
+
+	OnDemandList.extend({
+		postCreate: function () {
+			this.inherited(arguments);
+			var self = this;
+			// check visibility on scroll events
+			this._listeners.push(rias.on(this.bodyNode, 'scroll',
+				miscUtil[this.pagingMethod](function (event) {
+					self._processScroll(event);
+				}, null, this.pagingDelay)
+			));
+		}
+	});
+
 	var colsetidAttr = 'data-dgrid-column-set-id';
 
+	function adjustScrollLeft(grid, root) {
+		// Adjusts the scroll position of each column set in each row under the given root.
+		// (root can be a row, or e.g. a tree parent row element's connected property to adjust children)
+		var scrollLefts = grid._columnSetScrollLefts;
+		rias.dom.query('.dgrid-column-set', root).forEach(function (element) {
+			element.scrollLeft = scrollLefts[element.getAttribute(colsetidAttr)];
+		});
+	}
 	function getColumnSetSubRows(subRows, columnSetId, startRow) {
 		// Builds a subRow collection that only contains columns that correspond to
 		// a given column set id.
@@ -458,6 +497,126 @@ define([
 		}
 		return subset;
 	}
+	function isRootNode(node, rootNode) {
+		// If we've reached the top-level node for the grid then there is no parent column set.
+		// This guard prevents an error when scroll is initated over some node in the grid that is not a descendant of
+		// a column set. This can happen in a grid that has empty space below its rows (grid is taller than the rows).
+		return (rootNode && node === rootNode) || rias.dom.hasClass(node, 'dgrid');
+	}
+	function findParentColumnSet(node, root) {
+		// WebKit will invoke mousewheel handlers with an event target of a text
+		// node; check target and if it's not an element node, start one node higher
+		// in the tree
+		if (node.nodeType !== 1) {
+			node = node.parentNode;
+		}
+
+		while (node && !rias.dom.query.matches(node, '.dgrid-column-set[' + colsetidAttr + ']', root)) {
+			if (isRootNode(node, root)) {
+				return null;
+			}
+			node = node.parentNode;
+		}
+
+		return node;
+	}
+	var pointerMap = {
+		start: 'down',
+		end: 'up'
+	};
+	function getTouchEventName(type) {
+		// Given 'start', 'move', or 'end', returns appropriate touch or pointer event name
+		// based on browser support.  (Assumes browser supports touch or pointer.)
+		var hasPointer = rias.has('pointer');
+		if (hasPointer) {
+			type = pointerMap[type] || type;
+			if (hasPointer.slice(0, 2) === 'MS') {
+				return 'MSPointer' + type.slice(0, 1).toUpperCase() + type.slice(1);
+			}
+			else {
+				return 'pointer' + type;
+			}
+		}
+		return 'touch' + type;
+	}
+	var horizTouchMove = rias.has('touch') && function (grid) {
+		return function (target, listener) {
+			var listeners = [
+				rias.on(target, getTouchEventName('start'), function (event) {
+					if (!grid._currentlyTouchedColumnSet) {
+						var node = findParentColumnSet(event.target, target);
+						// If handling pointer events, only react to touch;
+						// MSPointerDown (IE10) reports 2, 3, 4 for touch, pen, mouse
+						if (node && (!event.pointerType || event.pointerType === 'touch' || event.pointerType === 2)) {
+							grid._currentlyTouchedColumnSet = node;
+							grid._lastColumnSetTouchX = event.clientX;
+							grid._lastColumnSetTouchY = event.clientY;
+						}
+					}
+				}),
+				rias.on(target, getTouchEventName('move'), function (event) {
+					if (grid._currentlyTouchedColumnSet === null) {
+						return;
+					}
+					var node = findParentColumnSet(event.target);
+					if (!node) {
+						return;
+					}
+					listener.call(null, grid, node, grid._lastColumnSetTouchX - event.clientX);
+					grid._lastColumnSetTouchX = event.clientX;
+					grid._lastColumnSetTouchY = event.clientY;
+				}),
+				rias.on(target, getTouchEventName('end'), function () {
+					grid._currentlyTouchedColumnSet = null;
+				})
+			];
+
+			return {
+				remove: function () {
+					for (var i = listeners.length; i--;) {
+						listeners[i].remove();
+					}
+				}
+			};
+		};
+	};
+	var horizMouseWheel = rias.has('event-mousewheel') || rias.has('event-wheel') ? function (grid) {
+		return function (target, listener) {
+			return grid._listeners.push(rias.on(target, rias.has('event-wheel') ? 'wheel' : 'mousewheel', function (event) {
+				var node = findParentColumnSet(event.target, target),
+					deltaX;
+
+				if (!node) {
+					return;
+				}
+
+				// Normalize reported delta value:
+				// wheelDeltaX (webkit, mousewheel) needs to be negated and divided by 3
+				// deltaX (FF17+, wheel) can be used exactly as-is
+				deltaX = event.deltaX || -event.wheelDeltaX / 3;
+				if (deltaX) {
+					// only respond to horizontal movement
+					listener.call(null, grid, node, deltaX);
+				}
+			}))[0];
+		};
+	} : function (grid) {
+		return function (target, listener) {
+			return grid._listeners.push(rias.on(target, '.dgrid-column-set[' + colsetidAttr + ']:MozMousePixelScroll', function (event) {
+				if (event.axis === 1) {
+					// only respond to horizontal movement
+					listener.call(null, grid, this, event.detail);
+				}
+			}))[0];
+		};
+	};
+	function horizMoveHandler(grid, colsetNode, amount) {
+		var id = colsetNode.getAttribute(colsetidAttr),
+			scroller = grid._columnSetScrollers[id],
+			scrollLeft = scroller.scrollLeft + amount;
+
+		scroller.scrollLeft = scrollLeft < 0 ? 0 : scrollLeft;
+	}
 	ColumnSet.extend({
 		postMixInProperties: function(){
 			///增加 this._columnSetRules 判断
@@ -469,12 +628,12 @@ define([
 			this.inherited(arguments);
 		},
 		/// 需要使用 this.own(aspect.after)
-		/*postCreate: function () {
+		postCreate: function () {
 			var self = this;
 			this.inherited(arguments);
 
 			this.on(horizMouseWheel(this), horizMoveHandler);
-			if (has('touch')) {
+			if (rias.has('touch')) {
 				this.on(horizTouchMove(this), horizMoveHandler);
 			}
 
@@ -483,7 +642,7 @@ define([
 			});
 
 			if (typeof this.expand === 'function') {
-				aspect.after(this, 'expand', function (promise, args) {
+				this.after(this, 'expand', function (promise, args) {
 					promise.then(function () {
 						var row = self.row(args[0]);
 						if (self._expanded[row.id]) {
@@ -495,7 +654,7 @@ define([
 					return promise;
 				});
 			}
-		},*/
+		},
 		startup: function(){
 			///增加 onColumnResize
 			var self = this;
@@ -506,7 +665,7 @@ define([
 			this.inherited(arguments);
 			this._started = true;
 
-			this.own(rias.on(this.domNode, "dgrid-columnresize", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-columnresize", function(evt){
 				self._calColumnSet();
 			}));
 		},
@@ -536,7 +695,7 @@ define([
 			if (rule) {
 				rule.set(css);
 			}else{
-				rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) + " " + parentCss + ' .dgrid-column-set-' + misc.escapeCssIdentifier(colsetId, '-'), css);
+				rule = this.addCssRule('#' + miscUtil.escapeCssIdentifier(this.domNode.id) + " " + parentCss + ' .dgrid-column-set-' + miscUtil.escapeCssIdentifier(colsetId, '-'), css);
 				this._columnSetRules[sId] = rule;
 			}
 			if(this._columnSetScrollers){
@@ -669,6 +828,21 @@ define([
 			/// 已经设置了 marginBottom
 			this.bodyNode.style.bottom = numScrollers + 'px';
 		},
+		_putScroller: function (columnSet, i) {
+			// function called for each columnSet
+			var scroller = this._columnSetScrollers[i] = rias.dom.create('span', {
+				// IE8 needs dgrid-scrollbar-height class for scrollbar to be visible,
+				// but for some reason IE11's scrollbar arrows become unresponsive, so avoid applying it there
+				className: 'dgrid-column-set-scroller dgrid-column-set-scroller-' + i +
+					(rias.has('ie') < 9 ? ' dgrid-scrollbar-height' : '')
+			}, this._columnSetScrollerNode);
+			scroller.setAttribute(colsetidAttr, i);
+
+			this._columnSetScrollerContents[i] = rias.dom.create('div', {
+				className: 'dgrid-column-set-scroller-content'
+			}, scroller);
+			this._listeners.push(rias.on(scroller, 'scroll', rias.hitch(this, '_onColumnSetScroll')));
+		},
 
 		_calColumnSet: function(){
 			function _getsw(node, sw){
@@ -711,8 +885,8 @@ define([
 							}else{
 								colw = rias.dom.getMarginBox(column.headerNode).w;
 							}
-							rule = self.addCssRule('#' + misc.escapeCssIdentifier(self.domNode.id) +
-								' .dgrid-column-' + misc.escapeCssIdentifier(column.id, '-'),
+							rule = self.addCssRule('#' + miscUtil.escapeCssIdentifier(self.domNode.id) +
+								' .dgrid-column-' + miscUtil.escapeCssIdentifier(column.id, '-'),
 								'width: ' + rias.dom.marginBox2box(column.headerNode, {w: colw}).w + 'px;');
 							self._columnSizes[column.id] = rule;
 						}
@@ -769,7 +943,7 @@ define([
 			this.inherited(arguments);
 
 			///增加 onColumnReorder
-			this.own(rias.on(this.domNode, "dgrid-columnreorder", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-columnreorder", function(evt){
 				return self.onColumnReorder(evt) != false;
 			}));
 		},
@@ -828,7 +1002,7 @@ define([
 			this.inherited(arguments);
 
 			///增加 onColumnResize
-			this.own(rias.on(this.domNode, "dgrid-columnresize", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-columnresize", function(evt){
 				return self.onColumnResize(evt) != false;
 			}));
 		},
@@ -867,8 +1041,8 @@ define([
 					rule.set('width', (rias.isNumber(column.width) ? column.width + 'px;' : column.width));
 				}else {
 					///改为用 this.addCssRule
-					rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) +
-						' .dgrid-column-' + misc.escapeCssIdentifier(colId, '-'),
+					rule = this.addCssRule('#' + miscUtil.escapeCssIdentifier(this.domNode.id) +
+						' .dgrid-column-' + miscUtil.escapeCssIdentifier(colId, '-'),
 						'width: ' + (rias.isNumber(column.width) ? column.width + 'px;' : column.width + ';'));
 				}
 				this._columnSizes[colId] = rule;
@@ -882,11 +1056,135 @@ define([
 			this.inherited(arguments);
 
 			///增加 onColumnStateChange
-			this.own(rias.on(this.domNode, "dgrid-columnstatechange", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-columnstatechange", function(evt){
 				self.onColumnStateChange(evt);
 			}));
 		},
 		onColumnStateChange: function(evt){
+		}
+	});
+
+	var delegatingInputTypes = {
+			checkbox: 1,
+			radio: 1,
+			button: 1
+		},
+		hasGridCellClass = /\bdgrid-cell\b/,
+		hasGridRowClass = /\bdgrid-row\b/;
+	Keyboard.extend({
+		postCreate: function () {
+			this.inherited(arguments);
+			var grid = this;
+
+			function handledEvent(event) {
+				// Text boxes and other inputs that can use direction keys should be ignored
+				// and not affect cell/row navigation
+				var target = event.target;
+				return target.type && (!delegatingInputTypes[target.type] || event.keyCode === 32);
+			}
+
+			function enableNavigation(areaNode) {
+				var cellNavigation = grid.cellNavigation,
+					isFocusableClass = cellNavigation ? hasGridCellClass : hasGridRowClass,
+					isHeader = areaNode === grid.headerNode,
+					initialNode = areaNode;
+
+				function initHeader() {
+					if (grid._focusedHeaderNode) {
+						// Remove the tab index for the node that previously had it.
+						grid._focusedHeaderNode.tabIndex = -1;
+					}
+					if (grid.showHeader) {
+						if (cellNavigation) {
+							// Get the focused element. Ensure that the focused element
+							// is actually a grid cell, not a column-set-cell or some
+							// other cell that should not be focused
+							var elements = grid.headerNode.getElementsByTagName('th');
+							for (var i = 0, element; (element = elements[i]); ++i) {
+								if (isFocusableClass.test(element.className)) {
+									grid._focusedHeaderNode = initialNode = element;
+									break;
+								}
+							}
+						}
+						else {
+							grid._focusedHeaderNode = initialNode = grid.headerNode;
+						}
+
+						// Set the tab index only if the header is visible.
+						if (initialNode) {
+							initialNode.tabIndex = grid.tabIndex;
+						}
+					}
+				}
+
+				if (isHeader) {
+					// Initialize header now (since it's already been rendered),
+					// and aspect after future renderHeader calls to reset focus.
+					initHeader();
+					grid.after(grid, 'renderHeader', initHeader, true);
+				}
+				else {
+					grid.after(grid, 'renderArray', function (rows) {
+						// summary:
+						//		Ensures the first element of a grid is always keyboard selectable after data has been
+						//		retrieved if there is not already a valid focused element.
+
+						var focusedNode = grid._focusedNode || initialNode;
+
+						// do not update the focused element if we already have a valid one
+						if (isFocusableClass.test(focusedNode.className) && areaNode.contains(focusedNode)) {
+							return rows;
+						}
+
+						// ensure that the focused element is actually a grid cell, not a
+						// dgrid-preload or dgrid-content element, which should not be focusable,
+						// even when data is loaded asynchronously
+						var elements = areaNode.getElementsByTagName('*');
+						for (var i = 0, element; (element = elements[i]); ++i) {
+							if (isFocusableClass.test(element.className)) {
+								focusedNode = grid._focusedNode = element;
+								break;
+							}
+						}
+
+						focusedNode.tabIndex = grid.tabIndex;
+						return rows;
+					});
+				}
+
+				grid._listeners.push(rias.on(areaNode, 'mousedown', function (event) {
+					if (!handledEvent(event)) {
+						grid._focusOnNode(event.target, isHeader, event);
+					}
+				}));
+
+				grid._listeners.push(rias.on(areaNode, 'keydown', function (event) {
+					// For now, don't squash browser-specific functionalities by letting
+					// ALT and META function as they would natively
+					if (event.metaKey || event.altKey) {
+						return;
+					}
+
+					var handler = grid[isHeader ? 'headerKeyMap' : 'keyMap'][event.keyCode];
+
+					// Text boxes and other inputs that can use direction keys should be ignored
+					// and not affect cell/row navigation
+					if (handler && !handledEvent(event)) {
+						handler.call(grid, event);
+					}
+				}));
+			}
+
+			if (this.tabableHeader) {
+				enableNavigation(this.headerNode);
+				grid._listeners.push(rias.on(this.headerNode, 'dgrid-cellfocusin', function () {
+					grid.scrollTo({ x: this.scrollLeft });
+				}));
+			}
+			enableNavigation(this.contentNode);
+
+			this._debouncedEnsureScroll = miscUtil.debounce(this._ensureScroll, this);
 		}
 	});
 
@@ -896,9 +1194,10 @@ define([
 			this.inherited(arguments);
 
 			///增加 onSelect、onDeselect
-			this.own(rias.on(this.domNode, "dgrid-select", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-select", function(evt){
 				self.onSelect(evt);
-			}), rias.on(this.domNode, "dgrid-deselect", function(evt){
+			}));
+			this._listeners.push(rias.on(this.domNode, "dgrid-deselect", function(evt){
 				self.onDeselect(evt);
 			}));
 
@@ -908,6 +1207,72 @@ define([
 			var selectionMode = this.selectionMode;
 			this.selectionMode = '';
 			this._setSelectionMode(selectionMode);
+		},
+		_initSelectionEvents: function () {
+			// summary:
+			//		Performs first-time hookup of event handlers containing logic
+			//		required for selection to operate.
+
+			var grid = this,
+				contentNode = this.contentNode,
+				selector = this.selectionDelegate;
+
+			this._selectionEventQueues = {
+				deselect: [],
+				select: []
+			};
+
+			if (rias.has('touch') && !rias.has('pointer') && this.selectionTouchEvents) {
+				// Listen for taps, and also for mouse/keyboard, making sure not
+				// to trigger both for the same interaction
+				grid._listeners.push(rias.on(contentNode, touchUtil.selector(selector, this.selectionTouchEvents), function (evt) {
+					grid._handleSelect(evt, this);
+					grid._ignoreMouseSelect = this;
+				}));
+				grid._listeners.push(rias.on(contentNode, rias.on.selector(selector, this.selectionEvents), function (event) {
+					if (grid._ignoreMouseSelect !== this) {
+						grid._handleSelect(event, this);
+					}
+					else if (event.type === upType) {
+						grid._ignoreMouseSelect = null;
+					}
+				}));
+			}
+			else {
+				// Listen for mouse/keyboard actions that should cause selections
+				grid._listeners.push(rias.on(contentNode, rias.on.selector(selector, this.selectionEvents), function (event) {
+					grid._handleSelect(event, this);
+				}));
+			}
+
+			// Also hook up spacebar (for ctrl+space)
+			if (this.addKeyHandler) {
+				this.addKeyHandler(32, function (event) {
+					grid._handleSelect(event, event.target);
+				});
+			}
+
+			// If allowSelectAll is true, bind ctrl/cmd+A to (de)select all rows,
+			// unless the event was received from an editor component.
+			// (Handler further checks against _allowSelectAll, which may be updated
+			// if selectionMode is changed post-init.)
+			if (this.allowSelectAll) {
+				this.on('keydown', function (event) {
+					if (event[ctrlEquiv] && event.keyCode === 65 &&
+						!/\bdgrid-input\b/.test(event.target.className)) {
+						event.preventDefault();
+						grid[grid.allSelected ? 'clearSelection' : 'selectAll']();
+					}
+				});
+			}
+
+			// Update aspects if there is a collection change
+			if (this._setCollection) {
+				this.before(this, '_setCollection', function (collection) {
+					grid._updateDeselectionAspect(collection);
+				});
+			}
+			this._updateDeselectionAspect();
 		},
 		onSelect: function(evt){
 		},
@@ -932,11 +1297,13 @@ define([
 			this.inherited(arguments);
 
 			///增加 onDataChange、onShowEditor、onHideEditor
-			this.own(rias.on(this.domNode, "dgrid-datachange", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-datachange", function(evt){
 				return self.onDataChange(evt) != false;
-			}), rias.on(this.domNode, "dgrid-editor-show", function(evt){
+			}));
+			this._listeners.push(rias.on(this.domNode, "dgrid-editor-show", function(evt){
 				self.onShowEditor(evt);
-			}), rias.on(this.domNode, "dgrid-editor-hide", function(evt){
+			}));
+			this._listeners.push(rias.on(this.domNode, "dgrid-editor-hide", function(evt){
 				self.onHideEditor(evt);
 			}));
 
@@ -947,6 +1314,109 @@ define([
 				self._focusedEditorCell = null;
 			});
 			this._listeners.push(this._editorFocusoutHandle);
+		},
+		_createEditor: function (column, object) {
+			// Creates an editor instance based on column definition properties,
+			// and hooks up events.
+			var editor = column.editor,
+				editOn = column.editOn,
+				self = this,
+				Widget = typeof editor !== 'string' && editor,
+				args,
+				cmp,
+				node,
+				tagName,
+				tagArgs = {};
+
+			args = column.editorArgs || {};
+			if (typeof args === 'function') {
+				args = args.call(this, column);
+			}
+
+			if (Widget) {
+				cmp = new Widget(args);
+				node = cmp.focusNode || cmp.domNode;
+
+				// Add dgrid-input to className to make consistent with HTML inputs.
+				node.className += ' dgrid-input';
+
+				// For editOn editors, connect to onBlur rather than onChange, since
+				// the latter is delayed by setTimeouts in Dijit and will fire too late.
+				cmp.on(editOn ? 'blur' : 'change', function () {
+					if (!cmp._dgridIgnoreChange) {
+						self._updatePropertyFromEditor(column, this, {type: 'widget'});
+					}
+				});
+			}
+			else {
+				// considerations for standard HTML form elements
+				if (!this._hasInputListener) {
+					// register one listener at the top level that receives events delegated
+					this._hasInputListener = true;
+					this.on('change', function (evt) {
+						self._handleEditorChange(evt);
+					});
+					// also register a focus listener
+				}
+
+				if (editor === 'textarea') {
+					tagName = 'textarea';
+				}
+				else {
+					tagName = 'input';
+					tagArgs.type = editor;
+				}
+				cmp = node = rias.dom.create(tagName, rias.mixin(tagArgs, {
+					className: 'dgrid-input',
+					name: column.field,
+					tabIndex: isNaN(column.tabIndex) ? -1 : column.tabIndex
+				}, args));
+
+				if (rias.has('ie') < 9) {
+					// IE<9 doesn't fire change events for all the right things,
+					// and it doesn't bubble.
+					var listener;
+					if (editor === 'radio' || editor === 'checkbox') {
+						// listen for clicks since IE doesn't fire change events properly for checks/radios
+						listener = rias.on(cmp, 'click', function (evt) {
+							self._handleEditorChange(evt, column);
+						});
+					}
+					else {
+						listener = rias.on(cmp, 'change', function (evt) {
+							self._handleEditorChange(evt, column);
+						});
+					}
+
+					if (editOn) {
+						// Shared editor handlers are maintained in _editorColumnListeners, since they're not per-row
+						this._editorColumnListeners.push(listener);
+					}
+					else if (this._editorRowListeners) {
+						this._editorRowListeners[column.id] = listener;
+					}
+					// If editRowListeners doesn't exist and this is an always-on editor,
+					// then we're here from renderCell via refreshCell, and the row should exist
+					else {
+						this._editorCellListeners[this.row(object).element.id][column.id] = listener;
+					}
+				}
+			}
+
+			if (column.autoSelect) {
+				var selectNode = cmp.focusNode || cmp;
+				if (selectNode.select) {
+					this._listeners.push(rias.on(selectNode, 'focus', function () {
+						// setTimeout is needed for always-on editors on WebKit,
+						// otherwise selection is reset immediately afterwards
+						setTimeout(function () {
+							selectNode.select();
+						}, 0);
+					}));
+				}
+			}
+
+			return cmp;
 		},
 		onDataChange: function(evt){
 		},
@@ -1186,7 +1656,7 @@ define([
 					if (hasTransitionend) {
 						// Update height whenever a collapse/expand transition ends.
 						// (This handler is only registered when each child container is first created.)
-						this.own(rias.on(container, hasTransitionend, this._onTreeTransitionEnd));
+						this._listeners.push(rias.on(container, hasTransitionend, this._onTreeTransitionEnd));
 					}
 				}
 
@@ -1238,6 +1708,54 @@ define([
 
 	});
 
+	DnD.extend({
+		postCreate: function () {
+			this.inherited(arguments);
+
+			// Make the grid's content a DnD source/target.
+			var Source = this.dndConstructor || DnD.GridSource;
+
+			var dndParams = rias.mixin(this.dndParams, {
+				// add cross-reference to grid for potential use in inter-grid drop logic
+				grid: this,
+				dropParent: this.contentNode
+			});
+			if (typeof this.expand === 'function') {
+				// If the Tree mixin is being used, allowNested needs to be set to true for DnD to work properly
+				// with the child rows.  Without it, child rows will always move to the last child position.
+				dndParams.allowNested = true;
+			}
+			this.dndSource = new Source(this.bodyNode, dndParams);
+
+			// Set up select/deselect handlers to maintain references, in case selected
+			// rows are scrolled out of view and unrendered, but then dragged.
+			var selectedNodes = this.dndSource._selectedNodes = {};
+
+			function selectRow(row) {
+				selectedNodes[row.id] = row.element;
+			}
+			function deselectRow(row) {
+				delete selectedNodes[row.id];
+				// Re-sync dojo/dnd UI classes based on deselection
+				// (unfortunately there is no good programmatic hook for this)
+				rias.dom.removeClass(row.element, 'dojoDndItemSelected dojoDndItemAnchor');
+			}
+
+			this.on('dgrid-select', function (event) {
+				rias.forEach(event.rows, selectRow);
+			});
+			this.on('dgrid-deselect', function (event) {
+				rias.forEach(event.rows, deselectRow);
+			});
+
+			this.after(this, 'destroy', function () {
+				delete this.dndSource._selectedNodes;
+				selectedNodes = null;
+				this.dndSource.destroy();
+			}, true);
+		}
+	});
+
 	function appendIfNode(parent, subNode) {
 		if (subNode && subNode.nodeType) {
 			parent.appendChild(subNode);
@@ -1270,7 +1788,7 @@ define([
 			this.inherited(arguments);
 
 			///增加 onSort，貌似没起作用
-			this.own(rias.on(this.domNode, "dgrid-sort", function(evt){
+			this._listeners.push(rias.on(this.domNode, "dgrid-sort", function(evt){
 				self.onSort(evt);
 			}));
 		},
@@ -1284,7 +1802,7 @@ define([
 			if (rule) {
 				rule.set(css);
 			}else{
-				rule = this.addCssRule('#' + misc.escapeCssIdentifier(this.domNode.id) + " " + parentCss + ' .dgrid-column-' + misc.escapeCssIdentifier(colId, '-'), css);
+				rule = this.addCssRule('#' + miscUtil.escapeCssIdentifier(this.domNode.id) + " " + parentCss + ' .dgrid-column-' + miscUtil.escapeCssIdentifier(colId, '-'), css);
 				this._columnStyles[sId] = rule;
 			}
 			return rule;

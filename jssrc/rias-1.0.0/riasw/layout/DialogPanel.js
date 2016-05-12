@@ -177,9 +177,9 @@ define([
 				rias.after(self.captionNode, "onmousedown", function(evt){
 					//self.defer(function(){
 					////focus 会导致其他 popup 失去焦点，最好判断一下
-					//if(!self.focused){
+					if(!self.focused){
 						self.focus();
-					//}
+					}
 					//}, 100);
 				})
 			);
@@ -473,7 +473,7 @@ define([
 				}
 			});
 		},
-		restore: function(forceVisible){
+		/*restore: function(forceVisible){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(result === self && self.isShown()){///防止无限递归
@@ -487,6 +487,36 @@ define([
 					}
 				}
 				return self;
+			});
+		},*/
+		_restore: function(silent){
+			var self = this;
+			return rias.when(self.inherited(arguments), function(result){
+				if(self.isShown()){///防止无限递归
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					if(self._playingDeferred){
+						rias.when(self._playingDeferred, function(){
+							self.bringToTop();
+						});
+					}else{
+						self.bringToTop();
+					}
+				}
+			});
+		},
+		_showMax: function(){
+			var self = this;
+			return rias.when(self.inherited(arguments), function(result){
+				if(self.isShown()){///防止无限递归
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					if(self._playingDeferred){
+						rias.when(self._playingDeferred, function(){
+							self.bringToTop();
+						});
+					}else{
+						self.bringToTop();
+					}
+				}
 			});
 		},
 		_onDomNodeEnter: function(e){

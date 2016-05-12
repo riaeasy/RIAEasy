@@ -705,9 +705,12 @@ define([
 		_setDisplayStateAttr: function(value){
 			value = displayStateStr(value);
 			if(value === displayClosed){
-				rias.when(this.onClose(), rias.hitch(this, function(){
-					this._set("displayState", value);
-				}));
+				var self = this;
+				rias.when(this.onClose(), function(result){
+					if(result != false){
+						self._set("displayState", value);
+					}
+				});
 			}else{
 				this._set("displayState", value);
 			}

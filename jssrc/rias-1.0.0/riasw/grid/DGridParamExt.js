@@ -216,6 +216,7 @@ define([
 						if(item && item.name){
 							item = rias.dom.create("button", {
 								//"class": "dgrid-opcolumn-button",
+								grid: grid,
 								name: item.name,
 								title: item.tooltip,
 								innerHTML: item.text,
@@ -399,9 +400,6 @@ define([
 		var _btnRefresh = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnRefresh",
-				grid: {
-					$refObj: p._riaswIdOfModule
-				},
 				label: rias.i18n.action.refresh,
 				tooltip: rias.i18n.action.refresh,
 				iconClass: "refreshIcon",
@@ -412,9 +410,6 @@ define([
 			_btnAdd = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnAdd",
-				grid: {
-					$refObj: p._riaswIdOfModule
-				},
 				label: rias.i18n.action.add,
 				tooltip: rias.i18n.action.add,
 				iconClass: "addIcon",
@@ -425,9 +420,6 @@ define([
 			_btnDele = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnDele",
-				grid: {
-					$refObj: p._riaswIdOfModule
-				},
 				label: rias.i18n.action.dele,
 				tooltip: rias.i18n.action.dele,
 				iconClass: "deleIcon",
@@ -438,9 +430,6 @@ define([
 			_btnPrint = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnPrint",
-				grid: {
-					$refObj: p._riaswIdOfModule
-				},
 				label: rias.i18n.action.printGrid,
 				tooltip: rias.i18n.action.printGrid,
 				iconClass: "printIcon",
@@ -451,9 +440,6 @@ define([
 			_btnExport = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnExport",
-				grid: {
-					$refObj: p._riaswIdOfModule
-				},
 				label: rias.i18n.action.exportAsXls,
 				tooltip: rias.i18n.action.exportAsXls,
 				iconClass: "exportIcon",
@@ -503,6 +489,9 @@ define([
 				//	}
 				}
 				if(item){
+					item.grid = {
+						$refObj: "module." + p._riaswIdOfModule
+					};
 					p.topTools._riaswChildren.push(item);
 				}
 			}

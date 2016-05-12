@@ -1967,7 +1967,7 @@ define([
 		_setActiveNodeAttr: function(node){
 			this._set("activeNode", rias.by(node) || node);
 		},
-		/*_setFocusedAttr: function(value){
+		_setFocusedAttr: function(value){
 			//console.debug(this.id, "focused", value);
 			if(!value){
 				this._focusedOk = false;
@@ -1980,7 +1980,7 @@ define([
 			//}
 			this.inherited(arguments);
 		},
-		_onFocus: function(by, newFocused){
+		/*_onFocus: function(by, newFocused){
 			this.inherited(arguments);
 			if(rias.dom.isDescendant(newFocused, this.domNode)){
 				var node = newFocused;
