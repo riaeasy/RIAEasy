@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>has-css3 tests</title>
+	</head>
+	<body class="claro">
+		<h2>has-css3 tests</h2>
+		<div id="results"></div>
+		<script>
+			var dojoConfig = {
+				async: true,
+				isDebug: true,
+				//baseUrl: '../../../dojo-1.10.4/dojo',
+				packages: [
+					//'dojo',
+					//'dijit',
+					{name: "dgrid", location: "../../dgrid-1.0.0"},
+					{name: "dstore", location: "../../dstore-1.1.1"}
+				]
+			};
+		</script>
+		<script src="../../dojo-1.10.4/dojo/dojo.js"
+				data-dojo-config="async: true"></script>
+		<script>
+			require([
+				'dojo/_base/array',
+				'dojo/dom-construct',
+				'dgrid/util/has-css3'
+			], function (arrayUtil, domConstruct, has) {
+				var resultsNode = document.getElementById('results');
+				var tests = [
+					'css-transitions',
+					'transitionend',
+					'css-transforms',
+					'css-transforms3d'
+				];
+				arrayUtil.forEach(tests, function (test) {
+					domConstruct.create('div', {
+						innerHTML: test + ': ' + has(test)
+					}, resultsNode);
+				});
+			});
+		</script>
+	</body>
+</html>
