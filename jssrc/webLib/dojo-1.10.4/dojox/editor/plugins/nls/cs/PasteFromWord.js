@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/cs/PasteFromWord", ({"pasteFromWord":"Vlo\u017eit z aplikace Word", "instructions":"Vlo\u017ete obsah z aplikace Word do zobrazen\xe9ho textov\xe9ho pole. Jakmile jste s vkl\xe1dan\xfdm obsahem spokojeni, stiskn\u011bte tla\u010d\xedtko Vlo\u017eit. Pomoc\xed tla\u010d\xedtka Storno vkl\xe1d\xe1n\xed zru\u0161\xedte."}));
-
+define("dojox/editor/plugins/nls/cs/PasteFromWord",{pasteFromWord:"Vlo\u017eit z aplikace Word",instructions:"Vlo\u017ete obsah z aplikace Word do zobrazen\u00e9ho textov\u00e9ho pole. Jakmile jste s vkl\u00e1dan\u00fdm obsahem spokojeni, stiskn\u011bte tla\u010d\u00edtko Vlo\u017eit. Pomoc\u00ed tla\u010d\u00edtka Storno vkl\u00e1d\u00e1n\u00ed zru\u0161\u00edte."});
+/// PasteFromWord.js.map

@@ -1,44 +1,6 @@
 //>>built
-
-define("dojox/calendar/StoreMixin", ["dojo/_base/declare", "dojo/_base/array", "dojo/_base/html", "dojo/_base/lang", "dojo/dom-class", "dojo/Stateful", "dojo/when"], function (declare, arr, html, lang, domClass, Stateful, when) {
-    return declare("dojox.calendar.StoreMixin", Stateful, {store:null, query:{}, queryOptions:null, startTimeAttr:"startTime", endTimeAttr:"endTime", summaryAttr:"summary", allDayAttr:"allDay", subColumnAttr:"calendar", cssClassFunc:null, decodeDate:null, encodeDate:null, displayedItemsInvalidated:false, itemToRenderItem:function (item, store) {
-        if (this.owner) {
-            return this.owner.itemToRenderItem(item, store);
-        }
-        return {id:store.getIdentity(item), summary:item[this.summaryAttr], startTime:(this.decodeDate && this.decodeDate(item[this.startTimeAttr])) || this.newDate(item[this.startTimeAttr], this.dateClassObj), endTime:(this.decodeDate && this.decodeDate(item[this.endTimeAttr])) || this.newDate(item[this.endTimeAttr], this.dateClassObj), allDay:item[this.allDayAttr] != null ? item[this.allDayAttr] : false, subColumn:item[this.subColumnAttr], cssClass:this.cssClassFunc ? this.cssClassFunc(item) : null};
-    }, renderItemToItem:function (renderItem, store) {
-        if (this.owner) {
-            return this.owner.renderItemToItem(renderItem, store);
-        }
-        var item = {};
-        item[store.idProperty] = renderItem.id;
-        item[this.summaryAttr] = renderItem.summary;
-        item[this.startTimeAttr] = (this.encodeDate && this.encodeDate(renderItem.startTime)) || renderItem.startTime;
-        item[this.endTimeAttr] = (this.encodeDate && this.encodeDate(renderItem.endTime)) || renderItem.endTime;
-        if (renderItem.subColumn) {
-            item[this.subColumnAttr] = renderItem.subColumn;
-        }
-        return this.getItemStoreState(renderItem) === "unstored" ? item : lang.mixin(renderItem._item, item);
-    }, _computeVisibleItems:function (renderData) {
-        if (this.owner) {
-            return this.owner._computeVisibleItems(renderData);
-        }
-        renderData.items = this.storeManager._computeVisibleItems(renderData);
-    }, _initItems:function (items) {
-        this.set("items", items);
-        return items;
-    }, _refreshItemsRendering:function (renderData) {
-    }, _setStoreAttr:function (value) {
-        this.store = value;
-        return this.storeManager.set("store", value);
-    }, _getItemStoreStateObj:function (item) {
-        return this.storeManager._getItemStoreStateObj(item);
-    }, getItemStoreState:function (item) {
-        return this.storeManager.getItemStoreState(item);
-    }, _cleanItemStoreState:function (id) {
-        this.storeManager._cleanItemStoreState(id);
-    }, _setItemStoreState:function (item, state) {
-        this.storeManager._setItemStoreState(item, state);
-    }});
-});
-
+define("dojox/calendar/StoreMixin","dojo/_base/declare dojo/_base/array dojo/_base/html dojo/_base/lang dojo/dom-class dojo/Stateful dojo/when".split(" "),function(d,g,h,e,k,f,l){return d("dojox.calendar.StoreMixin",f,{store:null,query:{},queryOptions:null,startTimeAttr:"startTime",endTimeAttr:"endTime",summaryAttr:"summary",allDayAttr:"allDay",subColumnAttr:"calendar",cssClassFunc:null,decodeDate:null,encodeDate:null,displayedItemsInvalidated:!1,itemToRenderItem:function(a,b){return this.owner?this.owner.itemToRenderItem(a,
+b):{id:b.getIdentity(a),summary:a[this.summaryAttr],startTime:this.decodeDate&&this.decodeDate(a[this.startTimeAttr])||this.newDate(a[this.startTimeAttr],this.dateClassObj),endTime:this.decodeDate&&this.decodeDate(a[this.endTimeAttr])||this.newDate(a[this.endTimeAttr],this.dateClassObj),allDay:null!=a[this.allDayAttr]?a[this.allDayAttr]:!1,subColumn:a[this.subColumnAttr],cssClass:this.cssClassFunc?this.cssClassFunc(a):null}},renderItemToItem:function(a,b){if(this.owner)return this.owner.renderItemToItem(a,
+b);var c={};c[b.idProperty]=a.id;c[this.summaryAttr]=a.summary;c[this.startTimeAttr]=this.encodeDate&&this.encodeDate(a.startTime)||a.startTime;c[this.endTimeAttr]=this.encodeDate&&this.encodeDate(a.endTime)||a.endTime;a.subColumn&&(c[this.subColumnAttr]=a.subColumn);return"unstored"===this.getItemStoreState(a)?c:e.mixin(a._item,c)},_computeVisibleItems:function(a){if(this.owner)return this.owner._computeVisibleItems(a);a.items=this.storeManager._computeVisibleItems(a)},_initItems:function(a){this.set("items",
+a);return a},_refreshItemsRendering:function(a){},_setStoreAttr:function(a){this.store=a;return this.storeManager.set("store",a)},_getItemStoreStateObj:function(a){return this.storeManager._getItemStoreStateObj(a)},getItemStoreState:function(a){return this.storeManager.getItemStoreState(a)},_cleanItemStoreState:function(a){this.storeManager._cleanItemStoreState(a)},_setItemStoreState:function(a,b){this.storeManager._setItemStoreState(a,b)}})});
+/// StoreMixin.js.map

@@ -1,7 +1,3 @@
 //>>built
-
-define("dojox/sketch", ["dojo/_base/kernel", "dojo/_base/lang", "./xml/DomParser", "./sketch/UndoStack", "./sketch/Figure", "./sketch/Toolbar"], function (dojo) {
-    dojo.getObject("sketch", true, dojox);
-    return dojox.sketch;
-});
-
+define("dojox/sketch","dojo/_base/kernel dojo/_base/lang ./xml/DomParser ./sketch/UndoStack ./sketch/Figure ./sketch/Toolbar".split(" "),function(a){a.getObject("sketch",!0,dojox);return dojox.sketch});
+/// sketch.js.map

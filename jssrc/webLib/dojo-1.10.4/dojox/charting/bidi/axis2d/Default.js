@@ -1,18 +1,3 @@
 //>>built
-
-define("dojox/charting/bidi/axis2d/Default", ["dojo/_base/declare", "dojo/dom-style"], function (declare, domStyle) {
-    return declare(null, {labelTooltip:function (elem, chart, label, truncatedLabel, font, elemType) {
-        var isChartDirectionRtl = (domStyle.get(chart.node, "direction") == "rtl");
-        var isBaseTextDirRtl = (chart.getTextDir(label) == "rtl");
-        if (isBaseTextDirRtl && !isChartDirectionRtl) {
-            label = "<span dir='rtl'>" + label + "</span>";
-        }
-        if (!isBaseTextDirRtl && isChartDirectionRtl) {
-            label = "<span dir='ltr'>" + label + "</span>";
-        }
-        this.inherited(arguments);
-    }, _isRtl:function () {
-        return this.chart.isRightToLeft();
-    }});
-});
-
+define("dojox/charting/bidi/axis2d/Default",["dojo/_base/declare","dojo/dom-style"],function(b,f){return b(null,{labelTooltip:function(b,c,a,g,h,k){var d="rtl"==f.get(c.node,"direction"),e="rtl"==c.getTextDir(a);e&&!d&&(a="\x3cspan dir\x3d'rtl'\x3e"+a+"\x3c/span\x3e");!e&&d&&(a="\x3cspan dir\x3d'ltr'\x3e"+a+"\x3c/span\x3e");this.inherited(arguments)},_isRtl:function(){return this.chart.isRightToLeft()}})});
+/// Default.js.map

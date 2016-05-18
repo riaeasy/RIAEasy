@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/pt/InsertEntity", ({insertEntity:"Inserir S\xedmbolo"}));
-
+define("dojox/editor/plugins/nls/pt/InsertEntity",{insertEntity:"Inserir S\u00edmbolo"});
+/// InsertEntity.js.map

@@ -27,7 +27,7 @@
 .rias .mblButton,
 .rias .dijitButtonNode {
   border-width: 0 0 2px 0;
-  border-color: skyblue;
+  border-color: lightblue;
 }
 .rias .riaswCheckButton,
 .rias .riaswRadioButton {
@@ -47,6 +47,7 @@
 .rias .riaswAccordionTitle,
 .rias .riaswAccordionChildWrapper,
 .rias .riaswTablePanel,
+.rias .riaswTablePanelTable,
 .rias .riaswDockBar,
 .rias .riaswDockNode,
 .rias .dijitTree,
@@ -64,9 +65,18 @@
   border-width: 0.25em;
   border-color: lavender;
 }
+.rias .riaswDialogPanelHover,
+.rias .riaswDialogPanelActive {
+  border-color: gold;
+}
+.rias .riaswDialogPanelSelected,
+.rias .riaswDialogPanelFocused,
+.rias .riaswDialogPanelTopmost {
+  border-color: lightblue;
+}
 .rias .riaswCaptionPanelContent,
 .rias .riaswDialogPanelContent {
-  padding: 0.25em;
+  margin: 0.25em;
 }
 .rias .riaswDialogPanelContent {
   background-color: whitesmoke;
@@ -91,20 +101,15 @@
 .rias .riaswDialogPanelCaptionNodeHover {
   background-color: gold;
 }
-.rias .riaswDialogPanelHover {
-  border-color: gold;
-}
 .rias .riaswCaptionPanelCaptionNodeSelected,
 .rias .riaswCaptionPanelCaptionNodeFocused,
 .rias .riaswDialogPanelCaptionNodeSelected,
 .rias .riaswDialogPanelCaptionNodeFocused,
 .rias .riaswDialogPanelCaptionNodeTopmost,
 .rias .riaswAccordionTitleSelected,
-.rias .riaswDockNodeTopmost {
-  background-color: skyblue;
-}
-.rias .riaswDialogPanelTopmost {
-  border-color: skyblue;
+.rias .riaswDockNodeSelected,
+.rias .riaswDockNodeFocused {
+  background-color: lightblue;
 }
 .rias .riaswStackPanelChildWrapper,
 .rias .dijitTabChecked {
@@ -118,7 +123,7 @@
   border-color: steelblue;
 }
 .rias .dijitTreeRowSelected {
-  background-color: skyblue;
+  background-color: lightblue;
 }
 .rias .webAppHeader {
   font-size: 125%;
@@ -126,7 +131,7 @@
   line-height: 2.5em;
   padding: 0px;
   font-weight: bold;
-  color: skyblue;
+  color: lightblue;
   /*.dijitButton .dijitButtonNode,
 		.dijitDropDownButton .dijitButtonNode,
 		.dijitComboButton .dijitButtonNode,
@@ -144,7 +149,7 @@
   /* disabled status */
 }
 .rias .webAppHeader .dijitButtonNode {
-  border-color: skyblue;
+  border-color: lightblue;
   border-width: 0 0 2px 0;
   margin: 0.25em;
   padding: 0em 0.25em;
@@ -179,7 +184,7 @@
   color: inherit;
 }
 .rias .webAppHeader .riaswDockNode {
-  border-color: skyblue;
+  border-color: lightblue;
   border-width: 0 0 2px 0;
   margin: 0.25em;
   padding: 0em 0.25em;
@@ -221,14 +226,14 @@
   padding: 0.25em 0 0.25em 0.25em;
 }
 .rias .webAppDockPanel .riaswDockBar {
-  border-right: 3px solid skyblue;
+  border-right: 3px solid lightblue;
   padding: 0;
   width: 10em;
 }
 .rias .webAppDockPanel .riaswDockNode {
   display: block;
-  margin: 2px 0 2px 2px;
-  border-radius: 8px 0 0 8px;
+  margin: 0;
+  border-radius: 0;
   border-width: 1px 0 1px 1px;
 }
 .rias .webAppCenter {
@@ -253,8 +258,9 @@
   border-color: gold;
   color: black;
 }
-.rias .webAppFooter .riaswDockNodeTopmost {
-  background-color: skyblue;
+.rias .webAppFooter .riaswDockNodeSelected,
+.rias .webAppFooter .riaswDockNodeFocused {
+  background-color: lightblue;
   color: black;
 }
 .rias .dgrid {
@@ -296,7 +302,7 @@
   background-color: snow;
 }
 .rias .dgrid-selected {
-  background-color: skyblue;
+  background-color: lightblue;
 }
 .rias .dgrid-hider-toggle {
   right: auto;

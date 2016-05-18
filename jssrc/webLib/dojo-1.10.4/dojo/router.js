@@ -1,6 +1,3 @@
 //>>built
-
-define("dojo/router", ["./router/RouterBase"], function (RouterBase) {
-    return new RouterBase({});
-});
-
+define("dojo/router",["./router/RouterBase"],function(a){return new a({})});
+/// router.js.map

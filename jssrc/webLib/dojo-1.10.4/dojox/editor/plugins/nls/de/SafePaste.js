@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/de/SafePaste", ({"instructions":"Direktes Einf\xfcgen ist inaktiviert. F\xfcgen Sie Inhalt in diesem Dialog \xfcber Tastaturbefehle oder Men\xfceintr\xe4ge f\xfcr Einf\xfcgeoperationen Ihres Standardbrowsers ein. Wenn Sie mit dem einzuf\xfcgenden Inhalt zufrieden sind, klicken Sie auf die Schaltfl\xe4che Einf\xfcgen. Wenn Sie das Einf\xfcgen des Inhalts abbrechen m\xf6chten, klicken Sie auf die Schaltfl\xe4che Abbrechen."}));
-
+define("dojox/editor/plugins/nls/de/SafePaste",{instructions:"Direktes Einf\u00fcgen ist inaktiviert. F\u00fcgen Sie Inhalt in diesem Dialog \u00fcber Tastaturbefehle oder Men\u00fceintr\u00e4ge f\u00fcr Einf\u00fcgeoperationen Ihres Standardbrowsers ein. Wenn Sie mit dem einzuf\u00fcgenden Inhalt zufrieden sind, klicken Sie auf die Schaltfl\u00e4che Einf\u00fcgen. Wenn Sie das Einf\u00fcgen des Inhalts abbrechen m\u00f6chten, klicken Sie auf die Schaltfl\u00e4che Abbrechen."});
+/// SafePaste.js.map

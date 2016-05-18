@@ -1,35 +1,4 @@
 //>>built
-
-define("dojox/wire/TextAdapter", ["dijit", "dojo", "dojox", "dojo/require!dojox/wire/CompositeWire"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.wire.TextAdapter");
-    dojo.require("dojox.wire.CompositeWire");
-    dojo.declare("dojox.wire.TextAdapter", dojox.wire.CompositeWire, {_wireClass:"dojox.wire.TextAdapter", constructor:function (args) {
-        this._initializeChildren(this.segments);
-        if (!this.delimiter) {
-            this.delimiter = "";
-        }
-    }, _getValue:function (object) {
-        if (!object || !this.segments) {
-            return object;
-        }
-        var text = "";
-        for (var i in this.segments) {
-            var segment = this.segments[i].getValue(object);
-            text = this._addSegment(text, segment);
-        }
-        return text;
-    }, _setValue:function (object, value) {
-        throw new Error("Unsupported API: " + this._wireClass + "._setValue");
-    }, _addSegment:function (text, segment) {
-        if (!segment) {
-            return text;
-        } else {
-            if (!text) {
-                return segment;
-            } else {
-                return text + this.delimiter + segment;
-            }
-        }
-    }});
-});
-
+define("dojox/wire/TextAdapter",["dijit","dojo","dojox","dojo/require!dojox/wire/CompositeWire"],function(e,c,d){c.provide("dojox.wire.TextAdapter");c.require("dojox.wire.CompositeWire");c.declare("dojox.wire.TextAdapter",d.wire.CompositeWire,{_wireClass:"dojox.wire.TextAdapter",constructor:function(a){this._initializeChildren(this.segments);this.delimiter||(this.delimiter="")},_getValue:function(a){if(!a||!this.segments)return a;var b="",c;for(c in this.segments)var d=this.segments[c].getValue(a),
+b=this._addSegment(b,d);return b},_setValue:function(a,b){throw Error("Unsupported API: "+this._wireClass+"._setValue");},_addSegment:function(a,b){return b?a?a+this.delimiter+b:b:a}})});
+/// TextAdapter.js.map

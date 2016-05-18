@@ -1,23 +1,4 @@
 //>>built
-
-define("dojox/mobile/FormLayout", ["dojo/_base/declare", "dojo/dom-class", "./Container", "dojo/has", "require"], function (declare, domClass, Container, has, BidiFormLayout) {
-    var FormLayout = declare(0 ? "dojox.mobile.NonBidiFormLayout" : "dojox.mobile.FormLayout", Container, {columns:"auto", rightAlign:false, baseClass:"mblFormLayout", buildRendering:function () {
-        this.inherited(arguments);
-        if (this.columns == "auto") {
-            domClass.add(this.domNode, "mblFormLayoutAuto");
-        } else {
-            if (this.columns == "single") {
-                domClass.add(this.domNode, "mblFormLayoutSingleCol");
-            } else {
-                if (this.columns == "two") {
-                    domClass.add(this.domNode, "mblFormLayoutTwoCol");
-                }
-            }
-        }
-        if (this.rightAlign) {
-            domClass.add(this.domNode, "mblFormLayoutRightAlign");
-        }
-    }});
-    return 0 ? declare("dojox.mobile.FormLayout", [FormLayout, BidiFormLayout]) : FormLayout;
-});
-
+define("dojox/mobile/FormLayout",["dojo/_base/declare","dojo/dom-class","./Container","dojo/has","require"],function(b,a,c,d,e){return b("dojox.mobile.FormLayout",c,{columns:"auto",rightAlign:!1,baseClass:"mblFormLayout",buildRendering:function(){this.inherited(arguments);"auto"==this.columns?a.add(this.domNode,"mblFormLayoutAuto"):"single"==this.columns?a.add(this.domNode,"mblFormLayoutSingleCol"):"two"==this.columns&&a.add(this.domNode,"mblFormLayoutTwoCol");this.rightAlign&&a.add(this.domNode,
+"mblFormLayoutRightAlign")}})});
+/// FormLayout.js.map

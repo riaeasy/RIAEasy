@@ -1,25 +1,4 @@
 //>>built
-
-define("dojox/mobile/bidi/Heading", ["dojo/_base/declare", "./common"], function (declare, common) {
-    return declare(null, {_setLabelAttr:function (label) {
-        this.inherited(arguments);
-        if (this.getTextDir(label) === "rtl") {
-            this.domNode.style.direction = "rtl";
-        }
-        this.labelDivNode.innerHTML = common.enforceTextDirWithUcc(this.labelDivNode.innerHTML, this.textDir);
-    }, _setBackAttr:function (back) {
-        this.inherited(arguments);
-        this.backButton.labelNode.innerHTML = common.enforceTextDirWithUcc(this.backButton.labelNode.innerHTML, this.textDir);
-        this.labelNode.innerHTML = this.labelDivNode.innerHTML;
-    }, _setTextDirAttr:function (textDir) {
-        if (!this._created || this.textDir != textDir) {
-            this._set("textDir", textDir);
-            if (this.getTextDir(this.labelDivNode.innerHTML) === "rtl") {
-                this.domNode.style.direction = "rtl";
-            }
-            this.labelDivNode.innerHTML = common.enforceTextDirWithUcc(common.removeUCCFromText(this.labelDivNode.innerHTML), this.textDir);
-            common.setTextDirForButtons(this);
-        }
-    }});
-});
-
+define("dojox/mobile/bidi/Heading",["dojo/_base/declare","./common"],function(c,a){return c(null,{_setLabelAttr:function(b){this.inherited(arguments);"rtl"===this.getTextDir(b)&&(this.domNode.style.direction="rtl");this.labelDivNode.innerHTML=a.enforceTextDirWithUcc(this.labelDivNode.innerHTML,this.textDir)},_setBackAttr:function(b){this.inherited(arguments);this.backButton.labelNode.innerHTML=a.enforceTextDirWithUcc(this.backButton.labelNode.innerHTML,this.textDir);this.labelNode.innerHTML=this.labelDivNode.innerHTML},
+_setTextDirAttr:function(b){if(!this._created||this.textDir!=b)this._set("textDir",b),"rtl"===this.getTextDir(this.labelDivNode.innerHTML)&&(this.domNode.style.direction="rtl"),this.labelDivNode.innerHTML=a.enforceTextDirWithUcc(a.removeUCCFromText(this.labelDivNode.innerHTML),this.textDir),a.setTextDirForButtons(this)}})});
+/// Heading.js.map

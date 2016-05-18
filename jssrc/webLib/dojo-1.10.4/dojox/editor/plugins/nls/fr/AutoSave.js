@@ -1,4 +1,4 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fr/AutoSave", ({"saveLabel":"Enregistrer", "saveSettingLabelOn":"D\xe9finir l'intervalle d'enregistrement automatique...", "saveSettingLabelOff":"D\xe9sactiver l'enregistrement automatique", "saveSettingdialogTitle":"Enregistrement automatique", "saveSettingdialogDescription":"Sp\xe9cifiez l'intervalle d'enregistrement automatique", "saveSettingdialogParamName":"Intervalle d'enregistrement automatique", "saveSettingdialogParamLabel":"min", "saveSettingdialogButtonOk":"D\xe9finir l'intervalle", "saveSettingdialogButtonCancel":"Annuler", "saveMessageSuccess":"Enregistr\xe9 \xe0 ${0}", "saveMessageFail":"Echec de l'enregistrement \xe0 ${0}"}));
-
+define("dojox/editor/plugins/nls/fr/AutoSave",{saveLabel:"Enregistrer",saveSettingLabelOn:"D\u00e9finir l'intervalle d'enregistrement automatique...",saveSettingLabelOff:"D\u00e9sactiver l'enregistrement automatique",saveSettingdialogTitle:"Enregistrement automatique",saveSettingdialogDescription:"Sp\u00e9cifiez l'intervalle d'enregistrement automatique",saveSettingdialogParamName:"Intervalle d'enregistrement automatique",saveSettingdialogParamLabel:"min",saveSettingdialogButtonOk:"D\u00e9finir l'intervalle",
+saveSettingdialogButtonCancel:"Annuler",saveMessageSuccess:"Enregistr\u00e9 \u00e0 ${0}",saveMessageFail:"Echec de l'enregistrement \u00e0 ${0}"});
+/// AutoSave.js.map

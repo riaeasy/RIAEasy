@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/mvc", ["./mvc/_base"], function (dxmvc) {
-    return dxmvc;
-});
-
+define("dojox/mvc",["./mvc/_base"],function(a){return a});
+/// mvc.js.map

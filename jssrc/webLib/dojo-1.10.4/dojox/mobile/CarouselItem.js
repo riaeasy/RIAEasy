@@ -1,45 +1,5 @@
 //>>built
-
-define("dojox/mobile/CarouselItem", ["dojo/_base/declare", "dojo/dom-construct", "dojo/dom-geometry", "dojo/dom-style", "dijit/_Contained", "dijit/_WidgetBase", "dojo/has", "require"], function (declare, domConstruct, domGeometry, domStyle, Contained, WidgetBase, has, BidiCarouselItem) {
-    var CarouselItem = declare(0 ? "dojox.mobile.NonBidiCarouselItem" : "dojox.mobile.CarouselItem", [WidgetBase, Contained], {alt:"", src:"", headerText:"", footerText:"", baseClass:"mblCarouselItem", buildRendering:function () {
-        this.inherited(arguments);
-        this.domNode.tabIndex = "0";
-        this.headerTextNode = domConstruct.create("div", {className:"mblCarouselItemHeaderText"}, this.domNode);
-        this.imageNode = domConstruct.create("img", {className:"mblCarouselItemImage"}, this.domNode);
-        this.footerTextNode = domConstruct.create("div", {className:"mblCarouselItemFooterText"}, this.domNode);
-    }, startup:function () {
-        if (this._started) {
-            return;
-        }
-        this.inherited(arguments);
-        this.resize();
-    }, resize:function (size) {
-        var box = domGeometry.getMarginBox(this.domNode);
-        if (box.h === 0) {
-            return;
-        }
-        var h1 = domGeometry.getMarginBox(this.headerTextNode).h;
-        var h2 = domGeometry.getMarginBox(this.footerTextNode).h;
-        domGeometry.setMarginBox(this.imageNode, {h:box.h - h1 - h2});
-    }, select:function () {
-        var img = this.imageNode;
-        domStyle.set(img, "opacity", 0.4);
-        this.defer(function () {
-            domStyle.set(img, "opacity", 1);
-        }, 1000);
-    }, _setAltAttr:function (alt) {
-        this._set("alt", alt);
-        this.imageNode.alt = alt;
-    }, _setSrcAttr:function (src) {
-        this._set("src", src);
-        this.imageNode.src = src;
-    }, _setHeaderTextAttr:function (text) {
-        this._set("headerText", text);
-        this.headerTextNode.innerHTML = this._cv ? this._cv(text) : text;
-    }, _setFooterTextAttr:function (text) {
-        this._set("footerText", text);
-        this.footerTextNode.innerHTML = this._cv ? this._cv(text) : text;
-    }});
-    return 0 ? declare("dojox.mobile.CarouselItem", [CarouselItem, BidiCarouselItem]) : CarouselItem;
-});
-
+define("dojox/mobile/CarouselItem","dojo/_base/declare dojo/dom-construct dojo/dom-geometry dojo/dom-style dijit/_Contained dijit/_WidgetBase dojo/has require".split(" "),function(e,b,c,d,f,g,h,k){return e("dojox.mobile.CarouselItem",[g,f],{alt:"",src:"",headerText:"",footerText:"",baseClass:"mblCarouselItem",buildRendering:function(){this.inherited(arguments);this.domNode.tabIndex="0";this.headerTextNode=b.create("div",{className:"mblCarouselItemHeaderText"},this.domNode);this.imageNode=b.create("img",
+{className:"mblCarouselItemImage"},this.domNode);this.footerTextNode=b.create("div",{className:"mblCarouselItemFooterText"},this.domNode)},startup:function(){this._started||(this.inherited(arguments),this.resize())},resize:function(a){a=c.getMarginBox(this.domNode);if(0!==a.h){var b=c.getMarginBox(this.headerTextNode).h,d=c.getMarginBox(this.footerTextNode).h;c.setMarginBox(this.imageNode,{h:a.h-b-d})}},select:function(){var a=this.imageNode;d.set(a,"opacity",0.4);this.defer(function(){d.set(a,"opacity",
+1)},1E3)},_setAltAttr:function(a){this._set("alt",a);this.imageNode.alt=a},_setSrcAttr:function(a){this._set("src",a);this.imageNode.src=a},_setHeaderTextAttr:function(a){this._set("headerText",a);this.headerTextNode.innerHTML=this._cv?this._cv(a):a},_setFooterTextAttr:function(a){this._set("footerText",a);this.footerTextNode.innerHTML=this._cv?this._cv(a):a}})});
+/// CarouselItem.js.map

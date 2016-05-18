@@ -1,37 +1,4 @@
 //>>built
-
-define("dojox/color/NeutralColorModel", ["dojo/_base/array", "dojo/_base/declare", "./SimpleColorModel"], function (arr, declare, SimpleColorModel) {
-    return declare("dojox.color.NeutralColorModel", SimpleColorModel, {_min:0, _max:0, _e:0, constructor:function (startColor, endColor) {
-    }, initialize:function (items, colorFunc) {
-        var values = [];
-        var sum = 0;
-        var min = 100000000;
-        var max = -min;
-        arr.forEach(items, function (item) {
-            var value = colorFunc(item);
-            min = Math.min(min, value);
-            max = Math.max(max, value);
-            sum += value;
-            values.push(value);
-        });
-        values.sort(function (a, b) {
-            return a - b;
-        });
-        var neutral = this.computeNeutral(min, max, sum, values);
-        this._min = min;
-        this._max = max;
-        if (this._min == this._max || neutral == this._min) {
-            this._e = -1;
-        } else {
-            this._e = Math.log(0.5) / Math.log((neutral - this._min) / (this._max - this._min));
-        }
-    }, computeNeutral:function (min, max, sum, values) {
-    }, getNormalizedValue:function (value) {
-        if (this._e < 0) {
-            return 0;
-        }
-        value = (value - this._min) / (this._max - this._min);
-        return Math.pow(value, this._e);
-    }});
-});
-
+define("dojox/color/NeutralColorModel",["dojo/_base/array","dojo/_base/declare","./SimpleColorModel"],function(k,l,m){return l("dojox.color.NeutralColorModel",m,{_min:0,_max:0,_e:0,constructor:function(a,g){},initialize:function(a,g){var d=[],e=0,c=1E8,f=-c;k.forEach(a,function(b){b=g(b);c=Math.min(c,b);f=Math.max(f,b);e+=b;d.push(b)});d.sort(function(b,a){return b-a});var h=this.computeNeutral(c,f,e,d);this._min=c;this._max=f;this._e=this._min==this._max||h==this._min?-1:Math.log(0.5)/Math.log((h-
+this._min)/(this._max-this._min))},computeNeutral:function(a,g,d,e){},getNormalizedValue:function(a){if(0>this._e)return 0;a=(a-this._min)/(this._max-this._min);return Math.pow(a,this._e)}})});
+/// NeutralColorModel.js.map

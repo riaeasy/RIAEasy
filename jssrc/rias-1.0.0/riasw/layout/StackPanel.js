@@ -7,9 +7,9 @@ define([
 	"rias/riasw/layout/_PanelBase"
 ], function(rias, _WidgetBase, _PanelBase){
 
-	rias.theme.loadRiasCss([
-		//"layout/Panel.css"
-	]);
+	//rias.theme.loadRiasCss([
+	//	"layout/Panel.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.StackPanel";
 	var Widget = rias.declare(riasType, _PanelBase, {
@@ -55,7 +55,7 @@ define([
 			//this._descendantsBeingDestroyed = true;
 			this.selectedChildWidget = undefined;
 			rias.forEach(this.getChildren(), function(child){
-				this.removeChild(child, true, preserveDom);
+				this.removeChild(child, false, preserveDom);
 				child.destroyRecursive(preserveDom);
 			}, this);
 			//rias.forEach(this.__reserved_page, function(child){
@@ -126,24 +126,26 @@ define([
 		_layoutChildren: function(/*String?*/ changedChildId, /*Object?*/ changedChildSize){
 			var child = rias.by(changedChildId) || this.selectedChildWidget;
 			if(child && !child.isDestroyed(true)){
-				if(child.resize){
-					if(changedChildSize || this.doLayout){
-						//this._containerContentBox = this._contentBox;
-						/// 尺寸取 this.containerNode 的 contentBox，即 this._contentBox，但是位置是 child._wrapper，
-						this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._contentBox);
-						//this._containerContentBox.l = 0;
-						//this._containerContentBox.t = 0;
-						changedChildSize = rias.mixin({}, this._containerContentBox, changedChildSize);
-						child.resize(changedChildSize);
-					}else{
-						child.resize();
+				this._noOverflowCall(function(){
+					if(child.resize){
+						if(changedChildSize || this.doLayout){
+							//this._containerContentBox = this._contentBox;
+							/// 尺寸取 this.containerNode 的 contentBox，即 this._contentBox，但是位置是 child._wrapper，
+							this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._contentBox);
+							//this._containerContentBox.l = 0;
+							//this._containerContentBox.t = 0;
+							changedChildSize = rias.mixin({}, this._containerContentBox, changedChildSize);
+							child.resize(changedChildSize);
+						}else{
+							child.resize();
+						}
 					}
-				}
+				});
 			}
 			return true;
 		},
 
-		_setupChild: function(/*dijit/_WidgetBase*/ child, added, insertIndex){
+		_setupChild: function(/*dijit/_WidgetBase*/ child, added, insertIndex, noresize){
 			if(!added){
 				this.inherited(arguments);
 				return;
@@ -179,11 +181,14 @@ define([
 			this.inherited(arguments);
 		},
 
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, noresize){
 			var //cs = this.getChildren(),
 				p = this;
+			child._focusStack0 = child._focusStack;
+			child._focusStack = true;
 			this.inherited(arguments);
 			if(this._started){
+				//console.debug("addChild - ", child.id.split('_').pop(), this.selectedChildWidget ? this.selectedChildWidget.id.split('_').pop() : "undefined");
 				if(child.selected || !this.selectedChildWidget){
 					this.selectChild(child, false);
 				}
@@ -193,16 +198,17 @@ define([
 			//	this.__reserved_page.splice(i, 1);
 			//}
 		},
-		removeChild: function(/*dijit/_WidgetBase*/ page, resize, reserve){
-			var idx = rias.indexOf(this.getChildren(), page);
+		removeChild: function(/*dijit/_WidgetBase*/ child, noresize, reserve){
+			var idx = rias.indexOf(this.getChildren(), child);
 			//if(!this.__reserved_page){
 			//	this.__reserved_page = [];
 			//}
 			//if(reserve){
-			//	this.__reserved_page.push(page);
-			//	page._wrapper.removeChild(page.domNode);
+			//	this.__reserved_page.push(child);
+			//	child._wrapper.removeChild(child.domNode);
 			//}
-			if(this.selectedChildWidget === page){
+			child._focusStack = child._focusStack0;
+			if(this.selectedChildWidget === child){
 				this.selectedChildWidget = undefined;
 				if(this._started){
 					this.back();
@@ -210,11 +216,11 @@ define([
 			}
 			this.inherited(arguments);
 
-			rias.dom.destroy(page._wrapper);
-			page._wrapper = undefined;
+			rias.dom.destroy(child._wrapper);
+			child._wrapper = undefined;
 
 			if(this._started){
-				rias.publish(this.id + "-removeChild", page);
+				rias.publish(this.id + "-removeChild", child);
 			}
 
 			//if(this._descendantsBeingDestroyed){
@@ -241,6 +247,7 @@ define([
 				///先设置 selectedChildWidget，以保证在 _transition.showChild 中 selectedChildWidget 正确
 				///同时，注意 _transition 的 new 和 old 是否正确
 				self._set("selectedChildWidget", page);
+				//console.debug("selectedChildWidget: ", page.id.split('_').pop());
 				// Deselect old page and select new one
 				d = self._transition(page, d, animate);
 				d.then(function(){
@@ -248,6 +255,8 @@ define([
 					if(self.persist){
 						rias.cookie(self.id + "_selectedChild", self.selectedChildWidget.id);
 					}
+					//console.debug("selectChild - ", page.id);
+					page.focus();
 				});
 			}
 
@@ -292,13 +301,14 @@ define([
 						//console.debug("_transition.begin: ", self.id, new Date().valueOf() - curr);
 						curr = new Date().valueOf();
 
+						rias.dom.visible(newContents, true, 0);
 						rias.when(self._showChild(newWidget, {
 							animate: false
 						}), function(){
 							//console.debug("_transition._showChild: ", self.id, new Date().valueOf() - curr);
 							curr = new Date().valueOf();
-							//rias.dom.visible(newContents, true, 0);
 							rias.dom.setStyle(newContents, "left", -box.w + "px");
+							rias.dom.visible(newContents, true, 1);
 							self._animation = [rias.fx.combine([
 								rias.fx.slideTo({
 									node: oldContents,
@@ -365,9 +375,9 @@ define([
 			// summary:
 			//		Gets the next/previous child widget in this container from the current selection.
 
-			// TODO: remove for 2.0 if this isn't being used.   Otherwise, fix to skip disabled tabs.
-
-			var children = this.getChildren();
+			var children = rias.filter(this.getChildren(), function(child){
+				return !child.isDestroyed(true) && !child.get("disabled");
+			});
 			var index = rias.indexOf(children, this.selectedChildWidget);
 			index += forward ? 1 : children.length - 1;
 			return children[ index % children.length ]; // dijit/_WidgetBase
@@ -432,7 +442,7 @@ define([
 			this._onShowChild(page);
 
 			if(args && args.animate != false){
-				return this._doPlayContent().then(function(){
+				d = this._doPlayContent().then(function(){
 					(page._show && page._show()) || (page._onShow && page._onShow());
 				});
 			}else{
@@ -442,8 +452,8 @@ define([
 				}
 				d = (page._show && page._show()) || (page._onShow && page._onShow()) || true;
 				page.animate = a;
-				return d;
 			}
+			return d;
 		},
 
 		onHideChild: function(page){
@@ -482,12 +492,20 @@ define([
 			//		If onClose() returns true then remove and destroy the child.
 			// tags:
 			//		private
-			var remove = page.onClose && page.onClose(this, page);
-			if(remove){
-				this.removeChild(page, reserve);
+			if(rias.isFunction(page.close)){
+				return page.close();
+			}
+			var go = true;
+			if(rias.isFunction(page._onClose)){
+				go = page._onClose();
+			}else if(rias.isFunction(page.onClose)){
+				go = page.onClose();
+			}
+			return rias.when(go, function(){
+				this.removeChild(page, false, reserve);
 				// makes sure we can clean up executeScripts in ContentPane onUnLoad
 				page.destroyRecursive();
-			}
+			});
 		}
 
 	});

@@ -1,7 +1,3 @@
 //>>built
-
-define("dojox/drawing/_base", ["dojo", "./annotations/Label", "./Drawing"], function (dojo, L, Drawing) {
-    dojo.experimental("dojox.drawing");
-    return Drawing;
-});
-
+define("dojox/drawing/_base",["dojo","./annotations/Label","./Drawing"],function(a,c,b){a.experimental("dojox.drawing");return b});
+/// _base.js.map

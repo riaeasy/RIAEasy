@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/ro/PageBreak", ({"pageBreak":"\xcentrerupere pagin\u0103"}));
-
+define("dojox/editor/plugins/nls/ro/PageBreak",{pageBreak:"\u00centrerupere pagin\u0103"});
+/// PageBreak.js.map

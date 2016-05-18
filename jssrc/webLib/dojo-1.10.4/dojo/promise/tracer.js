@@ -1,33 +1,4 @@
 //>>built
-
-define("dojo/promise/tracer", ["../_base/lang", "./Promise", "../Evented"], function (lang, Promise, Evented) {
-    "use strict";
-    var evented = new Evented;
-    var emit = evented.emit;
-    evented.emit = null;
-    function emitAsync(args) {
-        setTimeout(function () {
-            emit.apply(evented, args);
-        }, 0);
-    }
-    Promise.prototype.trace = function () {
-        var args = lang._toArray(arguments);
-        this.then(function (value) {
-            emitAsync(["resolved", value].concat(args));
-        }, function (error) {
-            emitAsync(["rejected", error].concat(args));
-        }, function (update) {
-            emitAsync(["progress", update].concat(args));
-        });
-        return this;
-    };
-    Promise.prototype.traceRejected = function () {
-        var args = lang._toArray(arguments);
-        this.otherwise(function (error) {
-            emitAsync(["rejected", error].concat(args));
-        });
-        return this;
-    };
-    return evented;
-});
-
+define("dojo/promise/tracer",["../_base/lang","./Promise","../Evented"],function(e,f,g){function c(a){setTimeout(function(){h.apply(d,a)},0)}var d=new g,h=d.emit;d.emit=null;f.prototype.trace=function(){var a=e._toArray(arguments);this.then(function(b){c(["resolved",b].concat(a))},function(b){c(["rejected",b].concat(a))},function(b){c(["progress",b].concat(a))});return this};f.prototype.traceRejected=function(){var a=e._toArray(arguments);this.otherwise(function(b){c(["rejected",b].concat(a))});return this};
+return d});
+/// tracer.js.map

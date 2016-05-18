@@ -1,4 +1,4 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fi/Smiley", ({smiley:"Lis\xe4\xe4 hymi\xf6", emoticonSmile:"hymyill\xe4", emoticonLaughing:"nauraa", emoticonWink:"iske\xe4 silm\xe4\xe4", emoticonGrin:"virnist\xe4\xe4", emoticonCool:"viile\xe4 hymy", emoticonAngry:"vihainen", emoticonHalf:"puolikas", emoticonEyebrow:"ihmetell\xe4", emoticonFrown:"irvist\xe4\xe4", emoticonShy:"ujo", emoticonGoofy:"h\xf6lm\xf6", emoticonOops:"hups", emoticonTongue:"n\xe4ytt\xe4\xe4 kielt\xe4", emoticonIdea:"idea", emoticonYes:"kyll\xe4", emoticonNo:"ei", emoticonAngel:"enkeli", emoticonCrying:"itke\xe4", emoticonHappy:"iloinen"}));
-
+define("dojox/editor/plugins/nls/fi/Smiley",{smiley:"Lis\u00e4\u00e4 hymi\u00f6",emoticonSmile:"hymyill\u00e4",emoticonLaughing:"nauraa",emoticonWink:"iske\u00e4 silm\u00e4\u00e4",emoticonGrin:"virnist\u00e4\u00e4",emoticonCool:"viile\u00e4 hymy",emoticonAngry:"vihainen",emoticonHalf:"puolikas",emoticonEyebrow:"ihmetell\u00e4",emoticonFrown:"irvist\u00e4\u00e4",emoticonShy:"ujo",emoticonGoofy:"h\u00f6lm\u00f6",emoticonOops:"hups",emoticonTongue:"n\u00e4ytt\u00e4\u00e4 kielt\u00e4",emoticonIdea:"idea",
+emoticonYes:"kyll\u00e4",emoticonNo:"ei",emoticonAngel:"enkeli",emoticonCrying:"itke\u00e4",emoticonHappy:"iloinen"});
+/// Smiley.js.map

@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/grid/enhanced/nls/ca/EnhancedGrid", ({singleSort:"Ordre \xfanic", nestedSort:"Ordre imbricat", ascending:"Feu clic per ordenar de forma ascendent", descending:"Feu clic per ordenar de forma descendent", sortingState:"${0} - ${1}", unsorted:"No ordenis aquesta finestra", indirectSelectionRadio:"Fila ${0}, selecci\xf3 individual, quadre d'opci\xf3", indirectSelectionCheckBox:"Fila ${0}, selecci\xf3 m\xfaltiple, quadre de selecci\xf3", selectAll:"Selecciona-ho tot"}));
-
+define("dojox/grid/enhanced/nls/ca/EnhancedGrid",{singleSort:"Ordre \u00fanic",nestedSort:"Ordre imbricat",ascending:"Feu clic per ordenar de forma ascendent",descending:"Feu clic per ordenar de forma descendent",sortingState:"${0} - ${1}",unsorted:"No ordenis aquesta finestra",indirectSelectionRadio:"Fila ${0}, selecci\u00f3 individual, quadre d'opci\u00f3",indirectSelectionCheckBox:"Fila ${0}, selecci\u00f3 m\u00faltiple, quadre de selecci\u00f3",selectAll:"Selecciona-ho tot"});
+/// EnhancedGrid.js.map

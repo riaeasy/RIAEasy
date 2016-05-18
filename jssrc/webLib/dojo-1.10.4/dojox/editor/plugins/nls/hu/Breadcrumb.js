@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/Breadcrumb", ({"nodeActions":"${nodeName} m\u0171veletek", "selectContents":"Tartalom kiv\xe1laszt\xe1sa", "selectElement":"Elem kiv\xe1laszt\xe1sa", "deleteElement":"Elem t\xf6rl\xe9se", "deleteContents":"Tartalom t\xf6rl\xe9se", "moveStart":"Kurzor mozgat\xe1sa az elej\xe9re", "moveEnd":"Kurzor mozgat\xe1sa a v\xe9g\xe9re"}));
-
+define("dojox/editor/plugins/nls/hu/Breadcrumb",{nodeActions:"${nodeName} m\u0171veletek",selectContents:"Tartalom kiv\u00e1laszt\u00e1sa",selectElement:"Elem kiv\u00e1laszt\u00e1sa",deleteElement:"Elem t\u00f6rl\u00e9se",deleteContents:"Tartalom t\u00f6rl\u00e9se",moveStart:"Kurzor mozgat\u00e1sa az elej\u00e9re",moveEnd:"Kurzor mozgat\u00e1sa a v\u00e9g\u00e9re"});
+/// Breadcrumb.js.map

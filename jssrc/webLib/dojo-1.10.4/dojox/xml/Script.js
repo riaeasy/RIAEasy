@@ -1,10 +1,3 @@
 //>>built
-
-define("dojox/xml/Script", ["dojo/_base/kernel", "dojo/_base/declare", "dojo/parser", "./widgetParser"], function (declare, parser, widgetParser) {
-    dojo.getObject("xml", true, dojox);
-    declare("dojox.xml.Script", null, {constructor:function (props, node) {
-        parser.instantiate(widgetParser._processScript(node));
-    }});
-    return dojox.xml.Script;
-});
-
+define("dojox/xml/Script",["dojo/_base/kernel","dojo/_base/declare","dojo/parser","./widgetParser"],function(a,b,c){dojo.getObject("xml",!0,dojox);a("dojox.xml.Script",null,{constructor:function(a,d){b.instantiate(c._processScript(d))}});return dojox.xml.Script});
+/// Script.js.map

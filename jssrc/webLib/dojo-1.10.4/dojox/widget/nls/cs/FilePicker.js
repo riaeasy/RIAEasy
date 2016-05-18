@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/cs/FilePicker", ({name:"N\xe1zev", path:"Cesta", size:"Velikost (v bajtech)"}));
-
+define("dojox/widget/nls/cs/FilePicker",{name:"N\u00e1zev",path:"Cesta",size:"Velikost (v bajtech)"});
+/// FilePicker.js.map

@@ -1,27 +1,3 @@
 //>>built
-
-define("dojo/when", ["./Deferred", "./promise/Promise"], function (Deferred, Promise) {
-    "use strict";
-    return function when(valueOrPromise, callback, errback, progback) {
-        var receivedPromise = valueOrPromise && typeof valueOrPromise.then === "function";
-        var nativePromise = receivedPromise && valueOrPromise instanceof Promise;
-        if (!receivedPromise) {
-            if (arguments.length > 1) {
-                return callback ? callback(valueOrPromise) : valueOrPromise;
-            } else {
-                return new Deferred().resolve(valueOrPromise);
-            }
-        } else {
-            if (!nativePromise) {
-                var deferred = new Deferred(valueOrPromise.cancel);
-                valueOrPromise.then(deferred.resolve, deferred.reject, deferred.progress);
-                valueOrPromise = deferred.promise;
-            }
-        }
-        if (callback || errback || progback) {
-            return valueOrPromise.then(callback, errback, progback);
-        }
-        return valueOrPromise;
-    };
-});
-
+define("dojo/when",["./Deferred","./promise/Promise"],function(d,g){return function(a,c,e,f){var b=a&&"function"===typeof a.then,h=b&&a instanceof g;if(b)h||(b=new d(a.cancel),a.then(b.resolve,b.reject,b.progress),a=b.promise);else return 1<arguments.length?c?c(a):a:(new d).resolve(a);return c||e||f?a.then(c,e,f):a}});
+/// when.js.map

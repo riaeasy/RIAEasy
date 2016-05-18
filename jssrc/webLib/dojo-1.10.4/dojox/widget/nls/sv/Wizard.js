@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/sv/Wizard", ({next:"N\xe4sta", previous:"F\xf6reg\xe5ende", done:"Klart"}));
-
+define("dojox/widget/nls/sv/Wizard",{next:"N\u00e4sta",previous:"F\u00f6reg\u00e5ende",done:"Klart"});
+/// Wizard.js.map

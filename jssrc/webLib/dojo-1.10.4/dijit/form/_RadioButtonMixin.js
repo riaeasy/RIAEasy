@@ -1,46 +1,4 @@
 //>>built
-
-define("dijit/form/_RadioButtonMixin", ["dojo/_base/array", "dojo/_base/declare", "dojo/dom-attr", "dojo/_base/lang", "dojo/query!css2", "../registry"], function (array, declare, domAttr, lang, query, registry) {
-    return declare("dijit.form._RadioButtonMixin", null, {type:"radio", _getRelatedWidgets:function () {
-        var ary = [];
-        query("input[type=radio]", this.focusNode.form || this.ownerDocument).forEach(lang.hitch(this, function (inputNode) {
-            if (inputNode.name == this.name && inputNode.form == this.focusNode.form) {
-                var widget = registry.getEnclosingWidget(inputNode);
-                if (widget) {
-                    ary.push(widget);
-                }
-            }
-        }));
-        return ary;
-    }, _setCheckedAttr:function (value) {
-        this.inherited(arguments);
-        if (!this._created) {
-            return;
-        }
-        if (value) {
-            array.forEach(this._getRelatedWidgets(), lang.hitch(this, function (widget) {
-                if (widget != this && widget.checked) {
-                    widget.set("checked", false);
-                }
-            }));
-        }
-    }, _getSubmitValue:function (value) {
-        return value == null ? "on" : value;
-    }, _onClick:function (e) {
-        if (this.checked || this.disabled) {
-            e.stopPropagation();
-            e.preventDefault();
-            return false;
-        }
-        if (this.readOnly) {
-            e.stopPropagation();
-            e.preventDefault();
-            array.forEach(this._getRelatedWidgets(), lang.hitch(this, function (widget) {
-                domAttr.set(this.focusNode || this.domNode, "checked", widget.checked);
-            }));
-            return false;
-        }
-        return this.inherited(arguments);
-    }});
-});
-
+define("dijit/form/_RadioButtonMixin","dojo/_base/array dojo/_base/declare dojo/dom-attr dojo/_base/lang dojo/query!css2 ../registry".split(" "),function(d,e,f,c,g,h){return e("dijit.form._RadioButtonMixin",null,{type:"radio",_getRelatedWidgets:function(){var a=[];g("input[type\x3dradio]",this.focusNode.form||this.ownerDocument).forEach(c.hitch(this,function(b){b.name==this.name&&b.form==this.focusNode.form&&(b=h.getEnclosingWidget(b))&&a.push(b)}));return a},_setCheckedAttr:function(a){this.inherited(arguments);
+this._created&&a&&d.forEach(this._getRelatedWidgets(),c.hitch(this,function(a){a!=this&&a.checked&&a.set("checked",!1)}))},_getSubmitValue:function(a){return null==a?"on":a},_onClick:function(a){return this.checked||this.disabled?(a.stopPropagation(),a.preventDefault(),!1):this.readOnly?(a.stopPropagation(),a.preventDefault(),d.forEach(this._getRelatedWidgets(),c.hitch(this,function(a){f.set(this.focusNode||this.domNode,"checked",a.checked)})),!1):this.inherited(arguments)}})});
+/// _RadioButtonMixin.js.map

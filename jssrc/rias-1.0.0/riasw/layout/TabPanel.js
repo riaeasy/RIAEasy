@@ -9,9 +9,10 @@ define([
 	"rias/riasw/layout/ScrollingTabController"
 ], function(rias, StackPanel, _TemplatedMixin, TabController, ScrollingTabController){
 
-	rias.theme.loadRiasCss([
-		"layout/TabPanel.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/TabPanel.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.TabPanel";
 	var Widget = rias.declare(riasType, [StackPanel, _TemplatedMixin], {
@@ -161,47 +162,49 @@ define([
 			}
 
 			var child = this.selectedChildWidget;
-			if(this.doLayout){
-				var titleAlign = this.tabPosition.replace(/-h/, "");
-				// position and size the titles and the container node
-				this.tablist.region = titleAlign;
-				var children = [this.tablist, {
-					domNode: this.tablistSpacer,
-					region: titleAlign
-				}, {
-					domNode: this.containerNode,
-					region: "center"
-				}];
-				rias.dom.layoutChildren(this.domNode, this._contentBox, children);
+			this._noOverflowCall(function(){
+				if(this.doLayout){
+					var titleAlign = this.tabPosition.replace(/-h/, "");
+					// position and size the titles and the container node
+					this.tablist.region = titleAlign;
+					var children = [this.tablist, {
+						domNode: this.tablistSpacer,
+						region: titleAlign
+					}, {
+						domNode: this.containerNode,
+						region: "center"
+					}];
+					rias.dom.layoutChildren(this.domNode, this._contentBox, children);
 
-				// Compute size to make each of my children.
-				// children[2] is the margin-box size of this.containerNode, set by layoutChildren() call above
-				if(child && child.resize){
-					/// 尺寸取 this.containerNode 的 contentBox，但是位置是 child._wrapper，
-					this._containerContentBox = rias.dom.marginBox2contentBox(this.containerNode, children[2]);
-					this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._containerContentBox);
-					//this._containerContentBox.t = 0;
-					//this._containerContentBox.l = 0;
-					child.needLayout = true;
-					child.resize(this._containerContentBox);
-				}
-			}else{
-				// just layout the tab controller, so it can position left/right buttons etc.
-				if(this.tablist.resize){
-					//make the tabs zero width so that they don't interfere with width calc, then reset
-					var s = this.tablist.domNode.style;
-					s.width = "0";
-					var width = rias.dom.getContentBox(this.domNode).w;
-					s.width = "";
-					this.tablist.resize({w: width});
-				}
+					// Compute size to make each of my children.
+					// children[2] is the margin-box size of this.containerNode, set by layoutChildren() call above
+					if(child && child.resize){
+						/// 尺寸取 this.containerNode 的 contentBox，但是位置是 child._wrapper，
+						this._containerContentBox = rias.dom.marginBox2contentBox(this.containerNode, children[2]);
+						this._containerContentBox = rias.dom.marginBox2contentBox(child._wrapper, this._containerContentBox);
+						//this._containerContentBox.t = 0;
+						//this._containerContentBox.l = 0;
+						child.needLayout = true;
+						child.resize(this._containerContentBox);
+					}
+				}else{
+					// just layout the tab controller, so it can position left/right buttons etc.
+					if(this.tablist.resize){
+						//make the tabs zero width so that they don't interfere with width calc, then reset
+						var s = this.tablist.domNode.style;
+						s.width = "0";
+						var width = rias.dom.getContentBox(this.domNode).w;
+						s.width = "";
+						this.tablist.resize({w: width});
+					}
 
-				// and call resize() on the selected pane just to tell it that it's been made visible
-				if(child && child.resize){
-					child.needLayout = true;
-					child.resize();
+					// and call resize() on the selected pane just to tell it that it's been made visible
+					if(child && child.resize){
+						child.needLayout = true;
+						child.resize();
+					}
 				}
-			}
+			});
 			return true;
 		},
 		_beforeLayout: function(){

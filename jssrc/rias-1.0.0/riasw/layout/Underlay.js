@@ -5,9 +5,10 @@ define([
 	"dijit/BackgroundIframe"
 ], function(rias, _Widget, _TemplatedMixin, BackgroundIframe){
 
-	rias.theme.loadRiasCss([
-		"layout/Underlay.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/Underlay.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.Underlay";
 

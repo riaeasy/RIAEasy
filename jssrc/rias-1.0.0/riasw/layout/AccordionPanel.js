@@ -53,10 +53,6 @@ define([
 		_setIconClassAttr: { node: "iconNode", type: "class" },
 
 		getParent: function(){
-			// summary:
-			//		Returns the AccordionContainer parent.
-			// tags:
-			//		private
 			return this.parent;
 		},
 
@@ -71,7 +67,7 @@ define([
 		getTitleHeight: function(){
 			// summary:
 			//		Returns the height of the title dom node.
-			return rias.dom.getMarginSize(this.domNode).h;	// Integer
+			return rias.dom.getMarginBox(this.domNode).h;	// Integer
 		},
 
 		// TODO: maybe the parent should set these methods directly rather than forcing the code
@@ -89,6 +85,7 @@ define([
 		},
 
 		_setSelectedAttr: function(/*Boolean*/ isSelected){
+			isSelected = !!isSelected;
 			this._set("selected", isSelected);
 			this.focusNode.setAttribute("aria-expanded", isSelected ? "true" : "false");
 			this.focusNode.setAttribute("aria-selected", isSelected ? "true" : "false");
@@ -289,7 +286,7 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
-			this.domNode.style.overflow = "hidden";		// TODO: put this in dijit.css
+			//this.domNode.style.overflow = "hidden";
 			this.domNode.setAttribute("role", "tablist");
 		},
 
@@ -298,14 +295,14 @@ define([
 				return;
 			}
 			this.inherited(arguments);
+			//this.resize();
 			if(this.selectedChildWidget){
 				this.selectedChildWidget._wrapperWidget.set("selected", true);
 			}
 		},
 
-		_getContainerContentBox: function(){
-			var openPane = this.selectedChildWidget;
-			if(!openPane){
+		_getContainerContentBox: function(pane){
+			if(!pane){
 				return;
 			}
 			if(!this._contentBox){
@@ -313,47 +310,59 @@ define([
 				return;
 			}
 
-			var wrapperDomNode = openPane._wrapperWidget.domNode,
+			var wrapperDomNode = pane._wrapperWidget.domNode,
 				wrapperDomNodeMargin = rias.dom.getMarginExtents(wrapperDomNode),
 				wrapperDomNodePadBorder = rias.dom.getPadBorderExtents(wrapperDomNode),
-				wrapperContainerNode = openPane._wrapperWidget.containerNode,
+				wrapperContainerNode = pane._wrapperWidget.containerNode,
 				wrapperContainerNodeMargin = rias.dom.getMarginExtents(wrapperContainerNode),
 				wrapperContainerNodePadBorder = rias.dom.getPadBorderExtents(wrapperContainerNode),
-				mySize = this._contentBox,
+				childMargin = rias.dom.getMarginExtents(pane.domNode),
+				childBorder = rias.dom.getPadBorderExtents(pane.domNode),
 				totalCollapsedHeight = 0;
 			rias.forEach(this.getChildren(), function(child){
-				/// 改为只取 child 的 titleHeight，不取 MarginBox
-				if(child != openPane){
+				/// 应该取 child 的 MarginBox
+				if(child != pane){
 					// Using domGeometry.getMarginSize() rather than domGeometry.position() since claro has 1px bottom margin
 					// to separate accordion panes.  Not sure that works perfectly, it's probably putting a 1px
 					// margin below the bottom pane (even though we don't want one).
-					child._buttonWidget && (totalCollapsedHeight += child._buttonWidget.getTitleHeight());
+					child._wrapperWidget && (totalCollapsedHeight += rias.dom.getMarginBox(child._wrapperWidget.domNode).h);
 				}
 			});
-			this._verticalSpace = mySize.h - totalCollapsedHeight - wrapperDomNodeMargin.h
-				- wrapperDomNodePadBorder.h - wrapperContainerNodeMargin.h - wrapperContainerNodePadBorder.h
-				- openPane._buttonWidget.getTitleHeight();
+			this._verticalSpace = this._contentBox.h
+				- totalCollapsedHeight
+				- childMargin.h
+				- childBorder.h
+				- wrapperDomNodeMargin.h
+				- wrapperDomNodePadBorder.h
+				- wrapperContainerNodeMargin.h
+				- wrapperContainerNodePadBorder.h
+				- pane._buttonWidget.getTitleHeight();
 			return this._containerContentBox = {
 				h: this._verticalSpace,
-				w: mySize.w - wrapperDomNodeMargin.w - wrapperDomNodePadBorder.w
-					- wrapperContainerNodeMargin.w - wrapperContainerNodePadBorder.w
+				w: this._contentBox.w
+					- childMargin.w
+					- childBorder.w
+					- wrapperDomNodeMargin.w
+					- wrapperDomNodePadBorder.w
+					- wrapperContainerNodeMargin.w
+					- wrapperContainerNodePadBorder.w
 			};
 		},
 		_layoutChildren: function(){
 			// Implement _LayoutWidget.layout() virtual method.
 			// Set the height of the open pane based on what room remains.
-
 			var openPane = this.selectedChildWidget;
-
 			if(!openPane){
 				return true;
 			}
-
-			openPane.resize(this._getContainerContentBox());
+			//console.debug(this.id + " _layoutChildren: ", this._contentBox);
+			this._noOverflowCall(function(){
+				openPane.resize(this._getContainerContentBox(openPane));
+			});
 			return true;
 		},
 
-		_setupChild: function(child, added, insertIndex, resize){
+		_setupChild: function(child, added, insertIndex, noresize){
 			if(added && !child._wrapperWidget){
 				child._wrapperWidget = new AccordionInnerContainer({
 					ownerRiasw: this,
@@ -373,8 +382,8 @@ define([
 				rias.dom.place(child.domNode, child._wrapper, "replace");
 			}
 		},
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
-			this.inherited(arguments, [child, insertIndex, false]);
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, noresize){
+			this.inherited(arguments, [child, insertIndex, true]);
 			if(this._started && !this.isDestroyed(true)){
 				this.needLayout = true;
 				//var self = this;
@@ -384,7 +393,7 @@ define([
 				this.defer("resize");
 			}
 		},
-		removeChild: function(child, resize){
+		removeChild: function(child, noresize){
 			rias.dom.removeClass(child.domNode, "dijitHidden");
 
 			// Destroy wrapper widget first, before StackPanel.getChildren() call.
@@ -433,14 +442,14 @@ define([
 			this.inherited(arguments);
 		},
 
-		_showChild: function(page, /*Boolean*/ args){
-			// Override StackPanel._showChild() to set visibility of _wrapperWidget.containerNode
-			page._wrapperWidget.containerNode.style.display = "block";
+		_showChild: function(child, args){
+			child._wrapperWidget.set("selected", true);
+			child._wrapperWidget.containerNode.style.display = "block";
 			return this.inherited(arguments);
 		},
 
-		_hideChild: function(child, /*Boolean*/ args){
-			// Override StackPanel._showChild() to set visibility of _wrapperWidget.containerNode
+		_hideChild: function(child, args){
+			child._wrapperWidget.set("selected", false);
 			child._wrapperWidget.containerNode.style.display = "none";
 			return this.inherited(arguments);
 		},
@@ -458,60 +467,57 @@ define([
 				self._animation = undefined;
 			}
 
-			///先 hide，以保证 showChild 取 大小 正确，同时调整 动画 处理
-			if(oldWidget){
-				oldWidget._wrapperWidget.set("selected", false);
-			}
-			if(newWidget){
-				newWidget._wrapperWidget.set("selected", true);
-			}
-
 			///需要另行计算 _verticalSpace
 			///oldWidget 可能已经 destroy
 			if(animate && oldWidget){
 				var newContents = newWidget._wrapperWidget.containerNode,
 					oldContents = oldWidget._wrapperWidget.containerNode;
 
-				// During the animation we will be showing two dijitAccordionChildWrapper nodes at once,
-				// which on claro takes up 4px extra space (compared to stable AccordionContainer).
-				// Have to compensate for that by immediately shrinking the pane being closed.
-				var h = this._getContainerContentBox().h,
-					wrapperContainerNode = newWidget._wrapperWidget.containerNode,
-					wrapperContainerNodeMargin = rias.dom.getMarginExtents(wrapperContainerNode),
-					wrapperContainerNodePadBorder = rias.dom.getPadBorderExtents(wrapperContainerNode),
-					animationHeightOverhead = wrapperContainerNodeMargin.h + wrapperContainerNodePadBorder.h;
+				rias.when(self._showChild(newWidget, {
+					animate: false
+				}), function(){
+					// During the animation we will be showing two dijitAccordionChildWrapper nodes at once,
+					// which on claro takes up 4px extra space (compared to stable AccordionContainer).
+					// Have to compensate for that by immediately shrinking the pane being closed.
+					var h = self._getContainerContentBox(oldWidget).h,
+						wrapperContainerNode = newContents,
+						wrapperContainerNodeMargin = rias.dom.getMarginExtents(wrapperContainerNode),
+						wrapperContainerNodePadBorder = rias.dom.getPadBorderExtents(wrapperContainerNode),
+						animationHeightOverhead = wrapperContainerNodeMargin.h + wrapperContainerNodePadBorder.h;
 
-				oldContents.style.height = (h - animationHeightOverhead) + "px";
+					oldContents.style.height = (h - animationHeightOverhead) + "px";
 
-				self._animation = new rias.fx.Animation({
-					node: newContents,
-					duration: self.duration / 2,
-					curve: [1, h - animationHeightOverhead - 1],
-					onAnimate: function(value){
-						//console.debug("onAnimate", value);
-						value = Math.floor(value);	// avoid fractional values
-						newContents.style.height = value + "px";
-						oldContents.style.height = (h - animationHeightOverhead - value) + "px";
-						if(newWidget){
-							rias.when(self._showChild(newWidget), function(w){
-								d.resolve(w);
+					self._animation = new rias.fx.Animation({
+						node: newContents,
+						duration: self.duration / 2,
+						curve: [1, h - animationHeightOverhead - 1],
+						onAnimate: function(value){
+							//console.debug("onAnimate", value);
+							value = Math.floor(value);	// avoid fractional values
+							newContents.style.height = newWidget.domNode.style.height = value + "px";
+							oldContents.style.height = oldWidget.domNode.style.height = (h - animationHeightOverhead - value) + "px";
+						},
+						onEnd: function(){
+							self._animation = undefined;
+							newContents.style.height = "auto";
+							oldContents.style.display = "none";
+							oldContents.style.height = "auto";
+
+							self._hideChild(oldWidget, {
+								animate: false///关闭 动画，避免隐藏 containerNode
 							});
-						}else{
-							d.resolve(w);
+							if(rias.isFunction(newWidget._doPlayContent)){
+								newWidget._doPlayContent(true).then(function(){
+									d.resolve(newWidget);
+								});
+							}else{
+								d.resolve(newWidget);
+							}
 						}
-					},
-					onEnd: function(){
-						self._animation = undefined;
-						newContents.style.height = "auto";
-						oldWidget._wrapperWidget.containerNode.style.display = "none";
-						oldContents.style.height = "auto";
-						///关闭 动画，避免隐藏 containerNode
-						self._hideChild(oldWidget, {
-							animate: false});
-					}
+					});
+					self._animation.onStop = self._animation.onEnd;
+					self._animation.play();
 				});
-				self._animation.onStop = self._animation.onEnd;
-				self._animation.play();
 			}else if(newWidget){
 				rias.when(self._showChild(newWidget), function(w){
 					d.resolve(w);

@@ -1,21 +1,3 @@
 //>>built
-
-define("dojox/mvc/_DataBindingExtension", ["dojo/_base/array", "dojo/aspect", "dojo/_base/lang", "dijit/_WidgetBase", "./_DataBindingMixin"], function (array, aspect, lang, WidgetBase, DataBindingMixin) {
-    lang.extend(WidgetBase, new DataBindingMixin());
-    aspect.before(WidgetBase.prototype, "startup", function () {
-        this._dbstartup();
-    });
-    aspect.before(WidgetBase.prototype, "destroy", function () {
-        if (this._modelWatchHandles) {
-            array.forEach(this._modelWatchHandles, function (h) {
-                h.unwatch();
-            });
-        }
-        if (this._viewWatchHandles) {
-            array.forEach(this._viewWatchHandles, function (h) {
-                h.unwatch();
-            });
-        }
-    });
-});
-
+define("dojox/mvc/_DataBindingExtension",["dojo/_base/array","dojo/aspect","dojo/_base/lang","dijit/_WidgetBase","./_DataBindingMixin"],function(b,c,d,a,e){d.extend(a,new e);c.before(a.prototype,"startup",function(){this._dbstartup()});c.before(a.prototype,"destroy",function(){this._modelWatchHandles&&b.forEach(this._modelWatchHandles,function(a){a.unwatch()});this._viewWatchHandles&&b.forEach(this._viewWatchHandles,function(a){a.unwatch()})})});
+/// _DataBindingExtension.js.map

@@ -1,9 +1,3 @@
 //>>built
-
-if (require.has) {
-    require.has.add("config-selectorEngine", "acme");
-}
-define("dojo/_base/browser", ["../ready", "./kernel", "./connect", "./unload", "./window", "./event", "./html", "./NodeList", "../query", "./xhr", "./fx"], function (dojo) {
-    return dojo;
-});
-
+require.has&&require.has.add("config-selectorEngine","acme");define("dojo/_base/browser","../ready ./kernel ./connect ./unload ./window ./event ./html ./NodeList ../query ./xhr ./fx".split(" "),function(a){return a});
+/// browser.js.map

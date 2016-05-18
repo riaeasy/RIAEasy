@@ -1,45 +1,4 @@
 //>>built
-
-define("dojo/cookie", ["./_base/kernel", "./regexp"], function (dojo, regexp) {
-    dojo.cookie = function (name, value, props) {
-        var c = document.cookie, ret;
-        if (arguments.length == 1) {
-            var matches = c.match(new RegExp("(?:^|; )" + regexp.escapeString(name) + "=([^;]*)"));
-            ret = matches ? decodeURIComponent(matches[1]) : undefined;
-        } else {
-            props = props || {};
-            var exp = props.expires;
-            if (typeof exp == "number") {
-                var d = new Date();
-                d.setTime(d.getTime() + exp * 24 * 60 * 60 * 1000);
-                exp = props.expires = d;
-            }
-            if (exp && exp.toUTCString) {
-                props.expires = exp.toUTCString();
-            }
-            value = encodeURIComponent(value);
-            var updatedCookie = name + "=" + value, propName;
-            for (propName in props) {
-                updatedCookie += "; " + propName;
-                var propValue = props[propName];
-                if (propValue !== true) {
-                    updatedCookie += "=" + propValue;
-                }
-            }
-            document.cookie = updatedCookie;
-        }
-        return ret;
-    };
-    dojo.cookie.isSupported = function () {
-        if (!("cookieEnabled" in navigator)) {
-            this("__djCookieTest__", "CookiesAllowed");
-            navigator.cookieEnabled = this("__djCookieTest__") == "CookiesAllowed";
-            if (navigator.cookieEnabled) {
-                this("__djCookieTest__", "", {expires:-1});
-            }
-        }
-        return navigator.cookieEnabled;
-    };
-    return dojo.cookie;
-});
-
+define("dojo/cookie",["./_base/kernel","./regexp"],function(c,h){c.cookie=function(c,f,b){var a=document.cookie,e;if(1==arguments.length)e=(e=a.match(RegExp("(?:^|; )"+h.escapeString(c)+"\x3d([^;]*)")))?decodeURIComponent(e[1]):void 0;else{b=b||{};a=b.expires;if("number"==typeof a){var d=new Date;d.setTime(d.getTime()+864E5*a);a=b.expires=d}a&&a.toUTCString&&(b.expires=a.toUTCString());f=encodeURIComponent(f);var a=c+"\x3d"+f,g;for(g in b)a+="; "+g,d=b[g],!0!==d&&(a+="\x3d"+d);document.cookie=a}return e};
+c.cookie.isSupported=function(){"cookieEnabled"in navigator||(this("__djCookieTest__","CookiesAllowed"),navigator.cookieEnabled="CookiesAllowed"==this("__djCookieTest__"),navigator.cookieEnabled&&this("__djCookieTest__","",{expires:-1}));return navigator.cookieEnabled};return c.cookie});
+/// cookie.js.map

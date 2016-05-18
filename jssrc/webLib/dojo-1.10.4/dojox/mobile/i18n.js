@@ -1,25 +1,3 @@
 //>>built
-
-define("dojox/mobile/i18n", ["dojo/_base/lang", "dojo/i18n", "dijit/_WidgetBase"], function (lang, di18n, WidgetBase) {
-    var i18n = {};
-    lang.setObject("dojox.mobile.i18n", i18n);
-    i18n.load = function (packageName, bundleName, locale) {
-        return i18n.registerBundle(di18n.getLocalization(packageName, bundleName, locale));
-    };
-    i18n.registerBundle = function (bundle) {
-        if (!i18n.bundle) {
-            i18n.bundle = [];
-        }
-        return lang.mixin(i18n.bundle, bundle);
-    };
-    i18n.I18NProperties = {mblNoConv:false};
-    lang.extend(WidgetBase, i18n.I18NProperties);
-    lang.extend(WidgetBase, {_cv:function (s) {
-        if (this.mblNoConv || !i18n.bundle) {
-            return s;
-        }
-        return i18n.bundle[lang.trim(s)] || s;
-    }});
-    return i18n;
-});
-
+define("dojox/mobile/i18n",["dojo/_base/lang","dojo/i18n","dijit/_WidgetBase"],function(b,e,d){var a={};b.setObject("dojox.mobile.i18n",a);a.load=function(c,b,d){return a.registerBundle(e.getLocalization(c,b,d))};a.registerBundle=function(c){a.bundle||(a.bundle=[]);return b.mixin(a.bundle,c)};a.I18NProperties={mblNoConv:!1};b.extend(d,a.I18NProperties);b.extend(d,{_cv:function(c){return this.mblNoConv||!a.bundle?c:a.bundle[b.trim(c)]||c}});return a});
+/// i18n.js.map

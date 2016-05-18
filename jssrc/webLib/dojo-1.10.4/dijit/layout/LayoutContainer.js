@@ -1,52 +1,5 @@
 //>>built
-
-define("dijit/layout/LayoutContainer", ["dojo/_base/array", "dojo/_base/declare", "dojo/dom-class", "dojo/dom-style", "dojo/_base/lang", "../_WidgetBase", "./_LayoutWidget", "./utils"], function (array, declare, domClass, domStyle, lang, _WidgetBase, _LayoutWidget, layoutUtils) {
-    var LayoutContainer = declare("dijit.layout.LayoutContainer", _LayoutWidget, {design:"headline", baseClass:"dijitLayoutContainer", startup:function () {
-        if (this._started) {
-            return;
-        }
-        array.forEach(this.getChildren(), this._setupChild, this);
-        this.inherited(arguments);
-    }, _setupChild:function (child) {
-        this.inherited(arguments);
-        var region = child.region;
-        if (region) {
-            domClass.add(child.domNode, this.baseClass + "Pane");
-        }
-    }, _getOrderedChildren:function () {
-        var wrappers = array.map(this.getChildren(), function (child, idx) {
-            return {pane:child, weight:[child.region == "center" ? Infinity : 0, child.layoutPriority, (this.design == "sidebar" ? 1 : -1) * (/top|bottom/.test(child.region) ? 1 : -1), idx]};
-        }, this);
-        wrappers.sort(function (a, b) {
-            var aw = a.weight, bw = b.weight;
-            for (var i = 0; i < aw.length; i++) {
-                if (aw[i] != bw[i]) {
-                    return aw[i] - bw[i];
-                }
-            }
-            return 0;
-        });
-        return array.map(wrappers, function (w) {
-            return w.pane;
-        });
-    }, layout:function () {
-        layoutUtils.layoutChildren(this.domNode, this._contentBox, this._getOrderedChildren());
-    }, addChild:function (child, insertIndex) {
-        this.inherited(arguments);
-        if (this._started) {
-            this.layout();
-        }
-    }, removeChild:function (child) {
-        this.inherited(arguments);
-        if (this._started) {
-            this.layout();
-        }
-        domClass.remove(child.domNode, this.baseClass + "Pane");
-        domStyle.set(child.domNode, {top:"auto", bottom:"auto", left:"auto", right:"auto", position:"static"});
-        domStyle.set(child.domNode, /top|bottom/.test(child.region) ? "width" : "height", "auto");
-    }});
-    LayoutContainer.ChildWidgetProperties = {region:"", layoutAlign:"", layoutPriority:0};
-    lang.extend(_WidgetBase, LayoutContainer.ChildWidgetProperties);
-    return LayoutContainer;
-});
-
+define("dijit/layout/LayoutContainer","dojo/_base/array dojo/_base/declare dojo/dom-class dojo/dom-style dojo/_base/lang ../_WidgetBase ./_LayoutWidget ./utils".split(" "),function(c,b,e,f,g,h,k,l){b=b("dijit.layout.LayoutContainer",k,{design:"headline",baseClass:"dijitLayoutContainer",startup:function(){this._started||(c.forEach(this.getChildren(),this._setupChild,this),this.inherited(arguments))},_setupChild:function(a){this.inherited(arguments);a.region&&e.add(a.domNode,this.baseClass+"Pane")},
+_getOrderedChildren:function(){var a=c.map(this.getChildren(),function(a,b){return{pane:a,weight:["center"==a.region?Infinity:0,a.layoutPriority,("sidebar"==this.design?1:-1)*(/top|bottom/.test(a.region)?1:-1),b]}},this);a.sort(function(a,b){for(var c=a.weight,e=b.weight,d=0;d<c.length;d++)if(c[d]!=e[d])return c[d]-e[d];return 0});return c.map(a,function(a){return a.pane})},layout:function(){l.layoutChildren(this.domNode,this._contentBox,this._getOrderedChildren())},addChild:function(a,b){this.inherited(arguments);
+this._started&&this.layout()},removeChild:function(a){this.inherited(arguments);this._started&&this.layout();e.remove(a.domNode,this.baseClass+"Pane");f.set(a.domNode,{top:"auto",bottom:"auto",left:"auto",right:"auto",position:"static"});f.set(a.domNode,/top|bottom/.test(a.region)?"width":"height","auto")}});b.ChildWidgetProperties={region:"",layoutAlign:"",layoutPriority:0};g.extend(h,b.ChildWidgetProperties);return b});
+/// LayoutContainer.js.map

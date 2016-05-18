@@ -1,35 +1,4 @@
 //>>built
-
-define("dojox/io/xhrWindowNamePlugin", ["dojo/_base/kernel", "dojo/_base/json", "dojo/_base/xhr", "dojox/io/xhrPlugins", "dojox/io/windowName", "dojox/io/httpParse", "dojox/secure/capability"], function (dojo, json, xhr, xhrPlugins, windowName, httpParse, capability) {
-    dojo.getObject("io.xhrWindowNamePlugin", true, dojox);
-    dojox.io.xhrWindowNamePlugin = function (url, httpAdapter, trusted) {
-        xhrPlugins.register("windowName", function (method, args) {
-            return args.sync !== true && (method == "GET" || method == "POST" || httpAdapter) && (args.url.substring(0, url.length) == url);
-        }, function (method, args, hasBody) {
-            var send = windowName.send;
-            var load = args.load;
-            args.load = undefined;
-            var dfd = (httpAdapter ? httpAdapter(send, true) : send)(method, args, hasBody);
-            dfd.addCallback(function (result) {
-                var ioArgs = dfd.ioArgs;
-                ioArgs.xhr = {getResponseHeader:function (name) {
-                    return dojo.queryToObject(ioArgs.hash.match(/[^#]*$/)[0])[name];
-                }};
-                if (ioArgs.handleAs == "json") {
-                    if (!trusted) {
-                        capability.validate(result, ["Date"], {});
-                    }
-                    return dojo.fromJson(result);
-                }
-                return dojo._contentHandlers[ioArgs.handleAs || "text"]({responseText:result});
-            });
-            args.load = load;
-            if (load) {
-                dfd.addCallback(load);
-            }
-            return dfd;
-        });
-    };
-    return dojox.io.xhrWindowNamePlugin;
-});
-
+define("dojox/io/xhrWindowNamePlugin","dojo/_base/kernel dojo/_base/json dojo/_base/xhr dojox/io/xhrPlugins dojox/io/windowName dojox/io/httpParse dojox/secure/capability".split(" "),function(c,n,p,e,k,q,l){c.getObject("io.xhrWindowNamePlugin",!0,dojox);dojox.io.xhrWindowNamePlugin=function(b,f,m){e.register("windowName",function(c,a){return!0!==a.sync&&("GET"==c||"POST"==c||f)&&a.url.substring(0,b.length)==b},function(b,a,e){var g=k.send,h=a.load;a.load=void 0;var d=(f?f(g,!0):g)(b,a,e);d.addCallback(function(a){var b=
+d.ioArgs;b.xhr={getResponseHeader:function(a){return c.queryToObject(b.hash.match(/[^#]*$/)[0])[a]}};return"json"==b.handleAs?(m||l.validate(a,["Date"],{}),c.fromJson(a)):c._contentHandlers[b.handleAs||"text"]({responseText:a})});(a.load=h)&&d.addCallback(h);return d})};return dojox.io.xhrWindowNamePlugin});
+/// xhrWindowNamePlugin.js.map

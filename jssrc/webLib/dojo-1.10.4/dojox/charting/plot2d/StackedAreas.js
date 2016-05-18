@@ -1,9 +1,3 @@
 //>>built
-
-define("dojox/charting/plot2d/StackedAreas", ["dojo/_base/declare", "./Stacked"], function (declare, Stacked) {
-    return declare("dojox.charting.plot2d.StackedAreas", Stacked, {constructor:function () {
-        this.opt.lines = true;
-        this.opt.areas = true;
-    }});
-});
-
+define("dojox/charting/plot2d/StackedAreas",["dojo/_base/declare","./Stacked"],function(a,b){return a("dojox.charting.plot2d.StackedAreas",b,{constructor:function(){this.opt.lines=!0;this.opt.areas=!0}})});
+/// StackedAreas.js.map

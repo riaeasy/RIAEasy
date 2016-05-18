@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fi/InsertAnchor", ({insertAnchor:"Lis\xe4\xe4 ankkuri", title:"Ankkurin ominaisuudet", anchor:"Nimi:", text:"Kuvaus:", set:"Aseta", cancel:"Peruuta"}));
-
+define("dojox/editor/plugins/nls/fi/InsertAnchor",{insertAnchor:"Lis\u00e4\u00e4 ankkuri",title:"Ankkurin ominaisuudet",anchor:"Nimi:",text:"Kuvaus:",set:"Aseta",cancel:"Peruuta"});
+/// InsertAnchor.js.map

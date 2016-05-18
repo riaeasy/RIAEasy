@@ -1,46 +1,4 @@
 //>>built
-
-define("dojox/mobile/viewRegistry", ["dojo/_base/array", "dojo/dom-class", "dijit/registry"], function (array, domClass, registry) {
-    var viewRegistry = {length:0, hash:{}, initialView:null, add:function (view) {
-        this.hash[view.id] = view;
-        this.length++;
-    }, remove:function (id) {
-        if (this.hash[id]) {
-            delete this.hash[id];
-            this.length--;
-        }
-    }, getViews:function () {
-        var arr = [];
-        for (var i in this.hash) {
-            arr.push(this.hash[i]);
-        }
-        return arr;
-    }, getParentView:function (view) {
-        for (var v = view.getParent(); v; v = v.getParent()) {
-            if (domClass.contains(v.domNode, "mblView")) {
-                return v;
-            }
-        }
-        return null;
-    }, getChildViews:function (parent) {
-        return array.filter(this.getViews(), function (v) {
-            return this.getParentView(v) === parent;
-        }, this);
-    }, getEnclosingView:function (node) {
-        for (var n = node; n && n.tagName !== "BODY"; n = n.parentNode) {
-            if (n.nodeType === 1 && domClass.contains(n, "mblView")) {
-                return registry.byNode(n);
-            }
-        }
-        return null;
-    }, getEnclosingScrollable:function (node) {
-        for (var w = registry.getEnclosingWidget(node); w; w = w.getParent()) {
-            if (w.scrollableParams && w._v) {
-                return w;
-            }
-        }
-        return null;
-    }};
-    return viewRegistry;
-});
-
+define("dojox/mobile/viewRegistry",["dojo/_base/array","dojo/dom-class","dijit/registry"],function(e,c,d){return{length:0,hash:{},initialView:null,add:function(a){this.hash[a.id]=a;this.length++},remove:function(a){this.hash[a]&&(delete this.hash[a],this.length--)},getViews:function(){var a=[],b;for(b in this.hash)a.push(this.hash[b]);return a},getParentView:function(a){for(a=a.getParent();a;a=a.getParent())if(c.contains(a.domNode,"mblView"))return a;return null},getChildViews:function(a){return e.filter(this.getViews(),
+function(b){return this.getParentView(b)===a},this)},getEnclosingView:function(a){for(;a&&"BODY"!==a.tagName;a=a.parentNode)if(1===a.nodeType&&c.contains(a,"mblView"))return d.byNode(a);return null},getEnclosingScrollable:function(a){for(a=d.getEnclosingWidget(a);a;a=a.getParent())if(a.scrollableParams&&a._v)return a;return null}}});
+/// viewRegistry.js.map

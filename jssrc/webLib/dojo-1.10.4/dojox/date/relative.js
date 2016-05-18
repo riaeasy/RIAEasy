@@ -1,31 +1,4 @@
 //>>built
-
-define("dojox/date/relative", ["..", "dojo/_base/lang", "dojo/date/locale", "dojo/i18n"], function (dojox, lang, ddl, i18n) {
-    var drelative = lang.getObject("date.relative", true, dojox);
-    var DAY = 1000 * 60 * 60 * 24, SIX_DAYS = 6 * DAY, del = dojo.delegate, ggb = ddl._getGregorianBundle, fmt = ddl.format;
-    function _clearTime(date) {
-        date = new Date(date);
-        date.setHours(0, 0, 0, 0);
-        return date;
-    }
-    drelative.format = function (dateObject, options) {
-        options = options || {};
-        var today = _clearTime(options.relativeDate || new Date()), diff = today.getTime() - _clearTime(dateObject).getTime(), fmtOpts = {locale:options.locale};
-        if (diff === 0) {
-            return fmt(dateObject, del(fmtOpts, {selector:"time"}));
-        } else {
-            if (diff <= SIX_DAYS && diff > 0 && options.weekCheck !== false) {
-                return fmt(dateObject, del(fmtOpts, {selector:"date", datePattern:"EEE"})) + " " + fmt(dateObject, del(fmtOpts, {selector:"time", formatLength:"short"}));
-            } else {
-                if (dateObject.getFullYear() == today.getFullYear()) {
-                    var bundle = ggb(i18n.normalizeLocale(options.locale));
-                    return fmt(dateObject, del(fmtOpts, {selector:"date", datePattern:bundle["dateFormatItem-MMMd"]}));
-                } else {
-                    return fmt(dateObject, del(fmtOpts, {selector:"date", formatLength:"medium", locale:options.locale}));
-                }
-            }
-        }
-    };
-    return drelative;
-});
-
+define("dojox/date/relative",["..","dojo/_base/lang","dojo/date/locale","dojo/i18n"],function(b,l,h,m){function k(a){a=new Date(a);a.setHours(0,0,0,0);return a}b=l.getObject("date.relative",!0,b);var d=dojo.delegate,n=h._getGregorianBundle,e=h.format;b.format=function(a,c){c=c||{};var b=k(c.relativeDate||new Date),g=b.getTime()-k(a).getTime(),f={locale:c.locale};return 0===g?e(a,d(f,{selector:"time"})):5184E5>=g&&0<g&&!1!==c.weekCheck?e(a,d(f,{selector:"date",datePattern:"EEE"}))+" "+e(a,d(f,{selector:"time",
+formatLength:"short"})):a.getFullYear()==b.getFullYear()?(b=n(m.normalizeLocale(c.locale)),e(a,d(f,{selector:"date",datePattern:b["dateFormatItem-MMMd"]}))):e(a,d(f,{selector:"date",formatLength:"medium",locale:c.locale}))};return b});
+/// relative.js.map

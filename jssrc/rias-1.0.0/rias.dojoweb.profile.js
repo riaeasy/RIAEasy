@@ -1,16 +1,36 @@
 
 var profile = (function(){
 	return {
+		resourceTags: {
+			copyOnly: function (filename, mid) {
+				return mid in copyOnlyMids;
+			},
+
+			test: function (filename) {
+				return /\/test\//.test(filename);
+			},
+
+			miniExclude: function (filename, mid) {
+				return (/\/(?:test|demos)\//).test(filename) ||
+					(/\.styl$/).test(filename) ||
+					mid in miniExcludeMids;
+			},
+
+			amd: function (filename) {
+				return (/\.js$/).test(filename);
+			}
+		},
+
 		basePath: "../../../js-lib-src/dojo-1.10.4-src",///相对于本文件的路径，接下类的编译都从这里开始计算。关联编译配置的文件位置。
-		releaseDir: "../dojo-1.10.4-min",///相对于 build.bat 的 basePath（即 build 所用的 dojo 的目录），编译目标目录，编译器会覆盖它发现的一切。
+		releaseDir: "../dojo-1.10.4-web-min",///相对于 build.bat 的 basePath（即 build 所用的 dojo 的目录），编译目标目录，编译器会覆盖它发现的一切。
 		releaseName: "",
 		action: "release",//一般就这样写，不要修改。
-		//默认值为"shrinksafe"。若该值为false，则关闭压缩。shrinksafe.keeplines, closure, closure.keeplines comments,comments.keeplines///dojo1.7+建议用closure。
-		layerOptimize: "comments.keeplines",
+		//默认值为"shrinksafe"。若该值为false，则关闭压缩。shrinksafe.keeplines, closure, closure.keeplines, comments,comments.keeplines///dojo1.7+建议用closure。
+		layerOptimize: "closure",
 		//设置那些不是层的模块的压缩设置，默认为false，其他值和layerOptimize相同///dojo1.7+建议用closure。
-		optimize: "comments.keeplines",
+		optimize: "closure",
 		//处理CSS的优化。默认为false。若为comments则去除注释和换行，并连接任何@import命令。其他可选的值有comments.keeplines，剔除注释和连接@import命令，但是保留换行。
-		cssOptimize: "comments.keeplines",
+		cssOptimize: "closure",
 		//决定编译过程中是否最小化。如果为真则标记为miniExcludes的文件被排除在外就像tests那样，demo和其他元素对于编译不是必需的。默认的为false。
 		mini: true,
 		stripConsole: "none",///处理输出代码中的console语名， 默认为"normal", 会删除所有console语句，除了console.error 和 console.warn.最需注意的是，这个特征只在优化级别时才适用。否则它会被忽略。 另外可能的值为"none", "warn" 和"all"
@@ -102,17 +122,20 @@ var profile = (function(){
 		layers: {/// build 系统处理后生成的打包文件，一个 layer 对应一个文件。
 			"dojo/dojo": {
 				include: [///合并到打包后的文件
-					"dojo/i18n",
+					"dojo/_base/kernel",
 					"dojo/_base/declare",
 					"dojo/_base/sniff",
 					"dojo/_base/lang",
 					"dojo/_base/config",
 					"dojo/_base/array",
 					"dojo/_base/Deferred",
+					"dojo/_base/loader",
 					"dojo/_base/json",
 					"dojo/_base/Color",
+					"dojo/main",
 					"dojo/has",
 					"dojo/sniff",
+					"dojo/i18n",
 
 					"dojo/cache",
 					"dojo/errors/create",
@@ -146,7 +169,6 @@ var profile = (function(){
 					"dojo/touch",
 					"dojo/keys",
 					"dojo/mouse",
-					"dojo/_base/event",
 					"dojo/Evented",
 					"dojox/gesture/tap",
 					"dojox/gesture/swipe",
@@ -191,7 +213,6 @@ var profile = (function(){
 
 					"dojo/regexp",
 
-					"dojox/mobile/_css3",
 					"dojo/_base/fx",
 					"dojo/fx",
 					"dojo/fx/easing",
@@ -203,15 +224,17 @@ var profile = (function(){
 					//"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
 					//"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
 				],
-				customBase: true,///最好只把 dojo/dojo 设为 customBase，未做深入解析。
+				customBase: true,///true 表示强行合并到 dojo/dojo。
 				boot: true///同上
 			},
-			"dijit/dijit": {
+			"dijit/dijit-min": {
 				include: [
-					"dijit/_base",
+					//"dijit/_base",///废弃
+					"dijit/_base/manager",///废弃，但是很多地方在用 dijit.defaultDuration
+					"dijit/_base/focus",///废弃，同上
+
 					"dijit/_WidgetBase",
 					"dijit/_Widget",
-					"dijit/registry",
 					"dijit/_Container",
 					"dijit/_Contained",
 					"dijit/_CssStateMixin",
@@ -223,6 +246,7 @@ var profile = (function(){
 					"dijit/_TemplatedMixin",
 					"dijit/_WidgetsInTemplateMixin",
 
+					"dijit/registry",
 					"dijit/a11y",
 					"dijit/a11yclick",
 
@@ -235,6 +259,7 @@ var profile = (function(){
 					"dijit/layout/utils",
 
 					"dijit/form/_AutoCompleterMixin",
+					"dijit/_HasDropDown",
 					"dijit/form/_ButtonMixin",
 					"dijit/form/_FormMixin",
 					"dijit/form/_FormValueMixin",
@@ -316,8 +341,8 @@ var profile = (function(){
 					"dojox/editor/plugins/UploadImage"
 				],
 				exclude: [
-					"dojo/dojo",
-					"dijit/dijit",
+					"dojo/main",
+					"dijit/main",
 					"dojo/_base/kernel",
 					"dojo/on",///has!dom-addeventlistener 需要检测浏览器，不能预先设定值
 					"dojo/request/watch"///has!dom-addeventlistener 需要检测浏览器，不能预先设定值

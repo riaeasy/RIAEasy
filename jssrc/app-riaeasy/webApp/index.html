@@ -7,6 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<script>
 		var riasAppPath = "app-riaeasy";
+		var cacheBust = "";
 		var dojoConfig = {
 			has: {
 				"dojo-publish-privates": 1,
@@ -46,7 +47,11 @@
 				{name: "webApp", location: "../../../" + riasAppPath + "/webApp", main: "webApp"},
 				{name: "appModule", location: "../../../" + riasAppPath + "/webApp/appModule", main: "webApp"},
 				{name: "act", location: "../../../act", main: "act"}
-			]
+			],
+			fixupUrl: function(url){
+				url += ""; // make sure url is a Javascript string (some paths may be a Java string)
+				return url + (cacheBust && /\/webApp\/|\/rias-1.0.0\//.test(url) ? ((/\?/.test(url) ? "&" : "?") + cacheBust) : "");
+			}
 		};
 	</script>
 	<script type="text/javascript" src="../../webLib/dojo-1.10.4/dojo/dojo.js"></script>

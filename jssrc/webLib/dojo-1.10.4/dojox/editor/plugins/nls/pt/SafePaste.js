@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/pt/SafePaste", ({"instructions":"A colagem direta est\xe1 desativada. Cole o conte\xfado neste di\xe1logo usando o teclado de navegador padr\xe3o ou os controles de colagem do menu. Quando estiver satisfeito com o conte\xfado a ser inserido, pressione o bot\xe3o colar. Para interromper a inser\xe7\xe3o de conte\xfado, pressione o bot\xe3o cancelar."}));
-
+define("dojox/editor/plugins/nls/pt/SafePaste",{instructions:"A colagem direta est\u00e1 desativada. Cole o conte\u00fado neste di\u00e1logo usando o teclado de navegador padr\u00e3o ou os controles de colagem do menu. Quando estiver satisfeito com o conte\u00fado a ser inserido, pressione o bot\u00e3o colar. Para interromper a inser\u00e7\u00e3o de conte\u00fado, pressione o bot\u00e3o cancelar."});
+/// SafePaste.js.map

@@ -1,73 +1,7 @@
 //>>built
-
-require({cache:{"url:dijit/templates/MenuItem.html":"<tr class=\"dijitReset\" data-dojo-attach-point=\"focusNode\" role=\"menuitem\" tabIndex=\"-1\">\n\t<td class=\"dijitReset dijitMenuItemIconCell\" role=\"presentation\">\n\t\t<span role=\"presentation\" class=\"dijitInline dijitIcon dijitMenuItemIcon\" data-dojo-attach-point=\"iconNode\"></span>\n\t</td>\n\t<td class=\"dijitReset dijitMenuItemLabel\" colspan=\"2\" data-dojo-attach-point=\"containerNode,textDirNode\"\n\t\trole=\"presentation\"></td>\n\t<td class=\"dijitReset dijitMenuItemAccelKey\" style=\"display: none\" data-dojo-attach-point=\"accelKeyNode\"></td>\n\t<td class=\"dijitReset dijitMenuArrowCell\" role=\"presentation\">\n\t\t<span data-dojo-attach-point=\"arrowWrapper\" style=\"visibility: hidden\">\n\t\t\t<span class=\"dijitInline dijitIcon dijitMenuExpand\"></span>\n\t\t\t<span class=\"dijitMenuExpandA11y\">+</span>\n\t\t</span>\n\t</td>\n</tr>\n"}});
-define("dijit/MenuItem", ["dojo/_base/declare", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/_base/kernel", "dojo/sniff", "dojo/_base/lang", "./_Widget", "./_TemplatedMixin", "./_Contained", "./_CssStateMixin", "dojo/text!./templates/MenuItem.html"], function (declare, dom, domAttr, domClass, kernel, has, lang, _Widget, _TemplatedMixin, _Contained, _CssStateMixin, template) {
-    var MenuItem = declare("dijit.MenuItem" + (0 ? "_NoBidi" : ""), [_Widget, _TemplatedMixin, _Contained, _CssStateMixin], {templateString:template, baseClass:"dijitMenuItem", label:"", _setLabelAttr:function (val) {
-        this._set("label", val);
-        var shortcutKey = "";
-        var text;
-        var ndx = val.search(/{\S}/);
-        if (ndx >= 0) {
-            shortcutKey = val.charAt(ndx + 1);
-            var prefix = val.substr(0, ndx);
-            var suffix = val.substr(ndx + 3);
-            text = prefix + shortcutKey + suffix;
-            val = prefix + "<span class=\"dijitMenuItemShortcutKey\">" + shortcutKey + "</span>" + suffix;
-        } else {
-            text = val;
-        }
-        this.domNode.setAttribute("aria-label", text + " " + this.accelKey);
-        this.containerNode.innerHTML = val;
-        this._set("shortcutKey", shortcutKey);
-    }, iconClass:"dijitNoIcon", _setIconClassAttr:{node:"iconNode", type:"class"}, accelKey:"", disabled:false, _fillContent:function (source) {
-        if (source && !("label" in this.params)) {
-            this._set("label", source.innerHTML);
-        }
-    }, buildRendering:function () {
-        this.inherited(arguments);
-        var label = this.id + "_text";
-        domAttr.set(this.containerNode, "id", label);
-        if (this.accelKeyNode) {
-            domAttr.set(this.accelKeyNode, "id", this.id + "_accel");
-        }
-        dom.setSelectable(this.domNode, false);
-    }, onClick:function () {
-    }, focus:function () {
-        try {
-            if (has("ie") == 8) {
-                this.containerNode.focus();
-            }
-            this.focusNode.focus();
-        }
-        catch (e) {
-        }
-    }, _setSelected:function (selected) {
-        domClass.toggle(this.domNode, "dijitMenuItemSelected", selected);
-    }, setLabel:function (content) {
-        kernel.deprecated("dijit.MenuItem.setLabel() is deprecated.  Use set('label', ...) instead.", "", "2.0");
-        this.set("label", content);
-    }, setDisabled:function (disabled) {
-        kernel.deprecated("dijit.Menu.setDisabled() is deprecated.  Use set('disabled', bool) instead.", "", "2.0");
-        this.set("disabled", disabled);
-    }, _setDisabledAttr:function (value) {
-        this.focusNode.setAttribute("aria-disabled", value ? "true" : "false");
-        this._set("disabled", value);
-    }, _setAccelKeyAttr:function (value) {
-        if (this.accelKeyNode) {
-            this.accelKeyNode.style.display = value ? "" : "none";
-            this.accelKeyNode.innerHTML = value;
-            domAttr.set(this.containerNode, "colSpan", value ? "1" : "2");
-        }
-        this._set("accelKey", value);
-    }});
-    if (0) {
-        MenuItem = declare("dijit.MenuItem", MenuItem, {_setLabelAttr:function (val) {
-            this.inherited(arguments);
-            if (this.textDir === "auto") {
-                this.applyTextDir(this.textDirNode);
-            }
-        }});
-    }
-    return MenuItem;
-});
-
+require({cache:{"url:dijit/templates/MenuItem.html":'\x3ctr class\x3d"dijitReset" data-dojo-attach-point\x3d"focusNode" role\x3d"menuitem" tabIndex\x3d"-1"\x3e\n\t\x3ctd class\x3d"dijitReset dijitMenuItemIconCell" role\x3d"presentation"\x3e\n\t\t\x3cspan role\x3d"presentation" class\x3d"dijitInline dijitIcon dijitMenuItemIcon" data-dojo-attach-point\x3d"iconNode"\x3e\x3c/span\x3e\n\t\x3c/td\x3e\n\t\x3ctd class\x3d"dijitReset dijitMenuItemLabel" colspan\x3d"2" data-dojo-attach-point\x3d"containerNode,textDirNode"\n\t\trole\x3d"presentation"\x3e\x3c/td\x3e\n\t\x3ctd class\x3d"dijitReset dijitMenuItemAccelKey" style\x3d"display: none" data-dojo-attach-point\x3d"accelKeyNode"\x3e\x3c/td\x3e\n\t\x3ctd class\x3d"dijitReset dijitMenuArrowCell" role\x3d"presentation"\x3e\n\t\t\x3cspan data-dojo-attach-point\x3d"arrowWrapper" style\x3d"visibility: hidden"\x3e\n\t\t\t\x3cspan class\x3d"dijitInline dijitIcon dijitMenuExpand"\x3e\x3c/span\x3e\n\t\t\t\x3cspan class\x3d"dijitMenuExpandA11y"\x3e+\x3c/span\x3e\n\t\t\x3c/span\x3e\n\t\x3c/td\x3e\n\x3c/tr\x3e\n'}});
+define("dijit/MenuItem","dojo/_base/declare dojo/dom dojo/dom-attr dojo/dom-class dojo/_base/kernel dojo/sniff dojo/_base/lang ./_Widget ./_TemplatedMixin ./_Contained ./_CssStateMixin dojo/text!./templates/MenuItem.html".split(" "),function(f,g,c,h,e,k,r,l,m,n,p,q){return f("dijit.MenuItem",[l,m,n,p],{templateString:q,baseClass:"dijitMenuItem",label:"",_setLabelAttr:function(a){this._set("label",a);var d="",b;b=a.search(/{\S}/);if(0<=b){var d=a.charAt(b+1),c=a.substr(0,b);a=a.substr(b+3);b=c+d+a;
+a=c+'\x3cspan class\x3d"dijitMenuItemShortcutKey"\x3e'+d+"\x3c/span\x3e"+a}else b=a;this.domNode.setAttribute("aria-label",b+" "+this.accelKey);this.containerNode.innerHTML=a;this._set("shortcutKey",d)},iconClass:"dijitNoIcon",_setIconClassAttr:{node:"iconNode",type:"class"},accelKey:"",disabled:!1,_fillContent:function(a){a&&!("label"in this.params)&&this._set("label",a.innerHTML)},buildRendering:function(){this.inherited(arguments);c.set(this.containerNode,"id",this.id+"_text");this.accelKeyNode&&
+c.set(this.accelKeyNode,"id",this.id+"_accel");g.setSelectable(this.domNode,!1)},onClick:function(){},focus:function(){try{8==k("ie")&&this.containerNode.focus(),this.focusNode.focus()}catch(a){}},_setSelected:function(a){h.toggle(this.domNode,"dijitMenuItemSelected",a)},setLabel:function(a){e.deprecated("dijit.MenuItem.setLabel() is deprecated.  Use set('label', ...) instead.","","2.0");this.set("label",a)},setDisabled:function(a){e.deprecated("dijit.Menu.setDisabled() is deprecated.  Use set('disabled', bool) instead.",
+"","2.0");this.set("disabled",a)},_setDisabledAttr:function(a){this.focusNode.setAttribute("aria-disabled",a?"true":"false");this._set("disabled",a)},_setAccelKeyAttr:function(a){this.accelKeyNode&&(this.accelKeyNode.style.display=a?"":"none",this.accelKeyNode.innerHTML=a,c.set(this.containerNode,"colSpan",a?"1":"2"));this._set("accelKey",a)}})});
+/// MenuItem.js.map

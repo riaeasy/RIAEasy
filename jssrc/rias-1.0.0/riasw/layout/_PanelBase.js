@@ -80,8 +80,13 @@ define([
 	}
 
 	rias.theme.loadRiasCss([
-		//"layout/Splitter.css",
-		"layout/Panel.css"
+		"layout/Panel.css",
+		"layout/CaptionPanel.css",
+		"layout/AccordionPanel.css",
+		"layout/TabPanel.css",
+		"layout/TablePanel.css",
+		"layout/DockBar.css",
+		"layout/Underlay.css"
 	]);
 
 	var riasType = "rias.riasw.layout._PanelBase";
@@ -93,7 +98,8 @@ define([
 
 		baseClass: "riaswPanel",
 
-		tabIndex: "0",
+		//tabIndex: "0",
+		//_setTabIndexAttr: ["domNode"],
 
 		//minHeight: 0,
 		//minWidth: 0,
@@ -125,7 +131,9 @@ define([
 		//resizable: "",
 		animate: false,
 
-		//canClose: false,
+		_focusStack: false,
+
+		//canClose: true,
 
 		//displayState: displayShowNormal,
 		initDisplayState: displayShowNormal,
@@ -222,6 +230,9 @@ define([
 			//this._playingDeferred = undefined;
 			this.inherited(arguments);
 		},
+		isDestroyed: function(checkAncestors, checkClose){
+			return (checkClose && this.isClosed()) || rias.isDestroyed(this, checkAncestors != false);
+		},
 
 		startup: function(){
 			if(this._started){
@@ -265,7 +276,7 @@ define([
 					//_cnt++;
 					//console.debug(self.id, _cnt, "parentScroll");
 					rias.debounce(self.id + "_onScroll", function(){
-						if(!self.isDestroyed(true)){
+						if(!self.isDestroyed(true, true)){
 							self.resize();
 						}
 					}, self, 150)();
@@ -306,14 +317,9 @@ define([
 			}
 		},
 
-		//_setFocusedAttr: function(value){
-		//	console.debug(this.id, "focused", value);
-		//	this.inherited(arguments);
-		//},
-
 		//_onParentNodeChanged: function(){
 		_onRiasrParentNode: function(){
-			if(this.isDestroyed(true)){
+			if(this.isDestroyed(true, true)){
 				return;
 			}
 			var self = this,
@@ -331,7 +337,7 @@ define([
 					rias.debounce(self.id + "_onViewportResize", function(){
 						//console.debug(self.id, _cnt, "resize");
 						//console.trace();
-						if(!self.isDestroyed(true)){
+						if(!self.isDestroyed(true, true)){
 							self.resize();
 						}
 					}, self, 150, function(){
@@ -387,6 +393,15 @@ define([
 			}
 		},
 
+		focus: function(){
+			if(!this.isDestroyed(true, true) && (this.isHidden() || this.isCollapsed() || !this.isShown() || !this.get("visible"))){
+				///非可见时，直接返回，在 restore 后处理。
+				this.restore(true);
+			}else{
+				this.inherited(arguments);
+			}
+		},
+
 		/*_isShown: function(){
 			/// isShown 只判断自己是否可见
 			///self 可能是 StackContainer.child，可能在不可见 页，所以不要判断 parent 的可见性。
@@ -431,45 +446,30 @@ define([
 		},
 		_layoutChildren: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
 			var cn = this.containerNode,
-				vf,
-				vfx,
-				vfy;
-			var childrenAndSplitters = [];
+				childrenAndSplitters = [];
 			rias.forEach(this._getOrderedChildren(), function(pane){
 				childrenAndSplitters.push(pane);
 				if(pane._splitterWidget){
 					childrenAndSplitters.push(pane._splitterWidget);
 				}
 			});
-			vf = rias.dom.getStyle(cn, "overflow");
-			vfx = rias.dom.getStyle(cn, "overflow-x");
-			vfy = rias.dom.getStyle(cn, "overflow-y");
-			rias.dom.setStyle(cn, "overflow", "hidden");
 
-			///不要传 this._contentBox，避免被修改
-			rias.dom.layoutChildren(cn, this._contentBox ? rias.dom.floorBox({
-				t: this._contentBox.t,
-				l: this._contentBox.l,
-				w: this._contentBox.w,
-				h: this._contentBox.h
-			}) : undefined, childrenAndSplitters, changedChildId, changedChildSize);
+			this._noOverflowCall(function(){
+				///不要传 this._contentBox，避免被修改
+				rias.dom.layoutChildren(cn, this._contentBox ? rias.dom.floorBox({
+					t: this._contentBox.t,
+					l: this._contentBox.l,
+					w: this._contentBox.w,
+					h: this._contentBox.h
+				}) : undefined, childrenAndSplitters, changedChildId, changedChildSize);
+			});
 
-			if(vf !== undefined){
-				rias.dom.setStyle(cn, "overflow", vf);
-			}else{
-				if(vfx !== undefined){
-					rias.dom.setStyle(cn, "overflow-x", vfx);
-				}
-				if(vfy !== undefined){
-					rias.dom.setStyle(cn, "overflow-y", vfy);
-				}
-			}
 		},
 		beforeLayout: function(needLayout){
 			return needLayout;
 		},
 		_beforeLayout: function(){
-			if(this.isDestroyed(true)){
+			if(this.isDestroyed(true, true)){
 				return false;
 			}
 			var box,
@@ -481,52 +481,71 @@ define([
 				noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center"),
 				nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
 
-			cs = dom.getComputedStyle(node);
-			if(node === this.containerNode){
-				box = dom.getMarginBox(node, cs);
-				box = dom.marginBox2contentBox(node, box, cs);
-			}else{
-				if(rg || !noheight || !nowidth){
-					box = dom.getContentBox(node, cs);
-					node = this.containerNode;
-					if(this.captionNode && this.showCaption){
-						//h = (this.showCaption && this.captionNode ? this._captionHeight = rias.dom.getMarginBox(this.captionNode).h : this._captionHeight = 0);
-						/*h = (this.showCaption && this.captionNode ?
-							//this._captionHeight = rias.dom.getMarginBox(this.captionNode)[(this.region == "left" || this.region == "right") ? "h" : "w"] :
-							this._captionHeight = rias.dom.getMarginBox(this.captionNode).h :
-							this._captionHeight = 0);*/
-						box.h -= this._captionHeight;
-						box.h -= ("fixedHeaderHeight" in this ? this.fixedHeaderHeight : 0);
-						box.h -= ("fixedFooterHeight" in this ? this.fixedFooterHeight : 0);
-					}
-					if(this.wrapperNode){
-						cs = dom.getComputedStyle(this.wrapperNode);
-						dom.setMarginBox(this.wrapperNode, box, cs);
-						box = dom.marginBox2contentBox(this.wrapperNode, box, cs);
-					}
-					if(this._actionBar){
-						box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
-					}
-					cs = dom.getComputedStyle(node);
-					rias.dom.floorBox(box);
-					dom.setMarginBox(node, box, cs);
-					///由于在缩小的时候，有 overflow 存在，重新获取 box 的话，导致 _contentBox 失真
-					///box = dom.getContentBox(this.containerNode);
+			this._noOverflowCall(function(){
+				cs = dom.getComputedStyle(node);
+				if(node === this.containerNode){
+					box = dom.getMarginBox(node, cs);
 					box = dom.marginBox2contentBox(node, box, cs);
 				}else{
-					/// CaptionPanel/DialogPanel 等，如果直接设置 moduleMeta时，是设置 containerNode，所以需要继续判断 containerNode.
-					node = this.containerNode;
-					noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center");
-					nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
-					if(!noheight || !nowidth){
-						cs = dom.getComputedStyle(node);
+					if(rg || !noheight || !nowidth){
 						box = dom.getContentBox(node, cs);
+						node = this.containerNode;
+						if(this.captionNode && this.showCaption){
+							//h = (this.showCaption && this.captionNode ? this._captionHeight = rias.dom.getMarginBox(this.captionNode).h : this._captionHeight = 0);
+							/*h = (this.showCaption && this.captionNode ?
+								//this._captionHeight = rias.dom.getMarginBox(this.captionNode)[(this.region == "left" || this.region == "right") ? "h" : "w"] :
+								this._captionHeight = rias.dom.getMarginBox(this.captionNode).h :
+								this._captionHeight = 0);*/
+							box.h -= this._captionHeight;
+							box.h -= ("fixedHeaderHeight" in this ? this.fixedHeaderHeight : 0);
+							box.h -= ("fixedFooterHeight" in this ? this.fixedFooterHeight : 0);
+						}
+						if(this.wrapperNode){
+							///如果 wrapperNode 有 margin、padding，setMarginBox 后 Style 变了，不应该带入到 containerNode。
+							cs = dom.getComputedStyle(this.wrapperNode);
+							/// 为了能够自动大小，position 必须为 relative，故不应该设置 top、left
+							dom.setMarginBox(this.wrapperNode, {
+								h: box.h,
+								w: box.w
+							}, cs);
+							box = dom.marginBox2contentBox(this.wrapperNode, box, cs);
+							//box = dom.getContentBox(this.wrapperNode);
+						}
+						if(this._actionBar){
+							box.h -= rias.dom.getMarginBox(this._actionBar.domNode).h;
+						}
+						cs = dom.getComputedStyle(node);
+						rias.dom.floorBox(box);
+						/// 为了能够自动大小，position 必须为 relative，故不应该设置 top、left
+						/// 但是 containerNode 内部则需要 top 和 left
+						dom.setMarginBox(node, {
+							h: box.h,
+							w: box.w
+						}, cs);
+						///由于在缩小的时候，有 overflow 存在，重新获取 box 的话，导致 _contentBox 失真
+						///box = dom.getContentBox(this.containerNode);
 						box = dom.marginBox2contentBox(node, box, cs);
 					}else{
-						box = undefined;
+						/// CaptionPanel/DialogPanel 等，如果直接设置 moduleMeta时，是设置 containerNode，所以需要继续判断 containerNode.
+						if(this.wrapperNode){
+							this.wrapperNode.style.top = "";
+							this.wrapperNode.style.left = "";
+							this.wrapperNode.style.height = "";
+							this.wrapperNode.style.width = "";
+						}
+						node = this.containerNode;
+						noheight = (node.style.height == "" && rg !== "left" && rg !== "right" && rg !== "center");
+						nowidth = (node.style.width == "" && rg !== "top" && rg !== "bottom" && rg !== "center");
+						if(!noheight || !nowidth){
+							cs = dom.getComputedStyle(node);
+							box = dom.getContentBox(node, cs);
+							//box = dom.marginBox2contentBox(node, box, cs);
+						}else{
+							box = undefined;
+						}
 					}
 				}
-			}
+			});
 			rias.dom.floorBox(box);
 			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
 				Math.abs(box.w - this._contentBox.w) > 0.01 || Math.abs(box.h - this._contentBox.h) > 0.01){
@@ -539,16 +558,11 @@ define([
 		afterLayout: function(){
 		},
 		layout: function(/*String?*/ changedChildId, /*Number?*/ changedChildSize){
-			var self = this,
-				cn = this.containerNode,
-				v,
-				vf,
-				vfx,
-				vfy;
+			var v;
 			v = this._started && !this.__updateSize && this.get("visible");
 			if(!v){
 				this.needLayout = true;
-				return;
+				return v;
 			}
 			if(v = this._beforeLayout()){
 				this._layoutChildren(changedChildId, changedChildSize);
@@ -563,7 +577,7 @@ define([
 		},
 		_internalResize: function(changeSize, resultSize){
 			//var dt0 = new Date();
-			if(this.isDestroyed(true)){
+			if(this.isDestroyed(true, true)){
 				return;
 			}
 			var v,
@@ -705,10 +719,14 @@ define([
 		_setDisplayStateAttr: function(value){
 			value = displayStateStr(value);
 			if(value === displayClosed){
-				var self = this;
-				rias.when(this.onClose(), function(result){
-					if(result != false){
-						self._set("displayState", value);
+				var self = this,
+					d;
+				rias.when(this._onClose(), function(result){
+					if(result === true || result > 0){
+						d = self.get("displayState");
+						if(d !== self.closeDisplayState && d !== displayHidden && d !== displayClosed){
+							self._set("displayState", self.closeDisplayState || "closed");
+						}
 					}
 				});
 			}else{
@@ -1192,7 +1210,29 @@ define([
 		},
 
 		onClose: function(){
-			return this.canClose != false;/// _close 在 DialogPanel 中设置
+			return true;
+		},
+		_onClose: function(){
+			//return this.canClose == true && !this.get("modified") && (this.onClose() != false);/// _close 在 DialogPanel 中设置
+			///this.onClose() 有可能是 promise，返回 this.onClose()
+			var self = this,
+				go = this.canClose != false && this.onClose();
+			return rias.when(go, function(result){
+				if(result != false && self.get("modified")){
+					return rias.choose({
+						//parent: rias.webApp,
+						autoClose: 0,
+						content: "是否放弃修改并退出？",
+						caption: rias.i18n.action.choose,
+						actionBar: [
+							"btnYes",
+							"btnNo"
+						]
+					}).closeDeferred;
+					//return false;
+				}
+				return result;
+			});
 		},
 		_close: function(){
 			if(!this.isDestroyed(true)){
@@ -1238,7 +1278,7 @@ define([
 				dr = true,
 				ds = true,
 				parent;
-			if(self.isDestroyed(true)){
+			if(self.isDestroyed(true, true)){
 				return false;
 			}
 			if(!self.get("visible") && forceVisible){
@@ -1388,7 +1428,7 @@ define([
 			return this.isDisplayState(Widget.displayTransparent);
 		},
 
-		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex, resize){
+		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex, noresize){
 			var self = this,
 				region = child.region,
 				ltr = child.isLeftToRight();
@@ -1454,7 +1494,7 @@ define([
 
 			this.inherited(arguments);
 
-			if(resize != false && this._started && !this.isDestroyed(true)){
+			if(!noresize && this._started && !this.isDestroyed(true, true)){
 				this.needLayout = true;
 				//var self = this;
 				//rias.debounce(this.id + "addChild", function(){
@@ -1465,7 +1505,7 @@ define([
 		},
 		onAddChild: function(child, insertIndex){
 		},
-		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, resize){
+		addChild: function(/*dijit/_WidgetBase*/ child, /*Integer?*/ insertIndex, noresize){
 			this.onAddChild.apply(this, arguments);
 			this.inherited(arguments);
 			///必须在 _setupChild 完成后才能明确 resize
@@ -1480,7 +1520,7 @@ define([
 		},
 		onRemoveChild: function(child){
 		},
-		removeChild: function(/*dijit/_WidgetBase*/ child, resize){
+		removeChild: function(/*dijit/_WidgetBase*/ child, noresize){
 			this.onRemoveChild(arguments);
 			this.inherited(arguments);
 			if(child && child._splitterWidget){

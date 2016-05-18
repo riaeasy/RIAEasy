@@ -22,7 +22,6 @@ define([
 		iconClass16: "riaswTimeSpinnerIcon16",
 		defaultParams: {
 			//content: "<input type='text'></input>",
-			tabIndex: 0,
 			required: true,
 			invalidMessage: rias.i18n.message.invalid,
 			rangeMessage: rias.i18n.message.range,
@@ -31,8 +30,7 @@ define([
 				locale: "",
 				selector: "time",
 				fullYear: true
-			},
-			scrollOnFocus: true
+			}
 		},
 		initialSize: {},
 		resizable: "width",

@@ -113,30 +113,23 @@ define([
 		},
 
 		baseClass: "riaswOrionEditor",
-		cssStateNodes: {
-			containerNode: "riaswOrionEditor"
-		},
+		//cssStateNodes: {
+		//	containerNode: "riaswOrionEditor"
+		//},
 
 		// name: String?
 		//		Specifies the name of a (hidden) `<textarea>` node on the page that's used to save
 		//		the editor content on page leave.   Used to restore editor contents after navigating
 		//		to a new page and then hitting the back button.
-		name: "",
+		//name: "",
 		filename: "",
 
-		// height: String
-		//		Set height to fix the editor at a specific height, with scrolling.
-		//		By default, this is 300px.  If you want to have the editor always
-		//		resizes to accommodate the content, use AlwaysShowToolbar plugin
-		//		and set height="".  If this editor is used within a layout widget,
-		//		set height="100%".
-		height: "",
-		// minHeight: String
-		//		The minimum height that the editor should have.
 		minHeight: "1em",
 
 		//templateString: "<div data-dojo-attach-point='focusNode' autocomplete='off'></div>",
 		templateString: "<div autocomplete='off'></div>",
+		tabIndex: 0,
+		//_setTabIndexAttr: ["domNode"],
 
 		// disabled: Boolean
 		//		The editor is disabled; the text cannot be changed.
@@ -161,6 +154,18 @@ define([
 				this._needDisabled = true;
 			}else{
 				this._needDisabled = undefined;
+				t._setReadOnly(value);
+			}
+		},
+		_setReadOnlyAttr: function(value){
+			var //w = this.editor,
+				t = this.textView;// (w ? w._textView : undefined);
+			value = !!value;
+			this._set("readOnly", value);
+			//if(w && w._textView){
+			if(t){
+				this._needReadOnly = undefined;
+				this.domNode.tabIndex = value ? "-1" : this.tabIndex;
 				t._setReadOnly(value);
 				var preventIEfocus = rias.has("ie");// && (this.isLoaded || !this.focusOnLoad);
 				if(preventIEfocus){
@@ -188,16 +193,6 @@ define([
 				//	}
 				//}
 				//}
-			}
-		},
-		_setReadOnlyAttr: function(value){
-			//var w = this.editor;
-			value = !!value;
-			this._set("readOnly", value);
-			//if(w && w._textView){
-			if(this.textView){
-				this._needReadOnly = undefined;
-				this.textView._setReadOnly(value);
 			}else{
 				this._needReadOnly = true;
 			}
@@ -225,8 +220,9 @@ define([
 			rias.dom.addClass(this.containerNode, "riaswTextBoxContainer");
 			///没有 template 时，显式设置 focusNode。
 			if(!this.focusNode){
-				this.focusNode = this.containerNode;
+				this.focusNode = this.textView._clientDiv;
 			}
+			//rias.dom.setAttr(this.domNode, 0);
 			//this.watch("readonly", rias.hitch(this, "_setStateClass"));
 		},
 		postCreate: function(){

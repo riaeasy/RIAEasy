@@ -1,24 +1,3 @@
 //>>built
-
-define("dojox/charting/plot2d/StackedBars", ["dojo/_base/declare", "./Bars", "./commonStacked"], function (declare, Bars, commonStacked) {
-    return declare("dojox.charting.plot2d.StackedBars", Bars, {getSeriesStats:function () {
-        var stats = commonStacked.collectStats(this.series), t;
-        stats.hmin -= 0.5;
-        stats.hmax += 0.5;
-        t = stats.hmin, stats.hmin = stats.vmin, stats.vmin = t;
-        t = stats.hmax, stats.hmax = stats.vmax, stats.vmax = t;
-        return stats;
-    }, getValue:function (value, index, seriesIndex, indexed) {
-        var y, x;
-        if (indexed) {
-            x = index;
-            y = commonStacked.getIndexValue(this.series, seriesIndex, x);
-        } else {
-            x = value.x - 1;
-            y = commonStacked.getValue(this.series, seriesIndex, value.x);
-            y = [y[0] ? y[0].y : null, y[1] ? y[1] : null];
-        }
-        return {x:x, y:y[0], py:y[1]};
-    }});
-});
-
+define("dojox/charting/plot2d/StackedBars",["dojo/_base/declare","./Bars","./commonStacked"],function(c,f,d){return c("dojox.charting.plot2d.StackedBars",f,{getSeriesStats:function(){var a=d.collectStats(this.series),b;a.hmin-=0.5;a.hmax+=0.5;b=a.hmin;a.hmin=a.vmin;a.vmin=b;b=a.hmax;a.hmax=a.vmax;a.vmax=b;return a},getValue:function(a,b,e,c){c?a=d.getIndexValue(this.series,e,b):(b=a.x-1,a=d.getValue(this.series,e,a.x),a=[a[0]?a[0].y:null,a[1]?a[1]:null]);return{x:b,y:a[0],py:a[1]}}})});
+/// StackedBars.js.map

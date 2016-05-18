@@ -1,55 +1,5 @@
 //>>built
-
-define("dijit/_BidiMixin", [], function () {
-    var bidi_const = {LRM:"\u200e", LRE:"\u202a", PDF:"\u202c", RLM:"\u200f", RLE:"\u202b"};
-    return {textDir:"", getTextDir:function (text) {
-        return this.textDir == "auto" ? this._checkContextual(text) : this.textDir;
-    }, _checkContextual:function (text) {
-        var fdc = /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(text);
-        return fdc ? (fdc[0] <= "z" ? "ltr" : "rtl") : this.dir ? this.dir : this.isLeftToRight() ? "ltr" : "rtl";
-    }, applyTextDir:function (element, text) {
-        if (this.textDir) {
-            var textDir = this.textDir;
-            if (textDir == "auto") {
-                if (typeof text === "undefined") {
-                    var tagName = element.tagName.toLowerCase();
-                    text = (tagName == "input" || tagName == "textarea") ? element.value : element.innerText || element.textContent || "";
-                }
-                textDir = this._checkContextual(text);
-            }
-            if (element.dir != textDir) {
-                element.dir = textDir;
-            }
-        }
-    }, enforceTextDirWithUcc:function (option, text) {
-        if (this.textDir) {
-            if (option) {
-                option.originalText = text;
-            }
-            var dir = this.textDir == "auto" ? this._checkContextual(text) : this.textDir;
-            return (dir == "ltr" ? bidi_const.LRE : bidi_const.RLE) + text + bidi_const.PDF;
-        }
-        return text;
-    }, restoreOriginalText:function (origObj) {
-        if (origObj.originalText) {
-            origObj.text = origObj.originalText;
-            delete origObj.originalText;
-        }
-        return origObj;
-    }, _setTextDirAttr:function (textDir) {
-        if (!this._created || this.textDir != textDir) {
-            this._set("textDir", textDir);
-            var node = null;
-            if (this.displayNode) {
-                node = this.displayNode;
-                this.displayNode.align = this.dir == "rtl" ? "right" : "left";
-            } else {
-                node = this.textDirNode || this.focusNode || this.textbox;
-            }
-            if (node) {
-                this.applyTextDir(node);
-            }
-        }
-    }};
-});
-
+define("dijit/_BidiMixin",[],function(){return{textDir:"",getTextDir:function(a){return"auto"==this.textDir?this._checkContextual(a):this.textDir},_checkContextual:function(a){return(a=/[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(a))?"z">=a[0]?"ltr":"rtl":this.dir?this.dir:this.isLeftToRight()?"ltr":"rtl"},applyTextDir:function(a,b){if(this.textDir){var c=this.textDir;"auto"==c&&("undefined"===typeof b&&(c=a.tagName.toLowerCase(),b="input"==c||"textarea"==c?a.value:
+a.innerText||a.textContent||""),c=this._checkContextual(b));a.dir!=c&&(a.dir=c)}},enforceTextDirWithUcc:function(a,b){return this.textDir?(a&&(a.originalText=b),("ltr"==("auto"==this.textDir?this._checkContextual(b):this.textDir)?"\u202a":"\u202b")+b+"\u202c"):b},restoreOriginalText:function(a){a.originalText&&(a.text=a.originalText,delete a.originalText);return a},_setTextDirAttr:function(a){if(!this._created||this.textDir!=a)this._set("textDir",a),a=null,this.displayNode?(a=this.displayNode,this.displayNode.align=
+"rtl"==this.dir?"right":"left"):a=this.textDirNode||this.focusNode||this.textbox,a&&this.applyTextDir(a)}}});
+/// _BidiMixin.js.map

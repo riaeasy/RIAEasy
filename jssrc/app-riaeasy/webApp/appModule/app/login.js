@@ -5,7 +5,7 @@ define([
 	"_rsfVersion": 110,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
-	"activeNode": "edtId",
+	"activeChild": "edtId",
 	"caption": "登录",
 	"op": "login",
 	"style": {

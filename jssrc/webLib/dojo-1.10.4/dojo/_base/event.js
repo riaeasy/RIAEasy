@@ -1,35 +1,3 @@
 //>>built
-
-define("dojo/_base/event", ["./kernel", "../on", "../has", "../dom-geometry"], function (dojo, on, has, dom) {
-    if (on._fixEvent) {
-        var fixEvent = on._fixEvent;
-        on._fixEvent = function (evt, se) {
-            evt = fixEvent(evt, se);
-            if (evt) {
-                dom.normalizeEvent(evt);
-            }
-            return evt;
-        };
-    }
-    var ret = {fix:function (evt, sender) {
-        if (on._fixEvent) {
-            return on._fixEvent(evt, sender);
-        }
-        return evt;
-    }, stop:function (evt) {
-        if (has("dom-addeventlistener") || (evt && evt.preventDefault)) {
-            evt.preventDefault();
-            evt.stopPropagation();
-        } else {
-            evt = evt || window.event;
-            evt.cancelBubble = true;
-            on._preventDefault.call(evt);
-        }
-    }};
-    if (1) {
-        dojo.fixEvent = ret.fix;
-        dojo.stopEvent = ret.stop;
-    }
-    return ret;
-});
-
+define("dojo/_base/event",["./kernel","../on","../has","../dom-geometry"],function(d,b,e,f){if(b._fixEvent){var g=b._fixEvent;b._fixEvent=function(a,b){(a=g(a,b))&&f.normalizeEvent(a);return a}}var c={fix:function(a,c){return b._fixEvent?b._fixEvent(a,c):a},stop:function(a){e("dom-addeventlistener")||a&&a.preventDefault?(a.preventDefault(),a.stopPropagation()):(a=a||window.event,a.cancelBubble=!0,b._preventDefault.call(a))}};d.fixEvent=c.fix;d.stopEvent=c.stop;return c});
+/// event.js.map

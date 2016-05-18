@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/de/InsertEntity", ({insertEntity:"Symbol einf\xfcgen"}));
-
+define("dojox/editor/plugins/nls/de/InsertEntity",{insertEntity:"Symbol einf\u00fcgen"});
+/// InsertEntity.js.map

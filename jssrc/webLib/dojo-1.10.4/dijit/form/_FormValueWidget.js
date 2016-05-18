@@ -1,26 +1,3 @@
 //>>built
-
-define("dijit/form/_FormValueWidget", ["dojo/_base/declare", "dojo/sniff", "./_FormWidget", "./_FormValueMixin"], function (declare, has, _FormWidget, _FormValueMixin) {
-    return declare("dijit.form._FormValueWidget", [_FormWidget, _FormValueMixin], {_layoutHackIE7:function () {
-        if (has("ie") == 7) {
-            var domNode = this.domNode;
-            var parent = domNode.parentNode;
-            var pingNode = domNode.firstChild || domNode;
-            var origFilter = pingNode.style.filter;
-            var _this = this;
-            while (parent && parent.clientHeight == 0) {
-                (function ping() {
-                    var disconnectHandle = _this.connect(parent, "onscroll", function () {
-                        _this.disconnect(disconnectHandle);
-                        pingNode.style.filter = (new Date()).getMilliseconds();
-                        _this.defer(function () {
-                            pingNode.style.filter = origFilter;
-                        });
-                    });
-                })();
-                parent = parent.parentNode;
-            }
-        }
-    }});
-});
-
+define("dijit/form/_FormValueWidget",["dojo/_base/declare","dojo/sniff","./_FormWidget","./_FormValueMixin"],function(c,f,g,h){return c("dijit.form._FormValueWidget",[g,h],{_layoutHackIE7:function(){if(7==f("ie"))for(var a=this.domNode,b=a.parentNode,d=a.firstChild||a,c=d.style.filter,e=this;b&&0==b.clientHeight;)(function(){var a=e.connect(b,"onscroll",function(){e.disconnect(a);d.style.filter=(new Date).getMilliseconds();e.defer(function(){d.style.filter=c})})})(),b=b.parentNode}})});
+/// _FormValueWidget.js.map

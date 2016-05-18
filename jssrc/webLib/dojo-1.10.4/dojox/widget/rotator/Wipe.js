@@ -1,46 +1,4 @@
 //>>built
-
-define("dojox/widget/rotator/Wipe", ["dojo/_base/lang", "dojo/_base/fx", "dojo/dom-style"], function (lang, fx, domStyle) {
-    var DOWN = 2, RIGHT = 3, UP = 0, LEFT = 1;
-    function _clipArray(type, w, h, x) {
-        var a = [0, w, 0, 0];
-        if (type == RIGHT) {
-            a = [0, w, h, w];
-        } else {
-            if (type == UP) {
-                a = [h, w, h, 0];
-            } else {
-                if (type == LEFT) {
-                    a = [0, 0, h, 0];
-                }
-            }
-        }
-        if (x != null) {
-            a[type] = type == DOWN || type == LEFT ? x : (type % 2 ? w : h) - x;
-        }
-        return a;
-    }
-    function _setClip(n, type, w, h, x) {
-        domStyle.set(n, "clip", type == null ? "auto" : "rect(" + _clipArray(type, w, h, x).join("px,") + "px)");
-    }
-    function _wipe(type, args) {
-        var node = args.next.node, w = args.rotatorBox.w, h = args.rotatorBox.h;
-        domStyle.set(node, {display:"", zIndex:(domStyle.get(args.current.node, "zIndex") || 1) + 1});
-        _setClip(node, type, w, h);
-        return new fx.Animation(lang.mixin({node:node, curve:[0, type % 2 ? w : h], onAnimate:function (x) {
-            _setClip(node, type, w, h, parseInt(x));
-        }}, args));
-    }
-    var exports = {wipeDown:function (args) {
-        return _wipe(DOWN, args);
-    }, wipeRight:function (args) {
-        return _wipe(RIGHT, args);
-    }, wipeUp:function (args) {
-        return _wipe(UP, args);
-    }, wipeLeft:function (args) {
-        return _wipe(LEFT, args);
-    }};
-    lang.mixin(lang.getObject("dojox.widget.rotator"), exports);
-    return exports;
-});
-
+define("dojox/widget/rotator/Wipe",["dojo/_base/lang","dojo/_base/fx","dojo/dom-style"],function(g,r,h){function s(a,b,c,e){var d=[0,b,0,0];a==l?d=[0,b,c,b]:a==m?d=[c,b,c,0]:a==k&&(d=[0,0,c,0]);null!=e&&(d[a]=a==n||a==k?e:(a%2?b:c)-e);return d}function p(a,b,c,e,d){h.set(a,"clip",null==b?"auto":"rect("+s(b,c,e,d).join("px,")+"px)")}function f(a,b){var c=b.next.node,e=b.rotatorBox.w,d=b.rotatorBox.h;h.set(c,{display:"",zIndex:(h.get(b.current.node,"zIndex")||1)+1});p(c,a,e,d);return new r.Animation(g.mixin({node:c,
+curve:[0,a%2?e:d],onAnimate:function(b){p(c,a,e,d,parseInt(b))}},b))}var n=2,l=3,m=0,k=1,q={wipeDown:function(a){return f(n,a)},wipeRight:function(a){return f(l,a)},wipeUp:function(a){return f(m,a)},wipeLeft:function(a){return f(k,a)}};g.mixin(g.getObject("dojox.widget.rotator"),q);return q});
+/// Wipe.js.map

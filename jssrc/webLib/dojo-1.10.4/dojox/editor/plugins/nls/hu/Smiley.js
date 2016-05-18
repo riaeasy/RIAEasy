@@ -1,4 +1,4 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/Smiley", ({smiley:"Hangulatjel besz\xfar\xe1sa", emoticonSmile:"mosoly", emoticonLaughing:"nevet\xe9s", emoticonWink:"kacsint\xe1s", emoticonGrin:"vigyor", emoticonCool:"laza", emoticonAngry:"m\xe9rges", emoticonHalf:"f\xe9l", emoticonEyebrow:"szem\xf6ld\xf6k", emoticonFrown:"rosszall\xe1s", emoticonShy:"sz\xe9gyenl\u0151s", emoticonGoofy:"ostoba", emoticonOops:"hopp\xe1", emoticonTongue:"nyelv", emoticonIdea:"\xf6tlet", emoticonYes:"igen", emoticonNo:"nem", emoticonAngel:"angyal", emoticonCrying:"s\xedr\xe1s", emoticonHappy:"boldog"}));
-
+define("dojox/editor/plugins/nls/hu/Smiley",{smiley:"Hangulatjel besz\u00far\u00e1sa",emoticonSmile:"mosoly",emoticonLaughing:"nevet\u00e9s",emoticonWink:"kacsint\u00e1s",emoticonGrin:"vigyor",emoticonCool:"laza",emoticonAngry:"m\u00e9rges",emoticonHalf:"f\u00e9l",emoticonEyebrow:"szem\u00f6ld\u00f6k",emoticonFrown:"rosszall\u00e1s",emoticonShy:"sz\u00e9gyenl\u0151s",emoticonGoofy:"ostoba",emoticonOops:"hopp\u00e1",emoticonTongue:"nyelv",emoticonIdea:"\u00f6tlet",emoticonYes:"igen",emoticonNo:"nem",
+emoticonAngel:"angyal",emoticonCrying:"s\u00edr\u00e1s",emoticonHappy:"boldog"});
+/// Smiley.js.map

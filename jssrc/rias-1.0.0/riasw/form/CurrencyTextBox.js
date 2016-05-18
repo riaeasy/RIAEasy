@@ -17,12 +17,10 @@ define([
 		defaultParams: {
 			//content: "<input type='text'></input>",
 			type: "text",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			rangeMessage: rias.i18n.message.range,
 			constraints: {currency: "", locale: "", type: "currency"},
-			editOptions: {pattern: "#.######"},
-			scrollOnFocus: true
+			editOptions: {pattern: "#.######"}
 		},
 		initialSize: {},
 		resizable: "width",

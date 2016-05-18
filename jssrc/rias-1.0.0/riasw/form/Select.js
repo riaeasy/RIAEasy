@@ -209,24 +209,24 @@ define([
 			}
 			var dn = this.domNode,
 				ln = this.labelNode,
-				bn = this.titleNode,///注意，不是 buttonNode
-				cn = this.containerNode,
+				bn = this._buttonNode,
+				cn = this.containerNode,// || this.domNode,///兼容 dijit.form.TextBox
 				cs,
-				h;
+				h, w;
 			if(changeSize){
 				rias.dom.setMarginBox(dn, changeSize);
 			}
 			changeSize = rias.dom.getContentBox(dn);
 			changeSize.h = h = Math.floor(changeSize.h);
-			changeSize.w = Math.floor(changeSize.w);
+			changeSize.w = w = Math.floor(changeSize.w);
 			//if(rias.has("ff")){
-				--changeSize.w;
+				--w;
 			//}
 
 			if(bn){
 				cs = rias.dom.getComputedStyle(bn);
 				resultSize = rias.dom.getMarginBox(bn, cs);
-				changeSize.w -= resultSize.w;
+				w -= resultSize.w;
 				rias.dom.setMarginBox(bn, {
 					h: h
 				}, cs);
@@ -234,18 +234,19 @@ define([
 			if(this.showLabel){
 				cs = rias.dom.getComputedStyle(ln);
 				resultSize = rias.dom.getMarginBox(ln, cs);
-				changeSize.w -= resultSize.w;
-				rias.dom.setStyle(ln, "line-height", h + "px");
+				w -= resultSize.w;
 				rias.dom.setMarginBox(ln, {
 					h: h
 				}, cs);
+				rias.dom.setStyle(ln, "line-height", rias.dom.marginBox2contentSize(ln, {w: 0, h: h}, cs).h + "px");
 			}
 			/// dijit.Editor 打包（Build）后，dijit.form.TextBox 不能 hack。
+			cs = rias.dom.getComputedStyle(cn);
 			rias.dom.setMarginBox(cn, {
 				h: h,
-				w: Math.floor(changeSize.w)
-			});
-			rias.dom.setStyle(this.textbox, "line-height", h + "px");
+				w: Math.floor(w)
+			}, cs);
+			rias.dom.setStyle(this.textbox, "line-height", rias.dom.marginBox2contentSize(cn, {w: 0, h: h}, cs).h + "px");
 		},
 		layout: function(){
 			this.resize();
@@ -264,9 +265,7 @@ define([
 			var p = rias.mixinDeep({}, {
 				type: "button",
 				label: "Select",
-				tabIndex: 0,
 				showLabel: true,
-				scrollOnFocus: true,
 				store: {
 					_riaswType: "rias.riasw.store.JsonRestStore",
 					oldApi: true

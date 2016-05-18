@@ -1,11 +1,3 @@
 //>>built
-
-define("dojox/mobile/bidi/Icon", ["dojo/_base/declare", "dojo/dom-style", "../_css3"], function (declare, domStyle, css3) {
-    return declare(null, {_setCustomTransform:function () {
-        if ((this.dir || domStyle.get(this.domNode, "direction")) == "rtl") {
-            domStyle.set(this.domNode.firstChild, css3.add({"direction":"ltr"}, {}));
-            domStyle.set(this.domNode, css3.add({}, {transform:"scaleX(-1)"}));
-        }
-    }});
-});
-
+define("dojox/mobile/bidi/Icon",["dojo/_base/declare","dojo/dom-style","../_css3"],function(c,a,b){return c(null,{_setCustomTransform:function(){if("rtl"==(this.dir||a.get(this.domNode,"direction")))a.set(this.domNode.firstChild,b.add({direction:"ltr"},{})),a.set(this.domNode,b.add({},{transform:"scaleX(-1)"}))}})});
+/// Icon.js.map

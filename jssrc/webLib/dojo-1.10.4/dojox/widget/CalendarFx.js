@@ -1,7 +1,3 @@
 //>>built
-
-define("dojox/widget/CalendarFx", ["dojo/_base/kernel", "dojo/_base/declare", "./CalendarFisheye", "./_FisheyeFX"], function (kernel, declare, CalendarFisheye, _FisheyeFX) {
-    kernel.experimental("dojox/widget/CalendarFx");
-    return declare("dojox.widget.CalendarFx", [CalendarFisheye, _FisheyeFX], {});
-});
-
+define("dojox/widget/CalendarFx",["dojo/_base/kernel","dojo/_base/declare","./CalendarFisheye","./_FisheyeFX"],function(a,b,c,d){a.experimental("dojox/widget/CalendarFx");return b("dojox.widget.CalendarFx",[c,d],{})});
+/// CalendarFx.js.map

@@ -1,42 +1,4 @@
 //>>built
-
-define("dojox/lang/aspect/memoizer", ["dijit", "dojo", "dojox"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.lang.aspect.memoizer");
-    (function () {
-        var aop = dojox.lang.aspect;
-        var memoize1 = {around:function (key) {
-            var ctx = aop.getContext(), self = ctx.joinPoint, that = ctx.instance, t, u, ret;
-            if ((t = that.__memoizerCache) && (t = t[self.targetName]) && (key in t)) {
-                return t[key];
-            }
-            var ret = aop.proceed.apply(null, arguments);
-            if (!(t = that.__memoizerCache)) {
-                t = that.__memoizerCache = {};
-            }
-            if (!(u = t[self.targetName])) {
-                u = t[self.targetName] = {};
-            }
-            return u[key] = ret;
-        }};
-        var memoizeN = function (keyMaker) {
-            return {around:function () {
-                var ctx = aop.getContext(), self = ctx.joinPoint, that = ctx.instance, t, u, ret, key = keyMaker.apply(that, arguments);
-                if ((t = that.__memoizerCache) && (t = t[self.targetName]) && (key in t)) {
-                    return t[key];
-                }
-                var ret = aop.proceed.apply(null, arguments);
-                if (!(t = that.__memoizerCache)) {
-                    t = that.__memoizerCache = {};
-                }
-                if (!(u = t[self.targetName])) {
-                    u = t[self.targetName] = {};
-                }
-                return u[key] = ret;
-            }};
-        };
-        aop.memoizer = function (keyMaker) {
-            return arguments.length == 0 ? memoize1 : memoizeN(keyMaker);
-        };
-    })();
-});
-
+define("dojox/lang/aspect/memoizer",["dijit","dojo","dojox"],function(l,d,h){d.provide("dojox.lang.aspect.memoizer");(function(){var g=h.lang.aspect,d={around:function(e){var c=g.getContext(),f=c.joinPoint,b=c.instance,a;if((a=b.__memoizerCache)&&(a=a[f.targetName])&&e in a)return a[e];c=g.proceed.apply(null,arguments);if(!(a=b.__memoizerCache))a=b.__memoizerCache={};if(!(b=a[f.targetName]))b=a[f.targetName]={};return b[e]=c}},k=function(e){return{around:function(){var c=g.getContext(),f=c.joinPoint,
+b=c.instance,a,d=e.apply(b,arguments);if((a=b.__memoizerCache)&&(a=a[f.targetName])&&d in a)return a[d];c=g.proceed.apply(null,arguments);if(!(a=b.__memoizerCache))a=b.__memoizerCache={};if(!(b=a[f.targetName]))b=a[f.targetName]={};return b[d]=c}}};g.memoizer=function(e){return 0==arguments.length?d:k(e)}})()});
+/// memoizer.js.map

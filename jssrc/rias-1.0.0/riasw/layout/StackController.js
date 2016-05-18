@@ -265,7 +265,6 @@ define([
 			newButton.set('checked', true);
 			this._currentChild = page;
 			newButton.focusNode.setAttribute("tabIndex", "0");
-			var container = rias.by(this.containerId);
 		},
 
 		onButtonClick: function(/*dijit/_WidgetBase*/ page){
@@ -293,14 +292,16 @@ define([
 			// tags:
 			//		private
 
-			var container = rias.by(this.containerId);
-			container.closeChild(page);
-			if(this._currentChild){
-				var b = this.page2button(this._currentChild);
-				if(b){
-					rias.dom.focus(b.focusNode || b.domNode);
+			var container = rias.by(this.containerId),
+				self = this;
+			rias.when(container.closeChild(page), function(result){
+				if(self._currentChild){
+					var b = self.page2button(self._currentChild);
+					if(b){
+						rias.dom.focus(b.focusNode || b.domNode);
+					}
 				}
-			}
+			});
 		},
 
 		// TODO: this is a bit redundant with forward, back api in StackContainer

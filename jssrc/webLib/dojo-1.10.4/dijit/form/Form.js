@@ -1,49 +1,5 @@
 //>>built
-
-define("dijit/form/Form", ["dojo/_base/declare", "dojo/dom-attr", "dojo/_base/kernel", "dojo/sniff", "../_Widget", "../_TemplatedMixin", "./_FormMixin", "../layout/_ContentPaneResizeMixin"], function (declare, domAttr, kernel, has, _Widget, _TemplatedMixin, _FormMixin, _ContentPaneResizeMixin) {
-    return declare("dijit.form.Form", [_Widget, _TemplatedMixin, _FormMixin, _ContentPaneResizeMixin], {name:"", action:"", method:"", encType:"", "accept-charset":"", accept:"", target:"", templateString:"<form data-dojo-attach-point='containerNode' data-dojo-attach-event='onreset:_onReset,onsubmit:_onSubmit' ${!nameAttrSetting}></form>", postMixInProperties:function () {
-        this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : "";
-        this.inherited(arguments);
-    }, execute:function () {
-    }, onExecute:function () {
-    }, _setEncTypeAttr:function (value) {
-        domAttr.set(this.domNode, "encType", value);
-        if (has("ie")) {
-            this.domNode.encoding = value;
-        }
-        this._set("encType", value);
-    }, reset:function (e) {
-        var faux = {returnValue:true, preventDefault:function () {
-            this.returnValue = false;
-        }, stopPropagation:function () {
-        }, currentTarget:e ? e.target : this.domNode, target:e ? e.target : this.domNode};
-        if (!(this.onReset(faux) === false) && faux.returnValue) {
-            this.inherited(arguments, []);
-        }
-    }, onReset:function () {
-        return true;
-    }, _onReset:function (e) {
-        this.reset(e);
-        e.stopPropagation();
-        e.preventDefault();
-        return false;
-    }, _onSubmit:function (e) {
-        var fp = this.constructor.prototype;
-        if (this.execute != fp.execute || this.onExecute != fp.onExecute) {
-            kernel.deprecated("dijit.form.Form:execute()/onExecute() are deprecated. Use onSubmit() instead.", "", "2.0");
-            this.onExecute();
-            this.execute(this.getValues());
-        }
-        if (this.onSubmit(e) === false) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-    }, onSubmit:function () {
-        return this.isValid();
-    }, submit:function () {
-        if (!(this.onSubmit() === false)) {
-            this.containerNode.submit();
-        }
-    }});
-});
-
+define("dijit/form/Form","dojo/_base/declare dojo/dom-attr dojo/_base/kernel dojo/sniff ../_Widget ../_TemplatedMixin ./_FormMixin ../layout/_ContentPaneResizeMixin".split(" "),function(c,d,e,f,g,h,k,l){return c("dijit.form.Form",[g,h,k,l],{name:"",action:"",method:"",encType:"","accept-charset":"",accept:"",target:"",templateString:"\x3cform data-dojo-attach-point\x3d'containerNode' data-dojo-attach-event\x3d'onreset:_onReset,onsubmit:_onSubmit' ${!nameAttrSetting}\x3e\x3c/form\x3e",postMixInProperties:function(){this.nameAttrSetting=
+this.name?"name\x3d'"+this.name+"'":"";this.inherited(arguments)},execute:function(){},onExecute:function(){},_setEncTypeAttr:function(a){d.set(this.domNode,"encType",a);f("ie")&&(this.domNode.encoding=a);this._set("encType",a)},reset:function(a){var b={returnValue:!0,preventDefault:function(){this.returnValue=!1},stopPropagation:function(){},currentTarget:a?a.target:this.domNode,target:a?a.target:this.domNode};!1!==this.onReset(b)&&b.returnValue&&this.inherited(arguments,[])},onReset:function(){return!0},
+_onReset:function(a){this.reset(a);a.stopPropagation();a.preventDefault();return!1},_onSubmit:function(a){var b=this.constructor.prototype;if(this.execute!=b.execute||this.onExecute!=b.onExecute)e.deprecated("dijit.form.Form:execute()/onExecute() are deprecated. Use onSubmit() instead.","","2.0"),this.onExecute(),this.execute(this.getValues());!1===this.onSubmit(a)&&(a.stopPropagation(),a.preventDefault())},onSubmit:function(){return this.isValid()},submit:function(){!1!==this.onSubmit()&&this.containerNode.submit()}})});
+/// Form.js.map

@@ -1,22 +1,4 @@
 //>>built
-
-define("dijit/form/DataList", ["dojo/_base/declare", "dojo/dom", "dojo/_base/lang", "dojo/query", "dojo/store/Memory", "../registry"], function (declare, dom, lang, query, MemoryStore, registry) {
-    function toItem(option) {
-        return {id:option.value, value:option.value, name:lang.trim(option.innerText || option.textContent || "")};
-    }
-    return declare("dijit.form.DataList", MemoryStore, {constructor:function (params, srcNodeRef) {
-        this.domNode = dom.byId(srcNodeRef);
-        lang.mixin(this, params);
-        if (this.id) {
-            registry.add(this);
-        }
-        this.domNode.style.display = "none";
-        this.inherited(arguments, [{data:query("option", this.domNode).map(toItem)}]);
-    }, destroy:function () {
-        registry.remove(this.id);
-    }, fetchSelectedItem:function () {
-        var option = query("> option[selected]", this.domNode)[0] || query("> option", this.domNode)[0];
-        return option && toItem(option);
-    }});
-});
-
+define("dijit/form/DataList","dojo/_base/declare dojo/dom dojo/_base/lang dojo/query dojo/store/Memory ../registry".split(" "),function(b,g,d,c,h,e){function f(a){return{id:a.value,value:a.value,name:d.trim(a.innerText||a.textContent||"")}}return b("dijit.form.DataList",h,{constructor:function(a,b){this.domNode=g.byId(b);d.mixin(this,a);this.id&&e.add(this);this.domNode.style.display="none";this.inherited(arguments,[{data:c("option",this.domNode).map(f)}])},destroy:function(){e.remove(this.id)},fetchSelectedItem:function(){var a=
+c("\x3e option[selected]",this.domNode)[0]||c("\x3e option",this.domNode)[0];return a&&f(a)}})});
+/// DataList.js.map

@@ -12,10 +12,10 @@ define([
 	"rias/riasw/layout/CaptionPanel"
 ], function(rias, Moveable, TimedMoveable, Resizer, Underlay, Panel, Button, CaptionPanel){
 
-	rias.theme.loadRiasCss([
-		"layout/CaptionPanel.css",
-		"layout/DialogPanel.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/DialogPanel.css"
+	//]);
 
 	var contentTypeInfo = "info",
 		contentTypeWarn = "warn",
@@ -48,7 +48,7 @@ define([
 
 		//loadOnStartup: false,
 
-		isTopmost: false,
+		selected: false,
 
 		_size: undefined,
 		_state: -1,
@@ -68,6 +68,7 @@ define([
 		resizeBorderWidth: 8,
 		resizable: "xy",
 		movable: true,
+		moveDelay: 0,
 		closable: true,
 		animate: true,
 
@@ -76,13 +77,15 @@ define([
 			h: 80
 		},
 
-		canClose: true,
-		submitDisplayState: "closed",
+		_focusStack: true,
+
+		closeDisplayState: "closed",
 		autoClose: 0,
 
 		templateString:
-			"<div class='dijitReset' role='dialog' data-dojo-attach-event='onmouseenter: _onDomNodeEnter' aria-labelledby='${id}_captionNode'>"+
-				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_onToggleMax, onkeydown:_onToggleKeydown' tabindex='-1' role='button'>"+
+			"<div class='dijitReset dijitPopup' role='dialog' data-dojo-attach-event='onmouseenter: _onDomNodeEnter'>"+
+				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_toggleMax, onkeydown:_toggleKeydown' " +
+					"tabIndex='-1' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelToggleIconNode riaswDialogPanelToggleIcon' role='presentation'></span>"+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
@@ -91,7 +94,7 @@ define([
 					"<span data-dojo-attach-point='maxNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelMaximizeIcon'></span>"+
 				"</div>"+
 				"<div data-dojo-attach-point='wrapperNode' class='dijitReset riaswDialogPanelWrapper' role='region' id='${id}_wrapper'>"+
-					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container' aria-labelledby='${id}_captionNode'></div>"+
+					"<div data-dojo-attach-point='containerNode' class='dijitReset riaswDialogPanelContent' role='region' id='${id}_container'></div>"+
 					//"<div data-dojo-attach-point='actionBarNode' class='dijitReset riaswDialogPanelActionBar' role='region' id='${id}_actionBar'></div>"+
 				"</div>"+
 			"</div>",
@@ -106,6 +109,8 @@ define([
 		},
 
 		//splitter: false,
+
+		tabCycle: true,
 
 		focusOnShow: true,
 		showCaption: true,
@@ -139,6 +144,10 @@ define([
 				opacity: 0,
 				position: "absolute"
 			});
+			var p = rias.by(this.popupParent || this._riasrOwner);
+			if(p){
+				rias.dom.setAttr(this.domNode, "_riasrPopupParent", p.id);
+			}
 		},
 		postCreate: function(){
 			var self = this;
@@ -151,7 +160,7 @@ define([
 				})
 			);
 			self.inherited(arguments);
-			this._initAttr(["zIndex", "dialogType", "movable", "contentType"]);
+			this._initAttr(["zIndex", "dialogType", "movable", "selected", "contentType"]);
 
 			if(self.autoClose == 1){
 				self.own(self.on("mouseleave", function(){
@@ -174,10 +183,10 @@ define([
 			}
 			self.inherited(arguments);
 			self.own(
-				rias.after(self.captionNode, "onmousedown", function(evt){
+				rias.on(self.captionNode, "mousedown", function(evt){
 					//self.defer(function(){
 					////focus 会导致其他 popup 失去焦点，最好判断一下
-					if(!self.focused){
+					if(!self.get("focused")){
 						self.focus();
 					}
 					//}, 100);
@@ -213,16 +222,17 @@ define([
 			var i = rias.indexOf(_allWin, this);
 			if(i >= 0){
 				_allWin.splice(i, 1);
-				Widget.bringToTop();
+				Widget.selectDialog();
 			}
 		},
 
 		_setStateClass: function(){
 			try{
 				this.inherited(arguments);
-
 				rias.dom.toggleClass(this.captionNode, "riaswDialogPanelCaptionNodeHover", !!this.hovering);
 				rias.dom.toggleClass(this.captionNode, "riaswDialogPanelCaptionNodeActive", !!this.active);
+				rias.dom.toggleClass(this.captionNode, "riaswDialogPanelCaptionNodeFocused", !!this.focused);
+				rias.dom.toggleClass(this.captionNode, "riaswDialogPanelCaptionNodeSelected", !!this.selected);
 			}catch(e){ /* Squelch any errors caused by focus change if hidden during a state change */
 			}
 		},
@@ -307,9 +317,6 @@ define([
 					}
 					if(w){
 						ps.push(w);
-						if(!self.activeNode){
-							self.activeNode = w._riaswIdOfModule || w.id;
-						}
 					}
 				}
 				if(ps.length > 0){
@@ -325,6 +332,9 @@ define([
 					}else{
 						self._actionBar.placeAt(self.wrapperNode, "last");
 						rias.dom.addClass(self._actionBar.domNode, "riaswDialogPanelActionBar");
+					}
+					if(!self.activeChild){
+						self.activeChild = ps[ps.length - 1]._riaswIdOfModule || ps[ps.length - 1].id;
 					}
 					rias.filer(ps, self._actionBar, self).then(function(){
 						self.inherited(args);
@@ -361,7 +371,7 @@ define([
 					this._riasrUnderlay.show();
 				}
 			}
-			Widget.bringToTop();
+			Widget.selectDialog();
 		},
 		_onContentType: function(value, oldValue){
 			this.contentType = contentTypeStr(value);
@@ -392,7 +402,7 @@ define([
 					self._moveHandle = rias.safeMixin(new ((rias.has("ie") === 6) ? TimedMoveable : Moveable)(
 						self.domNode,
 						{
-							delay: 0,
+							delay: self.moveDelay,
 							handle: self.captionNode// || self.focusNode
 						}
 					), {
@@ -420,7 +430,7 @@ define([
 						//onMoved: function(/*===== mover, leftTop =====*/){
 						}
 					});
-					self.own(self._moveHandle);
+					//self.own(self._moveHandle);
 					//self._doRestrictSizeHandle = rias.after(self._moveHandle, "onMoveStop", rias.hitch(self, "_doRestrictResize"));
 					self._doRestrictSizeHandle = rias.after(self._moveHandle, "onMoveStop", rias.hitch(self, function(){
 						self._doRestrictResize();
@@ -441,6 +451,56 @@ define([
 			//}
 		},
 
+		_onDomNodeEnter: function(e){
+			if(this.dockTo){
+				return;
+			}
+			this.inherited(arguments);
+		},
+		_onFocus: function(by){
+			this.inherited(arguments);
+			this.select(true);
+		},
+		focus: function(){
+			if(!this.isDestroyed(true) && (this.isHidden() || this.isCollapsed() || !this.isShown() || !this.get("visible"))){
+				///非可见时，直接返回，在 restore 后处理。
+				this.restore(true);
+			}else{
+				if(!this.get("selected")){
+					this.select(true);
+				}
+				this.inherited(arguments);
+			}
+		},
+
+		onSelected: function(selected){
+		},
+		_onSelected: function(value, oldValue){
+			//console.debug(this.id.split("_").pop(), "selected: ", this.selected);
+			//console.debug(this.id.split("_").pop(), "_lastFocusedNode: ", this._lastFocusedNode);
+			//console.debug(this.id.split("_").pop(), "_focusableNode: ", this._focusableNode);
+			if(value && !oldValue){
+				this.focus();
+			}
+		},
+		_setSelectedAttr: function(value){
+			if(!this.isDestroyed(true)){
+				value = value != false;
+				this._set("selected", value);
+				rias.dom.setAttr(this.domNode, "selected", value);
+				this.onSelected(this.get("selected"));
+			}
+		},
+		select: function(value){
+			value = !!value;
+			if(value){
+				Widget.selectDialog(this);
+			}else{
+				Widget.selectDialog();
+			}
+			this.set("selected", value);
+		},
+
 		//layout: function(){
 		//	this.inherited(arguments);
 		//},
@@ -449,8 +509,8 @@ define([
 			if(this._riasrUnderlay){
 				this._riasrUnderlay.hide();
 			}
-			if(this.isTopmost){
-				Widget.bringToTop();
+			if(this.get("selected")){
+				this.select(false);
 			}
 		},
 		_onShow: function(newState){
@@ -460,46 +520,30 @@ define([
 					self._riasrUnderlay.show();
 				}
 				if(self.isShown() && self.focusOnShow && !(self.autoClose > 0) && !self.isTip()){
-					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 selected
 					if(self._playingDeferred){
 						rias.when(self._playingDeferred, function(){
-							self.bringToTop();
+							self.focus();
 						});
 					}else{
-						self.bringToTop();
+						self.focus();
 					}
 				}else{
 
 				}
 			});
 		},
-		/*restore: function(forceVisible){
-			var self = this;
-			return rias.when(self.inherited(arguments), function(result){
-				if(result === self && self.isShown()){///防止无限递归
-					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
-					if(self._playingDeferred){
-						rias.when(self._playingDeferred, function(){
-							self.bringToTop();
-						});
-					}else{
-						self.bringToTop();
-					}
-				}
-				return self;
-			});
-		},*/
 		_restore: function(silent){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(self.isShown()){///防止无限递归
-					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 selected
 					if(self._playingDeferred){
 						rias.when(self._playingDeferred, function(){
-							self.bringToTop();
+							self.focus();
 						});
 					}else{
-						self.bringToTop();
+						self.focus();
 					}
 				}
 			});
@@ -508,53 +552,20 @@ define([
 			var self = this;
 			return rias.when(self.inherited(arguments), function(result){
 				if(self.isShown()){///防止无限递归
-					///有些时候，show 之前已经 focus，导致 onFocus 时不能 bringToTop
+					///有些时候，show 之前已经 focus，导致 onFocus 时不能 selected
 					if(self._playingDeferred){
 						rias.when(self._playingDeferred, function(){
-							self.bringToTop();
+							self.focus();
 						});
 					}else{
-						self.bringToTop();
+						self.focus();
 					}
 				}
 			});
 		},
-		_onDomNodeEnter: function(e){
-			if(this.dockTo){
-				return;
-			}
-			this.inherited(arguments);
-		},
-
-		//_doDock: function(){
-		//	this.inherited(arguments);
-		//	Widget.bringToTop();
-		//},
 
 		resize: function(/* Object */rect){
 			this.inherited(arguments);
-		},
-
-		_onBlur: function(){
-			this.inherited(arguments);
-		},
-		_onFocus: function(){
-			this.inherited(arguments);
-			this.bringToTop();
-		},
-		focus: function(){
-			this.inherited(arguments);
-		},
-		onBringToTop: function(isTopmost){
-		},
-		_onBringToTop: function(){
-			this.onBringToTop(this.isTopmost);
-			if(this.isTopmost && !this.focused){
-				this.focus();
-			}
-		},
-		bringToTop: function(){
-			Widget.bringToTop(this);
 		}
 
 	});
@@ -563,71 +574,47 @@ define([
 	Widget._currentZModal = _startZ;
 	Widget._currentZTop = _startZ;
 	Widget._currentZNormal = _startZ;
-	Widget.bringToTop = function(win){
+	Widget.selectDialog = function(win){
 		var i, z, zt, h,
 			ws, ms, ts;
 
 		function _visible(d){
 			return d.isShown() && d.get("visible");
 		}
-		function _topmost(h, value, z){
+		function _select(h, value, z){
+			//value = !!value;
 			if(value){
-				!Widget.topmost && (Widget.topmost = h);
-				rias.dom.addClass(h.domNode, "riaswDialogPanelTopmost");
-				rias.dom.addClass(h.captionNode, "riaswDialogPanelCaptionNodeTopmost");
-			}else{
-				rias.dom.removeClass(h.domNode, "riaswDialogPanelTopmost");
-				rias.dom.removeClass(h.captionNode, "riaswDialogPanelCaptionNodeTopmost");
+				Widget.selected = h;
 			}
-			//rias.dom.setStyle(h.domNode, "zIndex", z);
 			h.set("zIndex", z);
-			if(h.get("isTopmost") != value){
-				h.set("isTopmost", !!value);
-				h.defer(h._onBringToTop);
+			///不应该用 set，会导致递归，以至 selected 不正常。
+			if(h.get("selected") != value){
+				h.set("selected", value);
 			}
 		}
-		/*function _isFocused(id){
-			return rias.indexOf(rias.dom.focusManager.activeStack, id) >= 0;
-		}*/
 		function _sort(a, b){
-			/*if(_isFocused(a.id)){
-				return 1;
-			}
-			if(_isFocused(b.id)){
-				return -1;
-			}*/
-			//h = a === win ? 1 : b === win ? -1 : rias.toInt(rias.dom.getStyle(a.domNode, "zIndex"), 0, 1) - rias.toInt(rias.dom.getStyle(b.domNode, "zIndex"), 0, 1);
 			h = a === win ? 1 : b === win ? -1 : rias.toInt(a.get("zIndex"), 0, 1) - rias.toInt(b.get("zIndex"), 0, 1);
-			//if(isNaN(h)){
-			//	h = 0;
-			//}
 			return (_visible(a) ? (_visible(b) ? h : 1) : (_visible(b) ? -1 : h));
 		}
 
-		if(!win || Widget.topmost === win){
-			///不指定 win、或 win 已经 topmost，以及没有 destroy，则直接返回。
-			if(Widget.topmost && !Widget.topmost.isDestroyed(true) && _visible(Widget.topmost)){
-				///已经是 topmost，则不触发 onBringToTop
-				if(!Widget.topmost.isTopmpst){
-					Widget.topmost.isTopmpst = true;
-					Widget.topmost._onBringToTop();
+		if(!win || Widget.selected === win){
+			///不指定 win、或 win 已经 selected，以及没有 destroy，则直接返回。
+			if(Widget.selected && !Widget.selected.isDestroyed(true) && _visible(Widget.selected)){
+				///已经是 selected，则不触发 onSelected
+				if(!Widget.selected.get("selected")){
+					Widget.selected.select(true);
 				}
-				return Widget.topmost;
+				return Widget.selected;
 			}
-			Widget.topmost = null;
 		}
-		//if(Widget.topmost && !_visible(Widget.topmost)){
-		//	Widget.topmost.isTopmpst = false;
-		//	Widget.topmost._onBringToTop();
-		//}
-		Widget.topmost = null;
+		Widget.selected = null;
 		if(win && win.isDestroyed(true)){
 			win = undefined;
 		}
 		if(win && (!_visible(win) || win.isHidden() || win.isCollapsed())){
 			///非可见时，直接返回，在 restore 后处理。
 			win.restore(true);
-			return Widget.topmost;
+			return Widget.selected;
 		}
 		///因为需要处理 css，应该包含未显示的
 		ws = rias.filter(_allWin, function(w){
@@ -639,7 +626,6 @@ define([
 		ts = rias.filter(_allWin, function(w){
 			return !w.isDestroyed(true) && w.isTop();// && (!win || w !== win);
 		});
-		//Underlay.hide();
 		try{
 			ws.sort(_sort);
 			ms.sort(_sort);
@@ -649,33 +635,22 @@ define([
 			for(i = ms.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ms[i];
-				///modal 以最后一个为 topmost
-				//if(h === win && _visible(h)){
-				if(!Widget.topmost && _visible(h)){
-					_topmost(h, true, zt);
-					/*Underlay.show({
-						ownerRiasw: h,
-						dialog: h,
-						"class": rias.map(h["class"].split(/\s/),function(s){
-							return s + "_underlay";
-						}).join(" "),
-						_onKeyDown: rias.hitch(h, "_onKey"),
-						ownerDocument: h.ownerDocument
-					}, zt - 1);*/
+				///modal 以最后一个为 selected
+				if(!Widget.selected && _visible(h)){
+					_select(h, true, zt);
 				}else{
-					_topmost(h, false, z);
+					_select(h, false, z);
 				}
 			}
 			zt = z;
-			///!win 时，以第一个为 topmost
 			Widget._currentZTop = (z -= 2);
 			for(i = ts.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ts[i];
-				if(!Widget.topmost && (!win || h === win) && _visible(h)){
-					_topmost(h, true, zt);
+				if(!Widget.selected && (!win || h === win) && _visible(h)){
+					_select(h, true, zt);
 				}else{
-					_topmost(h, false, z);
+					_select(h, false, z);
 				}
 			}
 			zt = z;
@@ -683,16 +658,15 @@ define([
 			for(i = ws.length - 1; i >= 0; i--){
 				z -= 2;
 				h = ws[i];
-				if(!Widget.topmost && (!win || h === win) && _visible(h)){
-					_topmost(h, true, zt);
+				if(!Widget.selected && (!win || h === win) && _visible(h)){
+					_select(h, true, zt);
 				}else{
-					_topmost(h, false, z);
+					_select(h, false, z);
 				}
 			}
 		}catch(e){
-			//Underlay.hide();
 		}
-		return Widget.topmost;
+		return Widget.selected;
 	};
 
 	Widget._riasdMeta = {

@@ -1,34 +1,3 @@
 //>>built
-
-define("dojo/on/asyncEventListener", ["../on", "../_base/window", "../dom-construct", "../domReady!"], function (on, baseWin, domConstruct) {
-    var testNode = domConstruct.create("div", null, baseWin.body()), testEvent, requiresClone;
-    on.once(testNode, "click", function (e) {
-        testEvent = e;
-    });
-    testNode.click();
-    try {
-        requiresClone = testEvent.clientX === undefined;
-    }
-    catch (e) {
-        requiresClone = true;
-    }
-    finally {
-        domConstruct.destroy(testNode);
-    }
-    function clone(arg) {
-        var argCopy = {}, i;
-        for (i in arg) {
-            argCopy[i] = arg[i];
-        }
-        return argCopy;
-    }
-    return function (listener) {
-        if (requiresClone) {
-            return function (e) {
-                listener.call(this, clone(e));
-            };
-        }
-        return listener;
-    };
-});
-
+define("dojo/on/asyncEventListener",["../on","../_base/window","../dom-construct","../domReady!"],function(f,a,c){function g(d){var a={},b;for(b in d)a[b]=d[b];return a}a=c.create("div",null,a.body());var e,b;f.once(a,"click",function(a){e=a});a.click();try{b=void 0===e.clientX}catch(h){b=!0}finally{c.destroy(a)}return function(a){return b?function(b){a.call(this,g(b))}:a}});
+/// asyncEventListener.js.map

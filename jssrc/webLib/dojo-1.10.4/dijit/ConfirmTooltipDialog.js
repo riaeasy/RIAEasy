@@ -1,6 +1,3 @@
 //>>built
-
-define("dijit/ConfirmTooltipDialog", ["dojo/_base/declare", "./TooltipDialog", "./_ConfirmDialogMixin"], function (declare, TooltipDialog, _ConfirmDialogMixin) {
-    return declare("dijit/ConfirmTooltipDialog", [TooltipDialog, _ConfirmDialogMixin], {});
-});
-
+define("dijit/ConfirmTooltipDialog",["dojo/_base/declare","./TooltipDialog","./_ConfirmDialogMixin"],function(a,b,c){return a("dijit/ConfirmTooltipDialog",[b,c],{})});
+/// ConfirmTooltipDialog.js.map

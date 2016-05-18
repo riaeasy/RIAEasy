@@ -1,28 +1,4 @@
 //>>built
-
-define("dojox/mvc/getPlainValue", ["dojo/_base/array", "dojo/_base/lang", "dojo/Stateful"], function (array, lang, Stateful) {
-    var getPlainValueOptions = {getType:function (v) {
-        return lang.isArray(v) ? "array" : v != null && {}.toString.call(v) == "[object Object]" ? "object" : "value";
-    }, getPlainArray:function (a) {
-        return array.map(a, function (item) {
-            return getPlainValue(item, this);
-        }, this);
-    }, getPlainObject:function (o) {
-        var plain = {};
-        for (var s in o) {
-            if (!(s in Stateful.prototype) && s != "_watchCallbacks") {
-                plain[s] = getPlainValue(o[s], this);
-            }
-        }
-        return plain;
-    }, getPlainValue:function (v) {
-        return v;
-    }};
-    var getPlainValue = function (value, options) {
-        return (options || getPlainValue)["getPlain" + (options || getPlainValue).getType(value).replace(/^[a-z]/, function (c) {
-            return c.toUpperCase();
-        })](value);
-    };
-    return lang.setObject("dojox.mvc.getPlainValue", lang.mixin(getPlainValue, getPlainValueOptions));
-});
-
+define("dojox/mvc/getPlainValue",["dojo/_base/array","dojo/_base/lang","dojo/Stateful"],function(f,e,g){var c=function(a,b){return(b||c)["getPlain"+(b||c).getType(a).replace(/^[a-z]/,function(a){return a.toUpperCase()})](a)};return e.setObject("dojox.mvc.getPlainValue",e.mixin(c,{getType:function(a){return e.isArray(a)?"array":null!=a&&"[object Object]"=={}.toString.call(a)?"object":"value"},getPlainArray:function(a){return f.map(a,function(a){return c(a,this)},this)},getPlainObject:function(a){var b=
+{},d;for(d in a)!(d in g.prototype)&&"_watchCallbacks"!=d&&(b[d]=c(a[d],this));return b},getPlainValue:function(a){return a}}))});
+/// getPlainValue.js.map

@@ -1,21 +1,4 @@
 //>>built
-
-define("dojox/mobile/ProgressBar", ["dojo/_base/declare", "dojo/dom-class", "dojo/dom-construct", "dijit/_WidgetBase"], function (declare, domClass, domConstruct, WidgetBase) {
-    return declare("dojox.mobile.ProgressBar", WidgetBase, {value:"0", maximum:100, label:"", baseClass:"mblProgressBar", buildRendering:function () {
-        this.inherited(arguments);
-        this.progressNode = domConstruct.create("div", {className:"mblProgressBarProgress"}, this.domNode);
-        this.msgNode = domConstruct.create("div", {className:"mblProgressBarMsg"}, this.domNode);
-    }, _setValueAttr:function (value) {
-        value += "";
-        this._set("value", value);
-        var percent = Math.min(100, (value.indexOf("%") != -1 ? parseFloat(value) : this.maximum ? 100 * value / this.maximum : 0));
-        this.progressNode.style.width = percent + "%";
-        domClass.toggle(this.progressNode, "mblProgressBarNotStarted", !percent);
-        domClass.toggle(this.progressNode, "mblProgressBarComplete", percent == 100);
-        this.onChange(value, this.maximum, percent);
-    }, _setLabelAttr:function (label) {
-        this.msgNode.innerHTML = label;
-    }, onChange:function () {
-    }});
-});
-
+define("dojox/mobile/ProgressBar",["dojo/_base/declare","dojo/dom-class","dojo/dom-construct","dijit/_WidgetBase"],function(e,c,d,f){return e("dojox.mobile.ProgressBar",f,{value:"0",maximum:100,label:"",baseClass:"mblProgressBar",buildRendering:function(){this.inherited(arguments);this.progressNode=d.create("div",{className:"mblProgressBarProgress"},this.domNode);this.msgNode=d.create("div",{className:"mblProgressBarMsg"},this.domNode)},_setValueAttr:function(a){a+="";this._set("value",a);var b=Math.min(100,
+-1!=a.indexOf("%")?parseFloat(a):this.maximum?100*a/this.maximum:0);this.progressNode.style.width=b+"%";c.toggle(this.progressNode,"mblProgressBarNotStarted",!b);c.toggle(this.progressNode,"mblProgressBarComplete",100==b);this.onChange(a,this.maximum,b)},_setLabelAttr:function(a){this.msgNode.innerHTML=a},onChange:function(){}})});
+/// ProgressBar.js.map

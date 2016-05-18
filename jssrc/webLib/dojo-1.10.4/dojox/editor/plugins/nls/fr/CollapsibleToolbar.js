@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fr/CollapsibleToolbar", ({"collapse":"R\xe9duire la barre d'outils de l'\xe9diteur", "expand":"D\xe9velopper la barre d'outils de l'\xe9diteur"}));
-
+define("dojox/editor/plugins/nls/fr/CollapsibleToolbar",{collapse:"R\u00e9duire la barre d'outils de l'\u00e9diteur",expand:"D\u00e9velopper la barre d'outils de l'\u00e9diteur"});
+/// CollapsibleToolbar.js.map

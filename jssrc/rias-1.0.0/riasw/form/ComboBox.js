@@ -112,7 +112,6 @@ define([
 				type: "text",
 				labelType: "html",
 				label: "ComboBox",
-				tabIndex: 0,
 				invalidMessage: rias.i18n.message.invalid,
 				constraints: {locale: ""},
 				//regExp: ".*",
@@ -124,7 +123,6 @@ define([
 				//searchAttr: "id",
 				ignoreCase: true,
 				hasDownArrow: true,
-				scrollOnFocus: true,
 				highlightMatch: "first"
 			}, params);
 			if(!params.store && !this.srcNodeRef){///注意：!params.store && this.srcNodeRef 的时候，默认是取 srcNodeRef 中的数据。

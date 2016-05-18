@@ -115,10 +115,8 @@ define([
 		defaultParams: {
 			//content: "<span></span>",
 			type: "button",
-			tabIndex: 0,
 			showLabel: true,
-			optionsTitle: "combo options",
-			scrollOnFocus: true
+			optionsTitle: "combo options"
 		},
 		initialSize: {},
 		resizable: "none",

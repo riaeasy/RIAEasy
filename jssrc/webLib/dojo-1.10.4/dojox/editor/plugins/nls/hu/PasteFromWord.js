@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/PasteFromWord", ({"pasteFromWord":"Beilleszt\xe9s Word alkalmaz\xe1sb\xf3l", "instructions":"Illessze be a Word alkalmaz\xe1s tartalm\xe1t az al\xe1bbi sz\xf6vegmez\u0151be. Ha el\xe9gedett a besz\xfarand\xf3 tartalommal, akkor nyomja meg a beilleszt\xe9s gombot. Sz\xf6veg besz\xfar\xe1s\xe1nak megszak\xedt\xe1s\xe1hoz nyomja meg a m\xe9gse gombot."}));
-
+define("dojox/editor/plugins/nls/hu/PasteFromWord",{pasteFromWord:"Beilleszt\u00e9s Word alkalmaz\u00e1sb\u00f3l",instructions:"Illessze be a Word alkalmaz\u00e1s tartalm\u00e1t az al\u00e1bbi sz\u00f6vegmez\u0151be. Ha el\u00e9gedett a besz\u00farand\u00f3 tartalommal, akkor nyomja meg a beilleszt\u00e9s gombot. Sz\u00f6veg besz\u00far\u00e1s\u00e1nak megszak\u00edt\u00e1s\u00e1hoz nyomja meg a m\u00e9gse gombot."});
+/// PasteFromWord.js.map

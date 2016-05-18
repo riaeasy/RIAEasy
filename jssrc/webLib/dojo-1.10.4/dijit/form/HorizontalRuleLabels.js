@@ -1,46 +1,5 @@
 //>>built
-
-define("dijit/form/HorizontalRuleLabels", ["dojo/_base/declare", "dojo/has", "dojo/number", "dojo/query", "dojo/_base/lang", "./HorizontalRule"], function (declare, has, number, query, lang, HorizontalRule) {
-    var HorizontalRuleLabels = declare("dijit.form.HorizontalRuleLabels", HorizontalRule, {templateString:"<div class=\"dijitRuleContainer dijitRuleContainerH dijitRuleLabelsContainer dijitRuleLabelsContainerH\"></div>", labelStyle:"", labels:[], numericMargin:0, minimum:0, maximum:1, constraints:{pattern:"#%"}, _positionPrefix:"<div class=\"dijitRuleLabelContainer dijitRuleLabelContainerH\" style=\"left:", _labelPrefix:"\"><div class=\"dijitRuleLabel dijitRuleLabelH\">", _suffix:"</div></div>", _calcPosition:function (pos) {
-        return pos;
-    }, _genHTML:function (pos, ndx) {
-        var label = this.labels[ndx];
-        return this._positionPrefix + this._calcPosition(pos) + this._positionSuffix + this.labelStyle + this._genDirectionHTML(label) + this._labelPrefix + label + this._suffix;
-    }, _genDirectionHTML:function (label) {
-        return "";
-    }, getLabels:function () {
-        var labels = this.labels;
-        if (!labels.length && this.srcNodeRef) {
-            labels = query("> li", this.srcNodeRef).map(function (node) {
-                return String(node.innerHTML);
-            });
-        }
-        if (!labels.length && this.count > 1) {
-            var start = this.minimum;
-            var inc = (this.maximum - start) / (this.count - 1);
-            for (var i = 0; i < this.count; i++) {
-                labels.push((i < this.numericMargin || i >= (this.count - this.numericMargin)) ? "" : number.format(start, this.constraints));
-                start += inc;
-            }
-        }
-        return labels;
-    }, postMixInProperties:function () {
-        this.inherited(arguments);
-        this.labels = this.getLabels();
-        this.count = this.labels.length;
-    }});
-    if (0) {
-        HorizontalRuleLabels.extend({_setTextDirAttr:function (textDir) {
-            if (this.textDir != textDir) {
-                this._set("textDir", textDir);
-                query(".dijitRuleLabelContainer", this.domNode).forEach(lang.hitch(this, function (labelNode) {
-                    labelNode.style.direction = this.getTextDir(labelNode.innerText || labelNode.textContent || "");
-                }));
-            }
-        }, _genDirectionHTML:function (label) {
-            return (this.textDir ? ("direction:" + this.getTextDir(label) + ";") : "");
-        }});
-    }
-    return HorizontalRuleLabels;
-});
-
+define("dijit/form/HorizontalRuleLabels","dojo/_base/declare dojo/has dojo/number dojo/query dojo/_base/lang ./HorizontalRule".split(" "),function(e,k,f,g,l,h){return e("dijit.form.HorizontalRuleLabels",h,{templateString:'\x3cdiv class\x3d"dijitRuleContainer dijitRuleContainerH dijitRuleLabelsContainer dijitRuleLabelsContainerH"\x3e\x3c/div\x3e',labelStyle:"",labels:[],numericMargin:0,minimum:0,maximum:1,constraints:{pattern:"#%"},_positionPrefix:'\x3cdiv class\x3d"dijitRuleLabelContainer dijitRuleLabelContainerH" style\x3d"left:',
+_labelPrefix:'"\x3e\x3cdiv class\x3d"dijitRuleLabel dijitRuleLabelH"\x3e',_suffix:"\x3c/div\x3e\x3c/div\x3e",_calcPosition:function(a){return a},_genHTML:function(a,b){var c=this.labels[b];return this._positionPrefix+this._calcPosition(a)+this._positionSuffix+this.labelStyle+this._genDirectionHTML(c)+this._labelPrefix+c+this._suffix},_genDirectionHTML:function(a){return""},getLabels:function(){var a=this.labels;!a.length&&this.srcNodeRef&&(a=g("\x3e li",this.srcNodeRef).map(function(a){return String(a.innerHTML)}));
+if(!a.length&&1<this.count)for(var b=this.minimum,c=(this.maximum-b)/(this.count-1),d=0;d<this.count;d++)a.push(d<this.numericMargin||d>=this.count-this.numericMargin?"":f.format(b,this.constraints)),b+=c;return a},postMixInProperties:function(){this.inherited(arguments);this.labels=this.getLabels();this.count=this.labels.length}})});
+/// HorizontalRuleLabels.js.map

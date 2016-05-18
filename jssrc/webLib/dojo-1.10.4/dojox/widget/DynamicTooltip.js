@@ -1,39 +1,5 @@
 //>>built
-
-define("dojox/widget/DynamicTooltip", ["dijit", "dojo", "dojox", "dojo/i18n!dijit/nls/loading", "dojo/require!dijit/Tooltip"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.widget.DynamicTooltip");
-    dojo.experimental("dojox.widget.DynamicTooltip");
-    dojo.require("dijit.Tooltip");
-    dojo.requireLocalization("dijit", "loading");
-    dojo.declare("dojox.widget.DynamicTooltip", dijit.Tooltip, {hasLoaded:false, href:"", label:"", preventCache:false, postMixInProperties:function () {
-        this.inherited(arguments);
-        this._setLoadingLabel();
-    }, _setLoadingLabel:function () {
-        if (this.href) {
-            this.label = dojo.i18n.getLocalization("dijit", "loading", this.lang).loadingState;
-        }
-    }, _setHrefAttr:function (href) {
-        this.href = href;
-        this.hasLoaded = false;
-    }, loadContent:function (node) {
-        if (!this.hasLoaded && this.href) {
-            this._setLoadingLabel();
-            this.hasLoaded = true;
-            dojo.xhrGet({url:this.href, handleAs:"text", tooltipWidget:this, load:function (response, ioArgs) {
-                this.tooltipWidget.label = response;
-                this.tooltipWidget.close();
-                this.tooltipWidget.open(node);
-            }, preventCache:this.preventCache});
-        }
-    }, refresh:function () {
-        this.hasLoaded = false;
-    }, open:function (target) {
-        target = target || (this._connectNodes && this._connectNodes[0]);
-        if (!target) {
-            return;
-        }
-        this.loadContent(target);
-        this.inherited(arguments);
-    }});
-});
-
+define("dojox/widget/DynamicTooltip",["dijit","dojo","dojox","dojo/i18n!dijit/nls/loading","dojo/require!dijit/Tooltip"],function(b,a,d){a.provide("dojox.widget.DynamicTooltip");a.experimental("dojox.widget.DynamicTooltip");a.require("dijit.Tooltip");a.requireLocalization("dijit","loading");a.declare("dojox.widget.DynamicTooltip",b.Tooltip,{hasLoaded:!1,href:"",label:"",preventCache:!1,postMixInProperties:function(){this.inherited(arguments);this._setLoadingLabel()},_setLoadingLabel:function(){this.href&&
+(this.label=a.i18n.getLocalization("dijit","loading",this.lang).loadingState)},_setHrefAttr:function(a){this.href=a;this.hasLoaded=!1},loadContent:function(c){!this.hasLoaded&&this.href&&(this._setLoadingLabel(),this.hasLoaded=!0,a.xhrGet({url:this.href,handleAs:"text",tooltipWidget:this,load:function(a,b){this.tooltipWidget.label=a;this.tooltipWidget.close();this.tooltipWidget.open(c)},preventCache:this.preventCache}))},refresh:function(){this.hasLoaded=!1},open:function(a){if(a=a||this._connectNodes&&
+this._connectNodes[0])this.loadContent(a),this.inherited(arguments)}})});
+/// DynamicTooltip.js.map

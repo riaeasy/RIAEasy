@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/sv/SpellCheck", ({widgetLabel:"Batchstavningskontroll", unfound:"Finns inte", skip:"Hoppa \xf6ver", skipAll:"Hoppa \xf6ver alla", toDic:"L\xe4gg till i ordbok", suggestions:"F\xf6rslag", replace:"Ers\xe4tt", replaceWith:"Ers\xe4tt med", replaceAll:"Ers\xe4tt alla", cancel:"Avbryt", msg:"Det finns inga felstavningar", iSkip:"Hoppa \xf6ver det h\xe4r", iSkipAll:"Hoppa \xf6ver alla s\xe5dana h\xe4r", iMsg:"Inga stavningsf\xf6rslag"}));
-
+define("dojox/editor/plugins/nls/sv/SpellCheck",{widgetLabel:"Batchstavningskontroll",unfound:"Finns inte",skip:"Hoppa \u00f6ver",skipAll:"Hoppa \u00f6ver alla",toDic:"L\u00e4gg till i ordbok",suggestions:"F\u00f6rslag",replace:"Ers\u00e4tt",replaceWith:"Ers\u00e4tt med",replaceAll:"Ers\u00e4tt alla",cancel:"Avbryt",msg:"Det finns inga felstavningar",iSkip:"Hoppa \u00f6ver det h\u00e4r",iSkipAll:"Hoppa \u00f6ver alla s\u00e5dana h\u00e4r",iMsg:"Inga stavningsf\u00f6rslag"});
+/// SpellCheck.js.map

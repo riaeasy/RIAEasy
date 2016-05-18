@@ -1,7 +1,3 @@
 //>>built
-
-define("dojox/math", ["dojo", "dojox", "dojox/math/_base"], function (dojo, dojox, math) {
-    dojo.getObject("math", true, dojox);
-    return dojox.math;
-});
-
+define("dojox/math",["dojo","dojox","dojox/math/_base"],function(b,a,c){b.getObject("math",!0,a);return a.math});
+/// math.js.map

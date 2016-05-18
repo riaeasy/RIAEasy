@@ -30,9 +30,7 @@ define([
 			//content: "<input type='button'></input>",
 			label: "ToggleButton",
 			iconClass: "dijitCheckBoxIcon",
-			tabIndex: 0,
-			showLabel: true,
-			scrollOnFocus: true
+			showLabel: true
 		},
 		initialSize: {},
 		resizable: "none",

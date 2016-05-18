@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/zh/InsertEntity", ({insertEntity:"\u63d2\u5165\u7b26\u53f7"}));
-
+define("dojox/editor/plugins/nls/zh/InsertEntity",{insertEntity:"\u63d2\u5165\u7b26\u53f7"});
+/// InsertEntity.js.map

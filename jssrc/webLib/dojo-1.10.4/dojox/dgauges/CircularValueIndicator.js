@@ -1,24 +1,4 @@
 //>>built
-
-define("dojox/dgauges/CircularValueIndicator", ["dojo/_base/declare", "dojox/gfx", "./ScaleIndicatorBase", "dojo/_base/event"], function (declare, gfx, ScaleIndicatorBase, eventUtil) {
-    return declare("dojox.dgauges.CircularValueIndicator", ScaleIndicatorBase, {indicatorShapeFunc:function (group, indicator) {
-        return group.createLine({x1:0, y1:0, x2:40, y2:0}).setStroke({color:"black", width:1});
-    }, refreshRendering:function () {
-        this.inherited(arguments);
-        var v = isNaN(this._transitionValue) ? this.value : this._transitionValue;
-        var angle = this.scale.positionForValue(v);
-        this._gfxGroup.setTransform([{dx:this.scale.originX, dy:this.scale.originY}, gfx.matrix.rotateg(angle)]);
-    }, _onMouseDown:function (event) {
-        this.inherited(arguments);
-        var origin = this.scale._gauge._gaugeToPage(this.scale.originX, this.scale.originY);
-        var angle = ((Math.atan2(event.pageY - origin.y, event.pageX - origin.x)) * 180) / (Math.PI);
-        this.set("value", this.scale.valueForPosition(angle));
-        eventUtil.stop(event);
-    }, _onMouseMove:function (event) {
-        this.inherited(arguments);
-        var origin = this.scale._gauge._gaugeToPage(this.scale.originX, this.scale.originY);
-        var angle = ((Math.atan2(event.pageY - origin.y, event.pageX - origin.x)) * 180) / (Math.PI);
-        this.set("value", this.scale.valueForPosition(angle));
-    }});
-});
-
+define("dojox/dgauges/CircularValueIndicator",["dojo/_base/declare","dojox/gfx","./ScaleIndicatorBase","dojo/_base/event"],function(c,d,e,f){return c("dojox.dgauges.CircularValueIndicator",e,{indicatorShapeFunc:function(a,b){return a.createLine({x1:0,y1:0,x2:40,y2:0}).setStroke({color:"black",width:1})},refreshRendering:function(){this.inherited(arguments);var a=isNaN(this._transitionValue)?this.value:this._transitionValue,a=this.scale.positionForValue(a);this._gfxGroup.setTransform([{dx:this.scale.originX,
+dy:this.scale.originY},d.matrix.rotateg(a)])},_onMouseDown:function(a){this.inherited(arguments);var b=this.scale._gauge._gaugeToPage(this.scale.originX,this.scale.originY),b=180*Math.atan2(a.pageY-b.y,a.pageX-b.x)/Math.PI;this.set("value",this.scale.valueForPosition(b));f.stop(a)},_onMouseMove:function(a){this.inherited(arguments);var b=this.scale._gauge._gaugeToPage(this.scale.originX,this.scale.originY),b=180*Math.atan2(a.pageY-b.y,a.pageX-b.x)/Math.PI;this.set("value",this.scale.valueForPosition(b))}})});
+/// CircularValueIndicator.js.map

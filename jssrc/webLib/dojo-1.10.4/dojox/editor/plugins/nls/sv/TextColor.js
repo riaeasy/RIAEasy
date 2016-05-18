@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/sv/TextColor", ({"setButtonText":"Anv\xe4nd", "cancelButtonText":"Avbryt"}));
-
+define("dojox/editor/plugins/nls/sv/TextColor",{setButtonText:"Anv\u00e4nd",cancelButtonText:"Avbryt"});
+/// TextColor.js.map

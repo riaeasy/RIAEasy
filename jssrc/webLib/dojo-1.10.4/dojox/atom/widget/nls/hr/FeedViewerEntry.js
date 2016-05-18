@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/hr/FeedViewerEntry", ({deleteButton:"[Izbri\u0161i]"}));
-
+define("dojox/atom/widget/nls/hr/FeedViewerEntry",{deleteButton:"[Izbri\u0161i]"});
+/// FeedViewerEntry.js.map

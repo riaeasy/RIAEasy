@@ -1,46 +1,5 @@
 //>>built
-
-define("dijit/_WidgetsInTemplateMixin", ["dojo/_base/array", "dojo/aspect", "dojo/_base/declare", "dojo/_base/lang", "dojo/parser"], function (array, aspect, declare, lang, parser) {
-    return declare("dijit._WidgetsInTemplateMixin", null, {_earlyTemplatedStartup:false, widgetsInTemplate:true, contextRequire:null, _beforeFillContent:function () {
-        if (this.widgetsInTemplate) {
-            var node = this.domNode;
-            if (this.containerNode && !this.searchContainerNode) {
-                this.containerNode.stopParser = true;
-            }
-            parser.parse(node, {noStart:!this._earlyTemplatedStartup, template:true, inherited:{dir:this.dir, lang:this.lang, textDir:this.textDir}, propsThis:this, contextRequire:this.contextRequire, scope:"dojo"}).then(lang.hitch(this, function (widgets) {
-                this._startupWidgets = widgets;
-                for (var i = 0; i < widgets.length; i++) {
-                    this._processTemplateNode(widgets[i], function (n, p) {
-                        return n[p];
-                    }, function (widget, type, callback) {
-                        if (type in widget) {
-                            return widget.connect(widget, type, callback);
-                        } else {
-                            return widget.on(type, callback, true);
-                        }
-                    });
-                }
-                if (this.containerNode && this.containerNode.stopParser) {
-                    delete this.containerNode.stopParser;
-                }
-            }));
-            if (!this._startupWidgets) {
-                throw new Error(this.declaredClass + ": parser returned unfilled promise (probably waiting for module auto-load), " + "unsupported by _WidgetsInTemplateMixin.   Must pre-load all supporting widgets before instantiation.");
-            }
-        }
-    }, _processTemplateNode:function (baseNode, getAttrFunc, attachFunc) {
-        if (getAttrFunc(baseNode, "dojoType") || getAttrFunc(baseNode, "data-dojo-type")) {
-            return true;
-        }
-        return this.inherited(arguments);
-    }, startup:function () {
-        array.forEach(this._startupWidgets, function (w) {
-            if (w && !w._started && w.startup) {
-                w.startup();
-            }
-        });
-        this._startupWidgets = null;
-        this.inherited(arguments);
-    }});
-});
-
+define("dijit/_WidgetsInTemplateMixin",["dojo/_base/array","dojo/aspect","dojo/_base/declare","dojo/_base/lang","dojo/parser"],function(e,k,f,g,h){return f("dijit._WidgetsInTemplateMixin",null,{_earlyTemplatedStartup:!1,widgetsInTemplate:!0,contextRequire:null,_beforeFillContent:function(){if(this.widgetsInTemplate){var a=this.domNode;this.containerNode&&!this.searchContainerNode&&(this.containerNode.stopParser=!0);h.parse(a,{noStart:!this._earlyTemplatedStartup,template:!0,inherited:{dir:this.dir,
+lang:this.lang,textDir:this.textDir},propsThis:this,contextRequire:this.contextRequire,scope:"dojo"}).then(g.hitch(this,function(a){this._startupWidgets=a;for(var b=0;b<a.length;b++)this._processTemplateNode(a[b],function(a,c){return a[c]},function(a,c,b){return c in a?a.connect(a,c,b):a.on(c,b,!0)});this.containerNode&&this.containerNode.stopParser&&delete this.containerNode.stopParser}));if(!this._startupWidgets)throw Error(this.declaredClass+": parser returned unfilled promise (probably waiting for module auto-load), unsupported by _WidgetsInTemplateMixin.   Must pre-load all supporting widgets before instantiation.");
+}},_processTemplateNode:function(a,d,b){return d(a,"dojoType")||d(a,"data-dojo-type")?!0:this.inherited(arguments)},startup:function(){e.forEach(this._startupWidgets,function(a){a&&(!a._started&&a.startup)&&a.startup()});this._startupWidgets=null;this.inherited(arguments)}})});
+/// _WidgetsInTemplateMixin.js.map

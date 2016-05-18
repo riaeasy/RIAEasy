@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/sv/ComboBox", ({previousMessage:"Tidigare val", nextMessage:"Fler val"}));
-
+define("dijit/form/nls/sv/ComboBox",{previousMessage:"Tidigare val",nextMessage:"Fler val"});
+/// ComboBox.js.map

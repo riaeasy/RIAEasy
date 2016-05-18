@@ -1,45 +1,4 @@
 //>>built
-
-define("dojo/store/Cache", ["../_base/lang", "../when"], function (lang, when) {
-    var Cache = function (masterStore, cachingStore, options) {
-        options = options || {};
-        return lang.delegate(masterStore, {query:function (query, directives) {
-            var results = masterStore.query(query, directives);
-            results.forEach(function (object) {
-                if (!options.isLoaded || options.isLoaded(object)) {
-                    cachingStore.put(object);
-                }
-            });
-            return results;
-        }, queryEngine:masterStore.queryEngine || cachingStore.queryEngine, get:function (id, directives) {
-            return when(cachingStore.get(id), function (result) {
-                return result || when(masterStore.get(id, directives), function (result) {
-                    if (result) {
-                        cachingStore.put(result, {id:id});
-                    }
-                    return result;
-                });
-            });
-        }, add:function (object, directives) {
-            return when(masterStore.add(object, directives), function (result) {
-                cachingStore.add(result && typeof result == "object" ? result : object, directives);
-                return result;
-            });
-        }, put:function (object, directives) {
-            cachingStore.remove((directives && directives.id) || this.getIdentity(object));
-            return when(masterStore.put(object, directives), function (result) {
-                cachingStore.put(result && typeof result == "object" ? result : object, directives);
-                return result;
-            });
-        }, remove:function (id, directives) {
-            return when(masterStore.remove(id, directives), function (result) {
-                return cachingStore.remove(id, directives);
-            });
-        }, evict:function (id) {
-            return cachingStore.remove(id);
-        }});
-    };
-    lang.setObject("dojo.store.Cache", Cache);
-    return Cache;
-});
-
+define("dojo/store/Cache",["../_base/lang","../when"],function(h,f){var k=function(e,d,g){g=g||{};return h.delegate(e,{query:function(a,c){var b=e.query(a,c);b.forEach(function(a){(!g.isLoaded||g.isLoaded(a))&&d.put(a)});return b},queryEngine:e.queryEngine||d.queryEngine,get:function(a,c){return f(d.get(a),function(b){return b||f(e.get(a,c),function(b){b&&d.put(b,{id:a});return b})})},add:function(a,c){return f(e.add(a,c),function(b){d.add(b&&"object"==typeof b?b:a,c);return b})},put:function(a,c){d.remove(c&&
+c.id||this.getIdentity(a));return f(e.put(a,c),function(b){d.put(b&&"object"==typeof b?b:a,c);return b})},remove:function(a,c){return f(e.remove(a,c),function(b){return d.remove(a,c)})},evict:function(a){return d.remove(a)}})};h.setObject("dojo.store.Cache",k);return k});
+/// Cache.js.map

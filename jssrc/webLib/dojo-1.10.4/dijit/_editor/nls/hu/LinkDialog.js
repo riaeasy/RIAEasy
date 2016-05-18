@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/_editor/nls/hu/LinkDialog", ({createLinkTitle:"Hivatkoz\xe1s tulajdons\xe1gai", insertImageTitle:"K\xe9p tulajdons\xe1gai", url:"URL:", text:"Le\xedr\xe1s:", target:"C\xe9l:", set:"Be\xe1ll\xedt\xe1s", currentWindow:"Aktu\xe1lis ablak", parentWindow:"Sz\xfcl\u0151 ablak", topWindow:"Legfels\u0151 szint\u0171 ablak", newWindow:"\xdaj ablak"}));
-
+define("dijit/_editor/nls/hu/LinkDialog",{createLinkTitle:"Hivatkoz\u00e1s tulajdons\u00e1gai",insertImageTitle:"K\u00e9p tulajdons\u00e1gai",url:"URL:",text:"Le\u00edr\u00e1s:",target:"C\u00e9l:",set:"Be\u00e1ll\u00edt\u00e1s",currentWindow:"Aktu\u00e1lis ablak",parentWindow:"Sz\u00fcl\u0151 ablak",topWindow:"Legfels\u0151 szint\u0171 ablak",newWindow:"\u00daj ablak"});
+/// LinkDialog.js.map

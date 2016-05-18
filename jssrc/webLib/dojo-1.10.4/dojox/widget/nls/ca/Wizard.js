@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/ca/Wizard", ({next:"Seg\xfcent", previous:"Anterior", done:"Fet"}));
-
+define("dojox/widget/nls/ca/Wizard",{next:"Seg\u00fcent",previous:"Anterior",done:"Fet"});
+/// Wizard.js.map

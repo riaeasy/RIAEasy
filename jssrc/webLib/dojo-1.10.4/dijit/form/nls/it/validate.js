@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/it/validate", ({invalidMessage:"Il valore immesso non \xe8 valido.", missingMessage:"Questo valore \xe8 obbligatorio.", rangeMessage:"Questo valore \xe8 fuori dall'intervallo consentito."}));
-
+define("dijit/form/nls/it/validate",{invalidMessage:"Il valore immesso non \u00e8 valido.",missingMessage:"Questo valore \u00e8 obbligatorio.",rangeMessage:"Questo valore \u00e8 fuori dall'intervallo consentito."});
+/// validate.js.map

@@ -1,13 +1,3 @@
 //>>built
-
-define("dojox/mobile/transition", ["dojo/_base/Deferred", "dojo/_base/config"], function (Deferred, config) {
-    if (config.mblCSS3Transition) {
-        var transitDeferred = new Deferred();
-        require([config.mblCSS3Transition], function (transit) {
-            transitDeferred.resolve(transit);
-        });
-        return transitDeferred;
-    }
-    return null;
-});
-
+define("dojox/mobile/transition",["dojo/_base/Deferred","dojo/_base/config"],function(c,a){if(a.mblCSS3Transition){var b=new c;require([a.mblCSS3Transition],function(a){b.resolve(a)});return b}return null});
+/// transition.js.map

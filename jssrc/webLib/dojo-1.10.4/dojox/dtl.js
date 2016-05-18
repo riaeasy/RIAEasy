@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/dtl", ["./dtl/_base"], function (dxdtl) {
-    return dxdtl;
-});
-
+define("dojox/dtl",["./dtl/_base"],function(a){return a});
+/// dtl.js.map

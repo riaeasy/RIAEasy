@@ -1,61 +1,8 @@
 //>>built
-
-require({cache:{"url:dijit/layout/templates/_TabButton.html":"<div role=\"presentation\" data-dojo-attach-point=\"titleNode,innerDiv,tabContent\" class=\"dijitTabInner dijitTabContent\">\n\t<span role=\"presentation\" class=\"dijitInline dijitIcon dijitTabButtonIcon\" data-dojo-attach-point=\"iconNode\"></span>\n\t<span data-dojo-attach-point='containerNode,focusNode' class='tabLabel'></span>\n\t<span class=\"dijitInline dijitTabCloseButton dijitTabCloseIcon\" data-dojo-attach-point='closeNode'\n\t\t  role=\"presentation\">\n\t\t<span data-dojo-attach-point='closeText' class='dijitTabCloseText'>[x]</span\n\t\t\t\t></span>\n</div>\n"}});
-define("dijit/layout/TabController", ["dojo/_base/declare", "dojo/dom", "dojo/dom-attr", "dojo/dom-class", "dojo/has", "dojo/i18n", "dojo/_base/lang", "./StackController", "../registry", "../Menu", "../MenuItem", "dojo/text!./templates/_TabButton.html", "dojo/i18n!../nls/common"], function (declare, dom, domAttr, domClass, has, i18n, lang, StackController, registry, Menu, MenuItem, template) {
-    var TabButton = declare("dijit.layout._TabButton" + (0 ? "_NoBidi" : ""), StackController.StackButton, {baseClass:"dijitTab", cssStateNodes:{closeNode:"dijitTabCloseButton"}, templateString:template, _setNameAttr:"focusNode", scrollOnFocus:false, buildRendering:function () {
-        this.inherited(arguments);
-        dom.setSelectable(this.containerNode, false);
-    }, startup:function () {
-        this.inherited(arguments);
-        var n = this.domNode;
-        this.defer(function () {
-            n.className = n.className;
-        }, 1);
-    }, _setCloseButtonAttr:function (disp) {
-        this._set("closeButton", disp);
-        domClass.toggle(this.domNode, "dijitClosable", disp);
-        this.closeNode.style.display = disp ? "" : "none";
-        if (disp) {
-            var _nlsResources = i18n.getLocalization("dijit", "common");
-            if (this.closeNode) {
-                domAttr.set(this.closeNode, "title", _nlsResources.itemClose);
-            }
-        }
-    }, _setDisabledAttr:function (disabled) {
-        this.inherited(arguments);
-        if (this.closeNode) {
-            if (disabled) {
-                domAttr.remove(this.closeNode, "title");
-            } else {
-                var _nlsResources = i18n.getLocalization("dijit", "common");
-                domAttr.set(this.closeNode, "title", _nlsResources.itemClose);
-            }
-        }
-    }, _setLabelAttr:function (content) {
-        this.inherited(arguments);
-        if (!this.showLabel && !this.params.title) {
-            this.iconNode.alt = lang.trim(this.containerNode.innerText || this.containerNode.textContent || "");
-        }
-    }});
-    if (0) {
-        TabButton = declare("dijit.layout._TabButton", TabButton, {_setLabelAttr:function (content) {
-            this.inherited(arguments);
-            this.applyTextDir(this.iconNode, this.iconNode.alt);
-        }});
-    }
-    var TabController = declare("dijit.layout.TabController", StackController, {baseClass:"dijitTabController", templateString:"<div role='tablist' data-dojo-attach-event='onkeydown:onkeydown'></div>", tabPosition:"top", buttonWidget:TabButton, buttonWidgetCloseClass:"dijitTabCloseButton", postCreate:function () {
-        this.inherited(arguments);
-        var closeMenu = new Menu({id:this.id + "_Menu", ownerDocument:this.ownerDocument, dir:this.dir, lang:this.lang, textDir:this.textDir, targetNodeIds:[this.domNode], selector:function (node) {
-            return domClass.contains(node, "dijitClosable") && !domClass.contains(node, "dijitTabDisabled");
-        }});
-        this.own(closeMenu);
-        var _nlsResources = i18n.getLocalization("dijit", "common"), controller = this;
-        closeMenu.addChild(new MenuItem({label:_nlsResources.itemClose, ownerDocument:this.ownerDocument, dir:this.dir, lang:this.lang, textDir:this.textDir, onClick:function (evt) {
-            var button = registry.byNode(this.getParent().currentTarget);
-            controller.onCloseButtonClick(button.page);
-        }}));
-    }});
-    TabController.TabButton = TabButton;
-    return TabController;
-});
-
+require({cache:{"url:dijit/layout/templates/_TabButton.html":'\x3cdiv role\x3d"presentation" data-dojo-attach-point\x3d"titleNode,innerDiv,tabContent" class\x3d"dijitTabInner dijitTabContent"\x3e\n\t\x3cspan role\x3d"presentation" class\x3d"dijitInline dijitIcon dijitTabButtonIcon" data-dojo-attach-point\x3d"iconNode"\x3e\x3c/span\x3e\n\t\x3cspan data-dojo-attach-point\x3d\'containerNode,focusNode\' class\x3d\'tabLabel\'\x3e\x3c/span\x3e\n\t\x3cspan class\x3d"dijitInline dijitTabCloseButton dijitTabCloseIcon" data-dojo-attach-point\x3d\'closeNode\'\n\t\t  role\x3d"presentation"\x3e\n\t\t\x3cspan data-dojo-attach-point\x3d\'closeText\' class\x3d\'dijitTabCloseText\'\x3e[x]\x3c/span\n\t\t\t\t\x3e\x3c/span\x3e\n\x3c/div\x3e\n'}});
+define("dijit/layout/TabController","dojo/_base/declare dojo/dom dojo/dom-attr dojo/dom-class dojo/has dojo/i18n dojo/_base/lang ./StackController ../registry ../Menu ../MenuItem dojo/text!./templates/_TabButton.html dojo/i18n!../nls/common".split(" "),function(b,h,c,d,e,f,k,g,l,m,n,p){e=b("dijit.layout._TabButton",g.StackButton,{baseClass:"dijitTab",cssStateNodes:{closeNode:"dijitTabCloseButton"},templateString:p,_setNameAttr:"focusNode",scrollOnFocus:!1,buildRendering:function(){this.inherited(arguments);
+h.setSelectable(this.containerNode,!1)},startup:function(){this.inherited(arguments);var a=this.domNode;this.defer(function(){a.className=a.className},1)},_setCloseButtonAttr:function(a){this._set("closeButton",a);d.toggle(this.domNode,"dijitClosable",a);this.closeNode.style.display=a?"":"none";a&&(a=f.getLocalization("dijit","common"),this.closeNode&&c.set(this.closeNode,"title",a.itemClose))},_setDisabledAttr:function(a){this.inherited(arguments);if(this.closeNode)if(a)c.remove(this.closeNode,"title");
+else{var b=f.getLocalization("dijit","common");c.set(this.closeNode,"title",b.itemClose)}},_setLabelAttr:function(a){this.inherited(arguments);!this.showLabel&&!this.params.title&&(this.iconNode.alt=k.trim(this.containerNode.innerText||this.containerNode.textContent||""))}});b=b("dijit.layout.TabController",g,{baseClass:"dijitTabController",templateString:"\x3cdiv role\x3d'tablist' data-dojo-attach-event\x3d'onkeydown:onkeydown'\x3e\x3c/div\x3e",tabPosition:"top",buttonWidget:e,buttonWidgetCloseClass:"dijitTabCloseButton",
+postCreate:function(){this.inherited(arguments);var a=new m({id:this.id+"_Menu",ownerDocument:this.ownerDocument,dir:this.dir,lang:this.lang,textDir:this.textDir,targetNodeIds:[this.domNode],selector:function(a){return d.contains(a,"dijitClosable")&&!d.contains(a,"dijitTabDisabled")}});this.own(a);var b=f.getLocalization("dijit","common"),c=this;a.addChild(new n({label:b.itemClose,ownerDocument:this.ownerDocument,dir:this.dir,lang:this.lang,textDir:this.textDir,onClick:function(a){a=l.byNode(this.getParent().currentTarget);
+c.onCloseButtonClick(a.page)}}))}});b.TabButton=e;return b});
+/// TabController.js.map

@@ -1,39 +1,4 @@
 //>>built
-
-define("dojox/drawing/manager/StencilUI", ["dojo", "../util/oo"], function (dojo, oo) {
-    var surface, surfaceNode;
-    return oo.declare(function (options) {
-        surface = options.surface;
-        this.canvas = options.canvas;
-        this.mouse = options.mouse;
-        this.keys = options.keys;
-        this._mouseHandle = this.mouse.register(this);
-        this.stencils = {};
-    }, {register:function (stencil) {
-        this.stencils[stencil.id] = stencil;
-        return stencil;
-    }, onUiDown:function (obj) {
-        if (!this._isStencil(obj)) {
-            return;
-        }
-        this.stencils[obj.id].onDown(obj);
-    }, onUiUp:function (obj) {
-        if (!this._isStencil(obj)) {
-            return;
-        }
-        this.stencils[obj.id].onUp(obj);
-    }, onOver:function (obj) {
-        if (!this._isStencil(obj)) {
-            return;
-        }
-        this.stencils[obj.id].onOver(obj);
-    }, onOut:function (obj) {
-        if (!this._isStencil(obj)) {
-            return;
-        }
-        this.stencils[obj.id].onOut(obj);
-    }, _isStencil:function (obj) {
-        return !!obj.id && !!this.stencils[obj.id] && this.stencils[obj.id].type == "drawing.library.UI.Button";
-    }});
-});
-
+define("dojox/drawing/manager/StencilUI",["dojo","../util/oo"],function(c,b){return b.declare(function(a){this.canvas=a.canvas;this.mouse=a.mouse;this.keys=a.keys;this._mouseHandle=this.mouse.register(this);this.stencils={}},{register:function(a){return this.stencils[a.id]=a},onUiDown:function(a){if(this._isStencil(a))this.stencils[a.id].onDown(a)},onUiUp:function(a){if(this._isStencil(a))this.stencils[a.id].onUp(a)},onOver:function(a){if(this._isStencil(a))this.stencils[a.id].onOver(a)},onOut:function(a){if(this._isStencil(a))this.stencils[a.id].onOut(a)},
+_isStencil:function(a){return!!a.id&&!!this.stencils[a.id]&&"drawing.library.UI.Button"==this.stencils[a.id].type}})});
+/// StencilUI.js.map

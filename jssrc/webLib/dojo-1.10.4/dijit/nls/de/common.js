@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/nls/de/common", ({buttonOk:"OK", buttonCancel:"Abbrechen", buttonSave:"Speichern", itemClose:"Schlie\xdfen"}));
-
+define("dijit/nls/de/common",{buttonOk:"OK",buttonCancel:"Abbrechen",buttonSave:"Speichern",itemClose:"Schlie\u00dfen"});
+/// common.js.map

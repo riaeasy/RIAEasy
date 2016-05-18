@@ -19,7 +19,6 @@ define([
 			//content: "<input></input>",
 			states: "false, mixed, true",
 			checked: "false",
-			tabIndex: 0,
 			state: ""
 		},
 		initialSize: {},

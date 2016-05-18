@@ -17,7 +17,6 @@ define([
 		defaultParams: {
 			//content: "<input type='text'></input>",
 			value: 0,
-			tabIndex: 0,
 			required: true,
 			invalidMessage: rias.i18n.message.invalid,
 			rangeMessage: rias.i18n.message.range,
@@ -26,8 +25,7 @@ define([
 			defaultTimeout: 500,
 			timeoutChangeRate: 0.9,
 			smallDelta: 1,
-			largeDelta: 10,
-			scrollOnFocus: true
+			largeDelta: 10
 		},
 		initialSize: {},
 		resizable: "width",

@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fi/SafePaste", ({"instructions":"Suora liitt\xe4minen ei ole k\xe4yt\xf6ss\xe4. Liit\xe4 sis\xe4lt\xf6 t\xe4h\xe4n valintaikkunaan k\xe4ytt\xe4m\xe4ll\xe4 tavallisia selaimen pikan\xe4pp\xe4imi\xe4 tai valikon vaihtoehtoja. Kun lis\xe4tt\xe4v\xe4 sis\xe4lt\xf6 on mielest\xe4si valmis, napsauta Liit\xe4-painiketta. Voit peruuttaa lis\xe4yksen napsauttamalla Peruuta-painiketta."}));
-
+define("dojox/editor/plugins/nls/fi/SafePaste",{instructions:"Suora liitt\u00e4minen ei ole k\u00e4yt\u00f6ss\u00e4. Liit\u00e4 sis\u00e4lt\u00f6 t\u00e4h\u00e4n valintaikkunaan k\u00e4ytt\u00e4m\u00e4ll\u00e4 tavallisia selaimen pikan\u00e4pp\u00e4imi\u00e4 tai valikon vaihtoehtoja. Kun lis\u00e4tt\u00e4v\u00e4 sis\u00e4lt\u00f6 on mielest\u00e4si valmis, napsauta Liit\u00e4-painiketta. Voit peruuttaa lis\u00e4yksen napsauttamalla Peruuta-painiketta."});
+/// SafePaste.js.map

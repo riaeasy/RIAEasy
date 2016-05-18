@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/es/ComboBox", ({previousMessage:"Opciones anteriores", nextMessage:"M\xe1s opciones"}));
-
+define("dijit/form/nls/es/ComboBox",{previousMessage:"Opciones anteriores",nextMessage:"M\u00e1s opciones"});
+/// ComboBox.js.map

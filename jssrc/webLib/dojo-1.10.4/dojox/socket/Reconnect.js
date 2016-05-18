@@ -1,38 +1,4 @@
 //>>built
-
-define("dojox/socket/Reconnect", ["dojox/socket", "dojo/aspect"], function (dxSocket, aspect) {
-    dxSocket.Reconnect = function (socket, options) {
-        var reconnectTime = options.reconnectTime || 10000;
-        var checkForOpen, newSocket;
-        options = options || {};
-        aspect.after(socket, "onclose", function (event) {
-            clearTimeout(checkForOpen);
-            if (!event.wasClean) {
-                socket.disconnected(function () {
-                    dxSocket.replace(socket, newSocket = socket.reconnect());
-                });
-            }
-        }, true);
-        if (!socket.disconnected) {
-            socket.disconnected = function (reconnect) {
-                setTimeout(function () {
-                    reconnect();
-                    checkForOpen = setTimeout(function () {
-                        if (newSocket.readyState < 2) {
-                            reconnectTime = options.reconnectTime || 10000;
-                        }
-                    }, 10000);
-                }, reconnectTime);
-                reconnectTime *= options.backoffRate || 2;
-            };
-        }
-        if (!socket.reconnect) {
-            socket.reconnect = function () {
-                return socket.args ? dxSocket.LongPoll(socket.args) : dxSocket.WebSocket({url:socket.URL || socket.url});
-            };
-        }
-        return socket;
-    };
-    return dxSocket.Reconnect;
-});
-
+define("dojox/socket/Reconnect",["dojox/socket","dojo/aspect"],function(c,g){c.Reconnect=function(a,b){var d=b.reconnectTime||1E4,e,f;b=b||{};g.after(a,"onclose",function(b){clearTimeout(e);b.wasClean||a.disconnected(function(){c.replace(a,f=a.reconnect())})},!0);a.disconnected||(a.disconnected=function(a){setTimeout(function(){a();e=setTimeout(function(){2>f.readyState&&(d=b.reconnectTime||1E4)},1E4)},d);d*=b.backoffRate||2});a.reconnect||(a.reconnect=function(){return a.args?c.LongPoll(a.args):
+c.WebSocket({url:a.URL||a.url})});return a};return c.Reconnect});
+/// Reconnect.js.map

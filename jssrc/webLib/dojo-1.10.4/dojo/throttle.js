@@ -1,18 +1,3 @@
 //>>built
-
-define("dojo/throttle", [], function () {
-    return function (cb, wait) {
-        var canrun = true;
-        return function () {
-            if (!canrun) {
-                return;
-            }
-            canrun = false;
-            cb.apply(this, arguments);
-            setTimeout(function () {
-                canrun = true;
-            }, wait);
-        };
-    };
-});
-
+define("dojo/throttle",[],function(){return function(b,c){var a=!0;return function(){a&&(a=!1,b.apply(this,arguments),setTimeout(function(){a=!0},c))}}});
+/// throttle.js.map

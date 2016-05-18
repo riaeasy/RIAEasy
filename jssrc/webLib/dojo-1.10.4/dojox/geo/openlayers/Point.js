@@ -1,10 +1,3 @@
 //>>built
-
-define("dojox/geo/openlayers/Point", ["dojo/_base/declare", "./Geometry"], function (declare, Geometry) {
-    return declare("dojox.geo.openlayers.Point", Geometry, {setPoint:function (p) {
-        this.coordinates = p;
-    }, getPoint:function () {
-        return this.coordinates;
-    }});
-});
-
+define("dojox/geo/openlayers/Point",["dojo/_base/declare","./Geometry"],function(a,b){return a("dojox.geo.openlayers.Point",b,{setPoint:function(a){this.coordinates=a},getPoint:function(){return this.coordinates}})});
+/// Point.js.map

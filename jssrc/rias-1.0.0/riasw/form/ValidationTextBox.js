@@ -31,14 +31,12 @@ define([
 		defaultParams: {
 			//content: "<input type='text'></input>",
 			type: "text",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {
 				locale: ""
 			},
 			//regExp: ".*",
-			tooltipPosition: [],
-			scrollOnFocus: true
+			tooltipPosition: []
 		},
 		initialSize: {},
 		resizable: "width",

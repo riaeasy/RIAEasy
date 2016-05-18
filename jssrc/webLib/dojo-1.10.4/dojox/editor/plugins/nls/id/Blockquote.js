@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/id/Blockquote", ({"blockquote":"Blockquote"}));
-
+define("dojox/editor/plugins/nls/id/Blockquote",{blockquote:"Blockquote"});
+/// Blockquote.js.map

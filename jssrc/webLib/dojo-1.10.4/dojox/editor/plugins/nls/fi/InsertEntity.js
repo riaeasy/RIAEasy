@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/fi/InsertEntity", ({insertEntity:"Lis\xe4\xe4 symboli"}));
-
+define("dojox/editor/plugins/nls/fi/InsertEntity",{insertEntity:"Lis\u00e4\u00e4 symboli"});
+/// InsertEntity.js.map

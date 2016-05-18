@@ -29,14 +29,14 @@ define([
 	///不在前面加载，是为了保障加载的是打包后的 dojo/dojo 和 dijit/dijit（host-browser）
 	require(["rias/base/riasBase"], function (rias) {
 		if (has("host-browser")) {
-			rias.require(["dijit/dijit"], function () {
+			//rias.require(["dijit/main"], function () {
 				rias.require([
 					"rias/riasw/riastudio",
 					"rias/riasw/validate"
 				], function (rias) {
 					_d.resolve(rias);
 				});
-			});
+			//});
 		} else if (has("host-rhino") || has("host-node")) {
 			rias.require(["rias/riass/riass"], function (rias) {
 				_d.resolve(rias);

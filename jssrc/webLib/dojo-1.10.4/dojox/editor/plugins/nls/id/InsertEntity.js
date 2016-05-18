@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/id/InsertEntity", ({insertEntity:"Masukkan Simbol"}));
-
+define("dojox/editor/plugins/nls/id/InsertEntity",{insertEntity:"Masukkan Simbol"});
+/// InsertEntity.js.map

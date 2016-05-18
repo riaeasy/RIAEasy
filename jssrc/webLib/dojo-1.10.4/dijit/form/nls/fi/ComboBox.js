@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/fi/ComboBox", ({previousMessage:"Edelliset valinnat", nextMessage:"Lis\xe4\xe4 valintoja"}));
-
+define("dijit/form/nls/fi/ComboBox",{previousMessage:"Edelliset valinnat",nextMessage:"Lis\u00e4\u00e4 valintoja"});
+/// ComboBox.js.map

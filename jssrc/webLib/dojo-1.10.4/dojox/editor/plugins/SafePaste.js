@@ -1,53 +1,6 @@
 //>>built
-
-define("dojox/editor/plugins/SafePaste", ["dojo", "dijit", "dojox", "dojox/editor/plugins/PasteFromWord", "dijit/Dialog", "dojo/_base/connect", "dojo/_base/declare", "dojo/i18n", "dojo/string", "dojo/i18n!dojox/editor/plugins/nls/SafePaste", "dojo/i18n!dijit/nls/common", "dojo/i18n!dijit/_editor/nls/commands"], function (dojo, dijit, dojox, PasteFromWord) {
-    var SafePaste = dojo.declare("dojox.editor.plugins.SafePaste", [PasteFromWord], {_initButton:function () {
-        this._filters = this._filters.slice(0);
-        var strings = dojo.i18n.getLocalization("dojox.editor.plugins", "SafePaste");
-        dojo.mixin(strings, dojo.i18n.getLocalization("dijit", "common"));
-        dojo.mixin(strings, dojo.i18n.getLocalization("dijit._editor", "commands"));
-        this._uId = dijit.getUniqueId(this.editor.id);
-        strings.uId = this._uId;
-        strings.width = this.width || "400px";
-        strings.height = this.height || "300px";
-        this._dialog = new dijit.Dialog({title:strings["paste"]}).placeAt(dojo.body());
-        this._dialog.set("content", dojo.string.substitute(this._template, strings));
-        dojo.style(dojo.byId(this._uId + "_rte"), "opacity", 0.001);
-        this.connect(dijit.byId(this._uId + "_paste"), "onClick", "_paste");
-        this.connect(dijit.byId(this._uId + "_cancel"), "onClick", "_cancel");
-        this.connect(this._dialog, "onHide", "_clearDialog");
-        dojo.forEach(this.stripTags, function (tag) {
-            var tagName = tag + "";
-            var rxStartTag = new RegExp("<\\s*" + tagName + "[^>]*>", "igm");
-            var rxEndTag = new RegExp("<\\\\?\\/\\s*" + tagName + "\\s*>", "igm");
-            this._filters.push({regexp:rxStartTag, handler:""});
-            this._filters.push({regexp:rxEndTag, handler:""});
-        }, this);
-    }, updateState:function () {
-    }, setEditor:function (editor) {
-        this.editor = editor;
-        this._initButton();
-        this.editor.onLoadDeferred.addCallback(dojo.hitch(this, function () {
-            var spFunc = dojo.hitch(this, function (e) {
-                if (e) {
-                    dojo.stopEvent(e);
-                }
-                this._openDialog();
-                return true;
-            });
-            this.connect(this.editor.editNode, "onpaste", spFunc);
-            this.editor._pasteImpl = spFunc;
-        }));
-    }});
-    dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function (o) {
-        if (o.plugin) {
-            return;
-        }
-        var name = o.args.name.toLowerCase();
-        if (name === "safepaste") {
-            o.plugin = new SafePaste({width:(o.args.hasOwnProperty("width")) ? o.args.width : "400px", height:(o.args.hasOwnProperty("height")) ? o.args.width : "300px", stripTags:(o.args.hasOwnProperty("stripTags")) ? o.args.stripTags : null});
-        }
-    });
-    return SafePaste;
-});
-
+define("dojox/editor/plugins/SafePaste","dojo dijit dojox dojox/editor/plugins/PasteFromWord dijit/Dialog dojo/_base/connect dojo/_base/declare dojo/i18n dojo/string dojo/i18n!dojox/editor/plugins/nls/SafePaste dojo/i18n!dijit/nls/common dojo/i18n!dijit/_editor/nls/commands".split(" "),function(b,c,f,e){var d=b.declare("dojox.editor.plugins.SafePaste",[e],{_initButton:function(){this._filters=this._filters.slice(0);var a=b.i18n.getLocalization("dojox.editor.plugins","SafePaste");b.mixin(a,b.i18n.getLocalization("dijit",
+"common"));b.mixin(a,b.i18n.getLocalization("dijit._editor","commands"));this._uId=c.getUniqueId(this.editor.id);a.uId=this._uId;a.width=this.width||"400px";a.height=this.height||"300px";this._dialog=(new c.Dialog({title:a.paste})).placeAt(b.body());this._dialog.set("content",b.string.substitute(this._template,a));b.style(b.byId(this._uId+"_rte"),"opacity",0.001);this.connect(c.byId(this._uId+"_paste"),"onClick","_paste");this.connect(c.byId(this._uId+"_cancel"),"onClick","_cancel");this.connect(this._dialog,
+"onHide","_clearDialog");b.forEach(this.stripTags,function(a){a+="";var b=RegExp("\x3c\\\\?\\/\\s*"+a+"\\s*\x3e","igm");this._filters.push({regexp:RegExp("\x3c\\s*"+a+"[^\x3e]*\x3e","igm"),handler:""});this._filters.push({regexp:b,handler:""})},this)},updateState:function(){},setEditor:function(a){this.editor=a;this._initButton();this.editor.onLoadDeferred.addCallback(b.hitch(this,function(){var a=b.hitch(this,function(a){a&&b.stopEvent(a);this._openDialog();return!0});this.connect(this.editor.editNode,
+"onpaste",a);this.editor._pasteImpl=a}))}});b.subscribe(c._scopeName+".Editor.getPlugin",null,function(a){!a.plugin&&"safepaste"===a.args.name.toLowerCase()&&(a.plugin=new d({width:a.args.hasOwnProperty("width")?a.args.width:"400px",height:a.args.hasOwnProperty("height")?a.args.width:"300px",stripTags:a.args.hasOwnProperty("stripTags")?a.args.stripTags:null}))});return d});
+/// SafePaste.js.map

@@ -1,21 +1,3 @@
 //>>built
-
-define("dojox/mvc/Bind", ["dojo/_base/lang", "dojo/_base/array"], function (lang, array) {
-    var mvc = lang.getObject("dojox.mvc", true);
-    return lang.mixin(mvc, {bind:function (source, sourceProp, target, targetProp, func, bindOnlyIfUnequal) {
-        var convertedValue;
-        return source.watch(sourceProp, function (prop, oldValue, newValue) {
-            convertedValue = lang.isFunction(func) ? func(newValue) : newValue;
-            if (!bindOnlyIfUnequal || convertedValue != target.get(targetProp)) {
-                target.set(targetProp, convertedValue);
-            }
-        });
-    }, bindInputs:function (sourceBindArray, func) {
-        var watchHandles = [];
-        array.forEach(sourceBindArray, function (h) {
-            watchHandles.push(h.watch("value", func));
-        });
-        return watchHandles;
-    }});
-});
-
+define("dojox/mvc/Bind",["dojo/_base/lang","dojo/_base/array"],function(d,e){var l=d.getObject("dojox.mvc",!0);return d.mixin(l,{bind:function(a,c,b,g,h,e){var f;return a.watch(c,function(a,c,k){f=d.isFunction(h)?h(k):k;(!e||f!=b.get(g))&&b.set(g,f)})},bindInputs:function(a,c){var b=[];e.forEach(a,function(a){b.push(a.watch("value",c))});return b}})});
+/// Bind.js.map

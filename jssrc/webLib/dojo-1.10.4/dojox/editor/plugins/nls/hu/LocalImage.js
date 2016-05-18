@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/LocalImage", ({insertImageTitle:"K\xe9p besz\xfar\xe1sa", url:"K\xe9p", browse:"Tall\xf3z\xe1s...", text:"Le\xedr\xe1s", set:"Besz\xfar\xe1s", invalidMessage:"\xc9rv\xe9nytelen k\xe9pf\xe1jlt\xedpus", prePopuTextUrl:"Adja meg a k\xe9p URL c\xedm\xe9t", prePopuTextBrowse:" vagy tall\xf3z\xe1ssal v\xe1lasszon ki egy helyi f\xe1jlt."}));
-
+define("dojox/editor/plugins/nls/hu/LocalImage",{insertImageTitle:"K\u00e9p besz\u00far\u00e1sa",url:"K\u00e9p",browse:"Tall\u00f3z\u00e1s...",text:"Le\u00edr\u00e1s",set:"Besz\u00far\u00e1s",invalidMessage:"\u00c9rv\u00e9nytelen k\u00e9pf\u00e1jlt\u00edpus",prePopuTextUrl:"Adja meg a k\u00e9p URL c\u00edm\u00e9t",prePopuTextBrowse:" vagy tall\u00f3z\u00e1ssal v\u00e1lasszon ki egy helyi f\u00e1jlt."});
+/// LocalImage.js.map

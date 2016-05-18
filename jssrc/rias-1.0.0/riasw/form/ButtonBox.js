@@ -17,7 +17,6 @@ define([
 				type: "text",
 				labelType: "html",
 				label: "ButtonBox",
-				tabIndex: 0,
 				invalidMessage: rias.i18n.message.invalid,
 				//constraints: {locale: ""},
 				//regExp: ".*",
@@ -37,7 +36,6 @@ define([
 					}
 				},
 				hasDownArrow: true,
-				scrollOnFocus: true,
 				highlightMatch: "first"
 			}, params);
 			return params;

@@ -1,35 +1,6 @@
 //>>built
-
-define("dojox/dgauges/components/green/VerticalLinearGauge", ["dojo/_base/lang", "dojo/_base/declare", "dojo/_base/Color", "../utils", "../../RectangularGauge", "../../LinearScaler", "../../RectangularScale", "../../RectangularValueIndicator", "../DefaultPropertiesMixin"], function (lang, declare, Color, utils, RectangularGauge, LinearScaler, RectangularScale, RectangularValueIndicator, DefaultPropertiesMixin) {
-    return declare("dojox.dgauges.components.green.VerticalLinearGauge", [RectangularGauge, DefaultPropertiesMixin], {borderColor:[50, 50, 50], fillColor:[109, 183, 19], indicatorColor:[0, 0, 0], constructor:function () {
-        this.orientation = "vertical";
-        this.borderColor = new Color(this.borderColor);
-        this.fillColor = new Color(this.fillColor);
-        this.indicatorColor = new Color(this.indicatorColor);
-        this.addElement("background", lang.hitch(this, this.drawBackground));
-        var scaler = new LinearScaler();
-        var scale = new RectangularScale();
-        scale.set("scaler", scaler);
-        scale.set("labelPosition", "trailing");
-        scale.set("paddingTop", 30);
-        scale.set("paddingBottom", 30);
-        scale.set("paddingLeft", 15);
-        scale.set("labelGap", 2);
-        scale.set("font", {family:"Helvetica", weight:"bold", size:"7pt"});
-        this.addElement("scale", scale);
-        var indicator = new RectangularValueIndicator();
-        indicator.set("interactionArea", "gauge");
-        indicator.set("value", scaler.minimum);
-        indicator.set("paddingLeft", 18);
-        indicator.set("indicatorShapeFunc", lang.hitch(this, function (group) {
-            return group.createPolyline([0, 0, -10, -20, 10, -20, 0, 0]).setFill(this.indicatorColor);
-        }));
-        scale.addIndicator("indicator", indicator);
-    }, drawBackground:function (g, w, h) {
-        var lighterFillColor = utils.brightness(new Color(this.fillColor), 100);
-        g.createRect({x:0, y:0, width:50, height:h, r:10}).setFill(this.borderColor);
-        g.createRect({x:3, y:3, width:44, height:h - 6, r:7}).setFill({type:"linear", x1:6, y1:0, x2:38, y2:0, colors:[{offset:0, color:lighterFillColor}, {offset:1, color:this.fillColor}]});
-        g.createRect({x:6, y:6, width:38, height:h - 12, r:6}).setFill({type:"linear", x1:7, y1:0, x2:36, y2:0, colors:[{offset:0, color:[226, 226, 221]}, {offset:0.5, color:[239, 239, 236]}, {offset:1, color:"white"}]});
-    }});
-});
-
+define("dojox/dgauges/components/green/VerticalLinearGauge","dojo/_base/lang dojo/_base/declare dojo/_base/Color ../utils ../../RectangularGauge ../../LinearScaler ../../RectangularScale ../../RectangularValueIndicator ../DefaultPropertiesMixin".split(" "),function(e,f,d,g,h,k,l,m,n){return f("dojox.dgauges.components.green.VerticalLinearGauge",[h,n],{borderColor:[50,50,50],fillColor:[109,183,19],indicatorColor:[0,0,0],constructor:function(){this.orientation="vertical";this.borderColor=new d(this.borderColor);
+this.fillColor=new d(this.fillColor);this.indicatorColor=new d(this.indicatorColor);this.addElement("background",e.hitch(this,this.drawBackground));var c=new k,a=new l;a.set("scaler",c);a.set("labelPosition","trailing");a.set("paddingTop",30);a.set("paddingBottom",30);a.set("paddingLeft",15);a.set("labelGap",2);a.set("font",{family:"Helvetica",weight:"bold",size:"7pt"});this.addElement("scale",a);var b=new m;b.set("interactionArea","gauge");b.set("value",c.minimum);b.set("paddingLeft",18);b.set("indicatorShapeFunc",
+e.hitch(this,function(a){return a.createPolyline([0,0,-10,-20,10,-20,0,0]).setFill(this.indicatorColor)}));a.addIndicator("indicator",b)},drawBackground:function(c,a,b){a=g.brightness(new d(this.fillColor),100);c.createRect({x:0,y:0,width:50,height:b,r:10}).setFill(this.borderColor);c.createRect({x:3,y:3,width:44,height:b-6,r:7}).setFill({type:"linear",x1:6,y1:0,x2:38,y2:0,colors:[{offset:0,color:a},{offset:1,color:this.fillColor}]});c.createRect({x:6,y:6,width:38,height:b-12,r:6}).setFill({type:"linear",
+x1:7,y1:0,x2:36,y2:0,colors:[{offset:0,color:[226,226,221]},{offset:0.5,color:[239,239,236]},{offset:1,color:"white"}]})}})});
+/// VerticalLinearGauge.js.map

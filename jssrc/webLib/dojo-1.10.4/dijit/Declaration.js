@@ -1,35 +1,6 @@
 //>>built
-
-define("dijit/Declaration", ["dojo/_base/array", "dojo/aspect", "dojo/_base/declare", "dojo/_base/lang", "dojo/parser", "dojo/query", "./_Widget", "./_TemplatedMixin", "./_WidgetsInTemplateMixin", "dojo/NodeList-dom"], function (array, aspect, declare, lang, parser, query, _Widget, _TemplatedMixin, _WidgetsInTemplateMixin) {
-    return declare("dijit.Declaration", _Widget, {_noScript:true, stopParser:true, widgetClass:"", defaults:null, mixins:[], buildRendering:function () {
-        var src = this.srcNodeRef.parentNode.removeChild(this.srcNodeRef), methods = query("> script[type='dojo/method']", src).orphan(), connects = query("> script[type='dojo/connect']", src).orphan(), aspects = query("> script[type='dojo/aspect']", src).orphan(), srcType = src.nodeName;
-        var propList = this.defaults || {};
-        array.forEach(methods, function (s) {
-            var evt = s.getAttribute("event") || s.getAttribute("data-dojo-event"), func = parser._functionFromScript(s, "data-dojo-");
-            if (evt) {
-                propList[evt] = func;
-            } else {
-                aspects.push(s);
-            }
-        });
-        if (this.mixins.length) {
-            this.mixins = array.map(this.mixins, function (name) {
-                return lang.getObject(name);
-            });
-        } else {
-            this.mixins = [_Widget, _TemplatedMixin, _WidgetsInTemplateMixin];
-        }
-        propList._skipNodeCache = true;
-        propList.templateString = "<" + srcType + " class='" + src.className + "'" + " data-dojo-attach-point='" + (src.getAttribute("data-dojo-attach-point") || src.getAttribute("dojoAttachPoint") || "") + "' data-dojo-attach-event='" + (src.getAttribute("data-dojo-attach-event") || src.getAttribute("dojoAttachEvent") || "") + "' >" + src.innerHTML.replace(/\%7B/g, "{").replace(/\%7D/g, "}") + "</" + srcType + ">";
-        var wc = declare(this.widgetClass, this.mixins, propList);
-        array.forEach(aspects, function (s) {
-            var advice = s.getAttribute("data-dojo-advice") || "after", method = s.getAttribute("data-dojo-method") || "postscript", func = parser._functionFromScript(s);
-            aspect.after(wc.prototype, method, func, true);
-        });
-        array.forEach(connects, function (s) {
-            var evt = s.getAttribute("event") || s.getAttribute("data-dojo-event"), func = parser._functionFromScript(s);
-            aspect.after(wc.prototype, evt, func, true);
-        });
-    }});
-});
-
+define("dijit/Declaration","dojo/_base/array dojo/aspect dojo/_base/declare dojo/_base/lang dojo/parser dojo/query ./_Widget ./_TemplatedMixin ./_WidgetsInTemplateMixin dojo/NodeList-dom".split(" "),function(c,g,h,p,e,f,k,q,r){return h("dijit.Declaration",k,{_noScript:!0,stopParser:!0,widgetClass:"",defaults:null,mixins:[],buildRendering:function(){var b=this.srcNodeRef.parentNode.removeChild(this.srcNodeRef),s=f("\x3e script[type\x3d'dojo/method']",b).orphan(),t=f("\x3e script[type\x3d'dojo/connect']",
+b).orphan(),l=f("\x3e script[type\x3d'dojo/aspect']",b).orphan(),m=b.nodeName,d=this.defaults||{};c.forEach(s,function(a){var b=a.getAttribute("event")||a.getAttribute("data-dojo-event"),c=e._functionFromScript(a,"data-dojo-");b?d[b]=c:l.push(a)});this.mixins=this.mixins.length?c.map(this.mixins,function(a){return p.getObject(a)}):[k,q,r];d._skipNodeCache=!0;d.templateString="\x3c"+m+" class\x3d'"+b.className+"' data-dojo-attach-point\x3d'"+(b.getAttribute("data-dojo-attach-point")||b.getAttribute("dojoAttachPoint")||
+"")+"' data-dojo-attach-event\x3d'"+(b.getAttribute("data-dojo-attach-event")||b.getAttribute("dojoAttachEvent")||"")+"' \x3e"+b.innerHTML.replace(/\%7B/g,"{").replace(/\%7D/g,"}")+"\x3c/"+m+"\x3e";var n=h(this.widgetClass,this.mixins,d);c.forEach(l,function(a){a.getAttribute("data-dojo-advice");var b=a.getAttribute("data-dojo-method")||"postscript";a=e._functionFromScript(a);g.after(n.prototype,b,a,!0)});c.forEach(t,function(a){var b=a.getAttribute("event")||a.getAttribute("data-dojo-event");a=e._functionFromScript(a);
+g.after(n.prototype,b,a,!0)})}})});
+/// Declaration.js.map

@@ -1,6 +1,3 @@
 //>>built
-
-define("dojo/request", ["./request/default!"], function (request) {
-    return request;
-});
-
+define("dojo/request",["./request/default!"],function(a){return a});
+/// request.js.map

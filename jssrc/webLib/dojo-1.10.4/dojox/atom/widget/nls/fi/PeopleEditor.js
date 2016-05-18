@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/fi/PeopleEditor", ({add:"Lis\xe4\xe4", addAuthor:"Lis\xe4\xe4 tekij\xe4", addContributor:"Lis\xe4\xe4 lis\xe4\xe4j\xe4"}));
-
+define("dojox/atom/widget/nls/fi/PeopleEditor",{add:"Lis\u00e4\u00e4",addAuthor:"Lis\u00e4\u00e4 tekij\u00e4",addContributor:"Lis\u00e4\u00e4 lis\u00e4\u00e4j\u00e4"});
+/// PeopleEditor.js.map

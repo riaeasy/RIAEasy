@@ -106,9 +106,7 @@ define([
 		defaultParams: {
 			//content: "<span></span>",
 			label: "DropDown",
-			tabIndex: 0,
-			showLabel: true,
-			scrollOnFocus: true
+			showLabel: true
 		},
 		initialSize: {},
 		resizable: "none",

@@ -1,35 +1,4 @@
 //>>built
-
-define("dojox/app/Controller", ["dojo/_base/lang", "dojo/_base/declare", "dojo/on"], function (lang, declare, on) {
-    return declare("dojox.app.Controller", null, {constructor:function (app, events) {
-        this.events = this.events || events;
-        this._boundEvents = [];
-        this.app = app;
-    }, bind:function (evented, event, handler) {
-        if (arguments.length == 0) {
-            if (this.events) {
-                for (var item in this.events) {
-                    if (item.charAt(0) !== "_") {
-                        this.bind(this.app, item, lang.hitch(this, this.events[item]));
-                    }
-                }
-            }
-        } else {
-            var signal = on(evented, event, handler);
-            this._boundEvents.push({"event":event, "evented":evented, "signal":signal});
-        }
-        return this;
-    }, unbind:function (evented, event) {
-        var len = this._boundEvents.length;
-        for (var i = 0; i < len; i++) {
-            if ((this._boundEvents[i]["event"] == event) && (this._boundEvents[i]["evented"] == evented)) {
-                this._boundEvents[i]["signal"].remove();
-                this._boundEvents.splice(i, 1);
-                return;
-            }
-        }
-        console.warn("event '" + event + "' not bind on ", evented);
-        return this;
-    }});
-});
-
+define("dojox/app/Controller",["dojo/_base/lang","dojo/_base/declare","dojo/on"],function(e,f,g){return f("dojox.app.Controller",null,{constructor:function(b,c){this.events=this.events||c;this._boundEvents=[];this.app=b},bind:function(b,c,d){if(0==arguments.length){if(this.events)for(var a in this.events)"_"!==a.charAt(0)&&this.bind(this.app,a,e.hitch(this,this.events[a]))}else a=g(b,c,d),this._boundEvents.push({event:c,evented:b,signal:a});return this},unbind:function(b,c){for(var d=this._boundEvents.length,
+a=0;a<d;a++)if(this._boundEvents[a].event==c&&this._boundEvents[a].evented==b){this._boundEvents[a].signal.remove();this._boundEvents.splice(a,1);return}console.warn("event '"+c+"' not bind on ",b);return this}})});
+/// Controller.js.map

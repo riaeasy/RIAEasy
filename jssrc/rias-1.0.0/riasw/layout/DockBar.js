@@ -10,9 +10,10 @@ define([
 	"dijit/BackgroundIframe"
 ], function(rias, _Widget, _TemplatedMixin, _CssStateMixin, Moveable, _PanelBase, Panel, _BadgeMixin){
 
-	rias.theme.loadRiasCss([
-		"layout/DockBar.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/DockBar.css"
+	//]);
 
 	var DockNode = rias.declare("rias.riasw.layout.DockNode", [_Widget, _TemplatedMixin, _CssStateMixin, _BadgeMixin], {
 		title: "",
@@ -105,7 +106,8 @@ define([
 			/// isShown() 检测了 _wasShown，在初始化时由于 _playing 的延迟而导致返回 false。改用 displayState 来判断。
 			var d = this.targetWidget.displayState,
 				s = d === _PanelBase.displayShowNormal || d === _PanelBase.displayShowMax || d === _PanelBase.displayCollapsed;
-			rias.dom.toggleClass(this.domNode, "riaswDockNodeTopmost", !!this.targetWidget.isTopmost);
+			//rias.dom.toggleClass(this.domNode, "riaswDockNodeFocused", !!this.targetWidget.get("focused"));
+			rias.dom.toggleClass(this.domNode, "riaswDockNodeSelected", !!this.targetWidget.get("selected"));
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeShown", s);
 			rias.dom.toggleClass(this.domNode, "riaswDockNodeHidden", !s);
 			/*if(s){
@@ -142,15 +144,21 @@ define([
 					widget.watch('badge', function(name, oldValue, newValue){
 						self.set("badge", newValue);
 					}),
+					widget.watch('selected', function(name, oldValue, newValue){
+						self.setTargetState();
+					}),
+					//widget.watch('focused', function(name, oldValue, newValue){
+					//	self.setTargetState();
+					//}),
 					widget.watch('displayState', function(name, oldValue, newValue){
 						self.setTargetState();
 					})
 				);
-				if(rias.isFunction(widget.onBringToTop)){
-					self._hBadge.concat(self.own(rias.after(widget, "onBringToTop", function(){
-						self.setTargetState();
-					}, true)));
-				}
+				//if(rias.isFunction(widget.onSelected)){
+				//	self._hBadge.concat(self.own(rias.after(widget, "onSelected", function(){
+				//		self.setTargetState();
+				//	}, true)));
+				//}
 				self._set("targetWidget", widget);
 				self.set("caption", widget.get("caption"));
 				self.set("tooltip", widget.get("tooltip"));
@@ -174,15 +182,9 @@ define([
 		toggle: function(){
 			var target = this.targetWidget;
 			if(target && !target._playing){
-				//if(target.isShown() && target._wasResized && !target.isTopmost && rias.isFunction(target.bringToTop)){
-				///某些时候，target 被隐藏，但任然是 isTopmost
-				/*if(target.isShown() && target._wasResized && rias.isFunction(target.bringToTop)){
-					target.bringToTop();
-				}else if(rias.isFunction(target.toggle)){
-					target.toggle();
-				}*/
-				if(rias.isFunction(target.bringToTop) && (!target.get("visible") || !target.isTopmost)){
-					target.bringToTop();
+				///某些时候，target 被隐藏，但任然是 focused
+				if(rias.isFunction(target.focus) && (!target.get("visible") || !target.get("selected"))){
+					target.focus();
 				}else{
 					target.toggle();
 				}
@@ -207,10 +209,13 @@ define([
 							self._autoToggleDelay.remove();
 							self._autoToggleDelay = undefined;
 						}
+
 						if(target.isHidden() || target.isCollapsed()){
 							target.restore(true);
-						}else if(target.isShown() && !target.get("isTopmost")){
-							target.bringToTop();
+						}else if(rias.isFunction(target.focus) && (!target.get("visible") || !target.get("selected"))){
+							target.focus();
+						}else{
+							target.toggle();
 						}
 					}, rias.autoToggleDuration);
 				}

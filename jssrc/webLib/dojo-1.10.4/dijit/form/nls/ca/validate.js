@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/ca/validate", ({invalidMessage:"El valor introdu\xeft no \xe9s v\xe0lid", missingMessage:"Aquest valor \xe9s necessari", rangeMessage:"Aquest valor \xe9s fora de l'interval"}));
-
+define("dijit/form/nls/ca/validate",{invalidMessage:"El valor introdu\u00eft no \u00e9s v\u00e0lid",missingMessage:"Aquest valor \u00e9s necessari",rangeMessage:"Aquest valor \u00e9s fora de l'interval"});
+/// validate.js.map

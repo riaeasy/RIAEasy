@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/BidiSupport", {"ltr":"Balr\xf3l jobbra sz\xf6vegir\xe1ny", "rtl":"Jobbr\xf3l balra sz\xf6vegir\xe1ny"});
-
+define("dojox/editor/plugins/nls/hu/BidiSupport",{ltr:"Balr\u00f3l jobbra sz\u00f6vegir\u00e1ny",rtl:"Jobbr\u00f3l balra sz\u00f6vegir\u00e1ny"});
+/// BidiSupport.js.map

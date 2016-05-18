@@ -17,8 +17,6 @@ define([
 			//content: "<div></div>",
 			type: "text",
 			value: 0,
-			tabIndex: 0,
-			scrollOnFocus: true,
 			showButtons: true,
 			minimum: 0,
 			discreteValues: null,
@@ -33,45 +31,45 @@ define([
 			"type": {
 				"datatype": "string",
 				"defaultValue": "text",
-				"description": "Corresponds to the native HTML <input> element's attribute. From dijit.form._FormWidgetMixin.",
+				"description": "Corresponds to the native HTML <input> element's attribute.",
 				"hidden": true
 			},
 			"name": {
 				"datatype": "string",
 				"title": "Name",
-				"description": "Name used when submitting form; same as \"name\" attribute or plain HTML elements. From dijit.form._FormWidgetMixin."
+				"description": "Name used when submitting form; same as \"name\" attribute or plain HTML elements."
 			},
 			"alt": {
 				"datatype": "string",
 				"hidden": true,
-				"description": "Corresponds to the native HTML <input> element's attribute. From dijit.form._FormWidgetMixin."
+				"description": "Corresponds to the native HTML <input> element's attribute."
 			},
 			"value": {
 				"datatype": "number",
 				"defaultValue": 0,
 				"title": "Value",
-				"description": "Corresponds to the native HTML <input> element's attribute. From dijit.form._FormWidgetMixin."
+				"description": "Corresponds to the native HTML <input> element's attribute."
 			},
 			"tabIndex": {
 				"datatype": "number",
 				"defaultValue": "0",
 				"title": "Tab Index",
-				"description": "Order fields are traversed when user hits the tab key. From dijit.form._FormWidgetMixin."
+				"description": "Order fields are traversed when user hits the tab key."
 			},
 			"disabled": {
 				"datatype": "boolean",
 				"title": "Disabled",
-				"description": "Determines if this widget should respond to user input. From dijit.form._FormWidgetMixin."
+				"description": "Determines if this widget should respond to user input."
 			},
 			"intermediateChanges": {
 				"datatype": "boolean",
 				"title": "Intermediate Changes",
-				"description": "Fires onChange for each value change or only on demand. From dijit.form._FormWidgetMixin."
+				"description": "Fires onChange for each value change or only on demand."
 			},
 			"scrollOnFocus": {
 				"datatype": "boolean",
 				"title": "Scroll on Focus",
-				"description": "Determines if this this widget scroll into view on focus. From dijit.form._FormWidgetMixin.",
+				"description": "Determines if this this widget scroll into view on focus.",
 				"hidden": false,
 				"defaultValue": true
 			},

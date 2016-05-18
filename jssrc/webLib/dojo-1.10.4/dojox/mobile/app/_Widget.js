@@ -1,18 +1,3 @@
 //>>built
-
-define("dojox/mobile/app/_Widget", ["dijit", "dojo", "dojox", "dojo/require!dijit/_WidgetBase"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.mobile.app._Widget");
-    dojo.experimental("dojox.mobile.app._Widget");
-    dojo.require("dijit._WidgetBase");
-    dojo.declare("dojox.mobile.app._Widget", dijit._WidgetBase, {getScroll:function () {
-        return {x:dojo.global.scrollX, y:dojo.global.scrollY};
-    }, connect:function (target, event, fn) {
-        if (event.toLowerCase() == "dblclick" || event.toLowerCase() == "ondblclick") {
-            if (dojo.global["Mojo"]) {
-                return this.connect(target, Mojo.Event.tap, fn);
-            }
-        }
-        return this.inherited(arguments);
-    }});
-});
-
+define("dojox/mobile/app/_Widget",["dijit","dojo","dojox","dojo/require!dijit/_WidgetBase"],function(b,a,e){a.provide("dojox.mobile.app._Widget");a.experimental("dojox.mobile.app._Widget");a.require("dijit._WidgetBase");a.declare("dojox.mobile.app._Widget",b._WidgetBase,{getScroll:function(){return{x:a.global.scrollX,y:a.global.scrollY}},connect:function(b,c,d){return("dblclick"==c.toLowerCase()||"ondblclick"==c.toLowerCase())&&a.global.Mojo?this.connect(b,Mojo.Event.tap,d):this.inherited(arguments)}})});
+/// _Widget.js.map

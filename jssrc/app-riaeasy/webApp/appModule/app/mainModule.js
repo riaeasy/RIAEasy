@@ -26,18 +26,18 @@ define([
 						if(!rias.webApp.logged && args.requireLogged != false){
 							m.doLogin(function(){
 								m.newTabModule(args).then(function(){
-									d.resolve.apply(m, arguments);
+									d.resolve(rias.toArray(arguments));
 								}, function(){
-									d.reject.apply(m, arguments);
+									d.reject(rias.toArray(arguments));
 								});
 							}, function(){
-								d.reject.apply(m, arguments);
+								d.reject(rias.toArray(arguments));
 							});
 						}else{
 							m.newTabModule(args).then(function(){
-								d.resolve.apply(m, arguments);
+								d.resolve(rias.toArray(arguments));
 							}, function(){
-								d.reject.apply(m, arguments);
+								d.reject(rias.toArray(arguments));
 							});
 						}
 						return d.promise;
@@ -98,6 +98,7 @@ define([
 									around: "riasdFileSelector._riasrDockNode",
 									positions: ["below-centered"]
 								},
+								closable: false,
 								"dockTo": {
 									"$refObj": "appMainDockTop"
 								},
@@ -105,7 +106,7 @@ define([
 								//toggleable: false,
 								//toggleOnEnter: true,
 								toggleOnBlur: true,
-								submitDisplayState: "collapsed",
+								closeDisplayState: "collapsed",
 								style: {
 									width: "30em",
 									height: rias.toInt(m.domNode.clientHeight * 0.7, 600) + "px",//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
@@ -147,7 +148,7 @@ define([
 						//"toggleOnEnter": true,
 						toggleOnBlur: true,
 						//alwaysShowDockNode:true,
-						submitDisplayState: "collapsed",
+						closeDisplayState: "collapsed",
 						"initDisplayState": "hidden",
 						"initPlaceToArgs": {
 							parent: m,
@@ -156,7 +157,7 @@ define([
 						},
 						"style": {
 							//"display": "none",
-							"padding": "0px",
+							//"padding": "0px",
 							"width": "30em",
 							height: "60em"// rias.toInt(this.domNode.clientHeight * 0.8, 480) + "px"//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
 						}
@@ -277,21 +278,7 @@ define([
 									}else{
 										parent.selectChild(target, true);
 									}
-								/*},
-								_onMouseEnter: function(e){
-									var self = this,
-										target = self.targetWidget;
-									if(target && !self._autoToggleDelay && !target._playing){
-										self._autoToggleDelay = self.defer(function(){
-											rias.when(parent.selectChild(target, true), function(){
-												if(self._autoToggleDelay){
-													self._autoToggleDelay.remove();
-													self._autoToggleDelay = undefined;
-												}
-											});
-										}, rias.autoToggleDuration);
-									}
-								*/}
+								}
 							}
 						});
 					}
@@ -320,7 +307,6 @@ define([
 							d.reject(result);
 						}else if(c = result.widgets[0]){
 							if(asDialog){
-								//c.bringToTop();///需要保持设计值的 initDisplayState
 								d.resolve(c);
 							}else{
 								if(parent.selectedChildWidget != c){
@@ -358,7 +344,7 @@ define([
 				if(c = parentModule[args._riaswIdOfModule]){
 					if(!args.reCreate){
 						if(rias.isInstanceOf(c, "rias.riasw.layout.DialogPanel")){
-							c.bringToTop();///已存在，则唤起。
+							c.focus();
 							d.resolve(c);
 						}else{
 							rias.when(parent.selectChild(c, true), function(){
@@ -522,19 +508,7 @@ define([
 					"region": "center",
 					"tabPosition": "top",
 					"tabStrip": true,
-					"nested": false,
-					"onShowChild": function (page){
-							page.isTopmost = true;
-							if(page._riasrDockNode){
-								page._riasrDockNode.setTargetState();
-							}
-						},
-					"onHideChild": function (page){
-							page.isTopmost = undefined;
-							if(page._riasrDockNode){
-								page._riasrDockNode.setTargetState();
-							}
-						}
+					"nested": false
 				}
 			]
 		}

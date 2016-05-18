@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/image", ["./image/_base"], function (image) {
-    return image;
-});
-
+define("dojox/image",["./image/_base"],function(a){return a});
+/// image.js.map

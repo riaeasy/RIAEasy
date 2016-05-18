@@ -18,9 +18,7 @@ define([
 		defaultParams: {
 			//content: "<span></span>",
 			type: "text",
-			value: 0,
-			tabIndex: 0
-			//,scrollOnFocus: true
+			value: 0
 		},
 		initialSize: {},
 		resizable: "none",

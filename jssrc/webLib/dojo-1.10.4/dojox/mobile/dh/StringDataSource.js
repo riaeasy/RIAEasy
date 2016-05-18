@@ -1,10 +1,3 @@
 //>>built
-
-define("dojox/mobile/dh/StringDataSource", ["dojo/_base/declare"], function (declare) {
-    return declare("dojox.mobile.dh.StringDataSource", null, {text:"", constructor:function (text) {
-        this.text = text;
-    }, getData:function () {
-        return this.text;
-    }});
-});
-
+define("dojox/mobile/dh/StringDataSource",["dojo/_base/declare"],function(a){return a("dojox.mobile.dh.StringDataSource",null,{text:"",constructor:function(a){this.text=a},getData:function(){return this.text}})});
+/// StringDataSource.js.map

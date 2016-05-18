@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/pt/Blockquote", ({"blockquote":"Cita\xe7\xe3o de Bloco"}));
-
+define("dojox/editor/plugins/nls/pt/Blockquote",{blockquote:"Cita\u00e7\u00e3o de Bloco"});
+/// Blockquote.js.map

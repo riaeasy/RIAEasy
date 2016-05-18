@@ -1,24 +1,3 @@
 //>>built
-
-define("dojo/request/default", ["exports", "require", "../has"], function (exports, require, has) {
-    var defId = has("config-requestProvider"), platformId;
-    if (1 || has("host-webworker")) {
-        platformId = "./xhr";
-    } else {
-        if (0) {
-            platformId = "./node";
-        }
-    }
-    if (!defId) {
-        defId = platformId;
-    }
-    exports.getPlatformDefaultId = function () {
-        return platformId;
-    };
-    exports.load = function (id, parentRequire, loaded, config) {
-        require([id == "platform" ? platformId : defId], function (provider) {
-            loaded(provider);
-        });
-    };
-});
-
+define("dojo/request/default",["exports","require","../has"],function(a,d,c){var b=c("config-requestProvider");b||(b="./xhr");a.getPlatformDefaultId=function(){return"./xhr"};a.load=function(a,c,e,f){d(["platform"==a?"./xhr":b],function(a){e(a)})}});
+/// default.js.map

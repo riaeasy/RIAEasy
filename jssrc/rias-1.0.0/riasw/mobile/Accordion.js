@@ -3,8 +3,9 @@
 
 define([
 	"rias",
-	"dojox/mobile/Accordion"
-], function(rias, _Widget){
+	"dojox/mobile/Accordion",
+	"dojox/mobile/_css3"
+], function(rias, _Widget, _css3){
 
 	rias.theme.loadRiasCss([
 		"Accordion.css"
@@ -25,7 +26,7 @@ define([
 				this._openSpace = openSpace > 0 ? openSpace : 0;
 				var sel = this.getSelectedPanes()[0];
 				if(sel){
-					sel.domNode.style[rias.dom.css3.name("transition")] = "";
+					sel.domNode.style[_css3.name("transition")] = "";
 					sel.domNode.style.height = this._openSpace + "px";
 				}else{
 					console.error("no selectedPane of " + this.id);

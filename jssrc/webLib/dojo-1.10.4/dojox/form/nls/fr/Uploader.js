@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/fr/Uploader", ({label:"S\xe9lectionner les fichiers..."}));
-
+define("dojox/form/nls/fr/Uploader",{label:"S\u00e9lectionner les fichiers..."});
+/// Uploader.js.map

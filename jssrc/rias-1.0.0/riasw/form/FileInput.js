@@ -19,10 +19,8 @@ define([
 			//content: "<input></input>",
 			type: "text",
 			name: "uploadFile",
-			tabIndex: 0,
 			label: rias.i18n.action.browse,
 			cancelText: rias.i18n.action.cancel
-			//,scrollOnFocus: true
 		},
 		initialSize: {},
 		resizable: "width",

@@ -84,15 +84,13 @@ define([
 		iconClass16: "riaswTimeTextBoxIcon16",
 		defaultParams: {
 			//content: "<input type='text'></input>",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {
 				datePattern: "HH:mm:ss",
 				locale: "",
 				selector: "time",
 				fullYear: true
-			},
-			scrollOnFocus: true
+			}
 		},
 		initialSize: {},
 		resizable: "width",

@@ -1,32 +1,4 @@
 //>>built
-
-define("dojox/wire/TableAdapter", ["dijit", "dojo", "dojox", "dojo/require!dojox/wire/CompositeWire"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.wire.TableAdapter");
-    dojo.require("dojox.wire.CompositeWire");
-    dojo.declare("dojox.wire.TableAdapter", dojox.wire.CompositeWire, {_wireClass:"dojox.wire.TableAdapter", constructor:function (args) {
-        this._initializeChildren(this.columns);
-    }, _getValue:function (object) {
-        if (!object || !this.columns) {
-            return object;
-        }
-        var array = object;
-        if (!dojo.isArray(array)) {
-            array = [array];
-        }
-        var rows = [];
-        for (var i in array) {
-            var row = this._getRow(array[i]);
-            rows.push(row);
-        }
-        return rows;
-    }, _setValue:function (object, value) {
-        throw new Error("Unsupported API: " + this._wireClass + "._setValue");
-    }, _getRow:function (object) {
-        var row = (dojo.isArray(this.columns) ? [] : {});
-        for (var c in this.columns) {
-            row[c] = this.columns[c].getValue(object);
-        }
-        return row;
-    }});
-});
-
+define("dojox/wire/TableAdapter",["dijit","dojo","dojox","dojo/require!dojox/wire/CompositeWire"],function(f,d,e){d.provide("dojox.wire.TableAdapter");d.require("dojox.wire.CompositeWire");d.declare("dojox.wire.TableAdapter",e.wire.CompositeWire,{_wireClass:"dojox.wire.TableAdapter",constructor:function(a){this._initializeChildren(this.columns)},_getValue:function(a){if(!a||!this.columns)return a;d.isArray(a)||(a=[a]);var b=[],c;for(c in a){var e=this._getRow(a[c]);b.push(e)}return b},_setValue:function(a,
+b){throw Error("Unsupported API: "+this._wireClass+"._setValue");},_getRow:function(a){var b=d.isArray(this.columns)?[]:{},c;for(c in this.columns)b[c]=this.columns[c].getValue(a);return b}})});
+/// TableAdapter.js.map

@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/fi/PasswordValidator", ({nomatchMessage:"Salasanat eiv\xe4t t\xe4sm\xe4\xe4.", badPasswordMessage:"Salasana ei kelpaa."}));
-
+define("dojox/form/nls/fi/PasswordValidator",{nomatchMessage:"Salasanat eiv\u00e4t t\u00e4sm\u00e4\u00e4.",badPasswordMessage:"Salasana ei kelpaa."});
+/// PasswordValidator.js.map

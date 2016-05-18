@@ -1,7 +1,3 @@
 //>>built
-
-define("dijit/PopupMenuBarItem", ["dojo/_base/declare", "./PopupMenuItem", "./MenuBarItem"], function (declare, PopupMenuItem, MenuBarItem) {
-    var _MenuBarItemMixin = MenuBarItem._MenuBarItemMixin;
-    return declare("dijit.PopupMenuBarItem", [PopupMenuItem, _MenuBarItemMixin], {});
-});
-
+define("dijit/PopupMenuBarItem",["dojo/_base/declare","./PopupMenuItem","./MenuBarItem"],function(a,b,c){return a("dijit.PopupMenuBarItem",[b,c._MenuBarItemMixin],{})});
+/// PopupMenuBarItem.js.map

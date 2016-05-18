@@ -66,7 +66,6 @@ define([
 			type: "text",
 			labelType: "text",
 			label: "MultiComboBox",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {},
 			//regExp: ".*",
@@ -79,7 +78,6 @@ define([
 			ignoreCase: true,
 			hasDownArrow: true,
 			delimiter: ",",
-			//scrollOnFocus: true,
 			highlightMatch: "first"
 		},
 		initialSize: {},

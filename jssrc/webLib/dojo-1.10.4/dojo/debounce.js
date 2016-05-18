@@ -1,18 +1,3 @@
 //>>built
-
-define("dojo/debounce", [], function () {
-    return function (cb, wait) {
-        var timer;
-        return function () {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            var self = this;
-            var a = arguments;
-            timer = setTimeout(function () {
-                cb.apply(self, a);
-            }, wait);
-        };
-    };
-});
-
+define("dojo/debounce",[],function(){return function(b,c){var a;return function(){a&&clearTimeout(a);var d=this,e=arguments;a=setTimeout(function(){b.apply(d,e)},c)}}});
+/// debounce.js.map

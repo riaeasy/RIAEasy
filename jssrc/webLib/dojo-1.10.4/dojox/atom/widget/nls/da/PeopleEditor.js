@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/da/PeopleEditor", ({add:"Tilf\xf8j", addAuthor:"Tilf\xf8j forfatter", addContributor:"Tilf\xf8j bidragyder"}));
-
+define("dojox/atom/widget/nls/da/PeopleEditor",{add:"Tilf\u00f8j",addAuthor:"Tilf\u00f8j forfatter",addContributor:"Tilf\u00f8j bidragyder"});
+/// PeopleEditor.js.map

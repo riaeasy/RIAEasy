@@ -1,24 +1,4 @@
 //>>built
-
-define("dojo/rpc/JsonpService", ["../_base/array", "../_base/declare", "../_base/lang", "./RpcService", "../io/script"], function (array, declare, lang, RpcService, script) {
-    return declare("dojo.rpc.JsonpService", RpcService, {constructor:function (args, requiredArgs) {
-        if (this.required) {
-            if (requiredArgs) {
-                lang.mixin(this.required, requiredArgs);
-            }
-            array.forEach(this.required, function (req) {
-                if (req == "" || req == undefined) {
-                    throw new Error("Required Service Argument not found: " + req);
-                }
-            });
-        }
-    }, strictArgChecks:false, bind:function (method, parameters, deferredRequestHandler, url) {
-        var def = script.get({url:url || this.serviceUrl, callbackParamName:this.callbackParamName || "callback", content:this.createRequest(parameters), timeout:this.timeout, handleAs:"json", preventCache:true});
-        def.addCallbacks(this.resultCallback(deferredRequestHandler), this.errorCallback(deferredRequestHandler));
-    }, createRequest:function (parameters) {
-        var params = (lang.isArrayLike(parameters) && parameters.length == 1) ? parameters[0] : {};
-        lang.mixin(params, this.required);
-        return params;
-    }});
-});
-
+define("dojo/rpc/JsonpService",["../_base/array","../_base/declare","../_base/lang","./RpcService","../io/script"],function(d,e,b,f,g){return e("dojo.rpc.JsonpService",f,{constructor:function(a,c){this.required&&(c&&b.mixin(this.required,c),d.forEach(this.required,function(a){if(""==a||void 0==a)throw Error("Required Service Argument not found: "+a);}))},strictArgChecks:!1,bind:function(a,c,b,d){g.get({url:d||this.serviceUrl,callbackParamName:this.callbackParamName||"callback",content:this.createRequest(c),
+timeout:this.timeout,handleAs:"json",preventCache:!0}).addCallbacks(this.resultCallback(b),this.errorCallback(b))},createRequest:function(a){a=b.isArrayLike(a)&&1==a.length?a[0]:{};b.mixin(a,this.required);return a}})});
+/// JsonpService.js.map

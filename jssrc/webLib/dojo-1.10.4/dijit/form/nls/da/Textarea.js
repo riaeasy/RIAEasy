@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/da/Textarea", ({iframeEditTitle:"redigeringsomr\xe5de", iframeFocusTitle:"ramme om redigeringsomr\xe5de"}));
-
+define("dijit/form/nls/da/Textarea",{iframeEditTitle:"redigeringsomr\u00e5de",iframeFocusTitle:"ramme om redigeringsomr\u00e5de"});
+/// Textarea.js.map

@@ -172,6 +172,20 @@ define([
 		}
 		return undefined;
 	};
+	rias.focusNodeBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
+		if(rias.isRiasw(any._riasrWidget)){
+
+		}
+		var node = rias.dom.byId(any);
+		if(node){
+			return node;
+		}
+		node = rias.by.apply(this, arguments);
+		if(node){
+			return node.domNode;
+		}
+		return undefined;
+	};
 	rias.byUntil = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
 		var w = rias.by(any, context);
 		if(!w){

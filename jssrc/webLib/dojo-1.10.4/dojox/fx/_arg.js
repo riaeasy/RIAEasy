@@ -1,15 +1,3 @@
 //>>built
-
-define("dojox/fx/_arg", ["dojo/_base/lang"], function (lang) {
-    var fxArg = lang.getObject("dojox.fx._arg", true);
-    fxArg.StyleArgs = function (args) {
-        this.node = args.node;
-        this.cssClass = args.cssClass;
-    };
-    fxArg.ShadowResizeArgs = function (args) {
-        this.x = args.x;
-        this.y = args.y;
-    };
-    return fxArg;
-});
-
+define("dojox/fx/_arg",["dojo/_base/lang"],function(a){a=a.getObject("dojox.fx._arg",!0);a.StyleArgs=function(a){this.node=a.node;this.cssClass=a.cssClass};a.ShadowResizeArgs=function(a){this.x=a.x;this.y=a.y};return a});
+/// _arg.js.map

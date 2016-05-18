@@ -8,21 +8,23 @@ define([
 
 		/// FormLike =================================///
 
+		modified: false,
+
 		closeResult: -1,
-		submitDisplayState: "",
+		closeDisplayState: "closed",
 		name: "",
 		state: "",
 
 		constructor: function(params){
-			this.submitDeferred = rias.newDeferred();
+			this.closeDeferred = rias.newDeferred();
 		},
 		postMixInProperties: function(){
-			this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : "";
+			this.nameAttrSetting = this.name ? ("name='" + this.name + "'") : this._riaswIdOfModule ? ("name='" + this._riaswIdOfModule + "'") : "";
 			this.inherited(arguments);
 		},
 		destroy: function(){
-			if(!this.submitDeferred.isFulfilled){
-				this.submitDeferred.cancel();
+			if(!this.closeDeferred.isFulfilled()){
+				this.closeDeferred.resolve(this.closeResult);
 			}
 			this.inherited(arguments);
 		},
@@ -38,7 +40,7 @@ define([
 			self.own(
 				rias.on(
 					self.containerNode,
-					"attrmodified-state, attrmodified-disabled, attrmodified-value, attrmodified-checked",
+					"attrmodified-state, attrmodified-disabled, attrmodified-value, attrmodified-checked, attrmodified-modified",
 					function(evt){
 						if(evt.target == self.domNode){
 							return;	// ignore events that I fire on myself because my children changed
@@ -50,6 +52,11 @@ define([
 					self._onState(newVal, oldVal);
 				})
 			);
+		},
+
+		_onClose: function(){
+			var self = this;
+			return this.inherited(arguments);
 		},
 
 		_getDescendantFormWidgets: function(/*dijit/_WidgetBase[]?*/ children){
@@ -160,6 +167,26 @@ define([
 			});
 			return obj;
 		},
+		_getChildrenModified: function(){
+			var m = rias.some(this._getDescendantFormWidgets(), function(child){
+				return child.get("modified");
+			});
+			return !!m;
+		},
+		//_getModifiedAttr: function(){
+		//	return !!this.modified;
+		//},
+		_setModifiedAttr: function(value){
+			value = !!value;
+			if(!value){
+				rias.forEach(this._getDescendantFormWidgets(), function(child){
+					child.set("modified", false);
+				});
+				this._resetValue = this.get("value");
+			}
+			this._set("modified", value);
+			//console.debug(this.id + ".modified: ", value);
+		},
 
 		validate: function(){
 			var didFocus = false;
@@ -204,6 +231,9 @@ define([
 		},
 
 		_onChildChange: function(/*String*/ attr){
+			if(!attr || attr == "modified"){
+				this._set("modified", this._getChildrenModified());
+			}
 			if(!attr || attr == "state" || attr == "disabled"){
 				this._set("state", this._getState());
 			}
@@ -235,6 +265,7 @@ define([
 							widget.reset();
 						}
 					});
+					self.set("modified", false);
 				}
 			});
 		},
@@ -250,21 +281,17 @@ define([
 				e.preventDefault();
 			}
 			return rias.when(self.onSubmit.apply(self, arguments), function(result){
-				self.submitDeferred.resolve(result);
-				if(!(result === false)){
+				if(result != false){
 					rias.when(self.afterSubmit(result), function(result){
+						self.set("modified", false);
 						self.closeResult = 1;
-						if(self.submitDisplayState){
-							if(!self.isDisplayState(self.submitDisplayState)){
-								self.set("displayState", self.submitDisplayState);
-							}
-						}else{
-							self.close(self.closeResult);
-						}
+						rias.when(self.close(), function(){
+							self.closeDeferred.resolve(self.closeResult);
+						});
 					});
 				}
 			}, function(){
-				self.submitDeferred.reject();
+				self.closeDeferred.reject();
 			});
 		},
 		onCancel: function(){
@@ -277,11 +304,12 @@ define([
 				e.preventDefault();
 			}
 			return rias.when(self.onCancel(e), function(result){
-				if(!(result === false)){
-					//if(self.submitDisplayState){
-						self.closeResult = 0;
-						self.close(self.closeResult);
-					//}
+				if(result != false){
+					self.set("modified", false);
+					self.closeResult = 0;
+					rias.when(self.close(), function(){
+						self.closeDeferred.resolve(self.closeResult);
+					});
 				}
 			});
 		}

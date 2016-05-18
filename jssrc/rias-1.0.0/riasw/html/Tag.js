@@ -132,28 +132,33 @@ define([
 			//	this._onShow();
 			//}
 
-			// Set margin box size, unless it wasn't specified, in which case use current size.
-			if(changeSize){
-				rias.dom.setMarginBox(this.domNode, changeSize);
-			}
-
-			// Compute content box size of containerNode in case we [later] need to size our single child.
 			var cn = this.containerNode;
-			if(cn === this.domNode){
-				// If changeSize or resultSize was passed to this method and this.containerNode ==
-				// this.domNode then we can compute the content-box size without querying the node,
-				// which is more reliable (similar to LayoutWidget.resize) (see for example #9449).
-				var mb = resultSize || {};
-				rias.mixin(mb, changeSize || {}); // changeSize overrides resultSize
-				if(!("h" in mb) || !("w" in mb)){
-					mb = rias.mixin(rias.dom.getMarginBox(cn), mb); // just use domGeometry.setMarginBox() to fill in missing values
+			this._noOverflowCall(function(){
+				// Set margin box size, unless it wasn't specified, in which case use current size.
+				if(changeSize){
+					rias.dom.setMarginBox(this.domNode, changeSize);
 				}
-				this._contentBox = rias.dom.marginBox2contentBox(cn, mb);
-			}else{
-				this._contentBox = rias.dom.getContentBox(cn);
-			}
 
-			this._layoutChildren();
+				// Compute content box size of containerNode in case we [later] need to size our single child.
+				if(cn === this.domNode){
+					// If changeSize or resultSize was passed to this method and this.containerNode ==
+					// this.domNode then we can compute the content-box size without querying the node,
+					// which is more reliable (similar to LayoutWidget.resize) (see for example #9449).
+					var mb = resultSize || {};
+					rias.mixin(mb, changeSize || {}); // changeSize overrides resultSize
+					if(!("h" in mb) || !("w" in mb)){
+						mb = rias.mixin(rias.dom.getMarginBox(cn), mb); // just use domGeometry.setMarginBox() to fill in missing values
+					}
+					this._contentBox = rias.dom.marginBox2contentBox(cn, mb);
+				}else{
+					this._contentBox = rias.dom.getContentBox(cn);
+				}
+			});
+
+			this._noOverflowCall(function(){
+				this._layoutChildren();
+			});
+
 		},
 
 		_layoutChildren: function(){

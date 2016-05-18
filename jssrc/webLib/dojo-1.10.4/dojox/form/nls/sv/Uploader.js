@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/sv/Uploader", ({label:"V\xe4lj filer..."}));
-
+define("dojox/form/nls/sv/Uploader",{label:"V\u00e4lj filer..."});
+/// Uploader.js.map

@@ -1,40 +1,5 @@
 //>>built
-
-define("dojox/mobile/_DataMixin", ["dojo/_base/kernel", "dojo/_base/array", "dojo/_base/declare", "dojo/_base/lang", "dojo/_base/Deferred"], function (kernel, array, declare, lang, Deferred) {
-    kernel.deprecated("dojox/mobile/_DataMixin", "Use dojox/mobile/_StoreMixin instead", "2.0");
-    return declare("dojox.mobile._DataMixin", null, {store:null, query:null, queryOptions:null, setStore:function (store, query, queryOptions) {
-        if (store === this.store) {
-            return null;
-        }
-        this.store = store;
-        this._setQuery(query, queryOptions);
-        if (store && store.getFeatures()["dojo.data.api.Notification"]) {
-            array.forEach(this._conn || [], this.disconnect, this);
-            this._conn = [this.connect(store, "onSet", "onSet"), this.connect(store, "onNew", "onNew"), this.connect(store, "onDelete", "onDelete"), this.connect(store, "close", "onStoreClose")];
-        }
-        return this.refresh();
-    }, setQuery:function (query, queryOptions) {
-        this._setQuery(query, queryOptions);
-        return this.refresh();
-    }, _setQuery:function (query, queryOptions) {
-        this.query = query;
-        this.queryOptions = queryOptions || this.queryOptions;
-    }, refresh:function () {
-        if (!this.store) {
-            return null;
-        }
-        var d = new Deferred();
-        var onComplete = lang.hitch(this, function (items, request) {
-            this.onComplete(items, request);
-            d.resolve();
-        });
-        var onError = lang.hitch(this, function (errorData, request) {
-            this.onError(errorData, request);
-            d.resolve();
-        });
-        var q = this.query;
-        this.store.fetch({query:q, queryOptions:this.queryOptions, onComplete:onComplete, onError:onError, start:q && q.start, count:q && q.count});
-        return d;
-    }});
-});
-
+define("dojox/mobile/_DataMixin",["dojo/_base/kernel","dojo/_base/array","dojo/_base/declare","dojo/_base/lang","dojo/_base/Deferred"],function(f,g,h,e,k){f.deprecated("dojox/mobile/_DataMixin","Use dojox/mobile/_StoreMixin instead","2.0");return h("dojox.mobile._DataMixin",null,{store:null,query:null,queryOptions:null,setStore:function(a,b,d){if(a===this.store)return null;this.store=a;this._setQuery(b,d);a&&a.getFeatures()["dojo.data.api.Notification"]&&(g.forEach(this._conn||[],this.disconnect,
+this),this._conn=[this.connect(a,"onSet","onSet"),this.connect(a,"onNew","onNew"),this.connect(a,"onDelete","onDelete"),this.connect(a,"close","onStoreClose")]);return this.refresh()},setQuery:function(a,b){this._setQuery(a,b);return this.refresh()},_setQuery:function(a,b){this.query=a;this.queryOptions=b||this.queryOptions},refresh:function(){if(!this.store)return null;var a=new k,b=e.hitch(this,function(b,c){this.onComplete(b,c);a.resolve()}),d=e.hitch(this,function(b,c){this.onError(b,c);a.resolve()}),
+c=this.query;this.store.fetch({query:c,queryOptions:this.queryOptions,onComplete:b,onError:d,start:c&&c.start,count:c&&c.count});return a}})});
+/// _DataMixin.js.map

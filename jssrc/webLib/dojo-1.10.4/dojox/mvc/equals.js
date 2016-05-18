@@ -1,34 +1,4 @@
 //>>built
-
-define("dojox/mvc/equals", ["dojo/_base/array", "dojo/_base/lang", "dojo/Stateful", "./StatefulArray"], function (array, lang, Stateful, StatefulArray) {
-    var equalsOptions = {getType:function (v) {
-        return lang.isArray(v) ? "array" : lang.isFunction((v || {}).getTime) ? "date" : v != null && ({}.toString.call(v) == "[object Object]" || lang.isFunction((v || {}).set) && lang.isFunction((v || {}).watch)) ? "object" : "value";
-    }, equalsArray:function (dst, src) {
-        for (var i = 0, l = Math.max(dst.length, src.length); i < l; i++) {
-            if (!equals(dst[i], src[i])) {
-                return false;
-            }
-        }
-        return true;
-    }, equalsDate:function (dst, src) {
-        return dst.getTime() == src.getTime();
-    }, equalsObject:function (dst, src) {
-        var list = lang.mixin({}, dst, src);
-        for (var s in list) {
-            if (!(s in Stateful.prototype) && s != "_watchCallbacks" && !equals(dst[s], src[s])) {
-                return false;
-            }
-        }
-        return true;
-    }, equalsValue:function (dst, src) {
-        return dst === src;
-    }};
-    var equals = function (dst, src, options) {
-        var opts = options || equals, types = [opts.getType(dst), opts.getType(src)];
-        return types[0] != types[1] ? false : opts["equals" + types[0].replace(/^[a-z]/, function (c) {
-            return c.toUpperCase();
-        })](dst, src);
-    };
-    return lang.setObject("dojox.mvc.equals", lang.mixin(equals, equalsOptions));
-});
-
+define("dojox/mvc/equals",["dojo/_base/array","dojo/_base/lang","dojo/Stateful","./StatefulArray"],function(h,e,g,k){var f=function(a,b,c){c=c||f;var d=[c.getType(a),c.getType(b)];return d[0]!=d[1]?!1:c["equals"+d[0].replace(/^[a-z]/,function(a){return a.toUpperCase()})](a,b)};return e.setObject("dojox.mvc.equals",e.mixin(f,{getType:function(a){return e.isArray(a)?"array":e.isFunction((a||{}).getTime)?"date":null!=a&&("[object Object]"=={}.toString.call(a)||e.isFunction((a||{}).set)&&e.isFunction((a||
+{}).watch))?"object":"value"},equalsArray:function(a,b){for(var c=0,d=Math.max(a.length,b.length);c<d;c++)if(!f(a[c],b[c]))return!1;return!0},equalsDate:function(a,b){return a.getTime()==b.getTime()},equalsObject:function(a,b){var c=e.mixin({},a,b),d;for(d in c)if(!(d in g.prototype)&&"_watchCallbacks"!=d&&!f(a[d],b[d]))return!1;return!0},equalsValue:function(a,b){return a===b}}))});
+/// equals.js.map

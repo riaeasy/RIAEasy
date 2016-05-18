@@ -1,34 +1,4 @@
 //>>built
-
-define("dojo/request/notify", ["../Evented", "../_base/lang", "./util"], function (Evented, lang, util) {
-    var pubCount = 0, slice = [].slice;
-    var hub = lang.mixin(new Evented, {onsend:function (data) {
-        if (!pubCount) {
-            this.emit("start");
-        }
-        pubCount++;
-    }, _onload:function (data) {
-        this.emit("done", data);
-    }, _onerror:function (data) {
-        this.emit("done", data);
-    }, _ondone:function (data) {
-        if (--pubCount <= 0) {
-            pubCount = 0;
-            this.emit("stop");
-        }
-    }, emit:function (type, event) {
-        var result = Evented.prototype.emit.apply(this, arguments);
-        if (this["_on" + type]) {
-            this["_on" + type].apply(this, slice.call(arguments, 1));
-        }
-        return result;
-    }});
-    function notify(type, listener) {
-        return hub.on(type, listener);
-    }
-    notify.emit = function (type, event, cancel) {
-        return hub.emit(type, event, cancel);
-    };
-    return util.notify = notify;
-});
-
+define("dojo/request/notify",["../Evented","../_base/lang","./util"],function(d,g,h){function e(a,b){return f.on(a,b)}var b=0,k=[].slice,f=g.mixin(new d,{onsend:function(a){b||this.emit("start");b++},_onload:function(a){this.emit("done",a)},_onerror:function(a){this.emit("done",a)},_ondone:function(a){0>=--b&&(b=0,this.emit("stop"))},emit:function(a,b){var c=d.prototype.emit.apply(this,arguments);this["_on"+a]&&this["_on"+a].apply(this,k.call(arguments,1));return c}});e.emit=function(a,b,c){return f.emit(a,
+b,c)};return h.notify=e});
+/// notify.js.map

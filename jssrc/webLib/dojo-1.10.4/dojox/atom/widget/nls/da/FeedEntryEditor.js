@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/da/FeedEntryEditor", ({doNew:"[ny]", edit:"[redig\xe9r]", save:"[gem]", cancel:"[annull\xe9r]"}));
-
+define("dojox/atom/widget/nls/da/FeedEntryEditor",{doNew:"[ny]",edit:"[redig\u00e9r]",save:"[gem]",cancel:"[annull\u00e9r]"});
+/// FeedEntryEditor.js.map

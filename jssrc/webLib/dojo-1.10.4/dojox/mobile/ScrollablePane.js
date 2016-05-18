@@ -1,60 +1,6 @@
 //>>built
-
-define("dojox/mobile/ScrollablePane", ["dojo/_base/array", "dojo/_base/declare", "dojo/sniff", "dojo/_base/window", "dojo/dom-construct", "dojo/dom-style", "./common", "./_ScrollableMixin", "./Pane", "./_maskUtils"], function (array, declare, has, win, domConstruct, domStyle, common, ScrollableMixin, Pane, maskUtils) {
-    return declare("dojox.mobile.ScrollablePane", [Pane, ScrollableMixin], {roundCornerMask:false, radius:0, baseClass:"mblScrollablePane", buildRendering:function () {
-        var c = this.containerNode = domConstruct.create("div", {className:"mblScrollableViewContainer", style:{width:this.scrollDir === "v" ? "100%" : ""}});
-        this.inherited(arguments);
-        if (this.srcNodeRef) {
-            for (var i = 0, len = this.srcNodeRef.childNodes.length; i < len; i++) {
-                this.containerNode.appendChild(this.srcNodeRef.firstChild);
-            }
-        }
-        if (this.roundCornerMask && (has("mask-image"))) {
-            var node = this.containerNode;
-            var mask = this.maskNode = domConstruct.create("div", {className:"mblScrollablePaneMask"});
-            mask.appendChild(node);
-            c = mask;
-        }
-        this.domNode.appendChild(c);
-        common.setSelectable(this.containerNode, false);
-    }, resize:function () {
-        this.inherited(arguments);
-        if (this.roundCornerMask) {
-            this.createRoundMask();
-        }
-        array.forEach(this.getChildren(), function (child) {
-            if (child.resize) {
-                child.resize();
-            }
-        });
-    }, isTopLevel:function (e) {
-        var parent = this.getParent && this.getParent();
-        return (!parent || !parent.resize);
-    }, createRoundMask:function () {
-        if (has("mask-image")) {
-            if (this.domNode.offsetHeight == 0) {
-                return;
-            }
-            this.maskNode.style.height = this.domNode.offsetHeight + "px";
-            var child = this.getChildren()[0], c = this.containerNode, node = child ? child.domNode : (c.childNodes.length > 0 && (c.childNodes[0].nodeType === 1 ? c.childNodes[0] : c.childNodes[1]));
-            var r = this.radius;
-            if (!r) {
-                var getRadius = function (n) {
-                    return parseInt(domStyle.get(n, "borderTopLeftRadius"));
-                };
-                if (child) {
-                    r = getRadius(child.domNode);
-                    if (!r) {
-                        var item = child.getChildren()[0];
-                        r = item ? getRadius(item.domNode) : 0;
-                    }
-                } else {
-                    r = getRadius(node);
-                }
-            }
-            var pw = this.domNode.offsetWidth, w = node.offsetWidth, h = this.domNode.offsetHeight, t = domStyle.get(node, "marginTop"), b = domStyle.get(node, "marginBottom"), l = domStyle.get(node, "marginLeft");
-            maskUtils.createRoundMask(this.maskNode, l, t, 0, b, w, h - b - t, r, r);
-        }
-    }});
-});
-
+define("dojox/mobile/ScrollablePane","dojo/_base/array dojo/_base/declare dojo/sniff dojo/_base/window dojo/dom-construct dojo/dom-style ./common ./_ScrollableMixin ./Pane ./_maskUtils".split(" "),function(k,l,g,r,d,f,m,n,p,q){return l("dojox.mobile.ScrollablePane",[p,n],{roundCornerMask:!1,radius:0,baseClass:"mblScrollablePane",buildRendering:function(){var a=this.containerNode=d.create("div",{className:"mblScrollableViewContainer",style:{width:"v"===this.scrollDir?"100%":""}});this.inherited(arguments);
+if(this.srcNodeRef)for(var b=0,c=this.srcNodeRef.childNodes.length;b<c;b++)this.containerNode.appendChild(this.srcNodeRef.firstChild);this.roundCornerMask&&g("mask-image")&&(a=this.containerNode,b=this.maskNode=d.create("div",{className:"mblScrollablePaneMask"}),b.appendChild(a),a=b);this.domNode.appendChild(a);m.setSelectable(this.containerNode,!1)},resize:function(){this.inherited(arguments);this.roundCornerMask&&this.createRoundMask();k.forEach(this.getChildren(),function(a){a.resize&&a.resize()})},
+isTopLevel:function(a){a=this.getParent&&this.getParent();return!a||!a.resize},createRoundMask:function(){if(g("mask-image")&&0!=this.domNode.offsetHeight){this.maskNode.style.height=this.domNode.offsetHeight+"px";var a=this.getChildren()[0],b=this.containerNode,b=a?a.domNode:0<b.childNodes.length&&(1===b.childNodes[0].nodeType?b.childNodes[0]:b.childNodes[1]),c=this.radius;if(!c){var e=function(a){return parseInt(f.get(a,"borderTopLeftRadius"))};a?(c=e(a.domNode),c||(c=(c=a.getChildren()[0])?e(c.domNode):
+0)):c=e(b)}var a=b.offsetWidth,e=this.domNode.offsetHeight,d=f.get(b,"marginTop"),h=f.get(b,"marginBottom"),b=f.get(b,"marginLeft");q.createRoundMask(this.maskNode,b,d,0,h,a,e-h-d,c,c)}}})});
+/// ScrollablePane.js.map

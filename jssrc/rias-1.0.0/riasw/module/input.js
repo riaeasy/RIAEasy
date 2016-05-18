@@ -5,7 +5,7 @@ define([
 	"_rsfVersion": 31,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
-	"activeNode": "edt_val",
+	"activeChild": "edt_val",
 	"iconClass": "inputIcon",
 	"infos": "",
 	"style": {

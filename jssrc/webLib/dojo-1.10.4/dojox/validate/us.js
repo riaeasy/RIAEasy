@@ -1,23 +1,4 @@
 //>>built
-
-define("dojox/validate/us", ["dojo/_base/lang", "./_base", "./regexp"], function (lang, validate, xregexp) {
-    var us = lang.getObject("us", true, validate);
-    us.isState = function (value, flags) {
-        var re = new RegExp("^" + xregexp.us.state(flags) + "$", "i");
-        return re.test(value);
-    };
-    us.isPhoneNumber = function (value) {
-        var flags = {format:["###-###-####", "(###) ###-####", "(###) ### ####", "###.###.####", "###/###-####", "### ### ####", "###-###-#### x#???", "(###) ###-#### x#???", "(###) ### #### x#???", "###.###.#### x#???", "###/###-#### x#???", "### ### #### x#???", "##########"]};
-        return validate.isNumberFormat(value, flags);
-    };
-    us.isSocialSecurityNumber = function (value) {
-        var flags = {format:["###-##-####", "### ## ####", "#########"]};
-        return validate.isNumberFormat(value, flags);
-    };
-    us.isZipCode = function (value) {
-        var flags = {format:["#####-####", "##### ####", "#########", "#####"]};
-        return validate.isNumberFormat(value, flags);
-    };
-    return us;
-});
-
+define("dojox/validate/us",["dojo/_base/lang","./_base","./regexp"],function(a,b,c){a=a.getObject("us",!0,b);a.isState=function(a,b){return RegExp("^"+c.us.state(b)+"$","i").test(a)};a.isPhoneNumber=function(a){return b.isNumberFormat(a,{format:"###-###-####;(###) ###-####;(###) ### ####;###.###.####;###/###-####;### ### ####;###-###-#### x#???;(###) ###-#### x#???;(###) ### #### x#???;###.###.#### x#???;###/###-#### x#???;### ### #### x#???;##########".split(";")})};a.isSocialSecurityNumber=function(a){return b.isNumberFormat(a,
+{format:["###-##-####","### ## ####","#########"]})};a.isZipCode=function(a){return b.isNumberFormat(a,{format:["#####-####","##### ####","#########","#####"]})};return a});
+/// us.js.map

@@ -1,23 +1,3 @@
 //>>built
-
-define("dojox/charting/plot3d/Base", ["dojo/_base/declare", "dojo/has"], function (declare, has) {
-    var Base = declare("dojox.charting.plot3d.Base", null, {constructor:function (width, height, kwArgs) {
-        this.width = width;
-        this.height = height;
-    }, setData:function (data) {
-        this.data = data ? data : [];
-        return this;
-    }, getDepth:function () {
-        return this.depth;
-    }, generate:function (chart, creator) {
-    }});
-    if (0) {
-        Base.extend({_checkOrientation:function (chart) {
-            if (chart.isMirrored) {
-                chart.applyMirroring(chart.view, {width:this.width, height:this.height}, {l:0, r:0, t:0, b:0});
-            }
-        }});
-    }
-    return Base;
-});
-
+define("dojox/charting/plot3d/Base",["dojo/_base/declare","dojo/has"],function(b,d){return b("dojox.charting.plot3d.Base",null,{constructor:function(a,c,b){this.width=a;this.height=c},setData:function(a){this.data=a?a:[];return this},getDepth:function(){return this.depth},generate:function(a,b){}})});
+/// Base.js.map

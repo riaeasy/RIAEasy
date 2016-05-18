@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/id/ColorPicker", ({redLabel:"r", greenLabel:"g", blueLabel:"b", hueLabel:"h", saturationLabel:"s", valueLabel:"v", degLabel:"\xb0", hexLabel:"hex", huePickerTitle:"Selektor Corak", saturationPickerTitle:"Selektor Kepekatan"}));
-
+define("dojox/widget/nls/id/ColorPicker",{redLabel:"r",greenLabel:"g",blueLabel:"b",hueLabel:"h",saturationLabel:"s",valueLabel:"v",degLabel:"\u00b0",hexLabel:"hex",huePickerTitle:"Selektor Corak",saturationPickerTitle:"Selektor Kepekatan"});
+/// ColorPicker.js.map

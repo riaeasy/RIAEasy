@@ -1,33 +1,5 @@
 //>>built
-
-define("dojox/mobile/_ComboBoxMenu", ["dojo/_base/kernel", "dojo/_base/declare", "dojo/dom-class", "dojo/dom-construct", "dijit/form/_ComboBoxMenuMixin", "dijit/_WidgetBase", "./_ListTouchMixin", "./scrollable", "dojo/has", "require"], function (dojo, declare, domClass, domConstruct, ComboBoxMenuMixin, WidgetBase, ListTouchMixin, Scrollable, has, BidiComboBoxMenu) {
-    var _ComboBoxMenu = declare(0 ? "dojox.mobile._NonBidiComboBoxMenu" : "dojox.mobile._ComboBoxMenu", [WidgetBase, ListTouchMixin, ComboBoxMenuMixin], {baseClass:"mblComboBoxMenu", buildRendering:function () {
-        this.domNode = this.focusNode = domConstruct.create("div", {"class":"mblReset"});
-        this.containerNode = domConstruct.create("div", {style:{position:"absolute", top:0, left:0}}, this.domNode);
-        this.previousButton = domConstruct.create("div", {"class":"mblReset mblComboBoxMenuItem mblComboBoxMenuPreviousButton", role:"option"}, this.containerNode);
-        this.nextButton = domConstruct.create("div", {"class":"mblReset mblComboBoxMenuItem mblComboBoxMenuNextButton", role:"option"}, this.containerNode);
-        this.inherited(arguments);
-    }, _createMenuItem:function () {
-        return domConstruct.create("div", {"class":"mblReset mblComboBoxMenuItem" + (this.isLeftToRight() ? "" : " mblComboBoxMenuItemRtl"), role:"option"});
-    }, onSelect:function (node) {
-        domClass.add(node, "mblComboBoxMenuItemSelected");
-    }, onDeselect:function (node) {
-        domClass.remove(node, "mblComboBoxMenuItemSelected");
-    }, onOpen:function () {
-        this.scrollable.init({domNode:this.domNode, containerNode:this.containerNode});
-        this.scrollable.scrollTo({x:0, y:0});
-    }, onClose:function () {
-        this.scrollable.cleanup();
-    }, postCreate:function () {
-        this.inherited(arguments);
-        this.scrollable = new Scrollable();
-        this.scrollable.resize = function () {
-        };
-        var self = this;
-        this.scrollable.isLeftToRight = function () {
-            return self.isLeftToRight();
-        };
-    }});
-    return 0 ? declare("dojox.mobile._ComboBoxMenu", [_ComboBoxMenu, BidiComboBoxMenu]) : _ComboBoxMenu;
-});
-
+define("dojox/mobile/_ComboBoxMenu","dojo/_base/kernel dojo/_base/declare dojo/dom-class dojo/dom-construct dijit/form/_ComboBoxMenuMixin dijit/_WidgetBase ./_ListTouchMixin ./scrollable dojo/has require".split(" "),function(h,c,b,a,d,e,f,g,k,l){return c("dojox.mobile._ComboBoxMenu",[e,f,d],{baseClass:"mblComboBoxMenu",buildRendering:function(){this.domNode=this.focusNode=a.create("div",{"class":"mblReset"});this.containerNode=a.create("div",{style:{position:"absolute",top:0,left:0}},this.domNode);
+this.previousButton=a.create("div",{"class":"mblReset mblComboBoxMenuItem mblComboBoxMenuPreviousButton",role:"option"},this.containerNode);this.nextButton=a.create("div",{"class":"mblReset mblComboBoxMenuItem mblComboBoxMenuNextButton",role:"option"},this.containerNode);this.inherited(arguments)},_createMenuItem:function(){return a.create("div",{"class":"mblReset mblComboBoxMenuItem"+(this.isLeftToRight()?"":" mblComboBoxMenuItemRtl"),role:"option"})},onSelect:function(a){b.add(a,"mblComboBoxMenuItemSelected")},
+onDeselect:function(a){b.remove(a,"mblComboBoxMenuItemSelected")},onOpen:function(){this.scrollable.init({domNode:this.domNode,containerNode:this.containerNode});this.scrollable.scrollTo({x:0,y:0})},onClose:function(){this.scrollable.cleanup()},postCreate:function(){this.inherited(arguments);this.scrollable=new g;this.scrollable.resize=function(){};var a=this;this.scrollable.isLeftToRight=function(){return a.isLeftToRight()}}})});
+/// _ComboBoxMenu.js.map

@@ -1,40 +1,4 @@
 //>>built
-
-define("dojox/form/MonthTextBox", ["dojo/_base/kernel", "dojo/_base/lang", "dojox/widget/MonthlyCalendar", "dijit/form/TextBox", "./DateTextBox", "dojo/_base/declare"], function (kernel, lang, MonthlyCalendar, TextBox, DateTextBox, declare) {
-    kernel.experimental("dojox/form/DateTextBox");
-    return declare("dojox.form.MonthTextBox", DateTextBox, {popupClass:MonthlyCalendar, selector:"date", postMixInProperties:function () {
-        this.inherited(arguments);
-        this.constraints.datePattern = "MM";
-    }, format:function (value) {
-        if (!value && value !== 0) {
-            return 1;
-        }
-        if (value.getMonth) {
-            return value.getMonth() + 1;
-        }
-        return Number(value) + 1;
-    }, parse:function (value, constraints) {
-        return Number(value) - 1;
-    }, serialize:function (value, constraints) {
-        return String(value);
-    }, validator:function (value) {
-        var num = Number(value);
-        var isInt = /(^-?\d\d*$)/.test(String(value));
-        return value == "" || value == null || (isInt && num >= 1 && num <= 12);
-    }, _setValueAttr:function (value, priorityChange, formattedValue) {
-        if (value) {
-            if (value.getMonth) {
-                value = value.getMonth();
-            }
-        }
-        TextBox.prototype._setValueAttr.call(this, value, priorityChange, formattedValue);
-    }, openDropDown:function () {
-        this.inherited(arguments);
-        this.dropDown.onValueSelected = lang.hitch(this, function (value) {
-            this.focus();
-            setTimeout(lang.hitch(this, "closeDropDown"), 1);
-            TextBox.prototype._setValueAttr.call(this, value, true, value);
-        });
-    }});
-});
-
+define("dojox/form/MonthTextBox","dojo/_base/kernel dojo/_base/lang dojox/widget/MonthlyCalendar dijit/form/TextBox ./DateTextBox dojo/_base/declare".split(" "),function(f,d,g,e,h,k){f.experimental("dojox/form/DateTextBox");return k("dojox.form.MonthTextBox",h,{popupClass:g,selector:"date",postMixInProperties:function(){this.inherited(arguments);this.constraints.datePattern="MM"},format:function(a){return!a&&0!==a?1:a.getMonth?a.getMonth()+1:Number(a)+1},parse:function(a,b){return Number(a)-1},serialize:function(a,
+b){return String(a)},validator:function(a){var b=Number(a),c=/(^-?\d\d*$)/.test(String(a));return""==a||null==a||c&&1<=b&&12>=b},_setValueAttr:function(a,b,c){a&&a.getMonth&&(a=a.getMonth());e.prototype._setValueAttr.call(this,a,b,c)},openDropDown:function(){this.inherited(arguments);this.dropDown.onValueSelected=d.hitch(this,function(a){this.focus();setTimeout(d.hitch(this,"closeDropDown"),1);e.prototype._setValueAttr.call(this,a,!0,a)})}})});
+/// MonthTextBox.js.map

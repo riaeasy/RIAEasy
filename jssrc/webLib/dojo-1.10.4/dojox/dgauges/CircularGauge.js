@@ -1,41 +1,4 @@
 //>>built
-
-define("dojox/dgauges/CircularGauge", ["dojo/_base/declare", "dojo/dom-geometry", "dojox/gfx", "./GaugeBase"], function (declare, domGeom, gfx, GaugeBase) {
-    return declare("dojox.dgauges.CircularGauge", GaugeBase, {_transformProperties:null, refreshRendering:function () {
-        if (this._widgetBox.w <= 0 || this._widgetBox.h <= 0) {
-            return;
-        }
-        for (var key in this._elementsIndex) {
-            this._elementsRenderers[key] = this._elementsIndex[key].refreshRendering();
-        }
-        var bb = this._computeBoundingBox(this._gfxGroup);
-        var naturalRatio = (bb.x + bb.width) / (bb.y + bb.height);
-        var widgetWidth = this._widgetBox.w;
-        var widgetHeight = this._widgetBox.h;
-        var widgetRatio = this._widgetBox.w / this._widgetBox.h;
-        var xpos = 0;
-        var ypos = 0;
-        var h = 0;
-        var w = 0;
-        if (naturalRatio > widgetRatio) {
-            w = widgetWidth;
-            h = w / naturalRatio;
-            ypos = (widgetHeight - h) / 2;
-        } else {
-            h = widgetHeight;
-            w = h * naturalRatio;
-            xpos = (widgetWidth - w) / 2;
-        }
-        var scaleFactor = Math.max(w / (bb.x + bb.width), h / (bb.y + bb.height));
-        this._transformProperties = {scale:scaleFactor, tx:xpos, ty:ypos};
-        this._gfxGroup.setTransform([gfx.matrix.scale(scaleFactor), gfx.matrix.translate(xpos / scaleFactor, ypos / scaleFactor)]);
-    }, _gaugeToPage:function (px, py) {
-        if (this._transformProperties) {
-            var np = domGeom.position(this.domNode, true);
-            return {x:np.x + px * this._transformProperties.scale + this._transformProperties.tx, y:np.y + py * this._transformProperties.scale + this._transformProperties.ty};
-        } else {
-            return null;
-        }
-    }});
-});
-
+define("dojox/dgauges/CircularGauge",["dojo/_base/declare","dojo/dom-geometry","dojox/gfx","./GaugeBase"],function(l,m,g,n){return l("dojox.dgauges.CircularGauge",n,{_transformProperties:null,refreshRendering:function(){if(!(0>=this._widgetBox.w||0>=this._widgetBox.h)){for(var b in this._elementsIndex)this._elementsRenderers[b]=this._elementsIndex[b].refreshRendering();var a=this._computeBoundingBox(this._gfxGroup),c=(a.x+a.width)/(a.y+a.height),h=this._widgetBox.w,k=this._widgetBox.h,f=b=0,d=0,e=
+0;c>this._widgetBox.w/this._widgetBox.h?(e=h,d=e/c,f=(k-d)/2):(d=k,e=d*c,b=(h-e)/2);a=Math.max(e/(a.x+a.width),d/(a.y+a.height));this._transformProperties={scale:a,tx:b,ty:f};this._gfxGroup.setTransform([g.matrix.scale(a),g.matrix.translate(b/a,f/a)])}},_gaugeToPage:function(b,a){if(this._transformProperties){var c=m.position(this.domNode,!0);return{x:c.x+b*this._transformProperties.scale+this._transformProperties.tx,y:c.y+a*this._transformProperties.scale+this._transformProperties.ty}}return null}})});
+/// CircularGauge.js.map

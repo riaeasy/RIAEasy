@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/nl/PasswordValidator", ({nomatchMessage:"Wachtwoorden komen niet overeen.", badPasswordMessage:"Ongeldig wachtwoord."}));
-
+define("dojox/form/nls/nl/PasswordValidator",{nomatchMessage:"Wachtwoorden komen niet overeen.",badPasswordMessage:"Ongeldig wachtwoord."});
+/// PasswordValidator.js.map

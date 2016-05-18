@@ -1,54 +1,5 @@
 //>>built
-
-define("dojox/charting/action2d/Shake", ["dojo/_base/connect", "dojo/_base/declare", "./PlotAction", "dojo/fx", "dojo/fx/easing", "dojox/gfx/matrix", "dojox/gfx/fx"], function (hub, declare, PlotAction, df, dfe, m, gf) {
-    var DEFAULT_SHIFT = 3;
-    return declare("dojox.charting.action2d.Shake", PlotAction, {defaultParams:{duration:400, easing:dfe.backOut, shiftX:DEFAULT_SHIFT, shiftY:DEFAULT_SHIFT}, optionalParams:{}, constructor:function (chart, plot, kwArgs) {
-        if (!kwArgs) {
-            kwArgs = {};
-        }
-        this.shiftX = typeof kwArgs.shiftX == "number" ? kwArgs.shiftX : DEFAULT_SHIFT;
-        this.shiftY = typeof kwArgs.shiftY == "number" ? kwArgs.shiftY : DEFAULT_SHIFT;
-        this.connect();
-    }, process:function (o) {
-        if (!o.shape || !(o.type in this.overOutEvents)) {
-            return;
-        }
-        var runName = o.run.name, index = o.index, vector = [], anim;
-        if (runName in this.anim) {
-            anim = this.anim[runName][index];
-        } else {
-            this.anim[runName] = {};
-        }
-        if (anim) {
-            anim.action.stop(true);
-        } else {
-            this.anim[runName][index] = anim = {};
-        }
-        var kwArgs = {shape:o.shape, duration:this.duration, easing:this.easing, transform:[{name:"translate", start:[this.shiftX, this.shiftY], end:[0, 0]}, m.identity]};
-        if (o.shape) {
-            vector.push(gf.animateTransform(kwArgs));
-        }
-        if (o.oultine) {
-            kwArgs.shape = o.outline;
-            vector.push(gf.animateTransform(kwArgs));
-        }
-        if (o.shadow) {
-            kwArgs.shape = o.shadow;
-            vector.push(gf.animateTransform(kwArgs));
-        }
-        if (!vector.length) {
-            delete this.anim[runName][index];
-            return;
-        }
-        anim.action = df.combine(vector);
-        if (o.type == "onmouseout") {
-            hub.connect(anim.action, "onEnd", this, function () {
-                if (this.anim[runName]) {
-                    delete this.anim[runName][index];
-                }
-            });
-        }
-        anim.action.play();
-    }});
-});
-
+define("dojox/charting/action2d/Shake","dojo/_base/connect dojo/_base/declare ./PlotAction dojo/fx dojo/fx/easing dojox/gfx/matrix dojox/gfx/fx".split(" "),function(h,k,l,m,n,p,g){return k("dojox.charting.action2d.Shake",l,{defaultParams:{duration:400,easing:n.backOut,shiftX:3,shiftY:3},optionalParams:{},constructor:function(a,c,b){b||(b={});this.shiftX="number"==typeof b.shiftX?b.shiftX:3;this.shiftY="number"==typeof b.shiftY?b.shiftY:3;this.connect()},process:function(a){if(a.shape&&a.type in this.overOutEvents){var c=
+a.run.name,b=a.index,e=[],d;c in this.anim?d=this.anim[c][b]:this.anim[c]={};d?d.action.stop(!0):this.anim[c][b]=d={};var f={shape:a.shape,duration:this.duration,easing:this.easing,transform:[{name:"translate",start:[this.shiftX,this.shiftY],end:[0,0]},p.identity]};a.shape&&e.push(g.animateTransform(f));a.oultine&&(f.shape=a.outline,e.push(g.animateTransform(f)));a.shadow&&(f.shape=a.shadow,e.push(g.animateTransform(f)));e.length?(d.action=m.combine(e),"onmouseout"==a.type&&h.connect(d.action,"onEnd",
+this,function(){this.anim[c]&&delete this.anim[c][b]}),d.action.play()):delete this.anim[c][b]}}})});
+/// Shake.js.map

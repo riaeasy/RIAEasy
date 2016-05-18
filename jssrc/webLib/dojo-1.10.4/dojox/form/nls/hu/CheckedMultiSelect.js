@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/hu/CheckedMultiSelect", ({invalidMessage:"Legal\xe1bb egy t\xe9telt ki kell v\xe1lasztani.", multiSelectLabelText:"{num} elem van kiv\xe1lasztva"}));
-
+define("dojox/form/nls/hu/CheckedMultiSelect",{invalidMessage:"Legal\u00e1bb egy t\u00e9telt ki kell v\u00e1lasztani.",multiSelectLabelText:"{num} elem van kiv\u00e1lasztva"});
+/// CheckedMultiSelect.js.map

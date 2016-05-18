@@ -134,7 +134,7 @@ define([
 			}
 			d.then(function(){
 				if(self._needLoadedAndShown && self._wasResized){
-					self.afterLoadedAndShown();
+					self._afterLoadedAndShown();
 					self._needLoadedAndShown = undefined;
 				}
 			});
@@ -331,7 +331,7 @@ define([
 				self.onLoadDeferred.then(function(result){
 					self.afterLoaded(result);
 					if(self.isShown(true) && self._wasResized){
-						self.afterLoadedAndShown();
+						self._afterLoadedAndShown();
 					}else{
 						self._needLoadedAndShown = true;
 					}
@@ -346,6 +346,9 @@ define([
 		afterLoaded: function(result){
 		},
 		afterLoadedAndShown: function(){
+		},
+		_afterLoadedAndShown: function(){
+			this.afterLoadedAndShown();
 		},
 		_afterLoaded: function(result, noResolve){
 			var self = this;

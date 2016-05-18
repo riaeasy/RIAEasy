@@ -1,36 +1,4 @@
 //>>built
-
-define("dojo/NodeList-fx", ["./query", "./_base/lang", "./aspect", "./_base/fx", "./fx"], function (query, lang, aspect, baseFx, coreFx) {
-    var NodeList = query.NodeList;
-    lang.extend(NodeList, {_anim:function (obj, method, args) {
-        args = args || {};
-        var a = coreFx.combine(this.map(function (item) {
-            var tmpArgs = {node:item};
-            lang.mixin(tmpArgs, args);
-            return obj[method](tmpArgs);
-        }));
-        return args.auto ? a.play() && this : a;
-    }, wipeIn:function (args) {
-        return this._anim(coreFx, "wipeIn", args);
-    }, wipeOut:function (args) {
-        return this._anim(coreFx, "wipeOut", args);
-    }, slideTo:function (args) {
-        return this._anim(coreFx, "slideTo", args);
-    }, fadeIn:function (args) {
-        return this._anim(baseFx, "fadeIn", args);
-    }, fadeOut:function (args) {
-        return this._anim(baseFx, "fadeOut", args);
-    }, animateProperty:function (args) {
-        return this._anim(baseFx, "animateProperty", args);
-    }, anim:function (properties, duration, easing, onEnd, delay) {
-        var canim = coreFx.combine(this.map(function (item) {
-            return baseFx.animateProperty({node:item, properties:properties, duration:duration || 350, easing:easing});
-        }));
-        if (onEnd) {
-            aspect.after(canim, "onEnd", onEnd, true);
-        }
-        return canim.play(delay || 0);
-    }});
-    return NodeList;
-});
-
+define("dojo/NodeList-fx",["./query","./_base/lang","./aspect","./_base/fx","./fx"],function(b,e,k,h,f){b=b.NodeList;e.extend(b,{_anim:function(a,b,d){d=d||{};var g=f.combine(this.map(function(c){c={node:c};e.mixin(c,d);return a[b](c)}));return d.auto?g.play()&&this:g},wipeIn:function(a){return this._anim(f,"wipeIn",a)},wipeOut:function(a){return this._anim(f,"wipeOut",a)},slideTo:function(a){return this._anim(f,"slideTo",a)},fadeIn:function(a){return this._anim(h,"fadeIn",a)},fadeOut:function(a){return this._anim(h,
+"fadeOut",a)},animateProperty:function(a){return this._anim(h,"animateProperty",a)},anim:function(a,b,d,g,c){var e=f.combine(this.map(function(c){return h.animateProperty({node:c,properties:a,duration:b||350,easing:d})}));g&&k.after(e,"onEnd",g,!0);return e.play(c||0)}});return b});
+/// NodeList-fx.js.map

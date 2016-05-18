@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/nls/fi/loading", ({loadingState:"Lataus on meneill\xe4\xe4n...", errorState:"On ilmennyt virhe."}));
-
+define("dijit/nls/fi/loading",{loadingState:"Lataus on meneill\u00e4\u00e4n...",errorState:"On ilmennyt virhe."});
+/// loading.js.map

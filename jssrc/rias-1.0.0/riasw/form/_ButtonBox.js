@@ -296,6 +296,7 @@ define([
 			!args._riaswIdOfModule && self._riaswIdOfModule && (args._riaswIdOfModule = self._riaswIdOfModule + "_popup");
 			args.dialogType = args.dialogType ? args.dialogType : "modal";
 			args.parent = (args.parent != undefined ? args.parent : rias.dom.webAppNode);
+			args.popupParent = self;
 			//args.id = self.id + "_popup";
 			args.around = around;
 			args.autoClose = 0;
@@ -322,11 +323,12 @@ define([
 			var dd = self.dropDown,
 				ddNode = dd.domNode;
 
-			dd.own(rias.after(dd, "onClose", function(){
-				self.dropDown = undefined;///先 delete ，避免 closeDropDown 自循环
-				self.closeDropDown(true);
-				//h.remove();
-			}, false));
+			dd.own(rias.after(dd, "onClose", function(result){
+				if(result != false){
+					self.dropDown = undefined;///先 delete ，避免 closeDropDown 自循环
+					self.closeDropDown(true);
+				}
+			}, true));
 
 			///TODO:zensst. 尚未 placeTo 时怎么处理？
 			if(dd.isShown()){

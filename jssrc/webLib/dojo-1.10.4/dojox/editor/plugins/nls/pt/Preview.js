@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/pt/Preview", ({"preview":"Visualizar"}));
-
+define("dojox/editor/plugins/nls/pt/Preview",{preview:"Visualizar"});
+/// Preview.js.map

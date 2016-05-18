@@ -1,9 +1,3 @@
 //>>built
-
-define("dojo/dnd/Target", ["../_base/declare", "../dom-class", "./Source"], function (declare, domClass, Source) {
-    return declare("dojo.dnd.Target", Source, {constructor:function () {
-        this.isSource = false;
-        domClass.remove(this.node, "dojoDndSource");
-    }});
-});
-
+define("dojo/dnd/Target",["../_base/declare","../dom-class","./Source"],function(a,b,c){return a("dojo.dnd.Target",c,{constructor:function(){this.isSource=!1;b.remove(this.node,"dojoDndSource")}})});
+/// Target.js.map

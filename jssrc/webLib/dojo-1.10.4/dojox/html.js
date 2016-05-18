@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/html", ["./html/_base"], function (html) {
-    return html;
-});
-
+define("dojox/html",["./html/_base"],function(a){return a});
+/// html.js.map

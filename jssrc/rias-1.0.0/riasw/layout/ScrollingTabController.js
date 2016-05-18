@@ -134,7 +134,7 @@ define([
 			self._buttons = rias.dom.query("> .tabStripButton", self.domNode).filter(function(btn){
 				if((self.useMenu && btn == self._menuBtn.domNode) ||
 					(self.useSlider && (btn == self._rightBtn.domNode || btn == self._leftBtn.domNode))){
-					self._btnWidth += rias.dom.getMarginSize(btn).w;
+					self._btnWidth += rias.dom.getMarginBox(btn).w;
 					return true;
 				}else{
 					rias.dom.setStyle(btn, "display", "none");

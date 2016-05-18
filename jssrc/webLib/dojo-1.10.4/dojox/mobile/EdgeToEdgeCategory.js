@@ -1,12 +1,3 @@
 //>>built
-
-define("dojox/mobile/EdgeToEdgeCategory", ["dojo/_base/declare", "./RoundRectCategory"], function (declare, RoundRectCategory) {
-    return declare("dojox.mobile.EdgeToEdgeCategory", RoundRectCategory, {buildRendering:function () {
-        this.inherited(arguments);
-        this.domNode.className = "mblEdgeToEdgeCategory";
-        if (this.type && this.type == "long") {
-            this.domNode.className += " mblEdgeToEdgeCategoryLong";
-        }
-    }});
-});
-
+define("dojox/mobile/EdgeToEdgeCategory",["dojo/_base/declare","./RoundRectCategory"],function(a,b){return a("dojox.mobile.EdgeToEdgeCategory",b,{buildRendering:function(){this.inherited(arguments);this.domNode.className="mblEdgeToEdgeCategory";this.type&&"long"==this.type&&(this.domNode.className+=" mblEdgeToEdgeCategoryLong")}})});
+/// EdgeToEdgeCategory.js.map

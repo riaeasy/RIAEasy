@@ -45,7 +45,7 @@ define([
 			if(!result.length){
 				//#3268: don't modify display value on bad input
 				//#3285: change CSS to indicate error
-				this.set("value", '', priorityChange || (priorityChange === undefined && !this.focused), this.textbox.value, null);
+				this.set("value", '', priorityChange || (priorityChange === undefined && !this.get("focused")), this.textbox.value, null);
 			}else{
 				this.set('item', result[0], priorityChange);
 			}
@@ -211,7 +211,6 @@ define([
 			//content: "<select></select>",
 			type: "text",
 			labelType: "text",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {locale: ""},
 			//regExp: ".*",
@@ -223,7 +222,6 @@ define([
 			//searchAttr: "name",
 			ignoreCase: true,
 			hasDownArrow: true,
-			scrollOnFocus: true,
 			highlightMatch: "first"
 		},
 		initialSize: {},

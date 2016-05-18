@@ -2,19 +2,20 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 35,
+	"_rsfVersion": 32,
+	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "1.0",
-	"caption": "菜单",
-	"tooltip": "菜单",
+		"caption": rias.i18n.webApp.menu,
+		"tooltip": rias.i18n.webApp.menu,
 	"iconClass": "menuIcon",
-	"minSize": {
-		"h": 360,
-		"w": 240
-	},
+		"minSize": {
+			"h": 360,
+			"w": 240
+		},
 	"style": {
 		"width": "240px"
 	},
-	"onRestore": function (){
+		onRestore: function(){
 			this.resize({
 				h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.8, 480)
 			});
@@ -48,7 +49,7 @@ define([
 		}
 		children.push({
 			_riaswType: "rias.riasw.widget.Tree",
-			_riaswIdOfModule: "MenuTree",
+			_riaswIdOfModule: "menuTree",
 			"class": "riaswTreeMenu",
 			region: "center",
 			persist: false,
@@ -89,7 +90,8 @@ define([
 				m.treeOnClick(item, node, evt);
 			}
 		});
-		rias.destroy(m.MenuTree);
+		//rias.destroy(m.menuTree);
+		m.menuPane.destroyChildren();
 		rias.filer(children, m.menuPane, m).then(function(result){
 			rias.forEach(result.widgets, function(pane){
 				m.resize();
@@ -120,6 +122,7 @@ define([
 				m.buildMenu(items);
 				//m.needLayout = true;
 				m.resize();
+				m.focus();
 			}, function(error){
 				console.error(error);
 			});
@@ -128,26 +131,26 @@ define([
 	"afterLoadedAndShown": function (){
 		this.loadMenu();
 	},
-	"launch": function (meta, args){
-		var m = this;
-		if(rias.isString(meta)){
-			args = rias.mixin({}, args, {
-				moduleMeta: meta
-			})
-		}else{
-			args = meta;
-		}
-		args = rias.mixin({
-			_riaswIdOfModule: m.currentItem.code || m.currentItem.id,
-			caption: m.currentItem.text,
-			moduleMeta: "",
-			moduleParams: {},
-			reCreate: false,
-			iconClass: m.currentItem.iconClass
-		}, args);
-		rias.webApp.launch(args);
-		m.submit();
-	},
+		"launch": function (meta, args){
+			var m = this;
+			if(rias.isString(meta)){
+				args = rias.mixin({}, args, {
+					moduleMeta: meta
+				})
+			}else{
+				args = meta;
+			}
+			args = rias.mixin({
+				_riaswIdOfModule: m.currentItem.code || m.currentItem.id,
+				caption: m.currentItem.text,
+				moduleMeta: "",
+				moduleParams: {},
+				reCreate: false,
+				iconClass: m.currentItem.iconClass
+			}, args);
+			rias.webApp.launch(args);
+			m.submit();
+		},
 	"treeOnClick": function (item, node, evt){
 		var m = this;
 		m.currentItem = item;
@@ -166,9 +169,7 @@ define([
 				{
 					"_riaswType": "rias.riasw.store.JsonRestStore",
 					"_riaswIdOfModule": "menuStore",
-					"target": {
-						"$refScript": "return rias.webApp.dataServerAddr + 'act/appMain/getMenu';"
-					}
+					"target": "act/appMain/getMenu"
 				}
 			]
 		}

@@ -1,50 +1,6 @@
 //>>built
-
-define("dojox/dnd/BoundingBoxController", ["dojo", "dojox"], function (dojo, dojox) {
-    return dojo.declare("dojox.dnd.BoundingBoxController", null, {_startX:null, _startY:null, _endX:null, _endY:null, constructor:function (sources, domNode) {
-        this.events = [dojo.connect(dojo.doc, "onmousedown", this, "_onMouseDown"), dojo.connect(dojo.doc, "onmouseup", this, "_onMouseUp"), dojo.connect(dojo.doc, "onscroll", this, "_finishSelecting")];
-        this.subscriptions = [dojo.subscribe("/dojox/bounding/cancel", this, "_finishSelecting")];
-        dojo.forEach(sources, function (item) {
-            if (item.selectByBBox) {
-                this.subscriptions.push(dojo.subscribe("/dojox/dnd/bounding", item, "selectByBBox"));
-            }
-        }, this);
-        this.domNode = dojo.byId(domNode);
-        dojo.style(this.domNode, {position:"absolute", display:"none"});
-    }, destroy:function () {
-        dojo.forEach(this.events, dojo.disconnect);
-        dojo.forEach(this.subscriptions, dojo.unsubscribe);
-        this.domNode = null;
-    }, shouldStartDrawingBox:function (evt) {
-        return true;
-    }, boundingBoxIsViable:function (evt) {
-        return true;
-    }, _onMouseDown:function (evt) {
-        if (this.shouldStartDrawingBox(evt) && dojo.mouseButtons.isLeft(evt)) {
-            if (this._startX == null) {
-                this._startX = evt.clientX;
-                this._startY = evt.clientY;
-            }
-            this.events.push(dojo.connect(dojo.doc, "onmousemove", this, "_onMouseMove"));
-        }
-    }, _onMouseMove:function (evt) {
-        this._endX = evt.clientX;
-        this._endY = evt.clientY;
-        this._drawBoundingBox();
-    }, _onMouseUp:function (evt) {
-        if (this._endX !== null && this.boundingBoxIsViable(evt)) {
-            dojo.publish("/dojox/dnd/bounding", [this._startX, this._startY, this._endX, this._endY]);
-        }
-        this._finishSelecting();
-    }, _finishSelecting:function () {
-        if (this._startX !== null) {
-            dojo.disconnect(this.events.pop());
-            dojo.style(this.domNode, "display", "none");
-            this._startX = null;
-            this._endX = null;
-        }
-    }, _drawBoundingBox:function () {
-        dojo.style(this.domNode, {left:Math.min(this._startX, this._endX) + "px", top:Math.min(this._startY, this._endY) + "px", width:Math.abs(this._startX - this._endX) + "px", height:Math.abs(this._startY - this._endY) + "px", display:""});
-    }});
-});
-
+define("dojox/dnd/BoundingBoxController",["dojo","dojox"],function(a,d){return a.declare("dojox.dnd.BoundingBoxController",null,{_startX:null,_startY:null,_endX:null,_endY:null,constructor:function(b,c){this.events=[a.connect(a.doc,"onmousedown",this,"_onMouseDown"),a.connect(a.doc,"onmouseup",this,"_onMouseUp"),a.connect(a.doc,"onscroll",this,"_finishSelecting")];this.subscriptions=[a.subscribe("/dojox/bounding/cancel",this,"_finishSelecting")];a.forEach(b,function(b){b.selectByBBox&&this.subscriptions.push(a.subscribe("/dojox/dnd/bounding",
+b,"selectByBBox"))},this);this.domNode=a.byId(c);a.style(this.domNode,{position:"absolute",display:"none"})},destroy:function(){a.forEach(this.events,a.disconnect);a.forEach(this.subscriptions,a.unsubscribe);this.domNode=null},shouldStartDrawingBox:function(a){return!0},boundingBoxIsViable:function(a){return!0},_onMouseDown:function(b){this.shouldStartDrawingBox(b)&&a.mouseButtons.isLeft(b)&&(null==this._startX&&(this._startX=b.clientX,this._startY=b.clientY),this.events.push(a.connect(a.doc,"onmousemove",
+this,"_onMouseMove")))},_onMouseMove:function(a){this._endX=a.clientX;this._endY=a.clientY;this._drawBoundingBox()},_onMouseUp:function(b){null!==this._endX&&this.boundingBoxIsViable(b)&&a.publish("/dojox/dnd/bounding",[this._startX,this._startY,this._endX,this._endY]);this._finishSelecting()},_finishSelecting:function(){null!==this._startX&&(a.disconnect(this.events.pop()),a.style(this.domNode,"display","none"),this._endX=this._startX=null)},_drawBoundingBox:function(){a.style(this.domNode,{left:Math.min(this._startX,
+this._endX)+"px",top:Math.min(this._startY,this._endY)+"px",width:Math.abs(this._startX-this._endX)+"px",height:Math.abs(this._startY-this._endY)+"px",display:""})}})});
+/// BoundingBoxController.js.map

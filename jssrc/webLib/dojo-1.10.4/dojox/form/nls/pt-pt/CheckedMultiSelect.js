@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/pt-pt/CheckedMultiSelect", ({invalidMessage:"\xc9 necess\xe1rio seleccionar pelo menos um artigo.", multiSelectLabelText:"{num} artigo(s) seleccionado(s)"}));
-
+define("dojox/form/nls/pt-pt/CheckedMultiSelect",{invalidMessage:"\u00c9 necess\u00e1rio seleccionar pelo menos um artigo.",multiSelectLabelText:"{num} artigo(s) seleccionado(s)"});
+/// CheckedMultiSelect.js.map

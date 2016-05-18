@@ -1,16 +1,3 @@
 //>>built
-
-define("dojo/NodeList-html", ["./query", "./_base/lang", "./html"], function (query, lang, html) {
-    var NodeList = query.NodeList;
-    lang.extend(NodeList, {html:function (content, params) {
-        var dhs = new html._ContentSetter(params || {});
-        this.forEach(function (elm) {
-            dhs.node = elm;
-            dhs.set(content);
-            dhs.tearDown();
-        });
-        return this;
-    }});
-    return NodeList;
-});
-
+define("dojo/NodeList-html",["./query","./_base/lang","./html"],function(a,b,d){a=a.NodeList;b.extend(a,{html:function(a,b){var c=new d._ContentSetter(b||{});this.forEach(function(b){c.node=b;c.set(a);c.tearDown()});return this}});return a});
+/// NodeList-html.js.map

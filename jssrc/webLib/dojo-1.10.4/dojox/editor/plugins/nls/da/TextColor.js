@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/da/TextColor", ({"setButtonText":"Defin\xe9r", "cancelButtonText":"Annull\xe9r"}));
-
+define("dojox/editor/plugins/nls/da/TextColor",{setButtonText:"Defin\u00e9r",cancelButtonText:"Annull\u00e9r"});
+/// TextColor.js.map

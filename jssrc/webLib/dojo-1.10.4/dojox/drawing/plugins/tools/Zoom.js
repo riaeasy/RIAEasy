@@ -1,43 +1,5 @@
 //>>built
-
-define("dojox/drawing/plugins/tools/Zoom", ["dojo/_base/lang", "../../util/oo", "../_Plugin", "../../manager/_registry"], function (lang, oo, Plugin, registry) {
-    var zoomInc = Math.pow(2, 0.25), maxZoom = 10, minZoom = 0.1, zoomFactor = 1, dt;
-    if (!lang.getObject("dojox.drawing.plugins.tools")) {
-        lang.setObject("dojox.drawing.plugins.tools", {});
-    }
-    dt = dojox.drawing.plugins.tools;
-    dt.ZoomIn = oo.declare(Plugin, function (options) {
-    }, {type:"dojox.drawing.plugins.tools.ZoomIn", onZoomIn:function () {
-        zoomFactor *= zoomInc;
-        zoomFactor = Math.min(zoomFactor, maxZoom);
-        this.canvas.setZoom(zoomFactor);
-        this.mouse.setZoom(zoomFactor);
-    }, onClick:function () {
-        this.onZoomIn();
-    }});
-    dt.Zoom100 = oo.declare(Plugin, function (options) {
-    }, {type:"dojox.drawing.plugins.tools.Zoom100", onZoom100:function () {
-        zoomFactor = 1;
-        this.canvas.setZoom(zoomFactor);
-        this.mouse.setZoom(zoomFactor);
-    }, onClick:function () {
-        this.onZoom100();
-    }});
-    dt.ZoomOut = oo.declare(Plugin, function (options) {
-    }, {type:"dojox.drawing.plugins.tools.ZoomOut", onZoomOut:function () {
-        zoomFactor /= zoomInc;
-        zoomFactor = Math.max(zoomFactor, minZoom);
-        this.canvas.setZoom(zoomFactor);
-        this.mouse.setZoom(zoomFactor);
-    }, onClick:function () {
-        this.onZoomOut();
-    }});
-    dt.ZoomIn.setup = {name:"dojox.drawing.plugins.tools.ZoomIn", tooltip:"Zoom In"};
-    registry.register(dt.ZoomIn.setup, "plugin");
-    dt.Zoom100.setup = {name:"dojox.drawing.plugins.tools.Zoom100", tooltip:"Zoom to 100%"};
-    registry.register(dt.Zoom100.setup, "plugin");
-    dt.ZoomOut.setup = {name:"dojox.drawing.plugins.tools.ZoomOut", tooltip:"Zoom In"};
-    registry.register(dt.ZoomOut.setup, "plugin");
-    return dt;
-});
-
+define("dojox/drawing/plugins/tools/Zoom",["dojo/_base/lang","../../util/oo","../_Plugin","../../manager/_registry"],function(b,c,d,e){var f=Math.pow(2,0.25),a=1;b.getObject("dojox.drawing.plugins.tools")||b.setObject("dojox.drawing.plugins.tools",{});b=dojox.drawing.plugins.tools;b.ZoomIn=c.declare(d,function(a){},{type:"dojox.drawing.plugins.tools.ZoomIn",onZoomIn:function(){a*=f;a=Math.min(a,10);this.canvas.setZoom(a);this.mouse.setZoom(a)},onClick:function(){this.onZoomIn()}});b.Zoom100=c.declare(d,
+function(a){},{type:"dojox.drawing.plugins.tools.Zoom100",onZoom100:function(){a=1;this.canvas.setZoom(a);this.mouse.setZoom(a)},onClick:function(){this.onZoom100()}});b.ZoomOut=c.declare(d,function(a){},{type:"dojox.drawing.plugins.tools.ZoomOut",onZoomOut:function(){a/=f;a=Math.max(a,0.1);this.canvas.setZoom(a);this.mouse.setZoom(a)},onClick:function(){this.onZoomOut()}});b.ZoomIn.setup={name:"dojox.drawing.plugins.tools.ZoomIn",tooltip:"Zoom In"};e.register(b.ZoomIn.setup,"plugin");b.Zoom100.setup=
+{name:"dojox.drawing.plugins.tools.Zoom100",tooltip:"Zoom to 100%"};e.register(b.Zoom100.setup,"plugin");b.ZoomOut.setup={name:"dojox.drawing.plugins.tools.ZoomOut",tooltip:"Zoom In"};e.register(b.ZoomOut.setup,"plugin");return b});
+/// Zoom.js.map

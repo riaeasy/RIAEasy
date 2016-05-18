@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/nl/CheckedMultiSelect", ({invalidMessage:"Er moet ten minste \xe9\xe9n item geselecteerd worden.", multiSelectLabelText:"{num} item(s) geselecteerd"}));
-
+define("dojox/form/nls/nl/CheckedMultiSelect",{invalidMessage:"Er moet ten minste \u00e9\u00e9n item geselecteerd worden.",multiSelectLabelText:"{num} item(s) geselecteerd"});
+/// CheckedMultiSelect.js.map

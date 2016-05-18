@@ -4,7 +4,6 @@
 //非常重要：Rhino中的String不是js的string，请使用 “==” 来判断，而不是“===”
 
 ///是否需要显式申明？在 redef() 时有什么影响？
-////TODO:zensst.增加 destroy()，用于释放 handle，比如 rias.after()
 //var rias = {};///移到 rias/main 中加载
 
 define([
@@ -212,6 +211,25 @@ define([
 		}
 		return ok;
 	};
+	rias.objEqual = function(srcObj, equalObj){
+		var name,
+			ok = rias.isObject(srcObj) && rias.isObject(equalObj);
+		if(ok){
+			for(name in equalObj){
+				if(!(name in srcObj) || (srcObj[name] !== equalObj[name])){
+					ok = false;
+					break;
+				}
+			}
+			for(name in srcObj){
+				if(!(name in equalObj)){
+					ok = false;
+					break;
+				}
+			}
+		}
+		return ok;
+	};
 
 	function _delete(dest, ref, /*Integer*/deep){
 		//deep是嵌套的层数.
@@ -263,7 +281,7 @@ define([
 		}
 		return dest; // Object
 	}
-	rias.delete = function(/*Object*/dest, /*Object..*/refs) {
+	rias.dele = function(/*Object*/dest, /*Object..*/refs) {
 		if(!dest){
 			return {};
 		}
@@ -1148,18 +1166,24 @@ define([
 		}
 	};*/
 
-	/*rias.defer = function(scope, fcn, delay, args){
+	rias.defer = function(scope, fcn, delay, args){
+		if(rias.isString(fcn)){
+			if(!scope[fcn]){
+				throw(['rias.defer: scope["', fcn, '"] is null.', scope].join(''));
+			}
+			fcn = scope[fcn];
+		}
 		var timer = setTimeout(function(){
-				if(!timer){
-					return;
-				}
-				timer = null;
-				try{
-					fcn.apply(scope, args);
-				}catch(e){
-					console.error(rias.captureStackTrace(e));
-				}
-			}, delay || 0);
+			if(!timer){
+				return;
+			}
+			timer = null;
+			try{
+				fcn.apply(scope, args || []);///IE8 不支持 args = undefined。
+			}catch(e){
+				console.error("rias.defer()", rias.captureStackTrace(e));
+			}
+		}, delay || 0);
 		return {
 			remove: function(){
 				if(timer){
@@ -1169,7 +1193,7 @@ define([
 				return null; // so this works well: handle = handle.remove();
 			}
 		};
-	};*/
+	};
 	rias._defaultThrottleDelay = 50;
 	//rias.throttle = function (func, threshold, alt) {
 	//	var last = Date.now();

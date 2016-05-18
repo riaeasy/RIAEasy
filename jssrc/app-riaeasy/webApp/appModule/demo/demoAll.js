@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 130,
+	"_rsfVersion": 129,
 	"caption": "标题1",
 	"region": "center",
 	"style": {
@@ -111,9 +111,9 @@ define([
 								{
 									"_riaswType": "rias.riasw.studio.Module",
 									"_riaswIdOfModule": "module0",
-									"caption": "测试模块1",
-									"moduleMeta": "appModule/demo/formEdit",
 									"region": "center",
+									"caption": "测试模块1",
+									"moduleMeta": "appModule/demo/formEditor",
 									"style": {
 										"border": "0px #b1badf solid",
 										"height": "100px",

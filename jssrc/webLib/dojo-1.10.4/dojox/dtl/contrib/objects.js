@@ -1,11 +1,3 @@
 //>>built
-
-define("dojox/dtl/contrib/objects", ["dojo/_base/lang", "../_base"], function (lang, dd) {
-    var objects = lang.getObject("contrib.objects", true, dd);
-    lang.mixin(objects, {key:function (value, arg) {
-        return value[arg];
-    }});
-    dd.register.filters("dojox.dtl.contrib", {"objects":["key"]});
-    return objects;
-});
-
+define("dojox/dtl/contrib/objects",["dojo/_base/lang","../_base"],function(a,b){var c=a.getObject("contrib.objects",!0,b);a.mixin(c,{key:function(a,b){return a[b]}});b.register.filters("dojox.dtl.contrib",{objects:["key"]});return c});
+/// objects.js.map

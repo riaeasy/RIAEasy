@@ -21,9 +21,7 @@ define([
 		iconClass16: "riaswRadioButtonIcon16",
 		defaultParams: {
 			//content: "<input type='radio' showLabel='true'></input>",
-			//value: "on",
-			tabIndex: 0,
-			scrollOnFocus: true
+			//value: "on"
 		},
 		initialSize: {},
 		resizable: "none",

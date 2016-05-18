@@ -1,20 +1,3 @@
 //>>built
-
-define("dojox/fx/ext-dojo/NodeList-style", ["dojo/_base/lang", "dojo/query", "dojo/NodeList-fx", "dojo/fx", "../style"], function (lang, query, NodeListFx, coreFx, styleX) {
-    var NodeList = query.NodeList;
-    lang.extend(NodeList, {addClassFx:function (cssClass, args) {
-        return coreFx.combine(this.map(function (n) {
-            return styleX.addClass(n, cssClass, args);
-        }));
-    }, removeClassFx:function (cssClass, args) {
-        return coreFx.combine(this.map(function (n) {
-            return styleX.removeClass(n, cssClass, args);
-        }));
-    }, toggleClassFx:function (cssClass, force, args) {
-        return coreFx.combine(this.map(function (n) {
-            return styleX.toggleClass(n, cssClass, force, args);
-        }));
-    }});
-    return NodeList;
-});
-
+define("dojox/fx/ext-dojo/NodeList-style",["dojo/_base/lang","dojo/query","dojo/NodeList-fx","dojo/fx","../style"],function(g,a,h,e,f){a=a.NodeList;g.extend(a,{addClassFx:function(b,c){return e.combine(this.map(function(d){return f.addClass(d,b,c)}))},removeClassFx:function(b,c){return e.combine(this.map(function(d){return f.removeClass(d,b,c)}))},toggleClassFx:function(b,c,d){return e.combine(this.map(function(a){return f.toggleClass(a,b,c,d)}))}});return a});
+/// NodeList-style.js.map

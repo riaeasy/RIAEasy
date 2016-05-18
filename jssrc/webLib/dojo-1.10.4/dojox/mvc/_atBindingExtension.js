@@ -1,9 +1,3 @@
 //>>built
-
-define("dojox/mvc/_atBindingExtension", ["dojo/_base/config", "dojo/has", "dijit/_WidgetBase", "./atBindingExtension"], function (config, has, _WidgetBase, atBindingExtension) {
-    has.add("mvc-extension-per-widget", (config["mvc"] || {}).extensionPerWidget);
-    if (!has("mvc-extension-per-widget")) {
-        atBindingExtension(_WidgetBase.prototype);
-    }
-});
-
+define("dojox/mvc/_atBindingExtension",["dojo/_base/config","dojo/has","dijit/_WidgetBase","./atBindingExtension"],function(b,a,c,d){a.add("mvc-extension-per-widget",(b.mvc||{}).extensionPerWidget);a("mvc-extension-per-widget")||d(c.prototype)});
+/// _atBindingExtension.js.map

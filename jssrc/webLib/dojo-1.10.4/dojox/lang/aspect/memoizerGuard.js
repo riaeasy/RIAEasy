@@ -1,30 +1,3 @@
 //>>built
-
-define("dojox/lang/aspect/memoizerGuard", ["dijit", "dojo", "dojox"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.lang.aspect.memoizerGuard");
-    (function () {
-        var aop = dojox.lang.aspect, reset = function (method) {
-            var that = aop.getContext().instance, t;
-            if (!(t = that.__memoizerCache)) {
-                return;
-            }
-            if (arguments.length == 0) {
-                delete that.__memoizerCache;
-            } else {
-                if (dojo.isArray(method)) {
-                    dojo.forEach(method, function (m) {
-                        delete t[m];
-                    });
-                } else {
-                    delete t[method];
-                }
-            }
-        };
-        aop.memoizerGuard = function (method) {
-            return {after:function () {
-                reset(method);
-            }};
-        };
-    })();
-});
-
+define("dojox/lang/aspect/memoizerGuard",["dijit","dojo","dojox"],function(h,b,f){b.provide("dojox.lang.aspect.memoizerGuard");(function(){var d=f.lang.aspect,g=function(a){var e=d.getContext().instance,c;if(c=e.__memoizerCache)0==arguments.length?delete e.__memoizerCache:b.isArray(a)?b.forEach(a,function(a){delete c[a]}):delete c[a]};d.memoizerGuard=function(a){return{after:function(){g(a)}}}})()});
+/// memoizerGuard.js.map

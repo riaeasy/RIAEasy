@@ -1,40 +1,4 @@
 //>>built
-
-define("dojox/editor/plugins/_SpellCheckParser", ["dojo", "dojox", "dojo/_base/connect", "dojo/_base/declare"], function (dojo, dojox) {
-    var SpellCheckParser = dojo.declare("dojox.editor.plugins._SpellCheckParser", null, {lang:"english", parseIntoWords:function (text) {
-        function isCharExt(c) {
-            var ch = c.charCodeAt(0);
-            return 48 <= ch && ch <= 57 || 65 <= ch && ch <= 90 || 97 <= ch && ch <= 122;
-        }
-        var words = this.words = [], indices = this.indices = [], index = 0, length = text && text.length, start = 0;
-        while (index < length) {
-            var ch;
-            while (index < length && !isCharExt(ch = text.charAt(index)) && ch != "&") {
-                index++;
-            }
-            if (ch == "&") {
-                while (++index < length && (ch = text.charAt(index)) != ";" && isCharExt(ch)) {
-                }
-            } else {
-                start = index;
-                while (++index < length && isCharExt(text.charAt(index))) {
-                }
-                if (start < length) {
-                    words.push(text.substring(start, index));
-                    indices.push(start);
-                }
-            }
-        }
-        return words;
-    }, getIndices:function () {
-        return this.indices;
-    }});
-    dojo.subscribe(dijit._scopeName + ".Editor.plugin.SpellCheck.getParser", null, function (sp) {
-        if (sp.parser) {
-            return;
-        }
-        sp.parser = new SpellCheckParser();
-    });
-    return SpellCheckParser;
-});
-
+define("dojox/editor/plugins/_SpellCheckParser",["dojo","dojox","dojo/_base/connect","dojo/_base/declare"],function(c,k){var g=c.declare("dojox.editor.plugins._SpellCheckParser",null,{lang:"english",parseIntoWords:function(b){function h(a){a=a.charCodeAt(0);return 48<=a&&57>=a||65<=a&&90>=a||97<=a&&122>=a}for(var c=this.words=[],g=this.indices=[],a=0,d=b&&b.length,f=0;a<d;){for(var e;a<d&&!h(e=b.charAt(a))&&"\x26"!=e;)a++;if("\x26"==e)for(;++a<d&&";"!=(e=b.charAt(a))&&h(e););else{for(f=a;++a<d&&h(b.charAt(a)););
+f<d&&(c.push(b.substring(f,a)),g.push(f))}}return c},getIndices:function(){return this.indices}});c.subscribe(dijit._scopeName+".Editor.plugin.SpellCheck.getParser",null,function(b){b.parser||(b.parser=new g)});return g});
+/// _SpellCheckParser.js.map

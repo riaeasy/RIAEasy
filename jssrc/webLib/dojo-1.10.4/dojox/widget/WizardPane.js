@@ -1,41 +1,4 @@
 //>>built
-
-define("dojox/widget/WizardPane", ["dojo/_base/lang", "dojo/_base/declare", "dijit/layout/ContentPane"], function (lang, declare, ContentPane) {
-    return declare("dojox.widget.WizardPane", ContentPane, {canGoBack:true, passFunction:null, doneFunction:null, startup:function () {
-        this.inherited(arguments);
-        if (this.isFirstChild) {
-            this.canGoBack = false;
-        }
-        if (lang.isString(this.passFunction)) {
-            this.passFunction = lang.getObject(this.passFunction);
-        }
-        if (lang.isString(this.doneFunction) && this.doneFunction) {
-            this.doneFunction = lang.getObject(this.doneFunction);
-        }
-    }, _onShow:function () {
-        if (this.isFirstChild) {
-            this.canGoBack = false;
-        }
-        this.inherited(arguments);
-    }, _checkPass:function () {
-        var r = true;
-        if (this.passFunction && lang.isFunction(this.passFunction)) {
-            var failMessage = this.passFunction();
-            switch (typeof failMessage) {
-              case "boolean":
-                r = failMessage;
-                break;
-              case "string":
-                alert(failMessage);
-                r = false;
-                break;
-            }
-        }
-        return r;
-    }, done:function () {
-        if (this.doneFunction && lang.isFunction(this.doneFunction)) {
-            this.doneFunction();
-        }
-    }});
-});
-
+define("dojox/widget/WizardPane",["dojo/_base/lang","dojo/_base/declare","dijit/layout/ContentPane"],function(a,d,e){return d("dojox.widget.WizardPane",e,{canGoBack:!0,passFunction:null,doneFunction:null,startup:function(){this.inherited(arguments);this.isFirstChild&&(this.canGoBack=!1);a.isString(this.passFunction)&&(this.passFunction=a.getObject(this.passFunction));a.isString(this.doneFunction)&&this.doneFunction&&(this.doneFunction=a.getObject(this.doneFunction))},_onShow:function(){this.isFirstChild&&
+(this.canGoBack=!1);this.inherited(arguments)},_checkPass:function(){var b=!0;if(this.passFunction&&a.isFunction(this.passFunction)){var c=this.passFunction();switch(typeof c){case "boolean":b=c;break;case "string":alert(c),b=!1}}return b},done:function(){this.doneFunction&&a.isFunction(this.doneFunction)&&this.doneFunction()}})});
+/// WizardPane.js.map

@@ -1,29 +1,3 @@
 //>>built
-
-define("dojox/mobile/bidi/common", ["dojo/_base/array", "dijit/_BidiSupport"], function (array, _BidiSupport) {
-    var common = {};
-    common.enforceTextDirWithUcc = function (text, textDir) {
-        if (textDir) {
-            textDir = (textDir === "auto") ? _BidiSupport.prototype._checkContextual(text) : textDir;
-            return ((textDir === "rtl") ? common.MARK.RLE : common.MARK.LRE) + text + common.MARK.PDF;
-        }
-        return text;
-    };
-    common.removeUCCFromText = function (text) {
-        if (!text) {
-            return text;
-        }
-        return text.replace(/\u202A|\u202B|\u202C/g, "");
-    };
-    common.setTextDirForButtons = function (widget) {
-        var children = widget.getChildren();
-        if (children && widget.textDir) {
-            array.forEach(children, function (ch) {
-                ch.set("textDir", widget.textDir);
-            }, widget);
-        }
-    };
-    common.MARK = {LRE:"\u202a", RLE:"\u202b", PDF:"\u202c"};
-    return common;
-});
-
+define("dojox/mobile/bidi/common",["dojo/_base/array","dijit/_BidiSupport"],function(d,e){var c={enforceTextDirWithUcc:function(a,b){return b?(b="auto"===b?e.prototype._checkContextual(a):b,("rtl"===b?c.MARK.RLE:c.MARK.LRE)+a+c.MARK.PDF):a},removeUCCFromText:function(a){return!a?a:a.replace(/\u202A|\u202B|\u202C/g,"")},setTextDirForButtons:function(a){var b=a.getChildren();b&&a.textDir&&d.forEach(b,function(b){b.set("textDir",a.textDir)},a)},MARK:{LRE:"\u202a",RLE:"\u202b",PDF:"\u202c"}};return c});
+/// common.js.map

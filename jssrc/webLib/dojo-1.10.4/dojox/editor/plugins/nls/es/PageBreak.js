@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/es/PageBreak", ({"pageBreak":"Salto de p\xe1gina"}));
-
+define("dojox/editor/plugins/nls/es/PageBreak",{pageBreak:"Salto de p\u00e1gina"});
+/// PageBreak.js.map

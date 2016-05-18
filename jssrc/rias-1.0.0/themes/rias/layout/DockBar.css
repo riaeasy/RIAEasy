@@ -32,7 +32,8 @@
 .riaswDockNodeShown {
 	background-color: lavender;
 }
-.riaswDockNodeTopmost {
+.riaswDockNodeSelected,
+.riaswDockNodeFocused {
 	background-color: skyblue;
 }
 .riaswDockNode * {
@@ -92,8 +93,10 @@
 .riaswDockNodeIconHidden {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -28px center;
 }
-.riaswDockNodeTopmost .riaswDockNodeIcon,
-.riaswDockNodeIconTopmost {
+.riaswDockNodeSelected .riaswDockNodeIcon,
+.riaswDockNodeIconSelected,
+.riaswDockNodeFocused .riaswDockNodeIcon,
+.riaswDockNodeIconFocused {
 	background: url('./images/CaptionPanelBtn.png') no-repeat -148px center;
 }
 

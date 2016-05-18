@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/fi/Textarea", ({iframeEditTitle:"muokkausalue", iframeFocusTitle:"muokkausalueen kehys"}));
-
+define("dijit/form/nls/fi/Textarea",{iframeEditTitle:"muokkausalue",iframeFocusTitle:"muokkausalueen kehys"});
+/// Textarea.js.map

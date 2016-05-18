@@ -1,19 +1,3 @@
 //>>built
-
-define("dojox/validate/ca", ["dojo/_base/lang", "./_base", "./regexp", "./us"], function (lang, validate, xregexp, us) {
-    var ca = lang.getObject("ca", true, validate);
-    lang.mixin(ca, {isPhoneNumber:function (value) {
-        return us.isPhoneNumber(value);
-    }, isProvince:function (value) {
-        var re = new RegExp("^" + xregexp.ca.province() + "$", "i");
-        return re.test(value);
-    }, isSocialInsuranceNumber:function (value) {
-        var flags = {format:["###-###-###", "### ### ###", "#########"]};
-        return validate.isNumberFormat(value, flags);
-    }, isPostalCode:function (value) {
-        var re = new RegExp("^" + xregexp.ca.postalCode() + "$", "i");
-        return re.test(value);
-    }});
-    return ca;
-});
-
+define("dojox/validate/ca",["dojo/_base/lang","./_base","./regexp","./us"],function(b,c,d,f){var e=b.getObject("ca",!0,c);b.mixin(e,{isPhoneNumber:function(a){return f.isPhoneNumber(a)},isProvince:function(a){return RegExp("^"+d.ca.province()+"$","i").test(a)},isSocialInsuranceNumber:function(a){return c.isNumberFormat(a,{format:["###-###-###","### ### ###","#########"]})},isPostalCode:function(a){return RegExp("^"+d.ca.postalCode()+"$","i").test(a)}});return e});
+/// ca.js.map

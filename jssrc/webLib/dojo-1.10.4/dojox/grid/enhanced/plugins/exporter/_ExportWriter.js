@@ -1,32 +1,4 @@
 //>>built
-
-define("dojox/grid/enhanced/plugins/exporter/_ExportWriter", ["dojo/_base/declare"], function (declare) {
-    return declare("dojox.grid.enhanced.plugins.exporter._ExportWriter", null, {constructor:function (writerArgs) {
-    }, _getExportDataForCell:function (rowIndex, rowItem, cell, grid) {
-        var data = (cell.get || grid.get).call(cell, rowIndex, rowItem);
-        if (this.formatter) {
-            return this.formatter(data, cell, rowIndex, rowItem);
-        } else {
-            return data;
-        }
-    }, beforeHeader:function (grid) {
-        return true;
-    }, afterHeader:function () {
-    }, beforeContent:function (items) {
-        return true;
-    }, afterContent:function () {
-    }, beforeContentRow:function (argObj) {
-        return true;
-    }, afterContentRow:function (argObj) {
-    }, beforeView:function (argObj) {
-        return true;
-    }, afterView:function (argObj) {
-    }, beforeSubrow:function (argObj) {
-        return true;
-    }, afterSubrow:function (argObj) {
-    }, handleCell:function (argObj) {
-    }, toString:function () {
-        return "";
-    }});
-});
-
+define("dojox/grid/enhanced/plugins/exporter/_ExportWriter",["dojo/_base/declare"],function(e){return e("dojox.grid.enhanced.plugins.exporter._ExportWriter",null,{constructor:function(a){},_getExportDataForCell:function(a,d,c,b){b=(c.get||b.get).call(c,a,d);return this.formatter?this.formatter(b,c,a,d):b},beforeHeader:function(a){return!0},afterHeader:function(){},beforeContent:function(a){return!0},afterContent:function(){},beforeContentRow:function(a){return!0},afterContentRow:function(a){},beforeView:function(a){return!0},
+afterView:function(a){},beforeSubrow:function(a){return!0},afterSubrow:function(a){},handleCell:function(a){},toString:function(){return""}})});
+/// _ExportWriter.js.map

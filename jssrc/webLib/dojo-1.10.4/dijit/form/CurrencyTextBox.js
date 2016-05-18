@@ -1,17 +1,4 @@
 //>>built
-
-define("dijit/form/CurrencyTextBox", ["dojo/currency", "dojo/_base/declare", "dojo/_base/lang", "./NumberTextBox"], function (currency, declare, lang, NumberTextBox) {
-    return declare("dijit.form.CurrencyTextBox", NumberTextBox, {currency:"", baseClass:"dijitTextBox dijitCurrencyTextBox", _formatter:currency.format, _parser:currency.parse, _regExpGenerator:currency.regexp, parse:function (value, constraints) {
-        var v = this.inherited(arguments);
-        if (isNaN(v) && /\d+/.test(value)) {
-            v = lang.hitch(lang.delegate(this, {_parser:NumberTextBox.prototype._parser}), "inherited")(arguments);
-        }
-        return v;
-    }, _setConstraintsAttr:function (constraints) {
-        if (!constraints.currency && this.currency) {
-            constraints.currency = this.currency;
-        }
-        this.inherited(arguments, [currency._mixInDefaults(lang.mixin(constraints, {exponent:false}))]);
-    }});
-});
-
+define("dijit/form/CurrencyTextBox",["dojo/currency","dojo/_base/declare","dojo/_base/lang","./NumberTextBox"],function(a,f,c,e){return f("dijit.form.CurrencyTextBox",e,{currency:"",baseClass:"dijitTextBox dijitCurrencyTextBox",_formatter:a.format,_parser:a.parse,_regExpGenerator:a.regexp,parse:function(b,a){var d=this.inherited(arguments);isNaN(d)&&/\d+/.test(b)&&(d=c.hitch(c.delegate(this,{_parser:e.prototype._parser}),"inherited")(arguments));return d},_setConstraintsAttr:function(b){!b.currency&&
+this.currency&&(b.currency=this.currency);this.inherited(arguments,[a._mixInDefaults(c.mixin(b,{exponent:!1}))])}})});
+/// CurrencyTextBox.js.map

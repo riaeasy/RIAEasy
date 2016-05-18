@@ -1,30 +1,3 @@
 //>>built
-
-define("dojo/promise/first", ["../_base/array", "../Deferred", "../when"], function (array, Deferred, when) {
-    "use strict";
-    var forEach = array.forEach;
-    return function first(objectOrArray) {
-        var array;
-        if (objectOrArray instanceof Array) {
-            array = objectOrArray;
-        } else {
-            if (objectOrArray && typeof objectOrArray === "object") {
-                array = [];
-                for (var key in objectOrArray) {
-                    if (Object.hasOwnProperty.call(objectOrArray, key)) {
-                        array.push(objectOrArray[key]);
-                    }
-                }
-            }
-        }
-        if (!array || !array.length) {
-            return new Deferred().resolve();
-        }
-        var deferred = new Deferred();
-        forEach(array, function (valueOrPromise) {
-            when(valueOrPromise, deferred.resolve, deferred.reject);
-        });
-        return deferred.promise;
-    };
-});
-
+define("dojo/promise/first",["../_base/array","../Deferred","../when"],function(f,d,g){var h=f.forEach;return function(a){var b;if(a instanceof Array)b=a;else if(a&&"object"===typeof a){b=[];for(var e in a)Object.hasOwnProperty.call(a,e)&&b.push(a[e])}if(!b||!b.length)return(new d).resolve();var c=new d;h(b,function(a){g(a,c.resolve,c.reject)});return c.promise}});
+/// first.js.map

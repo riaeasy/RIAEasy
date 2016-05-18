@@ -1,13 +1,3 @@
 //>>built
-
-define("dojox/mobile/bidi/Accordion", ["dojo/_base/declare", "./common", "dojo/dom-class"], function (declare, common, domClass) {
-    return declare(null, {_setupChild:function (child) {
-        if (this.textDir) {
-            child.label = common.enforceTextDirWithUcc(child.label, this.textDir);
-        }
-        this.inherited(arguments);
-    }, _setIconDir:function (iconNode) {
-        domClass.add(iconNode, "mblAccordionIconParentRtl");
-    }});
-});
-
+define("dojox/mobile/bidi/Accordion",["dojo/_base/declare","./common","dojo/dom-class"],function(b,c,d){return b(null,{_setupChild:function(a){this.textDir&&(a.label=c.enforceTextDirWithUcc(a.label,this.textDir));this.inherited(arguments)},_setIconDir:function(a){d.add(a,"mblAccordionIconParentRtl")}})});
+/// Accordion.js.map

@@ -1,6 +1,3 @@
 //>>built
-
-define("dijit/main", ["dojo/_base/kernel"], function (dojo) {
-    return dojo.dijit;
-});
-
+define("dijit/main",["dojo/_base/kernel"],function(a){return a.dijit});
+/// main.js.map

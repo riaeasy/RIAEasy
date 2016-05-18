@@ -1,4 +1,4 @@
 //>>built
-
-define("dojox/editor/plugins/nls/de/Smiley", ({smiley:"Emoticon einf\xfcgen", emoticonSmile:"L\xe4cheln", emoticonLaughing:"Lachen", emoticonWink:"Zwinkern", emoticonGrin:"Grinsen", emoticonCool:"Cool", emoticonAngry:"W\xfctend", emoticonHalf:"Halbes L\xe4cheln", emoticonEyebrow:"Augenbraue", emoticonFrown:"Stirnrunzeln", emoticonShy:"Sch\xfcchtern", emoticonGoofy:"Albern", emoticonOops:"Hoppla", emoticonTongue:"Zunge", emoticonIdea:"Idee", emoticonYes:"Ja", emoticonNo:"Nein", emoticonAngel:"Engel", emoticonCrying:"Weinen", emoticonHappy:"Gl\xfccklich"}));
-
+define("dojox/editor/plugins/nls/de/Smiley",{smiley:"Emoticon einf\u00fcgen",emoticonSmile:"L\u00e4cheln",emoticonLaughing:"Lachen",emoticonWink:"Zwinkern",emoticonGrin:"Grinsen",emoticonCool:"Cool",emoticonAngry:"W\u00fctend",emoticonHalf:"Halbes L\u00e4cheln",emoticonEyebrow:"Augenbraue",emoticonFrown:"Stirnrunzeln",emoticonShy:"Sch\u00fcchtern",emoticonGoofy:"Albern",emoticonOops:"Hoppla",emoticonTongue:"Zunge",emoticonIdea:"Idee",emoticonYes:"Ja",emoticonNo:"Nein",emoticonAngel:"Engel",emoticonCrying:"Weinen",
+emoticonHappy:"Gl\u00fccklich"});
+/// Smiley.js.map

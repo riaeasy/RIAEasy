@@ -1,14 +1,3 @@
 //>>built
-
-define("dojox/mobile/bidi/Button", ["dojo/_base/declare", "./common"], function (declare, common) {
-    return declare(null, {_setLabelAttr:function (content) {
-        this.inherited(arguments, [this._cv ? this._cv(content) : content]);
-        this.focusNode.innerHTML = common.enforceTextDirWithUcc(this.focusNode.innerHTML, this.textDir);
-    }, _setTextDirAttr:function (textDir) {
-        if (!this._created || this.textDir !== textDir) {
-            this._set("textDir", textDir);
-            this.focusNode.innerHTML = common.enforceTextDirWithUcc(common.removeUCCFromText(this.focusNode.innerHTML), this.textDir);
-        }
-    }});
-});
-
+define("dojox/mobile/bidi/Button",["dojo/_base/declare","./common"],function(c,b){return c(null,{_setLabelAttr:function(a){this.inherited(arguments,[this._cv?this._cv(a):a]);this.focusNode.innerHTML=b.enforceTextDirWithUcc(this.focusNode.innerHTML,this.textDir)},_setTextDirAttr:function(a){if(!this._created||this.textDir!==a)this._set("textDir",a),this.focusNode.innerHTML=b.enforceTextDirWithUcc(b.removeUCCFromText(this.focusNode.innerHTML),this.textDir)}})});
+/// Button.js.map

@@ -1,5 +1,3 @@
 //>>built
-
-define("dojox/highlight/languages/pygments/_www", ["dojox/main", "../../_base", "./xml", "./html", "./css", "./javascript"], function () {
-});
-
+define("dojox/highlight/languages/pygments/_www","dojox/main ../../_base ./xml ./html ./css ./javascript".split(" "),function(){});
+/// _www.js.map

@@ -1,6 +1,3 @@
 //>>built
-
-define("dojo/data/api/Item", ["../../_base/declare"], function (declare) {
-    return declare(null, {});
-});
-
+define("dojo/data/api/Item",["../../_base/declare"],function(a){return a(null,{})});
+/// Item.js.map

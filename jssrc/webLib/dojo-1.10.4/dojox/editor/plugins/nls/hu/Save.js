@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/hu/Save", ({"save":"Ment\xe9s"}));
-
+define("dojox/editor/plugins/nls/hu/Save",{save:"Ment\u00e9s"});
+/// Save.js.map

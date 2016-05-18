@@ -1,20 +1,3 @@
 //>>built
-
-define("dojox/analytics/plugins/consoleMessages", ["dojo/_base/lang", "../_base", "dojo/_base/config", "dojo/aspect"], function (lang, dxa, config, aspect) {
-    var consoleMessages = lang.getObject("dojox.analytics.plugins.consoleMessages", true);
-    consoleMessages.addData = lang.hitch(dxa, "addData", "consoleMessages");
-    var lvls = config["consoleLogFuncs"] || ["error", "warn", "info", "rlog"];
-    if (!console) {
-        console = {};
-    }
-    for (var i = 0; i < lvls.length; i++) {
-        var fnName = lvls[i], _addData = lang.hitch(consoleMessages, "addData", fnName);
-        if (console[fnName]) {
-            aspect.after(console, fnName, _addData, true);
-        } else {
-            console[fnName] = _addData;
-        }
-    }
-    return consoleMessages;
-});
-
+define("dojox/analytics/plugins/consoleMessages",["dojo/_base/lang","../_base","dojo/_base/config","dojo/aspect"],function(d,b,a,g){var e=d.getObject("dojox.analytics.plugins.consoleMessages",!0);e.addData=d.hitch(b,"addData","consoleMessages");b=a.consoleLogFuncs||["error","warn","info","rlog"];console||(console={});for(a=0;a<b.length;a++){var c=b[a],f=d.hitch(e,"addData",c);console[c]?g.after(console,c,f,!0):console[c]=f}return e});
+/// consoleMessages.js.map

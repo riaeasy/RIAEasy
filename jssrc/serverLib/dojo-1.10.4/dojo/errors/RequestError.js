@@ -1,15 +1,8 @@
-define(['./create'], function(create){
-	// module:
-	//		dojo/errors/RequestError
+//>>built
 
-	/*=====
-	 return function(){
-		 // summary:
-		 //		TODOC
-	 };
-	 =====*/
-
-	return create("RequestError", function(message, response){
-		this.response = response;
-	});
+define("dojo/errors/RequestError", ["./create"], function (create) {
+    return create("RequestError", function (message, response) {
+        this.response = response;
+    });
 });
+

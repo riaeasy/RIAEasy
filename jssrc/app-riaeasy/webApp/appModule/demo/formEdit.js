@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 62,
+	"_rsfVersion": 2,
 	"_riaswVersion": "0.7",
 	"caption": "新的页面模块",
 	"region": "center",
@@ -246,7 +246,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": "auto"
 					}
 				},
@@ -260,7 +259,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": "5em"
 					}
 				},
@@ -274,7 +272,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": "5em"
 					}
 				},
@@ -288,7 +285,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": ""
 					}
 				},
@@ -302,7 +298,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": ""
 					},
 					"value": "toggleButton0"
@@ -319,7 +314,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": "auto"
 					}
 				},
@@ -335,7 +329,6 @@ define([
 						"row": 1
 					},
 					"style": {
-						"height": "auto",
 						"width": "auto"
 					},
 					"value": "comboButton0"
@@ -424,6 +417,28 @@ define([
 								"text": "1"
 							}
 						]
+					}
+				},
+				{
+					"_riaswType": "rias.riasw.form.ComboBox",
+					"_riaswIdOfModule": "comboBoxSelect",
+					"label": "select",
+					"labelAttr": "text",
+					"position": {
+						"col": 0,
+						"colSpan": 1,
+						"row": 2,
+						"rowSpan": 2
+					},
+					"query": {
+						"parentCode": "xdictdtyp"
+					},
+					"queryExpr": "${0}%",
+					"store": {
+						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"target": "act/xdict/query"
+					},
+					"style": {
 					}
 				},
 				{
@@ -533,8 +548,8 @@ define([
 					"_riaswIdOfModule": "TextArea0",
 					"label": "TextArea0",
 					"position": {
-						"col": 3,
-						"colSpan": 1,
+						"col": 0,
+						"colSpan": 2,
 						"row": 4,
 						"rowSpan": 2
 					},
@@ -543,79 +558,6 @@ define([
 						"height": "8em"
 					},
 					"value": "TextArea0\nfds\nwewq\n健康了\n进风口\n\n健康服务\njfkls"
-				},
-				{
-					"_riaswType": "rias.riasw.form.FilteringSelect",
-					"_riaswIdOfModule": "FilteringSelect",
-					"label": "FilteringSelect",
-					"labelAttr": "text",
-					"labelWidth": "8em",
-					"position": {
-						"col": 0,
-						"colSpan": 2,
-						"row": 4,
-						"rowSpan": 1
-					},
-					"query": {
-						"parentCode": "xdictdtyp"
-					},
-					"queryExpr": "${0}*",
-					"searchAttr": "id",
-					"store": {
-						"$refObj": "rias.webApp.datas.xdict"
-					},
-					"style": {
-					}
-				},
-				{
-					"_riaswType": "rias.riasw.form.MultiComboBox",
-					"_riaswIdOfModule": "multiComboBox1",
-					"label": "multiComboBox",
-					"labelAttr": "text",
-					"labelWidth": "8em",
-					"multiple": true,
-					"position": {
-						"col": 0,
-						"colSpan": 2,
-						"row": 5,
-						"rowSpan": 1
-					},
-					"query": {
-						"parentCode": "xdictdtyp"
-					},
-					"queryExpr": "${0}*",
-					"searchAttr": "id",
-					"size": 3,
-					"store": {
-						"$refObj": "rias.webApp.datas.xdict"
-					},
-					"style": {
-					}
-				},
-				{
-					"_riaswType": "rias.riasw.form.CheckedMultiSelect",
-					"_riaswIdOfModule": "checkedMultiSelect1",
-					"label": "multiSelect",
-					"labelAttr": "text",
-					"multiple": true,
-					"position": {
-						"col": 2,
-						"colSpan": 1,
-						"row": 4,
-						"rowSpan": 2
-					},
-					"query": {
-						"parentCode": "xdictdtyp"
-					},
-					"queryExpr": "${0}*",
-					"searchAttr": "id",
-					"size": 3,
-					"store": {
-						"$refObj": "rias.webApp.datas.xdict"
-					},
-					"style": {
-						"height": "5em"
-					}
 				}
 			]
 		},

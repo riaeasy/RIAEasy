@@ -1,23 +1,4 @@
-define(
-//begin v1.x content
-{
-	"HKD_displayName": "dòlar de Hong Kong",
-	"CHF_displayName": "franc suís",
-	"JPY_symbol": "JP¥",
-	"CAD_displayName": "dòlar canadenc",
-	"HKD_symbol": "HK$",
-	"CNY_displayName": "iuan xinès",
-	"USD_symbol": "$",
-	"AUD_displayName": "dòlar australià",
-	"JPY_displayName": "ien japonès",
-	"CAD_symbol": "CA$",
-	"USD_displayName": "dòlar dels Estats Units",
-	"EUR_symbol": "€",
-	"CNY_symbol": "¥",
-	"GBP_displayName": "lliura esterlina britànica",
-	"GBP_symbol": "£",
-	"AUD_symbol": "AU$",
-	"EUR_displayName": "euro"
-}
-//end v1.x content
-);
+//>>built
+
+define("dojo/cldr/nls/ca/currency", {"HKD_displayName":"d\xf2lar de Hong Kong", "CHF_displayName":"franc su\xeds", "JPY_symbol":"JP\xa5", "CAD_displayName":"d\xf2lar canadenc", "HKD_symbol":"HK$", "CNY_displayName":"iuan xin\xe8s", "USD_symbol":"$", "AUD_displayName":"d\xf2lar australi\xe0", "JPY_displayName":"ien japon\xe8s", "CAD_symbol":"CA$", "USD_displayName":"d\xf2lar dels Estats Units", "EUR_symbol":"\u20ac", "CNY_symbol":"\xa5", "GBP_displayName":"lliura esterlina brit\xe0nica", "GBP_symbol":"\xa3", "AUD_symbol":"AU$", "EUR_displayName":"euro"});
+

@@ -18,6 +18,11 @@ define([
 	rias.defaultDuration = dijit.defaultDuration;
 	//rias.fx = fx;
 	//rias.fxbase = fxbase;
+	var ctr = 0,
+		timer = null,
+		runner = {
+			run: function(){}
+		};
 	rias.extend(fxbase.Animation, {
 		_fire: function(/*Event*/ evt, /*Array?*/ args){
 			// summary:
@@ -50,7 +55,30 @@ define([
 				}
 			}
 			return this; // Animation
-		}
+		}/*,
+
+		_startTimer: function(){
+			if(!this._timer){
+				this._timer = rias.after(runner, "run", rias.hitch(this, "_cycle"), true);
+				ctr++;
+			}
+			if(!timer){
+				timer = setInterval(rias.hitch(runner, "run"), this.rate);
+			}
+		},
+
+		_stopTimer: function(){
+			if(this._timer){
+				this._timer.remove();
+				this._timer = null;
+				ctr--;
+			}
+			if(ctr <= 0){
+				clearInterval(timer);
+				timer = null;
+				ctr = 0;
+			}
+		}*/
 	});
 	rias.fx = {
 		easing: fxEasing,

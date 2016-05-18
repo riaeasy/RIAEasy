@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/da/Smiley", ({smiley:"Inds\xe6t hum\xf8rikon", emoticonSmile:"smil", emoticonLaughing:"ler", emoticonWink:"blink", emoticonGrin:"grin", emoticonCool:"sej", emoticonAngry:"vred", emoticonHalf:"halv", emoticonEyebrow:"\xf8jenbryn", emoticonFrown:"rynker panden", emoticonShy:"genert", emoticonGoofy:"sk\xf8r", emoticonOops:"ups", emoticonTongue:"tungen ud", emoticonIdea:"id\xe9", emoticonYes:"ja", emoticonNo:"nej", emoticonAngel:"engel", emoticonCrying:"gr\xe6der", emoticonHappy:"glad"}));
-
+define("dojox/editor/plugins/nls/da/Smiley",{smiley:"Inds\u00e6t hum\u00f8rikon",emoticonSmile:"smil",emoticonLaughing:"ler",emoticonWink:"blink",emoticonGrin:"grin",emoticonCool:"sej",emoticonAngry:"vred",emoticonHalf:"halv",emoticonEyebrow:"\u00f8jenbryn",emoticonFrown:"rynker panden",emoticonShy:"genert",emoticonGoofy:"sk\u00f8r",emoticonOops:"ups",emoticonTongue:"tungen ud",emoticonIdea:"id\u00e9",emoticonYes:"ja",emoticonNo:"nej",emoticonAngel:"engel",emoticonCrying:"gr\u00e6der",emoticonHappy:"glad"});
+/// Smiley.js.map

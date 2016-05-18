@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/sl/Wizard", ({next:"Naprej", previous:"Prej\u0161nji", done:"Opravljeno"}));
-
+define("dojox/widget/nls/sl/Wizard",{next:"Naprej",previous:"Prej\u0161nji",done:"Opravljeno"});
+/// Wizard.js.map

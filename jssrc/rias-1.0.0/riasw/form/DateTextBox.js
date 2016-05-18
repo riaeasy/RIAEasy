@@ -39,7 +39,6 @@ define([
 		iconClass16: "riaswDateTextBoxIcon16",
 		defaultParams: {
 			//content: "<input type='text'></input>",
-			tabIndex: 0,
 			invalidMessage: rias.i18n.message.invalid,
 			rangeMessage: rias.i18n.message.range,
 			constraints: {
@@ -47,8 +46,7 @@ define([
 				locale: "",
 				selector: "date",
 				fullYear: true
-			},
-			scrollOnFocus: true
+			}
 		},
 		initialSize: {},
 		resizable: "width",

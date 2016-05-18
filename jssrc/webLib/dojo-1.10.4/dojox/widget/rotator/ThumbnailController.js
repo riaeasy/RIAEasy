@@ -1,40 +1,5 @@
 //>>built
-
-define("dojox/widget/rotator/ThumbnailController", ["dojo/_base/declare", "dojo/_base/connect", "dojo/_base/lang", "dojo/_base/event", "dojo/aspect", "dojo/dom-attr", "dojo/dom-class", "dojo/dom-construct", "dojo/query"], function (declare, connect, lang, event, aspect, domAttr, domClass, domConstruct, query) {
-    var _css = "dojoxRotatorThumb", _selected = _css + "Selected";
-    return declare("dojox.widget.rotator.ThumbnailController", null, {rotator:null, constructor:function (params, node) {
-        lang.mixin(this, params);
-        this._domNode = node;
-        var r = this.rotator;
-        if (r) {
-            while (node.firstChild) {
-                node.removeChild(node.firstChild);
-            }
-            for (var i = 0; i < r.panes.length; i++) {
-                var n = r.panes[i].node, s = domAttr.get(n, "thumbsrc") || domAttr.get(n, "src"), t = domAttr.get(n, "alt") || "";
-                if (/img/i.test(n.tagName)) {
-                    (function (j) {
-                        domConstruct.create("a", {classname:_css + " " + _css + j + " " + (j == r.idx ? _selected : ""), href:s, onclick:function (e) {
-                            event.stop(e);
-                            if (r) {
-                                r.control.apply(r, ["go", j]);
-                            }
-                        }, title:t, innerHTML:"<img src=\"" + s + "\" alt=\"" + t + "\"/>"}, node);
-                    })(i);
-                }
-            }
-            aspect.after(r, "onUpdate", lang.hitch(this, "_onUpdate"), true);
-        }
-    }, destroy:function () {
-        domConstruct.destroy(this._domNode);
-    }, _onUpdate:function (type) {
-        var r = this.rotator;
-        if (type == "onAfterTransition") {
-            var n = query("." + _css, this._domNode).removeClass(_selected);
-            if (r.idx < n.length) {
-                domClass.add(n[r.idx], _selected);
-            }
-        }
-    }});
-});
-
+define("dojox/widget/rotator/ThumbnailController","dojo/_base/declare dojo/_base/connect dojo/_base/lang dojo/_base/event dojo/aspect dojo/dom-attr dojo/dom-class dojo/dom-construct dojo/query".split(" "),function(m,s,g,n,p,f,q,h,r){return m("dojox.widget.rotator.ThumbnailController",null,{rotator:null,constructor:function(a,b){g.mixin(this,a);this._domNode=b;var c=this.rotator;if(c){for(;b.firstChild;)b.removeChild(b.firstChild);for(var d=0;d<c.panes.length;d++){var e=c.panes[d].node,k=f.get(e,"thumbsrc")||
+f.get(e,"src"),l=f.get(e,"alt")||"";/img/i.test(e.tagName)&&function(a){h.create("a",{classname:"dojoxRotatorThumb dojoxRotatorThumb"+a+" "+(a==c.idx?"dojoxRotatorThumbSelected":""),href:k,onclick:function(b){n.stop(b);c&&c.control.apply(c,["go",a])},title:l,innerHTML:'\x3cimg src\x3d"'+k+'" alt\x3d"'+l+'"/\x3e'},b)}(d)}p.after(c,"onUpdate",g.hitch(this,"_onUpdate"),!0)}},destroy:function(){h.destroy(this._domNode)},_onUpdate:function(a){var b=this.rotator;"onAfterTransition"==a&&(a=r(".dojoxRotatorThumb",
+this._domNode).removeClass("dojoxRotatorThumbSelected"),b.idx<a.length&&q.add(a[b.idx],"dojoxRotatorThumbSelected"))}})});
+/// ThumbnailController.js.map

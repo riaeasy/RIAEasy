@@ -1,64 +1,7 @@
 //>>built
-
-require({cache:{"url:dijit/form/templates/DropDownBox.html":"<div class=\"dijit dijitReset dijitInline dijitLeft\"\n\tid=\"widget_${id}\"\n\trole=\"combobox\"\n\taria-haspopup=\"true\"\n\tdata-dojo-attach-point=\"_popupStateNode\"\n\t><div class='dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer'\n\t\tdata-dojo-attach-point=\"_buttonNode\" role=\"presentation\"\n\t\t><input class=\"dijitReset dijitInputField dijitArrowButtonInner\" value=\"&#9660; \" type=\"text\" tabIndex=\"-1\" readonly=\"readonly\" role=\"button presentation\" aria-hidden=\"true\"\n\t\t\t${_buttonInputDisabled}\n\t/></div\n\t><div class='dijitReset dijitValidationContainer'\n\t\t><input class=\"dijitReset dijitInputField dijitValidationIcon dijitValidationInner\" value=\"&#935; \" type=\"text\" tabIndex=\"-1\" readonly=\"readonly\" role=\"presentation\"\n\t/></div\n\t><div class=\"dijitReset dijitInputField dijitInputContainer\"\n\t\t><input class='dijitReset dijitInputInner' ${!nameAttrSetting} type=\"text\" autocomplete=\"off\"\n\t\t\tdata-dojo-attach-point=\"textbox,focusNode\" role=\"textbox\"\n\t/></div\n></div>\n"}});
-define("dijit/form/ComboBoxMixin", ["dojo/_base/declare", "dojo/Deferred", "dojo/_base/kernel", "dojo/_base/lang", "dojo/store/util/QueryResults", "./_AutoCompleterMixin", "./_ComboBoxMenu", "../_HasDropDown", "dojo/text!./templates/DropDownBox.html"], function (declare, Deferred, kernel, lang, QueryResults, _AutoCompleterMixin, _ComboBoxMenu, _HasDropDown, template) {
-    return declare("dijit.form.ComboBoxMixin", [_HasDropDown, _AutoCompleterMixin], {dropDownClass:_ComboBoxMenu, hasDownArrow:true, templateString:template, baseClass:"dijitTextBox dijitComboBox", cssStateNodes:{"_buttonNode":"dijitDownArrowButton"}, _setHasDownArrowAttr:function (val) {
-        this._set("hasDownArrow", val);
-        this._buttonNode.style.display = val ? "" : "none";
-    }, _showResultList:function () {
-        this.displayMessage("");
-        this.inherited(arguments);
-    }, _setStoreAttr:function (store) {
-        if (!store.get) {
-            lang.mixin(store, {_oldAPI:true, get:function (id) {
-                var deferred = new Deferred();
-                this.fetchItemByIdentity({identity:id, onItem:function (object) {
-                    deferred.resolve(object);
-                }, onError:function (error) {
-                    deferred.reject(error);
-                }});
-                return deferred.promise;
-            }, query:function (query, options) {
-                var deferred = new Deferred(function () {
-                    fetchHandle.abort && fetchHandle.abort();
-                });
-                deferred.total = new Deferred();
-                var fetchHandle = this.fetch(lang.mixin({query:query, onBegin:function (count) {
-                    deferred.total.resolve(count);
-                }, onComplete:function (results) {
-                    deferred.resolve(results);
-                }, onError:function (error) {
-                    deferred.reject(error);
-                }}, options));
-                return QueryResults(deferred);
-            }});
-        }
-        this._set("store", store);
-    }, postMixInProperties:function () {
-        var store = this.params.store || this.store;
-        if (store) {
-            this._setStoreAttr(store);
-        }
-        this.inherited(arguments);
-        if (!this.params.store && this.store && !this.store._oldAPI) {
-            var clazz = this.declaredClass;
-            lang.mixin(this.store, {getValue:function (item, attr) {
-                kernel.deprecated(clazz + ".store.getValue(item, attr) is deprecated for builtin store.  Use item.attr directly", "", "2.0");
-                return item[attr];
-            }, getLabel:function (item) {
-                kernel.deprecated(clazz + ".store.getLabel(item) is deprecated for builtin store.  Use item.label directly", "", "2.0");
-                return item.name;
-            }, fetch:function (args) {
-                kernel.deprecated(clazz + ".store.fetch() is deprecated for builtin store.", "Use store.query()", "2.0");
-                var shim = ["dojo/data/ObjectStore"];
-                require(shim, lang.hitch(this, function (ObjectStore) {
-                    new ObjectStore({objectStore:this}).fetch(args);
-                }));
-            }});
-        }
-    }, buildRendering:function () {
-        this.inherited(arguments);
-        this.focusNode.setAttribute("aria-autocomplete", this.autoComplete ? "both" : "list");
-    }});
-});
-
+require({cache:{"url:dijit/form/templates/DropDownBox.html":'\x3cdiv class\x3d"dijit dijitReset dijitInline dijitLeft"\n\tid\x3d"widget_${id}"\n\trole\x3d"combobox"\n\taria-haspopup\x3d"true"\n\tdata-dojo-attach-point\x3d"_popupStateNode"\n\t\x3e\x3cdiv class\x3d\'dijitReset dijitRight dijitButtonNode dijitArrowButton dijitDownArrowButton dijitArrowButtonContainer\'\n\t\tdata-dojo-attach-point\x3d"_buttonNode" role\x3d"presentation"\n\t\t\x3e\x3cinput class\x3d"dijitReset dijitInputField dijitArrowButtonInner" value\x3d"\x26#9660; " type\x3d"text" tabIndex\x3d"-1" readonly\x3d"readonly" role\x3d"button presentation" aria-hidden\x3d"true"\n\t\t\t${_buttonInputDisabled}\n\t/\x3e\x3c/div\n\t\x3e\x3cdiv class\x3d\'dijitReset dijitValidationContainer\'\n\t\t\x3e\x3cinput class\x3d"dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value\x3d"\x26#935; " type\x3d"text" tabIndex\x3d"-1" readonly\x3d"readonly" role\x3d"presentation"\n\t/\x3e\x3c/div\n\t\x3e\x3cdiv class\x3d"dijitReset dijitInputField dijitInputContainer"\n\t\t\x3e\x3cinput class\x3d\'dijitReset dijitInputInner\' ${!nameAttrSetting} type\x3d"text" autocomplete\x3d"off"\n\t\t\tdata-dojo-attach-point\x3d"textbox,focusNode" role\x3d"textbox"\n\t/\x3e\x3c/div\n\x3e\x3c/div\x3e\n'}});
+define("dijit/form/ComboBoxMixin","dojo/_base/declare dojo/Deferred dojo/_base/kernel dojo/_base/lang dojo/store/util/QueryResults ./_AutoCompleterMixin ./_ComboBoxMenu ../_HasDropDown dojo/text!./templates/DropDownBox.html".split(" "),function(g,c,d,f,h,k,l,m,n){return g("dijit.form.ComboBoxMixin",[m,k],{dropDownClass:l,hasDownArrow:!0,templateString:n,baseClass:"dijitTextBox dijitComboBox",cssStateNodes:{_buttonNode:"dijitDownArrowButton"},_setHasDownArrowAttr:function(a){this._set("hasDownArrow",
+a);this._buttonNode.style.display=a?"":"none"},_showResultList:function(){this.displayMessage("");this.inherited(arguments)},_setStoreAttr:function(a){a.get||f.mixin(a,{_oldAPI:!0,get:function(a){var e=new c;this.fetchItemByIdentity({identity:a,onItem:function(b){e.resolve(b)},onError:function(b){e.reject(b)}});return e.promise},query:function(a,e){var b=new c(function(){d.abort&&d.abort()});b.total=new c;var d=this.fetch(f.mixin({query:a,onBegin:function(a){b.total.resolve(a)},onComplete:function(a){b.resolve(a)},
+onError:function(a){b.reject(a)}},e));return h(b)}});this._set("store",a)},postMixInProperties:function(){var a=this.params.store||this.store;a&&this._setStoreAttr(a);this.inherited(arguments);if(!this.params.store&&this.store&&!this.store._oldAPI){var c=this.declaredClass;f.mixin(this.store,{getValue:function(a,b){d.deprecated(c+".store.getValue(item, attr) is deprecated for builtin store.  Use item.attr directly","","2.0");return a[b]},getLabel:function(a){d.deprecated(c+".store.getLabel(item) is deprecated for builtin store.  Use item.label directly",
+"","2.0");return a.name},fetch:function(a){d.deprecated(c+".store.fetch() is deprecated for builtin store.","Use store.query()","2.0");require(["dojo/data/ObjectStore"],f.hitch(this,function(b){(new b({objectStore:this})).fetch(a)}))}})}},buildRendering:function(){this.inherited(arguments);this.focusNode.setAttribute("aria-autocomplete",this.autoComplete?"both":"list")}})});
+/// ComboBoxMixin.js.map

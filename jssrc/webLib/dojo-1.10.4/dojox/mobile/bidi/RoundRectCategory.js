@@ -1,17 +1,3 @@
 //>>built
-
-define("dojox/mobile/bidi/RoundRectCategory", ["dojo/_base/declare", "./common"], function (declare, common) {
-    return declare(null, {_setLabelAttr:function (text) {
-        if (this.textDir) {
-            text = common.enforceTextDirWithUcc(text, this.textDir);
-        }
-        this.inherited(arguments);
-    }, _setTextDirAttr:function (textDir) {
-        if (textDir && this.textDir !== textDir) {
-            this.textDir = textDir;
-            this.label = common.removeUCCFromText(this.label);
-            this.set("label", this.label);
-        }
-    }});
-});
-
+define("dojox/mobile/bidi/RoundRectCategory",["dojo/_base/declare","./common"],function(c,b){return c(null,{_setLabelAttr:function(a){this.textDir&&(a=b.enforceTextDirWithUcc(a,this.textDir));this.inherited(arguments)},_setTextDirAttr:function(a){a&&this.textDir!==a&&(this.textDir=a,this.label=b.removeUCCFromText(this.label),this.set("label",this.label))}})});
+/// RoundRectCategory.js.map

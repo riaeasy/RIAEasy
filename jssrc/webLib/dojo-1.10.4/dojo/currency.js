@@ -1,29 +1,4 @@
 //>>built
-
-define("dojo/currency", ["./_base/array", "./_base/lang", "./number", "./i18n", "./i18n!./cldr/nls/currency", "./cldr/monetary"], function (darray, lang, dnumber, i18n, nlsCurrency, cldrMonetary) {
-    var currency = {};
-    lang.setObject("dojo.currency", currency);
-    currency._mixInDefaults = function (options) {
-        options = options || {};
-        options.type = "currency";
-        var bundle = i18n.getLocalization("dojo.cldr", "currency", options.locale) || {};
-        var iso = options.currency;
-        var data = cldrMonetary.getData(iso);
-        darray.forEach(["displayName", "symbol", "group", "decimal"], function (prop) {
-            data[prop] = bundle[iso + "_" + prop];
-        });
-        data.fractional = [true, false];
-        return lang.mixin(data, options);
-    };
-    currency.format = function (value, options) {
-        return dnumber.format(value, currency._mixInDefaults(options));
-    };
-    currency.regexp = function (options) {
-        return dnumber.regexp(currency._mixInDefaults(options));
-    };
-    currency.parse = function (expression, options) {
-        return dnumber.parse(expression, currency._mixInDefaults(options));
-    };
-    return currency;
-});
-
+define("dojo/currency","./_base/array ./_base/lang ./number ./i18n ./i18n!./cldr/nls/currency ./cldr/monetary".split(" "),function(g,f,c,h,l,k){var b={};f.setObject("dojo.currency",b);b._mixInDefaults=function(a){a=a||{};a.type="currency";var b=h.getLocalization("dojo.cldr","currency",a.locale)||{},c=a.currency,e=k.getData(c);g.forEach(["displayName","symbol","group","decimal"],function(a){e[a]=b[c+"_"+a]});e.fractional=[!0,!1];return f.mixin(e,a)};b.format=function(a,d){return c.format(a,b._mixInDefaults(d))};
+b.regexp=function(a){return c.regexp(b._mixInDefaults(a))};b.parse=function(a,d){return c.parse(a,b._mixInDefaults(d))};return b});
+/// currency.js.map

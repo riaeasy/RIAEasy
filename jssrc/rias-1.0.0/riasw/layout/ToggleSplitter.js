@@ -44,7 +44,7 @@ define([
 
 		templateString:
 			'<div data-dojo-attach-event="onkeypress:_onKeyPress,onmousedown:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse">' +
-				'<div role="separator" data-dojo-attach-point="toggleNode" class="riaswToggleSplitterThumb" tabIndex="0" ' +
+				'<div role="separator" data-dojo-attach-point="toggleNode" class="riaswToggleSplitterThumb" ' +
 					'data-dojo-attach-event="onmousedown:_onToggleNodeMouseDown, onclick:_toggle, onmouseenter:_onToggleNodeMouseMove, onmouseleave:_onToggleNodeMouseMove, onfocus:_onToggleNodeMouseMove, onblur:_onToggleNodeMouseMove">' +
 				'<span data-dojo-attach-point="a11yText" class="riaswToggleSplitterA11y"></span></div>' +
 			'</div>',
@@ -241,7 +241,7 @@ define([
 				baseClass = this.baseClass,
 				toggleNode = this.toggleNode,
 				on = this.state === "full",// || this.state === "collapsed",
-				focused = this.focused;
+				focused = this.get("focused");
 
 			rias.dom.toggleClass(toggleNode, baseClass + "ThumbOpen", on && !focused);
 			rias.dom.toggleClass(toggleNode, baseClass + "ThumbClosed", !on && !focused);

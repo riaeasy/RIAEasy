@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/_editor/nls/sv/LinkDialog", ({createLinkTitle:"L\xe4nkegenskaper", insertImageTitle:"Bildegenskaper", url:"URL-adress:", text:"Beskrivning:", target:"M\xe5l:", set:"Anv\xe4nd", currentWindow:"Aktuellt f\xf6nster", parentWindow:"\xd6verordnat f\xf6nster", topWindow:"\xd6versta f\xf6nstret", newWindow:"Nytt f\xf6nster"}));
-
+define("dijit/_editor/nls/sv/LinkDialog",{createLinkTitle:"L\u00e4nkegenskaper",insertImageTitle:"Bildegenskaper",url:"URL-adress:",text:"Beskrivning:",target:"M\u00e5l:",set:"Anv\u00e4nd",currentWindow:"Aktuellt f\u00f6nster",parentWindow:"\u00d6verordnat f\u00f6nster",topWindow:"\u00d6versta f\u00f6nstret",newWindow:"Nytt f\u00f6nster"});
+/// LinkDialog.js.map

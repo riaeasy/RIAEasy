@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/sv/BidiSupport", {"ltr":"V\xe4nster-till-h\xf6ger textriktning", "rtl":"H\xf6ger-till-v\xe4nster textriktning"});
-
+define("dojox/editor/plugins/nls/sv/BidiSupport",{ltr:"V\u00e4nster-till-h\u00f6ger textriktning",rtl:"H\u00f6ger-till-v\u00e4nster textriktning"});
+/// BidiSupport.js.map

@@ -1,15 +1,3 @@
 //>>built
-
-define("dojox/NodeList/delegate", ["dojo/_base/lang", "dojo/query", "dojo/_base/NodeList", "dojo/NodeList-traverse"], function (lang, query) {
-    var NodeList = query.NodeList;
-    lang.extend(NodeList, {delegate:function (selector, eventName, fn) {
-        return this.connect(eventName, function (evt) {
-            var closest = query(evt.target).closest(selector, this);
-            if (closest.length) {
-                fn.call(closest[0], evt);
-            }
-        });
-    }});
-    return NodeList;
-});
-
+define("dojox/NodeList/delegate",["dojo/_base/lang","dojo/query","dojo/_base/NodeList","dojo/NodeList-traverse"],function(a,c){var b=c.NodeList;a.extend(b,{delegate:function(b,a,e){return this.connect(a,function(a){var d=c(a.target).closest(b,this);d.length&&e.call(d[0],a)})}});return b});
+/// delegate.js.map

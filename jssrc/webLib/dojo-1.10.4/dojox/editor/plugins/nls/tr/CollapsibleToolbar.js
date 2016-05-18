@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/tr/CollapsibleToolbar", ({"collapse":"D\xfczenleyici Ara\xe7 \xc7ubu\u011funu Daralt", "expand":"D\xfczenleyici Ara\xe7 \xc7ubu\u011funu Geni\u015flet"}));
-
+define("dojox/editor/plugins/nls/tr/CollapsibleToolbar",{collapse:"D\u00fczenleyici Ara\u00e7 \u00c7ubu\u011funu Daralt",expand:"D\u00fczenleyici Ara\u00e7 \u00c7ubu\u011funu Geni\u015flet"});
+/// CollapsibleToolbar.js.map

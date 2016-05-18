@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/hu/Uploader", ({label:"F\xe1jlok kiv\xe1laszt\xe1sa..."}));
-
+define("dojox/form/nls/hu/Uploader",{label:"F\u00e1jlok kiv\u00e1laszt\u00e1sa..."});
+/// Uploader.js.map

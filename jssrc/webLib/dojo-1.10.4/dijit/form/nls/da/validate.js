@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/form/nls/da/validate", ({invalidMessage:"Den angivne v\xe6rdi er ugyldig.", missingMessage:"V\xe6rdien er p\xe5kr\xe6vet.", rangeMessage:"V\xe6rdien er uden for intervallet."}));
-
+define("dijit/form/nls/da/validate",{invalidMessage:"Den angivne v\u00e6rdi er ugyldig.",missingMessage:"V\u00e6rdien er p\u00e5kr\u00e6vet.",rangeMessage:"V\u00e6rdien er uden for intervallet."});
+/// validate.js.map

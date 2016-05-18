@@ -1,34 +1,4 @@
 //>>built
-
-define("dijit/_base/wai", ["dojo/dom-attr", "dojo/_base/lang", "../main", "../hccss"], function (domAttr, lang, dijit) {
-    var exports = {hasWaiRole:function (elem, role) {
-        var waiRole = this.getWaiRole(elem);
-        return role ? (waiRole.indexOf(role) > -1) : (waiRole.length > 0);
-    }, getWaiRole:function (elem) {
-        return lang.trim((domAttr.get(elem, "role") || "").replace("wairole:", ""));
-    }, setWaiRole:function (elem, role) {
-        domAttr.set(elem, "role", role);
-    }, removeWaiRole:function (elem, role) {
-        var roleValue = domAttr.get(elem, "role");
-        if (!roleValue) {
-            return;
-        }
-        if (role) {
-            var t = lang.trim((" " + roleValue + " ").replace(" " + role + " ", " "));
-            domAttr.set(elem, "role", t);
-        } else {
-            elem.removeAttribute("role");
-        }
-    }, hasWaiState:function (elem, state) {
-        return elem.hasAttribute ? elem.hasAttribute("aria-" + state) : !!elem.getAttribute("aria-" + state);
-    }, getWaiState:function (elem, state) {
-        return elem.getAttribute("aria-" + state) || "";
-    }, setWaiState:function (elem, state, value) {
-        elem.setAttribute("aria-" + state, value);
-    }, removeWaiState:function (elem, state) {
-        elem.removeAttribute("aria-" + state);
-    }};
-    lang.mixin(dijit, exports);
-    return dijit;
-});
-
+define("dijit/_base/wai",["dojo/dom-attr","dojo/_base/lang","../main","../hccss"],function(d,e,f){e.mixin(f,{hasWaiRole:function(a,b){var c=this.getWaiRole(a);return b?-1<c.indexOf(b):0<c.length},getWaiRole:function(a){return e.trim((d.get(a,"role")||"").replace("wairole:",""))},setWaiRole:function(a,b){d.set(a,"role",b)},removeWaiRole:function(a,b){var c=d.get(a,"role");c&&(b?(c=e.trim((" "+c+" ").replace(" "+b+" "," ")),d.set(a,"role",c)):a.removeAttribute("role"))},hasWaiState:function(a,b){return a.hasAttribute?
+a.hasAttribute("aria-"+b):!!a.getAttribute("aria-"+b)},getWaiState:function(a,b){return a.getAttribute("aria-"+b)||""},setWaiState:function(a,b,c){a.setAttribute("aria-"+b,c)},removeWaiState:function(a,b){a.removeAttribute("aria-"+b)}});return f});
+/// wai.js.map

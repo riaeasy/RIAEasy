@@ -9,15 +9,16 @@ define([
 	"rias/riasw/layout/DockBar"
 ], function(rias, ContentPanel, _BadgeMixin, _PanelBase, DockBar){
 
-	rias.theme.loadRiasCss([
-		"layout/CaptionPanel.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/CaptionPanel.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.CaptionPanel";
 	var Widget = rias.declare(riasType, [ContentPanel, _BadgeMixin], {
 		templateString:
 			"<div role='region' data-dojo-attach-event='onmouseenter: _onDomNodeEnter, onmouseleave: _onBlur'>"+
-				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' tabindex='-1' data-dojo-attach-event='ondblclick:_onToggleMax, onkeydown:_onToggleKeydown' role='button'>"+
+				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' data-dojo-attach-event='ondblclick:_toggleMax, onkeydown:_toggleKeydown' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswCaptionPanelIconNode riaswCaptionPanelToggleIconNode riaswCaptionPanelToggleIcon' role='presentation'></span>"+
 					'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
@@ -25,7 +26,7 @@ define([
 					"<span data-dojo-attach-point='closeNode' class='dijitInline riaswDialogPanelIconNode riaswDialogPanelCloseIcon'></span>"+
 					"<span data-dojo-attach-point='maxNode' class='dijitInline riaswCaptionPanelIconNode riaswCaptionPanelMaximizeIcon'></span>"+
 				"</div>"+
-				"<div role='region' data-dojo-attach-point='containerNode' class='dijitReset riaswCaptionPanelContent' id='${id}_container' aria-labelledby='${id}_captionNode'></div>"+
+				"<div role='region' data-dojo-attach-point='containerNode' class='dijitReset riaswCaptionPanelContent' id='${id}_container'></div>"+
 			"</div>",
 		baseClass: "riaswCaptionPanel",
 
@@ -47,7 +48,6 @@ define([
 		//	h: 0
 		//},
 
-		//tabIndex: "0",
 		caption: "",
 		showCaption: true,
 
@@ -55,6 +55,7 @@ define([
 		splitter: false,
 		//selectable: true,
 		toggleable: false,
+		//canToggle: true,
 		toggleOnEnter: false,
 		toggleOnBlur: false,
 		maxable: false,
@@ -63,6 +64,8 @@ define([
 		//resizable: "none",
 
 		extIconNode: null,
+
+		tabCycle: false,
 
 		dockTo: null,
 		alwaysShowDockNode: true,
@@ -96,18 +99,18 @@ define([
 			self.own(
 				rias.on(self.domNode, "keydown", rias.hitch(self, "_onKey")),
 				rias.on(self.closeNode, rias.touch.press, rias.hitch(self, "_stopEvent")),
-				rias.on(self.closeNode, rias.touch.release, rias.hitch(self, "cancel")),
+				rias.on(self.closeNode, rias.touch.release, rias.hitch(self, "close")),
 				rias.on(self.maxNode, rias.touch.press, function(evt){
 					self._stopEvent(evt);
+				}),
+				rias.on(self.maxNode, rias.touch.release, function(evt){
+					self._toggleMax(evt);
 				}),
 				rias.on(self.toggleNode, rias.touch.press, function(evt){
 					self._stopEvent(evt);
 				}),
-				rias.on(self.maxNode, rias.touch.release, function(evt){
-					self._onToggleMax(evt);
-				}),
 				rias.on(self.toggleNode, rias.touch.release, function(evt){
-					self._onToggleClick(evt);
+					self._toggleClick(evt);
 				})
 			);
 			self.inherited(arguments);
@@ -138,6 +141,17 @@ define([
 		_internalResize: function(){
 			this.inherited(arguments);
 		},*/
+
+		_setStateClass: function(){
+			try{
+				this.inherited(arguments);
+				rias.dom.toggleClass(this.captionNode, "riaswCaptionPanelCaptionNodeHover", !!this.hovering);
+				rias.dom.toggleClass(this.captionNode, "riaswCaptionPanelCaptionNodeActive", !!this.active);
+				rias.dom.toggleClass(this.captionNode, "riaswCaptionPanelCaptionNodeFocused", !!this.focused);
+				rias.dom.toggleClass(this.captionNode, "riaswCaptionPanelCaptionNodeSelected", !!this.selected);
+			}catch(e){ /* Squelch any errors caused by focus change if hidden during a state change */
+			}
+		},
 
 		_refreshDisplayState: function(){
 			if(this.isCollapsed()){
@@ -212,7 +226,7 @@ define([
 			this._onMinSize(this.minSize);
 			this._onMaxSize(this.maxSize);
 			if(this._riasrParent && this._riasrParent._setupChild){
-				this._setupChild(this);
+				this._riasrParent._setupChild(this);
 			}
 		},
 		_onToggleOnEnter: function(value, oldValue){
@@ -270,8 +284,13 @@ define([
 			}
 		},
 
+		/*_getFocusItems: function(){
+			var elems = rias.a11y._getTabNavigable(this.domNode);
+			this._firstFocusNode = elems.lowest || elems.first || this.closeButtonNode || this.domNode;
+			this._lastFocusNode = elems.last || elems.highest || this._firstFocusNode;
+		},*/
 		_onKey: function(/*Event*/ evt){
-			/*if(evt.keyCode == rias.keys.TAB){
+			if(evt.keyCode == rias.keys.TAB){
 				var fn = rias.dom.focusedNode;
 				//if(rias.dom.isDescendant(fn, this.domNode) && fn.focus){
 				//	fn.focus();
@@ -282,26 +301,66 @@ define([
 					evt.stopPropagation();
 					evt.preventDefault();
 				}else if(fn == this._firstFocusNode && evt.shiftKey){
-					// if we are shift-tabbing from first focusable item in dialog, send focus to last item
-					//rias.dom.focus(this._lastFocusNode);
-					if(this._lastFocusNode && this._lastFocusNode.focus){
-						this._lastFocusNode.focus();
+					if(this.tabCycle){
+						// if we are shift-tabbing from first focusable item in dialog, send focus to last item
+						//rias.dom.focus(this._lastFocusNode);
+						if(this._lastFocusNode && this._lastFocusNode.focus){
+							this._lastFocusNode.focus();
+						}
+						evt.stopPropagation();
+						evt.preventDefault();
 					}
-					evt.stopPropagation();
-					evt.preventDefault();
 				}else if(fn == this._lastFocusNode && !evt.shiftKey){
-					// if we are tabbing from last focusable item in dialog, send focus to first item
-					//rias.dom.focus(this._firstFocusNode);
-					if(this._firstFocusNode && this._firstFocusNode.focus){
-						this._firstFocusNode.focus();
+					if(this.tabCycle){
+						// if we are tabbing from last focusable item in dialog, send focus to first item
+						//rias.dom.focus(this._firstFocusNode);
+						if(this._firstFocusNode && this._firstFocusNode.focus){
+							this._firstFocusNode.focus();
+						}
+						evt.stopPropagation();
+						evt.preventDefault();
 					}
-					evt.stopPropagation();
-					evt.preventDefault();
 				}
-			}else*/ if(this.closable && evt.keyCode == rias.keys.ESCAPE){
-				this.defer(this.cancel);
+			}else if(this.closable && evt.keyCode == rias.keys.ESCAPE){
+				this.defer(this.close);
 				evt.stopPropagation();
 				evt.preventDefault();
+			}
+		},
+
+		_onDomNodeEnter: function(e){
+			//e.preventDefault();
+			//e.stopPropagation();
+			var self = this;
+			if(self.toggleOnEnter && self.toggleable && !self._autoToggleDelay && !self._playing){
+				if(self.canToggle != false){
+					self._autoToggleDelay = self.defer(function(){
+						if(self._autoToggleDelay){
+							self._autoToggleDelay.remove();
+							self._autoToggleDelay = undefined;
+						}
+						if(self.isCollapsed()){
+							self.restore(false);
+						}
+					}, rias.autoToggleDuration);
+				}
+			}
+		},
+		_onBlur: function(e){
+			//e.preventDefault();
+			//e.stopPropagation();
+			var self = this;
+			if(self._autoToggleDelay){
+				self._autoToggleDelay.remove();
+				self._autoToggleDelay = undefined;
+			}
+			self.inherited(arguments);
+			if(self.toggleOnBlur && self.toggleable && !self._playing){
+				if(self.canToggle != false){
+					if(!self.isCollapsed()){
+						self.collapse();
+					}
+				}
 			}
 		},
 
@@ -325,7 +384,7 @@ define([
 			e.preventDefault();
 			e.stopPropagation();
 		},
-		_onToggleClick: function(/*Event*/e){
+		_toggleClick: function(/*Event*/e){
 			e.preventDefault();
 			e.stopPropagation();
 			//if(this.maxable){
@@ -334,25 +393,27 @@ define([
 				this.toggle();
 			//}
 		},
-		_onToggleKeydown: function(/*Event*/ e){
+		_toggleKeydown: function(/*Event*/ e){
 			if(e.keyCode == rias.keys.DOWN_ARROW || e.keyCode == rias.keys.UP_ARROW){
-				this._onToggleClick(e);
+				this._toggleClick(e);
 			}
 		},
 		toggle: function(){
-			if(this.toggleable){
-				if(this.isHidden()){
+			if(this.canToggle != false){
+				if(this.toggleable){
+					if(this.isHidden()){
+						this.restore(true);
+					}else if(this.isCollapsed()){
+						this.expand();
+					}else if(this.isShown()){
+						this.collapse();
+					}
+				}else{
 					this.restore(true);
-				}else if(this.isCollapsed()){
-					this.expand();
-				}else if(this.isShown()){
-					this.collapse();
 				}
-			}else{
-				this.restore(true);
 			}
 		},
-		_onToggleMax: function(e){
+		_toggleMax: function(e){
 			e.preventDefault();
 			e.stopPropagation();
 			this.toggleMax();
@@ -366,37 +427,6 @@ define([
 				}
 			}else{
 				this.restore(false);
-			}
-		},
-		_onDomNodeEnter: function(e){
-			//e.preventDefault();
-			//e.stopPropagation();
-			var self = this;
-			if(self.toggleOnEnter && self.toggleable && !self._autoToggleDelay && !self._playing){
-				self._autoToggleDelay = self.defer(function(){
-					if(self._autoToggleDelay){
-						self._autoToggleDelay.remove();
-						self._autoToggleDelay = undefined;
-					}
-					if(self.isCollapsed()){
-						self.restore(false);
-					}
-				}, rias.autoToggleDuration);
-			}
-		},
-		_onBlur: function(e){
-			//e.preventDefault();
-			//e.stopPropagation();
-			var self = this;
-			if(self._autoToggleDelay){
-				self._autoToggleDelay.remove();
-				self._autoToggleDelay = undefined;
-			}
-			self.inherited(arguments);
-			if(self.toggleOnBlur && self.toggleable && !self._playing){
-				if(!self.isCollapsed()){
-					self.collapse();
-				}
 			}
 		}
 

@@ -1,19 +1,4 @@
 //>>built
-
-define("dojox/mvc/Element", ["dojo/_base/declare", "dijit/_WidgetBase"], function (declare, _WidgetBase) {
-    return declare("dojox.mvc.Element", _WidgetBase, {_setInnerTextAttr:{node:"domNode", type:"innerText"}, _setInnerHTMLAttr:{node:"domNode", type:"innerHTML"}, buildRendering:function () {
-        this.inherited(arguments);
-        if (/select|input|textarea/i.test(this.domNode.tagName)) {
-            var _self = this, node = this.focusNode = this.domNode;
-            this.on("change", function (e) {
-                var attr = /^checkbox$/i.test(node.getAttribute("type")) ? "checked" : "value";
-                _self._set(attr, _self.get(attr));
-            });
-        }
-    }, _getCheckedAttr:function () {
-        return this.domNode.checked;
-    }, _getValueAttr:function () {
-        return this.domNode.value;
-    }});
-});
-
+define("dojox/mvc/Element",["dojo/_base/declare","dijit/_WidgetBase"],function(a,d){return a("dojox.mvc.Element",d,{_setInnerTextAttr:{node:"domNode",type:"innerText"},_setInnerHTMLAttr:{node:"domNode",type:"innerHTML"},buildRendering:function(){this.inherited(arguments);if(/select|input|textarea/i.test(this.domNode.tagName)){var c=this,a=this.focusNode=this.domNode;this.on("change",function(b){b=/^checkbox$/i.test(a.getAttribute("type"))?"checked":"value";c._set(b,c.get(b))})}},_getCheckedAttr:function(){return this.domNode.checked},
+_getValueAttr:function(){return this.domNode.value}})});
+/// Element.js.map

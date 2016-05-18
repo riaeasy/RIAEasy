@@ -1,54 +1,5 @@
 //>>built
-
-define("dojox/gfx/svg_mask", ["dojo/_base/declare", "dojo/_base/lang", "./_base", "./shape", "./svg"], function (declare, lang, gfx, gfxShape, svg) {
-    lang.extend(svg.Shape, {mask:null, setMask:function (mask) {
-        var rawNode = this.rawNode;
-        if (mask) {
-            rawNode.setAttribute("mask", "url(#" + mask.shape.id + ")");
-            this.mask = mask;
-        } else {
-            rawNode.removeAttribute("mask");
-            this.mask = null;
-        }
-        return this;
-    }, getMask:function () {
-        return this.mask;
-    }});
-    var Mask = svg.Mask = declare("dojox.gfx.svg.Mask", svg.Shape, {constructor:function () {
-        gfxShape.Container._init.call(this);
-        this.shape = Mask.defaultMask;
-    }, setRawNode:function (rawNode) {
-        this.rawNode = rawNode;
-    }, setShape:function (shape) {
-        if (!shape.id) {
-            shape = lang.mixin({id:gfx._base._getUniqueId()}, shape);
-        }
-        this.inherited(arguments, [shape]);
-    }});
-    Mask.nodeType = "mask";
-    Mask.defaultMask = {id:null, x:0, y:0, width:1, height:1, maskUnits:"objectBoundingBox", maskContentUnits:"userSpaceOnUse"};
-    lang.extend(Mask, svg.Container);
-    lang.extend(Mask, gfxShape.Creator);
-    lang.extend(Mask, svg.Creator);
-    var Surface = svg.Surface, surfaceAdd = Surface.prototype.add, surfaceRemove = Surface.prototype.remove;
-    lang.extend(Surface, {createMask:function (mask) {
-        return this.createObject(Mask, mask);
-    }, add:function (shape) {
-        if (shape instanceof Mask) {
-            this.defNode.appendChild(shape.rawNode);
-            shape.parent = this;
-        } else {
-            surfaceAdd.apply(this, arguments);
-        }
-        return this;
-    }, remove:function (shape, silently) {
-        if (shape instanceof Mask && this.defNode == shape.rawNode.parentNode) {
-            this.defNode.removeChild(shape.rawNode);
-            shape.parent = null;
-        } else {
-            surfaceRemove.apply(this, arguments);
-        }
-        return this;
-    }});
-});
-
+define("dojox/gfx/svg_mask",["dojo/_base/declare","dojo/_base/lang","./_base","./shape","./svg"],function(e,c,g,f,d){c.extend(d.Shape,{mask:null,setMask:function(a){var b=this.rawNode;a?(b.setAttribute("mask","url(#"+a.shape.id+")"),this.mask=a):(b.removeAttribute("mask"),this.mask=null);return this},getMask:function(){return this.mask}});var b=d.Mask=e("dojox.gfx.svg.Mask",d.Shape,{constructor:function(){f.Container._init.call(this);this.shape=b.defaultMask},setRawNode:function(a){this.rawNode=a},
+setShape:function(a){a.id||(a=c.mixin({id:g._base._getUniqueId()},a));this.inherited(arguments,[a])}});b.nodeType="mask";b.defaultMask={id:null,x:0,y:0,width:1,height:1,maskUnits:"objectBoundingBox",maskContentUnits:"userSpaceOnUse"};c.extend(b,d.Container);c.extend(b,f.Creator);c.extend(b,d.Creator);e=d.Surface;var h=e.prototype.add,k=e.prototype.remove;c.extend(e,{createMask:function(a){return this.createObject(b,a)},add:function(a){a instanceof b?(this.defNode.appendChild(a.rawNode),a.parent=this):
+h.apply(this,arguments);return this},remove:function(a,c){a instanceof b&&this.defNode==a.rawNode.parentNode?(this.defNode.removeChild(a.rawNode),a.parent=null):k.apply(this,arguments);return this}})});
+/// svg_mask.js.map

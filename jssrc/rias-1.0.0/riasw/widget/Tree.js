@@ -108,7 +108,7 @@ define([
 				rias.forEach(rias.isArray(attachPointNames) ? attachPointNames : [attachPointNames], function(attachPointName){
 					var node = this[attachPointName];
 					// complex code because tabIndex=-1 on a <div> doesn't work on FF
-					if( true  || rias.a11y.hasDefaultTabStop(node)){    // see #11064 about webkit bug
+					if( true || rias.a11y.hasDefaultTabStop(node)){    // see #11064 about webkit bug
 						node.setAttribute('tabIndex', "-1");
 					}else{
 						node.removeAttribute('tabIndex');
@@ -292,9 +292,9 @@ define([
 			var self = this,
 				tree = self.tree;
 			if(tree && (tree.expandOnEnter || tree.collapseOnEnter) && !self._autoToggleDelay && tree.model.mayHaveChildren(self.item)){
-				if((!self._loadDeferred || self._loadDeferred.isFulfilled)
-					&& (!self._expandDeferred || self._expandDeferred.isFulfilled)
-					&& (!self._collapseDeferred || self._collapseDeferred.isFulfilled)){
+				if((!self._loadDeferred || self._loadDeferred.isFulfilled())
+					&& (!self._expandDeferred || self._expandDeferred.isFulfilled())
+					&& (!self._collapseDeferred || self._collapseDeferred.isFulfilled())){
 					self._autoToggleDelay = self.defer(function(){
 						if(self._autoToggleDelay){
 							self._autoToggleDelay.remove();

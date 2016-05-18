@@ -1,11 +1,3 @@
 //>>built
-
-define("dojo/_base/sniff", ["./kernel", "./lang", "../sniff"], function (dojo, lang, has) {
-    if (!1) {
-        return has;
-    }
-    dojo._name = "browser";
-    lang.mixin(dojo, {isBrowser:true, isFF:has("ff"), isIE:has("ie"), isKhtml:has("khtml"), isWebKit:has("webkit"), isMozilla:has("mozilla"), isMoz:has("mozilla"), isOpera:has("opera"), isSafari:has("safari"), isChrome:has("chrome"), isMac:has("mac"), isIos:has("ios"), isAndroid:has("android"), isWii:has("wii"), isQuirks:has("quirks"), isAir:has("air")});
-    return has;
-});
-
+define("dojo/_base/sniff",["./kernel","./lang","../sniff"],function(b,c,a){b._name="browser";c.mixin(b,{isBrowser:!0,isFF:a("ff"),isIE:a("ie"),isKhtml:a("khtml"),isWebKit:a("webkit"),isMozilla:a("mozilla"),isMoz:a("mozilla"),isOpera:a("opera"),isSafari:a("safari"),isChrome:a("chrome"),isMac:a("mac"),isIos:a("ios"),isAndroid:a("android"),isWii:a("wii"),isQuirks:a("quirks"),isAir:a("air")});return a});
+/// sniff.js.map

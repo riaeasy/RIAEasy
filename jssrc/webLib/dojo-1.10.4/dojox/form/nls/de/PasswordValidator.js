@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/form/nls/de/PasswordValidator", ({nomatchMessage:"Die Kennw\xf6rter stimmen nicht \xfcberein.", badPasswordMessage:"Ung\xfcltiges Kennwort."}));
-
+define("dojox/form/nls/de/PasswordValidator",{nomatchMessage:"Die Kennw\u00f6rter stimmen nicht \u00fcberein.",badPasswordMessage:"Ung\u00fcltiges Kennwort."});
+/// PasswordValidator.js.map

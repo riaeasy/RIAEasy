@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/widget/nls/hu/FilePicker", ({name:"N\xe9v", path:"El\xe9r\xe9si \xfat", size:"M\xe9ret (byte)"}));
-
+define("dojox/widget/nls/hu/FilePicker",{name:"N\u00e9v",path:"El\u00e9r\u00e9si \u00fat",size:"M\u00e9ret (byte)"});
+/// FilePicker.js.map

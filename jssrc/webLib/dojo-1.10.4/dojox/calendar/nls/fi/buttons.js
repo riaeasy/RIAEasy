@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/calendar/nls/fi/buttons", {previousButton:"\u25c4", nextButton:"\u25ba", todayButton:"T\xe4n\xe4\xe4n", dayButton:"P\xe4iv\xe4", weekButton:"Viikko", fourDaysButton:"4 p\xe4iv\xe4\xe4", monthButton:"Kuukausi"});
-
+define("dojox/calendar/nls/fi/buttons",{previousButton:"\u25c4",nextButton:"\u25ba",todayButton:"T\u00e4n\u00e4\u00e4n",dayButton:"P\u00e4iv\u00e4",weekButton:"Viikko",fourDaysButton:"4 p\u00e4iv\u00e4\u00e4",monthButton:"Kuukausi"});
+/// buttons.js.map

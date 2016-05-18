@@ -1,8 +1,3 @@
 //>>built
-
-define("dojox/form/_FormSelectWidget", ["dojo/_base/kernel", "dojo/_base/lang", "dijit/form/_FormSelectWidget"], function (kernel, lang, _FormSelectWidget) {
-    kernel.deprecated("dojox.form._FormSelectWidget", "Use dijit.form._FormSelectWidget instead", "2.0");
-    lang.setObject("dojox.form._FormSelectWidget", _FormSelectWidget);
-    return _FormSelectWidget;
-});
-
+define("dojox/form/_FormSelectWidget",["dojo/_base/kernel","dojo/_base/lang","dijit/form/_FormSelectWidget"],function(b,c,a){b.deprecated("dojox.form._FormSelectWidget","Use dijit.form._FormSelectWidget instead","2.0");c.setObject("dojox.form._FormSelectWidget",a);return a});
+/// _FormSelectWidget.js.map

@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/mobile/ContentPane", ["dojo/_base/declare", "./Container", "./_ContentPaneMixin"], function (declare, Container, ContentPaneMixin) {
-    return declare("dojox.mobile.ContentPane", [Container, ContentPaneMixin], {baseClass:"mblContentPane"});
-});
-
+define("dojox/mobile/ContentPane",["dojo/_base/declare","./Container","./_ContentPaneMixin"],function(a,b,c){return a("dojox.mobile.ContentPane",[b,c],{baseClass:"mblContentPane"})});
+/// ContentPane.js.map

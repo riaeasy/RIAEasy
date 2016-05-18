@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/editor/plugins/nls/nb/Preview", ({"preview":"Forh\xe5ndsvis"}));
-
+define("dojox/editor/plugins/nls/nb/Preview",{preview:"Forh\u00e5ndsvis"});
+/// Preview.js.map

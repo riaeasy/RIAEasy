@@ -1,4 +1,3 @@
 //>>built
-
-define("dijit/nls/it/loading", ({loadingState:"Caricamento in corso...", errorState:"Si \xe8 verificato un errore"}));
-
+define("dijit/nls/it/loading",{loadingState:"Caricamento in corso...",errorState:"Si \u00e8 verificato un errore"});
+/// loading.js.map

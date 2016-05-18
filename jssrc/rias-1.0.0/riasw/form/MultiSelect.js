@@ -18,9 +18,7 @@ define([
 			width: "200px",
 			height: "auto",
 			type: "text",
-			tabIndex: 0,
-			size: 7,
-			scrollOnFocus: true
+			size: 7
 		},
 		initialSize: {},
 		resizable: "width",

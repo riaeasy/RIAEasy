@@ -6,9 +6,10 @@ define([
 	"rias/riasw/form/_FormMixin"
 ], function(rias, Panel, _FormMixin) {
 
-	rias.theme.loadRiasCss([
-		"layout/TablePanel.css"
-	]);
+	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
+	//rias.theme.loadRiasCss([
+	//	"layout/TablePanel.css"
+	//]);
 
 	var _tableAttr = {
 		border: "0px",
@@ -26,7 +27,6 @@ define([
 	var Widget = rias.declare(riasType, [Panel, _FormMixin], {
 		baseClass: "riaswTablePanel",
 
-		//tabIndex: "0",
 		//_setCaptionAttr: { node: "titleNode", type: "innerHTML" }, // override default where title becomes a hover tooltip
 		//showCaption: false,
 		//caption: "",
@@ -314,9 +314,6 @@ define([
 		_layoutChildren: function(){
 			var self = this,
 				cn = this.containerNode,
-				vf,
-				vfx,
-				vfy,
 				p;
 
 			//this.inherited(arguments);
@@ -325,26 +322,14 @@ define([
 			}
 			///FIXME:zensst. debounce 下 p 被修改的问题。
 			p = 1;//rias.dom.getStyle(cn, "opacity");
-			rias.dom.setStyle(cn, "opacity", 0);
+			rias.dom.setStyle(cn, "opacity", 0.5);
 
 			//console.debug(self.id + " _layoutChildren...");
 			rias.debounce(this.id + "_layoutChildren", function(){
 				//console.debug(self.id + " _layoutChildren debounce callback...");
-				vf = rias.dom.getStyle(cn, "overflow");
-				vfx = rias.dom.getStyle(cn, "overflow-x");
-				vfy = rias.dom.getStyle(cn, "overflow-y");
-				rias.dom.setStyle(cn, "overflow", "hidden");
-				self._internalLayou();
-				if(vf !== undefined){
-					rias.dom.setStyle(cn, "overflow", vf);
-				}else{
-					if(vfx !== undefined){
-						rias.dom.setStyle(cn, "overflow-x", vfx);
-					}
-					if(vfy !== undefined){
-						rias.dom.setStyle(cn, "overflow-y", vfy);
-					}
-				}
+				self._noOverflowCall(function(){
+					self._internalLayou();
+				});
 				rias.dom.setStyle(cn, "opacity", p);
 			}, self, 210, function(){
 				//console.debug(self.id + " _layoutChildren debounce pass...");
@@ -383,7 +368,7 @@ define([
 				self.inherited(arguments);///保证 _riasrOwner 及 _riasrChildren 的正确。
 			}
 		},
-		removeChild: function(/*dijit/_WidgetBase*/ child){
+		removeChild: function(/*dijit/_WidgetBase*/ child, noresize){
 			var self = this;
 			var t = self._widgets,
 				i = (rias.isNumber(child) ? child : rias.indexOf(t, child));

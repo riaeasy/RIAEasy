@@ -1,55 +1,6 @@
 //>>built
-
-define("dojox/mobile/RoundRectList", ["dojo/_base/array", "dojo/_base/declare", "dojo/_base/event", "dojo/_base/lang", "dojo/_base/window", "dojo/dom-construct", "dojo/dom-attr", "dijit/_Contained", "dijit/_Container", "dijit/_WidgetBase"], function (array, declare, event, lang, win, domConstruct, domAttr, Contained, Container, WidgetBase) {
-    return declare("dojox.mobile.RoundRectList", [WidgetBase, Container, Contained], {transition:"slide", iconBase:"", iconPos:"", select:"", stateful:false, syncWithViews:false, editable:false, tag:"ul", editableMixinClass:"dojox/mobile/_EditableListMixin", baseClass:"mblRoundRectList", filterBoxClass:"mblFilteredRoundRectListSearchBox", buildRendering:function () {
-        this.domNode = this.srcNodeRef || domConstruct.create(this.tag);
-        if (this.select) {
-            domAttr.set(this.domNode, "role", "listbox");
-            if (this.select === "multiple") {
-                domAttr.set(this.domNode, "aria-multiselectable", "true");
-            }
-        }
-        this.inherited(arguments);
-    }, postCreate:function () {
-        if (this.editable) {
-            require([this.editableMixinClass], lang.hitch(this, function (module) {
-                declare.safeMixin(this, new module());
-            }));
-        }
-        this.connect(this.domNode, "onselectstart", event.stop);
-        if (this.syncWithViews) {
-            var f = function (view, moveTo, dir, transition, context, method) {
-                var child = array.filter(this.getChildren(), function (w) {
-                    return w.moveTo === "#" + view.id || w.moveTo === view.id;
-                })[0];
-                if (child) {
-                    child.set("selected", true);
-                }
-            };
-            this.subscribe("/dojox/mobile/afterTransitionIn", f);
-            this.subscribe("/dojox/mobile/startView", f);
-        }
-    }, resize:function () {
-        array.forEach(this.getChildren(), function (child) {
-            if (child.resize) {
-                child.resize();
-            }
-        });
-    }, onCheckStateChanged:function () {
-    }, _setStatefulAttr:function (stateful) {
-        this._set("stateful", stateful);
-        this.selectOne = stateful;
-        array.forEach(this.getChildren(), function (child) {
-            child.setArrow && child.setArrow();
-        });
-    }, deselectItem:function (item) {
-        item.set("selected", false);
-    }, deselectAll:function () {
-        array.forEach(this.getChildren(), function (child) {
-            child.set("selected", false);
-        });
-    }, selectItem:function (item) {
-        item.set("selected", true);
-    }});
-});
-
+define("dojox/mobile/RoundRectList","dojo/_base/array dojo/_base/declare dojo/_base/event dojo/_base/lang dojo/_base/window dojo/dom-construct dojo/dom-attr dijit/_Contained dijit/_Container dijit/_WidgetBase".split(" "),function(c,b,e,f,m,g,d,h,k,l){return b("dojox.mobile.RoundRectList",[l,k,h],{transition:"slide",iconBase:"",iconPos:"",select:"",stateful:!1,syncWithViews:!1,editable:!1,tag:"ul",editableMixinClass:"dojox/mobile/_EditableListMixin",baseClass:"mblRoundRectList",filterBoxClass:"mblFilteredRoundRectListSearchBox",
+buildRendering:function(){this.domNode=this.srcNodeRef||g.create(this.tag);this.select&&(d.set(this.domNode,"role","listbox"),"multiple"===this.select&&d.set(this.domNode,"aria-multiselectable","true"));this.inherited(arguments)},postCreate:function(){this.editable&&require([this.editableMixinClass],f.hitch(this,function(a){b.safeMixin(this,new a)}));this.connect(this.domNode,"onselectstart",e.stop);if(this.syncWithViews){var a=function(a,b,d,e,f,g){(b=c.filter(this.getChildren(),function(b){return b.moveTo===
+"#"+a.id||b.moveTo===a.id})[0])&&b.set("selected",!0)};this.subscribe("/dojox/mobile/afterTransitionIn",a);this.subscribe("/dojox/mobile/startView",a)}},resize:function(){c.forEach(this.getChildren(),function(a){a.resize&&a.resize()})},onCheckStateChanged:function(){},_setStatefulAttr:function(a){this._set("stateful",a);this.selectOne=a;c.forEach(this.getChildren(),function(a){a.setArrow&&a.setArrow()})},deselectItem:function(a){a.set("selected",!1)},deselectAll:function(){c.forEach(this.getChildren(),
+function(a){a.set("selected",!1)})},selectItem:function(a){a.set("selected",!0)}})});
+/// RoundRectList.js.map

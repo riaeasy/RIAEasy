@@ -1,52 +1,5 @@
 //>>built
-
-define("dojox/wire/ml/Service", ["dijit", "dojo", "dojox", "dojo/require!dijit/_Widget,dojox/xml/parser,dojox/wire/_base,dojox/wire/ml/util"], function (dijit, dojo, dojox) {
-    dojo.provide("dojox.wire.ml.Service");
-    dojo.require("dijit._Widget");
-    dojo.require("dojox.xml.parser");
-    dojo.require("dojox.wire._base");
-    dojo.require("dojox.wire.ml.util");
-    dojo.declare("dojox.wire.ml.Service", dijit._Widget, {url:"", serviceUrl:"", serviceType:"", handlerClass:"", preventCache:true, postCreate:function () {
-        this.handler = this._createHandler();
-    }, _handlerClasses:{"TEXT":"dojox.wire.ml.RestHandler", "XML":"dojox.wire.ml.XmlHandler", "JSON":"dojox.wire.ml.JsonHandler", "JSON-RPC":"dojo.rpc.JsonService"}, _createHandler:function () {
-        if (this.url) {
-            var self = this;
-            var d = dojo.xhrGet({url:this.url, handleAs:"json", sync:true});
-            d.addCallback(function (result) {
-                self.smd = result;
-            });
-            if (this.smd && !this.serviceUrl) {
-                this.serviceUrl = (this.smd.serviceUrl || this.smd.serviceURL);
-            }
-        }
-        var handlerClass = undefined;
-        if (this.handlerClass) {
-            handlerClass = dojox.wire._getClass(this.handlerClass);
-        } else {
-            if (this.serviceType) {
-                handlerClass = this._handlerClasses[this.serviceType];
-                if (handlerClass && dojo.isString(handlerClass)) {
-                    handlerClass = dojox.wire._getClass(handlerClass);
-                    this._handlerClasses[this.serviceType] = handlerClass;
-                }
-            } else {
-                if (this.smd && this.smd.serviceType) {
-                    handlerClass = this._handlerClasses[this.smd.serviceType];
-                    if (handlerClass && dojo.isString(handlerClass)) {
-                        handlerClass = dojox.wire._getClass(handlerClass);
-                        this._handlerClasses[this.smd.serviceType] = handlerClass;
-                    }
-                }
-            }
-        }
-        if (!handlerClass) {
-            return null;
-        }
-        return new handlerClass();
-    }, callMethod:function (method, parameters) {
-        var deferred = new dojo.Deferred();
-        this.handler.bind(method, parameters, deferred, this.serviceUrl);
-        return deferred;
-    }});
-});
-
+define("dojox/wire/ml/Service",["dijit","dojo","dojox","dojo/require!dijit/_Widget,dojox/xml/parser,dojox/wire/_base,dojox/wire/ml/util"],function(e,b,c){b.provide("dojox.wire.ml.Service");b.require("dijit._Widget");b.require("dojox.xml.parser");b.require("dojox.wire._base");b.require("dojox.wire.ml.util");b.declare("dojox.wire.ml.Service",e._Widget,{url:"",serviceUrl:"",serviceType:"",handlerClass:"",preventCache:!0,postCreate:function(){this.handler=this._createHandler()},_handlerClasses:{TEXT:"dojox.wire.ml.RestHandler",
+XML:"dojox.wire.ml.XmlHandler",JSON:"dojox.wire.ml.JsonHandler","JSON-RPC":"dojo.rpc.JsonService"},_createHandler:function(){if(this.url){var f=this;b.xhrGet({url:this.url,handleAs:"json",sync:!0}).addCallback(function(a){f.smd=a});this.smd&&!this.serviceUrl&&(this.serviceUrl=this.smd.serviceUrl||this.smd.serviceURL)}var a=void 0;if(this.handlerClass)a=c.wire._getClass(this.handlerClass);else if(this.serviceType){if((a=this._handlerClasses[this.serviceType])&&b.isString(a))a=c.wire._getClass(a),this._handlerClasses[this.serviceType]=
+a}else if(this.smd&&this.smd.serviceType&&(a=this._handlerClasses[this.smd.serviceType])&&b.isString(a))a=c.wire._getClass(a),this._handlerClasses[this.smd.serviceType]=a;return!a?null:new a},callMethod:function(c,a){var d=new b.Deferred;this.handler.bind(c,a,d,this.serviceUrl);return d}})});
+/// Service.js.map

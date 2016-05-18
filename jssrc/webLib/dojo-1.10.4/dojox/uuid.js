@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/uuid", ["dojox/uuid/_base"], function (uuid) {
-    return uuid;
-});
-
+define("dojox/uuid",["dojox/uuid/_base"],function(a){return a});
+/// uuid.js.map

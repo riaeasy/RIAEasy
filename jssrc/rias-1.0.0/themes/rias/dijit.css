@@ -362,7 +362,8 @@ td.dijitButtonContents {
 }
 
 div.dijitArrowButton {
-	float: right;
+	/*float: right;*/
+	right: 0px;
 }
 
 /******
@@ -430,10 +431,6 @@ div.dijitArrowButton {
 	width: 100% !important;
 	height: 100% !important;
 	/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
-	padding-left: 0.25em !important;
-	padding-right: 0.25em !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
 }
 .dj_a11y .dijitTextBox input {
 	margin: 0 !important;
@@ -2112,14 +2109,14 @@ div.dijitTabDisabled, .dj_ie div.dijitTabDisabled {
 	vertical-align: baseline;
 }
 
-.dijitNumberTextBox {
+/*.dijitNumberTextBox {
 	text-align: left;
 	direction: ltr;
 }
 
 .dijitNumberTextBox .dijitInputInner {
-	text-align: inherit; /* input */
-}
+	text-align: right;
+}*/
 
 .dijitToolbar .dijitSelect {
 	margin: 0;

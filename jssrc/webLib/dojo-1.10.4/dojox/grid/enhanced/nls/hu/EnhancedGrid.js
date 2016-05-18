@@ -1,4 +1,4 @@
 //>>built
-
-define("dojox/grid/enhanced/nls/hu/EnhancedGrid", ({singleSort:"Egyszer\u0171 rendez\xe9s", nestedSort:"Be\xe1gyazott rendez\xe9s", ascending:"Kattintson ide a n\xf6vekv\u0151 rendez\xe9shez", descending:"Kattintson ide a cs\xf6kken\u0151 rendez\xe9shez", sortingState:"${0} - ${1}", unsorted:"Ne rendezze ezt az oszlopot", indirectSelectionRadio:"${0} sor, egyetlen kijel\xf6l\xe9s, v\xe1laszt\xf3gomb", indirectSelectionCheckBox:"${0} sor, t\xf6bb kijel\xf6l\xe9s, jel\xf6l\u0151n\xe9gyzet", selectAll:"\xd6sszes kijel\xf6l\xe9se"}));
-
+define("dojox/grid/enhanced/nls/hu/EnhancedGrid",{singleSort:"Egyszer\u0171 rendez\u00e9s",nestedSort:"Be\u00e1gyazott rendez\u00e9s",ascending:"Kattintson ide a n\u00f6vekv\u0151 rendez\u00e9shez",descending:"Kattintson ide a cs\u00f6kken\u0151 rendez\u00e9shez",sortingState:"${0} - ${1}",unsorted:"Ne rendezze ezt az oszlopot",indirectSelectionRadio:"${0} sor, egyetlen kijel\u00f6l\u00e9s, v\u00e1laszt\u00f3gomb",indirectSelectionCheckBox:"${0} sor, t\u00f6bb kijel\u00f6l\u00e9s, jel\u00f6l\u0151n\u00e9gyzet",
+selectAll:"\u00d6sszes kijel\u00f6l\u00e9se"});
+/// EnhancedGrid.js.map

@@ -33,11 +33,11 @@ define([
 	"dstore/Trackable"
 
 ], function(rias, DGridBase, _Store, SummaryFooter, DGridParamExt,
-            //misc, touchUtil,
-            List, Grid, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
-            //GridFromHtml, GridWithColumnSetsFromHtml,
-            ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, //Dnd, //Pagination,
-            Trackable) {
+			//misc, touchUtil,
+			List, Grid, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
+			//GridFromHtml, GridWithColumnSetsFromHtml,
+			ColumnHider, ColumnResizer, ColumnReorder, CompoundColumns, //DijitRegistry, //Dnd, //Pagination,
+			Trackable) {
 
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
 
@@ -126,6 +126,9 @@ define([
 				this._queryObject0 = query;
 			}
 			store.queryObject = rias.mixinDeep({}, this._queryObject0);
+			if(self._renderedCollection){
+				self._renderedCollection.queryObject = store.queryObject;
+			}
 
 			rias.when(this.inherited(arguments), function(){
 				var summary = {

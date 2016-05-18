@@ -1,33 +1,4 @@
 //>>built
-
-define("dojox/data/GoogleFeedStore", ["dojo/_base/kernel", "dojo/_base/lang", "dojo/_base/declare", "dojox/data/GoogleSearchStore"], function (dojo, lang, declare, GoogleSearchStore) {
-    dojo.experimental("dojox.data.GoogleFeedStore");
-    var Search = GoogleSearchStore.Search;
-    return declare("dojox.data.GoogleFeedStore", Search, {_type:"", _googleUrl:"http://ajax.googleapis.com/ajax/services/feed/load", _attributes:["title", "link", "author", "published", "content", "summary", "categories"], _queryAttrs:{"url":"q"}, getFeedValue:function (attribute, defaultValue) {
-        var values = this.getFeedValues(attribute, defaultValue);
-        if (lang.isArray(values)) {
-            return values[0];
-        }
-        return values;
-    }, getFeedValues:function (attribute, defaultValue) {
-        if (!this._feedMetaData) {
-            return defaultValue;
-        }
-        return this._feedMetaData[attribute] || defaultValue;
-    }, _processItem:function (item, request) {
-        this.inherited(arguments);
-        item["summary"] = item["contentSnippet"];
-        item["published"] = item["publishedDate"];
-    }, _getItems:function (data) {
-        if (data["feed"]) {
-            this._feedMetaData = {title:data.feed.title, desc:data.feed.description, url:data.feed.link, author:data.feed.author};
-            return data.feed.entries;
-        }
-        return null;
-    }, _createContent:function (query, callback, request) {
-        var cb = this.inherited(arguments);
-        cb.num = (request.count || 10) + (request.start || 0);
-        return cb;
-    }});
-});
-
+define("dojox/data/GoogleFeedStore",["dojo/_base/kernel","dojo/_base/lang","dojo/_base/declare","dojox/data/GoogleSearchStore"],function(e,f,g,h){e.experimental("dojox.data.GoogleFeedStore");return g("dojox.data.GoogleFeedStore",h.Search,{_type:"",_googleUrl:"http://ajax.googleapis.com/ajax/services/feed/load",_attributes:"title link author published content summary categories".split(" "),_queryAttrs:{url:"q"},getFeedValue:function(a,b){var c=this.getFeedValues(a,b);return f.isArray(c)?c[0]:c},getFeedValues:function(a,
+b){return!this._feedMetaData?b:this._feedMetaData[a]||b},_processItem:function(a,b){this.inherited(arguments);a.summary=a.contentSnippet;a.published=a.publishedDate},_getItems:function(a){return a.feed?(this._feedMetaData={title:a.feed.title,desc:a.feed.description,url:a.feed.link,author:a.feed.author},a.feed.entries):null},_createContent:function(a,b,c){var d=this.inherited(arguments);d.num=(c.count||10)+(c.start||0);return d}})});
+/// GoogleFeedStore.js.map

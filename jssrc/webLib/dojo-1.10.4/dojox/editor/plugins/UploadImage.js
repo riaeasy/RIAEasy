@@ -1,53 +1,6 @@
 //>>built
-
-define("dojox/editor/plugins/UploadImage", ["dojo", "dijit", "dojox", "dijit/_editor/_Plugin", "dojo/_base/connect", "dojo/_base/declare", "dojox/form/FileUploader", "dijit/_editor/_Plugin"], function (dojo, dijit, dojox, _Plugin) {
-    dojo.experimental("dojox.editor.plugins.UploadImage");
-    var UploadImage = dojo.declare("dojox.editor.plugins.UploadImage", _Plugin, {tempImageUrl:"", iconClassPrefix:"editorIcon", useDefaultCommand:false, uploadUrl:"", button:null, label:"Upload", setToolbar:function (toolbar) {
-        this.button.destroy();
-        this.createFileInput();
-        toolbar.addChild(this.button);
-    }, _initButton:function () {
-        this.command = "uploadImage";
-        this.editor.commands[this.command] = "Upload Image";
-        this.inherited("_initButton", arguments);
-        delete this.command;
-    }, updateState:function () {
-        this.button.set("disabled", this.get("disabled"));
-    }, createFileInput:function () {
-        var node = dojo.create("span", {innerHTML:"."}, document.body);
-        dojo.style(node, {width:"40px", height:"20px", paddingLeft:"8px", paddingRight:"8px"});
-        this.button = new dojox.form.FileUploader({isDebug:true, uploadUrl:this.uploadUrl, uploadOnChange:true, selectMultipleFiles:false, baseClass:"dojoxEditorUploadNorm", hoverClass:"dojoxEditorUploadHover", activeClass:"dojoxEditorUploadActive", disabledClass:"dojoxEditorUploadDisabled"}, node);
-        this.connect(this.button, "onChange", "insertTempImage");
-        this.connect(this.button, "onComplete", "onComplete");
-    }, onComplete:function (data, ioArgs, widgetRef) {
-        data = data[0];
-        var tmpImgNode = dojo.byId(this.currentImageId, this.editor.document);
-        var file;
-        if (this.downloadPath) {
-            file = this.downloadPath + data.name;
-        } else {
-            file = data.file;
-        }
-        tmpImgNode.src = file;
-        dojo.attr(tmpImgNode, "_djrealurl", file);
-        if (data.width) {
-            tmpImgNode.width = data.width;
-            tmpImgNode.height = data.height;
-        }
-    }, insertTempImage:function () {
-        this.currentImageId = "img_" + (new Date().getTime());
-        var iTxt = "<img id=\"" + this.currentImageId + "\" src=\"" + this.tempImageUrl + "\" width=\"32\" height=\"32\"/>";
-        this.editor.execCommand("inserthtml", iTxt);
-    }});
-    dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function (o) {
-        if (o.plugin) {
-            return;
-        }
-        switch (o.args.name) {
-          case "uploadImage":
-            o.plugin = new UploadImage({url:o.args.url});
-        }
-    });
-    return UploadImage;
-});
-
+define("dojox/editor/plugins/UploadImage","dojo dijit dojox dijit/_editor/_Plugin dojo/_base/connect dojo/_base/declare dojox/form/FileUploader dijit/_editor/_Plugin".split(" "),function(b,f,g,h){b.experimental("dojox.editor.plugins.UploadImage");var e=b.declare("dojox.editor.plugins.UploadImage",h,{tempImageUrl:"",iconClassPrefix:"editorIcon",useDefaultCommand:!1,uploadUrl:"",button:null,label:"Upload",setToolbar:function(a){this.button.destroy();this.createFileInput();a.addChild(this.button)},_initButton:function(){this.command=
+"uploadImage";this.editor.commands[this.command]="Upload Image";this.inherited("_initButton",arguments);delete this.command},updateState:function(){this.button.set("disabled",this.get("disabled"))},createFileInput:function(){var a=b.create("span",{innerHTML:"."},document.body);b.style(a,{width:"40px",height:"20px",paddingLeft:"8px",paddingRight:"8px"});this.button=new g.form.FileUploader({isDebug:!0,uploadUrl:this.uploadUrl,uploadOnChange:!0,selectMultipleFiles:!1,baseClass:"dojoxEditorUploadNorm",
+hoverClass:"dojoxEditorUploadHover",activeClass:"dojoxEditorUploadActive",disabledClass:"dojoxEditorUploadDisabled"},a);this.connect(this.button,"onChange","insertTempImage");this.connect(this.button,"onComplete","onComplete")},onComplete:function(a,c,d){a=a[0];c=b.byId(this.currentImageId,this.editor.document);d=this.downloadPath?this.downloadPath+a.name:a.file;c.src=d;b.attr(c,"_djrealurl",d);a.width&&(c.width=a.width,c.height=a.height)},insertTempImage:function(){this.currentImageId="img_"+(new Date).getTime();
+this.editor.execCommand("inserthtml",'\x3cimg id\x3d"'+this.currentImageId+'" src\x3d"'+this.tempImageUrl+'" width\x3d"32" height\x3d"32"/\x3e')}});b.subscribe(f._scopeName+".Editor.getPlugin",null,function(a){if(!a.plugin)switch(a.args.name){case "uploadImage":a.plugin=new e({url:a.args.url})}});return e});
+/// UploadImage.js.map

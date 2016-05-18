@@ -55,8 +55,6 @@ define([
 			self.inherited(arguments);
 		},
 
-		/// ============================== ///
-
 		resize: function(changeSize, resultSize){
 			//console.debug("resize(): " + this.id);
 			this.inherited(arguments);

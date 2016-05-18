@@ -1,28 +1,4 @@
 //>>built
-
-define("dijit/form/TimeTextBox", ["dojo/_base/declare", "dojo/keys", "dojo/_base/lang", "../_TimePicker", "./_DateTimeTextBox"], function (declare, keys, lang, _TimePicker, _DateTimeTextBox) {
-    return declare("dijit.form.TimeTextBox", _DateTimeTextBox, {baseClass:"dijitTextBox dijitComboBox dijitTimeTextBox", popupClass:_TimePicker, _selector:"time", value:new Date(""), maxHeight:-1, _onKey:function (evt) {
-        if (this.disabled || this.readOnly) {
-            return;
-        }
-        this.inherited(arguments);
-        switch (evt.keyCode) {
-          case keys.ENTER:
-          case keys.TAB:
-          case keys.ESCAPE:
-          case keys.DOWN_ARROW:
-          case keys.UP_ARROW:
-            break;
-          default:
-            this.defer(function () {
-                var val = this.get("displayedValue");
-                this.filterString = (val && !this.parse(val, this.constraints)) ? val.toLowerCase() : "";
-                if (this._opened) {
-                    this.closeDropDown();
-                }
-                this.openDropDown();
-            });
-        }
-    }});
-});
-
+define("dijit/form/TimeTextBox",["dojo/_base/declare","dojo/keys","dojo/_base/lang","../_TimePicker","./_DateTimeTextBox"],function(b,a,e,c,d){return b("dijit.form.TimeTextBox",d,{baseClass:"dijitTextBox dijitComboBox dijitTimeTextBox",popupClass:c,_selector:"time",value:new Date(""),maxHeight:-1,_onKey:function(b){if(!this.disabled&&!this.readOnly)switch(this.inherited(arguments),b.keyCode){case a.ENTER:case a.TAB:case a.ESCAPE:case a.DOWN_ARROW:case a.UP_ARROW:break;default:this.defer(function(){var a=
+this.get("displayedValue");this.filterString=a&&!this.parse(a,this.constraints)?a.toLowerCase():"";this._opened&&this.closeDropDown();this.openDropDown()})}}})});
+/// TimeTextBox.js.map

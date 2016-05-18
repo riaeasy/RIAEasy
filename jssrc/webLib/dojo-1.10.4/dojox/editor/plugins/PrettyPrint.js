@@ -1,44 +1,6 @@
 //>>built
-
-define("dojox/editor/plugins/PrettyPrint", ["dojo", "dijit", "dojox", "dijit/_editor/_Plugin", "dojo/_base/connect", "dojo/_base/declare", "dojox/html/format"], function (dojo, dijit, dojox, _Plugin) {
-    var PrettyPrint = dojo.declare("dojox.editor.plugins.PrettyPrint", _Plugin, {indentBy:-1, lineLength:-1, useDefaultCommand:false, entityMap:null, _initButton:function () {
-        delete this.command;
-    }, setToolbar:function (toolbar) {
-    }, setEditor:function (editor) {
-        this.inherited(arguments);
-        var self = this;
-        this.editor.onLoadDeferred.addCallback(function () {
-            self.editor._prettyprint_getValue = self.editor.getValue;
-            self.editor.getValue = function () {
-                var val = self.editor._prettyprint_getValue(arguments);
-                return dojox.html.format.prettyPrint(val, self.indentBy, self.lineLength, self.entityMap, self.xhtml);
-            };
-            self.editor._prettyprint_endEditing = self.editor._endEditing;
-            self.editor._prettyprint_onBlur = self.editor._onBlur;
-            self.editor._endEditing = function (ignore_caret) {
-                var v = self.editor._prettyprint_getValue(true);
-                self.editor._undoedSteps = [];
-                self.editor._steps.push({text:v, bookmark:self.editor._getBookmark()});
-            };
-            self.editor._onBlur = function (e) {
-                this.inherited("_onBlur", arguments);
-                var _c = self.editor._prettyprint_getValue(true);
-                if (_c != self.editor.savedContent) {
-                    self.editor.onChange(_c);
-                    self.editor.savedContent = _c;
-                }
-            };
-        });
-    }});
-    dojo.subscribe(dijit._scopeName + ".Editor.getPlugin", null, function (o) {
-        if (o.plugin) {
-            return;
-        }
-        var name = o.args.name.toLowerCase();
-        if (name === "prettyprint") {
-            o.plugin = new PrettyPrint({indentBy:("indentBy" in o.args) ? o.args.indentBy : -1, lineLength:("lineLength" in o.args) ? o.args.lineLength : -1, entityMap:("entityMap" in o.args) ? o.args.entityMap : dojox.html.entities.html.concat([["\xa2", "cent"], ["\xa3", "pound"], ["\u20ac", "euro"], ["\xa5", "yen"], ["\xa9", "copy"], ["\xa7", "sect"], ["\u2026", "hellip"], ["\xae", "reg"]]), xhtml:("xhtml" in o.args) ? o.args.xhtml : false});
-        }
-    });
-    return PrettyPrint;
-});
-
+define("dojox/editor/plugins/PrettyPrint","dojo dijit dojox dijit/_editor/_Plugin dojo/_base/connect dojo/_base/declare dojox/html/format".split(" "),function(d,g,e,h){var f=d.declare("dojox.editor.plugins.PrettyPrint",h,{indentBy:-1,lineLength:-1,useDefaultCommand:!1,entityMap:null,_initButton:function(){delete this.command},setToolbar:function(b){},setEditor:function(b){this.inherited(arguments);var a=this;this.editor.onLoadDeferred.addCallback(function(){a.editor._prettyprint_getValue=a.editor.getValue;
+a.editor.getValue=function(){var b=a.editor._prettyprint_getValue(arguments);return e.html.format.prettyPrint(b,a.indentBy,a.lineLength,a.entityMap,a.xhtml)};a.editor._prettyprint_endEditing=a.editor._endEditing;a.editor._prettyprint_onBlur=a.editor._onBlur;a.editor._endEditing=function(b){b=a.editor._prettyprint_getValue(!0);a.editor._undoedSteps=[];a.editor._steps.push({text:b,bookmark:a.editor._getBookmark()})};a.editor._onBlur=function(b){this.inherited("_onBlur",arguments);var c=a.editor._prettyprint_getValue(!0);
+c!=a.editor.savedContent&&(a.editor.onChange(c),a.editor.savedContent=c)}})}});d.subscribe(g._scopeName+".Editor.getPlugin",null,function(b){!b.plugin&&"prettyprint"===b.args.name.toLowerCase()&&(b.plugin=new f({indentBy:"indentBy"in b.args?b.args.indentBy:-1,lineLength:"lineLength"in b.args?b.args.lineLength:-1,entityMap:"entityMap"in b.args?b.args.entityMap:e.html.entities.html.concat([["\u00a2","cent"],["\u00a3","pound"],["\u20ac","euro"],["\u00a5","yen"],["\u00a9","copy"],["\u00a7","sect"],["\u2026",
+"hellip"],["\u00ae","reg"]]),xhtml:"xhtml"in b.args?b.args.xhtml:!1}))});return f});
+/// PrettyPrint.js.map

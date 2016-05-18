@@ -1,39 +1,4 @@
 //>>built
-
-define("dojox/mvc/atBindingExtension", ["dojo/aspect", "dojo/_base/array", "dojo/_base/lang", "dijit/_WidgetBase", "./_atBindingMixin", "dijit/registry"], function (aspect, array, lang, _WidgetBase, _atBindingMixin) {
-    return function (w) {
-        array.forEach(arguments, function (w) {
-            if (w.dataBindAttr) {
-                console.warn("Detected a widget or a widget class that has already been applied data binding extension. Skipping...");
-                return;
-            }
-            lang._mixin(w, _atBindingMixin.mixin);
-            aspect.before(w, "postscript", function (params, srcNodeRef) {
-                this._dbpostscript(params, srcNodeRef);
-            });
-            aspect.before(w, "startup", function () {
-                if (this._started) {
-                    return;
-                }
-                this._startAtWatchHandles();
-            });
-            aspect.before(w, "destroy", function () {
-                this._stopAtWatchHandles();
-            });
-            aspect.around(w, "set", function (oldWidgetBaseSet) {
-                return function (name, value) {
-                    if (name == _atBindingMixin.prototype.dataBindAttr) {
-                        return this._setBind(value);
-                    } else {
-                        if ((value || {}).atsignature == "dojox.mvc.at") {
-                            return this._setAtWatchHandle(name, value);
-                        }
-                    }
-                    return oldWidgetBaseSet.apply(this, lang._toArray(arguments));
-                };
-            });
-        });
-        return arguments;
-    };
-});
-
+define("dojox/mvc/atBindingExtension","dojo/aspect dojo/_base/array dojo/_base/lang dijit/_WidgetBase ./_atBindingMixin dijit/registry".split(" "),function(b,f,d,g,e){return function(g){f.forEach(arguments,function(a){a.dataBindAttr?console.warn("Detected a widget or a widget class that has already been applied data binding extension. Skipping..."):(d._mixin(a,e.mixin),b.before(a,"postscript",function(a,b){this._dbpostscript(a,b)}),b.before(a,"startup",function(){this._started||this._startAtWatchHandles()}),
+b.before(a,"destroy",function(){this._stopAtWatchHandles()}),b.around(a,"set",function(a){return function(b,c){return b==e.prototype.dataBindAttr?this._setBind(c):"dojox.mvc.at"==(c||{}).atsignature?this._setAtWatchHandle(b,c):a.apply(this,d._toArray(arguments))}}))});return arguments}});
+/// atBindingExtension.js.map

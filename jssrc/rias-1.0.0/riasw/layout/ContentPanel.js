@@ -8,9 +8,9 @@ define([
 	"rias/riasw/studio/_ModuleMixin"
 ], function(rias, Panel, _FormMixin, _ModuleMixin){
 
-	rias.theme.loadRiasCss([
-		//"layout/ContentPane/.css"
-	]);
+	//rias.theme.loadRiasCss([
+	//	"layout/Panel.css"
+	//]);
 
 	var riasType = "rias.riasw.layout.ContentPanel";
 	var Widget = rias.declare(riasType, [Panel, _FormMixin, _ModuleMixin], {
@@ -46,6 +46,11 @@ define([
 				return;
 			}
 			self.inherited(arguments);
+		},
+
+		_afterLoadedAndShown: function(){
+			this.set("modified", false);
+			this.inherited(arguments);
 		},
 
 		cancelLoad: function(){

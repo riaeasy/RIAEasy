@@ -1,21 +1,3 @@
 //>>built
-
-define("dojox/io/xhrScriptPlugin", ["dojo/_base/kernel", "dojo/_base/window", "dojo/io/script", "dojox/io/xhrPlugins", "dojox/io/scriptFrame"], function (dojo, window, script, xhrPlugins, scriptFrame) {
-    dojo.getObject("io.xhrScriptPlugin", true, dojox);
-    dojox.io.xhrScriptPlugin = function (url, callbackParamName, httpAdapter) {
-        xhrPlugins.register("script", function (method, args) {
-            return args.sync !== true && (method == "GET" || httpAdapter) && (args.url.substring(0, url.length) == url);
-        }, function (method, args, hasBody) {
-            var send = function () {
-                args.callbackParamName = callbackParamName;
-                if (dojo.body()) {
-                    args.frameDoc = "frame" + Math.random();
-                }
-                return script.get(args);
-            };
-            return (httpAdapter ? httpAdapter(send, true) : send)(method, args, hasBody);
-        });
-    };
-    return dojox.io.xhrScriptPlugin;
-});
-
+define("dojox/io/xhrScriptPlugin",["dojo/_base/kernel","dojo/_base/window","dojo/io/script","dojox/io/xhrPlugins","dojox/io/scriptFrame"],function(e,l,g,h,m){e.getObject("io.xhrScriptPlugin",!0,dojox);dojox.io.xhrScriptPlugin=function(b,k,c){h.register("script",function(d,a){return!0!==a.sync&&("GET"==d||c)&&a.url.substring(0,b.length)==b},function(d,a,b){var f=function(){a.callbackParamName=k;e.body()&&(a.frameDoc="frame"+Math.random());return g.get(a)};return(c?c(f,!0):f)(d,a,b)})};return dojox.io.xhrScriptPlugin});
+/// xhrScriptPlugin.js.map

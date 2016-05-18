@@ -118,9 +118,7 @@ define([
 		defaultParams: {
 			//content: "<input type='button'></input>",
 			//label: "CheckButton",
-			tabIndex: 0,
 			//showLabel: true,
-			scrollOnFocus: true
 		},
 		initialSize: {},
 		resizable: "none",

@@ -5,9 +5,9 @@ define([
 	"rias/riasw/layout/_Gutter"
 ], function(rias, _Gutter) {
 
-	rias.theme.loadRiasCss([
-		"layout/Splitter.css"
-	]);
+	//rias.theme.loadRiasCss([
+	//	"layout/Splitter.css"
+	//]);
 
 	var riasType = "rias.riasw.layout._Splitter";
 	var Widget = rias.declare(riasType, [_Gutter], {
@@ -25,7 +25,7 @@ define([
 
 		baseClass: "riaswSplitter",
 		templateString:
-			'<div data-dojo-attach-event="onkeydown:_onKeyDown,press:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse" tabIndex="0" role="separator">' +
+			'<div data-dojo-attach-event="onkeydown:_onKeyDown,press:_startDrag,onmouseenter:_onMouse,onmouseleave:_onMouse" role="separator">' +
 				'<div class="riaswSplitterThumb"></div>' +
 			'</div>',
 
@@ -218,7 +218,7 @@ define([
 //				this.inherited(arguments);
 					return;
 			}
-			var childSize = rias.dom.getMarginSize(this.child.domNode)[ horizontal ? 'h' : 'w' ] + this._factor * tick;
+			var childSize = rias.dom.getMarginBox(this.child.domNode)[ horizontal ? 'h' : 'w' ] + this._factor * tick;
 			this.container._layoutChildren(this.child.id, Math.max(Math.min(childSize, this._computeMaxSize()), this.child.minSize[horizontal ? 'h' : 'w']));
 			e.stopPropagation();
 			e.preventDefault();

@@ -1,24 +1,4 @@
 //>>built
-
-define("dojo/fx/Toggler", ["../_base/lang", "../_base/declare", "../_base/fx", "../aspect"], function (lang, declare, baseFx, aspect) {
-    return declare("dojo.fx.Toggler", null, {node:null, showFunc:baseFx.fadeIn, hideFunc:baseFx.fadeOut, showDuration:200, hideDuration:200, constructor:function (args) {
-        var _t = this;
-        lang.mixin(_t, args);
-        _t.node = args.node;
-        _t._showArgs = lang.mixin({}, args);
-        _t._showArgs.node = _t.node;
-        _t._showArgs.duration = _t.showDuration;
-        _t.showAnim = _t.showFunc(_t._showArgs);
-        _t._hideArgs = lang.mixin({}, args);
-        _t._hideArgs.node = _t.node;
-        _t._hideArgs.duration = _t.hideDuration;
-        _t.hideAnim = _t.hideFunc(_t._hideArgs);
-        aspect.after(_t.showAnim, "beforeBegin", lang.hitch(_t.hideAnim, "stop", true), true);
-        aspect.after(_t.hideAnim, "beforeBegin", lang.hitch(_t.showAnim, "stop", true), true);
-    }, show:function (delay) {
-        return this.showAnim.play(delay || 0);
-    }, hide:function (delay) {
-        return this.hideAnim.play(delay || 0);
-    }});
-});
-
+define("dojo/fx/Toggler",["../_base/lang","../_base/declare","../_base/fx","../aspect"],function(b,e,c,d){return e("dojo.fx.Toggler",null,{node:null,showFunc:c.fadeIn,hideFunc:c.fadeOut,showDuration:200,hideDuration:200,constructor:function(a){b.mixin(this,a);this.node=a.node;this._showArgs=b.mixin({},a);this._showArgs.node=this.node;this._showArgs.duration=this.showDuration;this.showAnim=this.showFunc(this._showArgs);this._hideArgs=b.mixin({},a);this._hideArgs.node=this.node;this._hideArgs.duration=
+this.hideDuration;this.hideAnim=this.hideFunc(this._hideArgs);d.after(this.showAnim,"beforeBegin",b.hitch(this.hideAnim,"stop",!0),!0);d.after(this.hideAnim,"beforeBegin",b.hitch(this.showAnim,"stop",!0),!0)},show:function(a){return this.showAnim.play(a||0)},hide:function(a){return this.hideAnim.play(a||0)}})});
+/// Toggler.js.map

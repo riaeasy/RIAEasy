@@ -1,8 +1,3 @@
 //>>built
-
-define("dojo/require", ["./_base/loader"], function (loader) {
-    return {dynamic:0, normalize:function (id) {
-        return id;
-    }, load:loader.require};
-});
-
+define("dojo/require",["./_base/loader"],function(a){return{dynamic:0,normalize:function(a){return a},load:a.require}});
+/// require.js.map

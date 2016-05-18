@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/az/FeedViewerEntry", ({"deleteButton":"[Sil]"}));
-
+define("dojox/atom/widget/nls/az/FeedViewerEntry",{deleteButton:"[Sil]"});
+/// FeedViewerEntry.js.map

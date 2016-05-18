@@ -577,7 +577,7 @@ define([
 												$refScript: "return rias.getRiasdUrl('rias/riasd/module/fileSelector');"
 											},
 											afterSubmit: function(){
-												var m = this._riasrModule,
+												var m = this,
 													item = this.get("_riasrModuleResult"),
 													mn;
 												if(!item){
@@ -590,7 +590,10 @@ define([
 													//rias.xhrPost({
 													//
 													//});
-													return rias.webApp.launchRiasd(mn);
+													//m.canToggle = false;
+													return rias.webApp.launchRiasd(mn).then(function(){
+														//m.canToggle = true;
+													});
 												}
 											}
 										}, params));

@@ -1,13 +1,6 @@
-define(["./create"], function(create){
-	// module:
-	//		dojo/errors/CancelError
+//>>built
 
-	/*=====
-	return function(){
-		// summary:
-		//		Default error if a promise is canceled without a reason.
-	};
-	=====*/
-
-	return create("CancelError", null, null, { dojoType: "cancel" });
+define("dojo/errors/CancelError", ["./create"], function (create) {
+    return create("CancelError", null, null, {dojoType:"cancel"});
 });
+

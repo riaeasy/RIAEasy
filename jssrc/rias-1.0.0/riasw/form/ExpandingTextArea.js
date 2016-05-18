@@ -95,9 +95,7 @@ define([
 		defaultParams: {
 			//content: "<textarea type='text'></textarea>",
 			width: "200px",
-			height: "auto",
-			tabIndex: 0,
-			scrollOnFocus: true
+			height: "auto"
 		},
 		initialSize: {},
 		resizable: "width",

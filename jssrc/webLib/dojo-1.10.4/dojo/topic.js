@@ -1,11 +1,3 @@
 //>>built
-
-define("dojo/topic", ["./Evented"], function (Evented) {
-    var hub = new Evented;
-    return {publish:function (topic, event) {
-        return hub.emit.apply(hub, arguments);
-    }, subscribe:function (topic, listener) {
-        return hub.on.apply(hub, arguments);
-    }};
-});
-
+define("dojo/topic",["./Evented"],function(b){var a=new b;return{publish:function(b,c){return a.emit.apply(a,arguments)},subscribe:function(b,c){return a.on.apply(a,arguments)}}});
+/// topic.js.map

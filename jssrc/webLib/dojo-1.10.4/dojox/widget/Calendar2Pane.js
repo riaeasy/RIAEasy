@@ -1,6 +1,3 @@
 //>>built
-
-define("dojox/widget/Calendar2Pane", ["dojo/_base/declare", "./_CalendarBase", "./_CalendarDay", "./_CalendarMonthYear"], function (declare, _CalendarBase, _CalendarDay, _CalendarMonthYear) {
-    return declare("dojox.widget.Calendar2Pane", [_CalendarBase, _CalendarDay, _CalendarMonthYear], {});
-});
-
+define("dojox/widget/Calendar2Pane",["dojo/_base/declare","./_CalendarBase","./_CalendarDay","./_CalendarMonthYear"],function(a,b,c,d){return a("dojox.widget.Calendar2Pane",[b,c,d],{})});
+/// Calendar2Pane.js.map

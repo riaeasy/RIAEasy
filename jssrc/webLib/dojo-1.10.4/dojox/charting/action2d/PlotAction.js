@@ -1,30 +1,4 @@
 //>>built
-
-define("dojox/charting/action2d/PlotAction", ["dojo/_base/connect", "dojo/_base/declare", "./Base", "dojo/fx/easing", "dojox/lang/functional"], function (hub, declare, Base, dfe, df) {
-    var DEFAULT_DURATION = 400, DEFAULT_EASING = dfe.backOut;
-    return declare("dojox.charting.action2d.PlotAction", Base, {overOutEvents:{onmouseover:1, onmouseout:1}, constructor:function (chart, plot, kwargs) {
-        this.anim = {};
-        if (!kwargs) {
-            kwargs = {};
-        }
-        this.duration = kwargs.duration ? kwargs.duration : DEFAULT_DURATION;
-        this.easing = kwargs.easing ? kwargs.easing : DEFAULT_EASING;
-    }, connect:function () {
-        this.handle = this.chart.connectToPlot(this.plot.name, this, "process");
-    }, disconnect:function () {
-        if (this.handle) {
-            hub.disconnect(this.handle);
-            this.handle = null;
-        }
-    }, reset:function () {
-    }, destroy:function () {
-        this.inherited(arguments);
-        df.forIn(this.anim, function (o) {
-            df.forIn(o, function (anim) {
-                anim.action.stop(true);
-            });
-        });
-        this.anim = {};
-    }});
-});
-
+define("dojox/charting/action2d/PlotAction",["dojo/_base/connect","dojo/_base/declare","./Base","dojo/fx/easing","dojox/lang/functional"],function(b,d,e,f,c){var g=f.backOut;return d("dojox.charting.action2d.PlotAction",e,{overOutEvents:{onmouseover:1,onmouseout:1},constructor:function(c,h,a){this.anim={};a||(a={});this.duration=a.duration?a.duration:400;this.easing=a.easing?a.easing:g},connect:function(){this.handle=this.chart.connectToPlot(this.plot.name,this,"process")},disconnect:function(){this.handle&&
+(b.disconnect(this.handle),this.handle=null)},reset:function(){},destroy:function(){this.inherited(arguments);c.forIn(this.anim,function(b){c.forIn(b,function(b){b.action.stop(!0)})});this.anim={}}})});
+/// PlotAction.js.map

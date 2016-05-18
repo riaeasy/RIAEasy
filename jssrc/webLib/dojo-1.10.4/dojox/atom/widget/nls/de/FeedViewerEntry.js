@@ -1,4 +1,3 @@
 //>>built
-
-define("dojox/atom/widget/nls/de/FeedViewerEntry", ({deleteButton:"[L\xf6schen]"}));
-
+define("dojox/atom/widget/nls/de/FeedViewerEntry",{deleteButton:"[L\u00f6schen]"});
+/// FeedViewerEntry.js.map

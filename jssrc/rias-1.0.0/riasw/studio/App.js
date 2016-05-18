@@ -10,6 +10,8 @@ define([
 	var riasType = "rias.riasw.studio.App";
 	var Widget = rias.declare(riasType, [_PanelBase, _ModuleMixin],{
 
+		_focusStack: true,
+
 		baseClass: "webApp",
 		//isLayoutContainer: true,
 
