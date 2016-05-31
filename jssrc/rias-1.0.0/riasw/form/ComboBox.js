@@ -23,6 +23,8 @@ define([
 				'</div>'+
 			'</div>',*/
 
+		openOnfocus: true,
+
 		destroy: function(){
 			if(this.dropDown){
 				rias.destroy(this.dropDown);
@@ -94,7 +96,7 @@ define([
 		},*/
 
 		onFocus: function(){
-			if(!this.disabled && !this.readOnly){
+			if(this.openOnfocus && !this.disabled && !this.readOnly){
 				if(!this.get("editable")){
 					this.loadAndOpenDropDown();
 				}
@@ -110,8 +112,8 @@ define([
 		defaultParams: function(params){
 			params = rias.mixinDeep({}, {
 				type: "text",
-				labelType: "html",
-				label: "ComboBox",
+				//labelType: "html",
+				//label: "ComboBox",
 				invalidMessage: rias.i18n.message.invalid,
 				constraints: {locale: ""},
 				//regExp: ".*",

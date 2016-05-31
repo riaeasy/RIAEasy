@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 75,
+	"_rsfVersion": 76,
 	"_riaswType": "rias.riasw.studio.Module",
 	"_riaswVersion": "0.7",
 	"caption": "",
@@ -49,10 +49,34 @@ define([
 	"loadXdict": function (query){
 		return this.xdict.loadByHttp(query || {
 			_initData: 1
+		}).then(function(){
+			console.debug("datas.loadXdict() ok.");
+		}, function(){
+			console.error("datas.loadXdict() error.", e);
 		});
 	},
 	"getXdictTextById": function (id){
-		return this.xoper.index[id] ? this.xoper.data[this.xoper.index[id]].text : id;
+		return this.xdict.index[id] ? this.xdict.data[this.xdict.index[id]].text : id;
+	},
+	"getXdictTextByIdpDval": function (idp, dval){
+		var item = this.xdict.find({
+			idp: idp,
+			dval: dval
+		});
+		return item && item.length > 0 ? item[0].text : dval;
+	},
+	"getXdictTextByCodepDval": function (codep, dval){
+		var item = this.xdict.find({
+			parentCode: codep,
+			dval: dval
+		});
+		return item && item.length > 0 ? item[0].text : dval;
+	},
+	"getXdictTextByCode": function (code){
+		var item = this.xdict.find({
+			code: code
+		});
+		return item && item.length > 0 ? item[0].text : code;
 	},
 	"_riaswChildren": [
 		{

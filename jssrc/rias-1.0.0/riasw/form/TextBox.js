@@ -17,8 +17,15 @@ define([
 
 	_TextBoxMixin.extend({
 		_onInput: function(/*Event*/ evt){
-			this.inherited(arguments);
-			if(!this.intermediateChanges){
+
+			this._processInput(evt);
+
+			if(this.intermediateChanges){
+				// allow the key to post to the widget input box
+				this.defer(function(){
+					this._handleOnChange(this.get('value'), false);
+				});
+			}else{
 				//this.set("modified", this.compare(newValue, this._resetValue) != 0);
 				var m = this.compare(this.get('value'), this._resetValue) != 0;
 				if(!m){
@@ -191,6 +198,10 @@ define([
 			/// dijit.Editor 打包（Build）后，dijit.form.TextBox 不能 hack。
 			cs = rias.dom.getComputedStyle(cn);
 			rias.dom.setMarginBox(cn, {
+				h: h,
+				w: Math.floor(w)
+			}, cs);
+			rias.dom.setMarginBox(this.textbox, {
 				h: h,
 				w: Math.floor(w)
 			}, cs);

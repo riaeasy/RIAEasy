@@ -639,7 +639,7 @@ define([
 			if(!p.store){
 				if(~p.cacheClass.indexOf("Async")){
 					p.store = {
-						_riaswType: "rias.riasw.store.JsonRestStore"
+						_riaswType: "rias.riasw.store.JsonXhrStore"
 					};
 				}else{
 					p.store = {

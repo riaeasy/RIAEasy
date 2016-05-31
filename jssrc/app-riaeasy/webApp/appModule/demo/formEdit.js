@@ -351,7 +351,7 @@ define([
 					"queryExpr": "${0}%",
 					"searchAttr": "text",
 					"store": {
-						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"_riaswType": "rias.riasw.store.JsonXhrStore",
 						"defaultData": [
 							{
 								"id": "",
@@ -435,7 +435,7 @@ define([
 					},
 					"queryExpr": "${0}%",
 					"store": {
-						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"_riaswType": "rias.riasw.store.JsonXhrStore",
 						"target": "act/xdict/query"
 					},
 					"style": {

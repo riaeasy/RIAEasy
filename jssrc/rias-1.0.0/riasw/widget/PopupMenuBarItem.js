@@ -19,7 +19,7 @@ define([
 		iconClass16: "riaswPopupMenuBarItemIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "Menu"
+			//label: "Menu"
 		},
 		initialSize: {},
 		resizable: "none",

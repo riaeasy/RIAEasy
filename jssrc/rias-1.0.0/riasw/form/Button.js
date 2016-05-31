@@ -28,18 +28,19 @@ define([
 				'<input role="presentation" data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" aria-hidden="true" ${!nameAttrSetting}/>'+
 			'</span>',
 
+		baseClass: "dijitButton dijitButtonNode",
+
 		cssStateNodes: {
 			//"buttonNode": "dijitButtonNode",
 			"titleNode": "dijitButtonContents"
 		},
 
-		showLabel: true,
 		// iconClass: String
 		//		Class to apply to DOMNode in button to make it display an icon
 		iconClass: "dijitNoIcon",
 		_setIconClassAttr: { node: "iconNode", type: "class" },
 
-		baseClass: "dijitButton dijitButtonNode",
+		showLabel: true,
 
 		// Map widget attributes to DOMNode attributes.
 		_setValueAttr: "valueNode",
@@ -165,7 +166,7 @@ define([
 		defaultParams: {
 			//content: "<input type='button'></input>",
 			type: "button",
-			label: "Button"
+			label: ""
 		},
 		initialSize: {},
 		resizable: "none",

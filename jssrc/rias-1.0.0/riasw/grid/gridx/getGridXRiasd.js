@@ -117,7 +117,7 @@ define([
 		gp.pageSize = gp.pageSize || pageSize;
 		gp.pageSizes = gp.pageSizes || pageSizes;
 		gp.store = rias.mixinDeep({
-			_riaswType: "rias.riasw.store.JsonRestStore",
+			_riaswType: "rias.riasw.store.JsonXhrStore",
 			idAttribute: 'id',
 			labelAttribute: 'label',
 			target: gp.target || target

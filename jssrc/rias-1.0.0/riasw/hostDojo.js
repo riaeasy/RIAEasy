@@ -31,6 +31,8 @@ define([
 	"dojo/hash",
 	"dojo/ready",
 
+	"dojo/dnd/Mover",
+
 	//"dijit/dijit",///不能加载，否则会加载 form/_FormWidget，造成 _FormWidgetMixin.extend 失败。
 	//"dijit/_base",///有废弃的 require，单独引入需要的
 	//"dijit/main",//打包出来的文件
@@ -65,6 +67,7 @@ define([
 ], function(rias, on, touch, keys, mouse, gestureTap, gestureSwipe, connect, event, basewin, win,
 			_html, html, dom, domConstruct, domGeom, domClass, domStyle, domAttr, domProp,
 			parser, query, cookie, hash, ready,
+			Mover,
 			manager, _basefocus,
 			a11y, registry, WidgetSet,
 			selection, focus, place, Viewport, layoutUtils,
@@ -541,6 +544,34 @@ define([
 		};
 	};
 	rias.dom.getEffectiveBox = Viewport.getEffectiveBox;
+	rias.dom.fixedNode = function(node, fixed){
+		var s = node.style,
+			style = {
+			top: fixed.top,
+			left: fixed.left,
+			bottom: fixed.bottom,
+			right: fixed.right
+		};
+		if(style.left && style.right){
+			style.width = "auto";
+		}else if(style.right){
+			style.left = "auto";
+		}else if(style.left){
+			style.right = "auto";
+		}else if(s.width){
+			style.right = "";
+		}
+		if(style.top && style.bottom){
+			style.height = "auto";
+		}else if(style.bottom){
+			style.top = "auto";
+		}else if(style.top){
+			style.bottom = "auto";
+		}else if(s.height){
+			style.bottom = "";
+		}
+		rias.dom.setStyle(node, style);
+	};
 
 	rias.dom.hasClass = domClass.contains;
 	rias.dom.addClass = domClass.add;
@@ -646,6 +677,14 @@ define([
 			w: value.width || value.w,
 			h: value.height || value.h
 		};
+	};
+	rias.dom.hasHeight = function(style, region){
+		return (style.height && (style.height !== "" && style.height !== "auto"))
+			|| (region && (region === "left" || region === "right" || region === "center"));
+	};
+	rias.dom.hasWidth = function(style, region){
+		return (style.width && (style.width !== "" && style.width !== "auto"))
+			|| (region && (region === "top" || region === "bottom" || region === "center"));
 	};
 
 	rias.tooltipPositions = [
@@ -1239,6 +1278,54 @@ define([
 		return !!v;
 	};
 
+	Mover.extend({
+		// utilities
+		onFirstMove: function(e){
+			// summary:
+			//		makes the node absolute; it is meant to be called only once.
+			//		relative and absolutely positioned nodes are assumed to use pixel units
+			var s = this.node.style,
+				bm,
+				l, t, h = this.host;
+			switch(s.position){
+				case "relative":
+				case "absolute":
+					// assume that left and top values are in pixels already
+					///改为取 getMarginBox，以支持 right、bottom
+					bm = rias.dom.getMarginBox(this.node);
+					l = Math.round(parseFloat(bm.l)) || 0;
+					t = Math.round(parseFloat(bm.t)) || 0;
+					break;
+				default:
+					s.position = "absolute";	// enforcing the absolute mode
+					var m = rias.dom.getMarginBox(this.node);
+					// event.pageX/pageY (which we used to generate the initial
+					// margin box) includes padding and margin set on the body.
+					// However, setting the node's position to absolute and then
+					// doing domGeom.marginBox on it *doesn't* take that additional
+					// space into account - so we need to subtract the combined
+					// padding and margin.  We use getComputedStyle and
+					// _getMarginBox/_getContentBox to avoid the extra lookup of
+					// the computed style.
+					var b = rias.dom.docBody;
+					var bs = rias.dom.getComputedStyle(b);
+					bm = rias.dom.getMarginBox(b, bs);
+					var bc = rias.dom.getContentBox(b, bs);
+					l = m.l - (bc.l - bm.l);
+					t = m.t - (bc.t - bm.t);
+					break;
+			}
+			this.marginBox.l = l - this.marginBox.l;
+			this.marginBox.t = t - this.marginBox.t;
+			if(h && h.onFirstMove){
+				h.onFirstMove(this, e);
+			}
+
+			// Disconnect touch.move that call this function
+			this.events.shift().remove();
+		}
+	});
+
 	rias.dom.selection = selection;
 	rias.dom.focusManager = focus;
 	// Time of the last focusin event
@@ -1291,13 +1378,6 @@ define([
 			}), 0);
 		},
 		_onTouchNode: function(/*DomNode*/ node, /*String*/ by){
-			// summary:
-			//		Callback when node is focused or touched.
-			//		Note that _onFocusNode() calls _onTouchNode().
-			// node:
-			//		The node that was touched.
-			// by:
-			//		"mouse" if the focus/touch was caused by a mouse down event
 
 			// Keep track of time of last focusin or touch event.
 			lastTouchOrFocusin = (new Date()).getTime();
@@ -1330,14 +1410,7 @@ define([
 						newStack.unshift(id);
 					}
 					if(riasPopupParent){
-						/*widget = rias.by(node);
-						if(!(by == "mouse" && widget.get("disabled"))){
-							newStack.unshift(widget.id);
-						}*/
 						widget = rias.by(riasPopupParent);
-						/*if(!(by == "mouse" && widget.get("disabled"))){
-							newStack.unshift(widget.id);
-						}*/
 						node = widget.domNode;
 					}else if(popupParent){
 						node = registry.byId(popupParent).domNode;
@@ -1445,7 +1518,6 @@ define([
 					rias.defer(this, function(){
 						rias.dom.focus(focusableNode);
 					});
-					return;
 				}
 			}
 			//this.set("activeStack", newStack);
@@ -1514,27 +1586,9 @@ define([
 		}
 		return undefined;
 	};
-	//a11y.isTabNavigable = function (elem, checkAncestors) {
-	//	return a11y.effectiveTabIndex(elem, checkAncestors) >= 0;
-	//};
-	//a11y.isFocusable = function (elem, checkAncestors) {
-	//	return a11y.effectiveTabIndex(elem, checkAncestors) >= -1;
-	//};
 	rias.registry = registry;
 
 	_WidgetBase.extend({
-		/*own: function(position, handles){
-			var self = this,
-				hds = this.inherited(arguments);
-			if(!rias.isRiaswModule(this)){
-				rias.forEach(hds, function(handle){
-					if(rias.isRiasw(handle)){
-						console.warn(handle.id + "'s owner is not a Module.", handle, self);
-					}
-				});
-			}
-			return hds;
-		},*/
 		///不建议修改 set。如果需要触发 watch，则需要在 _setXXXAttr 中调用 _set()
 		//set: function(name, value){
 		//},
@@ -1545,17 +1599,6 @@ define([
 			this.inherited(arguments);
 		},
 		_attrToDom: function(/*String*/ attr, /*String*/ value, /*Object?*/ commands){
-			// summary:
-			//		Reflect a widget attribute (title, tabIndex, duration etc.) to
-			//		the widget DOM, as specified by commands parameter.
-			//		If commands isn't specified then it's looked up from attributeMap.
-			//		Note some attributes like "type"
-			//		cannot be processed this way as they are not mutable.
-			// attr:
-			//		Name of member variable (ex: "focusNode" maps to this.focusNode) pointing
-			//		to DOMNode inside the widget, or alternately pointing to a subwidget
-			// tags:
-			//		private
 
 			if(this.isDestroyed()){
 				return;
@@ -1690,6 +1733,7 @@ define([
 		destroyChildren: function(){
 			this.destroyDescendants();
 		},
+
 		_setVisibleAttr: function(value){
 			value = !!value;
 			this._set("visible", value);
@@ -1874,6 +1918,108 @@ define([
 	});
 	_Widget.extend({
 	});
+	_Container.extend({
+		_getFocusItems: function(){
+			var elems = rias.a11y._getTabNavigable(this.domNode);
+			this._firstFocusNode = elems.lowest || elems.first || this.closeButtonNode || this.domNode;
+			this._lastFocusNode = elems.last || elems.highest || this._firstFocusNode;
+		},
+
+		_noOverflowCall: function(callback){
+			if(this.isDestroyed(true, true)){
+				return;
+			}
+			var cn = this.containerNode,
+				vf,
+				vfx,
+				vfy;
+			vf = rias.dom.getStyle(cn, "overflow");
+			vfx = rias.dom.getStyle(cn, "overflow-x");
+			vfy = rias.dom.getStyle(cn, "overflow-y");
+			rias.dom.setStyle(cn, "overflow", "hidden");
+
+			if(rias.isFunction(callback)){
+				callback.apply(this);
+			}
+
+			if(vf !== undefined){
+				rias.dom.setStyle(cn, "overflow", vf);
+			}else{
+				if(vfx !== undefined){
+					rias.dom.setStyle(cn, "overflow-x", vfx);
+				}
+				if(vfy !== undefined){
+					rias.dom.setStyle(cn, "overflow-y", vfy);
+				}
+			}
+		},
+		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex, noresize){
+			if(added && this._started){
+				if(!child._started){
+					child.startup();
+				}
+			}
+		},
+		addChild: function(/*dijit/_WidgetBase*/ child, /*int?*/ insertIndex, noresize){
+			var p = this,
+				refNode = p.containerNode;
+			//rias.orphan(child);
+			//rias.own(p, child, insertIndex);
+			///注意：是对 parent.containerNode 操作.
+			if(insertIndex > 0){
+				refNode = refNode.firstChild;
+				while(refNode && insertIndex > 0){
+					if(refNode.nodeType == 1){
+						insertIndex--;
+					}
+					refNode = refNode.nextSibling;
+				}
+				if(refNode){
+					insertIndex = "before";
+				}else{
+					// to support addChild(child, n-1) where there are n children (should add child at end)
+					refNode = p.containerNode;
+					insertIndex = "last";
+				}
+			}
+
+			rias.dom.place(child.domNode, refNode, insertIndex);
+			child._riasrParent = p;
+			//if(child._onParentNodeChanged){
+			//	child._onParentNodeChanged();
+			//}
+			child.set("riasrParentNode", p.domNode);
+			p._setupChild(child, true, insertIndex, noresize);
+		},
+		removeChild: function(/*Widget|int*/ child, noresize){
+			var p = this;
+			if(typeof child == "number"){
+				child = p.getChildren()[child];
+			}
+			//if(child._riasrOwner){
+			//	child._riasrOwner = undefined;
+			//}
+			///必须判断 rias.indexOf(p._riasrChildren, child, 0) > -1
+			//if(rias.isRiasw(p) && rias.indexOf(p._riasrChildren, child, 0) > -1){
+			//	p._riasrChildren.splice(rias.indexOf(p._riasrChildren, child, 0), 1);
+			//}
+			if(child){
+				if(child._riasrParent == p){
+					//console.debug(parent, child);
+					child._riasrParent = undefined;
+				}
+				var n = (child.domNode ? child.domNode : child);
+				if(n && n.parentNode){
+					n.parentNode.removeChild(n); // detach but don't destroy
+					//if(child._onParentNodeChanged){
+					//	child._onParentNodeChanged();
+					//}
+					child.set("riasrParentNode", undefined);
+				}
+				p._setupChild(child, false, undefined, noresize);
+			}
+		}
+	});
 
 	_WidgetsInTemplateMixin.extend({
 		_beforeFillContent: function(){
@@ -1981,16 +2127,6 @@ define([
 			//console.debug(this.id + ".modified: ", value);
 		},
 		_handleOnChange: function(newValue, priorityChange){
-			// summary:
-			//		Called when the value of the widget is set.  Calls onChange() if appropriate
-			// newValue:
-			//		the new value
-			// priorityChange:
-			//		For a slider, for example, dragging the slider is priorityChange==false,
-			//		but on mouse up, it's priorityChange==true.  If intermediateChanges==false,
-			//		onChange is only called form priorityChange=true events.
-			// tags:
-			//		private
 			if(this._lastValueReported == undefined && (priorityChange === null || !this._onChangeActive)){
 				// this block executes not for a change, but during initialization,
 				// and is used to store away the original value (or for ToggleButton, the original checked state)
@@ -2085,13 +2221,13 @@ define([
 					//return (store._oldAPI ? store.getValue(this.searchAttr) + "(" + store.getValue(item, this.labelAttr) + ")" :
 					//	item[this.searchAttr].toString() + "(" + item[this.labelAttr].toString() + ")");
 					if(this.allwaysShowSearch == false){
-						text = store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr];
+						text = store && store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr];
 					}else{
-						text = (store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr])
-							+ "(" + (store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]) + ")";
+						text = (store && store._oldAPI ? store.getValue(item, this.labelAttr) : item[this.labelAttr])
+							+ "(" + (store && store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]) + ")";
 					}
 				}else{
-					text = (store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]);
+					text = (store && store._oldAPI ? store.getValue(item, this.searchAttr) : item[this.searchAttr]);
 				}
 			}catch(e){
 				console.error(this, "labelFunc() error: ", rias.captureStackTrace(e));
@@ -2099,31 +2235,54 @@ define([
 			}
 			return text.toString();
 		},
+		_setBlurValue: function(){
+			// if the user clicks away from the textbox OR tabs away, set the
+			// value to the textbox value
+			// #4617:
+			//		if value is now more choices or previous choices, revert
+			//		the value
+			var newvalue = this.get('displayedValue');
+			var pw = this.dropDown;
+			if(pw && (newvalue == pw._messages["previousMessage"] || newvalue == pw._messages["nextMessage"])){
+				this._setValueAttr(this._lastValueReported, true);
+			}else if(typeof this.item == "undefined"){
+				// Update 'value' (ex: KY) according to currently displayed text
+				this.item = null;
+				//this.set('displayedValue', newvalue);
+			}else{
+				if(this.value != this._lastValueReported){
+					this._handleOnChange(this.value, true);
+				}
+				this._refreshState();
+			}
+			///转换 displayedValue
+			if(this.item){
+				this.set('displayedValue', this.labelFunc(this.item));
+			}else{
+				this.set('displayedValue', newvalue);
+			}
+			// Remove aria-activedescendant since it may not be removed if they select with arrows then blur with mouse
+			this.focusNode.removeAttribute("aria-activedescendant");
+		},
 		onSetItem: function(item){
 
 		},
 		_setItemAttr: function(/*item*/ item, /*Boolean?*/ priorityChange, displayedValue){
-			// summary:
-			//		Set the displayed valued in the input box, and the hidden value
-			//		that gets submitted, based on a dojo.data store item.
-			// description:
-			//		Users shouldn't call this function; they should be calling
-			//		set('item', value)
-			// tags:
-			//		private
 			var value = '';
 			if(item){
 				if(!displayedValue){
-					displayedValue = this.store._oldAPI ? // remove getValue() for 2.0 (old dojo.data API)
-						this.store.getValue(item, this.searchAttr) : item[this.searchAttr];
+					displayedValue = this.store._oldAPI ? this.store.getValue(item, this.searchAttr) : item[this.searchAttr];
+					//displayedValue = this.labelFunc(item);
 				}
-				value = this._getValueField() != this.searchAttr ? this.store.getIdentity(item) : displayedValue;
+				//value = this._getValueField() != this.searchAttr ? this.store.getIdentity(item) : displayedValue;
+				value = this.store && this.store._oldAPI ? this.store.getValue(item, this._getValueField()) : item[this._getValueField()];
 			}
 			//this._set("item", item);
 			//if(item){
 			//	value = (this._getValueField() ? item[this._getValueField()] : this.store.getIdentity(item));
 			//}
-			this.set('value', value, priorityChange, this.get("displayedValue"), item);
+			//this.set('value', value, priorityChange, this.get("displayedValue"), item);
+			this.set('value', value, priorityChange, displayedValue, item);
 			///增加 onSetItem
 			this.onSetItem(item);
 		},
@@ -2175,106 +2334,6 @@ define([
 			this.onCloseDropDown();
 		}
 	});*/
-
-	_Container.extend({
-		_getFocusItems: function(){
-			var elems = rias.a11y._getTabNavigable(this.domNode);
-			this._firstFocusNode = elems.lowest || elems.first || this.closeButtonNode || this.domNode;
-			this._lastFocusNode = elems.last || elems.highest || this._firstFocusNode;
-		},
-
-		_noOverflowCall: function(callback){
-			var cn = this.containerNode,
-				vf,
-				vfx,
-				vfy;
-			vf = rias.dom.getStyle(cn, "overflow");
-			vfx = rias.dom.getStyle(cn, "overflow-x");
-			vfy = rias.dom.getStyle(cn, "overflow-y");
-			rias.dom.setStyle(cn, "overflow", "hidden");
-
-			if(rias.isFunction(callback)){
-				callback.apply(this);
-			}
-
-			if(vf !== undefined){
-				rias.dom.setStyle(cn, "overflow", vf);
-			}else{
-				if(vfx !== undefined){
-					rias.dom.setStyle(cn, "overflow-x", vfx);
-				}
-				if(vfy !== undefined){
-					rias.dom.setStyle(cn, "overflow-y", vfy);
-				}
-			}
-		},
-		_setupChild: function(/*dijit/_WidgetBase*/child, added, insertIndex, noresize){
-			if(added && this._started){
-				if(!child._started){
-					child.startup();
-				}
-			}
-		},
-		addChild: function(/*dijit/_WidgetBase*/ child, /*int?*/ insertIndex, noresize){
-			var p = this,
-				refNode = p.containerNode;
-			//rias.orphan(child);
-			//rias.own(p, child, insertIndex);
-			///注意：是对 parent.containerNode 操作.
-			if(insertIndex > 0){
-				refNode = refNode.firstChild;
-				while(refNode && insertIndex > 0){
-					if(refNode.nodeType == 1){
-						insertIndex--;
-					}
-					refNode = refNode.nextSibling;
-				}
-				if(refNode){
-					insertIndex = "before";
-				}else{
-					// to support addChild(child, n-1) where there are n children (should add child at end)
-					refNode = p.containerNode;
-					insertIndex = "last";
-				}
-			}
-
-			rias.dom.place(child.domNode, refNode, insertIndex);
-			child._riasrParent = p;
-			//if(child._onParentNodeChanged){
-			//	child._onParentNodeChanged();
-			//}
-			child.set("riasrParentNode", p.domNode);
-			p._setupChild(child, true, insertIndex, noresize);
-		},
-		removeChild: function(/*Widget|int*/ child, noresize){
-			var p = this;
-			if(typeof child == "number"){
-				child = p.getChildren()[child];
-			}
-			//if(child._riasrOwner){
-			//	child._riasrOwner = undefined;
-			//}
-			///必须判断 rias.indexOf(p._riasrChildren, child, 0) > -1
-			//if(rias.isRiasw(p) && rias.indexOf(p._riasrChildren, child, 0) > -1){
-			//	p._riasrChildren.splice(rias.indexOf(p._riasrChildren, child, 0), 1);
-			//}
-			if(child){
-				if(child._riasrParent == p){
-					//console.debug(parent, child);
-					child._riasrParent = undefined;
-				}
-				var n = (child.domNode ? child.domNode : child);
-				if(n && n.parentNode){
-					n.parentNode.removeChild(n); // detach but don't destroy
-					//if(child._onParentNodeChanged){
-					//	child._onParentNodeChanged();
-					//}
-					child.set("riasrParentNode", undefined);
-				}
-				p._setupChild(child, false, undefined, noresize);
-			}
-		}
-	});
 
 	return rias;
 

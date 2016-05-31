@@ -1,0 +1,264 @@
+{
+	"_rsfVersion": 35,
+	"requires": [
+	],
+	"moduleCss": [
+	],
+	"_riaswVersion": "1.0",
+	"region": "center",
+	"caption": "新的页面模块",
+	"title": "新的页面模块",
+	"style": {
+	},
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.CaptionPanel",
+			"_riaswIdOfModule": "captionPanel1",
+			"caption": "treeGrid",
+			"layoutPriority": 0,
+			"region": "top",
+			"splitter": true,
+			"style": {
+				"height": "20em"
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.grid.DGrid",
+					"_riaswIdOfModule": "dGridTree",
+					"cellIdOps": [
+						{
+							"func": "cellIdOnClick",
+							"name": "view",
+							"text": "查看",
+							"tooltip": "查看详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "modi",
+							"text": "修改",
+							"tooltip": "修改详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "copy",
+							"text": "复制",
+							"tooltip": "复制并新增"
+						}
+					],
+					"columnLockCount": 2,
+					"opColumnWidth": "8em",
+					"query": {
+						"parentId": "1"
+					},
+					"region": "center",
+					"structure": [
+						{
+							"field": "id",
+							"fixed": true,
+							"name": "id",
+							"width": "160px"
+						},
+						{
+							"field": "text",
+							"name": "条目名称",
+							"width": "160px"
+						},
+						{
+							"field": "idp",
+							"name": "上级id",
+							"width": "120px"
+						},
+						{
+							"field": "code",
+							"name": "条目编码",
+							"width": "100px"
+						},
+						{
+							"field": "typ",
+							"name": "条目类型",
+							"width": "80px"
+						},
+						{
+							"field": "dtyp",
+							"name": "值类型",
+							"width": "80px"
+						},
+						{
+							"field": "dval",
+							"name": "值",
+							"width": "160px"
+						},
+						{
+							"field": "ord",
+							"name": "顺序号",
+							"width": "48px"
+						},
+						{
+							"field": "children",
+							"name": "子项数",
+							"width": "48px"
+						}
+					],
+					"style": {
+						"border": "1px #b1badf solid"
+					},
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/xdict/query';"
+					},
+					"topBtns": [
+						"btnAdd",
+						"btnDele"
+					],
+					"treeColumns": [
+						"id"
+					],
+					"viewModule": "appModule/xdict/xdictForm"
+				}
+			]
+		},
+		{
+			"_riaswType": "rias.riasw.layout.CaptionPanel",
+			"_riaswIdOfModule": "dgrid1",
+			"caption": "normalGrid",
+			"layoutPriority": 0,
+			"region": "center",
+			"splitter": false,
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.grid.DGrid",
+					"_riaswIdOfModule": "dGrid1",
+					"cellIdOps": [
+						{
+							"func": "cellIdOnClick",
+							"name": "view",
+							"text": "查看",
+							"tooltip": "查看详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "modi",
+							"text": "修改",
+							"tooltip": "修改详细信息"
+						}
+					],
+					"query": {
+					},
+					"region": "center",
+					"structure": [
+						{
+							"field": "code",
+							"name": "用户编号",
+							"width": "80px"
+						},
+						{
+							"field": "acode",
+							"name": "缴款户卡号",
+							"width": "100px"
+						},
+						{
+							"field": "dreadstat",
+							"name": "抄表状态",
+							"width": "80px"
+						},
+						{
+							"field": "dreadoper",
+							"name": "抄表员",
+							"width": "80px"
+						},
+						{
+							"field": "dreadbookcode",
+							"name": "账本编号",
+							"width": "80px"
+						},
+						{
+							"field": "dreadord",
+							"name": "抄表顺序",
+							"width": "60px"
+						},
+						{
+							"field": "text",
+							"name": "产权人",
+							"width": "120px"
+						},
+						{
+							"field": "daddr",
+							"name": "安装地址",
+							"width": "260px"
+						},
+						{
+							"field": "typ",
+							"name": "基表类型",
+							"width": "100px"
+						},
+						{
+							"field": "stat",
+							"name": "状态",
+							"width": "60px"
+						},
+						{
+							"field": "dmetercalcode",
+							"name": "用气性质",
+							"width": "80px"
+						},
+						{
+							"field": "diccode",
+							"name": "IC卡卡号",
+							"width": "100px"
+						},
+						{
+							"field": "dmobile",
+							"name": "绑定手机",
+							"width": "120px"
+						},
+						{
+							"field": "didcodetyp",
+							"name": "证件类型",
+							"width": "60px"
+						},
+						{
+							"field": "didcode",
+							"name": "证件编号",
+							"width": "120px"
+						},
+						{
+							"field": "dreadtyp",
+							"name": "抄表类型",
+							"width": "60px"
+						},
+						{
+							"field": "dval0",
+							"name": "起数",
+							"style": "text-align: right",
+							"width": "60px"
+						},
+						{
+							"field": "dval1",
+							"name": "止数",
+							"style": "text-align: right",
+							"width": "60px"
+						},
+						{
+							"field": "drange",
+							"name": "量程",
+							"style": "text-align: right",
+							"width": "60px"
+						}
+					],
+					"style": {
+						"border": "1px #b1badf solid"
+					},
+					"target": "act/dmeter/query",
+					"topBtns": [
+						"btnAdd",
+						"btnDele"
+					],
+					"treeColumns": [
+					],
+					"viewModule": "appModule/dmeter/dmeterForm"
+				}
+			]
+		}
+	]
+}

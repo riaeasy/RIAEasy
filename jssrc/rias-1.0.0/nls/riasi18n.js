@@ -34,7 +34,9 @@ define({root: {
 		help: "Help",
 		open: "Open",
 		edit: "Edit",
-		print: "print",
+		display: "Display",
+		hidden: "Hidden",
+		print: "Print",
 		preview: "Preview",
 		run: "Run",
 		add: "Add",
@@ -60,6 +62,10 @@ define({root: {
 		newFile: "new file",
 		"delete": "Delete",
 		rename: "Rename",
+		extend: "Extend",
+		addons: "Add-ons",
+
+		outline: "outline",
 
 		check: "Check",
 		verify: "Verify",
@@ -68,6 +74,7 @@ define({root: {
 
 		hint: "Hint:",
 		info: "Infomation:",
+		message: "Infomation:",
 		warn: "Warn:",
 		error: "Error:",
 		choose: "Choose please:",

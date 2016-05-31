@@ -1,0 +1,149 @@
+.dgrid {
+  border-color: #d3d3d3;
+}
+.dgrid-selector {
+  text-align: center;
+}
+/*.dgrid-selector-hidden {
+	display: none;
+}*/
+.dgrid-summary-cell,
+.dgrid-cell {
+  border-color: #d3d3d3;
+  border-left-width: 0;
+  padding: 0.5em 0.25em;
+}
+.dgrid-cell-canedit {
+  border: 0px solid #add8e6;
+  -moz-box-shadow: 0 0 0 1px #add8e6 inset;
+  -webkit-box-shadow: 0 0 0 1px #add8e6 inset;
+  box-shadow: 0 0 0 1px #add8e6 inset;
+}
+.dgrid-focus {
+  outline-color: #ff8c00;
+  outline-style: solid;
+  outline-width: 3px;
+  outline-offset: -3px;
+}
+.dgrid-resize-header-container .dgrid-focus {
+  outline-width: 0;
+}
+.dgrid-cell-editing {
+  outline-width: 0px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.dgrid-cell-editor {
+  width: 100%;
+  height: 100%;
+  border-width: 0;
+}
+.dgrid-input {
+  border-width: 0;
+}
+.dgrid-summary-cell-none {
+  border-right-width: 0;
+}
+.dgrid-spacer-row .dgrid-cell {
+  padding: 0 !important;
+  border: 0 !important;
+}
+.dgrid-scroller {
+  overflow-y: auto;
+  border-bottom: 1px solid #d3d3d3;
+}
+.dgrid-row {
+  background-color: #fff;
+}
+.dgrid-row-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.dgrid-row-odd {
+  background-color: #fffafa;
+}
+.dgrid-selected {
+  background-color: #add8e6;
+}
+.dgrid-hider-toggle {
+  right: auto;
+  left: 0;
+}
+.dgrid-header-tools {
+  padding: 0.25em;
+  border-bottom-width: 1px;
+}
+.dgrid-opcolumn .dijitButton {
+  padding: 0 0 0 0.25em;
+}
+.dgrid-opcolumn .dijitButtonNode {
+  padding: 0;
+}
+.dgrid-opcolumn > button {
+  background-color: inherit;
+  height: auto;
+  line-height: 1em;
+  padding: 0;
+  margin-left: 0.5em;
+  border-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.dgrid-opcolumn > button:hover {
+  color: #ff8c00;
+}
+.dgrid-footer-summary-row {
+  position: absolute;
+  left: 0;
+  right: 17px;
+  border-width: 0 0 1px 0;
+  border-color: #d3d3d3;
+  border-style: solid;
+}
+.dgrid-footer-summary-row .dgrid-cell {
+  border-bottom-width: 0 !important;
+}
+.dgrid-autoheight .dgrid-footer-summary-scroll {
+  display: none;
+}
+.dgrid-rtl-swap .dgrid-footer-summary-scroll {
+  left: 0px;
+  right: auto;
+}
+.dgrid-footer-summary-row,
+.dgrid-header,
+.dgrid-selector,
+.dgrid-opcolumn,
+.dgrid-rownumcolumn {
+  background-color: #f8f8ff;
+}
+.dgrid-header-scroll,
+.dgrid-footer-summary-scroll {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #f8f8ff;
+  border: 0px solid #d3d3d3;
+}
+.dgrid-header-scroll {
+  border-width: 0 0 1px 0;
+}
+.dgrid-footer-summary-scroll {
+  border-width: 0 0 1px 0;
+}
+.dgrid-column-set-scroller {
+  background-color: #f8f8ff;
+  border: 0px solid #d3d3d3;
+}
+.dgrid-hider-menu {
+  left: 17px;
+}
+.dgrid-hider-menu-row:hover {
+  background-color: #ffd700;
+}
+.dgrid-hider-menu-row:focus {
+  background-color: #add8e6;
+}

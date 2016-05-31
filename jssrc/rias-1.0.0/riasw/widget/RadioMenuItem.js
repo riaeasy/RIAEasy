@@ -19,7 +19,7 @@ define([
 		iconClass16: "riaswRadioMenuItemIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "RadioMenuItem",
+			//label: "RadioMenuItem",
 			accelKey: ""
 		},
 		initialSize: {},

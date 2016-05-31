@@ -41,13 +41,13 @@ define([
 			self.inherited(arguments);
 			self.own(
 				rias.on(self.domNode, "keydown", rias.hitch(self, "_onKeyDown")),
+				///rias.subscribe(self.id + "-selectChild", rias.hitch(self, "_onShowChild")),///没必要
 				rias.subscribe(self.id + "-startup", function(params){
 					if(params.selected){
 						self._transition(params.selected);
 						rias.publish(self.id + "-selectChild", params.selected);
 					}
-				}),
-				rias.subscribe(self.id + "-selectChild", rias.hitch(self, "_onShowChild"))
+				})
 			);
 		},
 
@@ -143,6 +143,18 @@ define([
 				});
 			}
 			return true;
+		},
+		_beforeLayout: function(){
+			var box,
+				node = this.domNode;
+			box = rias.dom.getContentBox(node);
+			if(!box || !this._contentBox || Math.abs(box.l - this._contentBox.l) > 0.5 || Math.abs(box.t - this._contentBox.t) > 0.5 ||
+				Math.abs(box.w - this._contentBox.w) > 0.01 || Math.abs(box.h - this._contentBox.h) > 0.01){
+				////if(this.needLayout || !box || !this._contentBox || box.w != this._contentBox.w || box.h != this._contentBox.h){
+				this._contentBox = box;
+				this.needLayout = true;
+			}
+			return this.beforeLayout(this.needLayout || this._needResizeChild);
 		},
 
 		_setupChild: function(/*dijit/_WidgetBase*/ child, added, insertIndex, noresize){

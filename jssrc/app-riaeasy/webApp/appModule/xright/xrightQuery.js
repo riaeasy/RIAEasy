@@ -48,6 +48,7 @@ define([
 						"$refObj": "module.query"
 					},
 					"region": "center",
+					"refreshOnSetCollection": false,
 					"structure": [
 						{
 							"field": "id",
@@ -103,6 +104,8 @@ define([
 						"$refScript": "return rias.webApp.dataServerAddr + 'act/xright/query';"
 					},
 					"topBtns": [
+						"btnRefresh",
+						"btnAddons",
 						"btnAdd",
 						"btnDelete"
 					],

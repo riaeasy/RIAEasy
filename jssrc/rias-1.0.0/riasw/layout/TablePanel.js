@@ -305,11 +305,16 @@ define([
 				if(rias.isFunction(child.resize)){
 					child.resize();
 				}
-				self._resizeParent();/// layoutChildren 之后，TablePanel 的尺寸一般会改变，需要 _resizeParent
 				if(fn && rias.dom.isDescendant(fn, child.domNode ? child.domNode : child) && fn.focus){
-					fn.focus();
+					self.defer(function(){
+						fn.focus();
+					});
 				}
 			});
+			if(self.domNode.style.height == "" || self.domNode.style.width == ""){
+				///只要有一方向是 自适应，即要 _resizeParent
+				self._resizeParent();/// layoutChildren 之后，TablePanel 的尺寸一般会改变，需要 _resizeParent
+			}
 		},
 		_layoutChildren: function(){
 			var self = this,
@@ -320,13 +325,16 @@ define([
 			if(!this._started) {
 				return;
 			}
-			///FIXME:zensst. debounce 下 p 被修改的问题。
-			p = 1;//rias.dom.getStyle(cn, "opacity");
-			rias.dom.setStyle(cn, "opacity", 0.5);
 
 			//console.debug(self.id + " _layoutChildren...");
 			rias.debounce(this.id + "_layoutChildren", function(){
+				if(self.isDestroyed(true, true)){
+					return;
+				}
 				//console.debug(self.id + " _layoutChildren debounce callback...");
+				///FIXME:zensst. debounce 下 p 被修改的问题。
+				p = rias.dom.getStyle(cn, "opacity");
+				rias.dom.setStyle(cn, "opacity", 0.5);
 				self._noOverflowCall(function(){
 					self._internalLayou();
 				});

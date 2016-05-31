@@ -33,6 +33,8 @@ define({
 		help: "帮助",
 		open: "打开",
 		edit: "编辑",
+		display: "显示",
+		hidden: "隐藏",
 		print: "打印",
 		preview: "预览",
 		run: "运行",
@@ -59,6 +61,10 @@ define({
 		newFile: "新文件",
 		"delete": "删除",
 		rename: "重命名",
+		extend: "扩展",
+		addons: "辅助",
+
+		outline: "大纲",
 
 		check: "复核",
 		verify: "审核",
@@ -67,6 +73,7 @@ define({
 
 		hint: "提示：",
 		info: "提示信息：",
+		message: "提示信息：",
 		warn: "警告信息：",
 		error: "错误信息：",
 		choose: "请选择：",

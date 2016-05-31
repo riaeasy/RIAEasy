@@ -183,7 +183,7 @@ define([
 			var target = this.targetWidget;
 			if(target && !target._playing){
 				///某些时候，target 被隐藏，但任然是 focused
-				if(rias.isFunction(target.focus) && (!target.get("visible") || !target.get("selected"))){
+				if(rias.isFunction(target.focus) && (!target.get("visible") || (rias.isInstanceOf(target, "rias.riasw.layout.DialogPanel") && !target.get("selected")))){
 					target.focus();
 				}else{
 					target.toggle();
@@ -260,7 +260,7 @@ define([
 			this._initAttr(["float"]);
 		},
 
-		_onFloatAttr: function(value, oldValue){
+		_onFloat: function(value, oldValue){
 			rias.filter(this.getChildren(), function(child){
 				rias.dom.setStyle(child.domNode, "float", value);
 			});
@@ -296,7 +296,7 @@ define([
 				style: {
 					float: this.float
 				}
-			}, targetWidget.dockNodeParams)));
+			}, targetWidget.dockNodeArgs)));
 			var self= this,
 				h = rias.after(node, "destroy", function(){
 					rias.removeItems(self._docked, node);

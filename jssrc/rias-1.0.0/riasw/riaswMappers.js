@@ -445,6 +445,9 @@ define([
 			riasType: ["rias.riasw.store.MemoryStore"],
 			requires: "rias/riasw/store/MemoryStore"
 		},{
+			riasType: ["rias.riasw.store.JsonXhrStore"],
+			requires: "rias/riasw/store/JsonXhrStore"
+		},{
 			riasType: ["rias.riasw.store.JsonRestStore"],
 			requires: "rias/riasw/store/JsonRestStore"
 		/*},{

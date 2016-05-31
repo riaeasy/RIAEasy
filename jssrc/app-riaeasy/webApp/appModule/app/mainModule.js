@@ -62,6 +62,8 @@ define([
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					_riaswIdOfModule: "appInfos",
 					caption: "公告",/// 提前赋值，以确定 dockNode 的显示
+					tooltip: "公告",
+					iconClass: "infoIcon",
 					moduleParams: {},
 					//reCreate: true,
 					closable: false,
@@ -102,11 +104,11 @@ define([
 								"dockTo": {
 									"$refObj": "appMainDockTop"
 								},
-								dialogType: "top",
+								//dialogType: "top",
 								//toggleable: false,
 								//toggleOnEnter: true,
 								toggleOnBlur: true,
-								closeDisplayState: "collapsed",
+								//closeDisplayState: "hidden",
 								style: {
 									width: "30em",
 									height: rias.toInt(m.domNode.clientHeight * 0.7, 600) + "px",//"80em"//rias.toInt(m.domNode.clientHeight * 0.7) + "px"
@@ -117,6 +119,7 @@ define([
 					});
 				});
 			}
+		rias.webApp.workarea = m.mainCenter;
 		},
 	"showLogInfo": function (){
 			var m = this,
@@ -148,7 +151,7 @@ define([
 						//"toggleOnEnter": true,
 						toggleOnBlur: true,
 						//alwaysShowDockNode:true,
-						closeDisplayState: "collapsed",
+						closeDisplayState: "hidden",
 						"initDisplayState": "hidden",
 						"initPlaceToArgs": {
 							parent: m,
@@ -257,20 +260,20 @@ define([
 						toggleOnBlur: (args.toggleOnBlur != undefined ? args.toggleOnBlur : false),
 						alwaysShowDockNode: (args.alwaysShowDockNode != undefined ? args.alwaysShowDockNode : true),
 						//watchTargetState: true,// !args.isRiasd,
-						dockNodeParams: {
+						dockNodeArgs: {
 							style: {}
 						}
 					});
 					if(moduleParams.dockTo == self.appDock || moduleParams.dockTo == self.appDock._riaswIdOfModule){
-						moduleParams.dockNodeParams.iconLayoutTop = true;
-						//moduleParams.dockNodeParams.style.width = "10em";
+						moduleParams.dockNodeArgs.iconLayoutTop = true;
+						//moduleParams.dockNodeArgs.style.width = "10em";
 					}
 					moduleParams.style = rias.dom.styleToObject(moduleParams.style);
 					if(asDialog){
 						_getStyle(moduleParams, meta);
 					}else{
 						rias.mixinDeep(moduleParams, {
-							dockNodeParams: {
+							dockNodeArgs: {
 								toggle: function(){
 									var target = this.targetWidget;
 									if(target === parent.selectedChildWidget){
@@ -486,7 +489,8 @@ define([
 			"_riaswChildren": [
 				{
 					"_riaswType": "rias.riasw.layout.DockBar",
-					"_riaswIdOfModule": "appDock"
+					"_riaswIdOfModule": "appDock",
+					region: "center"
 				}
 			]
 		},

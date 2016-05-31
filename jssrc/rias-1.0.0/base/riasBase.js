@@ -28,35 +28,6 @@ define([
 	};
 
 ///Destroyable==================================================================///
-	rias.isInstanceOf = function(obj, base){
-		function _do(ctor){
-			if(rias.isString(ctor)){
-				ctor = rias.getObject(ctor);
-			}
-			if(!ctor){
-				return false;
-			}
-			if(obj instanceof ctor){
-				return true;
-			}
-			if(obj && obj.constructor && obj.constructor._meta){
-				var bases = obj.constructor._meta.bases;
-				for(var i = 0, l = bases.length; i < l; ++i){
-					if(bases[i] === ctor){
-						return true;
-					}
-				}
-			}
-			return false;
-		}
-		if(rias.isArray(base)){
-			return rias.some(base, function(item){
-				return _do(item);
-			});
-		}else{
-			return _do(base);
-		}
-	};
 
 	rias.isDestroyed = function(riasw, checkAncestors){
 		riasw = rias.by(riasw);

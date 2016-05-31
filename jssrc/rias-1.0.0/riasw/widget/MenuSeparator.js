@@ -24,7 +24,7 @@ define([
 		iconClass16: "riaswMenuSeparatorIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "MenuSeparator"
+			//label: "MenuSeparator"
 		},
 		initialSize: {},
 		resizable: "none",

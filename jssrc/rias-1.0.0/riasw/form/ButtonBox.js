@@ -15,8 +15,8 @@ define([
 		defaultParams: function(params){
 			params = rias.mixinDeep({}, {
 				type: "text",
-				labelType: "html",
-				label: "ButtonBox",
+				//labelType: "html",
+				//label: "ButtonBox",
 				invalidMessage: rias.i18n.message.invalid,
 				//constraints: {locale: ""},
 				//regExp: ".*",

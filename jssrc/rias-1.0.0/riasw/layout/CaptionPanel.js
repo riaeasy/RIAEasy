@@ -364,10 +364,11 @@ define([
 			}
 		},
 
-		_collapse: function(){
-			this.inherited(arguments);
+		collapse: function(){
 			if(this.dockTo){
-				this.defer(this.hide);
+				return this.hide();
+			}else{
+				return this.inherited(arguments);
 			}
 		},
 		restore: function(forceVisible){

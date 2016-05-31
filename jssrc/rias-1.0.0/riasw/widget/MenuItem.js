@@ -19,7 +19,7 @@ define([
 		iconClass16: "riaswMenuItemIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "MenuItem",
+			//label: "MenuItem",
 			accelKey: ""
 		},
 		initialSize: {},

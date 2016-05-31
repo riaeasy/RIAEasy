@@ -141,7 +141,7 @@ define([
 				args = meta;
 			}
 			args = rias.mixin({
-				_riaswIdOfModule: m.currentItem.code || m.currentItem.id,
+				_riaswIdOfModule: rias.trim(m.currentItem.code) || m.currentItem.id,
 				caption: m.currentItem.text,
 				moduleMeta: "",
 				moduleParams: {},
@@ -167,9 +167,11 @@ define([
 			},
 			"_riaswChildren": [
 				{
-					"_riaswType": "rias.riasw.store.JsonRestStore",
+					"_riaswType": "rias.riasw.store.JsonXhrStore",
 					"_riaswIdOfModule": "menuStore",
-					"target": "act/appMain/getMenu"
+					"target": {
+						"$refScript": "return rias.webApp.dataServerAddr + 'act/appMain/getMenu';"
+					}
 				}
 			]
 		}

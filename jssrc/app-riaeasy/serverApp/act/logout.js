@@ -4,7 +4,7 @@ define([
 	"rias"
 ], function(rias) {
 
-	return function (method, req, res) {
+	return function (method, req, res, oper) {
 		var header = {
 				"Access-Control-Allow-Origin": "*",
 				"Access-Control-Allow-Headers": "X-Requested-With,X-Range,Range",

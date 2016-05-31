@@ -264,10 +264,10 @@ define([
 		defaultParams: function(params){
 			var p = rias.mixinDeep({}, {
 				type: "button",
-				label: "Select",
-				showLabel: true,
+				//label: "Select",
+				//showLabel: true,
 				store: {
-					_riaswType: "rias.riasw.store.JsonRestStore",
+					_riaswType: "rias.riasw.store.JsonXhrStore",
 					oldApi: true
 				}
 			}, params);

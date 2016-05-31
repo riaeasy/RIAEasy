@@ -9,15 +9,11 @@ define([
 	"dojo/dom-form"
 ], function(rias, xhr, ioq, request, domForm) {
 
-	rias.xhr = xhr; /// xhr === dojo.xhr
-	rias.xhr.simulate = rias.has("rias-xhr-simulate");
-	rias.xhr.objectToQuery = ioq.objectToQuery;
-	rias.xhr.queryToObject = ioq.queryToObject;
-	rias.xhr.fieldToObject = domForm.fieldToObject;
-	rias.xhr.formToObject = domForm.toObject;
-	rias.xhr.formToQuery = domForm.toQuery;
-	rias.xhr.formToJson = domForm.toJson;
-	rias.xhr.defaultTimeout = rias.config.waitSeconds ? rias.config.waitSeconds * 1000 : undefined;
+	rias.xhr = rias.mixin(xhr, {
+		simulate: rias.has("rias-xhr-simulate"),
+		defaultTimeout: rias.config.waitSeconds ? rias.config.waitSeconds * 1000 : undefined,
+		withCredentials: true
+	});
 
 	//rias.xhr.isLocal = function(url){
 	//	return /^file:\/\//.test(url) && !/^http/.test(url);
@@ -108,7 +104,7 @@ define([
 							args,
 							function(result){
 								if(rias.isFunction(callback)){
-									callback(result);
+									return callback(result);
 								}
 							},
 							function(e){
@@ -137,7 +133,7 @@ define([
 						}else{
 							//response = rias.fromJson(response);
 							if(rias.isFunction(callback)){
-								callback(response);
+								return callback(response);
 							}
 						}
 					}catch(e){
@@ -147,6 +143,9 @@ define([
 			}
 		}
 		!(args.timeout > 0) && (args.timeout = rias.xhr.defaultTimeout);
+		if(rias.xhr.withCredentials){
+			args.withCredentials = true;
+		}
 		args = rias.mixin({
 			//timeout: rias.xhr.defaultTimeout,
 			/// error 改在 rias.after(dojo, "_ioSetArgs", function(d) 中处理
@@ -167,16 +166,20 @@ define([
 				handleAs: handleAs
 			};
 		}
+		if(!args.content){
+			args.content = {};
+		}
+		if(args.query){
+			rias.mixinDeep(args.content, args.query);
+		}
 		if(query != undefined){
-			args.content = rias.mixinDeep({}, query);
+			rias.mixinDeep(args.content, query);
 		}
 		if(preventCache != undefined){
 			args.preventCache = preventCache;
 		}
-		if(!args.content){
-			args.content = {};
-		}
 		args.content._method = "GET";
+		//args.withCredentials = true;///跨域 cookie
 		//args.postData._method = "GET";
 		return _xhr("GET", args, false, callback, errCall);
 	};
@@ -189,7 +192,10 @@ define([
 				url: url
 			};
 		}
-		args.postData = postData == undefined ? {} : rias.mixinDeep({}, postData);
+		if(!args.postData){
+			args.postData = {};
+		}
+		rias.mixinDeep(args.postData, postData);
 		args.postData._method = method;
 		if(!args.handleAs){
 			args.handleAs = "json";

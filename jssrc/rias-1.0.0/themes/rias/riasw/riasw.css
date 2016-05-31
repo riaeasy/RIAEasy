@@ -99,6 +99,9 @@
 .riaswExpandingTextAreaIcon{
 	background: url('./imagesw48/ExpandingTextArea.png') no-repeat;
 }
+/*.riaswFilteringComboBoxIcon{
+	background: url('./imagesw48/FilteringComboBox.png') no-repeat;
+}*/
 .riaswFilteringSelectIcon{
 	background: url('./imagesw48/FilteringSelect.png') no-repeat;
 }
@@ -460,6 +463,9 @@
 .riaswExpandingTextAreaIcon16{
 	background: url('./imagesw16/ExpandingTextArea.gif') no-repeat;
 }
+/*.riaswFilteringComboBoxIcon16{
+	background: url('./imagesw16/FilteringComboBox.png') no-repeat;
+}*/
 .riaswFilteringSelectIcon16{
 	background: url('./imagesw16/FilteringSelect.png') no-repeat;
 }

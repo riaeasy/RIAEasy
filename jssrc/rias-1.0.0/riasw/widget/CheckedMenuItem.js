@@ -19,7 +19,7 @@ define([
 		iconClass16: "riaswCheckedMenuItemIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "CheckedMenuItem",
+			//label: "CheckedMenuItem",
 			accelKey: ""
 		},
 		initialSize: {},

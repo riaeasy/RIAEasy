@@ -183,7 +183,7 @@ define([
 					"queryExpr": "${0}%",
 					"searchAttr": "text",
 					"store": {
-						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"_riaswType": "rias.riasw.store.JsonXhrStore",
 						"idAttribute": "dval",
 						"labelAttribute": "text",
 						"target": "act/xdict/query"
@@ -205,7 +205,7 @@ define([
 					"queryExpr": "${0}%",
 					"searchAttr": "text",
 					"store": {
-						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"_riaswType": "rias.riasw.store.JsonXhrStore",
 						"idAttribute": "dval",
 						"labelAttribute": "text",
 						"target": "act/xdict/query"
@@ -228,7 +228,7 @@ define([
 					"queryExpr": "${0}%",
 					"searchAttr": "text",
 					"store": {
-						"_riaswType": "rias.riasw.store.JsonRestStore",
+						"_riaswType": "rias.riasw.store.JsonXhrStore",
 						"idAttribute": "dval",
 						"labelAttribute": "text",
 						"target": "act/xdict/query"
@@ -263,7 +263,7 @@ define([
 			"target": {
 				"$refScript": "return module.target;"
 			},
-			"_riaswType": "rias.riasw.store.JsonRestStore",
+			"_riaswType": "rias.riasw.store.JsonXhrStore",
 			"_riaswIdOfModule": "_store"
 		}
 	]

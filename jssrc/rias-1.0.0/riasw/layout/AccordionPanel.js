@@ -386,10 +386,6 @@ define([
 			this.inherited(arguments, [child, insertIndex, true]);
 			if(this._started && !this.isDestroyed(true)){
 				this.needLayout = true;
-				//var self = this;
-				//rias.debounce(this.id + "addChild", function(){
-				//	self.resize();
-				//}, self, 15)();
 				this.defer("resize");
 			}
 		},
@@ -409,10 +405,6 @@ define([
 			this.inherited(arguments);
 			if(this._started && !this.isDestroyed(true)){
 				this.needLayout = true;
-				//var self = this;
-				//rias.debounce(this.id + "addChild", function(){
-				//	self.resize();
-				//}, self, 15)();
 				this.defer("resize");
 			}
 		},

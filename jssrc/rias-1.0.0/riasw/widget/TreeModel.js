@@ -190,7 +190,7 @@ define([
 			}, params);
 			if(!params.store){
 				params.store = {
-					_riaswType: "rias.riasw.store.JsonRestStore"
+					_riaswType: "rias.riasw.store.JsonXhrStore"
 				}
 			}
 			if(params.idAttribute){

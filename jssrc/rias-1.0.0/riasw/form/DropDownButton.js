@@ -105,8 +105,8 @@ define([
 		iconClass16: "riaswDropDownButtonIcon16",
 		defaultParams: {
 			//content: "<span></span>",
-			label: "DropDown",
-			showLabel: true
+			//label: "DropDown",
+			//showLabel: true
 		},
 		initialSize: {},
 		resizable: "none",

@@ -3,18 +3,19 @@
 define([
 	"rias",
 	"dijit/form/ComboBoxMixin"
-], function(rias, ComboBoxMixin) {
+], function(rias, _Widget) {
 
 	////必须 extend ComboBoxMixin，因为 诸如 dijit.form.FilteringSelect 等控件也使用 ComboBoxMixin。
-	ComboBoxMixin.extend({
+	_Widget.extend({
 
 		searchAttr: "id",
 
 		templateString:
+			///textbox 需要用 dijitComboBoxInputInner
 			'<div class="dijit dijitReset dijitInline dijitLeft" data-dojo-attach-point="_popupStateNode" id="widget_${id}" role="combobox" aria-haspopup="true">'+
 				'<div class="dijitReset riaswTextBoxLabel" data-dojo-attach-point="labelNode" id="${id}_labelNode" tabIndex="-1" readonly="readonly" role="presentation"></div>'+
 				'<div class="dijitReset dijitInputField dijitInputContainer riaswTextBoxContainer" data-dojo-attach-point="containerNode,_aroundNode">'+
-					'<input class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" type="text" autocomplete="off" aria-labelledby="${id}_labelNode" role="textbox" ${!nameAttrSetting}/>'+
+					'<input class="dijitReset dijitComboBoxInputInner" data-dojo-attach-point="textbox,focusNode" type="text" autocomplete="off" aria-labelledby="${id}_labelNode" role="textbox" ${!nameAttrSetting}/>'+
 					'<div class="dijitReset dijitValidationContainer" data-dojo-attach-point="validationNode">'+
 						'<input class="dijitReset dijitInputField dijitValidationIcon dijitValidationInner" value="&#935;" type="text" tabIndex="-1" readonly="readonly" role="presentation"/>'+
 					'</div>'+
@@ -72,6 +73,6 @@ define([
 		}
 	});
 
-	return ComboBoxMixin;
+	return _Widget;
 
 });

@@ -8,14 +8,19 @@ define([
 	"rias"
 ], function(rias) {
 
-	return function (method, req, res) {
-		var sql;
-		var header = {
-			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Headers": "X-Requested-With,X-Range,Range",
-			"Access-Control-Expose-Headers": "Accept-Ranges,Content-Encoding,Content-Length,Content-Range",
-			"Access-Control-Allow-Methods": "GET,OPTIONS"
+	var rightCode = "act/appMain/getMenu";
+
+	return function (method, req, res, oper) {
+		var server = this,
+			sql;
+		var result = {
+			success: false,
+			value: ''
 		};
+
+		if(!server.setXdHeader(req, result, oper, rightCode, method)){
+			return result;
+		}
 
 		sql = "select distinct l.*, r.idp, r.cat, r.code, r.text, r.stat, r.typ, r.dcmd, r.ord, '1' as lvl, if(r.children=0, 1, 0) as leaf,\n"
 			+ "       if(length(r.id)<=3, 1, 0) as isroot, \n"
@@ -40,11 +45,18 @@ define([
 			+ "on r.id=l.id\n"
 			+ "order by r.idp, r.ord";
 
-		var result = this.defaultDb.queryPage({
+		var rs = server.defaultDb.queryPage({
 			sql: sql
 		});
-		result.header = header;
-		return result;
+
+		return {
+			header: result.header,
+			code: rs.code,
+			success: rs.success,
+			value: rs.value,
+			args: rs.args
+		};
+
 	}
 
 });

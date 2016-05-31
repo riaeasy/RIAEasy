@@ -26,17 +26,18 @@ var riasServerConfig = {
 		"respGzipMinSize": 1 * 1024, ///server.response 启动Gzip的最小字节数
 		"respGzipMaxSize": 1 * 1024 * 1024, ///server.response 启动Gzip的最大字节数
 		//"serverId": "11",
-		minThreads: 5,
+		minThreads: 4,
 		maxThreads: 20,
+		maxQueued: 1000,///请求队列长度
 		maxFormContentSize: 4 * 1024 * 1024, /// form 提交的最大字节数
 		//maxUploadSize: 10 * 1024 * 1024,
 		port: 8088,
+		maxIdleTime: 60000, //表示连接最大空闲时间，默认值300000.
 		acceptors: 3, //表示同时在监听read事件的线程数，缺省值为2，对于NIO来说，建议值2-（处理器核数+1）.
-		maxIdleTime: 600000, //表示连接最大空闲时间，默认值300000.
-		lowResourceMaxIdleTime: 30000, //表示线程稀少时的maxIdleTime，一般设置为 <= maxIdleTime. 
+		lowResourceMaxIdleTime: 5000, //表示线程稀少时的maxIdleTime，一般设置为 <= maxIdleTime. 
 		//lowResourcesConnections: 只有NIO才有这个设置，表示连接空闲时的最大连接数，大于这个数将被shutdown，
-		// 每个acceptor的连接数=（lowResourcesConnections+acceptor-1）/ acceptor
-		lowResourcesConnections: 1,
+		// 每个acceptor的连接数 =（lowResourcesConnections + acceptors - 1）/ acceptors
+		lowResourcesConnections: 5000,
 		//contextRoot: "jssrc",
 		webContext: "/", ///访问的url根。
 
@@ -89,7 +90,8 @@ var riasServerConfig = {
 			dbs: {
 				"app-riaeasy": "app-riaeasy"
 			},
-			defaultDbName: "app-riaeasy"
+			defaultDbName: "app-riaeasy",
+			xactslog: true
 		}
 	},
 	dbConfigs: {

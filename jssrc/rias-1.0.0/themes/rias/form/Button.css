@@ -272,10 +272,11 @@
 .rias .dijitDropDownButtonActive .dijitButtonNode,
 .rias .dijitComboButtonActive .dijitButtonNode,
 .rias .dijitToggleButtonActive .dijitButtonNode,
-.rias .dijitToggleButtonChecked .dijitButtonNode,*/
+.rias .dijitToggleButtonChecked .dijitButtonNode,
+.rias .dijitButtonNodeChecked,*/
 .rias .dijitButtonNodeActive,
-.rias .dijitButtonNodeChecked {
-	/*background-color: skyblue;*/
+.rias .dijitToggleButtonChecked {
+	background-color: skyblue;
 	/*border-color: darkorange;
 	-moz-box-shadow: 0em 0em 0.2em darkorange inset;
 	-webkit-box-shadow: 0em 0em 0.2em darkorange inset;

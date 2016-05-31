@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 167,
+	"_rsfVersion": 145,
 	"_riaswVersion": "0.8",
 	"badge": "3",
 	"caption": "新的页面模块",
@@ -185,6 +185,7 @@ define([
 							"query": {
 								"parentId": "1"
 							},
+							"refreshOnSetCollection": true,
 							"region": "center",
 							"structure": [
 								{
@@ -241,6 +242,8 @@ define([
 								"$refScript": "return rias.webApp.dataServerAddr + 'act/xdict/query';"
 							},
 							"topBtns": [
+								"btnRefresh",
+								"btnAddons",
 								"btnAdd",
 								"btnDelete"
 							],
@@ -255,6 +258,9 @@ define([
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					"_riaswIdOfModule": "floatPanel",
 					"caption": "float(自动展开)",
+					"fixed": {
+						"right": "2em"
+					},
 					"initDisplayState": "collapsed",
 					"initPlaceToArgs": {
 						"around": {

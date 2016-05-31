@@ -13,7 +13,8 @@ define([
 	"dojo/_base/sniff",//包含has，并初始化浏览器相关判断
 	"dojo/_base/lang",
 	"dojo/_base/array",
-	"dojo/_base/json",
+	//"dojo/_base/json",
+	"dojo/json",
 
 	"dojo/date/locale",
 	"dojo/date/stamp",
@@ -140,6 +141,36 @@ define([
 	};
 	rias.likePromise = function(obj){
 		return obj && rias.isFunction(obj.then);
+	};
+
+	rias.isInstanceOf = function(obj, base){
+		function _do(ctor){
+			if(rias.isString(ctor)){
+				ctor = rias.getObject(ctor);
+			}
+			if(!ctor){
+				return false;
+			}
+			if(obj instanceof ctor){
+				return true;
+			}
+			if(obj && obj.constructor && obj.constructor._meta){
+				var bases = obj.constructor._meta.bases;
+				for(var i = 0, l = bases.length; i < l; ++i){
+					if(bases[i] === ctor){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		if(rias.isArray(base)){
+			return rias.some(base, function(item){
+				return _do(item);
+			});
+		}else{
+			return _do(base);
+		}
 	};
 
 	rias.hostBrowser = !!has("host-browser");
@@ -643,6 +674,151 @@ define([
 	//	return str//.replace(/&/gm, "&amp;").replace(/</gm, "&lt;").replace(/>/gm, "&gt;").replace(/"/gm, "&quot;").replace(/'/gm, "&quot;")
 	//		.replace(/\n/g, "<br/>");//.replace(/\s/g, "&nbsp;");///先转换 回车（\n），否则 回车会被当做 空格（\s）处理
 	//};
+	rias.toChinese = function(value, len, compact){
+		var s, c, space, result = "",
+			i, l, j,
+			pad = true;//!compact;
+		s = rias.toStr(rias.toFixed(value, 2));
+		//if(s[0] === "-"){
+		//	//s = s.slice(1);
+		//	//throw "待转换的值不能为负！";
+		//}
+		//s = TrimStrNum(S);
+		if (len > 0){
+			rias.pad(s, len, "0", false);
+		}
+		l = s.length;
+		for(i = l - 1; i >= 0; i--){
+			c = s[l - 1 - i];
+			switch(c){
+				case "0":
+					if(pad){
+						result += "零";
+					}
+					break;
+				case "1":
+					result += "壹";
+					break;
+				case "2":
+					result += "贰";
+					break;
+				case "3":
+					result += "叁";
+					break;
+				case "4":
+					result += "肆";
+					break;
+				case "5":
+					result += "伍";
+					break;
+				case "6":
+					result += "陆";
+					break;
+				case "7":
+					result += "柒";
+					break;
+				case "8":
+					result += "捌";
+					break;
+				case "9":
+					result += "玖";
+					break;
+				case "-":
+					result += "负";
+					break;
+			}
+			pad = !compact || c !== "0";
+			switch(i){
+				case 0:
+					if(pad){
+						result += "分";
+					}
+					break;
+				case 1:
+					if(pad){
+						result += "角";
+					}
+					break;
+				case 3:
+					if(pad || result === "零"){
+						result += "元";
+					}else{
+						result = result.slice(0, -1) + "元";
+					}
+					break;
+				case 4:
+					if(pad){
+						result += "拾";
+					}
+					break;
+				case 5:
+					if(pad){
+						result += "佰";
+					}
+					break;
+				case 6:
+					if(pad){
+						result += "仟";
+					}
+					break;
+				case 7:
+					if(pad || result === "零"){
+						result += "万";
+					}else{
+						result = result.slice(0, -1) + "万";
+					}
+					break;
+				case 8:
+					if(pad){
+						result += "拾";
+					}
+					break;
+				case 9:
+					if(pad){
+						result += "佰";
+					}
+					break;
+				case 10:
+					if(pad){
+						result += "仟";
+					}
+					break;
+				case 11:
+					if(pad || result === "零"){
+						result += "亿";
+					}else{
+						result = result.slice(0, -1) + "亿";
+					}
+					break;
+				case 12:
+					if(pad){
+						result += "拾";
+					}
+					break;
+				case 13:
+					if(pad){
+						result += "佰";
+					}
+					break;
+				case 14:
+					if(pad){
+						result += "仟";
+					}
+					break;
+				case 15:
+					if(pad || result === "零"){
+						result += "万";
+					}else{
+						result = result.slice(0, -1) + "万";
+					}
+					break;
+			}
+		}
+		if(!!compact && rias.endWith(result, "零")){
+			result = result.slice(0, -1);
+		}
+		return result;
+	};
 
 	//如果是字符串，则去掉首尾空格；如果是数组，则去掉全部 null/undefined/""
 	rias.trim = function(/*string | array*/arr){
@@ -659,14 +835,14 @@ define([
 		}
 		return arr;
 	};
-	rias.trimStart = function(str, /*string*/trim){
+	rias.trimStartChars = function(str, /*chars?*/trim){
 		var p = 0;
 		if(trim.indexOf(str.charAt(p)) >= 0){
 			p++;
 		}
 		return str.substring(p);
 	};
-	rias.trimEnd = function(str, /*string*/trim){
+	rias.trimEndChars = function(str, /*string*/trim){
 		var p = str.length;
 		if(trim.indexOf(str.charAt(p - 1)) >= 0){
 			p--;
@@ -953,6 +1129,186 @@ define([
 		};
 	}*/
 
+	function _getF(f){
+		var i = 0, n = 0, c;
+		if(!rias.isString(f)){
+			f = f.toString();
+		}
+		while(c = f.charAt(i)){
+			if(c === ")" && n === 1){
+				i++;
+				break;
+			}
+			if(c === "("){
+				n++;
+			}else if(c === ")"){
+				n--;
+			}
+			i++;
+		}
+		//return f.slice(0, i).replace(/connectToDomNode/i, "");
+		return f.slice(0, i) + "{}";
+	}
+	function escapeString(/*String*/str){
+		// summary:
+		//		Adds escape sequences for non-visual characters, double quote and
+		//		backslash and surrounds with double quotes to form a valid string
+		//		literal.
+		return ('"' + str.replace(/(["\\])/g, '\\$1') + '"')
+			.replace(/[\f]/g, "\\f").replace(/[\b]/g, "\\b").replace(/[\n]/g, "\\n")
+			.replace(/[\t]/g, "\\t").replace(/[\r]/g, "\\r"); // string
+	}
+	rias.json = {
+		parse: json.parse,
+		//stringify: json.stringify
+		stringify: function(value, replacer, spacer, args){
+			var objPath = [],
+				undef;
+			if(rias.isBoolean(args)){
+				args = {
+					prettyPrint: args
+				};
+			}else if(!rias.isObjectExact(args)){
+				args = {};
+			}
+			if(typeof replacer == "string"){
+				spacer = replacer;
+				replacer = null;
+			}
+			function stringify(it, indent, key){
+				if(replacer){
+					it = replacer(key, it);
+				}
+				var val, objtype = typeof it;
+				if(objtype == "number"){
+					return isFinite(it) ? it + "" : "null";
+				}
+				if(objtype == "boolean"){
+					return it + "";
+				}
+				if(it === null){
+					return "null";
+				}
+				if(typeof it == "string"){
+					return escapeString(it);
+				}
+				if(objtype == "undefined"){
+					return undef; //直接返回 undef 变量，即undefined
+				}
+				if(objtype == "function"){
+					if(args.includeFunc == true){
+						return it.toString();
+					}else if(args.includeFuncName == true){
+						return _getF(it);
+					}else{
+						return undef; //直接返回 undef 变量，即undefined
+					}
+				}
+				// short-circuit for objects that support "json" serialization
+				// if they return "self" then just pass-through...
+				if(typeof it.toJSON == "function"){
+					return stringify(it.toJSON(key), indent, key);
+				}
+				if(it instanceof Date){
+					return '"{FullYear}-{Month+}-{Date}T{Hours}:{Minutes}:{Seconds}Z"'.replace(/\{(\w+)(\+)?\}/g, function(t, prop, plus){
+						var num = it["getUTC" + prop]() + (plus ? 1 : 0);
+						return num < 10 ? "0" + num : num;
+					});
+				}
+				if(it.valueOf() !== it){
+					// primitive wrapper, try again unwrapped:
+					return stringify(it.valueOf(), indent, key);
+				}
+				var nextIndent= spacer ? (indent + spacer) : "";
+				/* we used to test for DOM nodes and throw, but FF serializes them as {}, so cross-browser consistency is probably not efficiently attainable */
+
+				var sep = spacer ? " " : "";
+				var newLine = spacer ? "\n" : "";
+
+				// array
+				if(it instanceof Array){
+					var itl = it.length, res = [];
+					for(key = 0; key < itl; key++){
+						var obj = it[key];
+						val = stringify(obj, nextIndent, key);
+						if(typeof val != "string"){
+							val = "null";
+						}
+						res.push(newLine + nextIndent + val);
+					}
+					return "[" + res.join(",") + newLine + indent + "]";
+				}
+				// generic object code path
+				if(rias.indexOf(objPath, it) >= 0){
+					if(args.loopToString != true){
+						console.error("rias.toJson(it): it has circular reference.", it);
+						throw rias.mixin(new Error("rias.toJson(it): it has circular reference."), {it: it});
+					}else{
+						console.debug("rias.toJson(it): it has circular reference.", it);
+						return it.toString() + " (circular reference.)";
+						/*return rias.toJson(it, {
+							prettyPrint: args.prettyPrint,
+							includeFunc: args.includeFunc,
+							includeFuncName: args.includeFuncName,
+							loopToString: args.loopToString,
+							errorToString: args.errorToString,
+							simpleObject: true,//args.simpleObject,
+							ignoreProperty_: args.ignoreProperty_
+						});*/
+					}
+				}
+				if(args.simpleObject == true){
+					if(rias.isObjectExact(it) && !rias.isObjectSimple(it)){
+						return it.toString();
+					}
+				}
+				objPath.push(it);
+				var output = [];
+				for(key in it){
+					//if(key == "_riasrWidget"){
+					//	if(rias.isDebug){
+					//		console.debug(key, it);
+					//	}else{
+					//		console.error("_riasrWidget:", key);
+					//	}
+					//}
+					var keyStr;
+					if(it.hasOwnProperty(key)){
+						if(typeof key == "number"){
+							keyStr = '"' + key + '"';
+						}else if(typeof key == "string"){
+							if(args.ignoreProperty_ == true && rias.startWith(key, "_") && !rias.startWith(key, "_rias")){
+								continue;
+							}
+							keyStr = escapeString(key);
+						}else{
+							// skip non-string or number keys
+							continue;
+						}
+						try{
+							val = stringify(it[key], nextIndent, key);
+						}catch(e){
+							if(args.errorToString != true){
+								throw e;
+							}else{
+								val = "Convert error of [" + it.toString() + "], errormessage: " + e.message;
+							}
+						}
+						if(typeof val != "string"){
+							// skip non-serializable values
+							continue;
+						}
+						// At this point, the most non-IE browsers don't get in this branch
+						// (they have native JSON), so push is definitely the way to
+						output.push(newLine + nextIndent + keyStr + ":" + sep + val);
+					}
+				}
+				objPath.pop();
+				return "{" + output.join(",") + newLine + indent + "}"; // String
+			}
+			return stringify(value, "", "");
+		}
+	};
 	rias.toJson = function(/*Object*/ it, args){
 		//args = {
 		//	prettyPrint: false,
@@ -969,184 +1325,15 @@ define([
 		}else if(!rias.isObjectExact(args)){
 			args = {};
 		}
-		function _getF(f){
-			var i = 0, n = 0, c;
-			if(!rias.isString(f)){
-				f = f.toString();
-			}
-			while(c = f.charAt(i)){
-				if(c === ")" && n === 1){
-					i++;
-					break;
-				}
-				if(c === "("){
-					n++;
-				}else if(c === ")"){
-					n--;
-				}
-				i++;
-			}
-			//return f.slice(0, i).replace(/connectToDomNode/i, "");
-			return f.slice(0, i) + "{}";
-		}
-		var objPath = [],
-			stringify = function(value, replacer, spacer){
-				var undef;
-				var escapeString = function(/*String*/str){
-					// summary:
-					//		Adds escape sequences for non-visual characters, double quote and
-					//		backslash and surrounds with double quotes to form a valid string
-					//		literal.
-					return ('"' + str.replace(/(["\\])/g, '\\$1') + '"')
-						.replace(/[\f]/g, "\\f").replace(/[\b]/g, "\\b").replace(/[\n]/g, "\\n")
-						.replace(/[\t]/g, "\\t").replace(/[\r]/g, "\\r"); // string
-				};
-				if(typeof replacer == "string"){
-					spacer = replacer;
-					replacer = null;
-				}
-				function stringify(it, indent, key){
-					if(replacer){
-						it = replacer(key, it);
-					}
-					var val, objtype = typeof it;
-					if(objtype == "number"){
-						return isFinite(it) ? it + "" : "null";
-					}
-					if(objtype == "boolean"){
-						return it + "";
-					}
-					if(it === null){
-						return "null";
-					}
-					if(typeof it == "string"){
-						return escapeString(it);
-					}
-					if(objtype == "undefined"){
-						return undef; //直接返回 undef 变量，即undefined
-					}
-					if(objtype == "function"){
-						if(args.includeFunc == true){
-							return it.toString();
-						}else if(args.includeFuncName == true){
-							return _getF(it);
-						}else{
-							return undef; //直接返回 undef 变量，即undefined
-						}
-					}
-					// short-circuit for objects that support "json" serialization
-					// if they return "self" then just pass-through...
-					if(typeof it.toJSON == "function"){
-						return stringify(it.toJSON(key), indent, key);
-					}
-					if(it instanceof Date){
-						return '"{FullYear}-{Month+}-{Date}T{Hours}:{Minutes}:{Seconds}Z"'.replace(/\{(\w+)(\+)?\}/g, function(t, prop, plus){
-							var num = it["getUTC" + prop]() + (plus ? 1 : 0);
-							return num < 10 ? "0" + num : num;
-						});
-					}
-					if(it.valueOf() !== it){
-						// primitive wrapper, try again unwrapped:
-						return stringify(it.valueOf(), indent, key);
-					}
-					var nextIndent= spacer ? (indent + spacer) : "";
-					/* we used to test for DOM nodes and throw, but FF serializes them as {}, so cross-browser consistency is probably not efficiently attainable */
-
-					var sep = spacer ? " " : "";
-					var newLine = spacer ? "\n" : "";
-
-					// array
-					if(it instanceof Array){
-						var itl = it.length, res = [];
-						for(key = 0; key < itl; key++){
-							var obj = it[key];
-							val = stringify(obj, nextIndent, key);
-							if(typeof val != "string"){
-								val = "null";
-							}
-							res.push(newLine + nextIndent + val);
-						}
-						return "[" + res.join(",") + newLine + indent + "]";
-					}
-					// generic object code path
-					if(rias.indexOf(objPath, it) >= 0){
-						if(args.loopToString != true){
-							console.error("rias.toJson(it): it has circular reference.", it);
-							throw rias.mixin(new Error("rias.toJson(it): it has circular reference."), {it: it});
-						}else{
-							console.debug("rias.toJson(it): it has circular reference.", it);
-							return it.toString() + " (circular reference.)";
-							/*return rias.toJson(it, {
-								prettyPrint: args.prettyPrint,
-								includeFunc: args.includeFunc,
-								includeFuncName: args.includeFuncName,
-								loopToString: args.loopToString,
-								errorToString: args.errorToString,
-								simpleObject: true,//args.simpleObject,
-								ignoreProperty_: args.ignoreProperty_
-							});*/
-						}
-					}
-					if(args.simpleObject == true){
-						if(rias.isObjectExact(it) && !rias.isObjectSimple(it)){
-							return it.toString();
-						}
-					}
-					objPath.push(it);
-					var output = [];
-					for(key in it){
-						//if(key == "_riasrWidget"){
-						//	if(rias.isDebug){
-						//		console.debug(key, it);
-						//	}else{
-						//		console.error("_riasrWidget:", key);
-						//	}
-						//}
-						var keyStr;
-						if(it.hasOwnProperty(key)){
-							if(typeof key == "number"){
-								keyStr = '"' + key + '"';
-							}else if(typeof key == "string"){
-								if(args.ignoreProperty_ == true && rias.startWith(key, "_") && !rias.startWith(key, "_rias")){
-									continue;
-								}
-								keyStr = escapeString(key);
-							}else{
-								// skip non-string or number keys
-								continue;
-							}
-							try{
-								val = stringify(it[key], nextIndent, key);
-							}catch(e){
-								if(args.errorToString != true){
-									throw e;
-								}else{
-									val = "Convert error of [" + it.toString() + "], errormessage: " + e.message;
-								}
-							}
-							if(typeof val != "string"){
-								// skip non-serializable values
-								continue;
-							}
-							// At this point, the most non-IE browsers don't get in this branch
-							// (they have native JSON), so push is definitely the way to
-							output.push(newLine + nextIndent + keyStr + ":" + sep + val);
-						}
-					}
-					objPath.pop();
-					return "{" + output.join(",") + newLine + indent + "}"; // String
-				}
-				return stringify(value, "", "");
-			};
-		return stringify(it, function(key, value){
+		return rias.json.stringify(it, function(key, value){
 			if(value){
-				var tf = value.__json__||value.json;
+				var tf = value.__json__ || value.json;
 				if(typeof tf == "function"){
 					return tf.call(value);
 				}
 			}
 			return value;
-		}, args.prettyPrint && "\t");	// String
+		}, args.prettyPrint && "\t", args);	// String
 	};
 	//rias.fromJson = json.fromJson;
 	rias.fromJson = function(js){
@@ -1350,9 +1537,11 @@ define([
 			if(m.node && m.node.parentNode){
 				m.node.parentNode.removeChild(m.node);
 			}
+			if(m.executed){
+				console.debug("rias.undef: " + moduleId);
+			}
+			rias.require.undef(moduleId, referenceModule);
 		}
-		rias.require.undef(moduleId, referenceModule);
-		console.debug("rias.undef: " + moduleId);
 	};
 	rias.declare = declare;
 	function getProp(/*Array*/parts, /*Boolean*/create, /*Object*/context){

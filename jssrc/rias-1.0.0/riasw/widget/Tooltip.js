@@ -44,7 +44,9 @@ define([
 			//		User overridable function that return the text to display in the tooltip.
 			// tags:
 			//		extension
-			return node._riasrTooltip ? node._riasrTooltip : (this.label || this.domNode.innerHTML);
+			node = rias.by(node);
+			node = node ? node.get("tooltip") : "";
+			return node || this.label || this.domNode.innerHTML;
 		},
 
 		_setConnectIdAttr: function(/*String|String[]|DomNode|DomNode[]*/ newId){

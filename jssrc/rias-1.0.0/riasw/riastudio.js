@@ -71,10 +71,10 @@ define([
 	//	rias.require.packs.gridx = {name: "gridx", location: "../../gridx-1.3.7"};
 	//}
 	if(!rias.require.packs.dgrid){
-		rias.require.packs.dgrid = {name: "dgrid", location: "../../dgrid-1.0.0"};
+		rias.require.packs.dgrid = {name: "dgrid", location: "../dgrid-1.1.0"};
 	}
 	if(!rias.require.packs.dstore){
-		rias.require.packs.dstore = {name: "dstore", location: "../../dstore-1.1.1"};
+		rias.require.packs.dstore = {name: "dstore", location: "../dstore-1.1.1"};
 	}
 
 	if(!rias.require.packs.orion){
@@ -90,9 +90,8 @@ define([
 		"dijit/_WidgetBase",
 		"dijit/popup",
 		"rias/riasw/widget/Tooltip",
-		"rias/riasw/layout/DialogPanel",
-		"rias/riasw/form/Button"
-	], function(_WidgetBase, popup, Tooltip, DialogPanel, Button){
+		"rias/riasw/layout/DialogPanel"
+	], function(_WidgetBase, popup, Tooltip, DialogPanel){
 		rias.tooltipPosition = ["below-centered", "above-centered", "after-centered", "before-centered"];
 		_WidgetBase.extend({
 			//_setTooltipAttr: {node: "focusNode", type: "attribute", attribute: "title"}, // focusNode spans the entire width, titleNode doesn't
@@ -120,11 +119,11 @@ define([
 					t.removeTarget(self.focusNode);
 					//delete self.focusNode._riasrTooltip;
 					///node 可能没有 id，采用 self.id
-					rias.forEach(t.__h[self.id], function(h){
-						rias.forEach(h, function(_h){
-							_h.remove();
-						})
-					});
+					//rias.forEach(t.__h[self.id], function(h){
+					//	rias.forEach(h, function(_h){
+					//		_h.remove();
+					//	})
+					//});
 					if(tooltip){
 						if(self.textDir && self.enforceTextDirWithUcc){///即 dojo.has("dojo-bidi")
 							tooltip = self.enforceTextDirWithUcc(null, tooltip);
@@ -553,7 +552,12 @@ define([
 											//reCreate: false,
 											id: "ve_" + modulename.replace(/\//g, "_").replace(/\./g, "_").replace(/^appModule_/, ""),
 											iconClass: "riasdIcon"
-										});
+										}).then(function(result){
+											if(result && result.length > 0){
+												var ve = result[0];
+												ve.loadEditor();
+											}
+											});
 									};
 								}
 								if(!rias.webApp.launchRiasdFileSelector){

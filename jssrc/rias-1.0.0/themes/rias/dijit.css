@@ -432,6 +432,15 @@ div.dijitArrowButton {
 	height: 100% !important;
 	/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
 }
+.dijitComboBoxInputInner {
+	/* for when an <input> is embedded inside an inline-block <div> with a size and border */
+	border:0 !important;
+	background-color:transparent !important;
+	/*width: 100% !important;*/
+	width: 0;
+	height: 100% !important;
+	/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
+}
 .dj_a11y .dijitTextBox input {
 	margin: 0 !important;
 }

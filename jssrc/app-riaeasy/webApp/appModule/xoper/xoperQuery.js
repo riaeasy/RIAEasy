@@ -33,6 +33,7 @@ define([
 						"$refObj": "module.query"
 					},
 					"region": "center",
+					"refreshOnSetCollection": false,
 					"structure": [
 						{
 							"field": "text",
@@ -97,6 +98,8 @@ define([
 						"$refScript": "return rias.webApp.dataServerAddr + 'act/xoper/query';"
 					},
 					"topBtns": [
+						"btnRefresh",
+						"btnAddons",
 						"btnAdd",
 						"btnDelete"
 					],

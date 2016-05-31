@@ -3,15 +3,33 @@
 define([
 	"rias",
 	"rias/riasw/store/StoreBase",
-	"dojo/store/JsonRest",
 	"dojo/store/util/QueryResults"
-], function(rias, StoreBase, JsonRest, QueryResults) {
+], function(rias, StoreBase, QueryResults) {
 
-	JsonRest.extend({
+	var riasType = "rias.riasw.store.JsonRestStore";
+	var Widget = rias.declare(riasType, [StoreBase], {
 
+		headers: {},
+		target: "",
+		idProperty: "id",
+		ascendingPrefix: "+",
+		descendingPrefix: "-",
+		accepts: "application/javascript, application/json",
+
+		noSuffixId: true,
 		serverStore: true,
 		timeout: rias.xhr.defaultTimeout,
 		_currentDfd: null,
+
+		constructor: function(options){
+			// summary:
+			//		This is a basic store for RESTful communicating with a server through JSON
+			//		formatted data.
+			// options: dojo/store/JsonRest
+			//		This provides any configuration information that will be mixed into the store
+			this.headers = {};
+			rias.safeMixin(this, options);
+		},
 
 		postscript: function(params){
 			this.inherited(arguments);
@@ -23,6 +41,102 @@ define([
 		},
 
 		close: function(/*dojo/data/api/Request|Object?*/ request){
+		},
+
+		_getTarget: function(id){
+			// summary:
+			//		If the target has no trailing '/', then append it.
+			// id: Number
+			//		The identity of the requested target
+			var target = this.target;
+			if(!this.noSuffixId){
+				if(typeof id != "undefined"){
+					if(target.charAt(target.length-1) == '/'){
+						target += id;
+					}else{
+						target += '/' + id;
+					}
+				}
+			}
+			return target;
+		},
+		get: function(id, options){
+			// summary:
+			//		Retrieves an object by its identity. This will trigger a GET request to the server using
+			//		the url `this.target + id`.
+			// id: Number
+			//		The identity to use to lookup the object
+			// options: Object?
+			//		HTTP headers. For consistency with other methods, if a `headers` key exists on this object, it will be
+			//		used to provide HTTP headers instead.
+			// returns: Object
+			//		The object in the store that matches the given id.
+			options = options || {};
+			var headers = rias.mixin({ Accept: this.accepts }, this.headers, options.headers || options);
+			return rias.xhr("GET", {
+				url: this._getTarget(id),
+				handleAs: "json",
+				headers: headers
+			});
+		},
+		getIdentity: function(object){
+			// summary:
+			//		Returns an object's identity
+			// object: Object
+			//		The object to get the identity from
+			// returns: Number
+			return object[this.idProperty];
+		},
+		put: function(object, options){
+			// summary:
+			//		Stores an object. This will trigger a PUT request to the server
+			//		if the object has an id, otherwise it will trigger a POST request.
+			// object: Object
+			//		The object to store.
+			// options: __PutDirectives?
+			//		Additional metadata for storing the data.  Includes an "id"
+			//		property if a specific id is to be used.
+			// returns: dojo/_base/Deferred
+			options = options || {};
+			var id = ("id" in options) ? options.id : this.getIdentity(object);
+			var hasId = typeof id != "undefined";
+			return rias.xhr(hasId && !options.incremental ? "PUT" : "POST", {
+				url: this._getTarget(id),
+				postData: rias.json.stringify(object),
+				handleAs: "json",
+				headers: rias.mixin({
+					"Content-Type": "application/json",
+					Accept: this.accepts,
+					"If-Match": options.overwrite === true ? "*" : null,
+					"If-None-Match": options.overwrite === false ? "*" : null
+				}, this.headers, options.headers)
+			});
+		},
+		add: function(object, options){
+			// summary:
+			//		Adds an object. This will trigger a PUT request to the server
+			//		if the object has an id, otherwise it will trigger a POST request.
+			// object: Object
+			//		The object to store.
+			// options: __PutDirectives?
+			//		Additional metadata for storing the data.  Includes an "id"
+			//		property if a specific id is to be used.
+			options = options || {};
+			options.overwrite = false;
+			return this.put(object, options);
+		},
+		remove: function(id, options){
+			// summary:
+			//		Deletes an object by its identity. This will trigger a DELETE request to the server.
+			// id: Number
+			//		The identity to use to delete the object
+			// options: __HeaderOptions?
+			//		HTTP headers.
+			options = options || {};
+			return rias.xhr("DELETE", {
+				url: this._getTarget(id),
+				headers: rias.mixin({}, this.headers, options.headers)
+			});
 		},
 
 		query: function(query, options){
@@ -101,10 +215,6 @@ define([
 				this._currentDfd = null;
 			}
 		}
-	});
-
-	var riasType = "rias.riasw.store.JsonRestStore";
-	var Widget = rias.declare(riasType, [StoreBase, JsonRest], {
 
 	});
 

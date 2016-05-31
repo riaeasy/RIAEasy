@@ -308,7 +308,7 @@ define([
 		}
 		return p;
 	};
-	rias.decodeRiaswParams = function(module, params, _pn){
+	rias.decodeRiaswParams = function(module, params, pathname){
 		///TODO:zensst. 未实现 params 中包含 _riaswType。
 		var pn, ppn, p,
 			_o, i, l;
@@ -330,7 +330,7 @@ define([
 				}
 			}
 			if (params.hasOwnProperty(pn)) {
-				ppn = (_pn ? _pn + "." + pn : pn);
+				ppn = (pathname ? pathname + "." + pn : pn);
 				rias.decodeRiaswParam(module, params, pn, ppn);
 				/*if(rias.isRiasw(p)){
 					if(!p._riasrModule || p._riasrModule === rias.webApp){
@@ -407,7 +407,7 @@ define([
 	};
 	var _xtor = new Function;
 	rias.createRiasw = function(/*Constructor*/widgetCtor, params, /*DOMNode|String?*/refNode, errCall){
-		function forceNew(ctor){
+		/*function forceNew(ctor){
 			// create object with correct prototype using a do-nothing
 			// constructor
 			_xtor.prototype = ctor.prototype;
@@ -482,7 +482,7 @@ define([
 				//	f.apply(this, args);
 				//}
 			}
-		}
+		}*/
 		var _ctor, ctor, w, owner;
 		if(rias.isFunction(widgetCtor)){
 			_ctor = widgetCtor;
@@ -917,7 +917,7 @@ define([
 				errf(message);
 				//_d.resolve(undefined);
 				///需要关联 _params._riasrWidget，不能用 Mixin({}, _params)
-				_createRiasw(_getRiaswCtor("rias.riasw.studio.DefaultError"), rias.mixin(_params, {
+				_createRiasw(_getRiaswCtor("rias.riasw.studio.DefaultError"), rias.mixin(rias.isObjectExact(_params) ? _params : {}, {
 					_riaswType: "rias.riasw.studio.DefaultError",
 					errorMessage: message,
 					_riaswOriginalParams: rias.mixinDeep({}, _params)///_params 已经被改变，需要用 mixinDeep

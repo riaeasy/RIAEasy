@@ -33,6 +33,7 @@ define([
 		templateString:
 			'<span data-dojo-attach-point="focusNode,buttonNode" class="dijitReset dijitInline dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
 				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
+				'<span data-dojo-attach-point="checkIconNode" class="dijitReset dijitInline dijitCheckBoxIcon"></span>'+
 				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
 				//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
 				'<span data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label" role="presentation"></span>'+
@@ -40,7 +41,7 @@ define([
 			'</span>',
 
 		baseClass: "riaswCheckButton dijitButtonNode",
-		iconClass: "dijitCheckBoxIcon",
+		//iconClass: "dijitCheckBoxIcon",
 
 		_setReadOnlyAttr: function(/*Boolean*/ value){
 			this._set("readOnly", value);

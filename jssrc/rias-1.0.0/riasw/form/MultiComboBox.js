@@ -64,8 +64,8 @@ define([
 		defaultParams: {
 			//content: "<select></select>",
 			type: "text",
-			labelType: "text",
-			label: "MultiComboBox",
+			//labelType: "text",
+			//label: "MultiComboBox",
 			invalidMessage: rias.i18n.message.invalid,
 			constraints: {},
 			//regExp: ".*",

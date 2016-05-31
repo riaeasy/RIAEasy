@@ -12,13 +12,16 @@ define([
 		required: true,
 		_lastDisplayedValue: "",
 
+		openOnfocus: true,
+
 		_isValidSubset: function(){
 			return this._opened;
 		},
 
 		isValid: function(){
 			// Overrides ValidationTextBox.isValid()
-			return !!this.item || (!this.required && this.get('displayedValue') == ""); // #5974
+			///修改 required 的判断。
+			return !this.required || !!this.item || this.get('displayedValue') == ""; // #5974
 		},
 
 		_refreshState: function(){
@@ -39,7 +42,9 @@ define([
 			// so it calls _callbackSetLabel directly,
 			// and so does not pass dataObject
 			// still need to test against _lastQuery in case it came too late
-			if((query && query[this.searchAttr] !== this._lastQuery) || (!query && result.length && this.store.getIdentity(result[0]) != this._lastQuery)){
+			///
+			//if((query && query[this.searchAttr] !== this._lastQuery) || (!query && result.length && this.store.getIdentity(result[0]) != this._lastQuery)){
+			if((query && query[this.searchAttr] !== this._lastQuery) || (!query && result.length && result[0][this.searchAttr] != this._lastQuery)){
 				return;
 			}
 			if(!result.length){
@@ -47,7 +52,8 @@ define([
 				//#3285: change CSS to indicate error
 				this.set("value", '', priorityChange || (priorityChange === undefined && !this.get("focused")), this.textbox.value, null);
 			}else{
-				this.set('item', result[0], priorityChange);
+				///增加 this.textbox.value 作为 displayValue
+				this.set('item', result[0], priorityChange, this.textbox.value);
 			}
 		},
 
@@ -73,15 +79,8 @@ define([
 			// summary:
 			//		Hook for get('value') to work.
 
-			// don't get the textbox value but rather the previously set hidden value.
-			// Use this.valueNode.value which isn't always set for other MappedTextBox widgets until blur
 			return this.valueNode.value;
-		},
-
-		_getValueField: function(){
-			// Overrides ComboBox._getValueField()
-			//return "value";
-			return this.valueAttr || this.searchAttr;
+			//return this.inherited(arguments);
 		},
 
 		_setValueAttr: function(/*String*/ value, /*Boolean?*/ priorityChange, /*String?*/ displayedValue, /*item?*/ item){
@@ -92,19 +91,29 @@ define([
 			//		Also sets the label to the corresponding value by reverse lookup.
 			if(!this._onChangeActive){ priorityChange = null; }
 
-			if(item === undefined){
+			if(item === undefined){// 不能用 ===，null 表示为 有 item，但是为 null
 				if(value === null || value === ''){
 					value = '';
 					if(!rias.isString(displayedValue)){
-						this._setDisplayedValueAttr(displayedValue||'', priorityChange);
+						this._setDisplayedValueAttr(displayedValue || '', priorityChange);
 						return;
 					}
 				}
 
-				var self = this;
+				/// 改为 query
+				var self = this,
+					query = rias.clone(this.query);
+				var options = {
+					queryOptions: {
+						ignoreCase: this.ignoreCase,
+						deep: true
+					}
+				};
+				query[this.searchAttr] = value;
 				this._lastQuery = value;
-				rias.when(this.store.get(value), function(item){
-					self._callbackSetLabel(item? [item] : [], undefined, undefined, priorityChange);
+				//rias.when(this.store.get(value), function(item){
+				rias.when(this.store.query(query, options), function(item){
+					self._callbackSetLabel(item ? rias.isArray(item) ? item : [item] : [], undefined, undefined, priorityChange);
 				});
 			}else{
 				this.valueNode.value = value;
@@ -121,7 +130,9 @@ define([
 			//		set('item', value)
 			// tags:
 			//		private
+			//displayedValue = this.labelFunc(item, this.store);
 			this.inherited(arguments);
+			//this.inherited(arguments, [item, priorityChange, displayedValue]);
 			this._lastDisplayedValue = this.textbox.value;
 		},
 
@@ -156,7 +167,9 @@ define([
 				var query = rias.clone(this.query); // #6196: populate query with user-specifics
 
 				// Generate query
-				var qs = this._getDisplayQueryString(label), q;
+				///使用 value(search)
+				//var qs = this._getDisplayQueryString(label), q;
+				var qs = this._getDisplayQueryString(this.get("value")), q;
 				if(this.store._oldAPI){
 					// remove this branch for 2.0
 					q = qs;
@@ -191,7 +204,7 @@ define([
 				}, function(err){
 					_this._fetchHandle = null;
 					if(!_this._cancelingQuery){	// don't treat canceled query as an error
-						console.error('dijit.form.FilteringSelect: ' + err.toString());
+						console.error('rias.riasw.form.FilteringSelect: ' + err.toString());
 					}
 				});
 			}
@@ -199,6 +212,15 @@ define([
 
 		undo: function(){
 			this.set('displayedValue', this._lastDisplayedValue);
+		},
+
+		///增加
+		onFocus: function(){
+			if(this.openOnfocus && !this.disabled && !this.readOnly){
+				if(!this.get("editable")){
+					this.loadAndOpenDropDown();
+				}
+			}
 		}
 
 	});

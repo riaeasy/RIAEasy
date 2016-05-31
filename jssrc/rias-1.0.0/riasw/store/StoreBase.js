@@ -2,13 +2,13 @@
 
 define([
 	"rias",
-	"dojo/store/Cache",
+	"rias/riasw/store/Cache",
 	"dojo/store/Observable",
 	"dojo/store/util/QueryResults"
 ], function(rias, Cache, Observable, QueryResults) {
 
 	rias.getObject("rias.riasw.store", true);
-	rias.riasw.store.Cache = Cache;
+	//rias.riasw.store.Cache = Cache;
 	rias.riasw.store.Observable = Observable;
 
 	var riasType = "rias.riasw.store.StoreBase";

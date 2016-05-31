@@ -46,6 +46,7 @@ define([
 		},
 
 		_setClassAttr: function(clazz){
+			this.domNode.className = clazz;
 			this.containerNode.className = "riaswUnderlay " + clazz;
 			this._set("class", clazz);
 		},

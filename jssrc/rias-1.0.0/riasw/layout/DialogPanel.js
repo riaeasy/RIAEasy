@@ -407,6 +407,7 @@ define([
 						}
 					), {
 						onMoving: function(mover, leftTop){
+							///约束方法可以参考 dojo/dnd/move
 							var p = self.domNode.parentNode,
 								r = (self.restrictPadding >= 0 ? self.restrictPadding : 0);
 							if(p){
@@ -593,7 +594,9 @@ define([
 			}
 		}
 		function _sort(a, b){
-			h = a === win ? 1 : b === win ? -1 : rias.toInt(a.get("zIndex"), 0, 1) - rias.toInt(b.get("zIndex"), 0, 1);
+			h = (a === win || win && rias.dom.isDescendant(win.domNode, a.domNode)) ? 1
+				: (b === win || win && rias.dom.isDescendant(win.domNode, b.domNode)) ? -1
+				: rias.toInt(a.get("zIndex"), 0, 1) - rias.toInt(b.get("zIndex"), 0, 1);
 			return (_visible(a) ? (_visible(b) ? h : 1) : (_visible(b) ? -1 : h));
 		}
 

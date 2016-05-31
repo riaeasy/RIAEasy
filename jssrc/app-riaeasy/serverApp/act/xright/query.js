@@ -10,53 +10,55 @@ define([
 	"rias"
 ], function (rias) {
 
-	return function (method, req, res, call) {
+	var rightCode = "act/xright/query";
+
+	return function (method, req, res, oper) {
 		var server = this,
 			table = "xright",
 			args, p,
-			header = {
-				"Access-Control-Allow-Origin": "*",
-				"Access-Control-Allow-Headers": "X-Requested-With,X-Range,Range",
-				"Access-Control-Expose-Headers": "Accept-Ranges,Content-Encoding,Content-Length,Content-Range",
-				"Access-Control-Allow-Methods": "GET,OPTIONS"
-			},
+			rs,
 			result = {
 				success: false,
 				value: ''
 			};
+
+		if(!server.setXdHeader(req, result, oper, rightCode, method)){
+			return result;
+		}
+
 		function add(req) {
-			result = server.defaultDb.insertRecord({
+			rs = server.defaultDb.insertRecord({
 				table: table,//单表表名
 				values: server.getParameters(req),
 				where: []
 			});
-			if(result.success){
-				result = server.defaultDb.updateRecord({
+			if(rs.success){
+				rs = server.defaultDb.updateRecord({
 					sql: "update " + table + " set children = (select count(*) from (select * from " + table + ") d where d.idp = " + table + ".id)"
 				});
 			}
 		}
 		function dele(req) {
-			result = server.defaultDb.deleteRecord({
+			rs = server.defaultDb.deleteRecord({
 				table: table,//单表表名
 				_idDirty: server.getConditionSrv(0, req, "_idDirty").split(","),
 				where: []
 			});
-			if(result.success){
-				result = server.defaultDb.updateRecord({
+			if(rs.success){
+				rs = server.defaultDb.updateRecord({
 					sql: "update " + table + " set children = (select count(*) from (select * from " + table + ") d where d.idp = " + table + ".id)"
 				});
 			}
 		}
 		function modify(req) {
-			result = server.defaultDb.updateRecord({
+			rs = server.defaultDb.updateRecord({
 				table: table,//单表表名
 				sets: server.getParameters(req),
 				_idDirty: server.getConditionSrv(0, req, "_idDirty").split(","),
 				where: []
 			});
-			if(result.success){
-				result = server.defaultDb.updateRecord({
+			if(rs.success){
+				rs = server.defaultDb.updateRecord({
 					sql: "update " + table + " set children = (select count(*) from (select * from " + table + ") d where d.idp = " + table + ".id)"
 				});
 			}
@@ -110,8 +112,7 @@ define([
 			args.defaultSort = "id";
 			server.getOrderBySrv(0, req, args);
 
-			result = server.defaultDb.queryPage(args);
-			result.header = header;
+			rs = server.defaultDb.queryPage(args);
 		}else if(method === "PUT"){
 			modify(req);
 		}else if(method === "POST"){
@@ -123,13 +124,19 @@ define([
 		}else if(method === "DELETE"){
 			dele(req);
 		}else if(method === "OPTIONS"){
-			result = {
+			rs = {
 				success: true,
 				value: ''
 			};
-			result.header = header;
 		}
-		return result;
+
+		return {
+			header: result.header,
+			code: rs.code,
+			success: rs.success,
+			value: rs.value,
+			args: rs.args
+		};
 
 	}
 

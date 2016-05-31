@@ -15,23 +15,25 @@ define([
 	return function(params, module){
 		var df = rias.newDeferred(), dfs = [],
 			p = rias.mixinDeep({}, params),
-			i, l, n, b,
+			i, l,
 			treeColumns = (rias.isArray(p.treeColumns) ? p.treeColumns : rias.isString(p.treeColumns) ? [p.treeColumns] : []),
 			opColumn = [], gridOps = [], item,
-			set1 = [], set2 = [],
-			editon;
+			set1 = [], set2 = [];
+
+		rias.decodeRiaswParams(module, p);
 
 		if(!p._riaswIdOfModule){
 			p._riaswIdOfModule = "grid";
 		}
 
-		//if(p.)
+		if(!("autoSave" in p)){
+			p.autoSave = true;
+		}
 		p._customColumnFormatter = function(cellData, data){
 			var col = this,
-				field = col.field,
 				format = col.format,
 				v;
-			if(data[field] == undefined){
+			if(cellData == undefined){
 				return "";
 			}
 			try{
@@ -40,21 +42,24 @@ define([
 				}else if(rias.isString(format)){
 					switch(format){
 						case "text":
-							return data[field];
+							return cellData + "";
 						case "date":
-							return rias.formatDatetime(data[field], rias.datetime.defaultDateFormatStr);
+							return rias.formatDatetime(cellData, rias.datetime.defaultDateFormatStr);
 						case "time":
-							return rias.formatDatetime(data[field], rias.datetime.defaultTimeFormatStr);
+							return rias.formatDatetime(cellData, rias.datetime.defaultTimeFormatStr);
 						case "datetime":
-							return rias.formatDatetime(data[field], rias.datetime.defaultFormatStr);
+							return rias.formatDatetime(cellData, rias.datetime.defaultFormatStr);
 						case "boolean":
-							return (data[field] != false ? "是" : "否");
+							return (cellData != false ? "是" : "否");
 						default:
 							if(/^number/.test(format)){
-								v = data[field];
+								v = cellData;
 								return rias.toFixed(v, rias.toInt(format.substring(6), 0));
 							}
-							return data[field];
+							if(/^field/.test(format)){
+								return data[format.substring(5)];
+							}
+							return cellData;
 					}
 				}
 			}catch(e){
@@ -66,6 +71,13 @@ define([
 			var col,
 				i = arr.length - 1,
 				d, ed, errs = "";
+			function _getEditor(c){
+				return rias.requireRiaswCtor(c.editor, function(err){
+					errs += err;
+				}).then(function(ctor){
+						c.editor = ctor;
+					});
+			}
 			for(; i >= 0; i--){
 				col = arr[i];
 				if(rias.isArray(col)){
@@ -94,13 +106,38 @@ define([
 					ed = col.editor;
 					if(rias.isString(ed)){
 						if(/^rias\.riasw\.|^dijit\.|^dojox\./.test(ed)){
-							d = rias.requireRiaswCtor(ed, function(err){
-								errs += err;
-							}).then(function(ctor){
-								col.editor = ctor;
-								});
-							dfs.push(d);
+							dfs.push(_getEditor(col));
 						}
+					}
+					if(ed){
+						if(!("autoSave" in col)){
+							col.autoSave = p.autoSave;
+						}
+						if(!("autoSelect" in col)){
+							col.autoSelect = true;
+						}
+						//if(!("dismissOnEnter" in col)){
+						//	col.dismissOnEnter = true;
+						//}
+						if(!("canEdit" in col)){
+							col.canEdit = function (object, value) {
+								return this.grid.canEdit;
+							}
+						}
+						if(!("editOn" in col)){
+							///强制使用该模式?
+							col.editOn = "click, keypress, paste, cut, input, compositionend";
+						}
+						/*if(!("editorArgs" in col)){
+							col.editorArgs = {
+								"style": "width: 100%;height:100%;"
+							};
+						}else{
+							if(!col.editorArgs.style){
+								col.editorArgs.style = "width: 100%;height:100%;";
+							}
+						}*/
+
 					}
 					if(col.field.toLowerCase() === "rownum"){
 						p._rownumColumn = col;
@@ -132,14 +169,14 @@ define([
 				p.collection = p.store;
 			}else if(rias.isObjectSimple(p.store)){
 				p.collection = rias.mixinDeep({
-					_riaswType: p.target ? "rias.riasw.store.JsonRestStore" : "rias.riasw.store.MemoryStore",
+					_riaswType: p.target ? "rias.riasw.store.JsonXhrStore" : "rias.riasw.store.MemoryStore",
 					_riaswIdOfModule: p._riaswIdOfModule + "_store",
 					idAttribute: 'id',
 					labelAttribute: 'label'
 				}, p.store);
 			}else{
 				p.collection = {
-					_riaswType: p.target ? "rias.riasw.store.JsonRestStore" : "rias.riasw.store.MemoryStore",
+					_riaswType: p.target ? "rias.riasw.store.JsonXhrStore" : "rias.riasw.store.MemoryStore",
 					_riaswIdOfModule: p._riaswIdOfModule + "_store",
 					idAttribute: 'id',
 					labelAttribute: 'label'
@@ -152,6 +189,9 @@ define([
 		if(p.target){
 			p.collection.target = p.target;
 		}
+		if(!("caching" in p)){
+			p.caching = false;
+		}
 		delete p.store;
 		p._queryObject0 = p.query;
 		if(!p.collection.queryObject && p._queryObject0){
@@ -159,7 +199,7 @@ define([
 		}
 		delete p.query;
 
-		rias.decodeRiaswParam(module, p, "selectionMode", module.id + "." + p._riaswIdOfModule + ".selectionMode");
+		//rias.decodeRiaswParam(module, p, "selectionMode", module.id + "." + p._riaswIdOfModule + ".selectionMode");
 		if(!p.selectionMode){
 			if(p.selectRowTriggerOnCell == false){
 				p.selectionMode = "none";
@@ -180,8 +220,8 @@ define([
 				id: "_selecol",
 				label: "",
 				field: "id",
-				width: "2em",
-				minWidth: 20,
+				width: p.showSelector != false ? "2em" : "0",
+				//minWidth: 20,
 				resizable: false,
 				sortable: false,
 				reorderable: false,
@@ -360,6 +400,9 @@ define([
 			}
 		};
 
+		if(treeColumns.length > 0){
+			p.collection.isTreeStore = true;
+		}
 		if(p.showRowNum != false){
 			set1.unshift(rias.mixinDeep({
 				_riasrRowNumColumn: true,
@@ -367,7 +410,7 @@ define([
 				className: "dgrid-rownumcolumn",
 				label: "",//rias.i18n.riasw.grid.DGrid.rowNumLabel,
 				field: "rownum",
-				width: "4em",
+				width: treeColumns.length > 0 ? "6em" : "4em",
 				//minWidth: 20,
 				align: "right",
 				//resizable: false,
@@ -400,11 +443,23 @@ define([
 		var _btnRefresh = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnRefresh",
+				showLabel: false,
 				label: rias.i18n.action.refresh,
 				tooltip: rias.i18n.action.refresh,
 				iconClass: "refreshIcon",
 				onClick: function(evt){
 					this.grid.refresh();
+				}
+			},
+			_btnAddons = {
+				_riaswType: "rias.riasw.form.Button",
+				_riaswIdOfModule: p._riaswIdOfModule + "_btnAddons",
+				showLabel: false,
+				label: rias.i18n.action.addons,
+				tooltip: rias.i18n.action.addons,
+				iconClass: "addonsIcon",
+				onClick: function(evt){
+					this.grid._toggleColumnHiderMenu(evt);
 				}
 			},
 			_btnAdd = {
@@ -427,9 +482,21 @@ define([
 					this.grid.deleteRecoreds(this.grid, this, this.grid.getSelectedIds(), this);
 				}
 			},
+			_btnEdit = {
+				_riaswType: "rias.riasw.form.ToggleButton",
+				_riaswIdOfModule: p._riaswIdOfModule + "_btnEdit",
+				label: rias.i18n.action.edit,
+				tooltip: rias.i18n.action.edit,
+				iconClass: "editIcon",
+				onClick: function(evt){
+					this.grid.canEdit = !!this.checked;
+					this.grid.refresh();
+				}
+			},
 			_btnPrint = {
 				_riaswType: "rias.riasw.form.Button",
 				_riaswIdOfModule: p._riaswIdOfModule + "_btnPrint",
+				showLabel: false,
 				label: rias.i18n.action.printGrid,
 				tooltip: rias.i18n.action.printGrid,
 				iconClass: "printIcon",
@@ -448,7 +515,8 @@ define([
 				}
 			};
 		if(p.topBtns){
-			gridOps = gridOps.concat([_btnRefresh], p.topBtns);
+			//gridOps = gridOps.concat([_btnRefresh, _btnAddons], p.topBtns);
+			gridOps = gridOps.concat(p.topBtns);
 			delete p.topBtns;
 		}
 		if(gridOps.length > 0){
@@ -460,8 +528,11 @@ define([
 			for(i = 0, l = gridOps.length; i < l; i++){
 				item = gridOps[i];
 				if(rias.isObjectSimple(item)){
-					item = rias.mixinDeep({}, item.name === "btnAdd" ? _btnAdd
-						: item.name === "btnDelete" ? _btnDele
+					item = rias.mixinDeep({}, item.name === "btnRefresh" ? _btnRefresh
+						: item.name === "btnAddons" ? _btnAddons
+						: item.name === "btnAdd" ? _btnAdd
+						: item.name === "btnDelete" || item.name === "btnDele" ? _btnDele
+						: item.name === "btnEdit" ? _btnEdit
 						: item.name === "btnPrint" ? _btnPrint
 						: item.name === "btnExport" ? _btnExport
 						: {
@@ -474,13 +545,19 @@ define([
 							}
 						}, item);
 				}else if(rias.isString(item)){
-					if(item == "btnAdd"){
+					if(item === "btnRefresh"){
+						item = _btnRefresh;
+					}else if(item === "btnAddons"){
+						item = _btnAddons;
+					}else if(item === "btnAdd"){
 						item = _btnAdd;
-					}else if(item == "btnDelete"){
+					}else if(item === "btnDelete" || item === "btnDele"){
 						item = _btnDele;
-					}else if(item == "btnPrint"){
+					}else if(item === "btnEdit"){
+						item = _btnEdit;
+					}else if(item === "btnPrint"){
 						item = _btnPrint;
-					}else if(item == "btnExport"){
+					}else if(item === "btnExport"){
 						item = _btnExport;
 					}
 				//}else{

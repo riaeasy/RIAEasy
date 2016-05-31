@@ -60,30 +60,31 @@ define([
 			switch(typeof query){
 				default:
 					throw new Error("Can not query with a " + typeof query);
-				case "object": case "undefined":
-				var queryObject = query;
-				for(var key in queryObject){
-					var required = queryObject[key];
-					if(rias.isString(required) && rias.startWith(required, "/") && rias.endWith(required, "/")){
-						required = new RegExp(required.slice(1, -1));
-						queryObject[key] = required;
-					}
-				}
-				query = function(object){
+				case "object":
+				case "undefined":
+					var queryObject = query;
 					for(var key in queryObject){
 						var required = queryObject[key];
-						if(required && required.test){
-							// an object can provide a test method, which makes it work with regex
-							if(!required.test(object[key], object)){
-								return false;
-							}
-						}else if(required != object[key]){
-							return false;
+						if(rias.isString(required) && rias.startWith(required, "/") && rias.endWith(required, "/")){
+							required = new RegExp(required.slice(1, -1));
+							queryObject[key] = required;
 						}
 					}
-					return true;
-				};
-				break;
+					query = function(object){
+						for(var key in queryObject){
+							var required = queryObject[key];
+							if(required && required.test){
+								// an object can provide a test method, which makes it work with regex
+								if(!required.test(object[key], object)){
+									return false;
+								}
+							}else if(required != object[key]){
+								return false;
+							}
+						}
+						return true;
+					};
+					break;
 				case "string":
 					// named query
 					if(!this[query]){
@@ -126,9 +127,10 @@ define([
 			execute.matches = query;
 			return execute;
 		},
-		//find: function(query){
+		find:function (query, options) {
+			return this.queryEngine(query, options)(this.data);
+		},
 
-		//},
 		setData: function(/*data|items|target*/data){
 			// summary:
 			//		Sets the given data as the source for this store, and indexes it

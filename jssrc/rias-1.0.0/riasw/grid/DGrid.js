@@ -7,6 +7,8 @@ define([
 	"rias/riasw/grid/dgrid/_Store",
 	"rias/riasw/grid/dgrid/SummaryFooter",
 	"rias/riasw/grid/DGridParamExt",
+	"rias/riasw/store/Cache",
+	"rias/riasw/store/MemoryStore",
 
 	//"dgrid/util/misc",
 	//"dojo/has!touch?dgrid/util/touch",
@@ -32,7 +34,7 @@ define([
 
 	"dstore/Trackable"
 
-], function(rias, DGridBase, _Store, SummaryFooter, DGridParamExt,
+], function(rias, DGridBase, _Store, SummaryFooter, DGridParamExt, Cache, Memory,
 			//misc, touchUtil,
 			List, Grid, OnDemandGrid, CellSelection, ColumnSet, Editor, Keyboard, Selection, Selector, Tree,
 			//GridFromHtml, GridWithColumnSetsFromHtml,
@@ -50,6 +52,8 @@ define([
 		_errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${0}</span>",
 		loadingMessage: rias.i18n.message.loading,
 		errorMessage: rias.i18n.message.loadError,
+
+		showRowNum: true,
 
 		postMixInProperties: function(){
 			this.loadingMessage = rias.substitute(this._loadingMessage, [this.loadingMessage]);
@@ -92,7 +96,7 @@ define([
 			this._riasrOpColumn = undefined;
 			this._riasrSelectorColumn = undefined;
 			this.inherited(arguments);
-			rias.dom.place(this.hiderToggleNode, this.headerNode);
+			//rias.dom.place(this.hiderToggleNode, this.headerNode);
 		},
 
 		_setCollection: function (collection) {
@@ -101,7 +105,11 @@ define([
 				collection = new _Store({
 					idAttribute: collection.idAttribute,
 					labelAttribute: collection.labelAttribute,
-					objectStore: collection
+					objectStore: this.caching ? Cache(collection, new Memory({
+						ownerRiasw: this,
+						idAttribute: collection.idAttribute,
+						labelAttribute: collection.labelAttribute
+					})) : collection
 				});
 			}
 			collection.queryObject = queryObject;
@@ -149,6 +157,87 @@ define([
 				this.farOffRemoval = rias.min(box.h, 2000);
 			}
 			return box;
+		},
+
+		/*_move: function (item, steps, targetClass, visible) {
+			var nextSibling, current, element;
+			// Start at the element indicated by the provided row or cell object.
+			element = current = item.element;
+			steps = steps || 1;
+
+			do {
+				// Outer loop: move in the appropriate direction.
+				if ((nextSibling = current[steps < 0 ? 'previousSibling' : 'nextSibling'])) {
+					do {
+						// Inner loop: advance, and dig into children if applicable.
+						current = nextSibling;
+						///TODO:zensst. 跳过部分 cell
+						if (current && (current.className + ' ').indexOf(targetClass + ' ') > -1) {
+							// Element with the appropriate class name; count step, stop digging.
+							element = current;
+							steps += steps < 0 ? 1 : -1;
+							break;
+						}
+						// If the next sibling isn't a match, drill down to search, unless
+						// visible is true and children are hidden.
+					} while ((nextSibling = (!visible || !current.hidden) &&
+						current[steps < 0 ? 'lastChild' : 'firstChild']));
+				}
+				else {
+					current = current.parentNode;
+					if (!current || current === this.bodyNode || current === this.headerNode) {
+						// Break out if we step out of the navigation area entirely.
+						break;
+					}
+				}
+			}while (steps);
+			// Return the final element we arrived at, which might still be the
+			// starting element if we couldn't navigate further in that direction.
+			return element;
+		},*/
+		up: function (row, steps, visible) {
+			if (!row.element) {
+				row = this.row(row);
+			}
+			return this.row(this._move(row, -(steps || 1), 'dgrid-row', visible));
+		},
+		down: function (row, steps, visible) {
+			if (!row.element) {
+				row = this.row(row);
+			}
+			return this.row(this._move(row, steps || 1, 'dgrid-row', visible));
+		},
+		left: function (cell, steps) {
+			if (!cell.element) {
+				cell = this.cell(cell);
+			}
+			return this.cell(this._move(cell, -(steps || 1), this.canEdit ? "dgrid-cell-canedit" : 'dgrid-cell'));
+		},
+		right: function (cell, steps) {
+			/// 需要覆盖 ColumnHider.right
+			var self = this;
+			function _next(c, s) {
+				if (!c.element) {
+					c = self.cell(c);
+				}
+				return self.cell(self._move(c, s || 1, self.canEdit ? "dgrid-cell-canedit" : 'dgrid-cell'));
+			}
+			if (!cell.element) {
+				cell = this.cell(cell);
+			}
+			var nextCell = _next(cell, steps),
+				prevCell = cell;
+
+			// Skip over hidden cells
+			while (nextCell.column.hidden) {
+				nextCell = _next(nextCell, steps > 0 ? 1 : -1);
+				if (prevCell.element === nextCell.element) {
+					// No further visible cell found - return original
+					return cell;
+				}
+				prevCell = nextCell;
+			}
+			return nextCell;
 		}
 
 	});
@@ -182,6 +271,9 @@ define([
 					keepScrollPosition: true,
 					deselectOnRefresh: false,
 					rowHeight: 0,
+
+					getBeforePut: false,
+					adjustLastColumn: false,
 
 					collection: null
 				}, p);

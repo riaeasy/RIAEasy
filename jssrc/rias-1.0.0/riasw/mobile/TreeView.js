@@ -145,7 +145,7 @@ define([
 						params.model.deferItemLoadingUntilExpand = true;
 					}
 					params.model.store = {
-						_riaswType: "rias.riasw.store.JsonRestStore"
+						_riaswType: "rias.riasw.store.JsonXhrStore"
 					}
 				}
 			}

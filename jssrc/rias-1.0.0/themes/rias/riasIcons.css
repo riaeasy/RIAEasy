@@ -294,10 +294,16 @@
 	width: 16px;
 	height: 16px;
 }
-.modiIcon,
-.editIcon {
+.modiIcon {
 	background-image: url(./images/btn_Images.png);
 	background-position: -352px -16px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+}
+.editIcon {
+	background-image: url(./images/btn_Images.png);
+	background-position: 0px -64px;
 	background-repeat: no-repeat;
 	width: 16px;
 	height: 16px;
@@ -440,6 +446,7 @@
 	width: 16px;
 	height: 16px;
 }
+.addonsIcon,
 .appIcon {
 	background-image: url(./images/btn_Images.png);
 	background-position: -32px -64px;

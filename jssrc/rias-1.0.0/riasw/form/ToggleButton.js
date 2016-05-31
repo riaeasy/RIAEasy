@@ -13,12 +13,17 @@ define([
 	var riasType = "rias.riasw.form.ToggleButton";
 	var Widget = rias.declare(riasType, [Button, _ToggleButtonMixin], {
 
-		baseClass: "dijitToggleButton dijitButtonNode",
+		templateString:
+			'<span data-dojo-attach-point="focusNode,buttonNode" class="dijitReset dijitInline dijitStretch dijitButtonNode dijitButtonContents" data-dojo-attach-event="ondijitclick:__onClick" role="button" aria-labelledby="${id}_label">'+
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
+				'<span data-dojo-attach-point="checkIconNode" class="dijitReset dijitInline dijitCheckBoxIcon"></span>'+
+				'<span data-dojo-attach-point="iconNode" class="dijitReset dijitInline dijitIcon"></span>'+
+				//'<span class="dijitReset dijitToggleButtonIconChar">&#x25CF;</span>'+
+				'<span role="presentation" data-dojo-attach-point="containerNode,titleNode,labelNode" class="dijitReset dijitInline dijitButtonText" id="${id}_label"></span>'+
+				'<input role="presentation" data-dojo-attach-point="valueNode" data-dojo-attach-event="onclick:_onClick" type="${type}" value="${value}" class="dijitOffScreen" tabIndex="-1" aria-hidden="true" ${!nameAttrSetting}/>'+
+			'</span>',
 
-		cssStateNodes: {
-			//"buttonNode": "dijitButtonNode",
-			"titleNode": "dijitButtonContents"
-		}
+		baseClass: "dijitToggleButton dijitButtonNode"
 
 	});
 
@@ -28,9 +33,9 @@ define([
 		iconClass16: "riaswToggleButtonIcon16",
 		defaultParams: {
 			//content: "<input type='button'></input>",
-			label: "ToggleButton",
-			iconClass: "dijitCheckBoxIcon",
-			showLabel: true
+			//label: "ToggleButton",
+			//iconClass: "dijitCheckBoxIcon",
+			//showLabel: true
 		},
 		initialSize: {},
 		resizable: "none",

@@ -271,7 +271,7 @@ define([
 			]
 		},
 		{
-			"_riaswType": "rias.riasw.store.JsonRestStore",
+			"_riaswType": "rias.riasw.store.JsonXhrStore",
 			"_riaswIdOfModule": "_store",
 			"idAttribute": "id",
 			"target": {
