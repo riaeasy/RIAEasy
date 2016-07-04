@@ -102,7 +102,8 @@ define([
 						_riaswIdOfModule: "_riasrTooltip",
 						__h: {},
 						position: rias.tooltipPosition,
-						showDelay: 1000,
+						showDelay: 1500,
+						showingDuration: 3000,
 						hideDelay: 200
 					})),
 					delegatedEvent = function(eventType){

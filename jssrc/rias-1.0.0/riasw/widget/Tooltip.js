@@ -36,6 +36,10 @@ define([
 	};
 	rias.hideTooltip = dijit.hideTooltip;// = Tooltip.hide;//hideTooltip = function(aroundNode)
 
+	var DORMANT = "DORMANT",
+		SHOW_TIMER = "SHOW TIMER",
+		SHOWING = "SHOWING",
+		HIDE_TIMER = "HIDE TIMER";
 	var riasType = "rias.riasw.widget.Tooltip";
 	var Widget = rias.declare(riasType, [Tooltip], {
 
@@ -49,6 +53,65 @@ define([
 			return node || this.label || this.domNode.innerHTML;
 		},
 
+		_setStateAttr: function(val){
+			if(this.state == val ||
+				(val == SHOW_TIMER && this.state == SHOWING) ||
+				(val == HIDE_TIMER && this.state == DORMANT)){
+				return;
+			}
+
+			if(this._hideTimer){
+				this._hideTimer.remove();
+				delete this._hideTimer;
+			}
+			if(this._showTimer){
+				this._showTimer.remove();
+				delete this._showTimer;
+			}
+			if(this._showingTimer){
+				this._showingTimer.remove();
+				delete this._showingTimer;
+			}
+
+			switch(val){
+				case DORMANT:
+					if(this._connectNode){
+						Tooltip.hide(this._connectNode);
+						delete this._connectNode;
+						this.onHide();
+					}
+					break;
+				case SHOW_TIMER:	 // set timer to show tooltip
+					// should only get here from a DORMANT state, i.e. tooltip can't be already SHOWING
+					if(this.state != SHOWING){
+						this._showTimer = this.defer(function(){ this.set("state", SHOWING); }, this.showDelay);
+					}
+					break;
+				case SHOWING:		// show tooltip and clear timers
+					var content = this.getContent(this._connectNode);
+					if(!content){
+						this.set("state", DORMANT);
+						return;
+					}
+
+					// Show tooltip and setup callbacks for mouseenter/mouseleave of tooltip itself
+					Tooltip.show(content, this._connectNode, this.position, !this.isLeftToRight(), this.textDir,
+						rias.hitch(this, "set", "state", SHOWING), rias.hitch(this, "set", "state", HIDE_TIMER));
+
+					this.onShow(this._connectNode, this.position);
+					if(this.showingDuration > 0){
+						this._showingTimer = this.defer(function(){
+							this.set("state", HIDE_TIMER);
+						}, this.showingDuration);
+					}
+					break;
+				case HIDE_TIMER:	// set timer set to hide tooltip
+					this._hideTimer = this.defer(function(){ this.set("state", DORMANT); }, this.hideDelay);
+					break;
+			}
+
+			this._set("state", val);
+		},
 		_setConnectIdAttr: function(/*String|String[]|DomNode|DomNode[]*/ newId){
 			// summary:
 			//		Connect to specified node(s)
