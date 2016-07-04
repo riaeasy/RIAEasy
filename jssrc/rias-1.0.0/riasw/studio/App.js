@@ -20,6 +20,14 @@ define([
 		moduleMeta: "",
 		dataServerAddr: "",
 
+		_setDataServerAddrAttr: function(value){
+			value = value + "";
+			if(value && !rias.endWith(value, "/")){
+				value = value + "/";
+			}
+			this._set("dataServerAddr", value);
+		},
+
 		constructor: function(params){
 			this.__riasrWidgetsCount = 0;
 			this._riasWidgets = _riasWidgets;

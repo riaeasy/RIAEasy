@@ -24,7 +24,7 @@ define([
 				" (dojo:" + v.major + "." + v.minor + "." + v.patch + v.flag + " (" + v.revision + "))";
 		}
 	};
-	rias.studioBuildtime = "";
+	rias.studioBuildtime = new Date("2016-7-1");
 	rias.studioOwner = "成都世高科技有限公司";
 	rias.studioUser = "成都世高科技有限公司";
 	//rias.studioTitle = rias.i18n.studio.title + "(" + (rias.i18n.studio.shell) + ")";
@@ -102,7 +102,7 @@ define([
 						_riaswIdOfModule: "_riasrTooltip",
 						__h: {},
 						position: rias.tooltipPosition,
-						showDelay: 2000,
+						showDelay: 1000,
 						hideDelay: 200
 					})),
 					delegatedEvent = function(eventType){
@@ -111,41 +111,18 @@ define([
 					node;
 				tooltip = tooltip + "";
 				self._set("tooltip", tooltip);
-				if(self.focusNode && self.id){
-					if(!(node = rias.dom.byId(self.focusNode, self.ownerDocument))){
-						return;
-					}
-					///先 remove()，避免多次 on 而没有 remove()
-					t.removeTarget(self.focusNode);
-					//delete self.focusNode._riasrTooltip;
-					///node 可能没有 id，采用 self.id
-					//rias.forEach(t.__h[self.id], function(h){
-					//	rias.forEach(h, function(_h){
-					//		_h.remove();
-					//	})
-					//});
-					if(tooltip){
-						if(self.textDir && self.enforceTextDirWithUcc){///即 dojo.has("dojo-bidi")
-							tooltip = self.enforceTextDirWithUcc(null, tooltip);
+				if(tooltip){
+					if(self.focusNode && self.id){
+						if(!(node = rias.dom.byId(self.focusNode, self.ownerDocument))){
+							return;
 						}
-						//self.focusNode._riasrTooltip = tooltip;
-						t.addTarget(self.focusNode);
-						/*t.__h[self.id] = t.own(
-							///用 self(dijit) 而不是 node，可以在 disabled 的情况下也能响应.
-							//rias.on(node, delegatedEvent(rias.mouse.enter), function(evt){
-							rias.on(self, delegatedEvent(rias.mouse.enter), function(evt){
-								t.domNode.innerHTML = tooltip;
-								t._onHover(node);
-							}),
-							rias.on(self, delegatedEvent("focusin"), function(evt){
-								t.domNode.innerHTML = tooltip;
-								t._onHover(node);
-							}),
-							rias.on(self, "mouseout", rias.hitch(t, "_onUnHover")),
-							rias.on(self, "focusout", rias.hitch(t, "set", "state", "DORMANT")),
-							rias.before(self, "destroy", rias.hitch(t, "set", "state", "DORMANT"))
-						);*/
 					}
+					if(self.textDir && self.enforceTextDirWithUcc){///即 dojo.has("dojo-bidi")
+						tooltip = self.enforceTextDirWithUcc(null, tooltip);
+					}
+					t.addTarget(self.focusNode);
+				}else{
+					t.removeTarget(self.focusNode);
 				}
 			}
 		});
@@ -275,14 +252,14 @@ define([
 				}
 
 			};
-			//args.loadOnStartup = false;
-			args.initPlaceToArgs = {
+			//args.loadOnStartup = true;
+			args.initPlaceToArgs = rias.mixin({
 				parent: args.parent,
 				around: args.around ? args.around : args.x && args.y ? {x: args.x, y: args.y} : undefined,
 				positions: args.positions,
 				maxHeight: args.maxHeight,
 				padding: args.padding
-			};
+			}, args.initPlaceToArgs);
 			delete args.parent;
 			delete args.around;
 			delete args.positions;
@@ -403,24 +380,19 @@ define([
 			return _doShowDlg(_toShowArgs(_args, "modal", 0, rias.i18n.action.choose, 0, ["btnOk", "btnCancel"]));
 		};
 		rias.showAbout = function(around) {
-			var homeLink = "<a href='" + rias.studioHome + "' target='_blank'>" + rias.studioHome + "</a>";
 			var formHTML = "<div class='about_container'>";
-			if(rias.webApp){
-				formHTML += "<div class='about_owner'>" + rias.substitute(rias.i18n.studio.owner, [rias.webApp.appOwner]) + "</div>";
-				formHTML += "<div class='about_user'>" + rias.substitute(rias.i18n.studio.user, [rias.webApp.appUser]) + "</div>";
-			}
-			formHTML += "<div class='about_home'>" + rias.substitute(rias.i18n.studio.home, [homeLink]) + "</div>";
-			formHTML += "<div class='about_version'>" + rias.substitute(rias.i18n.studio.version, [rias.studioVersion]) + "</div>";
-			var bd = rias.studioBuildtime;
-			var date = rias.dateStamp.fromISOString(bd);
-			if (date) {
-				bd = rias.dateLocale.format(date, {
-					formatLength : "medium"
-				});
-			}
-			if (bd) {
-				formHTML += "<div class='about_date'>" + rias.substitute(rias.i18n.studio.buildDate, [ bd ]) + "</div>";
-			}
+			formHTML += "<div class='about_owner'>"
+				+ rias.substitute(rias.i18n.studio.owner, [rias.webApp ? rias.webApp.appOwner : rias.studioOwner]) + "</div>";
+			formHTML += "<div class='about_user'>"
+				+ rias.substitute(rias.i18n.studio.user, [rias.webApp ? rias.webApp.appUser : rias.studioUser]) + "</div>";
+			var homeLink = (rias.webApp ? rias.webApp.appHome : rias.studioHome);
+			homeLink = "<a href='" + homeLink + "' target='_blank'>" + homeLink + "</a>";
+			formHTML += "<div class='about_home'>"
+				+ rias.substitute(rias.i18n.studio.home, [homeLink]) + "</div>";
+			formHTML += "<div class='about_version'>"
+				+ rias.substitute(rias.i18n.studio.version, [rias.webApp ? rias.webApp.appVersion : rias.studioVersion]) + "</div>";
+			formHTML += "<div class='about_date'>"
+				+ rias.substitute(rias.i18n.studio.buildDate, [rias.formatDatetime(rias.webApp ? rias.webApp.appBuildtime : rias.studioBuildtime, "")]) + "</div>";
 			//var revisionLink = "<a href='" + rias.studioHome + "' target='_blank'>" + rias.studioVersion  + "</a>";
 			//formHTML += "<div class='about_build'>" + rias.substitute(rias.i18n.studio.build, [revisionLink]) + "</div>";
 			formHTML += "</div>";

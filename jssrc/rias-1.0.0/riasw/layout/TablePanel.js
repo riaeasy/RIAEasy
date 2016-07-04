@@ -183,12 +183,12 @@ define([
 				cx = rias.toFixed(100 / (cc + 1), 2) + "%";
 				c = 0;
 			}
-			for(; c <= cc; c++){
-				cs.push(cx);
-			}
+			//for(; c <= cc; c++){
+			//	cs.push(cx);
+			//}
 			for(c = 0; c < cs.length; c++){
 				cx = cs[c];
-				if(rias.likeNumber(cx)){
+				if(rias.isNumberLike(cx)){
 					cs[c] = cx + "px";
 				}
 			}

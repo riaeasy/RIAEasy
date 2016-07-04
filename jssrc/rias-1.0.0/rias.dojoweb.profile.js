@@ -227,7 +227,7 @@ var profile = (function(){
 				customBase: true,///true 表示强行合并到 dojo/dojo。
 				boot: true///同上
 			},
-			"dijit/dijit-min": {
+			"dijit/main": {
 				include: [
 					//"dijit/_base",///废弃
 					"dijit/_base/manager",///废弃，但是很多地方在用 dijit.defaultDuration

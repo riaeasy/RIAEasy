@@ -2,7 +2,7 @@
 //RIAStudio Client Runtime(rias) in Browser.
 
 define([
-	"rias/riasw/hostDojo",
+	"rias/riasw/hostDijit",
 
 	"dojo/_base/fx",
 	"dojo/fx",

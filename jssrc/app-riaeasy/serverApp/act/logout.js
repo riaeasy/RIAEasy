@@ -1,33 +1,50 @@
 
+//RIAStudio Server Action of logout.
 
 define([
 	"rias"
 ], function(rias) {
 
-	return function (method, req, res, oper) {
-		var header = {
-				"Access-Control-Allow-Origin": "*",
-				"Access-Control-Allow-Headers": "X-Requested-With,X-Range,Range",
-				"Access-Control-Expose-Headers": "Accept-Ranges,Content-Encoding,Content-Length,Content-Range",
-				"Access-Control-Allow-Methods": "GET,OPTIONS"
-			},
+	return function (method, req, res) {
+		var server = this,
+			rights = {},
 			result = {
-			success: false,
-			value: {
-				logged: false,
-				oper: {
-					code: "",
-					name: "",
-					rights: {}
+				success: false,
+				value: {
+					logged: false,
+					oper: {
+						logged: false,
+						appName: server.appName,
+						ip: "0",
+						id: NaN,
+						code: "",
+						name: "",
+						petname: "",
+						rights: rights
+					}
 				}
-			}
-		};
+			};
 
+		//if(!server.setXdHeader(req, result)){
+		//	return result;
+		//}
+
+		var ses = req.getSession(false);
+		if(ses){
+			ses.removeAttribute("operInfo");
+		}
 		result.success = true;
 		result.value.logged = false;
-		result.value.oper.code = "";
-		result.value.oper.name = "";
-		result.header = header;
+		result.value.oper = {
+			logged: false,
+			appName: server.appName,
+			ip: "0",
+			id: NaN,
+			code: "",
+			name: "",
+			petname: "",
+			rights: rights
+		};
 
 		return result;
 

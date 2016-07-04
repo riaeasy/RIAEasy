@@ -81,12 +81,6 @@
 .rias .riaswDialogPanelContent {
   background-color: whitesmoke;
 }
-.rias .riaswDialogPanelTypeInfo .riaswDialogPanelContent,
-.rias .riaswDialogPanelTypeWarn .riaswDialogPanelContent,
-.rias .riaswDialogPanelTypeError .riaswDialogPanelContent,
-.rias .riaswDialogPanelTypeAbout .riaswDialogPanelContent {
-  padding: 1.5em 1em 1em 1em;
-}
 .rias .riaswCaptionPanelCaptionNode,
 .rias .riaswAccordionTitle,
 .rias .riaswDockNodeShown {
@@ -110,6 +104,24 @@
 .rias .riaswDockNodeSelected,
 .rias .riaswDockNodeFocused {
   background-color: lightblue;
+}
+.rias .riaswDialogPanelTypeInfo .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeWarn .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeError .riaswDialogPanelContent,
+.rias .riaswDialogPanelTypeAbout .riaswDialogPanelContent {
+  padding: 1.5em 1em 1em 1em;
+}
+.rias .riaswDialogPanelTypeWarn {
+  border-color: cornflowerblue;
+}
+.rias .riaswDialogPanelTypeWarn .riaswDialogPanelCaptionNode {
+  background-color: cornflowerblue;
+}
+.rias .riaswDialogPanelTypeError {
+  border-color: salmon;
+}
+.rias .riaswDialogPanelTypeError .riaswDialogPanelCaptionNode {
+  background-color: salmon;
 }
 .rias .riaswStackPanelChildWrapper,
 .rias .dijitTabChecked {

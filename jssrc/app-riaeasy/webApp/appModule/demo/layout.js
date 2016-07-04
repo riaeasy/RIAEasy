@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 145,
+	"_rsfVersion": 170,
 	"_riaswVersion": "0.8",
 	"badge": "3",
 	"caption": "新的页面模块",
@@ -244,8 +244,11 @@ define([
 							"topBtns": [
 								"btnRefresh",
 								"btnAddons",
+								"btnPrint",
+								"btnExport",
 								"btnAdd",
-								"btnDelete"
+								"btnDelete",
+								"btnEdit"
 							],
 							"treeColumns": [
 								"id"
@@ -257,7 +260,7 @@ define([
 				{
 					"_riaswType": "rias.riasw.layout.DialogPanel",
 					"_riaswIdOfModule": "floatPanel",
-					"caption": "float(自动展开)",
+					"caption": "float(自动展开、右停靠)",
 					"fixed": {
 						"right": "2em"
 					},

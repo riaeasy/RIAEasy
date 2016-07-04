@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 110,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 115,
 	"_riaswVersion": "0.7",
 	"activeChild": "edtId",
 	"caption": "登录",
@@ -18,62 +17,34 @@ define([
 			"logout": rias.webApp.dataServerAddr + "act/logout"
 		};
 	},
-	"onSubmit": function (){
+	"onShow": function (){
 		var m = this,
-			d = m.inputs.get("value"),
-			r = false;
-		function _after(result){
-			rias.webApp.logged = result ? result.value.logged : false;
-			rias.webApp.oper = result ? result.value.oper : undefined;
-			m.set("_riasrModuleResult", rias.webApp.logged);
+			oper = rias.webApp.oper.code;
+		if(!oper){
+			oper = rias.cookie("operCode") || "developer";
 		}
-		if(this.op === "login"){
-			if(m.actions().login){
-				r = rias.xhrPost({
-						url: m.actions().login,
-						handleAs: "json",
-						timeout: rias.webApp.defaultTimeout
-					}, d, function(result){
-						if(!result.success || result.success < 1){
-							_after(null);
-							rias.warn("登录失败");
-						}else{
-							_after(result);
-						}
-					}, function(e){
-						rias.warn("登录失败.\n" + e);
-						_after(null);
-					}
-				);
+		m.edtId.set("value", oper);
+		m.edtId.select();
+	},
+	"onSubmit": function (){
+		var m = this;
+		return rias.when(rias.webApp.login(m.inputs.get("value")), function(){
+			m.set("_riasrModuleResult", rias.webApp.oper.logged);
+			if(!rias.webApp.oper.logged){
+				rias.warn({
+					dialogType: "modal",
+					around: m.btnOk,
+					content: "未能登录，请重新登录."
+				});
 			}
-		}else if(this.op === "logout"){
-			if(m.actions().logout){
-				d._idDirty = m.query.code;
-				r = rias.xhrPost({
-						url: m.actions().logout,
-						handleAs: "json",
-						timeout: rias.webApp.defaultTimeout
-					}, d, function(result){
-						if(!result.success || result.success < 1){
-							rias.warn("退出失败");
-						}
-						_after(null);
-					}, function(e){
-						rias.warn("退出失败.\n" + e);
-						_after(null);
-					}
-				);
-			}
-		}else {
-			_after(null);
-		}
-		return r;
+			return !!rias.webApp.oper.logged;
+		});
 	},
 	"_riaswChildren": [
 		{
 			"_riaswType": "rias.riasw.layout.ContentPanel",
 			"_riaswIdOfModule": "mTitle",
-			"content": "<font color='darkblue'><b>(当前没有开通用户，请直接点击【确定】登录。)</b></font>",
+			"content": "<font color='darkblue'><b>请输入登录名和密码：</b></font>",
 			"style": {
 				"padding": "4px"
 			}
@@ -101,14 +72,13 @@ define([
 				{
 					"_riaswType": "rias.riasw.form.TextBox",
 					"_riaswIdOfModule": "edtId",
-					"label": "用户id",
+					"label": "登录名",
 					"name": "code",
 					"position": {
 						"col": 0,
 						"row": 0
 					},
 					"tooltip": "用户id",
-					"value": "developer",
 					"onKeyDown": function (evt){
 		var m = this._riasrModule;
 		if(evt.keyCode == rias.keys.ENTER){
@@ -121,7 +91,7 @@ define([
 					"_riaswType": "rias.riasw.form.TextBox",
 					"_riaswIdOfModule": "edtPass",
 					"label": "密码",
-					"name": "pass",
+					"name": "password",
 					"position": {
 						"col": 0,
 						"row": 1
@@ -158,13 +128,13 @@ define([
 				{
 					"_riaswType": "rias.riasw.form.Button",
 					"_riaswIdOfModule": "btnCancel",
+					"disabled": false,
+					"iconClass": "cancelIcon",
 					"label": "取消",
 					"tooltip": "取消登录操作...",
-					"iconClass": "cancelIcon",
-					"disabled": false,
 					"onClick": function (evt){
-							this._riasrModule.cancel();
-						}
+		this._riasrModule.cancel();
+	}
 				}
 			]
 		}

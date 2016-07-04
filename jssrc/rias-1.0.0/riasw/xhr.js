@@ -33,20 +33,30 @@ define([
 		return rias.toUrl(url, referenceModule);
 	};
 
-	rias.xhr.error = function(err, callback, silence){
+	rias.xhr.error = function(err, args, callback, silence){
 		var s = "";
 		if(err && err.response){
 			s = err.response.url + "<br/>";
 		}
 		console.error(s, rias.captureStackTrace(err));
-		if(rias.isFunction(callback)){
-			callback(err);
-		}else if(!silence){
+		if(rias.isFunction(args.errorCallback)){
+			args.errorCallback(err);
+		}else if(!args.silenceError){
 			if(err){
 				if(err.status == 0){
 					rias.error(s + "未能找到服务器，请检查网络连接是否正常。");
+				}else if(err.status == 401){
+					if(rias.webApp && rias.isFunction(rias.webApp.doLogin)){
+						rias.webApp.doLogin(args.initPlaceToArgs ? args.initPlaceToArgs.around : undefined);
+					}else{
+						rias.error(s + "需要登录...<br/>" + err.responseText);
+					}
+				}else if(err.status == 405){
+					rias.error(s + "缺少权限...<br/>" + err.responseText);
 				}else if(err.status == 500){
 					rias.error(s + "服务器Action处理出错...<br/>" + err.responseText);
+				}else if(err.status == 504){
+					rias.error(s + "服务器超时...<br/>" + err.responseText);
 				}else if(/Timeout/ig.test(err.message)){
 					rias.error(s + "网络超时，请重试...");
 				}else if(/Request canceled/ig.test(err.message)){
@@ -61,7 +71,7 @@ define([
 			}
 		}
 	};
-	rias.after(dojo, "_ioSetArgs", function(d){
+	rias.after(xhr, "_ioSetArgs", function(d){
 		d.addErrback(function(e){
 			if(!d.ioArgs.args._riaswXhr){
 				rias.xhr.error(e);
@@ -114,7 +124,7 @@ define([
 								}
 							});
 					}catch(e){
-						rias.xhr.error(e, errCall, !!errCall);
+						rias.xhr.error(e, args);
 					}
 				};
 			}
@@ -129,7 +139,7 @@ define([
 								response: {
 									url: args.url
 								}
-							}), errCall, !!errCall);
+							}), args);
 						}else{
 							//response = rias.fromJson(response);
 							if(rias.isFunction(callback)){
@@ -137,7 +147,7 @@ define([
 							}
 						}
 					}catch(e){
-						rias.xhr.error(e, errCall, !!errCall);
+						rias.xhr.error(e, args);
 					}
 				};
 			}
@@ -146,11 +156,20 @@ define([
 		if(rias.xhr.withCredentials){
 			args.withCredentials = true;
 		}
+		args.initPlaceToArgs = rias.mixin({
+			parent: args.parent,
+			around: args.around ? args.around : args.x && args.y ? {x: args.x, y: args.y} : undefined,
+			positions: args.positions,
+			maxHeight: args.maxHeight,
+			padding: args.padding
+		}, args.initPlaceToArgs);
+		args.errorCallback = errCall;
+		args.silenceError = (args.silenceError == undefined ? !!args.errorCallback : args.silenceError);
 		args = rias.mixin({
 			//timeout: rias.xhr.defaultTimeout,
-			/// error 改在 rias.after(dojo, "_ioSetArgs", function(d) 中处理
+			/// error 改在 rias.after(xhr, "_ioSetArgs", function(d) 中处理
 			error: function(e){
-				rias.xhr.error(e, errCall, !!errCall);
+				rias.xhr.error(e, args);
 			},
 			_riaswXhr: 1
 		}, args);
@@ -268,7 +287,7 @@ define([
 				}
 				rias.dom.setAttr(form, {
 					encoding: options.isUpload ? "multipart/form-data" : "application/x-www-form-urlencoded",
-					action: options.url,
+					action: rias.xhr.toUrl(options.url),
 					method: method,
 					target: options.isDownload ? name : "_blank"
 				});

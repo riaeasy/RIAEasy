@@ -46,8 +46,6 @@ define([
 	var riasType = "rias.riasw.layout.DialogPanel";
 	var Widget = rias.declare(riasType, [CaptionPanel], {
 
-		//loadOnStartup: false,
-
 		selected: false,
 
 		_size: undefined,
@@ -79,11 +77,10 @@ define([
 
 		_focusStack: true,
 
-		closeDisplayState: "closed",
 		autoClose: 0,
 
 		templateString:
-			"<div class='dijitReset dijitPopup' role='dialog' data-dojo-attach-event='onmouseenter: _onDomNodeEnter'>"+
+			"<div class='dijitReset dijitPopup' role='dialog' data-dojo-attach-event='onmouseenter: _onEnter'>"+
 				"<div data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswDialogPanelCaptionNode' data-dojo-attach-event='ondblclick:_toggleMax, onkeydown:_toggleKeydown' " +
 					"tabIndex='-1' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
@@ -345,9 +342,8 @@ define([
 			}else{
 				self.inherited(args);
 			}
-			//if(self.initPlaceToArgs){
-			self._needPosition = !rias.dom.positionAt(self, self.initPlaceToArgs) || !rias.dom.visible(self);/// self 不可见时，positionAt 定位不正确。
-			//}
+			this._initPos = rias.dom.positionAt(this, this.initPlaceToArgs);
+			this._needPosition = !this._initPos || !rias.dom.visible(self);/// self 不可见时，positionAt 定位不正确。;
 		},
 
 		_onZIndex: function(value, oldValue){
@@ -452,7 +448,7 @@ define([
 			//}
 		},
 
-		_onDomNodeEnter: function(e){
+		_onEnter: function(e){
 			if(this.dockTo){
 				return;
 			}
@@ -514,6 +510,18 @@ define([
 				this.select(false);
 			}
 		},
+		_show: function(){
+			if(this._needPosition){
+				this._initPos = rias.dom.positionAt(this, this.initPlaceToArgs);
+				this._needPosition = !this._initPos;
+			}else if(this._initPos){
+				var pos = rias.dom.position(this.domNode);
+				if(Math.abs(this._initPos.x - pos.x) < 4 && Math.abs(this._initPos.y - pos.y) < 4){
+					this._initPos = rias.dom.positionAt(this, this.initPlaceToArgs);
+				}
+			}
+			return this.inherited(arguments);
+		},
 		_onShow: function(newState){
 			var self = this;
 			return rias.when(self.inherited(arguments), function(){
@@ -530,7 +538,6 @@ define([
 						self.focus();
 					}
 				}else{
-
 				}
 			});
 		},

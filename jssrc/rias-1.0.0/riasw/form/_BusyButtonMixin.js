@@ -76,7 +76,7 @@ define([
 				if(self.busyLabel){
 					self._label0 = self.get("label");
 				}
-				if(rias.likePromise(self.isBusy)){
+				if(rias.isPromiseLike(self.isBusy)){
 					rias.when(self.isBusy, function(){
 						self.set("isBusy", false);
 					});

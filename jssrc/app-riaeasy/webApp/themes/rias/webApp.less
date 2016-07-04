@@ -72,6 +72,7 @@
 	.riaswOrionEditor {
 		border-color: @borderColor;
 	}
+
 	.riaswCaptionPanelCaptionNode,
 	.riaswDialogPanelCaptionNode,
 	.riaswDialogPanelWrapper,
@@ -101,12 +102,6 @@
 	}
 	.riaswDialogPanelContent {
 		background-color: @appAreaColor;
-	}
-	.riaswDialogPanelTypeInfo .riaswDialogPanelContent,
-	.riaswDialogPanelTypeWarn .riaswDialogPanelContent,
-	.riaswDialogPanelTypeError .riaswDialogPanelContent,
-	.riaswDialogPanelTypeAbout .riaswDialogPanelContent {
-		padding: 1.5em 1em 1em 1em;
 	}
 	.riaswCaptionPanelCaptionNode,
 	.riaswAccordionTitle,
@@ -138,6 +133,24 @@
 	}
 	.riaswDockNode {
 		//border-width: 1px;
+	}
+	.riaswDialogPanelTypeInfo .riaswDialogPanelContent,
+	.riaswDialogPanelTypeWarn .riaswDialogPanelContent,
+	.riaswDialogPanelTypeError .riaswDialogPanelContent,
+	.riaswDialogPanelTypeAbout .riaswDialogPanelContent {
+		padding: 1.5em 1em 1em 1em;
+	}
+	.riaswDialogPanelTypeWarn {
+		border-color: cornflowerblue;
+	}
+	.riaswDialogPanelTypeWarn .riaswDialogPanelCaptionNode {
+		background-color: cornflowerblue;
+	}
+	.riaswDialogPanelTypeError {
+		border-color: salmon;
+	}
+	.riaswDialogPanelTypeError .riaswDialogPanelCaptionNode {
+		background-color: salmon;
 	}
 
 	.riaswStackPanelChildWrapper,

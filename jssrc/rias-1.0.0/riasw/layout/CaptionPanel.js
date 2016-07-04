@@ -17,7 +17,7 @@ define([
 	var riasType = "rias.riasw.layout.CaptionPanel";
 	var Widget = rias.declare(riasType, [ContentPanel, _BadgeMixin], {
 		templateString:
-			"<div role='region' data-dojo-attach-event='onmouseenter: _onDomNodeEnter, onmouseleave: _onBlur'>"+
+			"<div role='region' data-dojo-attach-event='onmouseenter: _onEnter, onmouseleave: _onBlur'>"+
 				"<div role='button' data-dojo-attach-point='captionNode,focusNode' id='${id}_captionNode' class='dijitReset riaswCaptionPanelCaptionNode' data-dojo-attach-event='ondblclick:_toggleMax, onkeydown:_toggleKeydown' role='button'>"+
 					'<span data-dojo-attach-point="badgeNode" class="dijitInline ${badgeClass}"></span>'+
 					"<span data-dojo-attach-point='toggleNode' class='dijitInline riaswCaptionPanelIconNode riaswCaptionPanelToggleIconNode riaswCaptionPanelToggleIcon' role='presentation'></span>"+
@@ -328,7 +328,7 @@ define([
 			}
 		},
 
-		_onDomNodeEnter: function(e){
+		_onEnter: function(e){
 			//e.preventDefault();
 			//e.stopPropagation();
 			var self = this;

@@ -73,7 +73,7 @@ define([
 					selector = this.selector,
 					delegatedEvent = selector ?
 						function(eventType){
-							return on.selector(selector, eventType);
+							return rias.on.selector(selector, eventType);
 						} :
 						function(eventType){
 							return eventType;
@@ -82,11 +82,11 @@ define([
 					rias.on(node, delegatedEvent(rias.mouse.enter), function(){
 						self._onHover(this);
 					}),
-					rias.on(node, delegatedEvent("focusin"), function(){
-						self._onHover(this);
-					}),
-					rias.on(node, delegatedEvent(rias.mouse.leave), rias.hitch(self, "_onUnHover")),
-					rias.on(node, delegatedEvent("focusout"), rias.hitch(self, "set", "state", "DORMANT"))
+					//rias.on(node, delegatedEvent("focusin"), function(){
+					//	self._onHover(this);
+					//}),
+					rias.on(node, delegatedEvent(rias.mouse.leave), rias.hitch(self, "_onUnHover"))//,
+					//rias.on(node, delegatedEvent("focusout"), rias.hitch(self, "set", "state", "DORMANT"))
 				];
 			}, this);
 
@@ -101,6 +101,7 @@ define([
 		},
 
 		removeTarget: function(/*DomNode|String*/ node){
+			this._onUnHover();
 			node = rias.dom.byId(node);
 			var idx = rias.indexOf(this._connectIds, node);
 			if(idx >= 0){

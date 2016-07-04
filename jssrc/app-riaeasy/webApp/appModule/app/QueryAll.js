@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 84,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 94,
 	"_riaswVersion": "0.7",
 	"caption": "综合查询",
 	"events": [
@@ -28,7 +27,7 @@ define([
 			},
 			key;
 		function _query(g){
-			var q = g.query;
+			var q = g._queryObject0;
 			if(a){
 				for(key in a){
 					if(a[key]){
@@ -40,9 +39,7 @@ define([
 			}
 			g.refresh();
 		}
-		//_query(grid);
-		_query(m.daccGrid);
-		_query(m.dmeterGrid);
+		_query(grid);
 	},
 	"_riaswChildren": [
 		{
@@ -65,19 +62,17 @@ define([
 					"childLabelWidth": "10em",
 					"childShowLabel": true,
 					"childStyle": {
-						"height": "2em",
-						"width": "100%"
 					},
 					"colWidths": [
-						"5%",
-						"30%",
-						"30%",
-						"30%"
+						"1em",
+						"20em",
+						"20em"
 					],
 					"cols": 4,
 					"region": "top",
 					"splitter": false,
 					"style": {
+						"height": "3em",
 						"padding": "4px 1em"
 					},
 					"_riaswChildren": [
@@ -89,6 +84,10 @@ define([
 							"position": {
 								"col": 1,
 								"row": 0
+							},
+							"style": {
+								"height": "2em",
+								"width": "100%"
 							},
 							"tooltip": "id / 电话 / 证件编号 的模糊查询",
 							"onKeyDown": function (evt){
@@ -114,6 +113,10 @@ define([
 							"position": {
 								"col": 2,
 								"row": 0
+							},
+							"style": {
+								"height": "2em",
+								"width": "100%"
 							},
 							"tooltip": " 户名 / 姓名 / 地址 的模糊查询",
 							"onKeyDown": function (evt){
@@ -141,11 +144,31 @@ define([
 								"row": 0
 							},
 							"onClick": function (evt){
-			var m = this._riasrModule;
-			if(m._currGrid){
-				m._queryGrid(m._currGrid);
-			}
+		var m = this._riasrModule;
+		if(m._currGrid){
+			m._queryGrid(m._currGrid);
 		}
+	}
+						},
+						{
+							"_riaswType": "rias.riasw.form.Button",
+							"_riaswIdOfModule": "btnClear",
+							"iconClass": "clearIcon",
+							"label": "清除",
+							"position": {
+								"col": 3,
+								"row": 0
+							},
+							"style": {
+							},
+							"onClick": function (evt){
+		var m = this._riasrModule;
+		m.q_idall.set("value", "");
+		m.q_textall.set("value", "");
+		if(m._currGrid){
+			m._queryGrid(m._currGrid);
+		}
+	}
 						}
 					]
 				},
@@ -158,10 +181,10 @@ define([
 					},
 					"onShowChild": function (page){
 		var m = this._riasrModule;
-		m._currGrid = page || m.tabs.selectedChildWidget;
-		if(m._currGrid){
-			//m._queryGrid(m._currGrid);
-		}
+		//m._currGrid = page || m.tabs.selectedChildWidget;
+		//if(m._currGrid){
+		//	m._queryGrid(m._currGrid);
+		//}
 	},
 					"_riaswChildren": [
 						{

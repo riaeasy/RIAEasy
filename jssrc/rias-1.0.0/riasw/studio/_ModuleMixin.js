@@ -17,9 +17,9 @@ define([
 		///moduleMeta: "", //moduleMeta 要参与 isRiaswModule() 判断，不能在 rias.riasw.studio._ModuleMixin 中初始化，可以在 rias.riasw.studio.Module 和 rias.riasw.studio.App 中初始化。
 		content: "",
 
-		//loadOnStartup: true,
+		loadOnStartup: true,
 		//_lazyLoad: true,// false,
-		onLoadDeferred: null,
+		//loadMetaDeferred: null,
 		_loadingMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingIcon'></span>${0}</span>",
 		_errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${0}</span>",
 		loadingMessage: rias.i18n.message.loading,
@@ -77,6 +77,10 @@ define([
 			}
 		},
 		destroy: function(){
+			if(this._onceLoadedHandle){
+				this._onceLoadedHandle.remove();
+				this._onceLoadedHandle = undefined;
+			}
 			this.cancelLoad();
 			try{
 				this._beforeDestroy();
@@ -101,13 +105,13 @@ define([
 			var self = this,
 				arg = arguments,
 				d = rias.newDeferred();
-			if(self.isLoading && self.onLoadDeferred){
+			if(self.isLoading && self.loadMetaDeferred){
 				//if(self._lazyLoad){
 				//	rias.when(self.inherited(arg), function(){
 				//		d.resolve(self);
 				//	});
 				//}else{
-					self.onLoadDeferred.then(function(){
+					self.loadMetaDeferred.then(function(){
 						rias.when(self.inherited(arg), function(){
 							d.resolve(self);
 						});
@@ -167,7 +171,7 @@ define([
 		},
 		cancelLoad: function(){
 			//this._onStartupDeferred = null;
-			this.onLoadDeferred = null;
+			this.loadMetaDeferred = null;
 			/// cancel children，可能导致 children load 失败，在 children.destroy 中 cancel
 			/*rias.forEach(this.getChildren(), function(child){
 				//if(rias.isRiaswModule(child)){
@@ -326,9 +330,9 @@ define([
 				self._needLoad = undefined;
 				self.isLoading = true;
 				self.isLoaded = false;
-				self.onLoadDeferred = rias.newDeferred(rias.hitch(self, "cancelLoad"));
-				//self.onLoadDeferred.then(rias.hitch(self, "afterLoaded"));
-				self.onLoadDeferred.then(function(result){
+				self.loadMetaDeferred = rias.newDeferred(rias.hitch(self, "cancelLoad"));
+				//self.loadMetaDeferred.then(rias.hitch(self, "afterLoaded"));
+				self.loadMetaDeferred.then(function(result){
 					self.afterLoaded(result);
 					if(self.isShown(true) && self._wasResized){
 						self._afterLoadedAndShown();
@@ -337,18 +341,13 @@ define([
 					}
 				});
 				//rias.dom.removeClass(self.containerNode, "riaswDialogPanelContentMessage");
-				return self.onLoadDeferred.promise;
+				return self.loadMetaDeferred.promise;
 			}else{
 				self._needLoad = true;
 				return false;
 			}
 		},
 		afterLoaded: function(result){
-		},
-		afterLoadedAndShown: function(){
-		},
-		_afterLoadedAndShown: function(){
-			this.afterLoadedAndShown();
 		},
 		_afterLoaded: function(result, noResolve){
 			var self = this;
@@ -358,8 +357,8 @@ define([
 
 			try{
 				if(!noResolve){
-					if(self.onLoadDeferred){
-						self.onLoadDeferred.resolve(result);
+					if(self.loadMetaDeferred){
+						self.loadMetaDeferred.resolve(result);
 					}
 				}else{
 
@@ -371,6 +370,30 @@ define([
 			if(result && result.errors){
 				rias.error(result.errors);
 			}
+		},
+		onceLoaded: function(callback){
+			var self = this,
+				d = rias.newDeferred();
+			function pro(){
+				rias.when(callback(), function(){
+					d.resolve(self);
+				});
+			}
+			if(self.isLoaded){
+				pro();
+			}else{
+				self._onceLoadedHandle = rias.after(self, "afterLoaded", function(result){
+					self._onceLoadedHandle.remove();
+					self._onceLoadedHandle = undefined;
+					pro();
+				});
+			}
+			return d.promise;
+		},
+		afterLoadedAndShown: function(){
+		},
+		_afterLoadedAndShown: function(){
+			this.afterLoadedAndShown();
 		},
 		_loadModuleMeta: function(){
 			var self = this,
@@ -506,7 +529,7 @@ define([
 				try{
 					if(r.length > 0){
 						rias.require(r, function(){
-							//if(self.onLoadDeferred){
+							//if(self.loadMetaDeferred){
 								rias.hitch(self, _filer)();
 							//}
 						}, function(moduleId){
@@ -556,7 +579,7 @@ define([
 					//self.moduleMeta = self.moduleMeta.replace(/\.js$/g, "").replace(/\./g, "/") + ".js";
 					_do(self._beforeLoadMeta);
 					rias.require([self.moduleMeta], function(meta){
-						//if(self.onLoadDeferred){
+						//if(self.loadMetaDeferred){
 							rias.hitch(self, _pro)(meta);
 						//}
 					});
@@ -567,8 +590,8 @@ define([
 				_e("The Module must has moduleMeta.");
 			}
 
-			//不检查 self.onLoadDeferred === null 的情况，如果调用不正常，就报错。
-			return self.onLoadDeferred.promise;
+			//不检查 self.loadMetaDeferred === null 的情况，如果调用不正常，就报错。
+			return self.loadMetaDeferred.promise;
 		}
 
 	});

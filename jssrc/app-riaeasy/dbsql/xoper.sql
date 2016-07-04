@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50621
-Source Host           : localhost:3306
+Source Server Version : 50616
+Source Host           : 127.0.0.1:3306
 Source Database       : riaeasy
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-05-31 17:40:46
+Date: 2016-07-04 14:34:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,13 +24,14 @@ CREATE TABLE `xoper` (
   `_lock` tinyint(4) NOT NULL DEFAULT '0' COMMENT '锁定（0：激活；1：锁定）',
   `cat` char(16) NOT NULL DEFAULT '' COMMENT '数据归属，保留',
   `code` char(16) NOT NULL DEFAULT '' COMMENT '工号，用于关联，不允许重复',
-  `text` char(8) NOT NULL DEFAULT '' COMMENT '名称，暂定不允许重复',
+  `text` char(16) NOT NULL DEFAULT '' COMMENT '名称，暂定不允许重复',
   `stat` char(4) NOT NULL DEFAULT '' COMMENT '状态',
   `typ` char(4) NOT NULL DEFAULT '' COMMENT '类型（0：临时访客；1：内部操作员；2：外部操作员）',
   `dtnew` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最新修改时间',
   `dtcreate` datetime DEFAULT NULL COMMENT '创建时间',
   `opcreate` int(11) NOT NULL DEFAULT '0' COMMENT '创建人',
-  `dpass` char(16) NOT NULL DEFAULT '' COMMENT '登录密码，非明文',
+  `dtext` char(16) NOT NULL DEFAULT '' COMMENT '昵称、petname',
+  `dpassword` char(16) NOT NULL DEFAULT '' COMMENT '登录密码，非明文',
   `dtyp` char(4) NOT NULL DEFAULT '' COMMENT '证件类型',
   `dcode` char(18) NOT NULL DEFAULT '' COMMENT '证件编号',
   `dmobile` char(12) NOT NULL DEFAULT '' COMMENT '手机',
@@ -50,5 +51,5 @@ CREATE TABLE `xoper` (
 -- ----------------------------
 -- Records of xoper
 -- ----------------------------
-INSERT INTO `xoper` VALUES ('-1', '0', '', 'developer', '开发人员', '1', '0', '2016-05-30 10:43:56', '2012-07-03 00:00:00', '-1', 'x16YjoF1LNE=', '', '', '', '028', '', '0', '');
-INSERT INTO `xoper` VALUES ('0', '0', '', '1', '2', '1', '无', '2016-04-20 02:57:56', null, '0', '', '', '', '139', '', '', '无', '');
+INSERT INTO `xoper` VALUES ('-1', '0', '', 'developer', '开发人员', '1', '0', '2016-07-04 14:33:37', '2012-07-03 00:00:00', '-1', '', '', '', '', '', '028', '', '0', '');
+INSERT INTO `xoper` VALUES ('0', '0', '', '1', '2', '1', '无', '2016-04-20 02:57:56', null, '0', '', '', '', '', '139', '', '', '无', '');

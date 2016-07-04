@@ -1,6 +1,32 @@
 
 //RIAStudio Server config.
 
+//path: {
+/*系统目录结构
+ * riasLib
+ * webLib
+ * webLib/dojo
+ * webLib/dgrid
+ * webLib/dstore
+ * webLib/gridx
+ * webLib/orion
+ * appRoot ///riasApp
+ * appRoot/serverApp
+ * appRoot/serverApp/servlet
+ * appRoot/serverApp/act
+ * appRoot/serverApp/func
+ * appRoot/serverApp/db
+ * appRoot/webApp
+ * appRoot/webApp/module
+ * appRoot/webApp/nls
+ * appRoot/webApp/themes
+ * appRoot/rsfs
+ * appRoot/rsfs/module
+ * */
+//	riasLib: riasServerConfig.riasLib,//"jssrc/rias", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，发布时一般为: "jssrc/rias"。
+//	webLib: riasServerConfig.webLib,//"jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。
+//	appRoot: "jssrc/app-rq-my" ///发布的应用物理路径，比如: "jssrc/riasApp"。使用相对路径时，是相对于 jar 包的，不能包含"appRoot"、"riasLib"、"webLib"、"serverLib"、"serverApp"、"webApp"等字符串。
+//},
 var riasServerConfig = {
 	debugLevel: "info",
 	appsRoot: "jssrc",
@@ -8,7 +34,6 @@ var riasServerConfig = {
 	dojoBaseUrl: "jssrc/serverLib/dojo-1.10.4/dojo",
 	riasLib: "jssrc/rias-1.0.0", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，一般为: "jssrc/rias"。可以作为 appConfig.config.raisLib 的缺省值。
 	webLib: "jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。可以作为 appConfig.config.raisLib 的缺省值。
-	loadActionFile: "jssrc/serverLib/dojo-1.10.4/dojo/dojo.js",
 	defaultLanguage: "zh",
 	maxResultRecords: 9999,
 
@@ -40,33 +65,14 @@ var riasServerConfig = {
 		lowResourcesConnections: 5000,
 		//contextRoot: "jssrc",
 		webContext: "/", ///访问的url根。
-
-		//path: {
-		/*系统目录结构
-		 * riasLib
-		 * webLib
-		 * webLib/dojo
-		 * webLib/dgrid
-		 * webLib/dstore
-		 * webLib/gridx
-		 * webLib/orion
-		 * appRoot ///riasApp
-		 * appRoot/serverApp
-		 * appRoot/serverApp/servlet
-		 * appRoot/serverApp/act
-		 * appRoot/serverApp/func
-		 * appRoot/serverApp/db
-		 * appRoot/webApp
-		 * appRoot/webApp/module
-		 * appRoot/webApp/nls
-		 * appRoot/webApp/themes
-		 * appRoot/rsfs
-		 * appRoot/rsfs/module
-		 * */
-		//	riasLib: riasServerConfig.riasLib,//"jssrc/rias", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，发布时一般为: "jssrc/rias"。
-		//	webLib: riasServerConfig.webLib,//"jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。
-		//	appRoot: "jssrc/app-rq-my" ///发布的应用物理路径，比如: "jssrc/riasApp"。使用相对路径时，是相对于 jar 包的，不能包含"appRoot"、"riasLib"、"webLib"、"serverLib"、"serverApp"、"webApp"等字符串。
-		//},
+		"session-dbName": "app-riaeasy",///服务名，用于集群中区分服务
+		"sessionid-workerName": "riass1",///服务名，用于集群中区分服务
+		"sessionid-scavengeInterval": 65,///秒，扫描间隔？
+		//"session-timeout": 30,///分钟
+		//"session-cookie": "JSESSIONID",///cookie key-name
+		//"session-httpOnly": false,
+		//"session-secureCookies": false,
+		"session-saveInterval": 15,///秒，持久化间隔(缓存时间)，分布式时，建议为 0.
 
 		//monitorDir: [//只能监控目录，不能监控文件。///是文件系统的路径，不是 dojo 模块名，相对于 appRoot 的路径。
 		//	//"riasLib/riass",
@@ -91,7 +97,12 @@ var riasServerConfig = {
 				"app-riaeasy": "app-riaeasy"
 			},
 			defaultDbName: "app-riaeasy",
-			xactslog: true
+			"session-timeout": 15,
+			"session-cookie": "JSESSIONID",
+			"session-httpOnly": false,
+			"session-secureCookies": false,
+			"session-saveInterval": 0,//60,
+			xactslog: 1
 		}
 	},
 	dbConfigs: {

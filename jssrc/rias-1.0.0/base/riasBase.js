@@ -3,10 +3,11 @@
 
 define([
 	"rias/base/lang",
+	"rias/base/encoding",
 
 	"dojo/Stateful", // Stateful
 	"dijit/Destroyable"
-], function(rias, Stateful, Destroyable) {
+], function(rias, encoding, Stateful, Destroyable) {
 
 	var _catCounter = {};
 	//FIXME:zensst.考虑以后多页(rias.webApp)时怎样处理.

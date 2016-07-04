@@ -2,7 +2,7 @@
 //RIAStudio Client Runtime(rias) in Browser.
 
 define([
-	"rias/riasw/hostDojo",
+	"rias/riasw/hostDijit",
 	"dojo/i18n!rias/riasw/nls/riaswi18n",
 	"rias/riasw/riaswMappers"
 ], function(rias, riaswi18n, riaswMappers) {

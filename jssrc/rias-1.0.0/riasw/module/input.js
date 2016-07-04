@@ -20,6 +20,9 @@ define([
 		this.lbOldValue.set("content", "<font color='darkblue'><b>原来的值: " + this._oldValue + "</b></font>");
 		this.edt_val.set("value", this._get("value"));
 		},
+		"onShow": function (){
+			this.edt_val.select();
+		},
 	"_setValueAttr": function (value){
 			if(!("_oldValue" in this)){
 				this._oldValue = value ? value : "(无)";

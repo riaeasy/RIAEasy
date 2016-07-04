@@ -186,7 +186,7 @@ define([
 		_onError: function(type, err, consoleText){
 			var self= this,
 				errText = self['on' + type + 'Error'].call(self, err);
-			self.onLoadDeferred.reject(err);
+			self.loadMetaDeferred.reject(err);
 			if(consoleText){
 				console.error(consoleText, err);
 			}else if(errText){// a empty string won't change current content

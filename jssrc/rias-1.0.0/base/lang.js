@@ -120,7 +120,7 @@ define([
 	rias.isNumber = function(v){
 		return typeof v === "number" && isFinite(v);
 	};
-	rias.likeNumber = function(v){
+	rias.isNumberLike = function(v){
 		return Number(v) == v;
 	};
 	rias.isBoolean = function(v){
@@ -139,7 +139,7 @@ define([
 	rias.isPromise = function(obj){
 		return obj && obj == "[object Promise]" && rias.isFunction(obj.then);
 	};
-	rias.likePromise = function(obj){
+	rias.isPromiseLike = function(obj){
 		return obj && rias.isFunction(obj.then);
 	};
 
@@ -1103,10 +1103,13 @@ define([
 		if(!rias.isDatetime(datetime)){
 			datetime = new Date(datetime);
 		}
-		return rias.dateLocale.format(datetime, {
-			selector: 'time',
-			timePattern: formatStr || rias.datetime.defaultFormatStr
-		});
+		if(rias.isString(formatStr)){
+			return rias.dateLocale.format(datetime, {
+				selector: 'time',
+				timePattern: formatStr || rias.datetime.defaultFormatStr
+			});
+		}
+		return rias.dateLocale.format(datetime, formatStr);
 	};
 	/*if(!Date.prototype.format){
 		Date.prototype.format = function(fmt){
@@ -1537,10 +1540,11 @@ define([
 			if(m.node && m.node.parentNode){
 				m.node.parentNode.removeChild(m.node);
 			}
-			if(m.executed){
-				console.debug("rias.undef: " + moduleId);
-			}
+			//if(m.executed){
+			//	console.debug("rias.undef: " + moduleId);
+			//}
 			rias.require.undef(moduleId, referenceModule);
+			console.debug("rias.undef: " + moduleId);
 		}
 	};
 	rias.declare = declare;

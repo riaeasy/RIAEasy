@@ -67,10 +67,7 @@ define([
 			///value 要允许是 string
 			this._set("labelWidth", value);
 			if(this.labelNode /*&& this.showLabel*/ && value !== undefined){
-				if(rias.likeNumber(value)){
-					value = value + "px";
-				}
-				rias.dom.setStyle(this.labelNode, "width", value);
+				rias.dom.setStyle(this.labelNode, "width", rias.isNumberLike(value) ? value + "px" : value);
 			}
 			if(this._started && b){
 				this.resize();
@@ -82,7 +79,7 @@ define([
 			if(this.labelNode){
 				if(value){
 					//rias.dom.setStyle(this.labelNode, "width", rias.validate.isNumber(this.labelWidth) ? this.labelWidth + "px" : this.labelWidth);
-					//rias.dom.setStyle(this.labelNode, "width", rias.likeNumber(this.labelWidth) ? this.labelWidth + "px" : this.labelWidth);
+					//rias.dom.setStyle(this.labelNode, "width", rias.isNumberLike(this.labelWidth) ? this.labelWidth + "px" : this.labelWidth);
 					rias.dom.setStyle(this.labelNode, "padding-right", this.spacing);
 					rias.dom.setStyle(this.labelNode, "visibility", "visible");
 					rias.dom.setStyle(this.labelNode, "display", this._labelDisplay || "inline-block");
@@ -114,11 +111,12 @@ define([
 		},
 
 		_setReadOnlyAttr: function(/*Boolean*/ value){
-			value = !! value;
-			rias.dom.setAttr(this.focusNode, 'readOnly', value || !this.editable);
-
-			this._set("readOnly", value);
-			if(value || !this.editable){
+			if(value != undefined){
+				value = !!value;
+				rias.dom.setAttr(this.focusNode, 'readOnly', value || !this.editable);
+				this._set("readOnly", value);
+			}
+			if(this.readOnly || !this.editable){
 				// reset these, because after the domNode is disabled, we can no longer receive
 				// mouse related events, see #4200
 				this._set("hovering", false);
@@ -143,8 +141,10 @@ define([
 			}
 		},
 		_setEditableAttr: function(value){
-			this._set("editable", !!value);
+			value = !!value;
 			rias.dom.setAttr(this.textbox, "readOnly", (this.readOnly || !value));
+			this._set("editable", !!value);
+			this._setReadOnlyAttr();
 		},
 
 		startup: function(){

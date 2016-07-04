@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50621
-Source Host           : localhost:3306
+Source Server Version : 50616
+Source Host           : 127.0.0.1:3306
 Source Database       : riaeasy
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-05-31 17:46:33
+Date: 2016-07-04 14:34:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;

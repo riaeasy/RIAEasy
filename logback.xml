@@ -4,40 +4,42 @@
 	<property  name="filename" value="logs/RIAStudio" />
 
     <!-- 控制台输出 -->
-    <appender name="CONSOLE.ERR" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="console.error" class="ch.qos.logback.core.ConsoleAppender">
         <param name="target" value="System.err" />
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-6level[%date][%thread] %logger - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </layout>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-    <appender name="CONSOLE.OUT" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+	</appender>
+	<appender name="console.normal" class="ch.qos.logback.core.ConsoleAppender">
         <param name="target" value="System.out" />
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>%-6level[%date][%thread] %logger - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </layout>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>DENY</onMatch>
-            <onMismatch>ACCEPT</onMismatch>
-        </filter>
-    </appender>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>DENY</onMatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+		</filter>
+	</appender>
 
 	<!-- 时间滚动输出 level为 DEBUG 日志 -->
-	<appender name="file-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<!--<level>DEBUG</level>
-			<onMatch>ACCEPT</onMatch>
-			<level>INFO</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch> -->
+	<appender name="file.debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>DENY</onMatch>
 		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+		</filter-->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>${filename}_debug.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<MaxHistory>30</MaxHistory>
@@ -49,11 +51,9 @@
 	</appender>
 
 	<!-- 时间滚动输出 level为 ERROR 日志 -->
-	<!-- appender name="file-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY </onMismatch>
+	<appender name="file.error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
 		</filter>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>${filename}_error.%d{yyyy-MM-dd}.log</FileNamePattern>
@@ -63,11 +63,11 @@
             <Pattern>%-6level[%date][%thread] %logger - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </layout>
-	</appender -->
+	</appender>
 
 	<!-- 特定过滤含有某字符串的日志 -->
 <!--
-	<appender name="file-str" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="file.filter" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
 			<evaluator>
 				<expression>message.contains("张三")</expression>
@@ -99,17 +99,41 @@
 	-->
 
 	<!-- 异步输出 -->
-	<appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">
+	<appender name ="async.console.debug" class= "ch.qos.logback.classic.AsyncAppender">
 		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
 		<discardingThreshold >0</discardingThreshold>
 		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
 		<queueSize>256</queueSize>
 		<!-- 添加附加的appender,最多只能添加一个 -->
-		<appender-ref ref ="file-debug"/>
+		<appender-ref ref ="console.debug"/>
+	</appender>
+	<appender name ="async.console.normal" class= "ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold >0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>64</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref ="console.normal"/>
+	</appender>
+	<appender name ="async.file.debug" class= "ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold >0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>256</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref ="file.debug"/>
+	</appender>
+	<appender name ="async.file.error" class= "ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold >0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>64</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref ="file.error"/>
 	</appender>
 
 	<logger name="com.riastudio">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 	<logger name="java.sql.Connection">
 		<level value="INFO" />
@@ -141,14 +165,15 @@
 		</logger>
 	-->
 	<root level="WARN">
-		<appender-ref ref ="ASYNC"/>
-        <appender-ref ref="CONSOLE.ERR" />
-        <appender-ref ref="CONSOLE.OUT" />
+		<appender-ref ref ="async.debug"/>
+		<appender-ref ref ="async.error"/>
+		<appender-ref ref="console.error" />
+		<appender-ref ref="console.normal" />
 		<!--
-		<appender-ref ref="file-error" />
-		<appender-ref ref="file-debug" />
-				<appender-ref ref="file-str" />
-				<appender-ref ref="db" />
+		<appender-ref ref="file.debug" />
+		<appender-ref ref="file.error" />
+		<appender-ref ref="FILE.FILTER" />
+		<appender-ref ref="db" />
 		-->
 	</root>
 

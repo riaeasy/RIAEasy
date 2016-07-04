@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50621
-Source Host           : localhost:3306
+Source Server Version : 50616
+Source Host           : 127.0.0.1:3306
 Source Database       : riaeasy
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-05-31 17:46:48
+Date: 2016-07-04 14:35:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,25 +20,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `xroleright`;
 CREATE TABLE `xroleright` (
-  `idx` varchar(20) NOT NULL DEFAULT '' COMMENT '关键字',
-  `domain` varchar(8) DEFAULT '' COMMENT '数据域',
-  `id` varchar(20) DEFAULT '' COMMENT '角色id',
-  `cat` varchar(20) DEFAULT '' COMMENT '数据归属，保留',
-  `stat` varchar(20) DEFAULT '' COMMENT '状态',
-  `typ` varchar(20) DEFAULT '' COMMENT '类型，保留',
-  `dtmodi` datetime DEFAULT NULL COMMENT '最新修改时间',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '关键字',
+  `cat` char(16) NOT NULL DEFAULT '' COMMENT '数据归属，保留',
+  `dtnew` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最新修改时间',
   `dtcreate` datetime DEFAULT NULL COMMENT '创建时间',
-  `opcreate` varchar(20) DEFAULT '' COMMENT '创建人',
-  `dtcheck` datetime DEFAULT NULL COMMENT '提交时间',
-  `opcheck` varchar(20) DEFAULT '' COMMENT '提交人',
-  `dtapprove` datetime DEFAULT NULL COMMENT '批准时间',
-  `opapprove` varchar(20) DEFAULT '' COMMENT '批准人',
-  `idright` varchar(20) DEFAULT '' COMMENT '权限id',
-  `info` varchar(20) DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`idx`),
-  KEY `idx_xroleright` (`id`,`idright`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of xroleright
--- ----------------------------
+  `opcreate` int(11) NOT NULL DEFAULT '0' COMMENT '创建人',
+  `idrole` char(8) NOT NULL DEFAULT '' COMMENT '角色id',
+  `idright` char(15) NOT NULL DEFAULT '' COMMENT '权限id',
+  PRIMARY KEY (`id`),
+  KEY `xroleright1` (`idrole`,`idright`) USING BTREE,
+  KEY `xrolerignt2` (`dtnew`)
+) ENGINE=InnoDB AUTO_INCREMENT=100017322 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;

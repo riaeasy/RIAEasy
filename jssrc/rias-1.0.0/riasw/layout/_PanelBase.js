@@ -728,13 +728,15 @@ define([
 			value = displayStateStr(value);
 			if(value === displayClosed){
 				var self = this,
-					d;
+					d = displayClosed;
 				rias.when(this._onClose(), function(result){
 					if(result === true || result > 0){
-						d = self.get("displayState");
-						if(d !== self.closeDisplayState && d !== displayHidden && d !== displayClosed){
-							self._set("displayState", self.closeDisplayState || "closed");
+						if(self.closeDisplayState != undefined){
+							d = self.closeDisplayState;
+						}else if(self.dockTo){
+							d = displayHidden;
 						}
+						self._set("displayState", d);
 					}
 				});
 			}else{
@@ -1260,9 +1262,6 @@ define([
 		},
 		_show: function(){
 			this._wasShown = true;//this.get("visible");
-			if(this._needPosition){
-				this._needPosition = !rias.dom.positionAt(this, this.initPlaceToArgs);
-			}
 			this._refreshDisplayState();
 			this._onShow.apply(this, arguments);
 			return this.isShown();

@@ -67,8 +67,6 @@ define([
 		iconClass: "riaswModuleIcon",
 		iconClass16: "riaswModuleIcon16",
 		defaultParams: {
-			//moduleMeta: "rias/riasw/studio/Module",
-			//loadOnStartup: true
 		},
 		initialSize: {},
 		"property": {

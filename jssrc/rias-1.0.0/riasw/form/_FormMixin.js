@@ -11,7 +11,6 @@ define([
 		modified: false,
 
 		closeResult: -1,
-		closeDisplayState: "closed",
 		name: "",
 		state: "",
 

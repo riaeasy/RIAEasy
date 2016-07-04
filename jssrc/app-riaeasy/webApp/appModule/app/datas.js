@@ -21,7 +21,8 @@ define([
 			m.xdict.target = rias.xhr.toServerUrl(m.actions().xdict);
 		}else{
 			m.xdict.target = m.actions().xdict;
-		}	
+		}
+		rias.webApp.datas = m;///需要重置
 	},
 	"loadDatas": function (querys){
 		var m = this,

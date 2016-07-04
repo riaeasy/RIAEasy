@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50621
-Source Host           : localhost:3306
+Source Server Version : 50616
+Source Host           : 127.0.0.1:3306
 Source Database       : riaeasy
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-05-31 17:40:32
+Date: 2016-07-04 14:34:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,8 +39,4 @@ CREATE TABLE `xactslog` (
   KEY `xactslog1` (`dtnew`) USING BTREE,
   KEY `xactslog3` (`url`) USING BTREE,
   KEY `xactslog2` (`dtcreate`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17195 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
--- ----------------------------
--- Records of xactslog
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=17254 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
