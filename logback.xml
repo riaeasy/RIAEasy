@@ -165,10 +165,10 @@
 		</logger>
 	-->
 	<root level="WARN">
-		<appender-ref ref ="async.debug"/>
-		<appender-ref ref ="async.error"/>
-		<appender-ref ref="console.error" />
-		<appender-ref ref="console.normal" />
+		<appender-ref ref = "async.file.debug"/>
+		<appender-ref ref = "async.file.error"/>
+		<appender-ref ref = "async.console.error" />
+		<appender-ref ref = "async.console.normal" />
 		<!--
 		<appender-ref ref="file.debug" />
 		<appender-ref ref="file.error" />
