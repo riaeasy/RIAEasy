@@ -1,5 +1,10 @@
 /* Tree */
 
+.dijitTreeSelectNode {
+	width: 24px;
+	height: 16px;
+}
+
 .rias .dijitTreeNode {
 	/*background : url('images/treeI.gif') no-repeat;*/
 	/*background-position : top left;

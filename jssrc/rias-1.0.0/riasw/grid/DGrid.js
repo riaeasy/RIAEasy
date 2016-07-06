@@ -44,9 +44,9 @@ define([
 	var _WidgetBase = rias.getObject("dijit._WidgetBase");
 
 	var riasType = "rias.riasw.grid.DGrid";
-	var Widget = rias.declare(riasType, [_WidgetBase, OnDemandGrid, SummaryFooter,
+	var Widget = rias.declare(riasType, [_WidgetBase, OnDemandGrid,
 		ColumnResizer, ColumnHider, ColumnReorder, CompoundColumns, ColumnSet, //Pagination,
-		Keyboard, Selection, Selector, Editor, Tree], {
+		Keyboard, Selection, Selector, Editor, Tree, SummaryFooter], {
 
 		_loadingMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingIcon'></span>${0}</span>",
 		_errorMessage: "<span class='riaswModuleLoading'><span class='dijitInline riaswModuleLoadingError'></span>${0}</span>",

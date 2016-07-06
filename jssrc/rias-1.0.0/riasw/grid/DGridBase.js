@@ -74,7 +74,8 @@ define([
 	};
 
 	_StoreMixin.extend({
-		refreshOnSetCollection: true,
+		loadDataOnStart: true,
+		loadAllData: false,///增加，参见 dgrid/extensions/SingleQuery
 
 		_setCollection: function (collection) {
 			// summary:
@@ -116,10 +117,79 @@ define([
 
 					this._renderedCollection = renderedCollection;
 				}
-				if(this.refreshOnSetCollection != false){
+				if(this._needRefresh || this.loadDataOnStart){
 					this.refresh();
 				}
+				this._needRefresh = true;
 			}
+		},
+		_applySort: function () {
+			if (this.collection) {
+				this.set('collection', this.collection);
+			} else if (this.store) {
+				console.debug('_StoreMixin found store property but not collection; ' +
+					'this is often the sign of a mistake during migration from 0.3 to 0.4');
+			}
+		},
+
+		refresh: function () {
+			var self = this;
+			// First defer to List#refresh to clear the grid's
+			// previous content
+			var result = this.inherited(arguments);
+			if (!this.collection) {
+				this._insertNoDataNode();
+			}
+			if(!this.loadAllData){
+				return result;
+			}
+
+			if (!this._renderedCollection) {
+				return;
+			}
+
+			return this._trackError(function () {
+				var loadingNode = self.loadingNode = rias.dom.create('div', {
+					className: 'dgrid-loading',
+					innerHTML: self.loadingMessage
+				}, self.contentNode);
+
+				var queryResults = self._renderedCollection.fetch({});
+
+				queryResults.totalLength.then(function (total) {
+					// Record total so it can be retrieved later via get('total')
+					self._total = total;
+
+					if (!total) {
+						self._insertNoDataNode();
+					}
+				});
+
+				queryResults.always(function () {
+					rias.dom.destroy(loadingNode);
+					self.loadingNode = null;
+				});
+
+				return self.renderQueryResults(queryResults).then(function (rows) {
+					self._emitRefreshComplete();
+					return rows;
+				});
+			});
+		},
+
+		renderArray: function () {
+			var rows = this.inherited(arguments);
+
+			if (!this.collection) {
+				if (rows.length && this.noDataNode) {
+					rias.dom.destroy(this.noDataNode);
+				}
+			}
+			if(this.loadAllData){
+				// Clear _lastCollection which is ordinarily only used for store-less grids
+				this._lastCollection = null;
+			}
+			return rows;
 		},
 
 		save: function () {
@@ -545,6 +615,20 @@ define([
 			return box;
 		},
 
+		refresh: function () {
+			// summary:
+			//		refreshes the contents of the grid
+			this.cleanup();
+			this._rowIdToObject = {};
+			this._autoRowId = 0;
+
+			// make sure all the content has been removed so it can be recreated
+			this.contentNode.innerHTML = '';
+			// Ensure scroll position always resets
+			this.scrollTo({ x: 0, y: 0 });
+			///增加 return
+			return true;
+		},
 		///增加
 		adjustVScroll: function(){
 			//rias.dom.toggleClass(this.headerScrollNode, "dgrid-scrollbar-width", !!this.bodyNode.style.overflow);
@@ -607,6 +691,50 @@ define([
 					self._processScroll(event);
 				}, null, this.pagingDelay)
 			));
+		},
+
+		refresh: function (options) {
+			// summary:
+			//		Refreshes the contents of the grid.
+			// options: Object?
+			//		Optional object, supporting the following parameters:
+			//		* keepScrollPosition: like the keepScrollPosition instance property;
+			//			specifying it in the options here will override the instance
+			//			property's value for this specific refresh call only.
+
+			var self = this,
+				keep = (options && options.keepScrollPosition);
+
+			// Fall back to instance property if option is not defined
+			if (typeof keep === 'undefined') {
+				keep = this.keepScrollPosition;
+			}
+
+			// Store scroll position to be restored after new total is received
+			if (keep) {
+				this._previousScrollPosition = this.getScrollPosition();
+			}
+
+			///增加 return
+			///增加 loadAllData
+			var result = this.inherited(arguments);
+			if(this.loadAllData){
+				return result;
+			}
+			if (this._renderedCollection) {
+				// render the query
+
+				// renderQuery calls _trackError internally
+				return this.renderQuery(function (queryOptions) {
+					return self._renderedCollection.fetchRange({
+						start: queryOptions.start,
+						end: queryOptions.start + queryOptions.count
+					});
+				}).then(function () {
+						self._emitRefreshComplete();
+					});
+			}
+			return result;
 		}
 	});
 

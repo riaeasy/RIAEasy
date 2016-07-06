@@ -15,10 +15,41 @@ define([
 	]);
 
 	dndSelector.extend({
+		addTreeNode: function(/*dijit/Tree._TreeNode*/ node, /*Boolean?*/isAnchor){
+			// summary:
+			//		add node to current selection
+			// node: Node
+			//		node to add
+			// isAnchor: Boolean
+			//		Whether the node should become anchor.
+
+			this.setSelection(this.getSelectedTreeNodes().concat( [node] ));
+			if(isAnchor){
+				this.anchor = node;
+			}
+			return node;
+		},
+		removeTreeNode: function(/*dijit/Tree._TreeNode*/ node){
+			// summary:
+			//		remove node and it's descendants from current selection
+			// node: Node
+			//		node to remove
+			var newSelection = rias.filter(this.getSelectedTreeNodes(), function(selectedNode){
+				if(!node.selectionMode || node.selectionMode === "cascade"){
+					return !rias.dom.isDescendant(selectedNode.domNode, node.domNode); // also matches when selectedNode == node
+				}else{
+					return selectedNode.domNode !== node.domNode; // also matches when selectedNode == node
+				}
+			});
+			this.setSelection(newSelection);
+			return node;
+		},
 		onClickPress: function(e){
 
 			// ignore mouse or touch on expando node
-			if(this.current && this.current.isExpandable && this.tree.isExpandoNode(e.target, this.current)){ return; }
+			if(this.current && this.current.isExpandable && this.tree.isExpandoNode(e.target, this.current)){
+				return;
+			}
 
 			if(e.type == "mousedown" && rias.mouse.isLeft(e)){
 				// Prevent text selection while dragging on desktop, see #16328.   But don't call preventDefault()
@@ -39,12 +70,16 @@ define([
 				return;
 			}
 
-			var copy = dndCommon.getCopyKeyState(e), id = treeNode.id;
+			var copy = dndCommon.getCopyKeyState(e),
+				id = treeNode.id;
 
 			// if shift key is not pressed, and the node is already in the selection,
 			// delay deselection until onmouseup so in the case of DND, deselection
 			// will be canceled by onmousemove.
-			if(!this.singular && !e.shiftKey && this.selection[id]){
+			if(treeNode && this.tree.isSelectNode(e.target, treeNode)){
+				this._doDeselect = false;
+				copy = true;
+			}else if(!this.singular && !e.shiftKey && this.selection[id]){
 				this._doDeselect = true;
 				return;
 			}else{
@@ -55,31 +90,32 @@ define([
 
 	});
 
-	function shimmedPromise(/*Deferred|Promise*/ d){
-		// summary:
-		//		Return a Promise based on given Deferred or Promise, with back-compat addCallback() and addErrback() shims
-		//		added (TODO: remove those back-compat shims, and this method, for 2.0)
-
-		return rias.delegate(d.promise || d, {
-			addCallback: function(callback){
-				this.then(callback);
-			},
-			addErrback: function(errback){
-				this.otherwise(errback);
-			}
-		});
-	}
+	//function shimmedPromise(/*Deferred|Promise*/ d){
+	//	// summary:
+	//	//		Return a Promise based on given Deferred or Promise, with back-compat addCallback() and addErrback() shims
+	//	//		added (TODO: remove those back-compat shims, and this method, for 2.0)
+	//	return rias.delegate(d.promise || d, {
+	//		addCallback: function(callback){
+	//			this.then(callback);
+	//		},
+	//		addErrback: function(errback){
+	//			this.otherwise(errback);
+	//		}
+	//	});
+	//}
 	_Widget._TreeNode.extend({
 
 		tabIndex: "0",
 		_setTabIndexAttr: "focusNode", // force copy even when tabIndex default value, needed since Button is <span>
 		disabled: false,
+		selectionMode: "none",
 
 		templateString:
 			'<div class="dijitTreeNode" role="presentation">' +
 				'<div role="presentation" data-dojo-attach-point="rowNode,focusNode" class="dijitTreeRow" data-dojo-attach-event="onclick:toggle,onmouseenter:_onToggleMouseEnter,onmouseleave:_onToggleMouseLeave">' +
 					'<span role="presentation" data-dojo-attach-point="expandoNode" class="dijitInline dijitTreeExpando"></span>' +
 					'<span role="presentation" data-dojo-attach-point="expandoNodeText" class="dijitExpandoText"></span>' +
+					'<input role="presentation" data-dojo-attach-point="selectNode" class="dijitInline dijitTreeSelectNode dijitHidden" type="radio" tabindex="-1">' +
 					'<span role="presentation" data-dojo-attach-point="contentNode" class="dijitTreeContent">' +
 						'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitIcon dijitTreeIcon"></span>' +
 						'<span role="treeitem" data-dojo-attach-point="labelNode" class="dijitTreeLabel" tabindex="-1" aria-selected="false" id="${id}_label"></span>' +
@@ -119,6 +155,28 @@ define([
 					this.set('tabIndex', this.tabIndex);
 				}
 			}
+		},
+		_setSelectionModeAttr: function(value){
+			var node = this.selectNode;
+			switch (value) {
+				case "single":
+				case "radio":
+					value = "single";
+					rias.dom.setAttr(node, "type", "radio");
+					rias.dom.removeClass(node, "dijitHidden");
+					break;
+				case "multiple":
+				case "extended":
+				case "checkbox":
+					value = "multiple";
+					rias.dom.setAttr(this.selectNode, "type", "checkbox");
+					rias.dom.removeClass(node, "dijitHidden");
+					break;
+				default:
+					value = "none";
+					rias.dom.addClass(node, "dijitHidden");
+			}
+			this._set("selectionMode", value);
 		},
 		_updateItemClasses: function(item){
 			// summary:
@@ -186,6 +244,19 @@ define([
 					child._updateLayout();
 				});
 			}
+		},
+		setSelected: function(/*Boolean*/ selected){
+			// summary:
+			//		A Tree has a (single) currently selected node.
+			//		Mark that this node is/isn't that currently selected node.
+			// description:
+			//		In particular, setting a node as selected involves setting tabIndex
+			//		so that when user tabs to the tree, focus will go to that node (only).
+			this._selected = !!selected;
+			rias.dom.setAttr(this.selectNode, "checked", !!selected);
+			rias.dom.setAttr(this.selectNode, "aria-checked", selected ? "true" : "false");
+			this.labelNode.setAttribute("aria-selected", selected ? "true" : "false");
+			rias.dom.toggleClass(this.rowNode, "dijitTreeRowSelected", selected);
 		},
 		/*
 		expand: function(){
@@ -324,11 +395,6 @@ define([
 
 	_Widget.extend({
 
-		expandOnToggle: true,
-		collapseOnToggle: false,
-		expandOnEnter: false,
-		collapseOnEnter: false,
-
 		destroy: function(){
 			if(this._curSearch){
 				this._curSearch.timer.remove();
@@ -364,17 +430,8 @@ define([
 			}
 			return (!item || (item.itemType === "dir") || !this.model || this.model.mayHaveChildren(item)) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf";
 		},
-		_createTreeNode: function(/*Object*/ args){
-			// summary:
-			//		creates a TreeNode
-			// description:
-			//		Developers can override this method to define their own TreeNode class;
-			//		However it will probably be removed in a future release in favor of a way
-			//		of just specifying a widget for the label, rather than one that contains
-			//		the children too.
-			args.ownerRiasw = this;
-			args.disabled = args.disabled || args.item.disabled;
-			return new (this.nodeRender || _Widget._TreeNode)(args);
+		isSelectNode: function(node, widget){
+			return rias.dom.isDescendant(node, widget.selectNode);
 		},
 		__click: function(/*TreeNode*/ nodeWidget, /*Event*/ e, /*Boolean*/doOpen, /*String*/func){
 			//console.debug(nodeWidget.id, nodeWidget.disabled);
@@ -415,51 +472,6 @@ define([
 				// Also, adjust widths of all rows to match width of Tree
 				self._adjustWidths();
 			});
-		},
-		clear: function(){
-			var self = this,
-				d = rias.newDeferred(),
-				m = self.model;
-			self.dndController.setSelection([]);
-			m.store.revert();
-			m.store.close();
-			m.root.children = [];
-			m.root.size = 0;
-
-			if(self._curSearch){
-				self._curSearch.timer.remove();
-				self._curSearch = undefined;
-			}
-			if(self.rootNode){
-				self.rootNode.destroyRecursive();
-				self.rootNode = null;
-				self._itemNodesMap = {};
-				d.resolve(self.rootNode);
-			}else{
-				d.resolve(self.rootNode);
-			}
-			return d.promise;
-		},
-		reload: function(path){
-			var self = this,
-				d = rias.newDeferred();
-			function load(){
-				self._load();
-				self.set("path", path).then(function(newNodes){
-					d.resolve(newNodes);
-				}, function(e){
-					d.resolve(e);
-				});
-			}
-			path = rias.map(path || self.paths[0], function(item){
-				return rias.isString(item) ? item : self.model.getIdentity(item);
-			});
-			if(self.rootNode){
-				self.clear().then(load);
-			}else{
-				load();
-			}
-			return d.promise;
 		}
 	});
 
@@ -468,8 +480,14 @@ define([
 
 		nodeRender: _Widget._TreeNode,
 
+		selectionMode: "none",
 		noDnd: false,
 		lazyLoad: true,
+		expandOnToggle: true,
+		collapseOnToggle: false,
+		expandOnEnter: false,
+		collapseOnEnter: false,
+		///TODO:zensst. 同步 openOnClick 和 openOnDblClick
 
 		//rootItems: {
 		//	items: [],
@@ -485,6 +503,7 @@ define([
 				}
 			}
 			this.inherited(arguments);
+			//this.set("singular", this.singular);
 		},
 		postMixInProperties: function(){
 			this.inherited(arguments);
@@ -493,7 +512,7 @@ define([
 			}else{
 				this.dndController = dndSource;
 			}
-			this.dndParams = ["itemCreator", "isSource", "accept", "copyOnly",
+			this.dndParams = ["itemCreator", "isSource", "accept", "copyOnly", "singular",
 				"onDndDrop", "onDndCancel",
 				"checkAcceptance", "checkItemAcceptance",
 				"dragThreshold", "betweenThreshold"];
@@ -516,6 +535,47 @@ define([
 		},
 		getLabel: function(/*dojo/data/Item*/ item){
 			return this.onGetLabel(item);
+		},
+
+		_setSingularAttr: function(value){
+			value = !!value;
+			this._set("singular", value);
+			this.dndController.singular = value;
+		},
+		_setSelectionModeAttr: function(value){
+			switch (value) {
+				case "single":
+				case "radio":
+					value = "single";
+					break;
+				case "multiple":
+				case "extended":
+				case "checkbox":
+					value = "multiple";
+					break;
+				default:
+					value = "none";
+			}
+			this._set("singular", value !== "multiple");
+			this._set("selectionMode", value);
+			if(this.loaded){
+				this.reload();
+			}
+		},
+
+		_createTreeNode: function(/*Object*/ args){
+			// summary:
+			//		creates a TreeNode
+			// description:
+			//		Developers can override this method to define their own TreeNode class;
+			//		However it will probably be removed in a future release in favor of a way
+			//		of just specifying a widget for the label, rather than one that contains
+			//		the children too.
+			args.ownerRiasw = this;
+			args.disabled = args.disabled || args.item.disabled;
+			args.selectionMode = this.selectionMode;
+
+			return new (this.nodeRender || _Widget._TreeNode)(args);
 		},
 
 		_expandNode: function(/*TreeNode*/ node){
@@ -582,6 +642,55 @@ define([
 		},
 		expandNode: function(/*TreeNode*/ node){
 			this._expandNode(node);
+		},
+
+		clear: function(){
+			var self = this,
+				d = rias.newDeferred(),
+				m = self.model;
+			self.loaded = false;
+			self.dndController.setSelection([]);
+			m.store.revert();
+			m.store.close();
+			m.root.children = [];
+			m.root.size = 0;
+
+			if(self._curSearch){
+				self._curSearch.timer.remove();
+				self._curSearch = undefined;
+			}
+			if(self.rootNode){
+				self.rootNode.destroyRecursive();
+				self.rootNode = null;
+				self._itemNodesMap = {};
+				d.resolve(self.rootNode);
+			}else{
+				d.resolve(self.rootNode);
+			}
+			return d.promise;
+		},
+		reload: function(path){
+			var self = this,
+				d = rias.newDeferred();
+			function load(){
+				self._load();
+				self.set("path", path).then(function(newNodes){
+					self.loaded = true;
+					d.resolve(newNodes);
+				}, function(e){
+					self.loaded = true;
+					d.resolve(e);
+				});
+			}
+			path = rias.map(path || self.paths[0], function(item){
+				return rias.isString(item) ? item : self.model.getIdentity(item);
+			});
+			if(self.rootNode){
+				self.clear().then(load);
+			}else{
+				load();
+			}
+			return d.promise;
 		}
 
 	});

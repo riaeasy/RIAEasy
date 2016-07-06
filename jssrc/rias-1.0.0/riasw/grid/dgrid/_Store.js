@@ -26,6 +26,16 @@ define([
 			return this.root.filter({ parentId: this.getIdentity(object) });
 		},
 
+		fetch: function () {
+			// summary:
+			//		Fetches the query results. Note that the fetch may occur asynchronously
+			// returns: Array|Promise
+			//		The results or a promise for the results
+
+			// create an object store query and query options based on current collection
+			// information
+			return this.fetchRange.apply(this, arguments);
+		},
 		fetchRange: function (rangeArgs) {
 			// summary:
 			//		Fetches the query results with a range. Note that the fetch may occur asynchronously

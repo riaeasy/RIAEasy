@@ -215,6 +215,7 @@ define([
 		delete p.selectRowTriggerOnCell;
 		delete p.selectRowMultiple;
 		if(p.selectionMode !== "none"){
+			p.allowSelectAll = p.selectionMode !== "single";
 			set1.unshift({
 				_riasrSelectorColumn: true,
 				id: "_selecol",
@@ -421,11 +422,11 @@ define([
 					var grid = this.grid,
 					//module = grid._riasrModule,
 						level;
-					level = Number(options && options.queryLevel) + 1;
+					level = Number(options && options.queryLevel);
 					if(!isNaN(level)){
 						///cell.style["text-indent"] = level + "em";/// align: left
 						///cell.style["padding-left"] = level + "em";
-						cell.style["padding-right"] = level + "em";
+						cell.style["padding-right"] = (level * 0.5 + 0.5) + "em";
 					}
 					cell.appendChild(rias.dom.doc.createTextNode(options.rowNum));
 				}
