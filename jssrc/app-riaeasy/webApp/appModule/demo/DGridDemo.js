@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 84,
+	"_rsfVersion": 87,
 	"requires": [
 	],
 	"moduleCss": [
@@ -31,13 +31,13 @@ define([
 					"_riaswIdOfModule": "gridTree",
 					"cellOpParams": [
 					],
+					"loadDataOnStart": true,
 					"query": {
 						"parentId": "1"
 					},
 					"region": "center",
 					"showFooterSummary": false,
 					"showRowNum": false,
-					"refreshOnSetCollection": false,
 					"structure": [
 						{
 							"field": "id",
@@ -108,10 +108,11 @@ define([
 							"tooltip": "复制并新增"
 						}
 					],
+					"loadDataOnStart": false,
 					"query": {
 					},
 					"region": "center",
-					"refreshOnSetCollection": false,
+					"selectionMode": "extended",
 					"structure": [
 						{
 							"field": "id",
@@ -150,10 +151,10 @@ define([
 									"$refObj": "rias.webApp.datas.xdict"
 								}
 							},
+							"field": "stat",
 							"formatter": function (cellData, data){
 				return rias.webApp.datas.getXdictTextByCodepDval("xdictstat", cellData);
 			},
-							"field": "stat",
 							"name": "条目状态",
 							"width": "6em"
 						},
@@ -170,10 +171,10 @@ define([
 									"$refObj": "rias.webApp.datas.xdict"
 								}
 							},
+							"field": "typ",
 							"formatter": function (cellData, data){
 				return rias.webApp.datas.getXdictTextByCodepDval("xdicttyp", cellData);
 			},
-							"field": "typ",
 							"name": "条目类型",
 							"width": "6em"
 						},

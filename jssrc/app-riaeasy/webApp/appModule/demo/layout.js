@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 170,
+	"_rsfVersion": 168,
 	"_riaswVersion": "0.8",
 	"badge": "3",
 	"caption": "新的页面模块",
@@ -185,7 +185,7 @@ define([
 							"query": {
 								"parentId": "1"
 							},
-							"refreshOnSetCollection": true,
+							"loadDataOnStart": true,
 							"region": "center",
 							"structure": [
 								{
