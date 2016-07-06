@@ -2,7 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 8,
+	"_rsfVersion": 20,
 	"_riaswVersion": "0.7",
 	"query": {
 	},
@@ -170,6 +170,7 @@ define([
 					"rootItems": {
 						"$refObj": "rootItems"
 					},
+					"selectionMode": "multiple",
 					"showRoot": false,
 					"splitter": false,
 					"onGetLabel": function (item){
@@ -179,13 +180,6 @@ define([
 		var m = this._riasrModule,
 			p = node.tree.model.mayHaveChildren(item);
 		m.currentItem = item;
-		if(p){
-			if(node.isExpanded){
-				//node.tree._collapseNode(node);
-			}else{
-				//node.tree._expandNode(node);
-			}
-		}
 		m.setRiasrModuleResult(item, !p);
 	},
 					"onDblClick": function (item, node, evt){
