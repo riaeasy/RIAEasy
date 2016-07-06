@@ -47,6 +47,7 @@ define([
 	//"dijit/_base/window",///废弃
 
 	"dijit/a11y",
+	"dijit/a11yclick",
 	"dijit/registry",
 	"dijit/WidgetSet",	// used to be in dijit/_base/manager
 	"dijit/selection",
@@ -69,7 +70,7 @@ define([
 			parser, query, cookie, hash, ready,
 			Mover,
 			manager, _basefocus,
-			a11y, registry, WidgetSet,
+			a11y, a11yclick, registry, WidgetSet,
 			selection, focus, place, Viewport, layoutUtils,
 			_WidgetBase, _Widget, _WidgetsInTemplateMixin, _FocusMixin, _Container,
 			_FormWidgetMixin, _AutoCompleterMixin, _HasDropDown) {
@@ -1573,6 +1574,7 @@ define([
 
 ///dijit******************************************************************************///
 	rias.a11y = a11y;
+	rias.a11yclick = a11yclick;
 	a11y.effectiveTabIndex = function (elem) {
 		/// Tree.focusNode 是 function
 		//elem = rias.isDomNode(elem) ? elem : rias.isDijit(elem) ? rias.isDomNode(elem.focusNode) ? elem.focusNode : elem.domNode : undefined;

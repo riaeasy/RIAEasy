@@ -90,19 +90,20 @@ define([
 
 	});
 
-	//function shimmedPromise(/*Deferred|Promise*/ d){
-	//	// summary:
-	//	//		Return a Promise based on given Deferred or Promise, with back-compat addCallback() and addErrback() shims
-	//	//		added (TODO: remove those back-compat shims, and this method, for 2.0)
-	//	return rias.delegate(d.promise || d, {
-	//		addCallback: function(callback){
-	//			this.then(callback);
-	//		},
-	//		addErrback: function(errback){
-	//			this.otherwise(errback);
-	//		}
-	//	});
-	//}
+	function shimmedPromise(/*Deferred|Promise*/ d){
+		// summary:
+		//		Return a Promise based on given Deferred or Promise, with back-compat addCallback() and addErrback() shims
+		//		added (TODO: remove those back-compat shims, and this method, for 2.0)
+		return rias.delegate(d.promise || d, {
+			addCallback: function(callback){
+				this.then(callback);
+			},
+			addErrback: function(errback){
+				this.otherwise(errback);
+			}
+		});
+	}
+
 	_Widget._TreeNode.extend({
 
 		tabIndex: "0",
@@ -395,6 +396,67 @@ define([
 
 	_Widget.extend({
 
+		loadOnStartup: true,
+
+		postCreate: function(){
+			this._initState();
+
+			// Catch events on TreeNodes
+			var self = this;
+			this.own(
+				rias.on(this.containerNode, rias.on.selector(".dijitTreeNode", rias.touch.enter), function(evt){
+					self._onNodeMouseEnter(rias.registry.byNode(this), evt);
+				}),
+				rias.on(this.containerNode, rias.on.selector(".dijitTreeNode", rias.touch.leave), function(evt){
+					self._onNodeMouseLeave(rias.registry.byNode(this), evt);
+				}),
+				rias.on(this.containerNode, rias.on.selector(".dijitTreeRow", rias.a11yclick.press), function(evt){
+					self._onNodePress(rias.registry.getEnclosingWidget(this), evt);
+				}),
+				rias.on(this.containerNode, rias.on.selector(".dijitTreeRow", rias.a11yclick), function(evt){
+					self._onClick(rias.registry.getEnclosingWidget(this), evt);
+				}),
+				rias.on(this.containerNode, rias.on.selector(".dijitTreeRow", "dblclick"), function(evt){
+					self._onDblClick(rias.registry.getEnclosingWidget(this), evt);
+				})
+			);
+
+			// Create glue between store and Tree, if not specified directly by user
+			if(!this.model){
+				this._store2model();
+			}
+
+			// monitor changes to items
+			this.own(
+				rias.after(this.model, "onChange", rias.hitch(this, "_onItemChange"), true),
+				rias.after(this.model, "onChildrenChange", rias.hitch(this, "_onItemChildrenChange"), true),
+				rias.after(this.model, "onDelete", rias.hitch(this, "_onItemDelete"), true)
+			);
+
+			this.inherited(arguments);
+
+			if(this.dndController){
+				// TODO: remove string support in 2.0.
+				if(rias.isString(this.dndController)){
+					this.dndController = rias.getObject(this.dndController);
+				}
+				var params = {};
+				for(var i = 0; i < this.dndParams.length; i++){
+					if(this[this.dndParams[i]]){
+						params[this.dndParams[i]] = this[this.dndParams[i]];
+					}
+				}
+				this.dndController = new this.dndController(this, params);
+			}
+
+			//this._load();
+
+			// onLoadDeferred should fire when all commands that are part of initialization have completed.
+			// It will include all the set("paths", ...) commands that happen during initialization.
+			this.onLoadDeferred = shimmedPromise(this.pendingCommandsPromise);
+
+			this.onLoadDeferred.then(rias.hitch(this, "onLoad"));
+		},
 		destroy: function(){
 			if(this._curSearch){
 				this._curSearch.timer.remove();
@@ -417,6 +479,12 @@ define([
 			// A tree is treated as a leaf, not as a node with children (like a grid),
 			// but defining destroyRecursive for back-compat.
 			this.destroy();
+		},
+		startup: function(){
+			this.inherited(arguments);
+			if(this.loadOnStartup != false){
+				this._load();
+			}
 		},
 		getIconClass: function(item, opened){
 			if(item.iconClass){

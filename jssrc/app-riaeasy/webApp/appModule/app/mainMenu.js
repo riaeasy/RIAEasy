@@ -2,26 +2,26 @@ define([
 	"rias"
 ], function(rias){
 	return {
-		"_rsfVersion": 32,
-		"_riaswType": "rias.riasw.studio.Module",
-		"_riaswVersion": "1.0",
-		"caption": rias.i18n.webApp.menu,
-		"tooltip": rias.i18n.webApp.menu,
-		"iconClass": "menuIcon",
-		"minSize": {
-			"h": 360,
-			"w": 240
-		},
-		"style": {
-			"width": "240px"
-		},
-		onShow: function(){
+	"_rsfVersion": 35,
+	"_riaswType": "rias.riasw.studio.Module",
+	"_riaswVersion": "1.0",
+	"caption": "菜单",
+	"iconClass": "menuIcon",
+	"minSize": {
+		"h": 360,
+		"w": 240
+	},
+	"style": {
+		"width": "240px"
+	},
+	"tooltip": "菜单",
+	"onShow": function (){
 			this.resize({
 				h: rias.toInt(this._riasrParent.domNode.clientHeight * 0.7, 480)
 			});
 			this.loadMenu();
 		},
-		"buildMenu": function (items){
+	"buildMenu": function (items){
 			var children = [],
 				m = this;
 			function getItem(item){
@@ -53,6 +53,8 @@ define([
 				"class": "riaswTreeMenu",
 				region: "center",
 				persist: false,
+				loadOnStartup: false,
+				//selectionMode: "single",
 				showRoot: false,
 				isSource: false,
 				accept: [],
@@ -98,7 +100,7 @@ define([
 				});
 			});
 		},
-		"loadMenu": function (){
+	"loadMenu": function (){
 			var m = this,
 				q;
 			if(this.menuStore.fetch){
@@ -128,10 +130,10 @@ define([
 				});
 			}
 		},
-		"afterLoadedAndShown": function (){
+	"afterLoadedAndShown": function (){
 			//this.loadMenu();
 		},
-		"launch": function (meta, args){
+	"launch": function (meta, args){
 			var m = this;
 			if(rias.isString(meta)){
 				args = rias.mixin({}, args, {
@@ -151,29 +153,29 @@ define([
 			rias.webApp.launch(args);
 			m.submit();
 		},
-		"treeOnClick": function (item, node, evt){
+	"treeOnClick": function (item, node, evt){
 			var m = this;
 			m.currentItem = item;
 			if(item && item.cmd && !node.tree.model.mayHaveChildren(item)){
 				rias.$runByModule(m, item.cmd, "mainMenu_" + item.id);
 			}
 		},
-		"_riaswChildren": [
-			{
-				"_riaswType": "rias.riasw.layout.Panel",
-				"_riaswIdOfModule": "menuPane",
-				"region": "center",
-				"style": {
-				},
-				"_riaswChildren": [
-					{
-						"_riaswType": "rias.riasw.store.JsonXhrStore",
-						"_riaswIdOfModule": "menuStore",
-						"target": "act/appMain/getMenu"
-					}
-				]
-			}
-		]
-	}
-
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "menuPane",
+			"region": "center",
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.store.JsonXhrStore",
+					"_riaswIdOfModule": "menuStore",
+					"target": "act/appMain/getMenu"
+				}
+			]
+		}
+	]
+}
+	
 });
