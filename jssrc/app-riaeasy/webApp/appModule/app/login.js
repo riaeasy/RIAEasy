@@ -44,7 +44,7 @@ define([
 		{
 			"_riaswType": "rias.riasw.layout.ContentPanel",
 			"_riaswIdOfModule": "mTitle",
-			"content": "<font color='darkblue'><b>请输入登录名和密码：</b></font>",
+			"content": "<font color='darkblue'><b>请输入登录名和密码：(目前没有密码)</b></font>",
 			"style": {
 				"padding": "4px"
 			}

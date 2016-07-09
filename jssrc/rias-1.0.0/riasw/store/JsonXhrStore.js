@@ -40,7 +40,7 @@ define([
 			this.inherited(arguments);
 		},
 
-		close: function(/*dojo/data/api/Request|Object?*/ request){
+		close: function(){
 		},
 
 		_getTarget: function(id){

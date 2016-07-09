@@ -30,8 +30,8 @@
 var riasServerConfig = {
 	debugLevel: "info",
 	appsRoot: "jssrc",
-	dojoFile: "jssrc/serverLib/dojo-1.10.4/dojo/dojo.js",
-	dojoBaseUrl: "jssrc/serverLib/dojo-1.10.4/dojo",
+	dojoFile: "jssrc/serverLib/dojo-1.11.2/dojo/dojo.js",
+	dojoBaseUrl: "jssrc/serverLib/dojo-1.11.2/dojo",
 	riasLib: "jssrc/rias-1.0.0", ///rias 包的物理路径。使用相对路径时，是相对于 jar 包的，一般为: "jssrc/rias"。可以作为 appConfig.config.raisLib 的缺省值。
 	webLib: "jssrc/webLib", ///web 端的 lib 物理路径，使用相对路径时，是相对于 jar 包的，一般为 "jssrc/Weblib" 。可以作为 appConfig.config.raisLib 的缺省值。
 	defaultLanguage: "zh",

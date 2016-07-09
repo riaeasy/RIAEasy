@@ -33,7 +33,7 @@ define([
 						"$refObj": "module.query"
 					},
 					"region": "center",
-					"refreshOnSetCollection": false,
+					"loadDataOnStart": false,
 					"structure": [
 						{
 							"field": "text",

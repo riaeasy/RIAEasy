@@ -1,4 +1,0 @@
-//>>built
-define("dojox/mobile/Rating","dojo/_base/declare dojo/_base/lang dojo/dom-construct dijit/_WidgetBase ./iconUtils dojo/has require".split(" "),function(k,l,c,m,f,n,p){return k("dojox.mobile.Rating",[m],{image:"",numStars:5,value:0,alt:"",baseClass:"mblRating",buildRendering:function(){this.inherited(arguments);this.domNode.style.display="inline-block";var a=this.imgNode=c.create("img");this.connect(a,"onload",l.hitch(this,function(){this.set("value",this.value)}));f.createIcon(this.image,null,a)},
-_setValueAttr:function(a){this._set("value",a);var g=this.imgNode.height;if(0!=g){c.empty(this.domNode);var b,h,d=this.imgNode.width/3;for(b=0;b<this.numStars;b++){h=b<=a-1?0:b>=a?d:2*d;var e=c.create("div",{style:{"float":"left"}},this.domNode);this.isLeftToRight()||(e=this._setCustomTransform(e));f.createIcon(this.image,"0,"+h+","+d+","+g,null,this.alt,e)}}},_setCustomTransform:function(a){return a}})});
-/// Rating.js.map

@@ -22,7 +22,8 @@ define([
 			this.inherited(arguments);
 		},
 
-		close: function(/*dojo/data/api/Request|Object?*/ request){
+		close: function(){
+			this.setData();
 		},
 
 		put: function(object, options){
@@ -137,6 +138,9 @@ define([
 			// data: Object[]
 			//		An array of objects to use as the source of data.
 			var self = this;
+			if(!rias.isArray(data)){
+				data = self.data = [];
+			}
 			if(data.items){
 				// just for convenience with the data format IFRS expects
 				self.idProperty = data.identifier || self.idProperty;
@@ -145,9 +149,6 @@ define([
 				self.data = data;
 			}
 			self.index = {};
-			if(!rias.isArray(data)){
-				data = self.data = [];
-			}
 			var i, l, j, k;
 			if(rias.isArray(self.defaultData)){
 				k = 0;

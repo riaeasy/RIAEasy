@@ -45,7 +45,7 @@ define([
 				rias.subscribe(self.id + "-startup", function(params){
 					if(params.selected){
 						self._transition(params.selected);
-						rias.publish(self.id + "-selectChild", params.selected);
+						rias.publish(self.id + "-selectChild", params.selected, this._focused);
 					}
 				})
 			);
@@ -263,7 +263,7 @@ define([
 				// Deselect old page and select new one
 				d = self._transition(page, d, animate);
 				d.then(function(){
-					rias.publish(self.id + "-selectChild", page);	// publish
+					rias.publish(self.id + "-selectChild", page, this._focused);	// publish
 					if(self.persist){
 						rias.cookie(self.id + "_selectedChild", self.selectedChildWidget.id);
 					}

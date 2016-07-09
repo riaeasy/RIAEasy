@@ -143,7 +143,7 @@ define([
 			this._refreshTablist();
 			this.inherited(arguments);
 		},
-		selectChild: function(/*dijit/_WidgetBase|String*/ page, /*Boolean*/ animate){
+		/*selectChild: function(page, animate){
 			// Override _StackContainer.selectChild() so the page's focus isn't left in a strange state.
 
 			if(this._focused){
@@ -154,7 +154,7 @@ define([
 				this.tablist.page2button(page).focus();
 			}
 			return this.inherited(arguments);
-		},
+		},*/
 
 		_layoutChildren: function(/*String?*/ changedChildId, /*Object?*/ changedChildSize){
 			if(!this._contentBox || typeof(this._contentBox.l) == "undefined"){

@@ -13,6 +13,96 @@ define([
 	"dijit/a11yclick"	// template uses ondijitclick (not for keyboard support, but for responsive touch support)
 ], function(rias, TabController, _WidgetsInTemplateMixin, Menu, MenuItem, Button, _HasDropDown){
 
+	var ScrollingTabControllerButtonMixin = rias.declare("rias.riasw.layout._ScrollingTabControllerButtonMixin", null, {
+		baseClass: "dijitTab tabStripButton",
+
+		templateString:
+			'<div role="button" data-dojo-attach-point="focusNode,buttonNode" data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents">' +
+				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
+				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitTabStripIcon"></span>' +
+				'<span data-dojo-attach-point="containerNode,titleNode" class="dijitButtonText"></span>' +
+				'</div>',
+
+		// Override inherited tabIndex: 0 from dijit/form/Button, because user shouldn't be
+		// able to tab to the left/right/menu buttons
+		tabIndex: "",
+
+		postMixInProperties: function(){
+			this.inherited(arguments);
+		},
+		buildRendering: function(){
+			this.inherited(arguments);
+		},
+
+		// Similarly, override FormWidget.isFocusable() because clicking a button shouldn't focus it
+		// either (this override avoids focus() call in FormWidget.js)
+		isFocusable: function(){
+			return false;
+		}
+	});
+
+	// Class used in template
+	rias.declare("rias.riasw.layout._ScrollingTabControllerButton", [Button, ScrollingTabControllerButtonMixin], {
+		postMixInProperties: function(){
+			this.inherited(arguments);
+		},
+		buildRendering: function(){
+			this.inherited(arguments);
+		}
+	});
+
+	// Class used in template
+	rias.declare("rias.riasw.layout._ScrollingTabControllerMenuButton", [Button, _HasDropDown, ScrollingTabControllerButtonMixin], {
+		// id of the TabContainer itself
+		containerId: "",
+
+		// -1 so user can't tab into the button, but so that button can still be focused programatically.
+		// Because need to move focus to the button (or somewhere) before the menu is hidden or IE6 will crash.
+		tabIndex: "-1",
+
+		isLoaded: function(){
+			// recreate menu every time, in case the TabContainer's list of children (or their icons/labels) have changed
+			return false;
+		},
+
+		loadDropDown: function(callback){
+			this.dropDown = new Menu({
+				id: this.containerId + "_menu",
+				ownerDocument: this.ownerDocument,
+				dir: this.dir,
+				lang: this.lang,
+				textDir: this.textDir
+			});
+			var container = rias.by(this.containerId);
+			rias.forEach(container.getChildren(), function(page){
+				var menuItem = new MenuItem({
+					id: page.id + "_stcMi",
+					label: page.caption || page.title,
+					iconClass: page.iconClass,
+					disabled: page.disabled,
+					ownerDocument: this.ownerDocument,
+					dir: page.dir,
+					lang: page.lang,
+					textDir: page.textDir || container.textDir,
+					onClick: function(){
+						container.selectChild(page, true);
+					}
+				});
+				this.dropDown.addChild(menuItem);
+			}, this);
+			callback();
+		},
+
+		closeDropDown: function(/*Boolean*/ focus){
+			this.inherited(arguments);
+			if(this.dropDown){
+				this._popupStateNode.removeAttribute("aria-owns");	// remove ref to node that we are about to delete
+				this.dropDown.destroyRecursive();
+				this.dropDown = undefined;
+			}
+		}
+	});
+
 	var riasType = "rias.riasw.layout.ScrollingTabController";
 	var Widget = rias.declare(riasType, [TabController, _WidgetsInTemplateMixin], {
 		// summary:
@@ -218,10 +308,10 @@ define([
 			//		Returns the current scroll of the tabs where 0 means
 			//		"scrolled all the way to the left" and some positive number, based on #
 			//		of pixels of possible scroll (ex: 1000) means "scrolled all the way to the right"
-			return (this.isLeftToRight() || rias.has("ie") < 8 || (rias.has("ie") && rias.has("quirks")) || rias.has("webkit"))
-				? this.scrollNode.scrollLeft
-				: rias.dom.getStyle(this.containerNode, "width") - rias.dom.getStyle(this.scrollNode, "width")
-					+ (rias.has("ie") >= 8 ? -1 : 1) * this.scrollNode.scrollLeft;
+			return (this.isLeftToRight() || rias.has("ie") < 8 || (rias.has("trident") && rias.has("quirks")) || rias.has("webkit")) ?
+				this.scrollNode.scrollLeft :
+				rias.dom.getStyle(this.containerNode, "width") - rias.dom.getStyle(this.scrollNode, "width")
+					+ (rias.has("trident") || rias.has("edge") ? -1 : 1) * this.scrollNode.scrollLeft;
 		},
 
 		_convertToScrollLeft: function(val){
@@ -232,18 +322,19 @@ define([
 			//		to achieve that scroll.
 			//
 			//		This method is to adjust for RTL funniness in various browsers and versions.
-			if(this.isLeftToRight() || rias.has("ie") < 8 || (rias.has("ie") && rias.has("quirks")) || rias.has("webkit")){
+			if(this.isLeftToRight() || rias.has("ie") < 8 || (rias.has("trident") && rias.has("quirks")) || rias.has("webkit")){
 				return val;
 			}else{
 				var maxScroll = rias.dom.getStyle(this.containerNode, "width") - rias.dom.getStyle(this.scrollNode, "width");
-				return (rias.has("ie") >= 8 ? -1 : 1) * (val - maxScroll);
+				return (rias.has("trident") || rias.has("edge") ? -1 : 1) * (val - maxScroll);
 			}
 		},
 
-		onSelectChild: function(/*dijit/_WidgetBase*/ page){
+		onSelectChild: function(/*dijit/_WidgetBase*/ page, /*Boolean*/ tabContainerFocused){
 			// summary:
 			//		Smoothly scrolls to a tab when it is selected.
 
+			//var tab = this.pane2button(page.id);
 			var tab = this.page2button(page);
 			if(!tab){
 				return;
@@ -259,8 +350,19 @@ define([
 				if(this._postResize){
 					var sl = this._getScroll();
 
-					if(sl > node.offsetLeft || sl + rias.dom.getStyle(this.scrollNode, "width") < node.offsetLeft + rias.dom.getStyle(node, "width")){
-						this.createSmoothScroll().play();
+					if(sl > node.offsetLeft ||
+						sl + rias.dom.getStyle(this.scrollNode, "width") < node.offsetLeft + rias.dom.getStyle(node, "width")){
+						var anim = this.createSmoothScroll();
+						if(tabContainerFocused){
+							anim.onEnd = function(){
+								// Focus is on hidden tab or previously selected tab label.  Move to current tab label.
+								tab.focus();
+							};
+						}
+						anim.play();
+					}else if(tabContainerFocused){
+						// Focus is on hidden tab or previously selected tab label.  Move to current tab label.
+						tab.focus();
 					}
 				}
 			}
@@ -427,82 +529,6 @@ define([
 		}
 	});
 
-
-	var ScrollingTabControllerButtonMixin = rias.declare("rias.riasw.layout._ScrollingTabControllerButtonMixin", null, {
-		baseClass: "dijitTab tabStripButton",
-
-		templateString:
-			'<div role="button" data-dojo-attach-point="focusNode,buttonNode" data-dojo-attach-event="ondijitclick:_onClick" class="dijitTabInnerDiv dijitTabContent dijitButtonContents">' +
-				'<span data-dojo-attach-point="badgeNode" class="${badgeClass}"></span>'+
-				'<span role="presentation" data-dojo-attach-point="iconNode" class="dijitInline dijitTabStripIcon"></span>' +
-				'<span data-dojo-attach-point="containerNode,titleNode" class="dijitButtonText"></span>' +
-			'</div>',
-
-		// Override inherited tabIndex: 0 from dijit/form/Button, because user shouldn't be
-		// able to tab to the left/right/menu buttons
-		tabIndex: "",
-
-		// Similarly, override FormWidget.isFocusable() because clicking a button shouldn't focus it
-		// either (this override avoids focus() call in FormWidget.js)
-		isFocusable: function(){
-			return false;
-		}
-	});
-
-	// Class used in template
-	rias.declare("rias.riasw.layout._ScrollingTabControllerButton", [Button, ScrollingTabControllerButtonMixin]);
-
-	// Class used in template
-	rias.declare("rias.riasw.layout._ScrollingTabControllerMenuButton", [Button, _HasDropDown, ScrollingTabControllerButtonMixin], {
-		// id of the TabContainer itself
-		containerId: "",
-
-		// -1 so user can't tab into the button, but so that button can still be focused programatically.
-		// Because need to move focus to the button (or somewhere) before the menu is hidden or IE6 will crash.
-		tabIndex: "-1",
-
-		isLoaded: function(){
-			// recreate menu every time, in case the TabContainer's list of children (or their icons/labels) have changed
-			return false;
-		},
-
-		loadDropDown: function(callback){
-			this.dropDown = new Menu({
-				id: this.containerId + "_menu",
-				ownerDocument: this.ownerDocument,
-				dir: this.dir,
-				lang: this.lang,
-				textDir: this.textDir
-			});
-			var container = rias.by(this.containerId);
-			rias.forEach(container.getChildren(), function(page){
-				var menuItem = new MenuItem({
-					id: page.id + "_stcMi",
-					label: page.caption || page.title,
-					iconClass: page.iconClass,
-					disabled: page.disabled,
-					ownerDocument: this.ownerDocument,
-					dir: page.dir,
-					lang: page.lang,
-					textDir: page.textDir || container.textDir,
-					onClick: function(){
-						container.selectChild(page, true);
-					}
-				});
-				this.dropDown.addChild(menuItem);
-			}, this);
-			callback();
-		},
-
-		closeDropDown: function(/*Boolean*/ focus){
-			this.inherited(arguments);
-			if(this.dropDown){
-				this._popupStateNode.removeAttribute("aria-owns");	// remove ref to node that we are about to delete
-				this.dropDown.destroyRecursive();
-				this.dropDown = undefined;
-			}
-		}
-	});
 
 	return Widget;
 });

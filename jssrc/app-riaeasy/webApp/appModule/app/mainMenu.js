@@ -53,7 +53,6 @@ define([
 				"class": "riaswTreeMenu",
 				region: "center",
 				persist: false,
-				loadOnStartup: false,
 				//selectionMode: "single",
 				showRoot: false,
 				isSource: false,

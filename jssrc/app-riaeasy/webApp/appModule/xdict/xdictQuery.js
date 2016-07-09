@@ -34,7 +34,7 @@ define([
 					"query": {
 						"parentId": "1"
 					},
-					"refreshOnSetCollection": true,
+					"loadDataOnStart": true,
 					"region": "center",
 					"showFooterSummary": false,
 					"showHeader": false,
@@ -113,7 +113,7 @@ define([
 					},
 					"region": "center",
 					"showHeader": true,
-					"refreshOnSetCollection": false,
+					"loadDataOnStart": false,
 					"structure": [
 						{
 							"field": "id",

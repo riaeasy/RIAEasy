@@ -78,11 +78,12 @@ define([
 	}
 
 	if(!rias.require.packs.orion){
-		rias.require.packs.orion = {name: "orion", location: "../../orion-7.0/orion"};
-		rias.require.packs.webtools = {name: "webtools", location: "../../orion-7.0/webtools"};
-		rias.require.packs.javascript = {name: "javascript", location: "../../orion-7.0/javascript"};
-		rias.require.packs.csslint = {name: "csslint", location: "../../orion-7.0/csslint", main: "csslint"};
-		rias.require.packs.i18n = {name: "i18n", location: "../../orion-7.0/orion", main: "i18n"};
+		rias.require.packs.orion = {name: "orion", location: "../../orion-12.0/orion"};
+		rias.require.packs.webtools = {name: "webtools", location: "../../orion-12.0/webtools"};
+		rias.require.packs.javascript = {name: "javascript", location: "../../orion-12.0/javascript"};
+		rias.require.packs.csslint = {name: "csslint", location: "../../orion-12.0/csslint", main: "csslint"};
+		rias.require.packs.htmlparser2 = {name: "htmlparser2", location: "../../orion-12.0/htmlparser2"};
+		rias.require.packs.i18n = {name: "i18n", location: "../../orion-12.0/requirejs", main: "i18n"};
 	}
 
 	///需要延迟加载

@@ -2032,7 +2032,10 @@ define([
 
 	_WidgetsInTemplateMixin.extend({
 		_beforeFillContent: function(){
-			if(this.widgetsInTemplate){
+			// Short circuit the parser when the template doesn't contain any widgets.  Note that checking against
+			// this.templateString is insufficient because the data-dojo-type=... may appear through a substitution
+			// variable, like in ConfirmDialog, where the widget is hidden inside of the ${!actionBarTemplate}.
+			if(/dojoType|data-dojo-type/i.test(this.domNode.innerHTML)){
 				// Before copying over content, instantiate widgets in template
 				var node = this.domNode;
 
@@ -2042,6 +2045,7 @@ define([
 				}
 
 				parser.parse(node, {
+					///增加 ownerRiasw
 					defaults: {
 						ownerRiasw: this
 					},
@@ -2077,7 +2081,7 @@ define([
 
 						// Cleanup flag set above, just in case
 						if(this.containerNode && this.containerNode.stopParser){
-							this.containerNode.stopParser = undefined;
+							delete this.containerNode.stopParser;
 						}
 					}));
 

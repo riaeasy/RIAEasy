@@ -101,12 +101,15 @@ define([
 			//		Returns the button corresponding to the pane w/the given id.
 			// tags:
 			//		protected
+			if(rias.isString(page)){
+				return rias.by(this.id + "_" + page);
+			}
 			return rias.by(this.id + "_" + (page._riaswIdOfModule ? page._riaswIdOfModule : page.id));
 		},
 
-		buildRendering: function(){
+		/*buildRendering: function(){
 			this.inherited(arguments);
-		},
+		},*/
 		postCreate: function(){
 			var self = this;
 			self.inherited(arguments);

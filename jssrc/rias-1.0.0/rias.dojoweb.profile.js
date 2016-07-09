@@ -21,8 +21,8 @@ var profile = (function(){
 			}
 		},
 
-		basePath: "../../../js-lib-src/dojo-1.10.4-src",///相对于本文件的路径，接下类的编译都从这里开始计算。关联编译配置的文件位置。
-		releaseDir: "../dojo-1.10.4-web-min",///相对于 build.bat 的 basePath（即 build 所用的 dojo 的目录），编译目标目录，编译器会覆盖它发现的一切。
+		basePath: "../../../js-lib-src/dojo-1.11.2-src",///相对于本文件的路径，接下类的编译都从这里开始计算。关联编译配置的文件位置。
+		releaseDir: "../dojo-1.11.2-web-min",///相对于 build.bat 的 basePath（即 build 所用的 dojo 的目录），编译目标目录，编译器会覆盖它发现的一切。
 		releaseName: "",
 		action: "release",//一般就这样写，不要修改。
 		//默认值为"shrinksafe"。若该值为false，则关闭压缩。shrinksafe.keeplines, closure, closure.keeplines, comments,comments.keeplines///dojo1.7+建议用closure。

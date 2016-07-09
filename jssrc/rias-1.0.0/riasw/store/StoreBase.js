@@ -87,6 +87,9 @@ define([
 					return d;
 				};
 			}
+		},
+
+		close: function(){
 		}
 
 	});

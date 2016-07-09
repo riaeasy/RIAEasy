@@ -139,8 +139,7 @@ define([
 		defaultContent: "",
 
 		_setDisabledAttr: function(/*Boolean*/ value){
-			var //w = this.editor,
-				t = this.textView;// (w ? w._textView : undefined);
+			var t = this.textView;
 			value = !!value;
 			//if(this.disabled != value){
 			this._set("disabled", value);
@@ -158,11 +157,9 @@ define([
 			}
 		},
 		_setReadOnlyAttr: function(value){
-			var //w = this.editor,
-				t = this.textView;// (w ? w._textView : undefined);
+			var t = this.textView;
 			value = !!value;
 			this._set("readOnly", value);
-			//if(w && w._textView){
 			if(t){
 				this._needReadOnly = undefined;
 				this.domNode.tabIndex = value ? "-1" : this.tabIndex;
@@ -216,7 +213,7 @@ define([
 			if (!this.editor) {
 				this._createEditor();
 			}
-			this.containerNode = this.textView._rootDiv;// this.editor._textView._rootDiv;
+			this.containerNode = this.textView._rootDiv;
 			rias.dom.addClass(this.containerNode, "riaswTextBoxContainer");
 			///没有 template 时，显式设置 focusNode。
 			if(!this.focusNode){
@@ -473,6 +470,14 @@ define([
 			//}
 
 			var editor = self.editor = new mEditor.Editor({
+				textViewFactory: textViewFactory,
+				undoStackFactory: new mEditorFeatures.UndoFactory(),
+				annotationFactory: new mEditorFeatures.AnnotationFactory(),
+				lineNumberRulerFactory: new mEditorFeatures.LineNumberRulerFactory(),
+				foldingRulerFactory: new mEditorFeatures.FoldingRulerFactory(),
+				textDNDFactory: new mEditorFeatures.TextDNDFactory(),
+				contentAssistFactory: contentAssistFactory,
+				keyBindingFactory: new mEditorFeatures.KeyBindingsFactory(),
 				statusReporter: function(message, isError) {
 					//var method = isError ? "error" : "log";
 					//console[method]("orion.editor: " + message);
@@ -482,14 +487,7 @@ define([
 						console.error("orion.editor: " + message);
 					}
 				},
-				textViewFactory: textViewFactory,
-				undoStackFactory: new mEditorFeatures.UndoFactory(),
-				annotationFactory: new mEditorFeatures.AnnotationFactory(),
-				lineNumberRulerFactory: new mEditorFeatures.LineNumberRulerFactory(),
-				foldingRulerFactory: new mEditorFeatures.FoldingRulerFactory(),
-				textDNDFactory: new mEditorFeatures.TextDNDFactory(),
-				contentAssistFactory: contentAssistFactory,
-				keyBindingFactory: new mEditorFeatures.KeyBindingsFactory(),
+				hoverFactory: options.hoverFactory,
 				domNode: parent
 			});
 
@@ -527,6 +525,11 @@ define([
 			if(this._needResize){
 				this.resize();
 			}
+			var tooltip = mTooltip.Tooltip.getTooltip(this.textView, editor);
+			if (this._hoverFactory) {
+				this._hover = this._hoverFactory.createHover(this);
+				tooltip.hover = this._hover;
+			}
 			editor._listener = {
 				onModelChanged: function(e) {
 					editor.checkDirty();
@@ -536,7 +539,7 @@ define([
 					editor._listener.onMouseMove(e);
 				},
 				onMouseMove: function(e) {
-					var tooltip = mTooltip.Tooltip.getTooltip(textView);
+					/*var tooltip = mTooltip.Tooltip.getTooltip(textView);
 					if (!tooltip) { return; }
 					if (editor._listener.lastMouseX === e.event.clientX && editor._listener.lastMouseY === e.event.clientY) {
 						return;
@@ -549,27 +552,66 @@ define([
 						getTooltipInfo: function() {
 							return editor._getTooltipInfo(this.x, this.y);
 						}
-					});
+					});*/
+					if (!tooltip || editor._listener.mouseDown) { return; }
+
+					// Prevent spurious mouse event (e.g. on a scroll)
+					if (e.event.clientX === editor._listener.lastMouseX
+						&& e.event.clientY === editor._listener.lastMouseY) {
+						return;
+					}
+
+					editor._listener.lastMouseX = e.event.clientX;
+					editor._listener.lastMouseY = e.event.clientY;
+
+					if (editor._hoverTimeout) {
+						window.clearTimeout(editor._hoverTimeout);
+						editor._hoverTimeout = null;
+					}
+					editor._hoverTimeout = window.setTimeout(function() {
+						editor._hoverTimeout = null;
+
+						// Re-check incase editor closed...
+						if (!editor._listener){
+							return;
+						}
+
+						tooltip.onHover({
+							y: e.y,
+							x: e.x,
+							getTooltipInfo: function() {
+								return editor._getTooltipInfo(this.x, this.y);
+							}
+						}, e.x, e.y);
+					}, 175);
+
 					self.onMouseMove(e);
 				},
 				onMouseOut: function(e) {
-					var tooltip = mTooltip.Tooltip.getTooltip(textView);
+					/*var tooltip = mTooltip.Tooltip.getTooltip(textView);
 					if (!tooltip) { return; }
 					if (editor._listener.lastMouseX === e.event.clientX && editor._listener.lastMouseY === e.event.clientY) {
 						return;
 					}
 					editor._listener.lastMouseX = e.event.clientX;
 					editor._listener.lastMouseY = e.event.clientY;
-					tooltip.setTarget(null);
+					tooltip.setTarget(null);*/
+					if (editor._hoverTimeout) {
+						window.clearTimeout(editor._hoverTimeout);
+						editor._hoverTimeout = null;
+					}
 					self.onMouseOut(e);
 				},
 				onScroll: function(e) {
-					var tooltip = mTooltip.Tooltip.getTooltip(textView);
+					/*var tooltip = mTooltip.Tooltip.getTooltip(textView);
 					if (!tooltip) { return; }
-					tooltip.setTarget(null, 0, 0);
+					tooltip.setTarget(null, 0, 0);*/
 					self.onScroll(e);
 				},
 				onSelection: function(e) {
+					if (tooltip) {
+						tooltip.hide();
+					}
 					editor._updateCursorStatus();
 					editor._highlightCurrentLine(e.newValue, e.oldValue);
 					self.onSelection(e);
@@ -588,9 +630,71 @@ define([
 			editor.setZoomRulerVisible(options.showZoomRuler === undefined || options.showZoomRuler);
 			editor.setFoldingRulerVisible(options.showFoldingRuler === undefined || options.showFoldingRuler);
 			editor.setInput(options.title, null, contents, false, options.noFocus);
+			var syntaxHighlighter = {
+				styler: null,
 
+				highlight: function(contentType, grammarProvider, editor) {
+					if (this.styler && this.styler.destroy) {
+						this.styler.destroy();
+					}
+					this.styler = null;
+
+					/* to maintain backwards-compatibility convert previously-supported lang values to types */
+					if (contentType === "js") { //$NON-NLS-0$
+						contentType = "application/javascript"; //$NON-NLS-0$
+					} else if (contentType === "css") { //$NON-NLS-0$
+						contentType = "text/css"; //$NON-NLS-0$
+					} else if (contentType === "html") { //$NON-NLS-0$
+						contentType = "text/html"; //$NON-NLS-0$
+					} else if (contentType === "java") { //$NON-NLS-0$
+						contentType = "text/x-java-source"; //$NON-NLS-0$
+					}
+
+					var textView = editor.getTextView();
+					var annotationModel = editor.getAnnotationModel();
+					var loadGrammar = function(contentType) {
+						/* attempt to locate an included file containing the grammar for contentType */
+						var folderName = contentType.replace(/[*|:/".<>?+]/g, '_');
+						require(["./stylers/" + folderName + "/syntax"], //$NON-NLS-1$ //$NON-NLS-0$
+							function(grammar) {
+								var stylerAdapter = new mTextStyler.createPatternBasedAdapter(grammar.grammars, grammar.id, contentType);
+								this.styler = new mTextStyler.TextStyler(textView, annotationModel, stylerAdapter);
+							},
+							/* @callback */ function(error) {
+								/*
+								 * A grammar file was not found for the specified contentType, so syntax styling will
+								 * not be shown (the editor will still work fine otherwise).  requireJS has already
+								 * written an error message to the console regarding the missing grammar file.
+								 */
+							}
+						);
+					};
+
+					if (contentType) {
+						if (grammarProvider && (typeof grammarProvider === "function")) { //$NON-NLS-0$
+							grammarProvider(contentType).then(
+								function(result) {
+									if (result && result.grammars && result.id) {
+										var stylerAdapter = new mTextStyler.createPatternBasedAdapter(result.grammars, result.id, contentType);
+										this.styler = new mTextStyler.TextStyler(textView, annotationModel, stylerAdapter);
+									}
+								}.bind(this),
+								/* @callback */ function(error) {
+									loadGrammar(contentType); /* fall back to default grammar file lookup */
+								}
+							);
+						} else {
+							loadGrammar(contentType);
+						}
+					}
+					if (contentType === "text/css") { //$NON-NLS-0$
+						editor.setFoldingRulerVisible(options.showFoldingRuler === undefined || options.showFoldingRuler);
+					}
+				}
+			};
 			//syntaxHighlighter.highlight(options.contentType || options.lang || this.defaultLang, this.editor);
-			self.setContentType(options.contentType || options.lang)
+			syntaxHighlighter.highlight(options.contentType || options.lang, options.grammarProvider, editor);
+			self.setContentType(options.contentType || options.lang);
 			if (contentAssist) {
 				var cssContentAssistProvider = new mCSSContentAssist.CssContentAssistProvider();
 				var htmlContentAssistProvider = new mHtmlContentAssist.HTMLContentAssistProvider();
@@ -618,11 +722,9 @@ define([
 		},
 
 		resize: function(box){
-			//var w = this.editor;
 			rias.dom.setMarginBox(this.domNode, box);
 			box = rias.dom.marginBox2contentBox(this.domNode, box);
 			rias.dom.setMarginBox(this.containerNode, box);
-			//if(w && w._textView){
 			if(this.textView){
 				this._needResize = undefined;
 				this.textView.resize();
