@@ -1,0 +1,4 @@
+//>>built
+define("dijit/form/_ButtonMixin",["dojo/_base/declare","dojo/dom","dojo/has","../registry"],function(e,f,h,g){return e("dijit.form._ButtonMixin",null,{label:"",type:"button",__onClick:function(a){a.stopPropagation();a.preventDefault();this.disabled||this.valueNode.click(a);return!1},_onClick:function(a){if(this.disabled)return a.stopPropagation(),a.preventDefault(),!1;!1===this.onClick(a)&&a.preventDefault();var c=a.defaultPrevented;if(!c&&"submit"==this.type&&!(this.valueNode||this.focusNode).form)for(var b=
+this.domNode;b.parentNode;b=b.parentNode){var d=g.byNode(b);if(d&&"function"==typeof d._onSubmit){d._onSubmit(a);a.preventDefault();c=!0;break}}return!c},postCreate:function(){this.inherited(arguments);f.setSelectable(this.focusNode,!1)},onClick:function(){return!0},_setLabelAttr:function(a){this._set("label",a);(this.containerNode||this.focusNode).innerHTML=a;this.onLabelSet()},onLabelSet:function(){}})});
+/// _ButtonMixin.js.map

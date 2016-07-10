@@ -1,0 +1,3 @@
+//>>built
+define("dojox/mobile/Icon","dojo/_base/declare dojo/_base/lang dojo/dom-class dojo/dom-construct ./iconUtils dojo/has require".split(" "),function(a,c,f,d,e,g,h){return a("dojox.mobile.Icon",null,{icon:"",iconPos:"",alt:"",tag:"div",constructor:function(b,a){b&&c.mixin(this,b);this.domNode=a||d.create(this.tag);e.createIcon(this.icon,this.iconPos,null,this.alt,this.domNode);this._setCustomTransform()},_setCustomTransform:function(){}})});
+/// Icon.js.map
