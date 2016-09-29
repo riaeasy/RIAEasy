@@ -1,0 +1,31 @@
+/* TablePanel */
+.riaswTablePanel {
+/*display: block;
+	background: inherit;
+	margin:0;*/
+  overflow: hidden;
+  position: relative;
+  border: 0px solid #d3d3d3;
+}
+.riaswTablePanelContent {
+  overflow: auto;
+  position: relative;
+}
+/*.mobileBody .riaswTablePanelContent {
+	overflow: hidden;
+}*/
+.riaswTablePanelTable {
+  border: 0px solid #00008b;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.riaswTablePanelRow {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.riaswTablePanelCol {
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding: 0;
+}

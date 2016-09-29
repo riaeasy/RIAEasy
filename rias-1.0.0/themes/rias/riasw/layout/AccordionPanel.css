@@ -1,0 +1,90 @@
+/**
+ * dijit.layout.Accordioncontainer
+ *
+ */
+.riaswAccordionPanel {
+  position: relative;
+  border-style: solid;
+  border-color: #9e9e9e;
+  border-width: 0;
+  overflow: hidden;
+}
+/* common */
+.riaswAccordionInnerContainer {
+  background-color: inherit;
+  border-style: solid;
+  border-color: #9e9e9e;
+  border-width: 0px;
+}
+.riaswAccordionInnerContainerSelected {
+  border-width: 1px;
+}
+.riaswAccordionInnerContainerHover,
+.riaswAccordionInnerContainerActive {
+  border-color: #4fc3f7;
+}
+.riaswAccordionTitle {
+  background-color: #9e9e9e;
+/*border: 0px solid lightgray;
+	padding: 5px 4px 6px 8px;
+	font-size: 0.9em;*/
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.riaswAccordionTitleFocusNode {
+  padding: 0.25em;
+  margin: 0px;
+}
+.riaswAccordionTitleSelected,
+.riaswAccordionTitleFocused {
+  cursor: default;
+  border-color: #e0e0e0;
+  background-color: #e0e0e0;
+}
+.riaswAccordionTitleHover,
+.riaswAccordionTitleActive {
+  border-color: #4fc3f7;
+  background-color: #4fc3f7;
+}
+.riaswAccordionChildWrapper {
+  position: absolute;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.riaswAccordionArrow {
+/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -30px top;*/
+  background: url("./images/CaptionPanelBtn.png") no-repeat -24px center;
+  width: 24px;
+  height: 24px;
+  margin-top: -1px;
+}
+.riaswAccordionTitleSelected .riaswAccordionArrow {
+/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -15px top;*/
+  background: url("./images/CaptionPanelBtn.png") no-repeat -72px center;
+}
+.riaswAccordionText {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+.riaswAccordionTitle .arrowTextUp,
+.riaswAccordionTitle .arrowTextDown {
+  display: none;
+  font-size: 0.65em;
+  font-weight: normal !important;
+}
+.dj_a11y .riaswAccordionTitle .arrowTextUp,
+.dj_a11y .riaswAccordionTitleSelected .arrowTextDown {
+  display: inline;
+}
+.dj_a11y .riaswAccordionTitleSelected .arrowTextUp {
+  display: none;
+}
+.dijitRtl .riaswAccordionArrow {
+  background-position: 0 top;
+}
+.dijitRtl .riaswAccordionTitleSelected .riaswAccordionArrow {
+/* same rule as LTR mode, just listed to override previous rule in this file */
+  background-position: -15px top;
+}

@@ -1,0 +1,16 @@
+/* Underlay */
+.riaswUnderlayWrapper {
+  position: absolute;
+  z-index: 998;
+  display: none;
+  background: transparent !important;
+}
+.riaswUnderlay {
+  position: absolute;
+  z-index: 998;
+  display: none;
+  background: #a9a9a9;
+  opacity: 0.33;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=33)";
+  filter: alpha(opacity=33);
+}

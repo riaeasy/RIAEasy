@@ -1,0 +1,15 @@
+.rias table.dijitComboButtonRtl .dijitStretch {
+  border-radius: 0 0.25em 0.25em 0;
+}
+.rias table.dijitComboButtonRtl .dijitArrowButton {
+  border-radius: 0.25em 0 0 0.25em;
+  border-left-width: 1px;
+  border-right-width: 0;
+}
+.rias .dijitDropDownButtonRtl .dijitButtonNode {
+  padding-left: 0.5em;
+}
+.rias .dijitDropDownButtonRtl .dijitArrowButtonInner {
+  margin-left: 0;
+  margin-right: 0.75em;
+}

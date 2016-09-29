@@ -1,0 +1,74 @@
+
+/* Module */
+@import '../../variables';
+
+.riaswModule{
+	//display: block;
+	position: relative;
+	//background-color: inherit;
+	//border: 0;
+	//overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswModule {
+	//overflow: hidden;
+}
+.riaswModuleSelected,
+.riaswModuleFocused {
+	/*-moz-box-shadow: 0.5em 0.5em 2em #777;
+	-webkit-box-shadow: 0.5em 0.5em 2em #777;
+	box-shadow: 0.5em 0.5em 2em #777;*/
+}
+.riaswModuleHover {
+	border-color: $hover-color;
+	/*-moz-box-shadow: 0em 0em 2em gold;
+	-webkit-box-shadow: 0em 0em 2em gold;
+	box-shadow: 0em 0em 2em gold;*/
+}
+
+//暂时不用
+/*.riaswModuleWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswModuleContent {
+	//display: block;
+	position: relative;
+	//background-color: inherit;
+	//border: 0;
+	overflow: auto;
+	//-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswModuleContent {
+	overflow: hidden;
+}
+
+
+.riaswModuleLoading {
+
+}
+.riaswModuleLoadingIcon {
+	background-image: url(./images/moduleLoading.gif);
+	background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 8px;
+	vertical-align: middle;
+}
+.riaswModuleLoadingError {
+	background-image: url(./images/warning32.png);
+	background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 8px;
+	vertical-align: middle;
+}
+.riaswModuleLoading .riaswModuleLoadingIcon,
+.riaswModuleLoading .riaswModuleLoadingError {
+	/*margin-right: 4px;*/
+}
+

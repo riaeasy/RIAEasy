@@ -1,0 +1,150 @@
+
+@import 'layout_variables';
+
+
+.riaswGutter {
+	/* gutter is just a place holder for empty space between panes in BorderContainer */
+	position: absolute;
+	font-size: 1px;		/* needed by IE6 even though div is empty, otherwise goes to 15px */
+}
+
+.riaswSplitter {
+	position: absolute;
+	overflow: hidden;
+	z-index: 10;		/* above the panes so that splitter focus is visible on FF, see #7583*/
+	/*background-color: lavender;*/
+	background-color: inherit;
+	border-color: lightgray;
+	border-style: solid;
+	border-width: 0px;
+}
+.dj_ie .riaswSplitter {
+	z-index: 1;	/* behind the panes so that pane borders aren't obscured see test_Gui.html/[14392] */
+}
+
+.riaswSplitterActive {
+	z-index: 11 !important;
+}
+
+.riaswSplitterCover {
+	position:absolute;
+	z-index:-1;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+.riaswSplitterCoverActive {
+	z-index:3 !important;
+}
+
+.dj_ie .riaswSplitterCover {
+	background: white;
+	opacity: 0;
+}
+.dj_ie6 .riaswSplitterCover,
+.dj_ie7 .riaswSplitterCover,
+.dj_ie8 .riaswSplitterCover {
+	opacity: 0;
+}
+
+.riaswSplitterShadow {
+	font-size: 1px;
+	background-color: ThreeDShadow;
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	filter: Alpha(Opacity=50);
+	margin: 0;
+}
+
+.dj_a11y .riaswSplitterH {
+	border-top:1px solid #d3d3d3 !important;
+	border-bottom:1px solid #d3d3d3 !important;
+}
+.dj_a11y .riaswSplitterV {
+	border-left:1px solid #d3d3d3 !important;
+	border-right:1px solid #d3d3d3 !important;
+}
+
+/*===============================================*/
+.riaswSplitterH,
+.riaswGutterH {
+	background:none;
+	border:0;
+	height:8px;
+}
+.dj_ios .riaswSplitterH,
+.dj_ios .riaswGutterH,
+.dj_android .riaswSplitterH,
+.dj_android .riaswGutterH {
+	height: 12px;
+}
+.riaswSplitterH .riaswSplitterThumb {
+	overflow: hidden;
+	position: absolute;
+	left:45%;
+	background: none;
+	height: 0px;
+	top: 3px;
+	width: 10%;
+}
+.dj_ios .riaswSplitterH .riaswSplitterThumb,
+.dj_android .riaswSplitterH .riaswSplitterThumb{
+	height: 2px;
+	top: 5px;
+}
+
+.riaswSplitterV,
+.riaswGutterV {
+	background:none;
+	border:0;
+	width:8px;
+	margin: 0;
+}
+.dj_ios .riaswSplitterV,
+.dj_ios .riaswGutterV,
+.dj_android .riaswSplitterV,
+.dj_android .riaswGutterV {
+	width: 12px;
+}
+.riaswSplitterV .riaswSplitterThumb {
+	overflow:hidden;
+	position:absolute;
+	top:45%;
+	background: none;
+	height:10%;
+	left:3px;
+	width:0px;
+	margin: 0;
+}
+.dj_ios .riaswSplitterV .riaswSplitterThumb,
+.dj_android .riaswSplitterV .riaswSplitterThumb{
+	width:2px;
+	left:5px;
+}
+
+.riaswSplitterHover{
+	background-color: gold;
+}
+.riaswSplitterHHover {
+	cursor: row-resize;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswSplitterVHover {
+	cursor: col-resize;
+	-webkit-tap-highlight-color: transparent;
+}
+
+
+/* active splitter */
+.riaswSplitterActive {
+	font-size: 1px;
+	background-image: none;
+	background-color: #aaa;
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	filter: Alpha(Opacity=60);
+	margin: 0;
+}
+

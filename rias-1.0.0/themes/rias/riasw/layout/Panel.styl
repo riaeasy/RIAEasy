@@ -1,0 +1,55 @@
+
+/* Panel */
+/* ContentPanel */
+
+@import 'layout_variables';
+
+.riaswPanel {
+	/*display: block;*/
+	//overflow: hidden;
+	position: relative;
+	/*background-color: inherit;
+	padding: 0px;
+	margin:0;*/
+	border: 0px solid lightgray;
+}
+.riaswPanelSelected,
+.riaswPanelFocused {
+}
+.riaswPanelHover {
+}
+
+///暂时不用
+/*.riaswPanelWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswPanelContent {
+	overflow: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswPanelContent {
+	overflow: hidden;
+}
+
+.riaswPanelFocusNode {
+}
+
+/* riaswStackPanel ============================================*/
+.riaswStackPanelContent {
+	overflow: hidden;
+}
+.riaswStackPanel-child {
+
+}
+.riaswStackPanelChildWrapper {
+	position: absolute;
+}
+.riaswStackPanelChildWrapperTop {
+	z-index: 9;
+}

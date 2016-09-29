@@ -1,0 +1,112 @@
+/**
+ * dijit.layout.Accordioncontainer
+ *
+ */
+
+@import 'layout_variables';
+
+.riaswAccordionPanel {
+	position: relative;
+	border-style: solid;
+	border-color: $border-color;
+	border-width: 0;//1px 0 0 0;
+	overflow: hidden;
+}
+
+/* common */
+
+.riaswAccordionInnerContainer {
+	background-color: inherit;
+	border-style: solid;
+	border-color: $border-color;
+	border-width: 0px;// 1px 1px 0 1px;
+}
+.riaswAccordionInnerContainerSelected {
+	border-width: 1px;
+}
+.riaswAccordionInnerContainerFocused,
+.riaswAccordionInnerContainerSelected {
+	//border-color: $selected-color;
+}
+.riaswAccordionInnerContainerHover,
+.riaswAccordionInnerContainerActive {
+	border-color: $hover-color;
+}
+
+.riaswAccordionTitle {
+	background-color: $border-color;
+	/*border: 0px solid lightgray;
+	padding: 5px 4px 6px 8px;
+	font-size: 0.9em;*/
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.riaswAccordionTitleFocusNode {
+	padding: $padding;
+	margin: 0px;
+}
+
+.riaswAccordionTitleSelected,
+.riaswAccordionTitleFocused  {
+	cursor: default;
+	border-color: $selected-color;
+	background-color: $selected-color;
+}
+.riaswAccordionTitleHover,
+.riaswAccordionTitleActive  {
+	border-color: $hover-color;
+	background-color: $hover-color;
+}
+
+.riaswAccordionChildWrapper {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.riaswAccordionArrow {
+	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -30px top;*/
+	background: url('./images/CaptionPanelBtn.png') no-repeat -24px center;
+	width: 24px;
+	height: 24px;
+	margin-top: -1px;
+}
+
+.riaswAccordionTitleSelected .riaswAccordionArrow {
+	/*background:url("/rias/themes/rias/images/spriteRoundedIconsSmallBl.gif") no-repeat -15px top;*/
+	background: url('./images/CaptionPanelBtn.png') no-repeat -72px center;
+}
+
+.riaswAccordionText {
+	margin-left: $padding;
+	margin-right: $padding;
+}
+
+.riaswAccordionTitle .arrowTextUp,
+.riaswAccordionTitle .arrowTextDown {
+	display: none;
+	font-size: 0.65em;
+	font-weight: normal !important;
+}
+
+.dj_a11y .riaswAccordionTitle .arrowTextUp,
+.dj_a11y .riaswAccordionTitleSelected .arrowTextDown {
+	display: inline;
+}
+
+.dj_a11y .riaswAccordionTitleSelected .arrowTextUp {
+	display: none;
+}
+
+
+.dijitRtl .riaswAccordionArrow {
+	background-position: 0 top;
+}
+
+.dijitRtl .riaswAccordionTitleSelected .riaswAccordionArrow {
+	/* same rule as LTR mode, just listed to override previous rule in this file */
+	background-position: -15px top;
+}

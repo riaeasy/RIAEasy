@@ -1,0 +1,451 @@
+/**
+ * rias.riasw.layout.TabPanel
+ */
+/* Classes for all types of tabs (top/bottom/left/right) */
+.riaswTabPanel {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: 0.25em;
+}
+.dj_ie6 .riaswTabPanel {
+  overflow: hidden;
+}
+.riaswTabPanelNoLayout {
+  width: 100%;
+}
+.riaswTabPanelTopChildWrapper,
+.riaswTabPanelBottomChildWrapper,
+.riaswTabPanelLeftChildWrapper,
+.riaswTabPanelRightChildWrapper {
+  position: absolute;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.nowrapTabStrip {
+  width: auto;
+  position: absolute;
+}
+.riaswTabListWrapper {
+  overflow: hidden;
+  z-index: 1;
+}
+.riaswTabSpacer {
+  display: none;
+}
+.riaswTabController {
+  z-index: 1;
+}
+.riaswTabPanelContainer {
+  background: inherit;
+  border: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 0 0.25em 0.25em;
+  z-index: 1;
+  overflow: visible !important;
+}
+.riaswTab {
+  font-size: 1.1em;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid #9e9e9e;
+  background-color: inherit;
+  text-align: center;
+  -webkit-transition-property: background, padding, margin;
+  -moz-transition-property: background, padding, margin;
+  -o-transition-property: background, padding, margin;
+  -ms-transition-property: background, padding, margin;
+  transition-property: background, padding, margin;
+  -webkit-transition-duration: 0.1s;
+  -moz-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  -ms-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  -ms-transition-timing-function: ease;
+  transition-timing-function: ease;
+  position: relative;
+  z-index: 0;
+}
+.riaswTab:before {
+  content: "";
+  display: block;
+  position: absolute;
+}
+.riaswTab * {
+  vertical-align: middle;
+}
+.riaswTab .riaswTabLabel {
+/*min-height: 16px;*/
+  display: inline-block;
+}
+.riaswTabHover {
+  background-color: #f2f2f2;
+}
+.riaswTabActive {
+  background-color: #e6e6e6;
+}
+.riaswTabChecked {
+  cursor: default;
+  border-color: #9e9e9e;
+  font-weight: bold;
+  z-index: 1;
+}
+.riaswTabDisabled {
+  opacity: 0.25;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+  filter: alpha(opacity=25);
+}
+div.riaswTabDisabled,
+.dj_ie div.riaswTabDisabled {
+  cursor: auto;
+}
+.riaswTabCloseText {
+  display: none;
+}
+.dj_a11y .riaswTabCloseText {
+  display: inline;
+}
+.dj_ie6 .riaswTab .dijitNoIcon {
+  display: inline;
+  height: 15px;
+  width: 1px;
+}
+.riaswTabCloseButton {
+  font-family: "flat-icon";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0.35;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=35)";
+  filter: alpha(opacity=35);
+}
+.riaswTabCloseButton:before {
+  content: "\f00e";
+  font-size: 16px;
+}
+.riaswTabCloseButtonHover {
+  opacity: 0.75;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+  filter: alpha(opacity=75);
+  background-color: #ffd700;
+}
+.riaswTabCloseButtonActive {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  background-color: #ffd700;
+}
+.dj_a11y .riaswTabCloseButton {
+  background-image: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+.riaswTabStripButton {
+  z-index: 12;
+  background-color: #fff;
+  border: 1px solid transparent;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  -ms-transition-property: background-color;
+  transition-property: background-color;
+  position: absolute;
+  padding: 0.25em;
+}
+/************ top、bottom、left、right ***********/
+.riaswTabPanelContainer {
+  z-index: 0;
+  overflow: hidden;
+}
+.riaswTabController-top,
+.riaswTabController-bottom,
+.riaswTabController-left,
+.riaswTabController-right {
+  z-index: 1;
+  overflow: visible !important;
+  border: none;
+}
+.riaswTabController-top .riaswTab,
+.riaswTabController-bottom .riaswTab {
+  height: 2em;
+  line-height: 2em;
+}
+.riaswTabController-top .riaswTabControllerContent,
+.riaswTabController-bottom .riaswTabControllerContent {
+  padding: 0 1em;
+}
+.riaswTabController-left .riaswTab,
+.riaswTabController-right .riaswTab {
+  width: 2em;
+}
+.riaswTabController-left .riaswTabControllerContent,
+.riaswTabController-right .riaswTabControllerContent {
+  padding: 1em 0;
+}
+.riaswTabController-top .riaswTab,
+.riaswTabController-bottom .riaswTab {
+  display: inline-block;
+}
+/*************** top tabs ***************/
+.riaswTabPanelContainer-top {
+  border-top: 2px solid #9e9e9e;
+  border-radius: 0 0 0.25em 0.25em;
+}
+.riaswTabController-top {
+  margin-top: 2px;
+}
+.riaswTabController-top .riaswTab {
+  margin-right: 0;
+  padding: 0.25em 1em;
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+}
+.riaswTabController-top .riaswTabChecked {
+  border-bottom-color: #fff;
+}
+.riaswTabController-top .riaswTabChecked:before {
+  height: 3px;
+  background: #90caf9;
+  top: 0px;
+  left: -1px;
+  right: -1px;
+}
+/*************** end top tabs **************/
+/*************** bottom tabs ***************/
+.riaswTabPanelContainer-bottom {
+  border-bottom: 2px solid #9e9e9e;
+  border-radius: 0.25em 0.25em 0 0;
+}
+.riaswTabController-bottom {
+  margin-top: -2px;
+}
+.riaswTabController-bottom .riaswTab {
+  margin-right: 0;
+  padding: 0.25em 1em;
+  border-top: 2px solid transparent;
+  display: inline-block;
+}
+.riaswTabController-bottom .riaswTabChecked {
+  border-top-color: #fff;
+}
+.riaswTabController-bottom .riaswTabChecked:before {
+  height: 3px;
+  background: #90caf9;
+  bottom: 0px;
+  left: -1px;
+  right: -1px;
+}
+/************ end bottom tabs ************/
+/*************** left tabs ***************/
+.riaswTabPanelContainer-left {
+  border-left: 2px solid #9e9e9e;
+  border-radius: 0 0.25em 0.25em 0;
+}
+.riaswTabController-left {
+  margin-left: 2px;
+}
+.riaswTabController-left .riaswTab {
+  margin-bottom: 0;
+  padding: 0.5em;
+  border-right: 2px solid transparent;
+  display: block;
+}
+.riaswTabController-left .riaswTabChecked {
+  border-right-color: #fff;
+}
+.riaswTabController-left .riaswTabChecked:before {
+  width: 3px;
+  background: #90caf9;
+  bottom: -1px;
+  left: 0px;
+  top: -1px;
+}
+/************** end left tabs *************/
+/*************** right tabs ***************/
+.riaswTabPanelContainer-right {
+  border-right: 2px solid #9e9e9e;
+  border-radius: 0.25em 0 0 0.25em;
+}
+.riaswTabController-right {
+  margin-left: -2px;
+}
+.riaswTabController-right .riaswTab {
+  margin-bottom: 0;
+  padding: 0.5em;
+  border-left: 2px solid transparent;
+  display: block;
+}
+.riaswTabController-right .riaswTabChecked {
+  border-left-color: #fff;
+}
+.riaswTabController-right .riaswTabChecked:before {
+  width: 3px;
+  background: #90caf9;
+  bottom: -1px;
+  right: 0px;
+  top: -1px;
+}
+/************* end right tabs *************/
+/************ scroll buttons + menu button ***********/
+.riaswTabStripIcon {
+  font-family: "flat-icon";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #90caf9;
+  vertical-align: middle;
+}
+.riaswTabStripIcon:before {
+  content: "\f004";
+}
+.riaswTabStripSlideRightIcon:before {
+  content: "\f005";
+}
+.riaswTabStripSlideUpIcon:before {
+  content: "\f007";
+}
+.riaswTabStripSlideDownIcon:before {
+  content: "\f006";
+}
+.riaswTabStripMenuIcon:before {
+  content: "\f033";
+}
+.dj_a11y .riaswTabStripButton img {
+  display: none;
+}
+.riaswTabButtonDisabled .riaswTabStripButton {
+  display: none;
+}
+.riaswTabStripButtonHover {
+  background-color: #f2f2f2;
+}
+.riaswTabStripButtonActive {
+  background-color: #e6e6e6;
+}
+/* disabled */
+.riaswTabStripButtonDisabled {
+  cursor: default;
+  color: $button-disabled-color;
+  background-color: $button-disabled-background-color;
+  border-color: $button-disabled-border-color;
+  background-image: none;
+  color: inherit;
+  -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  opacity: 0.25;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+  filter: alpha(opacity=25);
+  filter: grayscale(1);
+}
+/*********** end left/right scroll buttons + menu button *********/
+/*************** nested tabs ***************/
+.riaswTabPanelNested .riaswTabListWrapper {
+  height: auto;
+}
+/*.riaswTabPanelTabListNested {
+	.riaswTab {
+		color: $nestedtab-text-color;
+		margin: $tab-padding;
+		padding: $nestedtab-padding;
+		border: 1px solid $nestedtab-border-color;
+		border-radius: $nestedtab-border-radius;
+		transition-property: background-color, border-color;
+		transition-duration: .3s;
+	}
+	.riaswTabHover {
+		background-color: $nestedtab-hover-background-color;
+	}
+	.riaswTabActive {
+		color: $nestedtab-active-text-color;
+		background-color:$nestedtab-active-background-color;
+	}
+	.riaswTabChecked,
+	.riaswTabChecked.riaswTabHover,
+	.riaswTabChecked.riaswTabActive {
+		color: $nestedtab-checked-text-color;
+		background-color: $nestedtab-checked-background-color;
+		&:before {
+			display: none;
+		}
+	}
+
+	.riaswTabController-top .riaswTab {
+		margin-right: $nestedtab-spacing;
+	}
+	.riaswTabController-bottom .riaswTab {
+		margin-right: $nestedtab-spacing;
+	}
+	.riaswTabController-left .riaswTab {
+		margin-bottom: $nestedtab-spacing;
+	}
+	.riaswTabController-right .riaswTab {
+		margin-bottom: $nestedtab-spacing;
+	}
+
+}
+
+.riaswTabPanelWrapperNested {
+	//border: none; // prevent double border
+	border-width: 0;
+	box-shadow: none;
+}*/
+/* Rtl */
+.riaswTabControllerRtl,
+.riaswTabControllerRtl .nowrapTabStrip {
+  text-align: right;
+}
+.dijitTabRtl .riaswTabCloseButton {
+  margin-left: 0;
+  margin-right: 0.25em;
+}
+.dijitRtl .riaswTab {
+  margin-right: 0;
+  margin-left: 2px;
+/* space between one tab and the next in top/bottom mode */
+}
+.dijitRtl .riaswTabPanelTopStrip,
+.dijitRtl .riaswTabPanelBottomStrip,
+.dijitRtl .riaswTabController-top,
+.dijitRtl .riaswTabController-bottom {
+  padding-left: 0;
+  padding-right: 3px;
+}
+.dijitRtl .riaswTabInnerDiv {
+  padding-left: 3px;
+  padding-right: 4px;
+}
+.dijitRtl .riaswTabController-left .riaswTab,
+.dijitRtl .riaswTabController-right .riaswTab {
+  margin-left: 0;
+}
+.dj_ie-rtl .riaswTabController-left {
+  margin-left: 0 !important;
+}
+.dj_ie-rtl .riaswTabController-right {
+  margin-right: 0 !important;
+}
+.dj_ie-rtl .riaswTab .riaswTabInnerDiv {
+  width: 1%;
+}

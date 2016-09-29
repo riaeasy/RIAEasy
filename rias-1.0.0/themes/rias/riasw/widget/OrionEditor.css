@@ -1,0 +1,58 @@
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/default.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/adelante.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/ambience.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/blue.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/eclipse.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/nimbus.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/prospecto.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/raspberrypi.css";
+@import "../../../../../webLib/orion-12.0/orion/editor/themes/tierra.css";
+.riaswOrionEditor {
+  border: 0px solid #d3d3d3;
+  width: 20em;
+  min-height: 2em;
+  min-width: 5em;
+  vertical-align: middle;
+  display: inline-block;
+  overflow: hidden;
+}
+.riaswOrionEditorReadOnly,
+.riaswOrionEditorDisabled,
+.riaswOrionEditorReadOnly .riaswTextBoxContainer,
+.riaswOrionEditorDisabled .riaswTextBoxContainer {
+  background-color: inherit;
+  background-image: none;
+  color: inherit;
+}
+.riaswOrionEditorFocused .riaswTextBoxContainer {
+  outline: 5px -webkit-focus-ring-color;
+  border-color: $input-focused-border-color;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 $input-focused-border-color inset;
+  box-shadow: 0 0 0.25em 0 $input-focused-border-color inset;
+}
+.riaswOrionEditorHover .riaswTextBoxContainer {
+  border-color: $input-hover-border-color;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 $input-hover-border-color inset;
+  box-shadow: 0 0 0.25em 0 $input-hover-border-color inset;
+}
+.riaswOrionEditorError .riaswTextBoxContainer,
+.riaswOrionEditorErrorFocused .riaswTextBoxContainer {
+  border-color: $input-error-border-color;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 $input-error-border-color inset;
+  box-shadow: 0 0 0.25em 0 $input-error-border-color inset;
+}
