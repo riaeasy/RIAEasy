@@ -1,4 +1,0 @@
-//>>built
-define("dojo/uacss",["./dom-geometry","./_base/lang","./domReady","./sniff","./_base/window"],function(h,k,n,a,d){var e=d.doc.documentElement;d=a("ie");var l=a("trident"),b=a("opera"),f=Math.floor,m=a("ff"),p=h.boxModel.replace(/-/,""),b={dj_quirks:a("quirks"),dj_opera:b,dj_khtml:a("khtml"),dj_webkit:a("webkit"),dj_safari:a("safari"),dj_chrome:a("chrome"),dj_edge:a("edge"),dj_gecko:a("mozilla"),dj_ios:a("ios"),dj_android:a("android")};d&&(b.dj_ie=!0,b["dj_ie"+f(d)]=!0,b.dj_iequirks=a("quirks"));l&&
-(b.dj_trident=!0,b["dj_trident"+f(l)]=!0);m&&(b["dj_ff"+f(m)]=!0);b["dj_"+p]=!0;var c="",g;for(g in b)b[g]&&(c+=g+" ");e.className=k.trim(e.className+" "+c);n(function(){if(!h.isBodyLtr()){var a="dj_rtl dijitRtl "+c.replace(/ /g,"-rtl ");e.className=k.trim(e.className+" "+a+"dj_rtl dijitRtl "+c.replace(/ /g,"-rtl "))}});return a});
-/// uacss.js.map

@@ -1,9 +1,0 @@
-/* Combo Button */
-.rias .dijitComboButtonRtl .dijitArrowButton {
-  -moz-border-radius: 4px 0 0 4px;
-  border-radius: 4px 0 0 4px;
-  padding: 3px 0 4px;
-  border-left-width: 1px;
-  border-right-width: 0;
-}
-/* End Combo Button */
