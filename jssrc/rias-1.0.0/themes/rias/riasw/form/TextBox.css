@@ -1,0 +1,536 @@
+/* Text Inputs: [TextBox | DateTextBox | CurrencyTextBox | ValidationTextBox | ...] | TextArea
+ * Mainly includes:
+ *
+ * 1. Containers
+ * 		.riaswTextBox
+ * 		.dijitInputField - container that wraps "dijitInputInner" or "dijitPlaceHolder"
+ *
+ * 2. Textbox input
+ * 		.dijitInputInner
+ * 		.dijitPlaceHolder
+ *
+ * 3. States - Hover, Focused, Disabled, Error, Error while Focused e.g.
+ * 		.riaswTextBoxHover
+ * 		.riaswTextBoxFocused
+ * 		.riaswTextBoxDisabled
+ *      .riaswTextBoxError
+ *      .riaswTextBoxErrorFocused
+ *
+*/
+.riaswTextBox,
+.riaswTextArea,
+.riaswSelect {
+  position: relative;
+  border: solid #000 0px;
+  overflow: hidden;
+  height: 2em;
+  width: 20em; /* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+  display: inline-block;
+}
+.riaswTextArea {
+  height: 5em;
+}
+.riaswSelect {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #9e9e9e;
+  padding: 0.25em;
+  border-radius: 0.25em;
+  line-height: 1.5em;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+  background: #fff;
+  table-layout: fixed;
+}
+.riaswExpandingTextArea {
+  resize: none;
+}
+.riaswTextBox *,
+.riaswTextArea *,
+.riaswSelect * {
+  vertical-align: middle;
+  display: inline-block;
+  font: inherit;
+}
+.riaswTextBoxLabel {
+  position: relative;
+  float: left;
+  text-align: right;
+  width: 0px;
+  overflow: hidden;
+}
+.riaswSelectLabel {
+/* for when an <input> is embedded inside an inline-block <div> with a size and border */
+  border-width: 0;
+  background-color: inherit;
+  width: 100%;
+/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
+  height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.riaswTextBoxContainer {
+  position: relative;
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #9e9e9e;
+  border-radius: 0.25em;
+  -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -o-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -ms-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  padding: 0;
+  margin: 0;
+}
+.riaswNumberTextBox .riaswTextBoxContainer {
+  text-align: left;
+  direction: ltr;
+}
+.riaswTextArea .riaswTextBoxContainer {
+  width: 100%;
+/*overflow-y: auto;*/
+/* w/out this IE's SimpleTextArea goes to overflow: scroll */
+}
+.riaswTextArea .riaswTextBoxContainer[cols] {
+  width: auto;
+/* SimpleTextArea cols */
+}
+.dj_ie .riaswTextAreaCols .riaswTextBoxContainer {
+  width: auto;
+}
+.riaswInputInner {
+  border: 0 !important;
+  background-color: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 0 0.25em;
+  margin: 0;
+  font-weight: bold;
+  resize: none;
+}
+.riaswNumberTextBox .riaswInputInner,
+.riaswCurrencyTextBox .riaswInputInner {
+  text-align: right;
+  padding-right: 1em;
+}
+/* ============================= */
+.riaswSpinnerContainer {
+  overflow: hidden;
+  position: relative;
+  width: auto;
+  padding: 0;
+  border: 1px solid #9e9e9e;
+}
+.riaswSpinnerInner {
+  width: 4em;
+  padding: 0.25em 0;
+  margin: 0;
+}
+.riaswSpinner .riaswSpinnerButtonContainer,
+.riaswTextBox .riaswArrowButtonContainer {
+  border-style: solid;
+  border-width: 1px 1px 1px 0px;
+}
+.riaswTextBox .riaswSpinnerButtonContainer {
+  padding: 0;
+  width: auto;
+  position: relative;
+}
+/* ----- Multiple Select ----- */
+select {
+  padding: 0.25em 0;
+  border: 1px solid #9e9e9e;
+  -webkit-box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.3), 0 2px 2px rgba(0,0,0,0.2);
+}
+select option {
+  padding: 0.25em 0.5em;
+}
+/* Dropdown menu styles for "Select"
+ * Most of menu styles are defined in Menu.styl
+ */
+.riaswSelectMenu td.dijitMenuItemIconCell,
+.riaswSelectMenu td.dijitMenuArrowCell {
+/* so that arrow and icon cells from MenuItem are not displayed */
+  display: none;
+}
+.dijitSelect.alt-primary,
+.dijitComboBox.alt-primary,
+.dijitSpinner.alt-primary {
+  border-color: #1e88e5;
+}
+.dijitSelect.alt-success,
+.dijitComboBox.alt-success,
+.dijitSpinner.alt-success {
+  border-color: #43a047;
+}
+.dijitSelect.alt-info,
+.dijitComboBox.alt-info,
+.dijitSpinner.alt-info {
+  border-color: #03a9f4;
+}
+.dijitSelect.alt-warning,
+.dijitComboBox.alt-warning,
+.dijitSpinner.alt-warning {
+  border-color: #fb8c00;
+}
+.dijitSelect.alt-danger,
+.dijitComboBox.alt-danger,
+.dijitSpinner.alt-danger {
+  border-color: #e53935;
+}
+.dijitSelect.alt-inverse,
+.dijitComboBox.alt-inverse,
+.dijitSpinner.alt-inverse {
+  border-color: #616161;
+}
+/* status ====================================*/
+.riaswTextBoxHover .riaswTextBoxContainer {
+  border-color: #90caf9;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #90caf9 inset;
+  box-shadow: 0 0 0.25em 0 #90caf9 inset;
+}
+.riaswTextBoxActive .riaswTextBoxContainer {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,0.05);
+  box-shadow: inset 0 3px 5px rgba(0,0,0,0.05);
+  background: #e0e0e0;
+  border-color: #b3b3b3;
+}
+.riaswTextBoxFocused .riaswTextBoxContainer {
+  outline: none;
+  border-color: #90caf9;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #90caf9 inset;
+  box-shadow: 0 0 0.25em 0 #90caf9 inset;
+}
+.riaswTextBoxReadOnly,
+.riaswTextBoxReadOnly .riaswTextBoxContainer,
+.riaswTextBoxReadOnly .riaswArrowButtonContainer,
+.riaswTextBoxReadOnly .riaswArrowButton,
+.riaswTextBoxReadOnly .riaswSpinnerButtonContainer {
+  background-color: inherit;
+  background-image: none;
+/*outline: none;*/
+  color: inherit;
+}
+.riaswTextBoxDisabled,
+.riaswTextBoxDisabled .riaswTextBoxContainer,
+.riaswTextBoxDisabled .riaswArrowButtonContainer,
+.riaswTextBoxDisabled .riaswArrowButton,
+.riaswTextBoxDisabled .riaswSpinnerButtonContainer {
+/*outline: none;*/
+  color: inherit;
+  background-color: inherit;
+  background-image: none;
+  border-color: #e3e3e3;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+.riaswTextAreaDisabled .riaswTextBoxContainer,
+.riaswTextAreaDisabled .riaswArrowButtonContainer {
+  border-top-width: 1px;
+}
+.riaswSpinnerDisabled .riaswDownArrowButton,
+.riaswSpinnerDisabled .riaswUpArrowButton {
+  cursor: default;
+  color: #9e9e9e;
+  background-color: #f5f5f5;
+  border-color: #e3e3e3;
+}
+.dijitComboBoxDisabled.alt-primary,
+.dijitSpinnerDisabled.alt-primary {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #6db2ee;
+}
+.dijitComboBoxDisabled.alt-primary .dijitButtonNode,
+.dijitSpinnerDisabled.alt-primary .dijitButtonNode {
+  background: #6db2ee;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-primary .dijitSpinnerButtonContainer {
+  border-left-color: #6db2ee;
+}
+.dijitSpinnerRtlDisabled.alt-primary .dijitSpinnerButtonContainer {
+  border-right-color: #6db2ee;
+}
+.dijitSelectDisabled.alt-primary {
+  border-color: #6db2ee;
+}
+.dijitSelectDisabled.alt-primary .dijitStretch,
+.dijitSelectDisabled.alt-primary .dijitButtonNode {
+  background: #6db2ee;
+  color: #f2f2f2;
+}
+.dijitComboBoxDisabled.alt-success,
+.dijitSpinnerDisabled.alt-success {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #7dc981;
+}
+.dijitComboBoxDisabled.alt-success .dijitButtonNode,
+.dijitSpinnerDisabled.alt-success .dijitButtonNode {
+  background: #7dc981;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-success .dijitSpinnerButtonContainer {
+  border-left-color: #7dc981;
+}
+.dijitSpinnerRtlDisabled.alt-success .dijitSpinnerButtonContainer {
+  border-right-color: #7dc981;
+}
+.dijitSelectDisabled.alt-success {
+  border-color: #7dc981;
+}
+.dijitSelectDisabled.alt-success .dijitStretch,
+.dijitSelectDisabled.alt-success .dijitButtonNode {
+  background: #7dc981;
+  color: #f2f2f2;
+}
+.dijitComboBoxDisabled.alt-info,
+.dijitSpinnerDisabled.alt-info {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #56c9fd;
+}
+.dijitComboBoxDisabled.alt-info .dijitButtonNode,
+.dijitSpinnerDisabled.alt-info .dijitButtonNode {
+  background: #56c9fd;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-info .dijitSpinnerButtonContainer {
+  border-left-color: #56c9fd;
+}
+.dijitSpinnerRtlDisabled.alt-info .dijitSpinnerButtonContainer {
+  border-right-color: #56c9fd;
+}
+.dijitSelectDisabled.alt-info {
+  border-color: #56c9fd;
+}
+.dijitSelectDisabled.alt-info .dijitStretch,
+.dijitSelectDisabled.alt-info .dijitButtonNode {
+  background: #56c9fd;
+  color: #f2f2f2;
+}
+.dijitComboBoxDisabled.alt-warning,
+.dijitSpinnerDisabled.alt-warning {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #ffb557;
+}
+.dijitComboBoxDisabled.alt-warning .dijitButtonNode,
+.dijitSpinnerDisabled.alt-warning .dijitButtonNode {
+  background: #ffb557;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-warning .dijitSpinnerButtonContainer {
+  border-left-color: #ffb557;
+}
+.dijitSpinnerRtlDisabled.alt-warning .dijitSpinnerButtonContainer {
+  border-right-color: #ffb557;
+}
+.dijitSelectDisabled.alt-warning {
+  border-color: #ffb557;
+}
+.dijitSelectDisabled.alt-warning .dijitStretch,
+.dijitSelectDisabled.alt-warning .dijitButtonNode {
+  background: #ffb557;
+  color: #f2f2f2;
+}
+.dijitComboBoxDisabled.alt-danger,
+.dijitSpinnerDisabled.alt-danger {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #ee7e7c;
+}
+.dijitComboBoxDisabled.alt-danger .dijitButtonNode,
+.dijitSpinnerDisabled.alt-danger .dijitButtonNode {
+  background: #ee7e7c;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-danger .dijitSpinnerButtonContainer {
+  border-left-color: #ee7e7c;
+}
+.dijitSpinnerRtlDisabled.alt-danger .dijitSpinnerButtonContainer {
+  border-right-color: #ee7e7c;
+}
+.dijitSelectDisabled.alt-danger {
+  border-color: #ee7e7c;
+}
+.dijitSelectDisabled.alt-danger .dijitStretch,
+.dijitSelectDisabled.alt-danger .dijitButtonNode {
+  background: #ee7e7c;
+  color: #f2f2f2;
+}
+.dijitComboBoxDisabled.alt-inverse,
+.dijitSpinnerDisabled.alt-inverse {
+  background: #f5f5f5;
+  color: #9e9e9e;
+  border: 1px solid #989898;
+}
+.dijitComboBoxDisabled.alt-inverse .dijitButtonNode,
+.dijitSpinnerDisabled.alt-inverse .dijitButtonNode {
+  background: #989898;
+  color: #f2f2f2;
+}
+.dijitSpinnerDisabled.alt-inverse .dijitSpinnerButtonContainer {
+  border-left-color: #989898;
+}
+.dijitSpinnerRtlDisabled.alt-inverse .dijitSpinnerButtonContainer {
+  border-right-color: #989898;
+}
+.dijitSelectDisabled.alt-inverse {
+  border-color: #989898;
+}
+.dijitSelectDisabled.alt-inverse .dijitStretch,
+.dijitSelectDisabled.alt-inverse .dijitButtonNode {
+  background: #989898;
+  color: #f2f2f2;
+}
+.alt-primary .riaswSpinnerButtonContainer {
+  border-color: #1e88e5;
+}
+.alt-success .riaswSpinnerButtonContainer {
+  border-color: #43a047;
+}
+.alt-info .riaswSpinnerButtonContainer {
+  border-color: #03a9f4;
+}
+.alt-warning .riaswSpinnerButtonContainer {
+  border-color: #fb8c00;
+}
+.alt-danger .riaswSpinnerButtonContainer {
+  border-color: #e53935;
+}
+.alt-inverse .riaswSpinnerButtonContainer {
+  border-color: #616161;
+}
+.riaswValidationIcon {
+  display: none;
+  width: 10px;
+  height: 100%;
+  background: url("./images/error.png") no-repeat;
+}
+.riaswValidationContainer {
+  color: #dd2c00;
+  display: inline-block;
+  cursor: default;
+  position: relative;
+  width: 0;
+  height: 100%;
+  top: 0px;
+  right: 1.25em;
+}
+.riaswValidationContainer:before {
+  content: "";
+}
+/*.riaswTextBoxError .riaswTextBoxContainer,
+.riaswTextBoxError .riaswButtonNode {
+	border-color: $input-error-border-color;
+	transition-duration: .25s;
+	box-shadow: 0em 0em 0.25em 0.1em $input-error-border-color inset;
+	background-color: #ffffbb;
+	background-image:none;
+}*/
+.riaswValidationTextBoxError .riaswTextBoxContainer {
+  border-color: #dd2c00;
+  background-color: #ffffe0;
+  background-image: none;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #dd2c00 inset;
+  box-shadow: 0 0 0.25em 0 #dd2c00 inset;
+}
+.riaswValidationTextBoxError .riaswValidationContainer:before {
+  display: block;
+  font-size: 1.5em;
+  font-family: "flat-icon";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f017";
+}
+.riaswComboBoxHighlightMatch {
+  background-color: #f9f7ba;
+}
+/* Rtl ======================= */
+.riaswTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswSpinnerButtonContainer {
+  border-right-width: 1px;
+  border-left-width: 0;
+}
+.riaswTextBoxRtlError .riaswValidationContainer {
+  border-left-width: 0;
+  border-right-width: 1px;
+}
+.dijitRtl .dijitPlaceHolder {
+  left: auto;
+  right: 0;
+}
+.riaswTextBoxRtl .riaswSpinnerButtonContainer,
+.riaswValidationTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswArrowButtonContainer {
+  float: left;
+}
+.riaswSpinnerRtl .riaswSpinnerButtonContainer .riaswArrowButton {
+  right: 0;
+  left: auto;
+}
+div.riaswNumberTextBoxRtl {
+  text-align: right;
+}
+.riaswSelectRtl .riaswButtonText {
+  float: right;
+  padding: 0 0.75em 0 0;
+}
+.riaswComboBoxRtl .riaswButtonNode.riaswArrowButtonContainer {
+  border-radius: 0.25em 0 0 0.25em;
+}
+.riaswComboBoxRtl .riaswArrowButtonContainer {
+  border-right-width: 1px;
+  border-left-width: 0;
+}
+.riaswSelect .riaswArrowButtonInner,
+.riaswComboBox .riaswArrowButtonInner {
+  background-position: -51px center;
+}
+/* ======================== */
+.dj_ie6 .riaswArrowButtonInner {
+  background-image: url("../images/spriteArrows.gif");
+}
+.dj_ie .riaswSpinner .riaswUpArrowButton .riaswArrowButtonInner {
+  margin-top: 1px; /* image has too many blank pixels on top */
+}

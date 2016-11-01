@@ -1,0 +1,383 @@
+/* Text Inputs: [TextBox | DateTextBox | CurrencyTextBox | ValidationTextBox | ...] | TextArea
+ * Mainly includes:
+ *
+ * 1. Containers
+ * 		.riaswTextBox
+ * 		.dijitInputField - container that wraps "dijitInputInner" or "dijitPlaceHolder"
+ *
+ * 2. Textbox input
+ * 		.dijitInputInner
+ * 		.dijitPlaceHolder
+ *
+ * 3. States - Hover, Focused, Disabled, Error, Error while Focused e.g.
+ * 		.riaswTextBoxHover
+ * 		.riaswTextBoxFocused
+ * 		.riaswTextBoxDisabled
+ *      .riaswTextBoxError
+ *      .riaswTextBoxErrorFocused
+ *
+*/
+
+@import 'form_variables';
+
+.riaswTextBox,
+.riaswTextArea,
+.riaswSelect {
+	position: relative;
+	border: solid black 0px;
+	overflow: hidden;
+	height: 2em;
+	width: 20em;	/* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+	display: inline-block;
+}
+.riaswTextArea {
+	height: 5em;
+}
+.riaswSelect {
+	button-style();
+	table-layout: fixed;
+}
+
+.riaswExpandingTextArea {
+	resize: none;
+}
+
+//.riaswTimeTextBox {
+//	width: 8em;
+//}
+
+.riaswTextBox *,
+.riaswTextArea *,
+.riaswSelect * {
+	vertical-align: middle;
+	display: inline-block;
+	font: inherit;
+}
+
+.riaswTextBoxLabel {
+	position: relative;
+	float: left;
+	text-align: right;
+	//visibility: hidden;
+	//display: none;
+	width: 0px;
+	overflow: hidden;
+}
+.riaswSelectLabel {
+	/* for when an <input> is embedded inside an inline-block <div> with a size and border */
+	border-width:0;
+	background-color: inherit;
+	width:100%;
+	/* IE dislikes horizontal tweaking combined with width:100% so punish everyone for consistency */
+	height: 100%;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.riaswTextBoxContainer {
+	position: relative;
+	background: $input-background;
+	border-width: 1px;
+	border-style: solid;
+	border-color: $input-border-color;
+	border-radius: $input-border-radius;
+	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	padding: 0;
+	margin:0;
+}
+.riaswValidationTextBox .riaswTextBoxContainer {
+	//padding-right: 1em !important;
+}
+.riaswNumberTextBox .riaswTextBoxContainer {
+	text-align: left;
+	direction: ltr;
+}
+
+.riaswTextArea .riaswTextBoxContainer {
+	width:100%;
+	/*overflow-y: auto;*/	/* w/out this IE's SimpleTextArea goes to overflow: scroll */
+}
+.riaswTextArea .riaswTextBoxContainer[cols] {
+	width:auto; /* SimpleTextArea cols */
+}
+.dj_ie .riaswTextAreaCols .riaswTextBoxContainer {
+	width:auto;
+}
+
+//.riaswTimeTextBox .riaswTextBoxContainer {
+//	width: 8em;
+//}
+
+.riaswInputInner {
+	border:0 !important;
+	background-color:transparent !important;
+	//width:100% !important;
+	box-shadow: none !important;
+	padding: 0 $input-padding;
+	margin: 0;// $input-margin;
+	font-weight: bold;
+	resize: none;
+}
+.riaswNumberTextBox .riaswInputInner,
+.riaswCurrencyTextBox .riaswInputInner {
+	text-align: right;
+	padding-right: 1em;
+}
+
+/* ============================= */
+
+.riaswSpinnerContainer {
+	overflow: hidden;
+	position: relative;
+	width: auto;
+	padding: 0;
+	border: $numberspinner-button-border;
+}
+.riaswSpinnerInner {
+	width: $numberspinner-button-width;
+	padding: $numberspinner-button-inner-padding 0;
+	margin: 0;
+}
+
+.riaswSpinner .riaswSpinnerButtonContainer,
+//.riaswComboBox .riaswArrowButtonContainer,
+//.riaswSelect .riaswArrowButtonContainer,
+.riaswTextBox .riaswArrowButtonContainer {
+	border-style: solid;
+	border-width: 1px 1px 1px 0px;
+}
+.riaswTextBox .riaswSpinnerButtonContainer {
+	padding: 0;
+	//width: 45px;
+	width: auto;
+	position: relative;// !important;
+	//overflow: hidden;
+}
+
+/* ----- Multiple Select ----- */
+select  {
+	padding: $input-padding 0;
+	border: 1px solid $input-border-color;
+	box-shadow: $shadow-depth1;
+}
+select option {
+	padding: $input-padding $input-padding * 2;
+}
+
+/* Dropdown menu styles for "Select"
+ * Most of menu styles are defined in Menu.styl
+ */
+.riaswSelectMenu td.dijitMenuItemIconCell,
+.riaswSelectMenu td.dijitMenuArrowCell {
+	/* so that arrow and icon cells from MenuItem are not displayed */
+	display: none;
+}
+
+create-alternative-textboxes($button-alternative-colors);
+
+/* status ====================================*/
+
+// hover
+.riaswTextBoxHover .riaswTextBoxContainer {
+	border-color: $input-hover-border-color;
+	transition-duration: .25s;
+	_textbox_shadow($input-hover-border-color);
+}
+
+// active
+.riaswTextBoxActive .riaswTextBoxContainer {
+	button-active-style();
+}
+
+// focused
+.riaswTextBoxFocused .riaswTextBoxContainer {
+	//outline: 5px -webkit-focus-ring-color;
+	outline: none;
+	border-color: $input-focused-border-color;
+	transition-duration: .25s;
+	_textbox_shadow($input-focused-border-color);
+}
+
+// readOnly
+//.riaswSelectReadOnly,
+//.riaswSelectReadOnly .riaswTextBoxContainer,
+//.riaswSelectReadOnly .riaswArrowButtonContainer,
+//.riaswTextAreaReadOnly,
+//.riaswTextAreaReadOnly .riaswTextBoxContainer,
+//.riaswTextAreaReadOnly .riaswArrowButtonContainer,
+.riaswTextBoxReadOnly,
+.riaswTextBoxReadOnly .riaswTextBoxContainer,
+.riaswTextBoxReadOnly .riaswArrowButtonContainer,
+.riaswTextBoxReadOnly .riaswArrowButton,
+.riaswTextBoxReadOnly .riaswSpinnerButtonContainer {
+	background-color: inherit;
+	background-image: none;
+	/*outline: none;*/
+	color: inherit;
+}
+// disabled
+//.riaswSelectDisabled,
+//.riaswSelectDisabled .riaswTextBoxContainer,
+//.riaswSelectDisabled .riaswArrowButtonContainer,
+//.riaswSelectDisabled .riaswSpinnerButtonContainer,
+//.riaswTextAreaDisabled,
+//.riaswTextAreaDisabled .riaswTextBoxContainer,
+//.riaswTextAreaDisabled .riaswSpinnerButtonContainer,
+//.riaswTextAreaDisabled .riaswArrowButtonContainer,
+.riaswTextBoxDisabled,
+.riaswTextBoxDisabled .riaswTextBoxContainer,
+.riaswTextBoxDisabled .riaswArrowButtonContainer,
+.riaswTextBoxDisabled .riaswArrowButton,
+.riaswTextBoxDisabled .riaswSpinnerButtonContainer {
+	/*outline: none;*/
+	color: inherit;
+	background-color: inherit;
+	background-image: none;
+	border-color: $input-disabled-border-color;
+
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+}
+.riaswTextAreaDisabled .riaswTextBoxContainer,
+.riaswTextAreaDisabled .riaswArrowButtonContainer {
+	border-top-width: 1px;
+}
+.riaswSpinnerDisabled {
+	.riaswDownArrowButton,
+	.riaswUpArrowButton {
+		button-disabled-style();
+	}
+}
+
+create-alternative-textboxes-disabled($button-alternative-colors);
+// checkbox icon within alternative buttons
+if($button-alternative-colors && length($button-alternative-colors) > 0) {
+	for class in $button-alternative-colors {
+		.{class} {
+			.riaswSpinnerButtonContainer {
+				border-color: $button-alternative-colors[class];
+			}
+		}
+	}
+}
+
+// error
+
+// error: icon
+.riaswValidationIcon {
+	display: none;
+	width: 10px;
+	height: 100%;
+	background: url('./images/error.png') no-repeat;
+}
+.riaswValidationContainer {
+	color: $input-error-icon-background-color;
+	//width: $input-error-icon-width;
+	display: inline-block;
+	cursor: default;
+	position: relative;
+	width: 0;
+	height: 100%;
+	top: 0px;
+	right: 1.25em;
+	&:before {
+		content: "";
+	}
+}
+/*.riaswTextBoxError .riaswTextBoxContainer,
+.riaswTextBoxError .riaswButtonNode {
+	border-color: $input-error-border-color;
+	transition-duration: .25s;
+	box-shadow: 0em 0em 0.25em 0.1em $input-error-border-color inset;
+	background-color: #ffffbb;
+	background-image:none;
+}*/
+.riaswValidationTextBoxError {
+	.riaswTextBoxContainer {
+		//border-color: red;
+		border-color: $input-error-border-color;
+		background-color: lightyellow;
+		background-image: none;
+		transition-duration: .25s;
+		_textbox_shadow($input-error-border-color);
+	}
+	.riaswValidationContainer {
+		&:before {
+			display: block;
+			font-size: 1.5em;//$input-error-icon-width;
+			_icon-core-style();
+			content: $icon-error;
+		}
+	}
+}
+
+.riaswComboBoxHighlightMatch {
+	background-color: #f9f7ba;
+}
+
+
+/* Rtl ======================= */
+.riaswTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswSpinnerButtonContainer {
+	border-right-width: 1px;
+	border-left-width: 0;
+}
+
+.riaswTextBoxRtlError .riaswValidationContainer {
+	border-left-width: 0;
+	border-right-width: 1px;
+}
+
+.dijitRtl .dijitPlaceHolder {
+	left: auto;
+	right: 0;
+}
+
+.riaswTextBoxRtl .riaswSpinnerButtonContainer,
+.riaswValidationTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswArrowButtonContainer {
+	float: left;
+}
+
+.riaswSpinnerRtl .riaswSpinnerButtonContainer .riaswArrowButton {
+	right: 0;
+	left: auto;
+}
+
+div.riaswNumberTextBoxRtl {
+	text-align: right;
+}
+.riaswSelectRtl {
+	.riaswButtonText {
+		float: right;
+		padding: 0 $input-padding*3 0 0;
+	}
+}
+
+.riaswComboBoxRtl {
+	.riaswButtonNode.riaswArrowButtonContainer {
+		border-radius: $button-border-radius 0 0 $button-border-radius;
+	}
+
+	.riaswArrowButtonContainer {
+		border-right-width: 1px;
+		border-left-width: 0;
+	}
+}
+
+.riaswSelect .riaswArrowButtonInner,
+.riaswComboBox .riaswArrowButtonInner {
+	background-position: -51px center;
+}
+
+	/* ======================== */
+
+.dj_ie6 .riaswArrowButtonInner {
+	background-image: url("../images/spriteArrows.gif");
+}
+.dj_ie .riaswSpinner .riaswUpArrowButton .riaswArrowButtonInner {
+	margin-top: 1px; /* image has too many blank pixels on top */
+}

@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>发票打印</title>
+	<style type="text/css" media="all">
+		* {
+			margin: 0;
+			padding: 0;
+			font-size: 9px
+		}
+		table {
+			margin: 0px;
+			border: 0px solid #000;
+			border-collapse: collapse;
+			margin: 2px auto;
+		}
+		th, td {
+			border: 0px solid #000;
+			border-collapse: collapse;
+			width: 45px;
+			height: 12px;
+			padding: 1px 1px;
+		}
+		h1 {
+			font-size: 15px;
+		}
+		@media print {
+			.no-print {
+				display: none;
+			}
+			.page-break {
+				page-break-after: always;
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="no-print" style="text-align:center; margin:5px">
+	<button onClick="window.print()" style="width:50px;height:30px;">打&nbsp;&nbsp;印</button>
+</div>
+<table >
+	<thead>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+		<tr>
+			<th></th>
+		</tr>
+		<tr>
+			<td></td>
+			<td colspan="2">${dtprint}</td>
+			<td></td>
+			<td></td>
+			<td colspan="2">天然气供应</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>用户名：</td>
+			<td colspan="8">${acc_text}</td>
+			<td>编&nbsp;&nbsp;号：</td>
+			<td>${idHZ}</td>
+		</tr>
+		<tr>
+			<td>地&nbsp;&nbsp;址：</td>
+			<td colspan="8">${acc_daddr}</td>
+			<td>所属月份：</td>
+			<td>${period}</td>
+		</tr>
+		<tr>
+			<td colspan="2">项&nbsp;&nbsp;目</td>
+			<td>起数</td>
+			<td>止数</td>
+			<td>实用量</td>
+			<td>加减量</td>
+			<td>合计量</td>
+			<td>单价</td>
+			<td>金额</td>
+			<td>滞纳金</td>
+			<td>小计金额</td>
+		</tr>
+		<tr>
+			<td colspan="2">${text1}</td>
+			<td>${dval01}</td>
+			<td>${dval11}</td>
+			<td>${dcount01}</td>
+			<td>${dadj1}</td>
+			<td>${dcount1}</td>
+			<td>${dprice1}</td>
+			<td>${dcost1}</td>
+			<td>${dcostlate1}</td>
+			<td>${dcost_1}</td>
+		</tr>
+		<tr>
+			<td colspan="2">${text2}</td>
+			<td>${dval02}</td>
+			<td>${dval12}</td>
+			<td>${dcount02}</td>
+			<td>${dadj2}</td>
+			<td>${dcount2}</td>
+			<td>${dprice2}</td>
+			<td>${dcost2}</td>
+			<td>${dcostlate2}</td>
+			<td>${dcost_2}</td>
+		</tr>
+		<tr>
+			<td colspan="2">${text3}</td>
+			<td>${dval03}</td>
+			<td>${dval13}</td>
+			<td>${dcount03}</td>
+			<td>${dadj3}</td>
+			<td>${dcount3}</td>
+			<td>${dprice3}</td>
+			<td>${dcost3}</td>
+			<td>${dcostlate3}</td>
+			<td>${dcost_3}</td>
+		</tr>
+		<tr>
+			<td colspan="2">${text4}</td>
+			<td>${dval04}</td>
+			<td>${dval14}</td>
+			<td>${dcount04}</td>
+			<td>${dadj4}</td>
+			<td>${dcount4}</td>
+			<td>${dprice4}</td>
+			<td>${dcost4}</td>
+			<td>${dcostlate4}</td>
+			<td>${dcost_4}</td>
+		</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td>合计金额</td>
+		<td>${dcost}</td>
+		<td></td>
+		<td>滞纳金</td>
+		<td>${dcostlate}</td>
+		<td></td>
+		<td>减免滞纳金</td>
+		<td>${dcostlate_}</td>
+	</tr>
+	<tr>
+		<td>上次余额</td>
+		<td>${dcostbalance}</td>
+		<td></td>
+		<td>本次应收</td>
+		<td>${dcost_}</td>
+		<td></td>
+		<td>本次实收</td>
+		<td>${dpay}</td>
+		<td></td>
+		<td>本次余额</td>
+		<td>${dbalance}</td>
+	</tr>
+	<tr>
+		<th colspan="2">金额合计(大写)：</th>
+		<th colspan="6">${dcostalldx}</th>
+		<th>(小写)：</th>
+		<th colspan="2">${dcostall}</th>
+	</tr>
+	</tfoot>
+</table>
+</body>
+</html>

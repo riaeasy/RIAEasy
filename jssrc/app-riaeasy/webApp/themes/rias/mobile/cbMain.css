@@ -1,0 +1,78 @@
+.cbMain {
+  font-size: 12px;
+}
+.cbMain .mblTextBox {
+  height: 20px;
+  font-size: 15px;
+}
+.cbMain .mblTextBox:disabled {
+  font-size: 15px;
+  font-weight: bold;
+}
+.cbMain .mblComboBoxMenuItem {
+  height: 1.5em;
+}
+.cbMain .mblButtonDisabled,
+.cbMain .mblButton:disabled {
+  background-color: rgba(0, 0, 0, 0);
+  color: silver;
+  border-style: none;
+}
+.cbMain .mblSwitchText {
+  font-size: 12px;
+}
+.cbMain .mblSwDefaultShape .mblSwitchBg {
+  border-radius: 8px;
+}
+.cbMain .mblSwDefaultShape .mblSwitchKnob {
+  width: 18px;
+}
+.cbMain .mblSwDefaultShape .mblSwitchTextRight {
+  left: 12px;
+}
+.cbMain .mblSwitchBgLeft {
+  background-color: mediumseagreen;
+  color: white;
+}
+.cbMain .mblSwitchBgRight {
+  background-color: dimgray;
+  color: white;
+}
+.cbMain .mblSwitchKnob {
+  background-color: #f8f8ff;
+}
+.cbMain .mblButton {
+  border: 1px solid lightgray;
+}
+.cbMain .mblGoldButton {
+  color: black;
+  background-color: gold;
+}
+.cbMain .mblGreenButton {
+  color: white;
+  background-color: green;
+}
+.cbMain .mblGrayButton {
+  color: white;
+  background-color: gray;
+}
+.cbMain .mblSkyblueButton {
+  color: black;
+  background-color: skyblue;
+}
+.cbMain .mblYellowButton {
+  color: black;
+  background-color: yellow;
+}
+.cbMain .mblSpringButton {
+  color: black;
+  background-color: springgreen;
+}
+.cbMain .mblPinkButton {
+  color: black;
+  background-color: pink;
+}
+.cbMain .mblSilverButton {
+  color: black;
+  background-color: silver;
+}

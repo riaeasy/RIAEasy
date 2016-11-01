@@ -1,0 +1,1 @@
+define(["rias"],function(b){return function(a){return this.defaultDb.insertRecord({table:"xactslog",values:a,where:[]})}});

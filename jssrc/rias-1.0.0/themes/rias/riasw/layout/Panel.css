@@ -1,0 +1,36 @@
+/* Panel */
+/* ContentPanel */
+.riaswPanel {
+/*display: block;*/
+  position: relative;
+/*background-color: inherit;
+	padding: 0px;
+	margin:0;*/
+  border: 0px solid #d3d3d3;
+}
+/*.riaswPanelWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswPanelContent {
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswPanelContent {
+  overflow: hidden;
+}
+/* riaswStackPanel ============================================*/
+.riaswStackPanelContent {
+  overflow: hidden;
+}
+.riaswStackPanelChildWrapper {
+  position: absolute;
+}
+.riaswStackPanelChildWrapperTop {
+  z-index: 9;
+}

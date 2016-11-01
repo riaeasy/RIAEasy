@@ -1,0 +1,42 @@
+/* Module */
+.riaswModule {
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.riaswModuleHover {
+  border-color: #4fc3f7;
+/*-moz-box-shadow: 0em 0em 2em gold;
+	-webkit-box-shadow: 0em 0em 2em gold;
+	box-shadow: 0em 0em 2em gold;*/
+}
+/*.riaswModuleWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswModuleContent {
+  position: relative;
+  overflow: auto;
+}
+.mobileBody .riaswModuleContent {
+  overflow: hidden;
+}
+.riaswModuleLoadingIcon {
+  background-image: url("./images/moduleLoading.gif");
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+  margin: 8px;
+  vertical-align: middle;
+}
+.riaswModuleLoadingError {
+  background-image: url("./images/warning32.png");
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+  margin: 8px;
+  vertical-align: middle;
+}

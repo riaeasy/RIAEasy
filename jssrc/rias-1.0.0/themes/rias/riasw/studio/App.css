@@ -1,0 +1,25 @@
+/* Module */
+.webApp {
+  background-color: #fff;
+  border-style: solid;
+  border-color: #9e9e9e;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  -moz-box-sizing: border-box; /* ff2 */
+  -ms-box-sizing: border-box; /* ie8 */
+  -webkit-box-sizing: border-box; /* safari3 */
+  -khtml-box-sizing: border-box; /* konqueror */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; /* css3 rec */
+}
+.webPage {
+  background-color: #fff;
+  border-color: #9e9e9e;
+  font-size: 12px;
+}

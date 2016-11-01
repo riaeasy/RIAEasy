@@ -1,0 +1,24 @@
+/**
+ * rias.riasw.layout.TabPanel
+ */
+
+/* Classes for all types of tabs (top/bottom/left/right) */
+
+@import 'layout_variables';
+
+.riaswStackPanel {
+	position: relative;
+	overflow: hidden;
+}
+.riaswStackPanelChildWrapper {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.riaswStackController .riaswToggleButtonChecked * {
+	cursor: default;
+}
+
+

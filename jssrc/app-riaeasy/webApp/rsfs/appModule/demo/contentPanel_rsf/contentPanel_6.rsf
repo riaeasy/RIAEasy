@@ -1,0 +1,31 @@
+{
+	"_rsfVersion": 6,
+	"requires": [
+	],
+	"moduleCss": [
+	],
+	"_riaswVersion": "1.0",
+	"region": "center",
+	"caption": "新的页面模块",
+	"title": "新的页面模块",
+	"style": {
+	},
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.ContentPanel",
+			"_riaswIdOfModule": "contentPanel1",
+			"layoutPriority": 0,
+			"region": "center",
+			"href": "http://www.163.com",
+			"splitter": false
+		},
+		{
+			"_riaswType": "rias.riasw.html.Tag",
+			"_riaswIdOfModule": "tag1",
+			"layoutPriority": 0,
+			"region": "center",
+			"splitter": false,
+			"tagType": "iframe"
+		}
+	]
+}

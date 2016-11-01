@@ -1,0 +1,599 @@
+{
+	"_rsfVersion": 60,
+	"_riaswVersion": "0.7",
+	"caption": {
+		"$refObj": "rias.i18n.webApp.myHome.caption"
+	},
+	"iconClass": "homeIcon",
+	"region": "center",
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.Panel",
+			"_riaswIdOfModule": "myHomeMain",
+			"region": "center",
+			"style": {
+				"border": "0px",
+				"padding": "0px"
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.layout.FieldsetPanel",
+					"_riaswIdOfModule": "download",
+					"caption": "源码下载",
+					"attachStyle": {
+						"containerNode": {
+							"font-size": "15px"
+						}
+					},
+					"content": "<p>   源码下载：<a href=\"https://github.com/riaeasy/riaeasy\" target=\"_blank\">https://github.com/riaeasy/riaeasy</a>\n</p>\n",
+					"style": {
+					},
+					"toggleable": true
+				},
+				{
+					"_riaswType": "rias.riasw.layout.FieldsetPanel",
+					"_riaswIdOfModule": "about",
+					"caption": "关于RIAEasy/RIAStudio",
+					"attachStyle": {
+						"containerNode": {
+							"font-size": "15px"
+						}
+					},
+					"style": {
+					},
+					"toggleable": true,
+					"_riaswChildren": [
+						{
+							"_riaswType": "rias.riasw.layout.ContentPanel",
+							"_riaswIdOfModule": "aboutContent",
+							"content": "<p style=\"font-size: 15px; line-height: 1.5em; text-indent: 2em;\">\nRIAEasy - A lightweight, modular, mobile-ready, data-driven for single-page-application.模块化、轻量的富客户/单页应用框架。\n</p>\n<p style=\"font-size: 15px; line-height: 1.5em; text-indent: 2em;\">\nRIAEasy是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用RIAStudio在线可视化设计器。\n</p>\n<p style=\"font-size: 15px; line-height: 1.5em; text-indent: 2em;\">\nRIAEasy基于webComponent概念设计，包括一整套基础控件，具有良好的运行期动态适应性；实现了完全的前端渲染，数据驱动，前后分离，无需后端服务器生成页面；实现了主题（theme）分离，可以自由换肤；同时支持桌面和移动端。目前已经基本可以替代EasyUI、ExtJS(Sencha)，特别适合于webMIS和webApp应用。\n</p>\n<p style=\"font-size: 15px; line-height: 1.5em; text-indent: 2em;\">\nRIAEasy基于dojo构建（dojo 1.10），支持HTML5、CSS3；采用AMD（异步模块定义）加载，封装并扩展了dojo、dijit和部分dojox模块，封装并扩展了dgrid、gridx（不推荐）和Eclipse&nbsp;orion 7的在线编辑等控件。\n</p>\n<p style=\"font-size: 15px; line-height: 1.5em; text-indent: 2em;\">\nRIAEasy是面向跨平台的单页应用设计平台，与传统的网页设计模式差别较大，反而更接近传统的C/S桌面应用设计模式。尽管RIAEasy也可以用来快速设计传统的网页，但这显然不是其真正的优势。正如RIAEasy的名称已经表明的，这是一个用来做RIA的工具。如果您做过C/S桌面应用，用过Delphi、C++Builder、VisualStudio这些工具，那么就更容易理解RIAEasy。\n</p>\n",
+							"style": {
+								"border": "0px #b1badf solid",
+								"padding": "0px 0px 0px 0px"
+							}
+						},
+						{
+							"_riaswType": "rias.riasw.html.Tag",
+							"_riaswIdOfModule": "aboutImg1",
+							"alt": "设计器图示",
+							"src": {
+								"$refScript": "return rias.toUrl('appModule/demo/demoAll_0.png');"
+							},
+							"style": {
+								"border": "0px #b1badf solid",
+								"height": "100%",
+								"padding": "0px 0px 0px 0px",
+								"text-align": "center",
+								"width": "100%"
+							},
+							"tagType": "img"
+						},
+						{
+							"_riaswType": "rias.riasw.html.Tag",
+							"_riaswIdOfModule": "aboutImg2",
+							"alt": "设计器图示",
+							"src": {
+								"$refScript": "return rias.toUrl('appModule/demo/demoAll_1.png');"
+							},
+							"style": {
+								"border": "0px #b1badf solid",
+								"height": "100%",
+								"padding": "0px 0px 0px 0px",
+								"text-align": "center",
+								"width": "100%"
+							},
+							"tagType": "img"
+						}
+					]
+				},
+				{
+					"_riaswType": "rias.riasw.layout.FieldsetPanel",
+					"_riaswIdOfModule": "infos",
+					"attachStyle": {
+						"containerNode": {
+							"font-size": "15px"
+						}
+					},
+					"caption": "相关信息",
+					"content": "<p>\n   QQ群：249642604&nbsp;<a href=\"http://shang.qq.com/wpa/qunwpa?idkey=af62c18f7ab99974c83de36927d241e22f8191634ef3d25c1c715d7184149687\" target=\"_blank\">\n   <img alt=\"RIAEasy\" border=\"0\" src=\"http://pub.idqqimg.com/wpa/images/group.png\" title=\"RIAEasy\">\n   </a>\n</p>\n<p>\n   临时站点：<a href=\"http://www.riaeasy.com:8081\" target=\"_blank\">RIAEasy演示</a>\n</p>\n<p>\n   技术博客：<a href=\"http://blog.csdn.net/zensst/article/category/2913205\" target=\"_blank\">关于 RIAEasy 的博客</a>\n</p>\n",
+					"style": {
+					},
+					"toggleable": true
+				},
+				{
+					"_riaswType": "rias.riasw.layout.CaptionPanel",
+					"_riaswIdOfModule": "history",
+					"caption": "变更历史",
+					"attachStyle": {
+						"containerNode": {
+							"font-size": "15px"
+						}
+					},
+					"content": "<p>\n   &nbsp;2015-1-18，RIAEasy的0.7版上线。&nbsp;\n</p>\n<p>\n   2015-1-19，增加 InnerHTML 编辑功能。&nbsp;\n</p>\n<p>\n   2015-1-20，修改了【助手小易】。&nbsp;\n</p>\n<p>\n   2015-1-21，rias.riasw.html.Tag可用。&nbsp;\n</p>\n<p>\n   2015-1-30，扩展 dijit.form.TextBox 及其子类，增加 label 属性；同时修改了其 css。&nbsp;\n</p>\n<p>\n   2015-2-1，调整设计器界面及功能操作，并修改了部分bug。&nbsp;\n</p>\n<p>\n   2015-2-3，新增 rias.riasw.layout.TablePanel 控件，实现 Table 布局。（暂时不支持 rowSpan）&nbsp;\n</p>\n<!--\n   nested divs because wipeIn()/wipeOut() doesn't work right on node w/padding etc.  Put padding on inner div.\n-->\n",
+					"style": {
+					},
+					"toggleable": true
+				},
+				{
+					"_riaswType": "rias.riasw.layout.CaptionPanel",
+					"_riaswIdOfModule": "panTable",
+					"toggleable": true,
+					"_riaswChildren": [
+						{
+							"_riaswType": "rias.riasw.layout.TablePanel",
+							"_riaswIdOfModule": "table",
+							"cellStyle": {
+								"border": "1px solid steelblue"
+							},
+							"childLabelWidth": "5em",
+							"childShowLabel": true,
+							"childStyle": {
+								"height": "2em",
+								"width": "100%"
+							},
+							"cols": 4,
+							"rowStyle": {
+								"height": "2em"
+							},
+							"rows": 6,
+							"style": {
+								"border": "1px #b1badf solid",
+								"padding": "12px",
+								"width": "80em"
+							},
+							"_riaswChildren": [
+								{
+									"_riaswType": "rias.riasw.form.TextBox",
+									"_riaswIdOfModule": "edt1",
+									"caption": "edt1",
+									"editable": false,
+									"label": "edt1",
+									"position": {
+										"col": 0,
+										"colSpan": 2,
+										"row": 0
+									},
+									"readOnly": false,
+									"value": "edt1text"
+								},
+								{
+									"_riaswType": "rias.riasw.form.ValidationTextBox",
+									"_riaswIdOfModule": "edt2",
+									"label": "url12",
+									"message": "错误的 url.",
+									"labelWidth": "40px",
+									"pattern": {
+										"$refScript": "return rias.regexp.url;"
+									},
+									"position": {
+										"col": 2,
+										"row": 0
+									},
+									"required": true,
+									"value": "edt2"
+								},
+								{
+									"_riaswType": "rias.riasw.form.ValidationTextBox",
+									"_riaswIdOfModule": "edtV0",
+									"label": "ValidationTextBox",
+									"position": {
+										"col": 3,
+										"row": 0
+									},
+									"readOnly": false,
+									"required": true
+								},
+								{
+									"_riaswType": "rias.riasw.form.CheckButton",
+									"_riaswIdOfModule": "checkBox0",
+									"label": "checkBox0",
+									"position": {
+										"col": 0,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": "auto"
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.RadioButton",
+									"_riaswIdOfModule": "rb0",
+									"label": "rb0",
+									"name": "rb",
+									"position": {
+										"col": 0,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": "5em"
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.RadioButton",
+									"_riaswIdOfModule": "rb1",
+									"label": "rb1",
+									"name": "rb",
+									"position": {
+										"col": 0,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": "5em"
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.Button",
+									"_riaswIdOfModule": "button0",
+									"badge": "3",
+									"label": "Button",
+									"position": {
+										"col": 1,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": ""
+									},
+									"onClick": function (){
+		rias.xhr.open("act/riass/page", {
+			module: 'appModule/demo/formEdit',
+			theme: rias.theme.themeParams.name,
+			mobileTheme: rias.theme.themeParams.mobileTheme
+		}, true);
+	}
+								},
+								{
+									"_riaswType": "rias.riasw.form.ToggleButton",
+									"_riaswIdOfModule": "toggleButton0",
+									"badge": "1",
+									"label": "toggleButton0",
+									"position": {
+										"col": 2,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": ""
+									},
+									"value": "toggleButton0"
+								},
+								{
+									"_riaswType": "rias.riasw.form.DropDownButton",
+									"_riaswIdOfModule": "dropDownButton0",
+									"dropDown": {
+										"$refScript": "return module.menu0;"
+									},
+									"label": "ddButton",
+									"position": {
+										"col": 3,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": "auto"
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.ComboButton",
+									"_riaswIdOfModule": "cbButton0",
+									"dropDown": {
+										"$refScript": "return module.menu0;"
+									},
+									"label": "cbButton",
+									"position": {
+										"col": 3,
+										"row": 1
+									},
+									"style": {
+										"height": "auto",
+										"width": "auto"
+									},
+									"value": "comboButton0"
+								},
+								{
+									"_riaswType": "rias.riasw.form.ComboBox",
+									"_riaswIdOfModule": "comboBoxRest",
+									"label": "Rest",
+									"name": "typ",
+									"pageSize": 16,
+									"position": {
+										"col": 0,
+										"colSpan": 1,
+										"row": 2,
+										"rowSpan": 2
+									},
+									"query": {
+										"parentCode": "xdictdtyp"
+									},
+									"queryExpr": "${0}%",
+									"searchAttr": "text",
+									"store": {
+										"_riaswType": "rias.riasw.store.JsonXhrStore",
+										"defaultData": [
+											{
+												"id": "",
+												"text": ""
+											}
+										],
+										"target": "act/xdict/query"
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.ComboBox",
+									"_riaswIdOfModule": "comboBoxMemory",
+									"defaultData": [
+										{
+											"id": "0",
+											"text": "0"
+										},
+										{
+											"id": "1",
+											"text": "1"
+										}
+									],
+									"label": "Memory",
+									"name": "typ",
+									"pageSize": 16,
+									"position": {
+										"col": 0,
+										"colSpan": 1,
+										"row": 2,
+										"rowSpan": 1
+									},
+									"query": {
+									},
+									"queryExpr": "${0}*",
+									"searchAttr": "text",
+									"store": {
+										"_riaswType": "rias.riasw.store.MemoryStore",
+										"data": [
+											{
+												"id": "1",
+												"text": "1"
+											},
+											{
+												"id": "11",
+												"text": "11"
+											},
+											{
+												"id": "2",
+												"text": "2"
+											},
+											{
+												"id": "21",
+												"text": "21"
+											}
+										],
+										"defaultData": [
+											{
+												"id": "0",
+												"text": "0"
+											},
+											{
+												"id": "1",
+												"text": "1"
+											}
+										]
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.ButtonBox",
+									"_riaswIdOfModule": "buttonBox0",
+									"dropDownArgs": {
+										"moduleMeta": "appModule/app/mainMenu",
+										"dialogType": "tip",
+										"style": {
+											"height": "480px",
+											"width": "320px"
+										}
+									},
+									"label": "ButtonBox",
+									"name": "typ",
+									"position": {
+										"col": 0,
+										"colSpan": 1,
+										"row": 2,
+										"rowSpan": 1
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.NumberTextBox",
+									"_riaswIdOfModule": "numberTextBox0",
+									"label": "numberTextBox",
+									"labelWidth": "8em",
+									"pattern": {
+										"$refScript": "return rias.regexp.url;"
+									},
+									"position": {
+										"col": 2,
+										"colSpan": 2,
+										"row": 2,
+										"rowSpan": 2
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.CurrencyTextBox",
+									"_riaswIdOfModule": "currencyTextBox0",
+									"editOptions": {
+										"pattern": "#.##"
+									},
+									"constraints": {
+										"currency": "",
+										"exponent": false,
+										"fractional": [
+											true,
+											false
+										],
+										"locale": "",
+										"max": 9000000000000,
+										"min": -9000000000000,
+										"places": 3,
+										"round": 0,
+										"type": "currency"
+									},
+									"label": "currencyTextBox0",
+									"labelWidth": "8em",
+									"position": {
+										"col": 2,
+										"row": 2
+									},
+									"value": "currencyTextBox0"
+								},
+								{
+									"_riaswType": "rias.riasw.form.NumberSpinner",
+									"_riaswIdOfModule": "numberSpinner0",
+									"label": "numberSpinner0",
+									"labelWidth": "8em",
+									"position": {
+										"col": 2,
+										"row": 2
+									},
+									"readOnly": false,
+									"value": "numberSpinner0"
+								},
+								{
+									"_riaswType": "rias.riasw.form.DateTextBox",
+									"_riaswIdOfModule": "dateTextBox0",
+									"cellStyle": {
+									},
+									"constraints": {
+										"datePattern": "yyyy-MM-dd"
+									},
+									"editable": false,
+									"label": "dateTextBox",
+									"labelWidth": "8em",
+									"position": {
+										"col": 1,
+										"colSpan": 1,
+										"row": 2,
+										"rowSpan": 1
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.TimeTextBox",
+									"_riaswIdOfModule": "timeTextBox0",
+									"cellStyle": {
+									},
+									"constraints": {
+										"timePattern": "HH:mm:ss"
+									},
+									"label": "timeTextBox",
+									"labelWidth": "8em",
+									"position": {
+										"col": 1,
+										"colSpan": 1,
+										"row": 3,
+										"rowSpan": 1
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.TimeSpinner",
+									"_riaswIdOfModule": "timeSpinner0",
+									"label": "timeSpinner",
+									"labelWidth": "6em",
+									"position": {
+										"col": 1,
+										"row": 3
+									},
+									"readOnly": 0
+								},
+								{
+									"_riaswType": "rias.riasw.form.TextArea",
+									"_riaswIdOfModule": "TextArea0",
+									"label": "TextArea0",
+									"position": {
+										"col": 3,
+										"colSpan": 1,
+										"row": 4,
+										"rowSpan": 2
+									},
+									"readOnly": false,
+									"style": {
+										"height": "9em"
+									},
+									"value": "TextArea0\nfds\nwewq\n健康了\n进风口\n\n健康服务\njfkls"
+								},
+								{
+									"_riaswType": "rias.riasw.form.FilteringSelect",
+									"_riaswIdOfModule": "FilteringSelect",
+									"label": "FilteringSelect",
+									"labelAttr": "text",
+									"labelWidth": "8em",
+									"position": {
+										"col": 0,
+										"colSpan": 2,
+										"row": 4,
+										"rowSpan": 1
+									},
+									"query": {
+										"parentCode": "xdictdtyp"
+									},
+									"queryExpr": "${0}*",
+									"searchAttr": "id",
+									"store": {
+										"$refObj": "rias.webApp.datas.xdict"
+									},
+									"style": {
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.MultiComboBox",
+									"_riaswIdOfModule": "multiComboBox1",
+									"label": "multiComboBox",
+									"labelAttr": "text",
+									"labelWidth": "8em",
+									"multiple": true,
+									"position": {
+										"col": 0,
+										"colSpan": 2,
+										"row": 5,
+										"rowSpan": 1
+									},
+									"query": {
+										"parentCode": "xdictdtyp"
+									},
+									"queryExpr": "${0}*",
+									"searchAttr": "id",
+									"size": 3,
+									"store": {
+										"$refObj": "rias.webApp.datas.xdict"
+									},
+									"style": {
+									}
+								},
+								{
+									"_riaswType": "rias.riasw.form.CheckedMultiSelect",
+									"_riaswIdOfModule": "checkedMultiSelect1",
+									"label": "multiSelect",
+									"labelAttr": "text",
+									"multiple": true,
+									"position": {
+										"col": 2,
+										"colSpan": 1,
+										"row": 4,
+										"rowSpan": 2
+									},
+									"query": {
+										"parentCode": "xdictdtyp"
+									},
+									"queryExpr": "${0}*",
+									"searchAttr": "id",
+									"size": 3,
+									"store": {
+										"$refObj": "rias.webApp.datas.xdict"
+									},
+									"style": {
+										"height": "5em"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

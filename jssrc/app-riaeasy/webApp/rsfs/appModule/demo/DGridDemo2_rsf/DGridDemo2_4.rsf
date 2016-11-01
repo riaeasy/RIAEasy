@@ -1,0 +1,159 @@
+{
+	"_rsfVersion": 4,
+	"requires": [
+	],
+	"moduleCss": [
+	],
+	"_riaswVersion": "1.0",
+	"region": "center",
+	"caption": "新的页面模块",
+	"title": "新的页面模块",
+	"style": {
+	},
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.CaptionPanel",
+			"_riaswIdOfModule": "dgrid1",
+			"caption": "normalGrid",
+			"layoutPriority": 0,
+			"region": "center",
+			"splitter": false,
+			"style": {
+			},
+			"_riaswChildren": [
+				{
+					"_riaswType": "rias.riasw.grid.DGrid",
+					"_riaswIdOfModule": "dGrid1",
+					"cellIdOps": [
+						{
+							"func": "cellIdOnClick",
+							"name": "view",
+							"text": "查看",
+							"tooltip": "查看详细信息"
+						},
+						{
+							"func": "cellIdOnClick",
+							"name": "modi",
+							"text": "修改",
+							"tooltip": "修改详细信息"
+						}
+					],
+					"query": {
+					},
+					"region": "center",
+					"structure": [
+						{
+							"field": "code",
+							"fixed": true,
+							"name": "用户编号",
+							"width": "80px"
+						},
+						{
+							"field": "acode",
+							"name": "缴款户卡号",
+							"width": "100px"
+						},
+						{
+							"field": "dreadstat",
+							"name": "抄表状态",
+							"width": "80px"
+						},
+						{
+							"field": "dreadoper",
+							"name": "抄表员",
+							"width": "80px"
+						},
+						{
+							"field": "dreadbookcode",
+							"name": "账本编号",
+							"width": "80px"
+						},
+						{
+							"field": "dreadord",
+							"name": "抄表顺序",
+							"width": "60px"
+						},
+						{
+							"field": "text",
+							"name": "产权人",
+							"width": "120px"
+						},
+						{
+							"field": "daddr",
+							"name": "安装地址",
+							"width": "260px"
+						},
+						{
+							"field": "typ",
+							"name": "基表类型",
+							"width": "100px"
+						},
+						{
+							"field": "stat",
+							"name": "状态",
+							"width": "60px"
+						},
+						{
+							"field": "dmetercalcode",
+							"name": "用气性质",
+							"width": "80px"
+						},
+						{
+							"field": "diccode",
+							"name": "IC卡卡号",
+							"width": "100px"
+						},
+						{
+							"field": "dmobile",
+							"name": "绑定手机",
+							"width": "120px"
+						},
+						{
+							"field": "didcodetyp",
+							"name": "证件类型",
+							"width": "60px"
+						},
+						{
+							"field": "didcode",
+							"name": "证件编号",
+							"width": "120px"
+						},
+						{
+							"field": "dreadtyp",
+							"name": "抄表类型",
+							"width": "60px"
+						},
+						{
+							"field": "dval0",
+							"name": "起数",
+							"style": "text-align: right",
+							"width": "60px"
+						},
+						{
+							"field": "dval1",
+							"name": "止数",
+							"style": "text-align: right",
+							"width": "60px"
+						},
+						{
+							"field": "drange",
+							"name": "量程",
+							"style": "text-align: right",
+							"width": "60px"
+						}
+					],
+					"style": {
+					},
+					"target": "act/dmeter/query",
+					"topBtns": [
+						"btnAdd",
+						"btnDele"
+					],
+					"treeColumns": [
+					],
+					"viewModule": "appModule/dmeter/dmeterForm"
+				}
+			]
+		}
+	]
+}

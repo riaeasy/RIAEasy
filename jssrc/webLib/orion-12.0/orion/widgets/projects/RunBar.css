@@ -1,0 +1,201 @@
+.dropdownTriggerButtonLabel{display:inline-block;line-height:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:calc(100% - 20px);}
+.runBarWrapper{
+-webkit-align-items:center;
+align-items:center;
+border-left:solid 1px #676f73;
+border-right:solid 1px #676f73;
+display:-webkit-inline-flex;
+display:inline-flex;
+overflow:visible;
+padding:0 10px;
+}
+.runBarWrapper .disabled{
+opacity:0.30;
+}
+.runBarWrapper .disabled:hover{
+opacity:0.30;
+cursor:default;
+}
+.launchConfigurationsWrapper{
+border-radius:5px;
+display:inline-block;
+margin:0 8px 0 0;
+min-width:270px;
+transition:opacity 0.3s ease;
+z-index:60;
+}
+.launchConfigurationsWrapper > .launchConfigurationsButton.dropdownTrigger{
+background:#37474F;
+border-radius:5px;
+padding:2px 0 2px 4px;
+width:270px;
+}
+.launchConfigurationsButton > .dropdownTriggerButtonLabel{
+-webkit-align-items:center;
+align-items:center;
+display:-webkit-inline-flex;
+display:inline-flex;
+overflow:hidden;
+text-overflow:ellipsis;
+vertical-align:top;
+white-space:nowrap;
+width:calc(100% - 20px);
+}
+.launchConfigurationsButton > .dropdownArrowDown{
+vertical-align:bottom;
+}
+.launchConfigurationsWrapper > .dropdownMenu{
+display:block;
+padding-bottom:0;
+-webkit-transform:scaleY(0);
+-ms-transform:scaleY(0);
+transform:scaleY(0);
+-webkit-transform-origin:top;
+-ms-transform-origin:top;
+transform-origin:top;
+transition:transform 0.2s ease;
+visibility:visible;
+}
+.launchConfigurationsWrapper > .dropdownMenu.dropdownMenuOpen{
+min-width:300px;
+-webkit-transform:scaleY(1);
+-ms-transform:scaleY(1);
+transform:scaleY(1);
+}
+.launchConfigurationMenuItem > .dropdownMenuItem{
+padding:9px 3px 9px 5px;
+}
+.launchConfigurationMenuItem.dropdownMenuItemActive{
+background-color:#DEF7D9;
+}
+.dropdownMenu.dropdownMenuOpen > li > .addNewMenuItem{
+background-color:whitesmoke;
+border-left-color:transparent;
+cursor:default;
+padding-left:0;
+}
+.addNewMenuItem > .orionButton{
+font-size:16px;
+font-weight:bold;
+}
+.launchConfigurationDeleteButton.orionButton{
+}
+.runBarWrapper .runBarButton{
+background:none;
+border:1px solid transparent;
+border-radius:3px;
+margin:0 2px;
+outline:none;
+padding:1px;
+transition:opacity 0.3s ease;
+cursor:pointer;
+}
+.runBarWrapper .runBarButton:not(.disabled):hover{
+border-color:#ccc;
+box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);
+}
+.runBarWrapper .runBarButton:before{
+display:block;
+height:18px;
+line-height:18px;
+margin-top:-3px;
+}
+.runBarButton.playButton{
+display:inline-block;
+font-size:16px;
+}
+.runBarButton.stopButton{
+display:inline-block;
+font-size:16px;
+}
+.statusLabel{
+color:#222;
+margin-right:10px;
+transition:opacity 0.3s ease;
+}
+.statusLight{
+-webkit-flex-grow:0;
+flex-grow:0;
+-webkit-flex-shrink:0;
+flex-shrink:0;
+background:gray;
+border:2px solid transparent;
+border-radius:100%;
+display:inline-block;
+height:8px;
+margin-right:5px;
+width:8px;
+transition:background 0.2s ease,opacity 0.3s ease;
+vertical-align:bottom;
+}
+.statusLight.statusLightGreen{
+background:#13dd6d;
+}
+.statusLight.statusLightRed{
+background:#C1272D;
+}
+.statusLight.statusLightAmber{
+background:#FFE141;
+}
+.statusLight.statusLightProgress{
+background:none;
+border-color:gray;
+border-top-color:transparent;
+-webkit-animation:rotate 1s infinite linear;
+-moz-animation:rotate 1s infinite linear;
+-ms-animation:rotate 1s infinite linear;
+-o-animation:rotate 1s infinite linear;
+animation:rotate 1s infinite linear;
+}
+.runBarSeparator{
+background:#676f73;
+display:inline-block;
+height:25px;
+margin:0 10px;
+position:relative;
+width:1px;
+}
+.appName{
+color:white;
+-webkit-flex-grow:0;
+flex-grow:0;
+-webkit-flex-shrink:1;
+flex-shrink:1;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+.appInfoSpan{
+color:white;
+-webkit-flex-grow:0;
+flex-grow:0;
+-webkit-flex-shrink:0;
+flex-shrink:0;
+overflow:hidden;
+margin-left:4px;
+max-width:50%;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+.runBarLink{
+-webkit-flex-grow:0;
+flex-grow:0;
+-webkit-flex-shrink:0;
+flex-shrink:0;
+margin:0 2px;
+}
+.runBarLink:hover:not(.disabled){
+color:#00AED1;
+}
+.runBarLink:hover{
+text-decoration:none;
+}
+.runBarLink.appLink{
+font-size:16px;
+height:16px;
+line-height:17px;
+margin:-6px 0 0 6px;
+}
+.logsLink{
+margin:-3px 0 0 10px !important;
+}

@@ -1,0 +1,1 @@
+define(["rias"],function(c){return function(d,e,a){a={success:!1,value:""};if("POST"===d){var b;try{(b=c.host.uploadFile(e,this.appName,"appModule"))?(a.success=!0,a.value="\u4e0a\u4f20\u6210\u529f...\n"+this.convertFilePathName(b,"",!0)):a.value="\u4e0a\u4f20\u5931\u8d25..."}catch(f){a.value="\u4e0a\u4f20\u5931\u8d25..."}}return a}});

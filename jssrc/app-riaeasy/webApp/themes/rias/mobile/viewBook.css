@@ -1,0 +1,28 @@
+.viewBook .mblTextBox {
+  height: 20px;
+  font-size: 15px;
+}
+.viewBook .mblTextBox:disabled {
+  font-size: 15px;
+  font-weight: bold;
+}
+.viewBook .mblComboBoxMenuItem {
+  height: 1.5em;
+}
+.viewBook .mblButtonDisabled,
+.viewBook .mblButton:disabled {
+  background-color: rgba(0, 0, 0, 0);
+  color: silver;
+}
+.viewBook .mblSwitchText {
+  font-size: 12px;
+}
+.viewBook .mblSwDefaultShape .mblSwitchBg {
+  border-radius: 6px;
+}
+.viewBook .mblSwDefaultShape .mblSwitchKnob {
+  width: 1em;
+}
+.viewBook .mblSwDefaultShape .mblSwitchTextRight {
+  left: 13px;
+}

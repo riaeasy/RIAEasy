@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RIAEasy - A lightweight, modular, mobile-ready, data-driven for single-page-application.模块化、轻量的富客户/单页应用框架。</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<script>
+		var riasAppName = "${appName}";
+		var dojoConfig = {
+			has: {
+				"dojo-publish-privates": 1,
+				"dojo-undef-api": 1
+			},
+			bindEncoding: "UTF-8",
+			isDebug: true,
+			isStackTrace: true,
+			parseOnLoad: false,
+			async: true,
+			//cacheBust: (new Date()).getTime(),
+			waitSeconds: 5,
+			bindPublish: true,
+			requirePublish: true,
+			ioPublish: true,
+			locale: "zh-cn",
+			extraLocale: ["en"],
+			packages: [
+				//{name: "dojo", location: "../dojo"},
+				//{name: "dijit", location: "../dijit"},
+				//{name: "dojox", location: "../dojox"},
+				{name: "rias", location: "../../../rias-1.0.0", main: "rias"},
+				{name: "webApp", location: "../../../" + riasAppName + "/webApp", main: "webApp"},
+				{name: "appModule", location: "../../../" + riasAppName + "/webApp/appModule", main: "webApp"},
+				{name: "act", location: "../../../" + riasAppName + "/act", main: "act"},
+				{name: "page", location: "../../../" + riasAppName + "/page", main: "act"}
+			],
+			fixupUrl: function(url){
+				url += ""; // make sure url is a Javascript string (some paths may be a Java string)
+				//return url + (cacheBust && /\/webApp\/|\/rias-1.0.0\//.test(url) ? ((/\?/.test(url) ? "&" : "?") + cacheBust) : "");
+				return url + (cacheBust ? ((/\?/.test(url) ? "&" : "?") + cacheBust) : "");
+			}
+		};
+		var cacheBust = (new Date()).getTime();
+	</script>
+	<script type="text/javascript" src="../../../webLib/dojo-1.11.2/dojo/dojo.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var _locationSearch = document.location.search;
+		require([
+			"rias"
+		], function(rias){
+			rias.whenLoaded(function(result){
+				if(!result){
+					return;
+				}
+				var theme = rias.queryToObject(_locationSearch).theme,
+					mobileTheme = rias.queryToObject(_locationSearch).mobileTheme;
+				if(!theme){
+					theme = rias.cookie("webAppTheme") || "rias";
+				}
+				if(!mobileTheme){
+					mobileTheme = rias.cookie("webAppMobileTheme") || "ios7";
+				}
+				rias.theme.loadTheme(theme, mobileTheme);
+				rias.require([
+					"webApp"
+				], function(webAppConfig) {
+					rias.startupWebApp(rias.mixinDeep({}, webAppConfig, {
+						appName: riasAppName,
+						moduleMeta: "${appEnvModuleMeta}",
+						mainModuleMeta: "${mainModuleMeta}",
+						"appTitle": "${pageTitle}"
+					}));
+				});
+			});
+		});
+	</script>
+	<div id="seo" style="display:none">
+		${seo}
+	</div>
+</body>
+</html>

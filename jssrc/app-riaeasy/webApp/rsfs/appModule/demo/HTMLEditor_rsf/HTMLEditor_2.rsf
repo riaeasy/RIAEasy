@@ -1,0 +1,15 @@
+{
+	"_rsfVersion": 2,
+	"_riaswVersion": "1.0",
+	"region": "center",
+	"caption": "新的页面模块",
+	"title": "新的页面模块",
+	"style": {
+	},
+	"_riaswChildren": [
+		{
+			"_riaswType": "rias.riasw.layout.FieldsetPanel",
+			"_riaswIdOfModule": "fieldsetPanel1"
+		}
+	]
+}

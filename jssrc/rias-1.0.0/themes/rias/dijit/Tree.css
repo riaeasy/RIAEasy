@@ -1,0 +1,180 @@
+/* Tree 
+ * 
+ * Styling Tree mostly means styling the TreeRow (dijitTreeRow)
+ * There are 4 basic states to style:
+ * 
+ * Tree Row:
+ * 1. tree row (default styling): 
+ * 		.dijitTreeRow - styles for each row of the tree
+ *
+ * 2. hovered tree row (mouse hover on a tree row)
+ * 		.dijitTreeRowHover - styles when mouse over on one row
+ * 
+ * 3. active tree row (mouse down on a tree row)
+ * 		.dijitTreeRowActive - styles when mouse down on one row
+ * 
+ * 4. selected tree row
+ * 		dijitTreeRowSelected - style when the row has been selected
+ * 
+ * Tree Expando:
+ * 	    dijitTreeExpando - the expando at the left of the text of each tree row
+ * 
+ */
+.rias .dijitTreeIsRoot {
+  background-color: transparent;
+}
+.rias .dijitTreeRow,
+.rias .dijitTreeNode .dojoDndItemBefore,
+.rias .dijitTreeNode .dojoDndItemAfter {
+  padding: 0.5em 0;
+  border: 0 transparent;
+  line-height: 1.5em;
+  -webkit-transition-property: background-color;
+  -moz-transition-property: background-color;
+  -o-transition-property: background-color;
+  -ms-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.15s;
+  -moz-transition-duration: 0.15s;
+  -o-transition-duration: 0.15s;
+  -ms-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+  -ms-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.rias .dijitTreeRowHover {
+  background-color: #f2f2f2;
+  border-color: transparent;
+  -webkit-transition-duration: 0.15s;
+  -moz-transition-duration: 0.15s;
+  -o-transition-duration: 0.15s;
+  -ms-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+}
+.rias .dijitTreeRowActive {
+  background-color: #f2f2f2;
+  border-color: transparent;
+}
+.rias .dijitTreeRowSelected,
+.rias .dijitTreeRowHover.dijitTreeRowSelected,
+.rias .dijitTreeRowActive.dijitTreeRowSelected {
+  color: #fff;
+  background-color: #90caf9;
+  border-color: transparent;
+}
+.rias .dijitTreeRowSelected .dijitTreeExpando,
+.rias .dijitTreeRowHover.dijitTreeRowSelected .dijitTreeExpando,
+.rias .dijitTreeRowActive.dijitTreeRowSelected .dijitTreeExpando {
+  color: #fff;
+}
+.rias .dijitTreeExpando {
+  font-family: "flat-icon";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  color: #90caf9;
+  vertical-align: middle;
+}
+.rias .dijitTreeExpandoOpened:before {
+  content: "\e60d";
+  cursor: pointer;
+}
+.rias .dijitTreeExpandoClosed:before {
+  content: "\e60a";
+  cursor: pointer;
+}
+.rias .dijitTreeExpandoLoading:before {
+  content: "\e60e";
+  -webkit-animation: spinning 2s linear infinite;
+  -moz-animation: spinning 2s linear infinite;
+  -o-animation: spinning 2s linear infinite;
+  -ms-animation: spinning 2s linear infinite;
+  animation: spinning 2s linear infinite;
+}
+.dj_ie8 .dijitTreeExpandoLoading,
+.dj_ie9 .dijitTreeExpandoLoading {
+  background: url("images/loadingAnimation.gif") no-repeat;
+}
+.dj_ie8 .dijitTreeExpandoLoading:before,
+.dj_ie9 .dijitTreeExpandoLoading:before {
+  content: "";
+}
+@-moz-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -o-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

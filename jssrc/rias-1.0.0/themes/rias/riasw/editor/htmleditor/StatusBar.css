@@ -1,0 +1,58 @@
+@import url("../../layout/Resizer.css");
+.dojoxEditorStatusBar {
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 2px;
+}
+.dojoxEditorStatusBar table {
+  width: 100%;
+}
+.dojoxEditorStatusBar .dojoxResizeHandle {
+  position: static;
+  padding: 0px;
+  vertical-align: bottom;
+}
+.dojoxEditorStatusBar .dojoxEditorStatusBarText {
+  height: 1.5em;
+  vertical-align: middle;
+  width: 100%;
+  overflow: hidden;
+}
+.claro .dojoxEditorStatusBar {
+  background-color: #f1f1f1;
+}
+.claro .dojoxEditorStatusBar .dojoxEditorStatusBarText {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #b5bcc7;
+}
+.tundra .dojoxEditorStatusBar {
+  background-color: #eaeaea;
+}
+.tundra .dojoxEditorStatusBar .dojoxEditorStatusBarText {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+}
+.nihilo .dojoxEditorStatusBar {
+  border-style: solid;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: #ccc;
+}
+.nihilo .dojoxEditorStatusBar .dojoxEditorStatusBarText {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ccc;
+}
+.soria .dojoxEditorStatusBar {
+  border-style: solid;
+  background-color: #bdd6f0;
+  border-width: 1px;
+  border-color: #698fb3;
+}
+.soria .dojoxEditorStatusBar .dojoxEditorStatusBarText {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #698fb3;
+}

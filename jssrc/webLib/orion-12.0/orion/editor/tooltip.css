@@ -1,0 +1,87 @@
+.textviewTooltip{
+font-family:"Consolas","Monaco","Vera Mono",monospace;
+font-size:12px;
+background-color:#325C80;
+color:#FAFAFA;
+padding:8px;
+box-sizing:content-box;
+border-radius:3px;
+z-index:101;
+position:fixed;
+overflow:hidden;
+}
+.tooltipTheme .textviewScroll{
+padding:0;
+}
+.tooltipTheme .annotationLine.currentLine{
+background-color:transparent !important;
+}
+.textviewTooltipCodeProjection{
+border:1px solid black !important;
+padding:0 !important;
+}
+.textviewTooltip a{
+color:#7CC7FF;
+}
+.textviewTooltip h3{
+-webkit-margin-before:0;
+margin-top:0;
+}
+.textviewTooltip p:first-of-type{
+-webkit-margin-before:0;
+margin-top:0;
+-webkit-margin-after:0;
+margin-bottom:0;
+}
+.textviewTooltip p{
+word-wrap:break-word;
+}
+.textviewTooltip multi_anno{
+font-style:normal;
+font-weight:bold;
+}
+.textviewTooltip span{
+vertical-align:baseline;
+}
+.textviewTooltip .tooltipRow{
+display:table-row;
+}
+.textviewTooltip .tooltipImage{
+display:inline-block;
+vertical-align:middle;
+padding:1px;
+}
+.textviewTooltip .tooltipTitle{
+padding-left:3px;
+vertical-align:middle;
+}
+.textviewTooltip .hoverTooltipTitle{
+font-weight:normal;
+}
+.textviewTooltip .quickFixList{
+margin-top:5px;
+}
+.textviewTooltip .commandButton{
+border:1px solid #325C80;
+background-color:inherit;
+color:white;
+}
+.textviewTooltip .commandButton:not(.dropdownTrigger){
+text-transform:initial;
+}
+.textviewTooltip .commandList > li{
+margin:0;
+}
+.textviewTooltip .quickfixAllParameter{
+margin-bottom:4px;
+vertical-align:middle;
+font-weight:normal;
+font-family:"HelveticaNeue","Helvetica Neue","HelveticaNeueRoman","HelveticaNeue-Roman","Helvetica Neue Roman",'TeXGyreHerosRegular',"Helvetica","Tahoma","Geneva","Arial",sans-serif;
+}
+.textViewTooltipOnFocus{
+resize:both;
+overflow:auto;
+}
+.textViewTooltipOnHover{
+overflow:auto;
+}
