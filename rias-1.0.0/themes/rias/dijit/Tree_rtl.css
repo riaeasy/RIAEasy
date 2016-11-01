@@ -1,9 +1,0 @@
-.rias .dijitTreeRtl {
-  text-align: right;
-}
-.rias .dijitTreeRtl .dijitTreeContainer {
-  float: right;
-}
-.rias .dijitTreeRtl .dijitTreeExpandoClosed:before {
-  content: "\e60b";
-}
