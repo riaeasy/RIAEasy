@@ -1,3 +1,62 @@
+.rias .dgrid-cell-padding {
+  padding: 0.25em 0.5em;
+}
+.rias .dgrid-header .dgrid-cell {
+  border-bottom-width: 2px;
+}
+.rias .dgrid-selected {
+  border: 0px solid #4fc3f7;
+}
+.rias .dgrid {
+  background: inherited;
+  border-color: #9e9e9e;
+  color: #000;
+}
+.rias .dgrid-header,
+.rias .dgrid-footer {
+  background: inherit;
+}
+.rias .dgrid-header {
+  text-transform: uppercase;
+}
+.rias .dgrid-header .dgrid-cell {
+  border-color: #9e9e9e;
+  font-weight: bold;
+}
+.rias .dgrid-header .dgrid-cell:hover {
+  background: #fff;
+}
+.rias .dgrid-row {
+  background-color: inherited;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  -ms-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-transition-property: background-color, border-color;
+  -moz-transition-property: background-color, border-color;
+  -o-transition-property: background-color, border-color;
+  -ms-transition-property: background-color, border-color;
+  transition-property: background-color, border-color;
+}
+.rias .dgrid-row-odd {
+  background-color: #fafafa;
+}
+.rias .dgrid-row:hover {
+  background-color: #4fc3f7;
+}
+.rias .dgrid-selected {
+  background-color: #e0e0e0;
+}
+.rias .dgrid-selected:hover {
+  background-color: #4fc3f7;
+}
+.rias .dgrid-highlight {
+  background-color: #81d4fa;
+}
+.rias .dgrid-cell {
+  border-color: #9e9e9e;
+}
 .dgrid {
   background-color: inherit;
 }
@@ -108,14 +167,14 @@
 .dgrid-selector,
 .dgrid-opcolumn,
 .dgrid-rownumcolumn {
-  background-color: $dgrid-background;
+  background-color: inherited;
 }
 .dgrid-header-scroll,
 .dgrid-footer-summary-scroll {
   position: absolute;
   right: 0;
   top: 0;
-  background-color: $dgrid-background;
+  background-color: inherited;
   border: 0px solid #9e9e9e;
 }
 .dgrid-header-scroll {
@@ -125,7 +184,7 @@
   border-width: 0 0 1px 0;
 }
 .dgrid-column-set-scroller {
-  background-color: $dgrid-background;
+  background-color: inherited;
   border: 0px solid #9e9e9e;
 }
 .dgrid-hider-menu {

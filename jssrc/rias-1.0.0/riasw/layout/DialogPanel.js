@@ -41,6 +41,8 @@ define([
 	var riaswType = "rias.riasw.layout.DialogPanel";
 	var Widget = rias.declare(riaswType, [CaptionPanel], {
 
+		isPopup: true,
+
 		closeResult: rias.closeResult.crCancel,
 
 		_captionHeight0: 33,
@@ -137,10 +139,14 @@ define([
 				opacity: 0,
 				position: "absolute"
 			});
+			if(this.dijitPopupParent){
+				rias.dom.setAttr(this.domNode, "dijitPopupParent", this.dijitPopupParent);
+			}
 			var p = rias.by((this.initPlaceToArgs && this.initPlaceToArgs.popupParent ? this.initPlaceToArgs.popupParent : this.popupParent) || this.getOwnerRiasw());
-			if(p){
+			if(rias.isInstanceOf(p, Widget)){
 				//rias.dom.setAttr(this.domNode, "_riasrPopupParent", p.id);
-				this.domNode._riasrPopupParent = p.id;
+				this._riasrPopupParent = this.domNode._riasrPopupParent = p;
+				p._riasrPopupChild = this;
 			}
 		},
 		postCreate: function(){
@@ -187,6 +193,10 @@ define([
 			);
 		},
 		destroy: function(){
+			if(this._riasrPopupParent){
+				delete this._riasrPopupParent._riasrPopupChild;
+				delete this._riasrPopupParent;
+			}
 			if(this._whenCloseDeferred && !this._whenCloseDeferred.isFulfilled()){
 				this._whenCloseDeferred.cancel();
 			}

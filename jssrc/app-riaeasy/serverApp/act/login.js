@@ -44,6 +44,7 @@ define([
 				result.success = true;
 				result.value.oper = rias.host.ServerEnv.getSessionOper(req);
 			}else{
+				code = rias.encoding.SimpleAES.decrypt(code, "riaeasy");
 				sql = "select r.*\n"
 					+ "from xoper r\n"
 					+ "where r.code='" + code + "'\n";

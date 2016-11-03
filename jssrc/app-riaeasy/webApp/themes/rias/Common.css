@@ -12,9 +12,15 @@
   box-shadow: 0 7px 3px -4px rgba(0,0,0,0.3), 0 8px 8px rgba(0,0,0,0.2);
 }
 .rias .riaswButtonNode {
-  border-width: 0 0 2px 0;
+  border-width: 1px;
   border-color: #e0e0e0;
   background-color: inherit;
+}
+.rias .highlightBtn {
+  background-color: #90ee90;
+}
+.rias .normalBtn {
+  background-color: #ffffe0;
 }
 .rias .riaswDockNode {
   border-width: 1px;

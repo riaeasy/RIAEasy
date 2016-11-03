@@ -2199,9 +2199,8 @@ define([
 				newFocused = node;
 			try{
 				while(node){
-					var popupParent = domAttr.get(node, "dijitPopupParent"),
-						//riasPopupParent = domAttr.get(node, "_riasrPopupParent"),
-						riasPopupParent = node._riasrPopupParent,
+					var dpParent = domAttr.get(node, "dijitPopupParent"),
+						rpParent = node._riasrPopupParent,
 						id, widget;
 					///只要有 widget，就 focus
 					///widget = rias.by(node);/// rias.by 导致子节点也会定位到 widget。
@@ -2210,11 +2209,11 @@ define([
 					if(widget && (widget._focusStack != false) && !(by == "mouse" && widget.get("disabled"))){
 						newStack.unshift(id);
 					}
-					if(riasPopupParent){
-						widget = rias.by(riasPopupParent);
+					if(dpParent){
+						node = rias.by(dpParent).domNode;
+					}else if(rpParent){
+						widget = rias.by(rpParent);
 						node = widget.domNode;
-					}else if(popupParent){
-						node = rias.by(popupParent).domNode;
 					}else if(node.tagName && node.tagName.toLowerCase() == "body"){
 						// is this the root of the document or just the root of an iframe?
 						if(node === winBody()){
@@ -3055,6 +3054,8 @@ define([
 			return a11y.effectiveTabIndex(node) >= -1;
 		},
 		focus: function(forceVisible){
+			//var w;
+			//console.debug("focus", this.id, rias.dom.focusedNode ? rias.dom.focusedNode.id : "");
 			if(!rias.contains(_dom.focusedStack, this.id)){///避免重复 focus，导致重定向和 blur
 				///如果 _focusableNode 不能 focus，则需要 focus 到 domNode。
 				if(this.isFocusable()){
@@ -3063,7 +3064,20 @@ define([
 				}else{
 					_dom.focus(this.domNode);
 				}
+			}else{
+				/*if(_dom.focusedStack){
+					w = rias.by(_dom.focusedStack[_dom.focusedStack.length - 1]);
+					if(w){
+						if(w.isFocusable()){
+							//_dom.focus(this.focusNode || this.domNode);
+							_dom.focus(w._focusableNode);
+						}else{
+							_dom.focus(w.domNode);
+						}
+					}
+				}*/
 			}
+			//console.debug("focused", this.id, rias.dom.focusedNode ? rias.dom.focusedNode.id : "");
 		},
 
 		on: function(/*String|Function*/ type, /*Function*/ func){

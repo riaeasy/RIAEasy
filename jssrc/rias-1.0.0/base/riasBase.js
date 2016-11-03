@@ -995,7 +995,8 @@ define([
 					value = getObject(format, false, thisObject).call(thisObject, value, key);
 				}
 				try{
-					value = transform(value, key).toString();
+					///value = transform(value, key).toString();
+					value = transform(value, key) + "";/// transform(value, key) 有可能为 undefined
 				}catch(e){
 					console.error("substitute error: " + key, e);
 					//throw "substitute error: " + key + "\n" + e;

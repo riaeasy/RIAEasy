@@ -286,17 +286,20 @@ define([
 				}
 			}
 			self.closeResult = (c == undefined ? rias.closeResult.crSubmit : c);
+			self.canClose = false;
 			return rias.when(self.onSubmit.apply(self, arguments || []), function(result){
 				///注意：这里不再 return _afterSubmit 的返回值，即只判断是否成功 onSubmit，而忽略 afterSubmit 是否有错。
 				///     只要成功 onSubmit，submitDeferred 即 resolve。
 				///     onSubmit 失败，则 submitDeferred 不动作。
 				///这里先设置 modified，可能在 afterSubmit 中会使用。
+				self.canClose = true;
 				if(result != false){
 					self.set("modified", false);
 					self._afterSubmit(result);
 				}
 				return result;
 			}, function(e){
+				self.canClose = false;
 				return e;
 			});
 		},
@@ -320,6 +323,7 @@ define([
 				}
 			}
 			self.closeResult = (c == undefined ? rias.closeResult.crCancel : c);
+			self.canClose = true;
 			return rias.when(self.onCancel.apply(self, arguments || []), function(result){
 				///注意：这里不再 return _afterCancel 的返回值，即只判断是否成功 onCancel，而忽略 afterCancel 是否有错。
 				///     同 submit。

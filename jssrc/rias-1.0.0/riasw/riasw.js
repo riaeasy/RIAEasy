@@ -133,6 +133,18 @@ define([
 		}
 		return w;
 	};
+	rias.dialogBy = function(/*String|DOMNode|Dijit|riasWidget*/any, /*Object*/context){
+		var w = rias.byUntil(any, context);
+		if(w){
+			if(!rias.isRiaswModule(w)){
+				w = w._riasrModule;
+			}
+			if(!w.isPopup){
+				w = arguments.callee(w.domNode.parentNode);
+			}
+		}
+		return w;
+	};
 
 	rias.riasdParams = {
 		moduleMeta: "",
@@ -164,7 +176,8 @@ define([
 			module = rias.webApp;
 		}
 		if(rias.isRiasw(p)){
-			if(!p._riasrModule || p._riasrModule !== module){
+			//if(!p._riasrModule || p._riasrModule !== module){
+			if(!p._riasrModule){
 				p._riasrModule = module;
 			}
 		}else if(rias.isObjectSimple(p)){

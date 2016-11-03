@@ -1,30 +1,7 @@
 
 /* rias.webApp */
 
-//@import "variables_material_colors";
-@import '../../../../rias-1.0.0/themes/rias/variables';
-
-//.mobile .mobileBody {
-//	font-family: Helvetica;
-//	font-size: 15px;
-//}
-
-$theme-name = "rias";
-
-$appBackgroundColor ?= $page-color;
-$pageBackgroundColor ?= $page-color;
-$appHeaderColor ?= $light-blue-800;
-$appFooterColor ?= $grey-500;
-$appAreaColor ?= $grey-50;
-$appInputColor ?= $input-color;
-$appHighlightColor ?= $light-blue-200;
-$appHoverColor ?= $light-blue-300;
-$appSelectedColor ?= $grey-400;
-$appBorderColor ?= $grey-300;
-$appErrorColor ?= darkorange;
-
-$dgridRowOdd = #f5faff;
-
+@import 'variables';
 
 .{$theme-name} {
 
@@ -43,9 +20,15 @@ $dgridRowOdd = #f5faff;
 		_shadow($shadow-depth2);
 	}
 	.riaswButtonNode {
-		border-width: 0 0 2px 0;
+		border-width: 1px;// 0 0 2px 0;
 		border-color: $appBorderColor;
 		background-color: inherit;
+	}
+	.highlightBtn {
+		background-color: lightgreen;
+	}
+	.normalBtn {
+		background-color: lightyellow;
 	}
 	.riaswDockNode {
 		border-width: 1px;

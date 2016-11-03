@@ -55,8 +55,13 @@ define([
 				d,
 				data = args.data,
 				url = args.url;
-			if(data && data.password){
-				data.password = rias.encoding.SimpleAES.encrypt(data.password, "riaeasy");
+			if(data){
+				if(data.code){
+					data.code = rias.encoding.SimpleAES.encrypt(data.code, "riaeasy");
+				}
+				if(data.password){
+					data.password = rias.encoding.SimpleAES.encrypt(data.password, "riaeasy");
+				}
 			}
 			if(!url){
 				if(rias.isFunction(m.actions)){

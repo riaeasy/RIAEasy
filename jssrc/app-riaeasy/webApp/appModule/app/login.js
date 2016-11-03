@@ -2,8 +2,7 @@ define([
 	"rias"
 ], function(rias){
 	return {
-	"_rsfVersion": 261,
-	"_riaswType": "rias.riasw.studio.Module",
+	"_rsfVersion": 263,
 	"caption": "登录",
 	"op": "login",
 	"operExpires": 7,
@@ -191,7 +190,7 @@ define([
 						"height": "3em"
 					},
 					"tooltip": "提交登录信息...",
-					"widgetCss": "btnLogin",
+					"widgetCss": "highlightBtn",
 					"onClick": function (evt){
 		this._riasrModule.submit();
 	}

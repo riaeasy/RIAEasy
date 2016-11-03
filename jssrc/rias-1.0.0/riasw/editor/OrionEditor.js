@@ -9,6 +9,7 @@ define([
 	"dijit/_Container",
 	"dijit/_CssStateMixin",
 
+	'orion/util', //$NON-NLS-1$
 	"orion/editor/config", //$NON-NLS-0$
 	"orion/editor/shim", //$NON-NLS-0$
 	"orion/editor/editor", //$NON-NLS-0$
@@ -40,7 +41,7 @@ define([
 	"orion/editor/stylers/text_html/syntax"//, //$NON-NLS-0$
 	//orion需要用requirejs包中的i18n.js
 ], function(rias, _Widget, _Container, _CssStateMixin,
-			config, shim, mEditor, mEditorFeatures,
+            util, config, shim, mEditor, mEditorFeatures,
 			mTextView, mTextModel, mTextTheme, mProjModel, mEventTarget, mKeyBinding, mRulers, mAnnotations,
 			mTooltip, mUndoStack, mTextDND, mContentAssist, mCSSContentAssist, mHtmlContentAssist,
 			mAsyncStyler, mMirror, mTextMateStyler, mHtmlGrammar, mTextStyler, mJS, mCSS, mHTML) {
@@ -131,6 +132,205 @@ define([
 			that._updateTimer = null;
 			that._update();
 		}, 0);
+	};
+	var Animation = /** @ignore */ (function() {
+		function Animation(options) {
+			this.options = options;
+		}
+		/**
+		 * Plays this animation.
+		 * @function
+		 * @memberOf orion.editor.Animation.prototype
+		 * @name play
+		 */
+		Animation.prototype.play = function() {
+			var duration = (typeof this.options.duration === "number") ? this.options.duration : 350, //$NON-NLS-0$
+				rate = (typeof this.options.rate === "number") ? this.options.rate : 20, //$NON-NLS-0$
+				easing = this.options.easing || this.defaultEasing,
+				onAnimate = this.options.onAnimate || function() {},
+				start = this.options.curve[0],
+				end = this.options.curve[1],
+				range = (end - start),
+				startedAt = -1,
+				propertyValue,
+				self = this;
+
+			function onFrame() {
+				startedAt = (startedAt === -1) ? new Date().getTime() : startedAt;
+				var now = new Date().getTime(),
+					percentDone = (now - startedAt) / duration;
+				if (percentDone < 1) {
+					var eased = easing(percentDone);
+					propertyValue = start + (eased * range);
+					onAnimate(propertyValue);
+				} else {
+					onAnimate(end);
+					self.stop();
+				}
+			}
+			this.interval = this.options.window.setInterval(onFrame, rate);
+		};
+		/**
+		 * Stops this animation.
+		 * @function
+		 * @memberOf orion.editor.Animation.prototype
+		 */
+		Animation.prototype.stop = function() {
+			this.options.window.clearInterval(this.interval);
+			var onEnd = this.options.onEnd || function () {};
+			onEnd();
+		};
+		Animation.prototype.defaultEasing = function(x) {
+			return Math.sin(x * (Math.PI / 2));
+		};
+		return Animation;
+	}());
+	mTextView.TextView.prototype._scrollView = function (pixelX, pixelY) {
+		/*
+		 * Always set _ensureCaretVisible to false so that the view does not scroll
+		 * to show the caret when scrollView is not called from showCaret().
+		 */
+		this._ensureCaretVisible = false;
+
+		/*
+		 * Scrolling is done only by setting the scrollLeft and scrollTop fields in the
+		 * view div. This causes an update from the scroll event. In some browsers
+		 * this event is asynchronous and forcing update page to run synchronously
+		 * leads to redraw problems.
+		 * On Chrome 11, the view redrawing at times when holding PageDown/PageUp key.
+		 * On Firefox 4 for Linux, the view redraws the first page when holding
+		 * PageDown/PageUp key, but it will not redraw again until the key is released.
+		 */
+		var viewDiv = this._viewDiv;
+		function _do(pixelX, pixelY){
+			if (pixelX) {
+				viewDiv.scrollLeft += pixelX;
+			}
+			if (pixelY) {
+				viewDiv.scrollTop += pixelY;
+			}
+		}
+		var win = this._getWindow();
+		if (this._scrollAnimation) {
+			var that = this;
+			//if(!this._animation_){
+				this._animation_ = new Animation({
+					window: win,
+					duration: this._scrollAnimation * 4,
+					curve: [pixelY, 0],
+					onAnimate: function(x) {
+						var deltaY = pixelY - Math.floor(x);
+						_do (0, deltaY);
+						pixelY -= deltaY;
+					},
+					onEnd: function() {
+						that._animation_ = null;
+						_do (pixelX, pixelY);
+					}
+				});
+				this._animation_.play();
+			//}
+		} else {
+			_do (pixelX, pixelY);
+		}
+	};
+	mTextView.TextView.prototype._handleMouseWheel = function (e) {
+		if (this._noScroll) return;
+		var lineHeight = this._getLineHeight();
+		var pixelX = 0, pixelY = 0;
+		// Note: On the Mac the correct behaviour is to scroll by pixel.
+		if (util.isIE || util.isOpera) {
+			pixelY = (-e.wheelDelta / 40) * lineHeight;
+		} else if (util.isFirefox) {
+			var limit = 256;
+			if (e.type === "wheel") { //$NON-NLS-1$
+				if (e.deltaMode) { // page or line
+					pixelX = Math.max(-limit, Math.min(limit, e.deltaX)) * lineHeight;
+					pixelY = Math.max(-limit, Math.min(limit, e.deltaY)) * lineHeight;
+				} else {
+					pixelX = e.deltaX;
+					pixelY = e.deltaY;
+				}
+			} else {
+				var pixel;
+				if (util.isMac) {
+					pixel = e.detail * 3;
+				} else {
+					pixel = Math.max(-limit, Math.min(limit, e.detail)) * lineHeight;
+				}
+				if (e.axis === e.HORIZONTAL_AXIS) {
+					pixelX = pixel;
+				} else {
+					pixelY = pixel;
+				}
+			}
+		} else {
+			//Webkit
+			if (util.isMac) {
+				/*
+				 * In Safari, the wheel delta is a multiple of 120. In order to
+				 * convert delta to pixel values, it is necessary to divide delta
+				 * by 40.
+				 *
+				 * In Chrome and Safari 5, the wheel delta depends on the type of the
+				 * mouse. In general, it is the pixel value for Mac mice and track pads,
+				 * but it is a multiple of 120 for other mice. There is no presise
+				 * way to determine if it is pixel value or a multiple of 120.
+				 *
+				 * Note that the current approach does not calculate the correct
+				 * pixel value for Mac mice when the delta is a multiple of 120.
+				 *
+				 * For values that are multiples of 120, the denominator varies on
+				 * the time between events.
+				 */
+				var denominatorX, denominatorY;
+				var deltaTime = e.timeStamp - this._wheelTimeStamp;
+				this._wheelTimeStamp = e.timeStamp;
+				if (e.wheelDeltaX % 120 !== 0) {
+					denominatorX = 1;
+				} else {
+					denominatorX = deltaTime < 40 ? 40/(40-deltaTime) : 40;
+				}
+				if (e.wheelDeltaY % 120 !== 0) {
+					denominatorY = 1;
+				} else {
+					denominatorY = deltaTime < 40 ? 40/(40-deltaTime) : 40;
+				}
+				pixelX = Math.ceil(-e.wheelDeltaX / denominatorX);
+				if (-1 < pixelX && pixelX < 0) { pixelX = -1; }
+				if (0 < pixelX && pixelX < 1) { pixelX = 1; }
+				pixelY = Math.ceil(-e.wheelDeltaY / denominatorY);
+				if (-1 < pixelY && pixelY < 0) { pixelY = -1; }
+				if (0 < pixelY && pixelY < 1) { pixelY = 1; }
+			} else {
+				pixelX = -e.wheelDeltaX;
+				///修改
+				var linesToScroll = 4;
+				pixelY = (-e.wheelDeltaY / 120 * linesToScroll) * lineHeight;
+			}
+		}
+		/*
+		 * Feature in Safari. If the event target is removed from the DOM
+		 * safari stops smooth scrolling. The fix is keep the element target
+		 * in the DOM and remove it on a later time.
+		 *
+		 * Note: Using a timer is not a solution, because the timeout needs to
+		 * be at least as long as the gesture (which is too long).
+		 */
+		if (util.isSafari || (util.isChrome && util.isMac)) {
+			var lineDiv = e.target;
+			while (lineDiv && lineDiv.lineIndex === undefined) {
+				lineDiv = lineDiv.parentNode;
+			}
+			this._mouseWheelLine = lineDiv;
+		}
+		var oldScroll = this._getScroll();
+		this._scrollView(pixelX, pixelY);
+		var newScroll = this._getScroll();
+		if (oldScroll.x !== newScroll.x || oldScroll.y !== newScroll.y) {
+			if (e.preventDefault) { e.preventDefault(); }
+			return false;
+		}
 	};
 
 	var riaswType = "rias.riasw.editor.OrionEditor";
@@ -504,6 +704,7 @@ define([
 					singleMode: options.singleMode,
 					themeClass: options.themeClass,
 					theme: options.theme,
+					scrollAnimation: rias.defaultDuration,
 					wrapMode: options.wrapMode,
 					wrappable: options.wrappable
 				});

@@ -95,10 +95,20 @@
 		_shadow(0.25em 0.25em 0.25em 0 $shadow-color-50);
 	}
 	.menuShadow {
-		_shadow($popup-box-shadow);
+		_shadow($shadow-depth2);
 	}
 	.popupShadow {
-		_shadow($popup-box-shadow);
+		_shadow($shadow-depth2);
+	}
+
+	.highlightBtn {
+		background-color: lightgreen;
+	}
+	.highlightBtnFocused {
+		background-color: $appHighlightColor;
+	}
+	.highlightBtnHover {
+		background-color: $appHoverColor;
 	}
 
 	.webAppHeader {
@@ -122,6 +132,7 @@
 		}
 		.riaswButtonNode,
 		.riaswDockNode {
+			border-width: 0 0 2px 0;
 			color: $input-color;
 			line-height: 1;
 		}
@@ -147,13 +158,13 @@
 		background-size:100% 100%;
 	}
 	.webAppHeaderDockBar {
-		padding: 1px;
+		padding: 1px 2em;
 	}
 	.webAppFooterDockBar {
-		padding: 1px;
+		padding: 1px 2em;
 	}
 	.webAppHeaderBtns {
-		width: 10em;
+		width: 12em;
 		padding: 1px;
 		//margin: 0;
 	}

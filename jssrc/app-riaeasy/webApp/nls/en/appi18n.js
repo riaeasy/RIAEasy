@@ -5,6 +5,8 @@ define({
 
 	login: "Login",
 	logout: "Logout",
+	operInfo: "Oper Info",
+	modiPassword: "Modify Password",
 	menu: "Menu",
 	notice: "Notice",
 	user: "User",

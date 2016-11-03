@@ -715,6 +715,7 @@
 .rias .dijitInlineEditBoxDisplayMode {
   border: 1px dashed transparent;
   padding: 0.25em 2.25em;
+  border-radius: 0.25em;
 }
 .rias .dijitInlineEditBoxDisplayModeHover {
   background-color: transparent;

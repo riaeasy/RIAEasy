@@ -26,33 +26,33 @@
 }
 .riaswOrionEditorFocused .riaswTextBoxContainer {
   outline: 5px -webkit-focus-ring-color;
-  border-color: $input-focused-border-color;
+  border-color: #90caf9;
   -webkit-transition-duration: 0.25s;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
   -ms-transition-duration: 0.25s;
   transition-duration: 0.25s;
-  -webkit-box-shadow: 0 0 0.25em 0 $input-focused-border-color inset;
-  box-shadow: 0 0 0.25em 0 $input-focused-border-color inset;
+  -webkit-box-shadow: 0 0 0.25em 0 #90caf9 inset;
+  box-shadow: 0 0 0.25em 0 #90caf9 inset;
 }
 .riaswOrionEditorHover .riaswTextBoxContainer {
-  border-color: $input-hover-border-color;
+  border-color: #90caf9;
   -webkit-transition-duration: 0.25s;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
   -ms-transition-duration: 0.25s;
   transition-duration: 0.25s;
-  -webkit-box-shadow: 0 0 0.25em 0 $input-hover-border-color inset;
-  box-shadow: 0 0 0.25em 0 $input-hover-border-color inset;
+  -webkit-box-shadow: 0 0 0.25em 0 #90caf9 inset;
+  box-shadow: 0 0 0.25em 0 #90caf9 inset;
 }
 .riaswOrionEditorError .riaswTextBoxContainer,
 .riaswOrionEditorErrorFocused .riaswTextBoxContainer {
-  border-color: $input-error-border-color;
+  border-color: #dd2c00;
   -webkit-transition-duration: 0.25s;
   -moz-transition-duration: 0.25s;
   -o-transition-duration: 0.25s;
   -ms-transition-duration: 0.25s;
   transition-duration: 0.25s;
-  -webkit-box-shadow: 0 0 0.25em 0 $input-error-border-color inset;
-  box-shadow: 0 0 0.25em 0 $input-error-border-color inset;
+  -webkit-box-shadow: 0 0 0.25em 0 #dd2c00 inset;
+  box-shadow: 0 0 0.25em 0 #dd2c00 inset;
 }

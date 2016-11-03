@@ -66,7 +66,7 @@ var riasServerConfig = {
 		lowResourcesConnections: 5000,
 		//contextRoot: "jssrc",
 		webContext: "/", ///访问的url根。
-		"sessionDbName": "app-riaeasy",///服务名，用于集群中区分服务
+		"sessionDbName": "",//////JNDI，用于集群共享 session
 		"sessionidWorkerName": "riass1",///服务名，用于集群中区分服务
 		"sessionidScavengeInterval": 65,///秒，扫描间隔？
 		//"sessionTimeout": 30,///分钟

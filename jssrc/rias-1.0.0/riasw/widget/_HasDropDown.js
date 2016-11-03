@@ -238,14 +238,14 @@ define([
 					return;
 				}
 			}
-			if(d && this._opened && e.keyCode == keys.ESCAPE){
+			if(d && this._opened && e.keyCode == rias.keys.ESCAPE){
 				this.closeDropDown();
 				e.stopPropagation();
 				e.preventDefault();
 			}else if(!this._opened &&
-				(e.keyCode == keys.DOWN_ARROW ||
+				(e.keyCode == rias.keys.DOWN_ARROW ||
 					// ignore unmodified SPACE if _KeyNavMixin has active searching in progress
-					( (e.keyCode == keys.ENTER || (e.keyCode == keys.SPACE && (!this._searchTimer || (e.ctrlKey || e.altKey || e.metaKey)))) &&
+					( (e.keyCode == rias.keys.ENTER || (e.keyCode == rias.keys.SPACE && (!this._searchTimer || (e.ctrlKey || e.altKey || e.metaKey)))) &&
 						//ignore enter and space if the event is for a text input
 						((target.tagName || "").toLowerCase() !== 'input' ||
 							(target.type && target.type.toLowerCase() !== 'text'))))){
@@ -264,7 +264,7 @@ define([
 				this.toggleDropDown();
 				var d = this._dropDown;	// drop down may not exist until toggleDropDown() call
 				if(d && d.focus){
-					this.defer(lang.hitch(d, "focus"), 1);
+					this.defer(rias.hitch(d, "focus"), 1);
 				}
 			}
 		},
@@ -387,12 +387,13 @@ define([
 			}
 			function _makeDropDown(args){
 				args = rias.mixinDeep({}, args);
+				args.reCreate = true;
 				args.ownerRiasw = self;
-				args.ownerEditor = self;
 				!args._riaswIdOfModule && self._riaswIdOfModule && (args._riaswIdOfModule = self._riaswIdOfModule + "_popup");
 				args.dialogType = args.dialogType ? args.dialogType : "modal";
 				args.parent = (args.parent != undefined ? args.parent : rias.dom.webAppNode);
-				args.popupParent = self;
+				args.popupParent = rias.dialogBy(self);
+				args.dijitPopupParent = self.id;
 				//args.id = self.id + "_popup";
 				args.around = around;
 				//if(!args.region){

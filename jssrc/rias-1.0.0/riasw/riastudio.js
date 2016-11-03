@@ -229,7 +229,6 @@ define([
 			//delete args.afterLoaded;
 			args.afterLoaded = function(result){
 				///DialogPanel 自己 loadModuleMeta，而不是创建一个 Module 作为 child，故不需要额外处理（关联） submit、cancel
-				var cc = 1;
 				/*if(_hookAfterSubmit){
 					d.own(rias.before(d, "afterSubmit", function(){
 						if (rias.isFunction(_hookAfterSubmit)) {
@@ -260,8 +259,9 @@ define([
 				}*/
 				d.own(rias.after(d, "onClose", function(){
 					///TODO:zensst.关于 级联 close 的处理，在需要联动的 child 的 onParent 时向 parent 中注册 child 的 onClose
-					if(args.parent && d.__parentCanClose){
-						args.parent.canClose = d.__parentCanClose;
+					var cc = 1;
+					if(d._riasrPopupChild){
+						cc = d._riasrPopupChild.canClose;
 					}
 					if (cc && rias.isFunction(_onClose)) {
 						cc = rias.hitch(d, _onClose)();
@@ -298,12 +298,13 @@ define([
 			try{
 				if(args._riaswIdOfModule){
 					if(d = rias.ownerModuleBy(args.ownerRiasw)[args._riaswIdOfModule]){
-						if(!args.reCreate && rias.isInstanceOf(d, DialogPanel)){
+						if(!args.reCreate){
+							console.error("已经存在[" + args.ownerRiasw.id + "." + args._riaswIdOfModule + "]", args.initPlaceToArgs.around, args.initPlaceToArgs.popupParent);
 							d.focus();
-						}else{
-							rias.error("已经存在[" + args.ownerRiasw.id + "." + args._riaswIdOfModule + "]", args.initPlaceToArgs.around, args.initPlaceToArgs.popupParent);
+							return d;
 						}
-						return d;
+						console.debug("已经存在[" + args.ownerRiasw.id + "." + args._riaswIdOfModule + "]", args.initPlaceToArgs.around, args.initPlaceToArgs.popupParent);
+						rias.destroy(d);
 					}
 				}
 				d = rias.createRiasw(DialogPanel, args);

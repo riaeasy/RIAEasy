@@ -5,6 +5,8 @@ define({
 
 	login: "登录",
 	logout: "退出",
+	operInfo: "用户信息",
+	modiPassword: "修改密码",
 	menu: "菜单",
 	notice: "通知",
 	user: "用户",

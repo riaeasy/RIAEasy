@@ -16,7 +16,7 @@ define([
 	"afterLoaded": function (result){
 		this.lbInfos.set("content", this.infos);
 		this.lbOldValue.set("content", "原来的值: <span style='color:darkblue;font-weight:bold'>" + this._oldValue + "</span>");
-		this.edt_val.silentSetValue("value", this._get("value"));
+		this.edt_val.silentSetValue(this._get("value"));
 		},
 		"onShow": function (){
 			this.edt_val.select();
@@ -26,6 +26,9 @@ define([
 				this._oldValue = value ? value : "(无)";
 			}
 			this._set("value", value);
+			if(this.edt_val){
+				this.edt_val.silentSetValue(this._get("value"));
+			}
 		},
 	"_getValueAttr": function (){
 			if(this.edt_val){

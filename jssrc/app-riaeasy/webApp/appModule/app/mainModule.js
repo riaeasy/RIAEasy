@@ -77,10 +77,9 @@ define([
 	"showLogInfo": function (){
 			var m = this,
 				b = rias.webApp.oper.logged;
-		m.btnLogin.set("label", b ? rias.i18n.webApp.logout : rias.i18n.webApp.login);
-			if(m.panOper){
-				m.panOper.set("content", b ? rias.webApp.oper.code + "/" + rias.webApp.oper.name : "尚未登录");
-			}
+			m.btnLogin.set("label", b ? rias.i18n.webApp.logout : rias.i18n.webApp.login);
+			m.btnOperInfo.set("label", b ? rias.webApp.oper.name : rias.i18n.webApp.operInfo);
+			m.btnOperInfo.set("visible", b);
 		},
 		"launchMainMenu": function(args){
 			var m = this;
@@ -352,6 +351,33 @@ define([
 										rias.webApp.doLogin();
 									}
 								}
+						},{
+							"_riaswType": "rias.riasw.form.DropDownButton",
+							"_riaswIdOfModule": "btnOperInfo",
+							visible: false,
+							"iconClass": "infoIcon",
+							"label": {
+								"$refObj": "rias.i18n.webApp.operInfo"
+							},
+							dropDown: {
+								"dialogType": "modal",
+								"moduleMeta": "appModule/app/operInfo",
+								//"caption": rias.i18n.webApp.menu,
+								//"tooltip": rias.i18n.webApp.menu,
+								//"iconClass": "menuIcon",
+								resizable: false,
+								maxable: false,
+								"style": {
+									//"height": "480px",
+									//"width": "320px"
+								},
+								actionBar: [
+									//"btnOk"
+								]
+							},
+							beforeDropDown: function(args){
+								args.caption = this.label + " - " + rias.i18n.webApp.operInfo;
+							}
 						}
 					]
 				}
@@ -368,18 +394,6 @@ define([
 			"style": {
 			},
 			"_riaswChildren": [
-				{
-					"_riaswType": "rias.riasw.html.Tag",
-					"_riaswIdOfModule": "panOper",
-					"content": "尚未登录",
-					"region": "left",
-					"style": {
-						"margin": "0px",
-						"padding": "0px",
-						"width": "16em"
-					},
-					"tagType": "label"
-				},
 				{
 					"_riaswType": "rias.riasw.layout.DockBar",
 					"_riaswIdOfModule": "appDock",
