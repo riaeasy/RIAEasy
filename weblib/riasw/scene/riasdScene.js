@@ -1,7 +1,7 @@
 define([
 	"riasw/riaswBase",
 	"riasd/main"
-], function(rias){
+], function(rias, riasd){
 
 	return {
 	"_rsfVersion": 1,
