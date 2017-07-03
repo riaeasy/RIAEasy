@@ -1,0 +1,200 @@
+/* rias.app */
+.riasApp {
+  font-family: "微软雅黑", "arial", "sans-serif";
+  font-size: 12px;
+}
+.riasPage {
+  font-family: "微软雅黑", "arial", "sans-serif";
+  font-size: 12px;
+}
+.infoText {
+  color: #d2691e;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.infoRegion {
+  margin: 0.25em;
+  padding: 0.25em;
+  color: #d2691e;
+  font-weight: bold;
+  border-bottom: 1px solid #d2691e;
+}
+.appPanelShadow.riaswRegionNone,
+.appPanelShadow.riaswRegionCenter,
+.appPanelShadow.riaswRegionTop,
+.appPanelShadow.riaswRegionBottom,
+.appPanelShadow.riaswRegionLeft,
+.appPanelShadow.riaswRegionRight {
+  margin: 0.25em;
+}
+.appPanelShadow.infoRegion.riaswRegionNone,
+.appPanelShadow.riaswSelected.riaswRegionNone,
+.appPanelShadow.infoRegion.riaswRegionCenter,
+.appPanelShadow.riaswSelected.riaswRegionCenter {
+  -webkit-box-shadow: 0em 0.25em 1em -0.25em rgba(0,0,0,0.5);
+  box-shadow: 0em 0.25em 1em -0.25em rgba(0,0,0,0.5);
+}
+.appPanelShadow.infoRegion.riaswRegionTop,
+.appPanelShadow.riaswSelected.riaswRegionTop {
+  -webkit-box-shadow: 0em 0.25em 1em -0.5em rgba(0,0,0,0.5);
+  box-shadow: 0em 0.25em 1em -0.5em rgba(0,0,0,0.5);
+}
+.appPanelShadow.infoRegion.riaswRegionBottom,
+.appPanelShadow.riaswSelected.riaswRegionBottom {
+  -webkit-box-shadow: 0em -0.25em 1em -0.5em rgba(0,0,0,0.5);
+  box-shadow: 0em -0.25em 1em -0.5em rgba(0,0,0,0.5);
+}
+.appPanelShadow.infoRegion.riaswRegionLeft,
+.appPanelShadow.riaswSelected.riaswRegionLeft {
+  -webkit-box-shadow: 0.25em 0em 1em -0.5em rgba(0,0,0,0.5);
+  box-shadow: 0.25em 0em 1em -0.5em rgba(0,0,0,0.5);
+}
+.appPanelShadow.infoRegion.riaswRegionRight,
+.appPanelShadow.riaswSelected.riaswRegionRight {
+  -webkit-box-shadow: -0.25em 0em 1em -0.5em rgba(0,0,0,0.5);
+  box-shadow: -0.25em 0em 1em -0.5em rgba(0,0,0,0.5);
+}
+.appPopupShadow {
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.dj_ie8 .appPopupShadow,
+.dj_ie9 .appPopupShadow {
+  filter: "progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+}
+.desktopHeader {
+  background-color: #0d47a1;
+  border-bottom-width: 1px;
+  color: #fff;
+  font-size: 1.1em;
+  height: 32px;
+  padding: 0px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+.desktopHeader .riaswButtonLabel {
+  padding: 0px 0.25em;
+  margin: 0px 0.25em;
+}
+.desktopHeader .riaswToolButton,
+.desktopHeader .riaswButton {
+  border-width: 0 0 4px 0;
+  border-color: transparent;
+  padding: 3px;
+}
+.desktopHeader .riaswToolButtonHover,
+.desktopHeader .riaswButtonHover {
+  background-color: transparent;
+  border-color: #b3e5fc;
+  color: #b3e5fc;
+}
+.desktopHeader .riaswLogo {
+  margin: 2px 12px;
+}
+.desktopHeader .desktopHeaderDockBar {
+  padding: 0em 1em;
+}
+.desktopHeader .desktopHeaderDockBar .riaswDockNodeHidden {
+  border-color: transparent;
+}
+.desktopHeader .desktopHeaderDockBar .riaswDockNodeShown {
+  background-color: inherit;
+  color: inherit;
+}
+.desktopHeader .desktopHeaderDockBar .riaswDockNodeHover {
+  border-color: #b3e5fc;
+  color: #b3e5fc;
+}
+.desktopHeader .desktopHeaderDockBar .riaswDockNodeChecked {
+  border-color: #ffb74d;
+  color: #ffb74d;
+}
+.desktopHeader .desktopHeaderBtns {
+  padding: 0em 1em;
+}
+.desktopHeader .desktopHeaderDateTime {
+  font-size: 12px;
+  font-weight: normal;
+  width: 6em;
+  height: 2em;
+  line-height: 1em;
+  text-align: center;
+  padding: 0.25em 1em 0em 1em;
+}
+.desktopCenter {
+  padding: 0.5em;
+}
+.desktopFooter .desktopFooterStatusBar .desktopFooterDateTime {
+  width: 6em;
+  height: 2em;
+  line-height: 1em;
+  text-align: center;
+  padding: 1px;
+}
+.desktopMessageItem {
+  border-bottom: 1px dashed #bdbdbd;
+  color: #000;
+  padding: 0.5em;
+}
+.sceneFooter {
+  background-color: #757575;
+  color: #fff;
+  height: 2.5em;
+  padding: 0px;
+  -webkit-box-shadow: 0 -1px 1px rgba(0,0,0,0.3);
+  box-shadow: 0 -1px 1px rgba(0,0,0,0.3);
+}
+.sceneFooter .sceneFooterDockBar {
+  padding: 1px 2em;
+}
+.sceneFooter .sceneFooterDockBar .riaswDockNodeHidden {
+  border-color: transparent;
+}
+.sceneFooter .sceneFooterDockBar .riaswDockNodeShown {
+  background-color: inherit;
+  color: inherit;
+}
+.sceneFooter .sceneFooterDockBar .riaswDockNodeHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.sceneFooter .sceneFooterDockBar .riaswDockNodeSelected {
+  background-color: #0277bd;
+  border-color: #ffb74d;
+  color: #fff;
+}
+.sceneFooter .sceneFooterDockBar .riaswDockNodeFocused,
+.sceneFooter .sceneFooterDockBar .riaswDockNodeActive {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+}
+.sceneFooter .sceneFooterStatusBar {
+  background-color: transparent;
+  border-style: solid;
+  border-color: #696969;
+  border-width: 0px 0px 0px 1px;
+  color: inherit;
+  padding: 1px;
+}
+.sceneFooter .sceneFooterStatusBar .sceneMessageTrayEmpty {
+  color: #424242;
+}
+.sceneFooter .sceneFooterStatusBar .sceneLogTrayEmpty {
+  color: #424242;
+}
+.sceneFooter .sceneFooterStatusBar .sceneFooterDateTime {
+  width: 6em;
+  height: 2em;
+  line-height: 1em;
+  text-align: center;
+  padding: 1px;
+}
+.sceneBg {
+  background: url("./images/bg.png") no-repeat top center;
+}
+.sceneBg0 {
+  background: url("./images/bg0.jpg") no-repeat top center;
+}

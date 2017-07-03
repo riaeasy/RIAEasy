@@ -1,0 +1,96 @@
+
+/* rias.app */
+
+//@import "variables_material_colors";
+@import 'variables';
+//@import 'Common';
+
+//.mobile .mobileBody {
+//	font-family: Helvetica;
+//	font-size: 15px;
+//}
+
+.riasApp{
+	font-family: "微软雅黑","arial","sans-serif";
+	font-size: 12px;
+}
+.riasAppContent {
+}
+.riasPage{
+	font-family: "微软雅黑","arial","sans-serif";
+	font-size: 12px;
+}
+.riasPageContent {
+}
+
+.riaswDesktop{
+}
+.riaswDesktopContent {
+}
+.riaswScene{
+}
+.riaswSceneContent {
+	//margin: 0.5em 0em 0em 0em;
+}
+
+.infoText {
+	color: chocolate;
+	font-size: 1.25em;
+	font-weight: bold;
+}
+.infoRegion {
+	margin: $theme-margin;
+	padding: $theme-padding;
+	color: chocolate;
+	//font-size: 1.15em;
+	font-weight: bold;
+	border-bottom: 1px solid chocolate;
+}
+.appPanelShadow {
+	&.riaswRegionNone,
+	&.riaswRegionCenter,
+	&.riaswRegionTop,
+	&.riaswRegionBottom,
+	&.riaswRegionLeft,
+	&.riaswRegionRight {
+		margin: $theme-margin;
+	}
+}
+.appPanelShadow {
+	&.infoRegion,
+	&.riaswSelected {
+		&.riaswRegionNone,
+		&.riaswRegionCenter {
+			_shadow(0em 0.25em 1em -0.25em $shadow-color-50);
+			.riaswFieldsetContent {
+				//padding: $theme-padding;
+			}
+		}
+		&.riaswRegionTop {
+			_shadow(0em 0.25em 1em -0.5em $shadow-color-50);
+		}
+		&.riaswRegionBottom {
+			_shadow(0em -0.25em 1em -0.5em $shadow-color-50);
+		}
+		&.riaswRegionLeft {
+			_shadow(0.25em 0em 1em -0.5em $shadow-color-50);
+		}
+		&.riaswRegionRight {
+			_shadow(-0.25em 0em 1em -0.5em $shadow-color-50);
+		}
+	}
+}
+.appPopupShadow {
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	_shadow($shadow-popup);
+}
+.dj_ie8,
+.dj_ie9 {
+	.appPopupShadow {
+		filter: "progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+	}
+}
+
+/// ======================================== ///
+@import 'desktop';
+@import 'scene';

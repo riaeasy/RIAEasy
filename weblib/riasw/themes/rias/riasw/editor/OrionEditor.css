@@ -1,0 +1,41 @@
+@import "../../../../../orion/orion/editor/themes/default.css";
+.riaswOrionEditor {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  border: 0;
+  min-height: 2em;
+  min-width: 5em;
+  width: 20em;
+}
+.riaswOrionEditorReadOnly,
+.riaswOrionEditorDisabled,
+.riaswOrionEditorReadOnly .riaswTextBoxContainer,
+.riaswOrionEditorDisabled .riaswTextBoxContainer {
+  background-color: inherit;
+  background-image: none;
+  color: inherit;
+}
+.riaswOrionEditorHover .riaswTextBoxContainer {
+  border-color: #039ffc;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #039ffc inset;
+  box-shadow: 0 0 0.25em 0 #039ffc inset;
+}
+.riaswOrionEditorFocused .riaswTextBoxContainer,
+.riaswOrionEditorActive .riaswTextBoxContainer {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswOrionEditorError .riaswTextBoxContainer,
+.riaswOrionEditorErrorFocused .riaswTextBoxContainer {
+  border-color: #ff3d00;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ff3d00 inset;
+  box-shadow: 0 0 0.25em 0 #ff3d00 inset;
+}

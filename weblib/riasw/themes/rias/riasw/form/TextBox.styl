@@ -1,0 +1,314 @@
+/// Text Inputs: [TextBox | DateTextBox | CurrencyTextBox | ValidationTextBox | ...] | TextArea
+
+@import '../../variables';
+
+.riaswTextBox,
+.riaswTextArea,
+.riaswSelect {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	//border: 1px solid transparent;
+	//overflow: hidden;
+	line-height: $textbox-line-height;
+	//height: 2em;
+	width: 20em;	/* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+}
+.riaswTextArea {
+	height: 5em;
+}
+.riaswSelect {
+	button-style();
+	table-layout: fixed;
+}
+
+.riaswExpandingTextArea {
+	resize: none;
+}
+
+//.riaswTimeTextBox {
+//	width: 8em;
+//}
+
+.riaswTextBox *,
+.riaswTextArea *,
+.riaswSelect * {
+	//vertical-align: middle;
+	//font: inherit;
+}
+
+.riaswTextBoxLabel {
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: left;
+	text-align: right;
+	height: 100%;
+	//width: 0px;
+}
+
+.riaswTextBoxContainer {
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: none;
+	background: $textbox-color;
+	border-width: 1px;
+	border-style: solid;
+	border-color: $textbox-border-color;
+	border-radius: $textbox-border-radius;
+	color: $textbox-text-color;
+	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	padding: 0;
+	margin:0;
+	height: 100%;
+}
+
+.riaswTextArea {
+	.riaswTextBoxContainer {
+		//width:100%;
+		/*overflow-y: auto;*/	/* w/out this IE's SimpleTextArea goes to overflow: scroll */
+		//overflow: auto;
+	}
+	.riaswTextBoxContainer[cols] {
+		width:auto; /* SimpleTextArea cols */
+	}
+	.riaswInputInner {
+		overflow: auto;
+		line-height: normal;
+		//width: auto;
+		//white-space: nowrap;
+	}
+}
+.dj_ie .riaswTextAreaCols .riaswTextBoxContainer {
+	width:auto;
+}
+
+//.riaswTimeTextBox .riaswTextBoxContainer {
+//	width: 8em;
+//}
+.riaswInputContainer {
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: none;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	box-shadow: none;
+}
+.riaswInputInner {
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	float: none;
+	background-color: transparent;
+	border: 0;
+	font: inherit;
+	font-weight: bold;
+	resize: none;
+	padding: 0 $textbox-input-padding;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	box-shadow: none;
+}
+.riaswCurrencyTextBox,
+.riaswNumberTextBox {
+	.riaswTextBoxContainer {
+		text-align: right;
+		direction: ltr;
+	}
+	.riaswInputInner {
+		text-align: right;
+	}
+}
+
+// hover
+.riaswTextBoxHover {
+	.riaswTextBoxContainer {
+		border-color: $theme-hover-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-hover-border-color);
+	}
+}
+// focused
+// active
+.riaswTextBoxFocused,
+.riaswTextBoxActive {
+	.riaswTextBoxContainer {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+	}
+}
+
+
+// readOnly
+//.riaswSelectReadOnly,
+//.riaswSelectReadOnly .riaswTextBoxContainer,
+//.riaswSelectReadOnly .riaswArrowButtonContainer,
+//.riaswTextAreaReadOnly,
+//.riaswTextAreaReadOnly .riaswTextBoxContainer,
+.riaswTextBoxReadOnly {
+	//.riaswArrowButtonContainer,
+	//.riaswArrowButton,
+	//.riaswSpinnerButtonContainer,
+	.riaswTextBoxContainer {
+		//color: inherit;
+		background-color: inherit;// $theme-input-color;
+		//border-color: $theme-disabled-text-color;///用 text-color 更好些
+		//opacity: $theme-disabled-opacity;
+	}
+	.riaswArrowButtonContainer,
+	.riaswSpinnerButtonContainer {
+		display: none;
+	}
+}
+// disabled
+//.riaswSelectDisabled,
+//.riaswSelectDisabled .riaswTextBoxContainer,
+//.riaswSelectDisabled .riaswArrowButtonContainer,
+//.riaswSelectDisabled .riaswSpinnerButtonContainer,
+//.riaswTextAreaDisabled,
+//.riaswTextAreaDisabled .riaswTextBoxContainer,
+.riaswTextBoxDisabled {
+	//.riaswArrowButtonContainer,
+	//.riaswArrowButton,
+	//.riaswSpinnerButtonContainer,
+	.riaswTextBoxContainer {
+		disabled-grayscale();
+	}
+	.riaswArrowButtonContainer,
+	.riaswSpinnerButtonContainer {
+		display: none;
+	}
+}
+.riaswTextAreaDisabled {
+	.riaswTextBoxContainer {
+		//border-top-width: 1px;
+	}
+}
+.riaswTextArea,
+.riaswTextBoxDisabled,
+.riaswTextBoxReadOnly {
+	.riaswInputInner {
+		font-weight: normal;
+	}
+}
+
+// error
+
+// error: icon
+/*.riaswValidationIcon {
+	display: none;
+	//width: $textbox-validation-icon-size;
+	//height: 100%;
+	//background: $textbox-validation-icon-background;
+}*/
+.riaswValidationContainer {
+	display: none;
+	//position: absolute;
+	overflow: hidden;
+	float: right;
+	cursor: default;
+	color: $theme-error-color;
+	height: 100%;
+	width: $textbox-validation-width;
+	//top: 0px;
+	//right: 0px;// 1.25em;
+	&:before {
+		content: "";
+	}
+}
+/*.riaswTextBoxError .riaswTextBoxContainer,
+.riaswTextBoxError .riaswButton {
+	border-color: $theme-error-color;
+	transition-duration: .25s;
+	box-shadow: 0em 0em 0.25em 0.1em $theme-error-color inset;
+	background-color: #ffffbb;
+	background-image:none;
+}*/
+.riaswValidationTextBoxError {
+	.riaswValidationContainer {
+		display: block;
+		&:before {
+			display: block;
+			_icon-core-style();
+			content: $icon-error;
+		}
+	}
+	.riaswTextBoxContainer {
+		//border-color: red;
+		border-color: $theme-error-color;
+		background-color: $theme-error-background-color;
+		background-image: none;
+		//padding-right: $textbox-validation-width;///需要适配 riaswValidationContainer
+		transition-duration: .25s;
+		_textbox_shadow($theme-error-color);
+	}
+}
+
+.riaswComboBoxHighlightMatch {
+	background-color: #f9f7ba;
+}
+
+
+/* Rtl ======================= */
+.riaswTextBoxRtl,
+.riaswTextBoxRtl {
+	.riaswArrowButtonContainer,
+	.riaswSpinnerButtonContainer {
+		border-right-width: 1px;
+		border-left-width: 0;
+	}
+}
+
+.riaswTextBoxRtlError {
+	.riaswValidationContainer {
+		border-left-width: 0;
+		border-right-width: 1px;
+	}
+}
+
+.dijitRtl .riaswPlaceHolder {
+	left: auto;
+	right: 0;
+}
+
+.riaswTextBoxRtl .riaswSpinnerButtonContainer,
+.riaswValidationTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswArrowButtonContainer {
+	float: left;
+}
+
+.riaswSpinnerRtl .riaswSpinnerButtonContainer .riaswArrowButton {
+	right: 0;
+	left: auto;
+}
+
+div.riaswNumberTextBoxRtl {
+	text-align: right;
+}
+.riaswSelectRtl {
+	.riaswButtonLabel {
+		float: right;
+	}
+}
+
+.riaswComboBoxRtl {
+	.riaswArrowButtonContainer {
+		//border-radius: $textbox-border-radius 0 0 $textbox-border-radius;
+		//border-right-width: 1px;
+		//border-left-width: 0;
+	}
+}
+
+/* ======================== */

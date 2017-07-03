@@ -1,0 +1,214 @@
+
+
+@import '../../variables';
+
+.riaswToggleSplitter {
+	position: absolute;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	//z-index: $splitter-zindex;		/* above the panes so that splitter focus is visible on FF, see #7583*/
+	background-color: inherit;
+	border: 1px solid transparent;
+}
+.dj_ie {
+	.riaswToggleSplitter {
+		z-index: 1;	/* behind the panes so that pane borders aren't obscured see test_Gui.html/[14392] */
+	}
+}
+
+.riaswToggleSplitterCover {
+	position: absolute;
+	z-index:-1;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+.dj_ie {
+	.riaswToggleSplitterCover {
+		background: white;
+		opacity: 0;
+	}
+}
+.dj_ie6,
+.dj_ie7,
+.dj_ie8 {
+	.riaswToggleSplitterCover {
+		opacity: 0;
+	}
+}
+
+.riaswToggleSplitterShadow {
+	font-size: 1px;
+	background-color: $splitter-shadow-color;
+	//margin: 0;
+}
+
+.riaswToggleSplitterThumb {
+	//box-sizing: border-box;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	vertical-align: middle;///需要
+	text-align: center;
+	cursor: pointer;
+	_icon-core-style();
+	font-size: $togglesplitter-thumb-font-size;
+	border-width: 1px;
+	border-style: solid;
+	border-color: $togglesplitter-thumb-color;
+	//z-index: $splitter-zindex + 9 !important;
+}
+
+.riaswToggleSplitterH {
+	text-align: center;
+	background: none;
+	border: 0;
+	height: $splitter-width;
+
+	.riaswToggleSplitterThumb {
+		border-width: 0px 2px;
+		//top: 0;
+		left: 45%;
+		width: 48px;//$splitter-width * 6;///用固定值好些
+		height: $splitter-width;
+
+		&:before {
+			position: relative;
+			color: $togglesplitter-thumb-color;
+			top: -($togglesplitter-thumb-font-size - $splitter-width) * 0.5;
+		}
+	}
+}
+.dj_ios,
+.dj_android {
+	.riaswToggleSplitterH {
+		height: $splitter-width-mobile;
+
+		.riaswToggleSplitterThumb {
+		}
+	}
+}
+
+.riaswToggleSplitterV {
+	vertical-align: middle;
+	background: none;
+	border: 0;
+	width: $splitter-width;
+
+	.riaswToggleSplitterThumb {
+		border-width: 2px 0px;
+		top: 45%;
+		width: $splitter-width;
+		height: 48px;//$splitter-width * 6;///用固定值好些
+
+		&:before {
+			position: relative;
+			color: $togglesplitter-thumb-color;
+			line-height: 48px;///与 riaswToggleSplitterThumb 的 height 相同
+			left: -($togglesplitter-thumb-font-size - $splitter-width) * 0.5;
+		}
+	}
+}
+.dj_ios,
+.dj_android {
+	.riaswToggleSplitterV {
+		width: $splitter-width-mobile;
+
+		.riaswToggleSplitterThumb {
+		}
+	}
+}
+
+.dj_a11y {
+	.riaswToggleSplitterH {
+		border-top: 1px solid #d3d3d3 !important;
+		border-bottom: 1px solid #d3d3d3 !important;
+	}
+	.riaswToggleSplitterV {
+		border-left: 1px solid #d3d3d3 !important;
+		border-right: 1px solid #d3d3d3 !important;
+	}
+}
+
+.riaswToggleSplitterHover{
+	background-color: $theme-hover-color;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswToggleSplitterHHover {
+	cursor: row-resize;
+}
+.riaswToggleSplitterVHover {
+	cursor: col-resize;
+}
+.riaswToggleSplitterActive {
+	//z-index: $splitter-zindex + 2 !important;
+	font-size: 1px;
+	background-image: none;
+	background-color: $theme-active-color;
+}
+.riaswToggleSplitterCoverActive {
+	//z-index: $splitter-zindex + 3 !important;
+}
+
+.riaswToggleSplitterTop .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbClosed {
+	&:before {
+		content: $icon-drop-up;
+	}
+}
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterTop .riaswToggleSplitterThumbClosed {
+	&:before {
+		content: $icon-drop-down;
+	}
+}
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterRight .riaswToggleSplitterThumbClosed {
+	&:before {
+		content: $icon-drop-left;
+	}
+}
+.riaswToggleSplitterRight .riaswToggleSplitterThumbOpen,
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbClosed {
+	&:before {
+		content: $icon-drop-right;
+	}
+}
+
+.riaswToggleSplitter {
+	.riaswToggleSplitterThumbOpenHover,
+	.riaswToggleSplitterThumbClosedHover,
+	.riaswToggleSplitterThumbOpenFocused,
+	.riaswToggleSplitterThumbOpenActive,
+	.riaswToggleSplitterThumbClosedFocused,
+	.riaswToggleSplitterThumbClosedActive {
+		make-color($togglesplitter-thumb-hover-color, $togglesplitter-thumb-hover-border-color, $togglesplitter-thumb-hover-text-color);
+		&:before {
+			color: $togglesplitter-thumb-hover-text-color;
+		}
+	}
+}
+
+/*.riaswToggleSplitterTop,
+.riaswToggleSplitterBottom {
+	.riaswToggleSplitterA11y,
+	.riaswToggleSplitterA11y {
+		display: none;
+		font-size: 8px;
+		text-align: center;
+	}
+}
+.riaswToggleSplitterRight,
+.riaswToggleSplitterLeft {
+	.riaswToggleSplitterA11y {
+		display: none;
+		font-size: 8px;
+		position: relative;
+		top: 48%;
+	}
+}
+.dj_a11y {
+	.riaswToggleSplitterA11y {
+		display: block;
+	}
+}*/

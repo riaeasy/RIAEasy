@@ -1,0 +1,1034 @@
+
+@import "../variables";
+
+$rias-font-version = '2017b1';
+
+@font-face {
+	font-family: 'riasFont';
+	src:url(join("/", $path-icons, 'fonts/riaeasy.eot?v=' + $rias-font-version));
+	src:url(join("/", $path-icons, 'fonts/riaeasy.eot?#iefix&v=' + $rias-font-version)) format('embedded-opentype'),
+		url(join("/", $path-icons, 'fonts/riaeasy.ttf?v=' + $rias-font-version)) format('truetype'),
+		url(join("/", $path-icons, 'fonts/riaeasy.woff?v=' + $rias-font-version)) format('woff'),
+		url(join("/", $path-icons, 'fonts/riaeasy.svg?v=' + $rias-font-version)) format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+// animations and transformations
+@keyframes spin-right {
+	from {transform: rotate(0);}
+	to {transform: rotate(360deg);}
+}
+@keyframes spin-left {
+	from {transform: rotate(360deg);}
+	to {transform: rotate(0);}
+}
+// genaric icon spin class
+.icon-spin {
+	animation: spin-right 2s infinite linear;
+}
+
+//.dijitIcon,
+.riaswLoadingIcon,
+.riaswBusyIcon,
+.riaswFileIcon,
+.riaswEditorIcon,
+.riaswButtonIcon {
+	//box-sizing: border-box;
+	display: inline-block;
+	//position: relative;
+	//float: none;
+	vertical-align: middle;///需要
+	text-align: center;
+	_icon-core-style();
+	background: $icon-image-url;
+	background-position: -208px 0px;
+	background-repeat: no-repeat;
+	width: 16px;
+	height: 16px;
+	margin: 2px;///16px -> 20px
+}
+.riaswFileIcon {
+	background: $icon-image-url-files;
+	background-position: -80px -32px;
+}
+.riaswLoadingIcon {
+	font-size: 24px;
+	&:before {
+		// may want to add a another "spinning" icon
+		// which is more loady and less refreshy
+		content: "\f02e";
+		animation: spin-left 2s linear infinite;
+	}
+}
+//.riaswLoadingIcon {
+//	background: $icon-image-url-loading;
+//	background-position: 0px 0px;
+//}
+.dj_ie8 .riaswLoadingIcon,
+.dj_ie9 .riaswLoadingIcon {
+	background: $icon-image-url-loading;
+	&:before {
+		content: "";
+	}
+}
+.riaswBusyIcon {
+	background: $icon-image-url-busy;
+	background-position: 0px 0px;
+}
+.riaswLoadingBusyIcon {
+	background: $icon-image-url-loading-busy;
+	background-position: 0px 0px;
+	height: 10px;
+	width: 50px;
+}
+
+/*rias.file.Icon=================================================================*/
+.riaswUNKNOWFileIcon{
+	background-position: -80px -32px;
+}
+.riaswAUDIOFileIcon{
+	background-position: 0px 0px;
+}
+.riaswAVIFileIcon{
+	background-position: -16px 0px;
+}
+.riaswMIDFileIcon{
+	background-position: -32px 0px;
+}
+.riaswMPFileIcon{
+	background-position: -48px 0px;
+}
+.riaswMP3FileIcon{
+	background-position: -64px 0px;
+}
+.riaswBMPFileIcon{
+	background-position: 0px -16px;
+}
+.riaswGIFFileIcon{
+	background-position: -16px -16px;
+}
+.riaswJPGFileIcon{
+	background-position: -32px -16px;
+}
+.riaswPNGFileIcon{
+	background-position: -32px -16px;
+}
+.riaswHTMFileIcon{
+	background-position: 0px -32px;
+}
+.riaswHTMLFileIcon{
+	background-position: 0px -32px;
+}
+.riaswCSSFileIcon{
+	background-position: -16px -32px;
+}
+.riaswJSFileIcon{
+	background-position: -32px -32px;
+}
+.riaswJSONFileIcon{
+	background-position: -32px -32px;
+}
+.riaswRSPFileIcon{
+	background-position: -32px -32px;
+}
+.riaswRSMFileIcon{
+	background-position: -32px -32px;
+}
+.riaswTXTFileIcon{
+	background-position: -80px -32px;
+}
+.riaswDOCFileIcon{
+	background-position: 0px -48px;
+}
+.riaswXLSFileIcon{
+	background-position: -16px -48px;
+}
+.riaswPPTFileIcon{
+	background-position: -32px -48px;
+}
+.riaswMDBFileIcon{
+	background-position: -48px -48px;
+}
+.riaswPDFFileIcon{
+	background-position: -64px -48px;
+}
+.riaswSWFFileIcon{
+	background-position: -80px -48px;
+}
+.riaswIEFileIcon{
+	background-position: 0px -64px;
+}
+.riaswEXEFileIcon{
+	background-position: -16px -64px;
+}
+.riaswHLPFileIcon{
+	background-position: -32px -64px;
+}
+.riaswZIPFileIcon{
+	background-position: -48px -64px;
+}
+.riaswRARFileIcon{
+	background-position: -64px -64px;
+}
+.riaswFOLDFileIcon{
+	background-position: 0px -80px;
+}
+.riaswFOLDUPFileIcon{
+	background-position: -16px -80px;
+}
+
+
+/*rias.ui.Icon=================================================================*/
+.spaceIcon {
+	&:before {
+		content: "\20";
+	}
+}
+.okIcon {
+	&:before {
+		content: "\f001";
+	}
+}
+.noIcon {
+	&:before {
+		content: "\f002";
+	}
+}
+.cancelIcon {
+	&:before {
+		content: "\f003";
+	}
+}
+.aboutIcon,
+.infoIcon {
+	&:before {
+		content: "\f004";
+	}
+}
+.warnIcon {
+	&:before {
+		content: "\f005";
+	}
+}
+.errorIcon {
+	&:before {
+		content: "\f006";
+	}
+}
+.chooseIcon {
+	&:before {
+		content: "\f007";
+	}
+}
+.helpIcon {
+	&:before {
+		content: "\f008";
+	}
+}
+.loginIcon {
+	&:before {
+		content: "\f009";
+	}
+}
+.menuIcon {
+	&:before {
+		content: "\f00a";
+	}
+}
+.optionIcon {
+	&:before {
+		content: "\f00b";
+	}
+}
+.inputIcon {
+	&:before {
+		content: "\f00c";
+	}
+}
+.scanIcon {
+	&:before {
+		content: "\f00d";
+	}
+}
+.listIcon {
+	&:before {
+		content: "\f00e";
+	}
+}
+.iconListIcon {
+	&:before {
+		content: "\f00f";
+	}
+}
+
+.saveIcon {
+	&:before {
+		content: "\f010";
+	}
+}
+.saveAsIcon {
+	&:before {
+		content: "\f011";
+	}
+}
+.openIcon {
+	&:before {
+		content: "\f012";
+	}
+}
+.abortIcon {
+	&:before {
+		content: "\f013";
+	}
+}
+.closeIcon,
+.exitIcon {
+	&:before {
+		content: "\f014";
+	}
+}
+.runIcon {
+	&:before {
+		content: "\f015";
+	}
+}
+.homeIcon {
+	&:before {
+		content: "\f016";
+	}
+}
+.printIcon {
+	&:before {
+		content: "\f017";
+	}
+}
+.printPreviewIcon {
+	&:before {
+		content: "\f018";
+	}
+}
+.downloadIcon {
+	&:before {
+		content: "\f019";
+	}
+}
+.uploadIcon {
+	&:before {
+		content: "\f01a";
+	}
+}
+.importIcon {
+	&:before {
+		content: "\f01b";
+	}
+}
+.exportIcon {
+	&:before {
+		content: "\f01c";
+	}
+}
+.messageIcon {
+	&:before {
+		content: "\f01d";
+	}
+}
+.messageEmptyIcon {
+	&:before {
+		content: "\f01e";
+	}
+}
+.messageHighlightIcon {
+	&:before {
+		content: "\f01f";
+	}
+}
+
+.newFileIcon {
+	&:before {
+		content: "\f020";
+	}
+}
+.openedFolderIcon {
+	&:before {
+		content: "\f021";
+	}
+}
+.folderIcon,
+.closedFolderIcon {
+	&:before {
+		content: "\f022";
+	}
+}
+.newFolderIcon {
+	&:before {
+		content: "\f023";
+	}
+}
+.parentFolderIcon {
+	&:before {
+		content: "\f024";
+	}
+}
+.childFolderIcon {
+	&:before {
+		content: "\f025";
+	}
+}
+.newIcon,
+.addIcon,
+.addChildIcon {
+	&:before {
+		content: "\f026";
+	}
+}
+.deleIcon,
+.deleteIcon,
+.reduceIcon,
+.removeIcon {
+	&:before {
+		content: "\f027";
+	}
+}
+.editIcon,
+.modiIcon {
+	&:before {
+		content: "\f028";
+	}
+}
+.submitIcon {
+	&:before {
+		content: "\f029";
+	}
+}
+//.cancelIcon,
+.rollbackIcon {
+	&:before {
+		content: "\f02a";
+	}
+}
+.queryIcon {
+	&:before {
+		content: "\f02b";
+	}
+}
+.denyIcon {
+	&:before {
+		content: "\f02c";
+	}
+}
+.busyIcon {
+	&:before {
+		content: "\f02d";
+	}
+}
+.trashIcon {
+	&:before {
+		content: "\f02e";
+	}
+}
+.powerIcon {
+	&:before {
+		content: "\f02f";
+	}
+}
+
+.cutIcon {
+	&:before {
+		content: "\f030";
+	}
+}
+.copyIcon {
+	&:before {
+		content: "\f031";
+	}
+}
+.pasteIcon {
+	&:before {
+		content: "\f032";
+	}
+}
+.undoIcon {
+	&:before {
+		content: "\f033";
+	}
+}
+.redoIcon {
+	&:before {
+		content: "\f034";
+	}
+}
+.refreshIcon {
+	&:before {
+		content: "\f035";
+	}
+}
+.clearIcon {
+	&:before {
+		content: "\f036";
+	}
+}
+.cursorIcon {
+	&:before {
+		content: "\f037";
+	}
+}
+.cursorIcon {
+	&:before {
+		content: "\f037";
+	}
+}
+.smileIcon {
+	&:before {
+		content: "\f038";
+	}
+}
+.lockIcon {
+	&:before {
+		content: "\f039";
+	}
+}
+.resizerIcon {
+	&:before {
+		content: "\f03a";
+	}
+}
+.resizerRtlIcon {
+	&:before {
+		content: "\f03b";
+	}
+}
+.drawIcon {
+	&:before {
+		content: "\f03c";
+	}
+}
+.imageIcon {
+	&:before {
+		content: "\f03d";
+	}
+}
+.barcodeIcon {
+	&:before {
+		content: "\f03e";
+	}
+}
+.barcode2dIcon {
+	&:before {
+		content: "\f03f";
+	}
+}
+
+.idCardIcon {
+	&:before {
+		content: "\f040";
+	}
+}
+
+.leftIcon {
+	&:before {
+		content: "\f050";
+	}
+}
+.upIcon {
+	&:before {
+		content: "\f051";
+	}
+}
+.rightIcon {
+	&:before {
+		content: "\f052";
+	}
+}
+.downIcon {
+	&:before {
+		content: "\f053";
+	}
+}
+.beginIcon {
+	&:before {
+		content: "\f054";
+	}
+}
+.priorIcon {
+	&:before {
+		content: "\f055";
+	}
+}
+.nextIcon {
+	&:before {
+		content: "\f056";
+	}
+}
+.endIcon {
+	&:before {
+		content: "\f057";
+	}
+}
+.dockToCenterIcon {
+	&:before {
+		content: "\f058";
+	}
+}
+.dockToLeftIcon {
+	&:before {
+		content: "\f059";
+	}
+}
+.dockToTopIcon {
+	&:before {
+		content: "\f05a";
+	}
+}
+.dockToRightIcon {
+	&:before {
+		content: "\f05b";
+	}
+}
+.dockToBottomIcon {
+	&:before {
+		content: "\f05c";
+	}
+}
+.dockToIcon {
+	&:before {
+		content: "\f05d";
+	}
+}
+.pinIcon {
+	&:before {
+		content: "\f042";
+	}
+}
+
+.noticeIcon {
+	&:before {
+		content: "\f060";
+	}
+}
+.logIcon {
+	&:before {
+		content: "\f061";
+	}
+}
+.sheetIcon {
+	&:before {
+		content: "\f062";
+	}
+}
+.additionIcon {
+	&:before {
+		content: "\f063";
+	}
+}
+.diaryIcon {
+	&:before {
+		content: "\f064";
+	}
+}
+.scheduleIcon {
+	&:before {
+		content: "\f065";
+	}
+}
+.timeIcon {
+	&:before {
+		content: "\f066";
+	}
+}
+.taskIcon {
+	&:before {
+		content: "\f067";
+	}
+}
+.worksIcon {
+	&:before {
+		content: "\f068";
+	}
+}
+.checkIcon {
+	&:before {
+		content: "\f069";
+	}
+}
+.auditIcon {
+	&:before {
+		content: "\f06a";
+	}
+}
+.signIcon {
+	&:before {
+		content: "\f06b";
+	}
+}
+.starIcon {
+	&:before {
+		content: "\f06c";
+	}
+}
+.starEmptyIcon {
+	&:before {
+		content: "\f06d";
+	}
+}
+.goodIcon {
+	&:before {
+		content: "\f06e";
+	}
+}
+.badIcon {
+	&:before {
+		content: "\f06f";
+	}
+}
+
+.captionToggleIcon {
+	&:before {
+		content: "\f070";
+	}
+}
+.captionLeftIcon {
+	&:before {
+		content: "\f071";
+	}
+}
+.captionRightIcon {
+	&:before {
+		content: "\f072";
+	}
+}
+.captionDownIcon {
+	&:before {
+		content: "\f073";
+	}
+}
+.captionUpIcon {
+	&:before {
+		content: "\f074";
+	}
+}
+.captionShowMaxIcon {
+	&:before {
+		content: "\f075";
+	}
+}
+.captionShowCascadeIcon {
+	&:before {
+		content: "\f076";
+	}
+}
+.captionCloseIcon {
+	&:before {
+		content: "\f077";
+	}
+}
+.captionShowMoreIcon {
+	&:before {
+		content: "\f078";
+	}
+}
+.captionInputIcon {
+	&:before {
+		content: "\f079";
+	}
+}
+.captionShowNormalIcon {
+	&:before {
+		content: "\f07a";
+	}
+}
+.captionShowFullIcon {
+	&:before {
+		content: "\f07b";
+	}
+}
+.captionShowExpandIcon {
+	&:before {
+		content: "\f07c";
+	}
+}
+.captionShowCollapseIcon {
+	&:before {
+		content: "\f07d";
+	}
+}
+.captionShowFitIcon {
+	&:before {
+		content: "\f07e";
+	}
+}
+.changeIcon {
+	&:before {
+		content: "\f07e";
+	}
+}
+
+.riaswTXTFileIcon,
+.fileTxtIcon {
+	background-image: none;
+	&:before {
+		content: "\f080";
+	}
+}
+.riaswDOCFileIcon,
+.riaswDOCXFileIcon,
+.fileDocIcon {
+	background-image: none;
+	&:before {
+		content: "\f081";
+	}
+}
+.riaswXLSFileIcon,
+.riaswXLSXFileIcon,
+.fileXlsIcon {
+	background-image: none;
+	&:before {
+		content: "\f082";
+	}
+}
+.riaswPPTFileIcon,
+.riaswPPTXFileIcon,
+.filePptIcon {
+	background-image: none;
+	&:before {
+		content: "\f083";
+	}
+}
+.riaswPDFFileIcon,
+.filePdfIcon {
+	background-image: none;
+	&:before {
+		content: "\f084";
+	}
+}
+.riaswSWFFileIcon,
+.fileFlashIcon {
+	background-image: none;
+	&:before {
+		content: "\f085";
+	}
+}
+.riaswBMPFileIcon,
+.riaswGIFFileIcon,
+.riaswJPGFileIcon,
+.riaswPNGFileIcon,
+.fileImageIcon {
+	background-image: none;
+	&:before {
+		content: "\f086";
+	}
+}
+.riaswAVIFileIcon,
+.riaswMP4FileIcon,
+.fileVedioIcon {
+	background-image: none;
+	&:before {
+		content: "\f087";
+	}
+}
+.riaswAUDIOFileIcon,
+.riaswMIDFileIcon,
+.riaswMP3FileIcon,
+.fileAudioIcon {
+	background-image: none;
+	&:before {
+		content: "\f088";
+	}
+}
+.riaswZIPFileIcon,
+.riaswRARFileIcon,
+.fileZipIcon {
+	background-image: none;
+	&:before {
+		content: "\f089";
+	}
+}
+.riaswJSFileIcon,
+.riaswRSFFileIcon,
+.fileJsIcon,
+.riasdJsIcon {
+	background-image: none;
+	&:before {
+		content: "\f08a";
+	}
+}
+.riaswCSSFileIcon,
+.fileCssIcon,
+.riasdCssIcon {
+	background-image: none;
+	&:before {
+		content: "\f08b";
+	}
+}
+.riaswHTMFileIcon,
+.riaswHTMLFileIcon,
+.fileHtmlIcon,
+.riasdHtmlIcon {
+	background-image: none;
+	&:before {
+		content: "\f08c";
+	}
+}
+.riasdFuncIcon {
+	&:before {
+		content: "\f08d";
+	}
+}
+.riaswJSONFileIcon,
+.riaswRSFSFileIcon,
+.riasdParamIcon {
+	background-image: none;
+	&:before {
+		content: "\f08e";
+	}
+}
+.riasdStyleIcon {
+	//background-position: -144px -64px;
+	&:before {
+		content: "\f08f";
+	}
+}
+
+.logoGitHubIcon {
+	&:before {
+		content: "\f090";
+	}
+}
+.logoQqIcon {
+	&:before {
+		content: "\f091";
+	}
+}
+.logoWeixinIcon {
+	&:before {
+		content: "\f092";
+	}
+}
+.logoAlipayIcon {
+	&:before {
+		content: "\f093";
+	}
+}
+.logoTaobaoIcon {
+	&:before {
+		content: "\f094";
+	}
+}
+.logoLinuxIcon {
+	&:before {
+		content: "\f095";
+	}
+}
+.logoAndroidIcon {
+	&:before {
+		content: "\f096";
+	}
+}
+.logoWindowIcon {
+	&:before {
+		content: "\f097";
+	}
+}
+.logoAppleIcon {
+	&:before {
+		content: "\f098";
+	}
+}
+.logoBbaiduIcon {
+	&:before {
+		content: "\f099";
+	}
+}
+.logoGoogleIcon {
+	&:before {
+		content: "\f09a";
+	}
+}
+.logoZhihuIcon {
+	&:before {
+		content: "\f09b";
+	}
+}
+.logoDojoIcon {
+	&:before {
+		content: "\f09c";
+	}
+}
+.logoPaypalIcon {
+	&:before {
+		content: "\f09d";
+	}
+}
+
+.logoRiaEasyIcon {
+	&:before {
+		content: "\f0a0";
+	}
+}
+.riasdIcon {
+	&:before {
+		content: "\f0a1";
+	}
+}
+.viewDialogIcon,
+.riasdPreviewIcon {
+	&:before {
+		content: "\f0a2";
+	}
+}
+.outlineIcon {
+	&:before {
+		content: "\f0a3";
+	}
+}
+.consoleIcon {
+	&:before {
+		content: "\f0a4";
+	}
+}
+.workflowIcon {
+	&:before {
+		content: "\f0a5";
+	}
+}
+.charIcon {
+	&:before {
+		content: "\f0a6";
+	}
+}
+.reportIcon {
+	&:before {
+		content: "\f0a7";
+	}
+}
+
+.appIcon {
+	&:before {
+		content: "\f0b0";
+	}
+}
+.mDatasIcon {
+	&:before {
+		content: "\f0b1";
+	}
+}
+.mRightsIcon {
+	&:before {
+		content: "\f0b2";
+	}
+}
+.mUsersIcon {
+	&:before {
+		content: "\f0b3";
+	}
+}
+.mUserGroupIcon {
+	&:before {
+		content: "\f0b4";
+	}
+}
+.dbIcon {
+	&:before {
+		content: "\f0b5";
+	}
+}
+

@@ -1,0 +1,94 @@
+
+/* WidgetPalette */
+.riaswWidgetPalette {
+	/*width: 100%;
+	height: 100%;*/
+	overflow-x: hidden;
+	padding: 0px;
+	font-size: 12px;
+}
+
+.riaswWidgetPaletteItem {
+	display: inline-block;
+	width: 72px;
+	height: 96px;
+	text-align: center;
+	border: 2px solid transparent;
+	margin: 0.25em;
+	padding-top: 0.25em;
+	//-moz-border-radius: 1em;
+	//-webkit-border-radius: 1em;
+	border-radius: 1em;
+	a {
+		vertical-align:bottom;
+		line-height:normal;
+		text-decoration: none;
+		color: black;
+	}
+}
+.riaswWidgetPaletteItemImageContainer {
+	text-align:center;
+	display:block;
+	img {
+		display: inline-block;
+		width:50px;
+		height:50px;
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, .24);
+	}
+}
+.riaswWidgetPaletteItemLabelContainer {
+	padding: 2px 4px;
+	text-align:center;
+	display:block;
+	overflow:hidden;
+	white-space: normal;
+	text-overflow:ellipsis;
+	height: 3em;
+	font-size:12px;
+	line-height:12px;
+}
+.riaswWidgetPaletteItemLabel {
+}
+.riaswWidgetPaletteItemFlat {
+}
+.riaswWidgetPaletteItemRaised {
+	border: 2px solid gold;
+	//-moz-border-radius: 9px;
+	//-moz-box-shadow: 0.5em 0.5em 0.5em #777;
+	//-webkit-box-shadow: 0.5em 0.5em 0.5em #777;
+	box-shadow: 0.25em 0.25em 0.5em #777;
+}
+.riaswWidgetPaletteItemSunken {
+	.riaswWidgetPaletteItemLabel {
+	}
+}
+.riaswWidgetPaletteItemSelect {
+	border: 2px solid skyblue;
+	//-moz-box-shadow: 0.5em 0.5em 0.5em #777;
+	//-webkit-box-shadow: 0.5em 0.5em 0.5em #777;
+	box-shadow: 0.25em 0.25em 0.5em #777;
+	.riaswWidgetPaletteItemLabel {
+		font-weight:bold;
+	}
+}
+
+.riaswWidgetPaletteItemSelectedIcon {
+	position:absolute;
+	display:inline-block;
+	pointer-events:auto;
+	width:26px;
+	height:26px;
+}
+.riaswWidgetPaletteItemSelectedMoreIcon {
+	/*background-image:url(img/palette_more_active.png);*/
+	background: url(../../../resources/images/sprite.png) no-repeat -65px -41px;
+	left: 48px;
+	top: -4px;
+}
+.riaswWidgetPaletteItemSelectedHelpIcon {
+	/*background-image:url(img/palette_help_active.png);*/
+	background: url(../../../resources/images/sprite.png) no-repeat -94px -40px;
+	left: 48px;
+	top: 32px;
+}
+

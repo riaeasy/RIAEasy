@@ -1,0 +1,134 @@
+
+/// ColorPalette
+
+@import '../../variables';
+
+.riaswColorPicker {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	background-color: $colorpicker-background-color;
+	border: 1px solid $colorpicker-border-color;
+	border-radius: $colorpicker-border-radius;
+	padding: $colorpicker-padding;
+}
+.riaswColorPickerTable {
+	//width: 100%;///不应该设置
+	border: none;
+	table-layout: fixed;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.riaswColorPickerRightPad {
+	padding-right: 8px;
+}
+
+.riaswColorPickerBox {
+	position: relative;
+	width: $colorpicker-colorbox-size;
+	height: $colorpicker-colorbox-size;
+	margin: 0;
+	padding: 0;
+}
+
+.riaswColorPickerUnderlay {
+	position: relative;
+	border: 1px solid $colorpicker-border-color;
+	top: 0;
+	left: 0;
+	width: $colorpicker-colorbox-size;
+	height: $colorpicker-colorbox-size;
+	z-index: 1;
+}
+
+.riaswColorPickerPoint {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	border: 0;
+	z-index: 3;
+	cursor: move;
+}
+
+.riaswColorPickerPreview {
+	display: block;
+	position: relative;
+	background-color: $theme-input-color;
+	border: 1px solid $colorpicker-border-color;
+	width: $colorpicker-previewbox-size;
+	height: $colorpicker-previewbox-size;
+	top: 0px;
+	left: 0px; 
+}
+.riaswColorPickerWebSafePreview {
+	display: block;
+	position: relative;
+	border: 1px solid $colorpicker-border-color;
+	width: $colorpicker-previewbox-size-safe;
+	height: $colorpicker-previewbox-size-safe;
+	top: 0px;
+	left: 0px; 
+}
+
+.riaswColorPickerOptional {
+	position:relative;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+}
+
+.riaswColorPickerOptional table {
+	border-spacing: 4px;
+}
+
+.riaswColorPickerPreviewContainer table {
+	border-spacing: 6px 0px;
+}
+
+.riaswColorPickerOptional input {
+	border: 1px solid $grey-500;
+	width: $colorpicker-previewbox-size-safe;
+	padding: 1px 3px 1px 3px;
+	line-height: 1.1em;
+}
+
+.riaswColorPickerHex input {
+	width: 4em;
+}
+
+.riaswHuePickerUnderlay {
+	position: relative;
+	text-align: center;
+	top: 0;
+	left: 0;
+	height: $colorpicker-colorbox-size;
+	width: 20px;
+	z-index: 1;
+}
+
+.riaswHuePicker {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	padding: 0px;
+}
+
+.riaswHuePickerPoint {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 8px;
+	z-index: 3;
+	cursor: move;
+}
+
+.riaswColorPickerReadOnly {
+	background-color: inherit;
+}
+.riaswColorPickerDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+}

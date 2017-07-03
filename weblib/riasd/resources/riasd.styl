@@ -1,0 +1,137 @@
+
+
+@import '../../riasw/themes/rias/variables';
+@import "riaswIcons";
+@import 'WidgetPalette';
+
+$riasd-tab-label-color ?= $red-700;
+$riasd-current-widget-color ?= $theme-highlight-border-color;
+$riasd-preview-background-color ?= $inverse-color;//$grey-700;
+$riasd-preview-border-color ?= $yellow-300;
+$riasd-docknode-selected-margin ?= 3px 3px 3px 0;
+
+.riasdTabLabelPath {
+	display: inline-block;
+	font-weight: normal;
+}
+.riasdTabLabelName {
+	display: inline-block;
+	font-weight: bold;
+	color: $riasd-tab-label-color;
+}
+.riaswTabChecked {
+	.riasdTabLabelName {
+		color: inherit;
+	}
+}
+
+.riasdOutlineTreeItemFunc {
+	display: inline-block;
+	font-weight: bold;
+	color: red;
+}
+.riasdOutlineTreeItemId {
+	display: inline-block;
+	font-weight: bold;
+	//color: inherit;
+}
+.riasdOutlineTreeItemLabel {
+	display: inline-block;
+	font-weight: bold;
+	color: chocolate;
+}
+.riasdOutlineTreeItemType {
+	display: inline-block;
+	font-weight: bold;
+	color: orchid;
+}
+.riasdOutlineTreeItemError {
+	display: inline-block;
+	font-weight: bold;
+	color: red;
+}
+.riaswTreeRowSelected {
+	.riasdOutlineTreeItemFunc {
+		color: orange;
+	}
+	.riasdOutlineTreeItemId {
+		//color: inherit;
+	}
+	.riasdOutlineTreeItemLabel {
+		color: lightsalmon;
+	}
+	.riasdOutlineTreeItemType {
+		color: pink;
+	}
+	.riasdOutlineTreeItemError {
+		color: yellow;
+	}
+}
+
+.riaswOutlineTreeIcon48 {
+	background: url('./imagesw48/OutlineTree.png') no-repeat;
+}
+.riaswOutlineTreeIcon16 {
+	background: url('./imagesw16/OutlineTree.png') no-repeat;
+}
+.riaswWidgetPaletteIcon48 {
+	background: url('./imagesw48/IconContainer.png') no-repeat;
+}
+.riaswWidgetPaletteIcon16 {
+	background: url('./imagesw16/IconContainer.gif') no-repeat;
+}
+
+.riasdCurrentWidget {
+	outline-color: $riasd-current-widget-color;
+	outline-style: dashed;
+	outline-width: 6px;
+	outline-offset: -3px;
+}
+
+.riasdCurrentWidgetDiv {
+	display: block;
+	position: absolute;
+	border: 4px dashed $riasd-tab-label-color;
+	background: transparent;
+	margin: 0;
+	overflow: hidden;
+	z-index: 30;
+	pointer-events: none;
+}
+
+.riasdPreviewContentPanel {
+	background-color: $riasd-preview-background-color;
+	padding: 0.25em;
+	border-width: 1px;
+	//margin: 0.25em;
+}
+.riasdPreviewPanel {
+	padding: 0px;
+	border: 0px solid $theme-border-color;
+}
+.riasdBtnsDockBar {
+	//background-color: whitesmoke;
+	//padding: 0em 0em 0em 0.5em;
+	border-left-width: $tabpanel-tab-checked-border-width;
+	border-color: $tabpanel-tab-checked-color;
+	//width: 3em;
+	padding: 0px;
+	.riaswDockNode {
+		display: block;
+		border-radius: 0 $tabpanel-tab-border-radius $tabpanel-tab-border-radius 0;
+		border-left-width: 0;
+		//padding: 0.25em 0.5em;
+		//min-height: 2em;
+	}
+	.riaswDockNodeSelected {
+		//margin: $riasd-docknode-selected-margin;
+	}
+}
+.riasdPreview {
+	border: 3px solid $riasd-preview-border-color;
+}
+.mobileBody .riasdPreview {
+	//overflow: hidden;
+}
+
+

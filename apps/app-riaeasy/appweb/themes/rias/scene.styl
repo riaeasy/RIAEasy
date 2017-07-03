@@ -1,0 +1,102 @@
+
+/* common scene */
+
+//@import "variables_material_colors";
+@import 'variables';
+
+.sceneHeader {
+	.sceneHeaderDockBar {
+		//padding: 0em 1em;
+	}
+	.sceneHeaderBtns {
+		//padding: 0em 1em;
+	}
+	.sceneHeaderDateTime {
+	}
+}
+
+.sceneCenter {
+	//padding: 0.5em;
+	.riaswTabPanelContent {
+	}
+
+	.riaswCaptionPanel {
+		//border-width: 0px;
+	}
+	.appmoduleCaption {
+	}
+	.appmoduleContent {
+		//margin: 0.5em 0em 0em 0em;
+	}
+}
+
+.sceneFooter {
+	background-color: $sceneFooterColor;
+	//border-top: 1px solid lightgray;
+	color: $theme-input-color;
+	//line-height: 2.5em;
+	height: 2.5em;
+	padding: 0px;
+	//margin-left: 0.25em !important;
+	_shadow(0 -1px 1px rgba(0,0,0,0.3), 0 -2px 2px rgba(0,0,0,0.2));
+
+	.sceneFooterDockBar {
+		padding: 1px 2em;
+
+		.riaswDockNodeHidden {
+			//background-color: inherit;
+			border-color: transparent;
+		}
+		.riaswDockNodeShown {
+			background-color: inherit;
+			color: inherit;
+		}
+		.riaswDockNodeHover {
+			make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+		}
+		.riaswDockNodeSelected {
+			make-color($tabpanel-tab-checked-color, $theme-highlight-border-color, $tabpanel-tab-checked-text-color);
+		}
+		.riaswDockNodeFocused,
+		.riaswDockNodeActive {
+			make-color($theme-active-color, $theme-highlight-border-color, $theme-active-text-color);
+		}
+	}
+	.sceneFooterStatusBar {
+		background-color: transparent;
+		border-style: solid;
+		border-color: dimgray;
+		border-width: 0px 0px 0px 1px;
+		color: inherit;
+		//width: 2.5em;
+		padding: 1px;
+
+		.sceneMessageTray {
+		}
+		.sceneMessageTrayEmpty {
+			color: $theme-disabled-text-color;
+		}
+		.sceneLogTray {
+		}
+		.sceneLogTrayEmpty {
+			color: $theme-disabled-text-color;
+		}
+		.sceneFooterDateTime {
+			width: 6em;
+			height: 2em;
+			line-height: 1em;
+			text-align: center;
+			padding: 1px;
+		}
+	}
+}
+
+.sceneBg {
+	background: url("./images/bg.png") no-repeat top center;
+	//background-size: contain;
+}
+.sceneBg0 {
+	background: url("./images/bg0.jpg") no-repeat top center;
+	//background-size: contain;
+}
+

@@ -1,0 +1,40 @@
+/// Rating
+
+@import '../../variables';
+
+.riaswRating {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.riaswRatingStar {
+	display:inline-block;
+	position: relative;
+	background-image: $rating-star-image-url;
+	background-position: $rating-star-empty-image-position;
+	height: $rating-star-image-size;
+	width: $rating-star-image-size;
+	//float:left;
+}
+
+.riaswRatingStarChecked {
+	background-position: $rating-star-checked-image-position;
+}
+.riaswRatingStarHover {
+	background-position: $rating-star-checked-image-position;
+	opacity: $theme-disabled-opacity;
+}
+
+/* read only */
+.riaswRatingReadOnly {
+}
+/* disabled */
+.riaswRatingDisabled {
+	disabled-grayscale();
+	.riaswRatingStar {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+}

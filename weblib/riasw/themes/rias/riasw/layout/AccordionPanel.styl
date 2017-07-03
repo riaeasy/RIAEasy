@@ -1,0 +1,66 @@
+
+/// AccordionPanel
+
+@import '../../variables';
+
+.riaswAccordionPanel {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: $accordingpanel-border;
+}
+
+.riaswAccordionInner {
+	position: relative;
+	background-color: inherit;
+	border: $accordingpanel-container-border;
+}
+.riaswAccordionChildContainer {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+	border: $accordingpanel-child-border;
+}
+.riaswAccordionPanelChild {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+}
+
+.riaswAccordionCaption {
+	position: relative;
+	cursor: pointer;
+	background-color: $accordingpanel-caption-color;
+	///border: $accordingpanel-caption-border;
+	color: $accordingpanel-caption-text-color;
+	//white-space: -moz-pre-space;
+	white-space: nowrap;
+	//font-size: 1em;
+	font-weight: bold;
+	padding: $accordingpanel-caption-padding;
+	margin: 0px;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswAccordionCaptionLabel {
+	margin: 0 $theme-padding;
+}
+.riaswAccordionCaptionHover {
+	make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+}
+.riaswAccordionCaptionSelected {
+	cursor: default;
+	make-color($theme-selected-color, $theme-selected-border-color, $theme-selected-text-color);
+}
+.riaswAccordionCaptionFocused,
+.riaswAccordionCaptionActive {
+	cursor: default;
+	make-color(false, $theme-active-border-color, false);
+}
+
+.riaswAccordionInnerHover {
+	border-color: $theme-hover-border-color;
+}
+.riaswAccordionInnerSelected {
+	border-color: $theme-selected-border-color;
+}
+.riaswAccordionInnerFocused,
+.riaswAccordionInnerActive {
+	border-color: $theme-active-border-color;
+}
+

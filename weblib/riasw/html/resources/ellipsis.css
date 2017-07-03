@@ -1,0 +1,35 @@
+
+.riaswEllipsis,
+.riaswEllipsisShown {
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+}
+
+.riaswEllipsis window {
+    width:100%;
+    -moz-user-focus:normal;
+    -moz-user-select:text;
+}
+.riaswEllipsis description{
+    -moz-user-focus:normal;
+    -moz-user-select:text;
+}
+.riaswEllipsisIFrame{
+	white-space: normal;
+	border: none;
+	width: 100%;
+	display: block;
+	height: 1px;
+	margin-top: -1px;
+	clear: both;
+}
+.riaswEllipsisContainer{
+	width: 100%;
+}
+.riaswEllipsisShown:after{
+	content: "\2026"
+}

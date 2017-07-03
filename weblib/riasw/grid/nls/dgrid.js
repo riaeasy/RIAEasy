@@ -1,0 +1,51 @@
+
+//RIAStudio dgrid
+
+define({root: {
+	//rias.i18n.dgrid
+	action: "Action",
+	refresh: "Refresh",
+	aux: "Auxiliary",
+	view: "View",
+	add: "Add",
+	copy: "Copy",
+	dele: "Delete",
+	modify: "Modify",
+	edit: "Edit",
+	save: "Save",
+	abort: "Abort",
+	"export": "Export",
+	"import": "Import",
+	printGrid: "Print Grid",
+	exportAsXls: "Export as xls"
+},
+	"ar": false,
+	"ca": false,
+	"cs": false,
+	"da": false,
+	"de": false,
+	"el": false,
+	"en": true,
+	"en-gb": false,
+	"es": false,
+	"fi": false,
+	"fr": false,
+	"hu": false,
+	"it": false,
+	"ja": false,
+	"ko": false,
+	"nb": false,
+	"nl": false,
+	"pl": false,
+	"pt": false,
+	"pt-pt": false,
+	"ro": false,
+	"ru": false,
+	"sv": false,
+	"th": false,
+	"tr": false,
+	"zh": true,
+	"zh-cn": false,
+	"zh-hant": false
+
+});

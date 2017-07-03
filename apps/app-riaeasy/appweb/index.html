@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RIAEasy - A modular, mobile-ready, data-driven for single-page-application.模块化富客户/单页应用框架。</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<script>
+		var appName = "app-riaeasy";
+		var dojoConfig = {
+			has: {
+				//"config-deferredInstrumentation": 1,//是否自动加载那些会报告un-handled rejected promises的代码
+				//"config-dojo-loader-catches": 0,//是否 catch 加载的模块文本
+				"dojo-sync-loader": 1,///mobile 是同步加载
+				"dojo-trace-api": 0,//Disables the tracing of module loading.是否跟踪模块加载过程
+				"dojo-log-api": 0,//是否记录加载器的日志？
+				"dojo-publish-privates": 1,
+				"dojo-undef-api": 1,
+				"require-encoding": 1,
+				//"rias-desktop-focusAction": "outline",/// none, outline, animate
+				"rias-xhr-simulate": 0,
+				"riasd": 1,
+				"riasw-enterAsTab": true
+			},
+			hookConsole: {
+				//logLimit: 49,
+				//logLevels: ["warn", "error"]
+			},
+			isDebug: true,
+			debugStackTrace: false,
+			debugStackTraceOwn: false,
+			parseOnLoad: false,
+			//"dojo-sync-loader": 1,///mobile 是同步加载
+			async: true,
+			//cacheBust: (new Date()).getTime(),
+			waitSeconds: 5,
+			publishParse: true,
+			publishRequire: true,
+			ioPublish: true,
+			//locale: "zh-cn",
+			extraLocale: ["en"],
+			trace:{
+				"loader-inject": 0,
+				"loader-define": 0,
+				"loader-exec-module": 0,
+				"loader-run-factory": 0,
+				"loader-finish-exec": 0,
+				"loader-define-module": 0,
+				"loader-circular-dependency": 1,
+				"loader-define-nonmodule": 1
+			},
+			packages: [
+				//{name: "dojo", location: "../dojo"},
+				//{name: "dijit", location: "../dijit"},
+				//{name: "dojox", location: "../dojox"},
+				{name: "rias", location: "../rias", main: "main"},
+				{name: "appweb", location: "../../" + appName + "/appweb"},
+				{name: "appmodule", location: "../../" + appName + "/appweb/appmodule"},
+				{name: "act", location: "../../" + appName + "/act", main: "main"}
+			],
+			fixupUrl: function(url){
+				url += ""; // make sure url is a Javascript string (some paths may be a Java string)
+				//return url + (cacheBust && /\/appweb\/|\/rias\//.test(url) ? ((/\?/.test(url) ? "&" : "?") + cacheBust) : "");
+				return url + (cacheBust ? ((/\?/.test(url) ? "&" : "?") + cacheBust) : "");
+			}
+		};
+		var cacheBust = !dojoConfig.isDebug ? (new Date()).getTime() : "";
+	</script>
+	<!--script type="text/javascript" src="../../../weblib/firebug-lite/build/firebug-lite-debug.js"></script-->
+	<script type="text/javascript" src="../../../weblib/dojo/dojo.js"></script>
+	<!--script src="//ajax.googleapis.com/ajax/libs/dojo/1.11.2/dojo/dojo.js"></script-->
+</head>
+<body>
+	<script type="text/javascript">
+		var _locationSearch = document.location.search;
+		require([
+			"riasw/riaswBase",
+			"appmodule/studio"
+		], function(rias, initParams){
+			rias.whenLoaded(function(result){
+				if(!result){
+					return;
+				}
+				var theme = rias.urlParamsToObj(_locationSearch).theme;
+				if(!theme){
+					theme = rias.cookie("desktopTheme") || "rias";
+				}
+				rias.theme.loadTheme(theme);
+				rias.startupDesktop(rias.mixinDeep({}, initParams, {
+					messageLimit: 0,
+					appName: appName,
+					moduleMeta: "appmodule/desktop",
+					//dataServerAddr: "",
+					defaultTimeout: 15000,
+					currentTheme: theme,
+					initScenes: [
+						{
+							sceneId: "myHome",
+							moduleMeta: "appmodule/welcome/scene"
+						//}, {
+						//	sceneId: "riastudio",
+						//	moduleMeta: "riasw/scene/riasdScene"
+						}
+					]
+				}));
+			});
+		});
+	</script>
+</body>
+</html>

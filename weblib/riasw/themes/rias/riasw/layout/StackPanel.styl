@@ -1,0 +1,32 @@
+/**
+ * riasw.layout.StackPanel
+ */
+
+/* Classes for all types of tabs (top/bottom/left/right) */
+
+@import '../../variables';
+
+.riaswStackPanel {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: $stackpanel-border;
+}
+.riaswStackPanelContent {
+	overflow: hidden;
+	border: 0px solid transparent;
+}
+.riaswStackPanelChildWrapper {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+	//margin: 0 !important;
+	//padding: 0 !important;
+	//border: 0 !important;
+}
+.riaswStackPanelChild {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+}
+
+.riaswStackController .riaswToggleButtonChecked * {
+	cursor: default;
+}
+

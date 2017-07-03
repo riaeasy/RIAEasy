@@ -1,0 +1,90 @@
+
+/* Module */
+@import '../../variables';
+
+.riaswLogo {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	overflow: hidden;
+	background-color: transparent;
+	border: 0;
+}
+
+.riaswLogoNode {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	background-color: white;
+	min-height: $icon-size;
+	min-width: $icon-size;
+	height: $icon-size;
+	width: $icon-size;
+}
+.riaswLogoPart {
+	display: inline-block;
+	position: absolute;
+	border: 0;
+}
+.riaswLogoPart1 {
+	background-color: green;
+	top: 5%;
+	left: 5%;
+	height: 30%;
+	width: 45%;
+}
+.riaswLogoPart2 {
+	background-color: black;
+	top: 5%;
+	left: 50%;
+	height: 30%;
+	width: 45%;
+}
+.riaswLogoPart3 {
+	background-color: red;
+	top: 35%;
+	left: 5%;
+	height: 30%;
+	width: 45%;
+}
+.riaswLogoPart4 {
+	background-color: white;
+	top: 35%;
+	left: 50%;
+	height: 30%;
+	width: 45%;
+}
+.riaswLogoPart5 {
+	background-color: yellow;
+	top: 65%;
+	left: 5%;
+	height: 30%;
+	width: 90%;
+}
+
+.riaswLogoLabel {
+	display: inline-block;
+	vertical-align: bottom;
+	font-family: "arial";
+	font-style: normal;
+	font-weight: bold;
+	//font-size: 13px;
+	text-decoration: underline;
+	padding: 0 0.25em;
+}
+
+.riaswLogoActive,
+.riaswLogoFocused,
+.riaswLogoHover {
+	font-weight: bolder;
+	color: $theme-highlight-border-color;
+	.riaswLogoNode {
+		background-color: $theme-highlight-border-color;
+	}
+}
+.riaswLogoDisabled {
+	disabled-grayscale();
+}
+
+

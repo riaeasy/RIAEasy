@@ -1,0 +1,150 @@
+
+/// Splitter
+
+@import '../../variables';
+
+.riaswGutter {
+	position: absolute;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	font-size: 1px;		/* needed by IE6 even though div is empty, otherwise goes to 15px */
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.riaswSplitter {
+	position: absolute;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	//z-index: $splitter-zindex;		/* above the panes so that splitter focus is visible on FF, see #7583*/
+	background-color: inherit;
+	border: 1px solid transparent;
+}
+.dj_ie {
+	.riaswSplitter {
+		//z-index: 1;	/* behind the panes so that pane borders aren't obscured see test_Gui.html/[14392] */
+	}
+}
+
+.riaswSplitterCover {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.dj_ie {
+	.riaswSplitterCover {
+		background: white;
+		opacity: 0;
+	}
+}
+.dj_ie6,
+.dj_ie7,
+.dj_ie8 {
+	.riaswSplitterCover {
+		opacity: 0;
+	}
+}
+
+.riaswSplitterShadow {
+	font-size: 1px;
+	background-color: $splitter-shadow-color;
+	//margin: 0;
+}
+
+.riaswSplitterH,
+.riaswGutterH {
+	text-align: center;
+	background: none;
+	border: 0;
+	height: $splitter-width;
+}
+.riaswSplitterH {
+	.riaswSplitterThumb {
+		position: absolute;
+		overflow: hidden;
+		background: none;
+		top: $splitter-width / 2;
+		left: 45%;
+		height: 0px;
+		width: 10%;
+	}
+}
+.dj_ios,
+.dj_android {
+	.riaswSplitterH,
+	.riaswGutterH {
+		top: $splitter-width-mobile / 2;
+		height: $splitter-width-mobile;
+	}
+	.riaswSplitterH {
+		.riaswSplitterThumb {
+		}
+	}
+}
+
+.riaswSplitterV,
+.riaswGutterV {
+	vertical-align: middle;
+	background: none;
+	border: 0;
+	width: $splitter-width;
+	margin: 0;
+}
+.dj_ios,
+.dj_android {
+	.riaswSplitterV,
+	.riaswGutterV {
+		width: $splitter-width-mobile;
+	}
+}
+.riaswSplitterV {
+	.riaswSplitterThumb {
+		position: absolute;
+		overflow: hidden;
+		background: none;
+		top: 45%;
+		left: $splitter-width / 2;
+		height: 10%;
+		width: 0px;
+		margin: 0;
+	}
+}
+.dj_ios,
+.dj_android {
+	.riaswSplitterV {
+		.riaswSplitterThumb{
+		}
+	}
+}
+.dj_a11y {
+	.riaswSplitterH {
+		border-top: 1px solid #d3d3d3 !important;
+		border-bottom: 1px solid #d3d3d3 !important;
+	}
+	.riaswSplitterV {
+		border-left: 1px solid #d3d3d3 !important;
+		border-right: 1px solid #d3d3d3 !important;
+	}
+}
+
+.riaswSplitterHover{
+	background-color: $theme-hover-color;
+	-webkit-tap-highlight-color: transparent;
+}
+.riaswSplitterHHover {
+	cursor: row-resize;
+}
+.riaswSplitterVHover {
+	cursor: col-resize;
+}
+.riaswSplitterActive {
+	//z-index: $splitter-zindex + 2 !important;
+	font-size: 1px;
+	background-image: none;
+	background-color: $theme-active-color;
+}
+.riaswSplitterCoverActive {
+	//z-index: $splitter-zindex + 3 !important;
+}
+

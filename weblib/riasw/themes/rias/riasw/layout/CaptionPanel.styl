@@ -1,0 +1,507 @@
+
+/* CaptionPanel */
+
+@import '../../variables';
+///@import '../sys/Tooltip';
+
+.riaswCaptionPanel {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: $captionpanel-border;
+	padding: $captionpanel-padding;
+	margin: $captionpanel-margin;
+}
+.riaswFieldset {
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	position: relative;
+	border: $fieldset-border;
+	border-radius: $fieldset-border-radius;
+	///min-width: inherit;///改为在 Fieldset 的 resize 中处理。///很重要！部份浏览器默认设置了该值，导致不能调整 width。
+	padding: $fieldset-padding;
+	margin: $fieldset-margin;
+}
+.riaswFieldsetNoCaptionNode {
+	.riaswFieldsetCaptionNode {
+		display: none;
+	}
+}
+
+.riaswCaptionPanelHover,
+.riaswFieldsetHover {
+	//border-color: $theme-hover-border-color;
+}
+.riaswCaptionPanelSelected,
+.riaswFieldsetSelected {
+	//border-color: $theme-selected-border-color;
+}
+.riaswCaptionPanelFocused,
+.riaswCaptionPanelActive,
+.riaswFieldsetFocused,
+.riaswFieldsetActive {
+	//border-color: $theme-active-border-color;
+}
+
+.riaswCaptionPanelContent,
+.riaswFieldsetContent {
+	overflow: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+	padding: 0;
+	margin: 0;
+}
+/*.mobileBody .riaswCaptionPanelContent,
+.mobileBody .riaswFieldsetContent {
+	overflow: hidden;
+}*/
+
+.riaswCaptionPanelNoCaption {
+}
+
+.riaswCaptionPanelCaptionNode,
+.riaswFieldsetCaptionNode,
+.riaswDialogCaptionNode {
+	display: block;
+	position: relative;
+	vertical-align: middle;
+	background-color: $captionpanel-caption-color;
+	border: $captionpanel-caption-border;
+	/*border-bottom-width: 1px;*/
+	color: $captionpanel-caption-text-color;
+	//font-size: 1em;
+	font-weight: bold;
+	//white-space: -moz-pre-space;
+	white-space: nowrap;
+	//word-wrap: break-word;
+	//line-height: 1.5em;
+
+	.riaswToolButton,
+	.riaswButton {
+		//border-width: 1px;
+		border-color: $toolbar-button-border-color;
+		//padding: $toolbar-button-padding;
+		margin: $toolbar-button-margin;
+		//background-color: $toolbar-button-background-color;
+		//border-radius: $toolbar-button-border-radius;
+		//transition-property: background-color;
+		//transition-duration: .3s;
+	}
+	.riaswButtonHover,
+	.riaswToolButtonHover,
+	.riaswButtonActive,
+	.riaswButtonFocused,
+	.riaswToolButtonActive,
+	.riaswToolButtonFocused {
+		make-color($toolbutton-inner-hover-color, $toolbutton-inner-hover-border-color, $toolbutton-inner-hover-text-color);
+	}
+}
+.riaswCaptionPanelCaptionNode {
+	padding: $captionpanel-caption-padding;//需要留 resizer 的 border
+}
+.riaswFieldsetCaptionNode {
+	background-color: $fieldset-caption-color;
+	border: $fieldset-caption-border;
+	color: $fieldset-caption-text-color;
+	padding: $fieldset-caption-padding;//需要留 resizer 的 border
+	margin: $fieldset-caption-margin;
+}
+.riaswDialogCaptionNode {
+	padding: $dialog-caption-padding;
+	border-radius: $dialog-border-radius $dialog-border-radius 0px 0px;
+	background-color: $dialog-caption-color;
+	_shadow($dialog-caption-shadow);
+}
+.riaswCaptionToolsNode {
+}
+.riaswDialogMoveNode {
+	display: block;
+	border: 0px solid transparent;
+	padding: 0;
+	margin:0;
+	overflow: hidden;
+	position: relative;// !important;
+	-webkit-overflow-scrolling: touch;
+}
+.riaswCaptionPanelCaptionNodeFixedExpanded,
+.riaswDialogCaptionNodeFixedExpanded {
+}
+.riaswCaptionPanelCaptionNodeFixedCollapsed,
+.riaswDialogCaptionNodeFixedCollapsed {
+}
+.riaswCaptionPanelCaptionNodeExpanded,
+.riaswDialogCaptionNodeExpanded {
+}
+//.riaswCaptionPanelCaptionNodeCollapsed,
+.riaswDialogCaptionNodeCollapsed {
+	border-radius: $dialog-border-radius;
+}
+//.riaswCaptionPanelCaptionNodeHover,
+.riaswDialogCaptionNodeHover {
+	background-color: $theme-hover-color;
+}
+.riaswCaptionPanelCaptionNodeSelected {
+	//background-color: $theme-selected-color;
+}
+.riaswCaptionPanelCaptionNodeFocused,
+.riaswCaptionPanelCaptionNodeActive {
+	//background-color: $theme-selected-color;
+}
+.riaswDialogCaptionNodeSelected {
+	background-color: $theme-highlight-color;
+	color: $theme-highlight-text-color;
+}
+.riaswDialogCaptionNodeFocused,
+.riaswDialogCaptionNodeActive {
+	background-color: $theme-highlight-color;
+	color: $theme-highlight-text-color;
+}
+
+/* Vertical ===============================================*/
+
+/*.riaswCaptionPanelCaptionNodeVertical,
+.riaswFieldsetCaptionNodeVertical,
+.riaswDialogCaptionNodeVertical {
+	//margin: 0.25em 0;
+}*/
+.riaswCaptionPanelCaptionNodeVertical {
+	padding: $captionpanel-caption-padding-v;
+	.riaswToolButton {
+		//padding: $toolbar-button-padding 0;
+	}
+}
+.riaswFieldsetCaptionNodeVertical {
+	margin: $fieldset-caption-padding-v;
+}
+
+// Dialog ======================== //
+.riaswDialog {
+	display: block;
+	position: absolute;
+	background-color: $dialog-background-color;
+	//overflow: hidden;
+	border-width: 0px;
+	border-color: $theme-border-color;
+	border-style: solid;
+	border-radius: $dialog-border-radius;
+	color: $dialog-text-color;
+	padding: $dialog-padding;
+	margin:0;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	box-shadow: $dialog-shadow;
+}
+.dj_ie8 {
+	.riaswDialog {
+		border-width: 1px;
+	}
+}
+.dj_ie8,
+.dj_ie9 {
+	.riaswDialog {
+		border-width: 1px;
+		filter: "progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+	}
+}
+.riaswDialogHover {
+	background-color: $theme-workarea-active-color;
+	border-color: $theme-hover-color;
+}
+.riaswDialogSelected {
+	background-color: $theme-workarea-active-color;
+	border-color: $theme-highlight-color;
+}
+.riaswDialogFocused,
+.riaswDialogActive {
+	//background-color: $theme-workarea-active-color;
+	border-color: $theme-active-border-color;
+}
+
+.riaswDialogContent {
+	overflow: auto;
+	position: relative;// !important;
+	padding: 0;
+	margin: $dialog-container-margin;
+	-webkit-overflow-scrolling: touch;
+}
+
+.riaswDialogNoCaption {
+}
+
+/* ActionBar ========================= */
+.riaswDialogActionBar {
+	display: block;
+	background-color: $dialog-actionbar-color;
+	border: $dialog-actionbar-border;
+	color: $dialog-actionbar-text-color;
+	padding: $dialog-actionbar-padding $dialog-actionbar-padding * 2;
+	margin: 0 $dialog-actionbar-margin $dialog-actionbar-margin;
+	text-align: right;
+	//border-top-width: 1px;
+}
+.riaswDialogActionBarTop {
+	display: block;
+	background-color: $dialog-actionbar-color;
+	border: $dialog-actionbar-border;
+	color: $dialog-actionbar-text-color;
+	padding: $dialog-actionbar-padding $dialog-actionbar-padding * 2;
+	margin: 0 $dialog-actionbar-margin;
+	text-align: left;
+	//border-bottom: 1px;
+}
+
+.riaswDialogTypeDropDown,
+.riaswDialogTypeTip {
+	background-color: $dialog-tip-background-color;
+	border-color: $dialog-tip-border-color;
+	border-width: $dialog-tip-border-width;
+	border-radius: $dialog-border-radius * 2;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	box-shadow: $shadow-dropdown-below;
+
+	//.riaswDialogConnector {
+	//	position: absolute;
+	//}
+	.riaswDialogCaptionNode {
+		background-color: transparent;
+		border-bottom-width: 1px;
+		//border-radius: $dialog-border-radius * 2;
+		color: inherit;
+		margin: 0 1em;
+		padding: 0.5em 0em 0.25em 0em;
+		_shadow($shadow-none);
+	}
+
+	&.riaswTooltipBelow {
+		//padding-top: $tooltip-arrow-size;
+		//margin-top: $tooltip-arrow-size;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+		//_shadow($shadow-dropdown-below);
+	}
+	&.riaswTooltipAbove {
+		//padding-bottom: $tooltip-arrow-size;
+		//margin-bottom: $tooltip-arrow-size;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=225, Strength=4)";
+		_shadow($shadow-dropdown-above);
+	}
+	&.riaswTooltipLeft {
+		//padding-right: $tooltip-arrow-size;
+		//margin-right: $tooltip-arrow-size;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+		_shadow($shadow-dropdown-left);
+	}
+	&.riaswTooltipRight {
+		//padding-left: $tooltip-arrow-size;
+		//margin-left: $tooltip-arrow-size;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=315, Strength=4)";
+		_shadow($shadow-dropdown-right);
+	}
+
+	// The tooltip dialog's connector itself serves as the "border" of the arrows,
+	// then using :after to overlay the connector to "fill" the arrows with the same color as the container.
+	.riaswTooltipConnector {
+		height: 0;
+		width: 0;
+		position: absolute;
+		z-index: 2;
+		opacity: 1;
+
+		&:after {
+			content: "";
+			height: 0;
+			width: 0;
+			position: absolute;
+		}
+	}
+
+	&.riaswTooltipAbove .riaswTooltipConnector {
+		border-color: $dialog-tip-border-color transparent transparent;
+		border-width: $tooltip-arrow-size + $dialog-tip-border-width + 1px  $tooltip-arrow-size + $dialog-tip-border-width + 1px  0; // one extra pixel is added as the border of the arrows;
+		border-style: solid;
+		bottom: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+
+		&:after {
+			border-color: $dialog-tip-background-color transparent transparent;
+			border-width: $tooltip-arrow-size $tooltip-arrow-size 0;
+			border-style: solid;
+			left: - $tooltip-arrow-size;
+			top: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+		}
+	}
+	&.riaswTooltipBelow .riaswTooltipConnector {
+		border-color: transparent transparent $dialog-tip-border-color;
+		border-width: 0  $tooltip-arrow-size + $dialog-tip-border-width + 1px  $tooltip-arrow-size + $dialog-tip-border-width + 1px;
+		border-style: solid;
+		top: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+
+		&:after {
+			border-color: transparent transparent $dialog-tip-background-color;
+			border-width: 0 $tooltip-arrow-size $tooltip-arrow-size;
+			border-style: solid;
+			left: - $tooltip-arrow-size;
+			bottom: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+		}
+	}
+	&.riaswTooltipLeft .riaswTooltipConnector {
+		border-color: transparent transparent transparent $dialog-tip-border-color;
+		border-width: $tooltip-arrow-size + $dialog-tip-border-width + 1px  0  $tooltip-arrow-size + $dialog-tip-border-width + 1px  $tooltip-arrow-size + $dialog-tip-border-width + 1px;
+		border-style: solid;
+		right: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+
+		&:after {
+			border-color: transparent transparent transparent $dialog-tip-background-color;
+			border-width: $tooltip-arrow-size 0 $tooltip-arrow-size $tooltip-arrow-size;
+			border-style: solid;
+			top: - $tooltip-arrow-size;
+			left: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+		}
+	}
+	&.riaswTooltipRight .riaswTooltipConnector {
+		border-color: transparent $dialog-tip-border-color transparent transparent;
+		border-width: $tooltip-arrow-size + $dialog-tip-border-width + 1px  $tooltip-arrow-size + $dialog-tip-border-width + 1px  $tooltip-arrow-size + $dialog-tip-border-width + 1px  0;
+		border-style: solid;
+		left: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+
+		&:after {
+			border-color: transparent $dialog-tip-background-color transparent transparent;
+			border-width: $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size 0;
+			border-style: solid;
+			top: - $tooltip-arrow-size;
+			right: - $tooltip-arrow-size - $dialog-tip-border-width - 1px;
+		}
+	}
+}
+.riaswDialogHover {
+	&.riaswDialogTypeDropDown,
+	&.riaswDialogTypeTip {
+		background-color: $dialog-tip-selected-background-color;
+		border-color: $theme-hover-color;
+	}
+	&.riaswTooltipAbove .riaswTooltipConnector {
+		border-color: $theme-hover-color transparent transparent;
+		&:after {
+			border-color: $dialog-tip-selected-background-color transparent transparent;
+		}
+	}
+	&.riaswTooltipBelow .riaswTooltipConnector {
+		border-color: transparent transparent $theme-hover-color;
+		&:after {
+			border-color: transparent transparent $dialog-tip-selected-background-color;
+		}
+	}
+	&.riaswTooltipLeft .riaswTooltipConnector {
+		border-color: transparent transparent transparent $theme-hover-color;
+		&:after {
+			border-color: transparent transparent transparent $dialog-tip-selected-background-color;
+		}
+	}
+	&.riaswTooltipRight .riaswTooltipConnector {
+		border-color: transparent $theme-hover-color transparent transparent;
+		&:after {
+			border-color: transparent $dialog-tip-selected-background-color transparent transparent;
+		}
+	}
+	.riaswDialogCaptionTypeTip {
+	}
+}
+.riaswDialogSelected {
+	&.riaswDialogTypeDropDown,
+	&.riaswDialogTypeTip {
+		background-color: $dialog-tip-selected-background-color;
+		border-color: $theme-highlight-color;
+	}
+	&.riaswTooltipAbove .riaswTooltipConnector {
+		border-color: $theme-highlight-color transparent transparent;
+		&:after {
+			border-color: $dialog-tip-selected-background-color transparent transparent;
+		}
+	}
+	&.riaswTooltipBelow .riaswTooltipConnector {
+		border-color: transparent transparent $theme-highlight-color;
+		&:after {
+			border-color: transparent transparent $dialog-tip-selected-background-color;
+		}
+	}
+	&.riaswTooltipLeft .riaswTooltipConnector {
+		border-color: transparent transparent transparent $theme-highlight-color;
+		&:after {
+			border-color: transparent transparent transparent $dialog-tip-selected-background-color;
+		}
+	}
+	&.riaswTooltipRight .riaswTooltipConnector {
+		border-color: transparent $theme-highlight-color transparent transparent;
+		&:after {
+			border-color: transparent $dialog-tip-selected-background-color transparent transparent;
+		}
+	}
+	.riaswDialogCaptionTypeTip {
+	}
+}
+.riaswDialogFocused,
+.riaswDialogActive {
+	&.riaswDialogTypeDropDown,
+	&.riaswDialogTypeTip {
+		//border-color: $theme-active-border-color;
+	}
+	&.riaswTooltipAbove .riaswTooltipConnector {
+		//border-color: $theme-active-border-color transparent transparent;
+	}
+	&.riaswTooltipBelow .riaswTooltipConnector {
+		//border-color: transparent transparent $theme-active-border-color;
+	}
+	&.riaswTooltipLeft .riaswTooltipConnector {
+		//border-color: transparent transparent transparent $theme-active-border-color;
+	}
+	&.riaswTooltipRight .riaswTooltipConnector {
+		//border-color: transparent $theme-active-border-color transparent transparent;
+	}
+	.riaswDialogCaptionTypeTip {
+	}
+}
+
+/// Type
+.riaswDialogContentTypeChoose,
+.riaswDialogContentTypeInfo,
+.riaswDialogContentTypeWarn,
+.riaswDialogContentTypeError,
+.riaswDialogContentTypeAbout {
+	padding: $dialog-content-type-padding;
+	font-size: $dialog-content-type-font-size;
+	font-weight: bold;
+}
+.riaswDialogContentTypeChoose {
+	//font-size: $dialog-content-type-font-size;
+}
+.riaswDialogTypeWarn {
+	border-color: $warn-color;
+}
+//.riaswDialogContentTypeWarn {
+//	color: $warn-text-color;
+//}
+.riaswDialogCaptionTypeWarn {
+	background-color: $warn-color;
+	color: $warn-text-color;
+}
+.riaswDialogTypeError {
+	border-color: $error-color;
+}
+//.riaswDialogContentTypeError {
+//	color: $error-text-color;
+//}
+.riaswDialogCaptionTypeError {
+	background-color: $error-color;
+	color: $error-text-color;
+}
+
+.riaswFieldsetCaption,
+.riaswDialogTypeDropDown,
+.riaswDialogTypeTip {
+	.riaswDialogCaptionNode {
+		.riaswToolButtonHover {
+			make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+		}
+		.riaswToolButtonActive,
+		.riaswToolButtonFocused {
+			make-color($theme-active-color, $theme-active-border-color, $theme-active-text-color);
+		}
+	}
+}
+

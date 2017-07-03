@@ -1,0 +1,150 @@
+/*
+**----------------------------------------------------------------------------
+**  CheckedMultiSelect
+**----------------------------------------------------------------------------
+*/
+
+@import '../../variables';
+
+/// riaswCheckedMultiSelect ==========================///
+.riaswCheckedMultiSelect {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	//border: 1px solid transparent;
+	//overflow: hidden;
+	line-height: $textbox-line-height;
+	//height: 2em;
+	width: 20em;	/* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+}
+
+.riaswCheckedMultiSelectContainer {
+	box-sizing: border-box;
+	display: block;
+	position: relative;
+	overflow: auto;
+	float: none;
+	background: $textbox-color;
+	border-width: 1px;
+	border-style: solid;
+	border-color: $textbox-border-color;
+	border-radius: $textbox-border-radius;
+	color: $textbox-text-color;
+	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+	padding: 0;
+	margin:0;
+	//height: 100%;
+	//width: 100%;
+}
+
+.riaswCheckedMultiSelectHover {
+	.riaswCheckedMultiSelectContainer {
+		border-color: $theme-hover-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-hover-border-color);
+	}
+}
+.riaswCheckedMultiSelectFocused,
+.riaswCheckedMultiSelectActive {
+	.riaswCheckedMultiSelectContainer {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+	}
+}
+
+/// End of riaswCheckedMultiSelect =================///
+
+
+/// riaswCheckedMultiSelectItem ==========================///
+.riaswCheckedMultiSelectItem {
+	display: inline-block;
+	cursor: default;
+	white-space: nowrap;
+	padding: $menu-item-padding;
+	margin: $menu-item-margin;
+}
+.riaswCheckedMultiSelectItemLabel {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 $theme-padding;
+}
+.riaswCheckedMultiSelectItemHover {
+	button-hover-style('$theme-hover');
+}
+.riaswCheckedMultiSelectSelectedOption {
+	transition: none;
+	outline: none;
+	//font-weight: bold;
+	make-color($menu-item-selected-color, $menu-item-selected-border-color, $menu-item-selected-text-color);
+}
+.riaswCheckedMultiSelectItemActive,
+.riaswCheckedMultiSelectItemFocused {
+	make-color(false, $theme-active-border-color, false);
+}
+/*.riaswCheckedMultiSelectItemDisabled {
+	disabled-grayscale();
+
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+	.riaswCheckedMultiSelectSelectedOption {
+		make-color($theme-disabled-border-color, $theme-disabled-border-color, $menu-item-selected-text-color);
+		.riaswCheckBoxChecked,
+		.riaswRadioBoxChecked {
+			//border-color: $theme-disabled-border-color;
+		}
+	}
+}*/
+
+/// End of riaswCheckedMultiSelectItem =================///
+
+.riaswCheckedMultiSelectReadOnly {
+	.riaswCheckedMultiSelectContainer {
+		background-color: inherit;
+		color: inherit;
+	}
+	.riaswCheckBox,
+	.riaswRadioBox {
+		//background-color: $theme-disabled-background-color;// $theme-input-color;
+		//border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;///用 text-color 更好些
+		//opacity: 1;//需要隔离 背景;
+	}
+	.riaswCheckBoxChecked {
+		&:before {
+			color: inherit;// $theme-disabled-text-color;
+			//opacity: $theme-disabled-opacity;//需要隔离 背景;
+		}
+	}
+	.riaswRadioBoxChecked {
+		&:after {
+			background-color: inherit;//$theme-disabled-text-color;
+			//opacity: $theme-disabled-opacity;//需要隔离 背景;
+		}
+	}
+}
+.riaswCheckedMultiSelectDisabled {
+	.riaswCheckedMultiSelectContainer {
+		disabled-grayscale();
+	}
+	.riaswCheckedMultiSelectSelectedOption {
+		make-color($theme-border-color, $theme-border-color, $menu-item-selected-text-color);
+	}
+	.riaswCheckBoxChecked,
+	.riaswRadioBoxChecked {
+		//border-color: $theme-disabled-border-color;
+	}
+	.riaswCheckBoxChecked {
+		&:before {
+			//color: $theme-disabled-text-color;
+		}
+	}
+	.riaswRadioBoxChecked {
+		&:after {
+			//background-color: $theme-disabled-text-color;
+		}
+	}
+}
+

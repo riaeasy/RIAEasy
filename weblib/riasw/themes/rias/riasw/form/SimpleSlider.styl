@@ -1,0 +1,145 @@
+
+// riasw.form.SimpleSlider
+
+@import '../../variables';
+
+.riaswSimpleSlider {
+	box-sizing: border-box;
+	display: inline-block;
+	user-select(none); // prevent selection
+	cursor: pointer;
+}
+.riaswSimpleSliderH {
+	margin: $simpleslider-knob-size * 0.5 0;
+	padding: 0 $simpleslider-knob-size * 0.5;
+	width: 10em;
+	height: 2em;
+	.riaswSimpleSliderBar {
+		height: $simpleslider-bar-size;
+		width: 100%;
+	}
+	.riaswSimpleSliderProgressBar {
+		height: 100%;
+	}
+	.riaswSimpleSliderKnob {
+		top: 50%;
+	}
+}
+.riaswSimpleSliderV {
+	text-align: center;
+	margin: 0 $simpleslider-knob-size * 0.5;
+	padding: $simpleslider-knob-size * 0.5 0;
+	height: 10em;
+	width: 2em;
+	.riaswSimpleSliderBar {
+		height: 100%;
+		width: $simpleslider-bar-size;
+	}
+	.riaswSimpleSliderProgressBar {
+		width: 100%;
+	}
+	.riaswSimpleSliderKnob {
+		left: 50%;
+	}
+}
+.riaswSimpleSliderBar {
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	background-image: $simpleslider-bar-background-image;
+	border: $simpleslider-bar-border;
+	border-radius: $simpleslider-bar-border-radius;
+	height: 100%;
+	width: 100%;
+}
+.riaswSimpleSliderProgressBar {
+	position: absolute;
+	background-image: $simpleslider-progress-background-image;
+	border-radius: $simpleslider-bar-border-radius;
+}
+.riaswSimpleSliderTouchBox {
+	position: absolute;
+	border: none;
+	background-color: transparent;
+	tap-highlight-color(rgb(255,255,255));
+	margin: 0;
+	padding: $simpleslider-knob-size * 0.5;
+	left: -($simpleslider-knob-size * 0.5);
+	top: -($simpleslider-knob-size * 0.5);
+	width: 100%;
+	height: 100%;
+}
+.riaswSimpleSliderKnob {
+	box-sizing: border-box;
+	position: absolute;
+	background-image: $simpleslider-knob-background-image;
+	border: $simpleslider-knob-border;
+	border-radius: $simpleslider-knob-border-radius;
+	width: $simpleslider-knob-size;
+	height: $simpleslider-knob-size;
+	margin-top: -($simpleslider-knob-size * 0.5);
+	margin-left: -($simpleslider-knob-size * 0.5);
+}
+.riaswSimpleSliderTransition {
+	transition-duration(400ms);
+}
+
+/* hover */
+.riaswSimpleSliderHover {
+	.riaswSimpleSliderBar,
+	.riaswSimpleSliderKnob {
+		box-shadow: $slider-thumb-hover-box-shadow;
+	}
+}
+/* focus */
+.riaswSimpleSliderFocused,
+.riaswSimpleSliderActive {
+	.riaswSimpleSliderKnob {
+		make-color(false, $theme-active-border-color, false);
+	}
+	.riaswSimpleSliderBar,
+	.riaswSimpleSliderKnob {
+		box-shadow: $slider-thumb-focused-box-shadow;
+	}
+}
+
+/* read only */
+.riaswSimpleSliderReadOnly {
+	cursor: default;
+	.riaswSimpleSliderBar {
+		border-color: $theme-disabled-border-color;
+	}
+	.riaswSimpleSliderKnob {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+	}
+}
+/* disabled */
+.riaswSimpleSliderDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+	cursor: default;
+
+	//.riaswSimpleSliderBar,
+	.riaswSimpleSliderKnob {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		//border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+	}
+}
+
+.dj_ie {
+	.riaswSimpleSlider {
+		background-image: url(images/slider-h-bg.png);
+		background-repeat: repeat-x;
+	}
+	.riaswSimpleSliderProgressBar {
+		background-image: url(images/slider-h-bar-bg.png);
+		background-repeat: repeat-x;
+	}
+	.riaswSimpleSliderKnob {
+		background-image: url(images/slider-handle-bg.png);
+	}
+}

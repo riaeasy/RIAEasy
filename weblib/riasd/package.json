@@ -1,0 +1,16 @@
+{
+	"name": "riasd",
+	"author": "Yan Zheng",
+	"version": "2017",
+	"description": "A modular, visual-desing, mobile-ready, data-driven for single-page-application",
+	"license": "LGPL v3",
+	"repository": {
+		"type": "git",
+		"url": "//www.riaeasy.com"
+	},
+	"devDependencies": {
+		"dojo": "1.12.2"
+	},
+	"directories": {
+	}
+}

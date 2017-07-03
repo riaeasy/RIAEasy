@@ -1,0 +1,65 @@
+
+@import '../../variables';
+
+.riaswLoadingtipPointer {
+	position: absolute;
+	z-index: 1999;
+}
+
+.riaswLoadingtip {
+	display: block;
+	position: fixed;
+	vertical-align: middle;
+	//float: right;
+	background-color: $loadingtip-background-color;
+	border: $loadingtip-border;
+	border-radius: $loadingtip-border-radius;
+	color: $loadingtip-text-color;
+	min-width: 60px;
+	//height: 1.5em;
+	//top: 0;
+	//right: 0;
+	padding: $loadingtip-padding;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	//box-shadow: 0.25em 0.25em 1em -0.25em black;
+	_shadow($loadingtip-shadow);
+}
+.dj_ie8,
+.dj_ie9 {
+	.riaswLoadingtip {
+		background-color: rgb(0, 0, 0);
+		filter: "alpha(opacity=65) progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+	}
+}
+
+.riaswLoadingtipLabel {
+	display: block;
+	white-space: nowrap;
+	word-wrap: break-word;
+	//color: $loadingtip-text-color;
+	//font-size: 1em;
+	font-weight: bold;
+	line-height: 1.25em;
+	padding-left: 0.5em;
+}
+.riaswLoadingtipLoading {
+	color: lightpink;
+}
+.riaswLoadingtipIoLoading {
+	color: gold;
+}
+.riaswLoadingtipParsing {
+	color: greenyellow;
+}
+.riaswLoadingtipDestroying {
+	color: whitesmoke;
+}
+.riaswLoadingtipDoing {
+	color: whitesmoke;
+}
+.riaswLoadingtipText {
+	color: whitesmoke;
+}
+
+
+

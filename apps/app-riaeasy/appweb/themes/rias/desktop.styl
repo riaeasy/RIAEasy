@@ -1,0 +1,142 @@
+
+/* rias.desktop */
+
+//@import "variables_material_colors";
+@import 'variables';
+//@import 'Common';
+
+.desktopHeader {
+	background-color: $sceneHeaderColor;
+	border-bottom-width: 1px;
+	color: $theme-input-color;
+	font-size: 1.1em;
+	//font-weight: bold;
+	height: 32px;
+	//line-height: 2.5em;
+	padding: 0px;
+	//margin-top: 0.25em !important;
+	//margin-left: 0.25em !important;
+	//margin: 0m 0em 0em 0em;
+	_shadow($shadow-highlight);
+	z-index: 10;
+
+	.riaswButtonIcon {
+		//font-size: 20px;
+		//line-height: 20px;
+	}
+	.riaswButtonLabel {
+		padding: 0px 0.25em;
+		margin: 0px 0.25em;
+	}
+	.riaswToolButton,
+	.riaswButton {
+		border-width: 0 0 4px 0;
+		border-color: transparent;
+		padding: 3px;
+	}
+	.riaswToolButtonHover,
+	.riaswButtonHover {
+		background-color: transparent;
+		//border-width: 0 0 3px 0;
+		border-color: $theme-hover-color
+		color: $theme-hover-color;
+	}
+	.riaswLogo {
+		margin: 2px 12px;
+	}
+
+	.desktopHeaderDockBar {
+		padding: 0em 1em;
+		.riaswDockNodeHidden {
+			//background-color: inherit;
+			border-color: transparent;
+		}
+		.riaswDockNodeShown {
+			background-color: inherit;
+			color: inherit;
+		}
+		.riaswDockNodeHover {
+			make-color(false, $theme-hover-color, $theme-hover-color);
+		}
+		.riaswDockNodeSelected {
+			//make-color($theme-hover-color, $theme-highlight-border-color, $theme-hover-text-color);
+		}
+		.riaswDockNodeChecked {
+			make-color(false, $theme-highlight-border-color, $theme-highlight-border-color);
+		}
+		.riaswDockNodeFocused,
+		.riaswDockNodeActive {
+			//make-color($theme-hover-color, false, false);
+		}
+	}
+	.desktopHeaderBtns {
+		padding: 0em 1em;
+	}
+	.desktopHeaderDateTime {
+		font-size: 12px;
+		font-weight: normal;
+		width: 6em;
+		height: 2em;
+		line-height: 1em;
+		text-align: center;
+		padding: 0.25em 1em 0em 1em;
+		//margin-top: 3px;
+	}
+}
+
+.desktopCenter {
+	padding: 0.5em;
+
+	.riaswStackPanelContent {
+
+	}
+	.riaswCaptionPanel {
+		//border-width: 0px;
+	}
+	.appmoduleCaption {
+	}
+	.appmoduleContent {
+		//margin: 0.5em 0em 0em 0em;
+	}
+}
+
+.desktopFooter {
+	.desktopFooterDockBar {
+	}
+	.desktopFooterStatusBar {
+		.desktopMessageTray {
+		}
+		.desktopMessageTrayEmpty {
+			//color: $theme-disabled-text-color;
+		}
+		.desktopLogTray {
+		}
+		.desktopLogTrayEmpty {
+			//color: $theme-disabled-text-color;
+		}
+		.desktopFooterDateTime {
+			width: 6em;
+			height: 2em;
+			line-height: 1em;
+			text-align: center;
+			padding: 1px;
+		}
+	}
+}
+
+.desktopBg {
+	//background: url("./images/bg.png") no-repeat top center;
+	//background-size: contain;
+}
+.desktopBg0 {
+	//background: url("./images/bg0.jpg") no-repeat top center;
+	//background-size: contain;
+}
+
+
+.desktopMessageItem {
+	border-bottom: 1px dashed $theme-border-color;
+	color: $theme-input-text-color;
+	//font-size: 1.1em;
+	padding: 0.5em;
+}

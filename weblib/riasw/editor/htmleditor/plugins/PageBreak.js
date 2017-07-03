@@ -1,0 +1,164 @@
+define([
+	"riasw/riaswBase",
+	"../_Plugin",
+	"riasw/form/Button",
+	"dojo/i18n!./nls/PageBreak"
+], function(rias, _Plugin, Button) {
+
+	var pluginsName = "riasw.editor.htmleditor.plugins";
+
+	var PageBreak = rias.declare(pluginsName + ".PageBreak", _Plugin, {
+		// summary:
+		//		This plugin provides a simple CSS page break plugin that
+		//		lets your insert browser print recognizable page breaks in
+		//		the document.
+		//		This plugin registers the hotkey command: CTRL-SHIFT-ENTER
+
+		// Over-ride indicating that the command processing is done all by this plugin.
+		useDefaultCommand: false,
+
+		// _unbreakableNodes: [private] Array
+		//		The nodes that should not allow page breaks to be inserted into them.
+		_unbreakableNodes: ["li", "ul", "ol"],
+
+		// _pbContent: [private] String
+		//		The markup used for the pagebreak insert.
+		_pbContent: "<hr style='page-break-after: always;' class='riaswEditorPageBreak'>",
+
+		_initButton: function(){
+			// summary:
+			//		Over-ride for creation of the resize button.
+			var self = this,
+				ed = this.editor;
+			var strings = rias.i18n.getLocalization(pluginsName, "PageBreak");
+			this.button = new Button({
+				ownerRiasw: this,
+				disabled: this.get("disabled"),
+				readOnly: this.get("readOnly"),
+				label: strings.pageBreak,
+				showLabel: false,
+				tooltip: strings.pageBreak,
+				iconClass: this.iconClassPrefix + " " + this.iconClassPrefix + "PageBreak",
+				tabIndex: "-1",
+				onClick: rias.hitch(this, "_insertPageBreak")
+			});
+			ed.onLoadDeferred.then(function(){
+				//Register our hotkey to CTRL-SHIFT-ENTER.
+				ed.addKeyHandler(rias.keys.ENTER, true, true, rias.hitch(self, self._insertPageBreak));
+				if(rias.has("webkit") || rias.has("opera")){
+					// Webkit and Opera based browsers don't generate keypress events when ctrl and shift are
+					// held then enter is pressed.  Odd, that.
+					self.after(ed, "onKeyDown", function(e){
+						if((e.keyCode === rias.keys.ENTER) && e.ctrlKey && e.shiftKey){
+							self._insertPageBreak();
+						}
+					}, true);
+				}
+			});
+		},
+
+		updateState: function(){
+			// summary:
+			//		Over-ride for button state control for disabled to work.
+			this.button.set("disabled", this.get("disabled"));
+		},
+
+		setEditor: function(editor){
+			// summary:
+			//		Over-ride for the setting of the editor.
+			// editor: Object
+			//		The editor to configure for this plugin to use.
+			this.editor = editor;
+			this._initButton();
+		},
+
+		_style: function(){
+			// summary:
+			//		Internal function for inserting dynamic css.  This was originally
+			//		in an editor.onLoadDeferred, but I ran into issues in Chrome with
+			//		the tag being ignored.  Having it done at insert worked better.
+			// tags:
+			//		private
+			if(!this._styled){
+				this._styled = true;
+				var doc = this.editor.document;
+				var style = ".riaswEditorPageBreak {\n" +
+					"\tborder-top-style: solid;\n" +
+					"\tborder-top-width: 3px;\n" +
+					"\tborder-top-color: #585858;\n" +
+					"\tborder-bottom-style: solid;\n" +
+					"\tborder-bottom-width: 1px;\n" +
+					"\tborder-bottom-color: #585858;\n" +
+					"\tborder-left-style: solid;\n" +
+					"\tborder-left-width: 1px;\n" +
+					"\tborder-left-color: #585858;\n" +
+					"\tborder-right-style: solid;\n" +
+					"\tborder-right-width: 1px;\n" +
+					"\tborder-right-color: #585858;\n" +
+					"\tcolor: #A4A4A4;\n" +
+					"\tbackground-color: #A4A4A4;\n" +
+					"\theight: 10px;\n"+
+					"\tpage-break-after: always;\n" +
+					"\tpadding: 0px 0px 0px 0px;\n" +
+					"}\n\n" +
+					"@media print {\n" +
+					"\t.riaswEditorPageBreak { page-break-after: always; " +
+					"background-color: rgba(0,0,0,0); color: rgba(0,0,0,0); " +
+					"border: 0px none rgba(0,0,0,0); display: hidden; " +
+					"width: 0px; height: 0px;}\n" +
+					"}";
+
+				if(!rias.has("ie")){
+					var sNode = doc.createElement("style");
+					sNode.appendChild(doc.createTextNode(style));
+					doc.getElementsByTagName("head")[0].appendChild(sNode);
+				}else{
+					var ss = doc.createStyleSheet("");
+					ss.cssText = style;
+				}
+			}
+		},
+
+		_insertPageBreak: function(){
+			// summary:
+			//		Function to insert a CSS page break at the current point in the document
+			// tags:
+			//		private
+			try{
+				if(!this._styled){ this._style(); }
+				//this.editor.focus();
+				if(this._allowBreak()){
+					this.editor.execCommand("inserthtml", this._pbContent);
+				}
+			}catch(e){
+				console.warn(e);
+			}
+		},
+
+		_allowBreak: function(){
+			// summary:
+			//		Internal function to see if we should allow a page break at the document
+			//		location.
+			// tags:
+			//		private
+			var ed = this.editor;
+			var doc = ed.document;
+			var node = ed._sCall("getSelectedElement", []) || ed._sCall("getParentElement", []);
+			while(node && node !== doc.body && node !== doc.html){
+				if(ed._sCall("isTag", [node, this._unbreakableNodes])){
+					return false;
+				}
+				node = node.parentNode;
+			}
+			return true;
+		}
+	});
+
+// Register this plugin.
+	_Plugin.registry.pageBreak = _Plugin.registry.pagebreak = function(args){
+		return new PageBreak(args);
+	};
+
+	return PageBreak;
+
+});

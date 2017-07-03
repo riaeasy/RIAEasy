@@ -1,0 +1,50 @@
+
+/* TablePanel */
+
+@import '../../variables';
+
+.riaswTablePanel{
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: $tablepanel-border;
+}
+
+.riaswTablePanelContent {
+	//-webkit-overflow-scrolling: touch;
+	position: relative;
+	overflow: auto;
+	//width: 100%;
+}
+/*.mobileBody .riaswTablePanelContent {
+	overflow: hidden;
+}*/
+
+.riaswTablePanelTable {
+	table-layout: fixed;
+	border: none;//1px solid transparent;///边框由 cell 设置
+	border-spacing: 0;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.riaswTablePanelRowHeader {
+	padding: 0;
+	margin: 0;
+	height: 0;
+}
+.riaswTablePanelColHeader {
+	padding: 0;
+	margin: 0;
+	width: 0;
+}
+.riaswTablePanelRow {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.riaswTablePanelCol {
+	border-collapse: collapse;
+	border-spacing: 0;
+	padding: 0;
+}
+

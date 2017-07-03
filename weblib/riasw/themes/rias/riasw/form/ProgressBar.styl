@@ -1,0 +1,101 @@
+/// ProgressBar
+
+@import '../../variables';
+
+.riaswProgressBar {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	///text-align: center;///建议不要
+	background-color: $progressbar-background-color;
+	border: 0;
+	border-radius: $progressbar-border-radius;
+	z-index: 0;
+}
+.riaswProgressBarEmpty {
+	position: relative;
+	overflow: hidden;
+	border: $progressbar-border;
+	z-index: 0;
+}
+.riaswProgressBarProgress {
+	position: absolute;
+	overflow: hidden;
+	background-color: $progressbar-progress-color;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transition-property: width;
+	transition-duration: .25s;
+}
+
+.riaswProgressBarTile {
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: auto;
+	//background-color: #aaa;
+	/*background-attachment: fixed;*/
+	background: $progressbar-progress-tile-color;
+	//animation: progress-bar-stripes 2s linear infinite;
+}
+// animation
+@keyframes progress-bar-stripes {
+	from { background-position: 75px 0; }
+	to { background-position: 0 0; }
+}
+.riaswProgressBarIndeterminate {
+	.riaswProgressBarTile {
+	}
+}
+.riaswProgressBarLabel {
+	display: block;
+	position: static;
+	width: 100%;
+	text-align: center;
+	background-color: transparent !important;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+	color: $progressbar-text-color;
+	font-size: $progressbar-font-size;
+	text-shadow: $progressbar-text-shadow;
+}
+
+.riaswProgressBarReadOnly {
+	background-color: inherit;
+	.riaswProgressBarLabel {
+		text-shadow: none;
+	}
+}
+.riaswProgressBarDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+}
+
+
+.dj_a11y {
+	.riaswProgressBarTile {
+		border-width: 2px;
+		border-style: solid;
+		background-color: transparent !important;
+	}
+}
+.dj_ie6 {
+	.riaswProgressBarTile {
+		position: static;
+		height: 1.6em;
+	}
+	.riaswProgressBarProgress {
+		//height: 1.6em;
+	}
+}
+

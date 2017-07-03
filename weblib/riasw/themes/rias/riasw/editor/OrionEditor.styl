@@ -1,0 +1,61 @@
+/// OrionEditor
+
+@import '../../variables';
+
+$orioneditor-border-color ?= $theme-border-color;
+
+@import "../../../../../orion/orion/editor/themes/default.css";
+//@import "../../../../../orion/orion/editor/themes/adelante.css";
+//@import "../../../../../orion/orion/editor/themes/ambience.css";
+//@import "../../../../../orion/orion/editor/themes/blue.css";
+//@import "../../../../../orion/orion/editor/themes/eclipse.css";
+//@import "../../../../../orion/orion/editor/themes/nimbus.css";
+//@import "../../../../../orion/orion/editor/themes/prospecto.css";
+//@import "../../../../../orion/orion/editor/themes/raspberrypi.css";
+//@import "../../../../../orion/orion/editor/themes/tierra.css";
+
+.riaswOrionEditor {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	border: 0;
+	min-height: 2em;
+	min-width: 5em;
+	width: 20em;
+}
+.riaswOrionEditorReadOnly,
+.riaswOrionEditorDisabled,
+.riaswOrionEditorReadOnly .riaswTextBoxContainer,
+.riaswOrionEditorDisabled .riaswTextBoxContainer {
+	background-color: inherit;
+	background-image: none;
+	//outline: none;
+	color: inherit;
+}
+.riaswOrionEditorHover {
+	.riaswTextBoxContainer {
+		border-color: $theme-hover-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-hover-border-color);
+	}
+}
+.riaswOrionEditorFocused,
+.riaswOrionEditorActive {
+	.riaswTextBoxContainer {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+	}
+}
+.riaswOrionEditorError,
+.riaswOrionEditorErrorFocused {
+	.riaswTextBoxContainer {
+		border-color: $theme-error-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-error-color);
+		//background-color: #ffffbb;
+		//background-image:none;
+	}
+}
+
+

@@ -1,0 +1,212 @@
+
+/// Tree
+
+@import '../../variables';
+
+.riaswTree {
+	overflow: auto;
+	background-color: $tree-background-color;
+}
+.riaswTreeContainer {
+	float: left;
+}
+.riaswTreeIndent {
+	width: $tree-indent;
+}
+.riaswTreeNodeContent {
+	cursor: default;
+}
+.riaswTreeRow {
+	vertical-align: middle;
+	white-space: nowrap;
+	.riaswTreeNodeContent {
+		white-space: nowrap;
+	}
+	img {
+		//vertical-align: middle;
+	}
+}
+.riaswTreeNodeExpandoText {
+	display: none;
+}
+.dj_a11y .riaswTreeNodeExpandoText {
+	display: inline;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-family: monospace;
+	border-style: solid;
+	border-width: thin;
+	cursor: pointer;
+}
+.riaswTreeNodeLabel {
+	margin: $tree-node-label-margin;
+}
+.dj_ie .riaswTreeNodeLabel:focus {
+	outline: 1px dotted black;
+}
+
+.riaswTreeNodeSelectNode {
+	width: $tree-node-selector-size;
+	height: $tree-node-selector-size;
+	margin: $tree-node-selector-margin;
+}
+.riaswTreeNodeSelectNodeIcon {
+	margin: $tree-node-selector-margin;
+}
+
+.riaswTreeNodeIsRoot {
+}
+.riaswTreeNodeIsLast {
+}
+
+.riaswTreeRow,
+.riaswTreeNode .dojoDndItemBefore,
+.riaswTreeNode .dojoDndItemAfter {
+	padding: $tree-row-padding;
+	//margin: 1px 0;
+	border: 1px solid $tree-row-border-color;
+	line-height: $tree-row-line-height;
+	transition-property: background-color;
+	transition-duration: .15s;
+	transition-timing-function: ease-out;
+}
+
+.riaswTreeRowHover {
+	background-color: $tree-row-hover-background-color;
+	border-color: $tree-row-hover-border-color;
+	//transition-duration: .15s;///有闪烁，暂时屏蔽
+}
+.riaswTreeRowSelected {
+	outline: none;
+	color: $tree-row-selected-text-color;
+	background-color: $tree-row-selected-background-color;
+	border-color: $tree-row-selected-border-color;
+	.riaswTreeExpando {
+		//color: $tree-expando-icon-selected-color;
+	}
+}
+.riaswTreeRowFocused,
+.riaswTreeRowActive {
+	//background-color: $tree-row-active-background-color;
+	border-color: $tree-row-active-border-color;
+}
+
+// ========================== //
+.riaswTreeExpando {
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	//position: relative;
+	//overflow: hidden;
+	_icon-core-style();
+	background-color: transparent;
+	border: 1px solid transparent;///需要调整 border-color
+	border-radius: $button-border-radius;
+	//font-size: $tree-node-expando-size - 4;///需要调整 font-size
+	line-height: $tree-node-expando-size - 2;///需要调整 line-height
+	//padding: 0px;
+	//margin: 0px;
+	width: $tree-node-expando-size;
+	height: $tree-node-expando-size;
+	cursor: pointer;
+	transition: all 0.05s linear;
+}
+.riaswTreeExpandoOpened {
+	//background: url(join("/", $path-riasw-tree, 'images/treeIcons.png')) no-repeat -24px center;
+	&:before {
+		content: $icon-drop-down;
+	}
+}
+.riaswTreeExpandoClosed {
+	//background: url(join("/", $path-riasw-tree, 'images/treeIcons.png')) no-repeat 0px center;
+	&:before {
+		content: $icon-drop-right;
+	}
+}
+.riaswTreeExpandoLeaf {
+	//background: url(join("/", $path-riasw-tree, 'images/treeIcons.png')) no-repeat -48px center;
+	cursor: default;
+}
+.riaswTreeExpandoLoading {
+	background: url(join("/", $path-icons, 'images/loading16blue.gif')) no-repeat center;
+}
+
+.riaswTreeExpandoHover {
+	//&.riaswTreeExpando,
+	&.riaswTreeExpandoOpened,
+	&.riaswTreeExpandoClosed {
+		button-hover-style('$toolbutton-inner-hover');
+	}
+}
+.riaswTreeExpandoFocused,
+.riaswTreeExpandoActive {
+	//&.riaswTreeExpando,
+	&.riaswTreeExpandoOpened,
+	&.riaswTreeExpandoClosed {
+		button-active-style('$toolbutton-inner-hover');
+	}
+}
+
+.riaswTreeNodeDisabled {
+	.riaswTreeRow {
+		disabled-grayscale();
+		border-color: transparent;
+		.riaswButtonIcon {
+			filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+			filter: grayscale(100%);
+		}
+	}
+	.riaswTreeRowSelected {
+	}
+}
+// ========================== //
+
+/* Rtl */
+.riaswTreeRtl  {
+	text-align: right;
+
+	.riaswTreeContainer {
+		float: right;
+	}
+	/*.riaswTreeExpandoClosed:before {
+		content: "\e60b";
+	}*/
+}
+
+
+.dj_ie8,
+.dj_ie9 {
+	.riaswTreeExpandoLoading,
+	.riaswTreeExpandoLoading {
+		background: url(join("/", $path-icons, 'images/loading16blue.gif')) no-repeat center;
+
+		&:before {
+			content: "";
+		}
+	}
+}
+.dj_a11y .riaswTreeExpando {
+	display: none;
+}
+
+@keyframes spinning {
+	from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+
+/*riaswTreeMenu*/
+.riaswTreeMenu .riaswTreeRow {
+	/* so insert line shows up on IE when dropping after a target element */
+	//padding: $tree-row-padding;
+	/*border-bottom: 0px solid lightgray;*/
+}
+.riaswTreeMenu .riaswTreeNodeDisabled .riaswTreeRow {
+	/*border-bottom-color: lightgray;*/
+}
+/*.riaswTreeMenu .riaswTreeExpando {
+	display: none;
+}
+.riaswTreeMenu .riaswTreeNode {
+	background: none;
+}*/

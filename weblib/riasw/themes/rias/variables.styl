@@ -1,0 +1,539 @@
+
+// http://tj.github.io/nib/
+@require 'nib';
+
+// theme mixins and functions
+@import 'mixins';
+
+@import 'variables_material_colors';
+
+// theme name
+// easily copy flat theme, adjust variables and compile new theme
+$theme-name = rias;
+
+$path-icons = "icons";
+$path-riasw = "riasw";
+$path-riasw-editor = "riasw/editor";
+$path-riasw-form = "riasw/form";
+$path-riasw-grid = "riasw/grid";
+$path-riasw-layout = "riasw/layout";
+$path-riasw-mobile = "riasw/mobile";
+$path-riasw-sys = "riasw/sys";
+$path-riasw-tree = "riasw/tree";
+$path-riasw-widget = "riasw/widget";
+
+// colors
+$theme-highlight-color = $light-blue-800;
+$theme-highlight-border-color = $orange-300;//darken($theme-highlight-color, 20%);//
+$theme-highlight-text-color = $white;//$black;
+$theme-workarea-color = $grey-200;
+$theme-workarea-active-color = $grey-100;
+$theme-workarea-text-color = $black;
+$theme-border-radius = 0.25em;
+$theme-border-color = $grey-400;
+$theme-error-color = $deep-orange-a400;
+$theme-error-background-color = $amber-50;
+$theme-hover-color = $light-blue-100;// lighten($theme-highlight-color, 25%);
+$theme-hover-border-color = lighten($theme-highlight-color, 20%);
+$theme-hover-text-color = $black;
+$theme-active-color = $theme-hover-color;//$theme-highlight-color;
+$theme-active-border-color = $theme-highlight-border-color;//darken($theme-active-color, 10%);
+$theme-active-text-color = $theme-hover-text-color;//$theme-highlight-text-color;
+$theme-selected-color = $theme-highlight-color;
+$theme-selected-border-color = darken($theme-selected-color, 10%);
+$theme-selected-text-color = $theme-highlight-text-color;
+$theme-disabled-opacity = 0.5;
+$theme-disabled-text-color = $grey-800;
+//$theme-disabled-text-color-1 = lighten($theme-disabled-text-color, 35%);
+$theme-disabled-background-color = $theme-workarea-color;
+$theme-disabled-border-color = $grey-600;
+$theme-input-color = $white;
+$theme-input-border-color = $theme-border-color;
+$theme-input-text-color = $black;
+$theme-bar-color = $grey-300;
+$theme-bar-text-color = $theme-workarea-text-color;
+$theme-panel-border-color = $theme-border-color;//$grey-400;
+$theme-captionpanel-caption-color = $theme-panel-border-color;
+$theme-captionpanel-caption-text-color = $black;
+$theme-dialog-caption-color = $theme-captionpanel-caption-color;
+$theme-dialog-caption-text-color = $theme-captionpanel-caption-text-color;
+$theme-popup-color = $theme-input-color;
+$theme-popup-text-color = $theme-input-text-color;
+$theme-popup-border-color = $theme-input-border-color;
+$theme-popup-border-radius = $theme-border-radius;
+
+$theme-line-height = 1.5em;
+$theme-padding = 0.25em;
+$theme-margin = 0.25em;
+
+// alternate colors
+$focus-color = $theme-highlight-border-color;
+$primary-color = $yellow-100;
+$primary-text-color = $black;
+$ok-color = $light-green-400;
+$ok-text-color = $black;
+$off-color = $grey-300;
+$off-text-color = $black;
+$info-color = $blue-600;
+$info-text-color = $white;
+$warn-color = $orange-600;
+$warn-text-color = $black;
+$danger-color = $red-600;
+$danger-text-color = $black;
+$error-color = $theme-error-color;
+$error-text-color = $black;
+$inverse-color = $grey-600;
+$inverse-text-color = $white;
+
+// box shadows
+$shadow-color-20 = rgba(0, 0, 0, 0.2);
+$shadow-color-35 = rgba(0, 0, 0, 0.35);
+$shadow-color-50 = rgba(0, 0, 0, 0.5);
+$shadow-color-65 = rgba(0, 0, 0, 0.65);
+$shadow-color-80 = rgba(0, 0, 0, 0.8);
+
+$shadow-none = 0px 0px 0px 0px;
+$shadow-popup = 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+$shadow-dropdown-below = $shadow-popup;
+$shadow-dropdown-above = 0em -1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+$shadow-dropdown-left = 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+$shadow-dropdown-right = 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+$shadow-badge = 0.25em 0.25em 0.25em 0 rgba(0, 0, 0, 0.5);
+$shadow-panel = 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+$shadow-button = 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+$shadow-textbox = 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+$shadow-dialog = 0em 1.25em 0.5em -0.5em rgba(0,0,0,0.35), 0em 1em 1em 0em rgba(0,0,0,0.35), 0px 0px 0.5em 0px rgba(0,0,0,0.5) inset;
+$shadow-dialog-caption = 0px 0.1em 0.5em 0px rgba(0,0,0,0.25) inset;
+$shadow-loadingtip = 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+$shadow-tooltip = 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+$shadow-highlight = 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+$shadow-depth1 = 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+$shadow-depth1_5 = 0 4px 2px -2px rgba(0,0,0,0.35), 0 4px 6px rgba(0,0,0,0.25);
+$shadow-depth2 = 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+$shadow-depth3 = 0 12px 8px -4px rgba(0,0,0,0.35), 0 15px 20px rgba(0,0,0,0.25);
+$shadow-inset = inset 0 3px 5px rgba(0,0,0,0.15);
+
+//badge
+
+// icons
+$icon-image-url ?= url(join("/", $path-icons, "images/btnImages_256.png"));
+$icon-image-url-files ?= url(join("/", $path-icons, "images/files.png"));
+$icon-image-url-busy ?= url(join("/", $path-icons, "images/busy16.gif"));
+$icon-image-url-loading ?= url(join("/", $path-icons, "images/loading16blue.gif"));
+$icon-image-url-loading-busy ?= url(join("/", $path-icons, "images/loadingBusy.gif"));
+$icon-image-url-caption-button ?= url(join("/", $path-icons, "images/captionBtn.png"));
+$icon-font-family ?= "riasFont";
+$icon-size ?= 16px;
+$icon-error ?= "\f006"; // validation error
+$icon-drop-down ?= "\f073"; // drop down icons
+$icon-drop-up ?= "\f074";
+$icon-drop-right ?= "\f072";
+$icon-drop-left ?= "\f071";
+$icon-expand ?= "\f073"; // accordion and title panes
+$icon-collapse ?= "\f074";
+
+/// sys ============================== ///
+/* DND */
+$dnd-color ?= $grey-50;
+$dnd-border-color ?= $grey-100;
+
+$dnd-item-border-color ?= transparent;
+
+// hover
+$dnd-hover-background-color ?= $dnd-color;
+$dnd-hover-border-radius ?= $theme-border-radius;
+
+// anchor
+$dnd-anchor-background-color ?= transparent;
+$dnd-anchor-border-color ?= $theme-highlight-color;
+$dnd-anchor-border-radius ?= $theme-border-radius;
+
+// insert indicator color
+$dnd-avatar-item-insert-indicator-color ?= $theme-highlight-color;
+
+// avatar
+// item
+$dnd-avatar-item-background-color ?= $theme-highlight-color;
+$dnd-avatar-item-text-color ?= $theme-highlight-text-color;
+$dnd-avatar-item-padding ?= $theme-padding $theme-padding * 2;
+$dnd-avatar-item-border-radius ?= $theme-border-radius;
+$dnd-avatar-item-box-shadow ?= $shadow-depth2;
+
+// icons
+$dnd-icon-drop ?= "\f054";
+$dnd-icon-no-drop ?= "\f002";
+
+/// Splitter
+//$splitter-zindex ?= 2900;
+$splitter-width ?= 8px;
+$splitter-width-mobile ?= 12px;
+$splitter-shadow-color ?= $theme-active-color;
+/// ToggleSplitter
+$togglesplitter-thumb-color ?= $theme-highlight-color;
+$togglesplitter-thumb-font-size ?= $icon-size;
+$togglesplitter-thumb-hover-color ?= $theme-highlight-border-color;
+$togglesplitter-thumb-hover-border-color ?= $grey-800;
+$togglesplitter-thumb-hover-text-color ?= $grey-800;
+
+/// ToolButton
+$toolbutton-inner-hover-color ?= $theme-input-color;
+$toolbutton-inner-hover-border-color ?= $theme-hover-border-color;
+$toolbutton-inner-hover-text-color ?= $theme-input-text-color;
+
+/// Tooltip
+$tooltip-color ?= rgba(0, 0, 0, 0.65);
+$tooltip-text-color ?= $theme-input-color;
+$tooltip-border ?= 0 none;
+$tooltip-border-radius ?= $theme-border-radius * 2;
+$tooltip-padding ?= $theme-padding * 2;
+$tooltip-shadow ?= $shadow-tooltip;
+$tooltip-arrow-color ?= $tooltip-color;
+$tooltip-arrow-size ?= 9px;
+
+/// Toolbar
+$toolbar-color ?= $theme-bar-color;
+$toolbar-text-color ?= $theme-bar-text-color;
+$toolbar-padding ?= $theme-padding;
+$toolbar-button-border-color ?= transparent;
+//$toolbar-button-padding ?= 1px;//$theme-padding;
+$toolbar-button-margin ?= 1px;
+//$toolbar-button-background-color ?= transparent;
+$toolbar-button-border-radius ?= $theme-border-radius;
+$toolbar-label-padding ?= $theme-padding * 2;
+$toolbar-separator-width ?= 1px;
+$toolbar-separator-height ?= 20px;
+$toolbar-separator-color ?= $theme-border-color;
+$toolbar-separator-margin ?= 0 $theme-margin;
+
+/// Menu
+$menu-color ?= $theme-input-color;
+$menu-caption-color ?= $theme-border-color;
+$menu-border-color ?= $theme-border-color;
+$menu-border-radius ?= $theme-border-radius;
+$menu-padding ?= $theme-padding;
+$menu-item-line-height ?= $theme-line-height;
+$menu-item-padding ?= $theme-padding;
+$menu-item-margin ?= 1px;
+$menu-item-selected-color ?= $theme-selected-color;///menuItem 是 hover/focus 自动 selected
+$menu-item-selected-text-color ?= $theme-selected-text-color;///menuItem 是 hover/focus 自动 selected
+$menu-item-selected-border-color ?= $theme-selected-border-color;
+$menu-item-icon-background ?= $theme-bar-color;
+$menu-item-icon-padding ?= $theme-padding;
+$menu-item-icon-margin ?= $theme-margin;
+$menu-item-expand-icon ?= $icon-drop-right;
+$menu-item-expand-icon-rtl ?= $icon-drop-left;
+/// MenuBar
+$menubar-color ?= $theme-bar-color;
+$menubar-text-color ?= $theme-bar-text-color;
+$menubar-item-padding ?= $theme-padding * 2 $theme-padding * 3;
+
+//ListItem
+$list-item-height ?= 50px;
+
+/// Loadingtip
+$loadingtip-background-color ?= rgba(0, 0, 0, 0.65);
+$loadingtip-text-color ?= $theme-input-color;
+$loadingtip-border ?= 1px solid $theme-border-color;
+$loadingtip-border-radius ?= $theme-border-radius * 4;
+$loadingtip-padding ?= $theme-padding * 4 $theme-padding * 6;
+$loadingtip-shadow ?= $shadow-loadingtip;
+
+/// Inline Edit Box
+$inlineeditbox-border-color ?= transparent;
+$inlineeditbox-padding ?= $theme-padding $theme-padding * 2;
+$inlineeditbox-border-radius ?= $theme-border-radius;
+$inlineeditbox-hover-background-color ?= transparent;
+$inlineeditbox-hover-border-color ?= $theme-hover-border-color;
+
+/// form ================================ ///
+/// CheckBox
+$checkbox-icon ?= "\f001";
+/// Button
+$button-color ?= inherit;
+$button-border-color ?= $theme-border-color;
+$button-border-radius ?= $theme-border-radius;
+$button-line-height ?= $theme-line-height;
+$button-padding ?= 1px;
+$button-margin ?= 0px;
+$button-arrow-icon-width ?= 20px;
+//$button-arrow-icon-url ?= $icon-image-url-caption-button;
+//$button-arrow-icon-position-down ?= -146px center;///24px -> $button-arrow-icon-width
+//$button-arrow-icon-position-up ?= -98px center;
+//$button-arrow-icon-position-left ?= -170px center;
+//$button-arrow-icon-position-right ?= -122px center;
+$button-arrow-icon-down ?= "\f073";
+$button-arrow-icon-up ?= "\f074";
+$button-arrow-icon-left ?= "\f071";
+$button-arrow-icon-right ?= "\f072";
+/// Switch
+$switch-height ?= 2em;///需要计算，用 px
+$switch-bg-border ?= 1px solid $theme-highlight-color;
+$switch-bg-left-background-color ?= $ok-color;
+$switch-bg-left-background-image ?= background-linear-gradient-top-bottom-2-stops($ok-color, lighten($ok-color, 20%), 0.2, lighten($ok-color, 10%), 0.2, lighten($ok-color, 10%));
+$switch-bg-left-text-color ?= $ok-text-color;
+$switch-bg-right-background-color ?= $off-color;
+$switch-bg-right-background-image ?= background-linear-gradient-top-bottom($off-color, lighten($off-color, 20%));
+$switch-bg-right-text-color ?= $off-text-color;
+$switch-knob-background-color ?= $theme-highlight-color;
+$switch-knob-background-image ?= background-linear-gradient-top-bottom(lighten($theme-highlight-color, 20%), $theme-highlight-color);
+$switch-knob-border ?= 1px solid darken($theme-highlight-color, 20%);
+$switch-bg-left-background-image-gecko ?= -moz-linear-gradient(top, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+$switch-bg-right-background-image-gecko ?= -moz-linear-gradient(top, #bdbebd 0%, #f7f3f7 100%);
+$switch-knob-background-image-gecko ?= -moz-linear-gradient(top, #9c9a9c 0%, #848284 100%);
+$switch-square-border-radius ?= $theme-border-radius * 2;
+
+/// TextBox
+$textbox-color ?= $theme-input-color;
+$textbox-text-color ?= $theme-input-text-color;
+$textbox-border-color ?= $theme-input-border-color;
+$textbox-border-radius ?= $theme-border-radius;
+$textbox-line-height ?= $theme-line-height;
+$textbox-input-padding ?= $theme-padding;
+//$textbox-validation-icon-background ?= url(join("/", $path-riasw-form, 'images/error.png')) no-repeat;
+//$textbox-validation-icon-size ?= $icon-size;
+$textbox-validation-width ?= $icon-size;/// 需要大于 $textbox-input-padding
+
+/// Select
+$select-date-icon ?= "\f064";
+$select-time-icon ?= "\f01e";
+
+/// ProgressBar
+$progressbar-background-color ?= transparent;// $theme-border-color;
+$progressbar-progress-color ?= $ok-color;//$theme-highlight-color;// $theme-border-color;
+$progressbar-progress-tile-color ?= url(join("/", $path-riasw-form, "images/progressBarStrips.png")) repeat-x top;// $theme-border-color;
+$progressbar-border ?= 1px solid $theme-border-color;
+$progressbar-border-radius ?= $theme-border-radius;
+$progressbar-text-color ?= $ok-text-color;
+$progressbar-font-size ?= 1em;
+$progressbar-text-shadow ?= ($progressbar-font-size / 10) ($progressbar-font-size / 10) 1px $grey-500;
+
+/// Rating
+$rating-star-image-url ?= url(join("/", $path-riasw-form, "images/rating16.png"));
+$rating-star-image-size ?= 16px;
+$rating-star-empty-image-position ?= -16px center;
+$rating-star-checked-image-position ?= 0px center;
+
+/// SimpleSlider
+$simpleslider-bar-size ?= 0.5em;
+$simpleslider-bar-border ?= 1px solid $theme-highlight-color;
+$simpleslider-bar-border-radius ?= $theme-border-radius;
+$simpleslider-bar-color ?= transparent;// $theme-border-color;
+$simpleslider-bar-background-image ?= background-linear-gradient-top-bottom($off-color, lighten($off-color, 20%));
+$simpleslider-progress-color ?= $ok-color;//$theme-highlight-color;// $theme-border-color;
+$simpleslider-progress-background-image ?= background-linear-gradient-top-bottom-2-stops($ok-color, lighten($ok-color, 20%), 0.2, lighten($ok-color, 10%), 0.2, lighten($ok-color, 10%));
+$simpleslider-knob-size ?= $icon-size;
+$simpleslider-knob-color ?= $theme-highlight-color;
+$simpleslider-knob-background-image ?= background-linear-gradient-top-bottom(lighten($theme-highlight-color, 20%), $theme-highlight-color);
+$simpleslider-knob-border-radius ?= 50%;
+$simpleslider-knob-border ?= 1px solid darken($theme-highlight-color, 20%);
+/// Slider
+$slider-bar-width ?= 0.25em;// the height for the horizontal slider and the width for the vertical slider
+$slider-bar-radius ?= $slider-bar-width * .5;
+$slider-bar-spacing ?= $theme-padding;// the spacing between the buttons and the bar
+$slider-thumb-box-shadow ?= $shadow-depth1;
+$slider-thumb-hover-box-shadow ?= 0 0.125em 0.25em rgba(0,0,0,0.35);
+$slider-thumb-focused-box-shadow ?= 0 0.125em 0.25em rgba(0,0,0,0.25);
+$slider-v-thumb-hover-box-shadow ?= 0.125em 0 0.25em rgba(0,0,0,0.35);
+$slider-v-thumb-focused-box-shadow ?= 0.125em 0 0.25em rgba(0,0,0,0.25);
+$slider-ruler-color ?= $grey-800;
+$slider-ruler-padding ?= $theme-padding;
+$slider-bar-color ?= transparent;// $theme-border-color;
+$slider-bar-border ?= 0px solid $theme-highlight-color;
+$slider-progress-color ?= $ok-color;//$theme-highlight-color;// $theme-border-color;
+$slider-button-color ?= $theme-highlight-color;
+$slider-button-size ?= $icon-size;
+$slider-icon-increment ?= "\f072";
+$slider-icon-decrement ?= "\f071";
+$slider-v-icon-increment ?= "\f074";
+$slider-v-icon-decrement ?= "\f073";
+
+/// Time Picker
+$timepicker-color ?= $theme-input-color;
+$timepicker-border-color ?= $theme-border-color;
+$timepicker-border-radius ?= $theme-border-radius;
+$timepicker-padding ?= $theme-padding 0;
+$timepicker-item-padding ?= $theme-padding;
+$timepicker-marker-text-color ?= $theme-input-text-color;
+$timepicker-tick-text-color ?= lighten($theme-input-text-color, 35%);
+
+/// ColorPalette
+$colorpalette-background-color ?= $theme-input-color;
+$colorpalette-border-color ?= $theme-border-color;
+$colorpalette-border-radius ?= $theme-border-radius * 2;
+$colorpalette-padding ?= $theme-padding;
+//$colorpalette-margin ?= $theme-margin;
+$colorpalette-swatch-width ?= 15px;
+$colorpalette-swatch-height ?= 15px;
+$colorpalette-swatch-border-color ?= transparent;
+$colorpalette-swatch-radius ?= 3px;
+$colorpalette-swatch-hover-border-color ?= $theme-highlight-border-color;
+$colorpalette-swatch-hover-box-shadow ?= none;
+$colorpalette-swatch-selected-border-color ?= $theme-selected-color;
+$colorpalette-swatch-selected-box-shadow ?= $shadow-depth1;
+
+/// ColorPalette
+$colorpicker-background-color ?= $theme-input-color;
+$colorpicker-border-color ?= $theme-border-color;
+$colorpicker-border-radius ?= $theme-border-radius * 2;
+$colorpicker-padding ?= $theme-padding * 2;
+//$colorpicker-margin ?= $theme-margin;
+$colorpicker-colorbox-size ?= 150px;
+$colorpicker-previewbox-size ?= 45px;
+$colorpicker-previewbox-size-safe ?= 25px;
+
+/// layout ========================== ///
+/// Resizer
+//$resizer-zindex ?= 1;
+//$resizer-background-url ?= $icon-image-url;
+//$resizer-background-position ?= -160px -48px;
+//$resizer-background-position-rtl ?= -176px -48px;
+$resizer-icon ?= "\f03a";
+$resizer-icon-rtl ?= "\f03b";
+$resizer-clone-border ?= 1px dashed $theme-highlight-color;
+
+/// Panel
+$panel-border ?= 0px solid $theme-panel-border-color;
+/// TablePanel
+$tablepanel-border ?= 0px solid $theme-panel-border-color;
+/// StackPanel
+$stackpanel-border ?= 0px solid $theme-panel-border-color;
+/// According
+$accordingpanel-border ?= 1px solid $theme-panel-border-color;
+$accordingpanel-container-border ?= 1px solid transparent;
+$accordingpanel-caption-color ?= $theme-panel-border-color;
+$accordingpanel-caption-text-color ?= $theme-captionpanel-caption-text-color;
+$accordingpanel-caption-border ?= 0px solid transparent;
+$accordingpanel-caption-padding ?= $theme-padding * 2 $theme-padding * 2 $theme-padding $theme-padding * 2;///有 riaswAccordionArrow（即 toggleNode）时，不要 * 2
+$accordingpanel-child-border ?= 1px solid transparent;
+/// TabController
+///FIXME:zensst. ff 中 Vertical 时会发生剪切
+$tabcontroller-tab-min-size ?= 28px;
+/// TabPanel
+$tabpanel-padding ?= $theme-padding;
+$tabpanel-container-padding ?= $theme-padding;
+$tabpanel-wrapper-background-color ?= inherit;//$theme-workarea-color;
+//$tabpanel-wrapper-text-color ?= $theme-workarea-text-color;
+//$tabpanel-wrapper-border-color ?= $theme-border-color;
+//$tabpanel-wrapper-border-radius ?= $theme-border-radius * 2;
+$tabpanel-tab-checked-has-highlight-border ?= false; // whether to have a highlight bar on the edge of the tab
+$tabpanel-tab-color ?= inherit;
+$tabpanel-tab-checked-color ?= $theme-highlight-color;// $tabpanel-wrapper-border-color;
+$tabpanel-tab-checked-border-color ?= $theme-highlight-border-color;// $tabpanel-wrapper-border-color;
+$tabpanel-tab-checked-text-color ?= $theme-highlight-text-color;// $tabpanel-wrapper-text-color;
+$tabpanel-tab-checked-border-width ?= 2px;// $tabpanel-wrapper-border-color;
+$tabpanel-tab-border-color ?= $theme-border-color;
+$tabpanel-tab-border-radius ?= $theme-border-radius * 3;
+$tabpanel-tab-line-height ?= $theme-line-height;
+$tabpanel-tab-padding ?= $theme-padding;
+$tabpanel-tab-margin ?= 0;
+$tabpanel-tab-spacing ?= 1px; // space between tabs
+$tabpanel-top-tab-padding ?= $tabpanel-padding $tabpanel-padding * 2;
+$tabpanel-bottom-tab-padding ?= $tabpanel-top-tab-padding;
+$tabpanel-left-tab-padding ?= $tabpanel-padding * 2 $tabpanel-padding;
+$tabpanel-right-tab-padding ?= $tabpanel-left-tab-padding;
+$tabpanel-tab-close-icon-size ?= 20px;
+$tabpanel-tab-close-button-icon ?= "\f077";
+$tabpanel-left-icon ?= "\f071";
+$tabpanel-right-icon ?= "\f072";
+$tabpanel-up-icon ?= "\f074";
+$tabpanel-down-icon ?= "\f073";
+$tabpanel-menu-icon ?= "\f00a";
+
+/// CaptionPanel
+$captionpanel-padding ?= 0;
+$captionpanel-margin ?= 0;
+$captionpanel-border ?= 1px solid $theme-captionpanel-caption-color;
+$captionpanel-caption-color ?= $theme-captionpanel-caption-color;
+$captionpanel-caption-text-color ?= $theme-captionpanel-caption-text-color;
+$captionpanel-caption-border ?= 0px solid transparent;
+$captionpanel-caption-padding ?= $theme-padding $theme-padding 0 $theme-padding;//需要留 resizer 的 border
+$captionpanel-caption-padding-v ?= $theme-padding;//不需要留 resizer 的 border
+/// Fieldset
+$fieldset-padding ?= 0;
+$fieldset-margin ?= 0;
+$fieldset-border ?= 1px solid $theme-captionpanel-caption-color;
+$fieldset-border-radius ?= $dialog-border-radius;
+$fieldset-caption-color ?= transparent;
+$fieldset-caption-text-color ?= $theme-captionpanel-caption-text-color;
+$fieldset-caption-border ?= 0px solid transparent;
+$fieldset-caption-padding ?= $theme-padding $theme-padding 0 $theme-padding;//需要留 resizer 的 border
+$fieldset-caption-padding-v ?= $theme-padding 0;
+$fieldset-caption-margin ?= 0 1em;
+/// Dialog
+$dialog-background-color ?= $theme-workarea-color;
+$dialog-text-color ?= $theme-workarea-text-color;
+$dialog-padding ?= 0;
+$dialog-border-radius ?= $theme-border-radius * 2;
+$dialog-shadow ?= $shadow-dialog;
+$dialog-caption-color ?= $theme-dialog-caption-color;
+$dialog-caption-text-color ?= $theme-dialog-caption-text-color;
+$dialog-caption-border ?= 0px solid transparent;
+$dialog-caption-padding ?= $theme-padding * 2 $theme-padding * 2 0 $theme-padding * 2;//需要留 resizer 的 border
+$dialog-caption-shadow ?= $shadow-dialog-caption;
+$dialog-container-margin ?= $theme-padding * 2;///保留 HiddenCaption 时的 margin
+$dialog-actionbar-color ?= $theme-bar-color;
+$dialog-actionbar-text-color ?= $theme-bar-text-color;
+$dialog-actionbar-border ?= 0px solid $theme-border-color;
+$dialog-actionbar-padding ?= $theme-padding * 2;
+$dialog-actionbar-margin ?= $theme-margin * 2;//需要留 resizer 的 border
+//$dialog-underlay-opacity ?= 0.33;
+// Tooltip Dialog connector (arrow)
+$dialog-tip-background-color ?= $theme-workarea-color;
+$dialog-tip-selected-background-color ?= $theme-workarea-active-color;
+$dialog-tip-border-width ?= 2px;
+$dialog-tip-border-color ?= $theme-border-color;
+$dialog-content-type-padding ?= 1.5em 1em 1em 1em;
+$dialog-content-type-font-size ?= 1.1em;
+/// Underlay
+$dialog-underlay-color ?= $grey-800;
+
+/// widget ============================== ///
+/// Calendar
+$calendar-color ?= $theme-input-color;
+$calendar-border-color ?= $theme-border-color;
+$calendar-border-radius ?= $theme-border-radius * 2;
+$calendar-padding ?= $theme-padding;
+$calendar-bar-color ?= $theme-bar-color;
+$calendar-bar-font-size ?= 115%;
+$calendar-date-cell-padding ?= $theme-padding;
+$calendar-date-date-padding ?= $theme-padding;
+$calendar-date-date-border-radius ?= 50%;
+//$calendar-icon-decrease ?= $icon-drop-left;
+//$calendar-icon-increase ?= $icon-drop-right;
+$calendar-icon-size ?= 24px;
+
+/// Tree =============================== ///
+$tree-indent ?= 19px;
+$tree-background-color ?= transparent;
+$tree-row-padding ?= $theme-padding;
+$tree-row-border-color ?= transparent;
+$tree-row-line-height ?= $theme-line-height;
+$tree-row-hover-background-color ?= $theme-hover-color;
+$tree-row-hover-border-color ?= $theme-hover-border-color;
+$tree-row-active-padding ?= $tree-row-padding;
+$tree-row-active-background-color ?= $theme-active-color;
+$tree-row-active-border-color ?= $theme-active-border-color;
+$tree-row-selected-background-color ?= $theme-selected-color;
+$tree-row-selected-border-color ?= $theme-selected-border-color;
+$tree-row-selected-text-color ?= $theme-selected-text-color;
+$tree-node-label-margin ?= 0 4px;
+$tree-node-selector-size ?= $icon-size;
+$tree-node-selector-margin ?= 0 6px 0 0;
+$tree-node-expando-size ?= 20px;
+$tree-expando-icon-width ?= $icon-size;
+$tree-expando-icon-height ?= $icon-size;
+$tree-expando-icon-color ?= $theme-highlight-color;
+$tree-expando-margin ?= $theme-margin;
+$tree-expando-icon-selected-color ?= $theme-selected-text-color;
+
+/// Editor =============================== ///
+$editor-background-color ?= $theme-workarea-color;
+$editor-border-color ?= $theme-border-color;
+$editor-border-radius ?= $theme-border-radius;
+$editor-input-color ?= $theme-input-color;
+$editor-input-border-color ?= transparent;
+$editor-input-text-color ?= $theme-input-text-color;
+$editor-input-padding ?= $theme-padding $theme-padding * 2;
+//$editor-disabled-border-color ?= $theme-border-color;
+
+

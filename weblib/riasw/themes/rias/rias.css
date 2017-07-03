@@ -1,0 +1,6715 @@
+:focus {
+  outline: none;
+}
+.dijitReset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  font: inherit;
+/*line-height:normal;*/
+  color: inherit;
+}
+.dj_a11y .dijitReset {
+  -moz-appearance: none;
+}
+.dijitInline {
+  display: inline-block;
+  border: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+table.dijitInline {
+  display: inline-table;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+}
+.dijitOffScreen {
+  position: absolute !important;
+  left: 50% !important;
+  top: -10000px !important;
+}
+.dj_a11y .riaswButtonIcon {
+  display: none;
+}
+.dijitLeft {
+  background-position: left top;
+  background-repeat: no-repeat;
+}
+.dijitStretch {
+  white-space: nowrap;
+  background-repeat: repeat-x;
+}
+.dojoDndItem {
+  padding: 2px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+.dojoDndHorizontal .dojoDndItem {
+  display: inline-block;
+}
+.dojoDndItemBefore,
+.dojoDndItemAfter {
+  border: 0px solid #369;
+}
+.dojoDndItemBefore {
+  border-width: 2px 0 0 0;
+  padding: 0 2px 2px 2px;
+}
+.dojoDndItemAfter {
+  border-width: 0 0 2px 0;
+  padding: 2px 2px 0 2px;
+}
+.dojoDndHorizontal .dojoDndItemBefore {
+  border-width: 0 0 0 2px;
+  padding: 2px 2px 2px 0;
+}
+.dojoDndHorizontal .dojoDndItemAfter {
+  border-width: 0 2px 0 0;
+  padding: 2px 0 2px 2px;
+}
+.dojoDndItemOver {
+  cursor: pointer;
+}
+.dijitRtl .dijitOffScreen {
+/* align on the right side rather than the left so no horizontal scroll bar shown */
+  left: auto !important;
+  right: -10000px !important;
+}
+.dijitRtl .dojoDndHorizontal .dojoDndItemBefore {
+  border-width: 0 2px 0 0;
+  padding: 2px 0 2px 2px;
+}
+.dijitRtl .dojoDndHorizontal .dojoDndItemAfter {
+  border-width: 0 0 0 2px;
+  padding: 2px 2px 2px 0;
+}
+@font-face {
+  font-family: 'riasFont';
+  src: url("icons/fonts/riaeasy.eot?v=2017b1");
+  src: url("icons/fonts/riaeasy.eot?#iefix&v=2017b1") format('embedded-opentype'), url("icons/fonts/riaeasy.ttf?v=2017b1") format('truetype'), url("icons/fonts/riaeasy.woff?v=2017b1") format('woff'), url("icons/fonts/riaeasy.svg?v=2017b1") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.icon-spin {
+  -webkit-animation: spin-right 2s infinite linear;
+  -moz-animation: spin-right 2s infinite linear;
+  -o-animation: spin-right 2s infinite linear;
+  -ms-animation: spin-right 2s infinite linear;
+  animation: spin-right 2s infinite linear;
+}
+.riaswLoadingIcon,
+.riaswBusyIcon,
+.riaswFileIcon,
+.riaswEditorIcon,
+.riaswButtonIcon {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url("icons/images/btnImages_256.png");
+  background-position: -208px 0px;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+}
+.riaswFileIcon {
+  background: url("icons/images/files.png");
+  background-position: -80px -32px;
+}
+.riaswLoadingIcon {
+  font-size: 24px;
+}
+.riaswLoadingIcon:before {
+  content: "\f02e";
+  -webkit-animation: spin-left 2s linear infinite;
+  -moz-animation: spin-left 2s linear infinite;
+  -o-animation: spin-left 2s linear infinite;
+  -ms-animation: spin-left 2s linear infinite;
+  animation: spin-left 2s linear infinite;
+}
+.dj_ie8 .riaswLoadingIcon,
+.dj_ie9 .riaswLoadingIcon {
+  background: url("icons/images/loading16blue.gif");
+}
+.dj_ie8 .riaswLoadingIcon:before,
+.dj_ie9 .riaswLoadingIcon:before {
+  content: "";
+}
+.riaswBusyIcon {
+  background: url("icons/images/busy16.gif");
+  background-position: 0px 0px;
+}
+.riaswLoadingBusyIcon {
+  background: url("icons/images/loadingBusy.gif");
+  background-position: 0px 0px;
+  height: 10px;
+  width: 50px;
+}
+.riaswUNKNOWFileIcon {
+  background-position: -80px -32px;
+}
+.riaswAUDIOFileIcon {
+  background-position: 0px 0px;
+}
+.riaswAVIFileIcon {
+  background-position: -16px 0px;
+}
+.riaswMIDFileIcon {
+  background-position: -32px 0px;
+}
+.riaswMPFileIcon {
+  background-position: -48px 0px;
+}
+.riaswMP3FileIcon {
+  background-position: -64px 0px;
+}
+.riaswBMPFileIcon {
+  background-position: 0px -16px;
+}
+.riaswGIFFileIcon {
+  background-position: -16px -16px;
+}
+.riaswJPGFileIcon {
+  background-position: -32px -16px;
+}
+.riaswPNGFileIcon {
+  background-position: -32px -16px;
+}
+.riaswHTMFileIcon {
+  background-position: 0px -32px;
+}
+.riaswHTMLFileIcon {
+  background-position: 0px -32px;
+}
+.riaswCSSFileIcon {
+  background-position: -16px -32px;
+}
+.riaswJSFileIcon {
+  background-position: -32px -32px;
+}
+.riaswJSONFileIcon {
+  background-position: -32px -32px;
+}
+.riaswRSPFileIcon {
+  background-position: -32px -32px;
+}
+.riaswRSMFileIcon {
+  background-position: -32px -32px;
+}
+.riaswTXTFileIcon {
+  background-position: -80px -32px;
+}
+.riaswDOCFileIcon {
+  background-position: 0px -48px;
+}
+.riaswXLSFileIcon {
+  background-position: -16px -48px;
+}
+.riaswPPTFileIcon {
+  background-position: -32px -48px;
+}
+.riaswMDBFileIcon {
+  background-position: -48px -48px;
+}
+.riaswPDFFileIcon {
+  background-position: -64px -48px;
+}
+.riaswSWFFileIcon {
+  background-position: -80px -48px;
+}
+.riaswIEFileIcon {
+  background-position: 0px -64px;
+}
+.riaswEXEFileIcon {
+  background-position: -16px -64px;
+}
+.riaswHLPFileIcon {
+  background-position: -32px -64px;
+}
+.riaswZIPFileIcon {
+  background-position: -48px -64px;
+}
+.riaswRARFileIcon {
+  background-position: -64px -64px;
+}
+.riaswFOLDFileIcon {
+  background-position: 0px -80px;
+}
+.riaswFOLDUPFileIcon {
+  background-position: -16px -80px;
+}
+.spaceIcon:before {
+  content: "\20";
+}
+.okIcon:before {
+  content: "\f001";
+}
+.noIcon:before {
+  content: "\f002";
+}
+.cancelIcon:before {
+  content: "\f003";
+}
+.aboutIcon:before,
+.infoIcon:before {
+  content: "\f004";
+}
+.warnIcon:before {
+  content: "\f005";
+}
+.errorIcon:before {
+  content: "\f006";
+}
+.chooseIcon:before {
+  content: "\f007";
+}
+.helpIcon:before {
+  content: "\f008";
+}
+.loginIcon:before {
+  content: "\f009";
+}
+.menuIcon:before {
+  content: "\f00a";
+}
+.optionIcon:before {
+  content: "\f00b";
+}
+.inputIcon:before {
+  content: "\f00c";
+}
+.scanIcon:before {
+  content: "\f00d";
+}
+.listIcon:before {
+  content: "\f00e";
+}
+.iconListIcon:before {
+  content: "\f00f";
+}
+.saveIcon:before {
+  content: "\f010";
+}
+.saveAsIcon:before {
+  content: "\f011";
+}
+.openIcon:before {
+  content: "\f012";
+}
+.abortIcon:before {
+  content: "\f013";
+}
+.closeIcon:before,
+.exitIcon:before {
+  content: "\f014";
+}
+.runIcon:before {
+  content: "\f015";
+}
+.homeIcon:before {
+  content: "\f016";
+}
+.printIcon:before {
+  content: "\f017";
+}
+.printPreviewIcon:before {
+  content: "\f018";
+}
+.downloadIcon:before {
+  content: "\f019";
+}
+.uploadIcon:before {
+  content: "\f01a";
+}
+.importIcon:before {
+  content: "\f01b";
+}
+.exportIcon:before {
+  content: "\f01c";
+}
+.messageIcon:before {
+  content: "\f01d";
+}
+.messageEmptyIcon:before {
+  content: "\f01e";
+}
+.messageHighlightIcon:before {
+  content: "\f01f";
+}
+.newFileIcon:before {
+  content: "\f020";
+}
+.openedFolderIcon:before {
+  content: "\f021";
+}
+.folderIcon:before,
+.closedFolderIcon:before {
+  content: "\f022";
+}
+.newFolderIcon:before {
+  content: "\f023";
+}
+.parentFolderIcon:before {
+  content: "\f024";
+}
+.childFolderIcon:before {
+  content: "\f025";
+}
+.newIcon:before,
+.addIcon:before,
+.addChildIcon:before {
+  content: "\f026";
+}
+.deleIcon:before,
+.deleteIcon:before,
+.reduceIcon:before,
+.removeIcon:before {
+  content: "\f027";
+}
+.editIcon:before,
+.modiIcon:before {
+  content: "\f028";
+}
+.submitIcon:before {
+  content: "\f029";
+}
+.rollbackIcon:before {
+  content: "\f02a";
+}
+.queryIcon:before {
+  content: "\f02b";
+}
+.denyIcon:before {
+  content: "\f02c";
+}
+.busyIcon:before {
+  content: "\f02d";
+}
+.trashIcon:before {
+  content: "\f02e";
+}
+.powerIcon:before {
+  content: "\f02f";
+}
+.cutIcon:before {
+  content: "\f030";
+}
+.copyIcon:before {
+  content: "\f031";
+}
+.pasteIcon:before {
+  content: "\f032";
+}
+.undoIcon:before {
+  content: "\f033";
+}
+.redoIcon:before {
+  content: "\f034";
+}
+.refreshIcon:before {
+  content: "\f035";
+}
+.clearIcon:before {
+  content: "\f036";
+}
+.cursorIcon:before {
+  content: "\f037";
+}
+.cursorIcon:before {
+  content: "\f037";
+}
+.smileIcon:before {
+  content: "\f038";
+}
+.lockIcon:before {
+  content: "\f039";
+}
+.resizerIcon:before {
+  content: "\f03a";
+}
+.resizerRtlIcon:before {
+  content: "\f03b";
+}
+.drawIcon:before {
+  content: "\f03c";
+}
+.imageIcon:before {
+  content: "\f03d";
+}
+.barcodeIcon:before {
+  content: "\f03e";
+}
+.barcode2dIcon:before {
+  content: "\f03f";
+}
+.idCardIcon:before {
+  content: "\f040";
+}
+.leftIcon:before {
+  content: "\f050";
+}
+.upIcon:before {
+  content: "\f051";
+}
+.rightIcon:before {
+  content: "\f052";
+}
+.downIcon:before {
+  content: "\f053";
+}
+.beginIcon:before {
+  content: "\f054";
+}
+.priorIcon:before {
+  content: "\f055";
+}
+.nextIcon:before {
+  content: "\f056";
+}
+.endIcon:before {
+  content: "\f057";
+}
+.dockToCenterIcon:before {
+  content: "\f058";
+}
+.dockToLeftIcon:before {
+  content: "\f059";
+}
+.dockToTopIcon:before {
+  content: "\f05a";
+}
+.dockToRightIcon:before {
+  content: "\f05b";
+}
+.dockToBottomIcon:before {
+  content: "\f05c";
+}
+.dockToIcon:before {
+  content: "\f05d";
+}
+.pinIcon:before {
+  content: "\f042";
+}
+.noticeIcon:before {
+  content: "\f060";
+}
+.logIcon:before {
+  content: "\f061";
+}
+.sheetIcon:before {
+  content: "\f062";
+}
+.additionIcon:before {
+  content: "\f063";
+}
+.diaryIcon:before {
+  content: "\f064";
+}
+.scheduleIcon:before {
+  content: "\f065";
+}
+.timeIcon:before {
+  content: "\f066";
+}
+.taskIcon:before {
+  content: "\f067";
+}
+.worksIcon:before {
+  content: "\f068";
+}
+.checkIcon:before {
+  content: "\f069";
+}
+.auditIcon:before {
+  content: "\f06a";
+}
+.signIcon:before {
+  content: "\f06b";
+}
+.starIcon:before {
+  content: "\f06c";
+}
+.starEmptyIcon:before {
+  content: "\f06d";
+}
+.goodIcon:before {
+  content: "\f06e";
+}
+.badIcon:before {
+  content: "\f06f";
+}
+.captionToggleIcon:before {
+  content: "\f070";
+}
+.captionLeftIcon:before {
+  content: "\f071";
+}
+.captionRightIcon:before {
+  content: "\f072";
+}
+.captionDownIcon:before {
+  content: "\f073";
+}
+.captionUpIcon:before {
+  content: "\f074";
+}
+.captionShowMaxIcon:before {
+  content: "\f075";
+}
+.captionShowCascadeIcon:before {
+  content: "\f076";
+}
+.captionCloseIcon:before {
+  content: "\f077";
+}
+.captionShowMoreIcon:before {
+  content: "\f078";
+}
+.captionInputIcon:before {
+  content: "\f079";
+}
+.captionShowNormalIcon:before {
+  content: "\f07a";
+}
+.captionShowFullIcon:before {
+  content: "\f07b";
+}
+.captionShowExpandIcon:before {
+  content: "\f07c";
+}
+.captionShowCollapseIcon:before {
+  content: "\f07d";
+}
+.captionShowFitIcon:before {
+  content: "\f07e";
+}
+.changeIcon:before {
+  content: "\f07e";
+}
+.riaswTXTFileIcon,
+.fileTxtIcon {
+  background-image: none;
+}
+.riaswTXTFileIcon:before,
+.fileTxtIcon:before {
+  content: "\f080";
+}
+.riaswDOCFileIcon,
+.riaswDOCXFileIcon,
+.fileDocIcon {
+  background-image: none;
+}
+.riaswDOCFileIcon:before,
+.riaswDOCXFileIcon:before,
+.fileDocIcon:before {
+  content: "\f081";
+}
+.riaswXLSFileIcon,
+.riaswXLSXFileIcon,
+.fileXlsIcon {
+  background-image: none;
+}
+.riaswXLSFileIcon:before,
+.riaswXLSXFileIcon:before,
+.fileXlsIcon:before {
+  content: "\f082";
+}
+.riaswPPTFileIcon,
+.riaswPPTXFileIcon,
+.filePptIcon {
+  background-image: none;
+}
+.riaswPPTFileIcon:before,
+.riaswPPTXFileIcon:before,
+.filePptIcon:before {
+  content: "\f083";
+}
+.riaswPDFFileIcon,
+.filePdfIcon {
+  background-image: none;
+}
+.riaswPDFFileIcon:before,
+.filePdfIcon:before {
+  content: "\f084";
+}
+.riaswSWFFileIcon,
+.fileFlashIcon {
+  background-image: none;
+}
+.riaswSWFFileIcon:before,
+.fileFlashIcon:before {
+  content: "\f085";
+}
+.riaswBMPFileIcon,
+.riaswGIFFileIcon,
+.riaswJPGFileIcon,
+.riaswPNGFileIcon,
+.fileImageIcon {
+  background-image: none;
+}
+.riaswBMPFileIcon:before,
+.riaswGIFFileIcon:before,
+.riaswJPGFileIcon:before,
+.riaswPNGFileIcon:before,
+.fileImageIcon:before {
+  content: "\f086";
+}
+.riaswAVIFileIcon,
+.riaswMP4FileIcon,
+.fileVedioIcon {
+  background-image: none;
+}
+.riaswAVIFileIcon:before,
+.riaswMP4FileIcon:before,
+.fileVedioIcon:before {
+  content: "\f087";
+}
+.riaswAUDIOFileIcon,
+.riaswMIDFileIcon,
+.riaswMP3FileIcon,
+.fileAudioIcon {
+  background-image: none;
+}
+.riaswAUDIOFileIcon:before,
+.riaswMIDFileIcon:before,
+.riaswMP3FileIcon:before,
+.fileAudioIcon:before {
+  content: "\f088";
+}
+.riaswZIPFileIcon,
+.riaswRARFileIcon,
+.fileZipIcon {
+  background-image: none;
+}
+.riaswZIPFileIcon:before,
+.riaswRARFileIcon:before,
+.fileZipIcon:before {
+  content: "\f089";
+}
+.riaswJSFileIcon,
+.riaswRSFFileIcon,
+.fileJsIcon,
+.riasdJsIcon {
+  background-image: none;
+}
+.riaswJSFileIcon:before,
+.riaswRSFFileIcon:before,
+.fileJsIcon:before,
+.riasdJsIcon:before {
+  content: "\f08a";
+}
+.riaswCSSFileIcon,
+.fileCssIcon,
+.riasdCssIcon {
+  background-image: none;
+}
+.riaswCSSFileIcon:before,
+.fileCssIcon:before,
+.riasdCssIcon:before {
+  content: "\f08b";
+}
+.riaswHTMFileIcon,
+.riaswHTMLFileIcon,
+.fileHtmlIcon,
+.riasdHtmlIcon {
+  background-image: none;
+}
+.riaswHTMFileIcon:before,
+.riaswHTMLFileIcon:before,
+.fileHtmlIcon:before,
+.riasdHtmlIcon:before {
+  content: "\f08c";
+}
+.riasdFuncIcon:before {
+  content: "\f08d";
+}
+.riaswJSONFileIcon,
+.riaswRSFSFileIcon,
+.riasdParamIcon {
+  background-image: none;
+}
+.riaswJSONFileIcon:before,
+.riaswRSFSFileIcon:before,
+.riasdParamIcon:before {
+  content: "\f08e";
+}
+.riasdStyleIcon:before {
+  content: "\f08f";
+}
+.logoGitHubIcon:before {
+  content: "\f090";
+}
+.logoQqIcon:before {
+  content: "\f091";
+}
+.logoWeixinIcon:before {
+  content: "\f092";
+}
+.logoAlipayIcon:before {
+  content: "\f093";
+}
+.logoTaobaoIcon:before {
+  content: "\f094";
+}
+.logoLinuxIcon:before {
+  content: "\f095";
+}
+.logoAndroidIcon:before {
+  content: "\f096";
+}
+.logoWindowIcon:before {
+  content: "\f097";
+}
+.logoAppleIcon:before {
+  content: "\f098";
+}
+.logoBbaiduIcon:before {
+  content: "\f099";
+}
+.logoGoogleIcon:before {
+  content: "\f09a";
+}
+.logoZhihuIcon:before {
+  content: "\f09b";
+}
+.logoDojoIcon:before {
+  content: "\f09c";
+}
+.logoPaypalIcon:before {
+  content: "\f09d";
+}
+.logoRiaEasyIcon:before {
+  content: "\f0a0";
+}
+.riasdIcon:before {
+  content: "\f0a1";
+}
+.viewDialogIcon:before,
+.riasdPreviewIcon:before {
+  content: "\f0a2";
+}
+.outlineIcon:before {
+  content: "\f0a3";
+}
+.consoleIcon:before {
+  content: "\f0a4";
+}
+.workflowIcon:before {
+  content: "\f0a5";
+}
+.charIcon:before {
+  content: "\f0a6";
+}
+.reportIcon:before {
+  content: "\f0a7";
+}
+.appIcon:before {
+  content: "\f0b0";
+}
+.mDatasIcon:before {
+  content: "\f0b1";
+}
+.mRightsIcon:before {
+  content: "\f0b2";
+}
+.mUsersIcon:before {
+  content: "\f0b3";
+}
+.mUserGroupIcon:before {
+  content: "\f0b4";
+}
+.dbIcon:before {
+  content: "\f0b5";
+}
+@-moz-keyframes spin-right {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin-right {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spin-right {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-right {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin-left {
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+}
+@-webkit-keyframes spin-left {
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+}
+@-o-keyframes spin-left {
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+}
+@keyframes spin-left {
+  from {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+}
+.riaswGutter {
+  position: absolute;
+  overflow: hidden;
+  font-size: 1px; /* needed by IE6 even though div is empty, otherwise goes to 15px */
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.riaswSplitter {
+  position: absolute;
+  overflow: hidden;
+  background-color: inherit;
+  border: 1px solid transparent;
+}
+.riaswSplitterCover {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.dj_ie .riaswSplitterCover {
+  background: #fff;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.dj_ie6 .riaswSplitterCover,
+.dj_ie7 .riaswSplitterCover,
+.dj_ie8 .riaswSplitterCover {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.riaswSplitterShadow {
+  font-size: 1px;
+  background-color: #b3e5fc;
+}
+.riaswSplitterH,
+.riaswGutterH {
+  text-align: center;
+  background: none;
+  border: 0;
+  height: 8px;
+}
+.riaswSplitterH .riaswSplitterThumb {
+  position: absolute;
+  overflow: hidden;
+  background: none;
+  top: 8px/2;
+  left: 45%;
+  height: 0px;
+  width: 10%;
+}
+.dj_ios .riaswSplitterH,
+.dj_android .riaswSplitterH,
+.dj_ios .riaswGutterH,
+.dj_android .riaswGutterH {
+  top: 12px/2;
+  height: 12px;
+}
+.riaswSplitterV,
+.riaswGutterV {
+  vertical-align: middle;
+  background: none;
+  border: 0;
+  width: 8px;
+  margin: 0;
+}
+.dj_ios .riaswSplitterV,
+.dj_android .riaswSplitterV,
+.dj_ios .riaswGutterV,
+.dj_android .riaswGutterV {
+  width: 12px;
+}
+.riaswSplitterV .riaswSplitterThumb {
+  position: absolute;
+  overflow: hidden;
+  background: none;
+  top: 45%;
+  left: 8px/2;
+  height: 10%;
+  width: 0px;
+  margin: 0;
+}
+.dj_a11y .riaswSplitterH {
+  border-top: 1px solid #d3d3d3 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
+}
+.dj_a11y .riaswSplitterV {
+  border-left: 1px solid #d3d3d3 !important;
+  border-right: 1px solid #d3d3d3 !important;
+}
+.riaswSplitterHover {
+  background-color: #b3e5fc;
+  -webkit-tap-highlight-color: transparent;
+}
+.riaswSplitterHHover {
+  cursor: row-resize;
+}
+.riaswSplitterVHover {
+  cursor: col-resize;
+}
+.riaswSplitterActive {
+  font-size: 1px;
+  background-image: none;
+  background-color: #b3e5fc;
+}
+.riaswToggleSplitter {
+  position: absolute;
+  overflow: hidden;
+  background-color: inherit;
+  border: 1px solid transparent;
+}
+.dj_ie .riaswToggleSplitter {
+  z-index: 1; /* behind the panes so that pane borders aren't obscured see test_Gui.html/[14392] */
+}
+.riaswToggleSplitterCover {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.dj_ie .riaswToggleSplitterCover {
+  background: #fff;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.dj_ie6 .riaswToggleSplitterCover,
+.dj_ie7 .riaswToggleSplitterCover,
+.dj_ie8 .riaswToggleSplitterCover {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.riaswToggleSplitterShadow {
+  font-size: 1px;
+  background-color: #b3e5fc;
+}
+.riaswToggleSplitterThumb {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #0277bd;
+}
+.riaswToggleSplitterH {
+  text-align: center;
+  background: none;
+  border: 0;
+  height: 8px;
+}
+.riaswToggleSplitterH .riaswToggleSplitterThumb {
+  border-width: 0px 2px;
+  left: 45%;
+  width: 48px;
+  height: 8px;
+}
+.riaswToggleSplitterH .riaswToggleSplitterThumb:before {
+  position: relative;
+  color: #0277bd;
+  top: -4px;
+}
+.dj_ios .riaswToggleSplitterH,
+.dj_android .riaswToggleSplitterH {
+  height: 12px;
+}
+.riaswToggleSplitterV {
+  vertical-align: middle;
+  background: none;
+  border: 0;
+  width: 8px;
+}
+.riaswToggleSplitterV .riaswToggleSplitterThumb {
+  border-width: 2px 0px;
+  top: 45%;
+  width: 8px;
+  height: 48px;
+}
+.riaswToggleSplitterV .riaswToggleSplitterThumb:before {
+  position: relative;
+  color: #0277bd;
+  line-height: 48px;
+  left: -4px;
+}
+.dj_ios .riaswToggleSplitterV,
+.dj_android .riaswToggleSplitterV {
+  width: 12px;
+}
+.dj_a11y .riaswToggleSplitterH {
+  border-top: 1px solid #d3d3d3 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
+}
+.dj_a11y .riaswToggleSplitterV {
+  border-left: 1px solid #d3d3d3 !important;
+  border-right: 1px solid #d3d3d3 !important;
+}
+.riaswToggleSplitterHover {
+  background-color: #b3e5fc;
+  -webkit-tap-highlight-color: transparent;
+}
+.riaswToggleSplitterHHover {
+  cursor: row-resize;
+}
+.riaswToggleSplitterVHover {
+  cursor: col-resize;
+}
+.riaswToggleSplitterActive {
+  font-size: 1px;
+  background-image: none;
+  background-color: #b3e5fc;
+}
+.riaswToggleSplitterTop .riaswToggleSplitterThumbOpen:before,
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbClosed:before {
+  content: "\f074";
+}
+.riaswToggleSplitterBottom .riaswToggleSplitterThumbOpen:before,
+.riaswToggleSplitterTop .riaswToggleSplitterThumbClosed:before {
+  content: "\f073";
+}
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbOpen:before,
+.riaswToggleSplitterRight .riaswToggleSplitterThumbClosed:before {
+  content: "\f071";
+}
+.riaswToggleSplitterRight .riaswToggleSplitterThumbOpen:before,
+.riaswToggleSplitterLeft .riaswToggleSplitterThumbClosed:before {
+  content: "\f072";
+}
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenHover,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedHover,
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenFocused,
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenActive,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedFocused,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedActive {
+  background-color: #ffb74d;
+  border-color: #424242;
+  color: #424242;
+}
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenHover:before,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedHover:before,
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenFocused:before,
+.riaswToggleSplitter .riaswToggleSplitterThumbOpenActive:before,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedFocused:before,
+.riaswToggleSplitter .riaswToggleSplitterThumbClosedActive:before {
+  color: #424242;
+}
+.riaswLogo {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  overflow: hidden;
+  background-color: transparent;
+  border: 0;
+}
+.riaswLogoNode {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  background-color: #fff;
+  min-height: 16px;
+  min-width: 16px;
+  height: 16px;
+  width: 16px;
+}
+.riaswLogoPart {
+  display: inline-block;
+  position: absolute;
+  border: 0;
+}
+.riaswLogoPart1 {
+  background-color: #008000;
+  top: 5%;
+  left: 5%;
+  height: 30%;
+  width: 45%;
+}
+.riaswLogoPart2 {
+  background-color: #000;
+  top: 5%;
+  left: 50%;
+  height: 30%;
+  width: 45%;
+}
+.riaswLogoPart3 {
+  background-color: #f00;
+  top: 35%;
+  left: 5%;
+  height: 30%;
+  width: 45%;
+}
+.riaswLogoPart4 {
+  background-color: #fff;
+  top: 35%;
+  left: 50%;
+  height: 30%;
+  width: 45%;
+}
+.riaswLogoPart5 {
+  background-color: #ff0;
+  top: 65%;
+  left: 5%;
+  height: 30%;
+  width: 90%;
+}
+.riaswLogoLabel {
+  display: inline-block;
+  vertical-align: bottom;
+  font-family: "arial";
+  font-style: normal;
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 0 0.25em;
+}
+.riaswLogoActive,
+.riaswLogoFocused,
+.riaswLogoHover {
+  font-weight: bolder;
+  color: #ffb74d;
+}
+.riaswLogoActive .riaswLogoNode,
+.riaswLogoFocused .riaswLogoNode,
+.riaswLogoHover .riaswLogoNode {
+  background-color: #ffb74d;
+}
+.riaswLogoDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswTooltip {
+  display: block;
+  position: absolute;
+  overflow: visible;
+  z-index: 2000;
+  background: transparent; /* make the area on the sides of the arrow transparent */
+  left: 0;
+  top: -10000px;
+/* the outermost dom node, holding the connector and container */
+  font-size: 1.15em;
+}
+.riaswTooltipData {
+  display: none;
+}
+.riaswTooltipContainer {
+  background-color: rgba(0,0,0,0.65);
+  border: 0 none;
+  border-radius: 0.5em;
+  font-size: inherit;
+  white-space: nowrap;
+  color: #fff;
+  min-height: 1em;
+  min-width: 2em;
+  padding: 0.5em 1em;
+  -webkit-box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+}
+.dj_ie8 .riaswTooltipContainer,
+.dj_ie9 .riaswTooltipContainer {
+  background-color: #000;
+  filter: "alpha(opacity=65) progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+}
+.riaswTooltipFocusNode {
+  padding: 2px 2px 2px 2px;
+}
+.riaswTooltipConnector {
+/* the arrow */
+  z-index: 2;
+  width: auto;
+  height: auto;
+  position: absolute;
+}
+.riaswTooltipConnectorTestSize {
+  hight: 9px;
+  width: 9px;
+}
+.riaswTooltipABRight .riaswTooltipConnector {
+/* above or below tooltip, but the arrow appears on the right,
+			and the right edges of target and tooltip are aligned rather than the left */
+  left: auto !important;
+  right: 1em;
+}
+.riaswTooltipBelow {
+/* leave room for arrow above content */
+  margin-top: 9px;
+}
+.riaswTooltipBelow .riaswTooltipConnector {
+/* the arrow piece for tooltips below an element */
+  top: -9px;
+  left: 1em;
+  border-bottom: 9px solid rgba(0,0,0,0.65);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 0;
+}
+.riaswTooltipAbove {
+/* leave room for arrow below content */
+  margin-bottom: 9px;
+}
+.riaswTooltipAbove .riaswTooltipConnector {
+/* the arrow piece for tooltips above an element */
+  bottom: -9px;
+  left: 1em;
+  border-top: 9px solid rgba(0,0,0,0.65);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 0;
+}
+.riaswTooltipLeft {
+  margin-right: 9px;
+}
+.riaswTooltipLeft .riaswTooltipConnector {
+/* the arrow piece for tooltips to the left of an element, bottom borders aligned */
+  right: -9px;
+  border-left: 9px solid rgba(0,0,0,0.65);
+  border-bottom: 9px solid transparent;
+  border-top: 9px solid transparent;
+  border-right: 0;
+}
+.riaswTooltipRight {
+  margin-left: 9px;
+}
+.riaswTooltipRight .riaswTooltipConnector {
+/* the arrow piece for tooltips to the right of an element, bottom borders aligned */
+  left: -9px;
+  border-bottom: 9px solid transparent;
+  border-top: 9px solid transparent;
+  border-right: 9px solid rgba(0,0,0,0.65);
+}
+.dj_a11y .riaswTooltipConnector {
+  display: none;
+}
+.riaswLoadingtipPointer {
+  position: absolute;
+  z-index: 1999;
+}
+.riaswLoadingtip {
+  display: block;
+  position: fixed;
+  vertical-align: middle;
+  background-color: rgba(0,0,0,0.65);
+  border: 1px solid #bdbdbd;
+  border-radius: 1em;
+  color: #fff;
+  min-width: 60px;
+  padding: 1em 1.5em;
+  -webkit-box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+}
+.dj_ie8 .riaswLoadingtip,
+.dj_ie9 .riaswLoadingtip {
+  background-color: #000;
+  filter: "alpha(opacity=65) progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+}
+.riaswLoadingtipLabel {
+  display: block;
+  white-space: nowrap;
+  word-wrap: break-word;
+  font-weight: bold;
+  line-height: 1.25em;
+  padding-left: 0.5em;
+}
+.riaswLoadingtipLoading {
+  color: #ffb6c1;
+}
+.riaswLoadingtipIoLoading {
+  color: #ffd700;
+}
+.riaswLoadingtipParsing {
+  color: #adff2f;
+}
+.riaswLoadingtipDestroying {
+  color: #f5f5f5;
+}
+.riaswLoadingtipDoing {
+  color: #f5f5f5;
+}
+.riaswLoadingtipText {
+  color: #f5f5f5;
+}
+.riaswBadge {
+  display: none;
+  position: relative;
+  vertical-align: middle;
+  visibility: hidden;
+  float: left;
+  height: 1em;
+  width: 1.25em;
+}
+.riaswBadge2 {
+  width: 2em;
+}
+.riaswBadge3 {
+  width: 2.75em;
+}
+.riaswBadgeMore {
+  width: 3em;
+}
+.riaswBadgeVisible {
+  display: inline-block;
+  visibility: visible;
+}
+.riaswBadgeText {
+  display: block;
+  position: absolute;
+  padding: 0px 0.25em;
+/*top: 0px;
+	right: 0px;*/
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 1em;
+/*text-align: right;
+	font-family: Helvetica;*/
+  font-weight: bold;
+  text-align: center;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0.25em 0.25em 0.25em 0 rgba(0,0,0,0.5);
+  box-shadow: 0.25em 0.25em 0.25em 0 rgba(0,0,0,0.5);
+}
+.riaswBadgeRed {
+  background: #f00;
+  background: -webkit-linear-gradient(top, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+  background: -moz-linear-gradient(top, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+  background: -o-linear-gradient(top, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+  background: -ms-linear-gradient(top, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+  background: linear-gradient(to bottom, #f56e6e 0%, #e44149 50%, #de151f 50%, #ae0001 100%);
+}
+.riaswBadgeBlue {
+  background: #00f;
+  background: -webkit-linear-gradient(top, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+  background: -moz-linear-gradient(top, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+  background: -o-linear-gradient(top, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+  background: -ms-linear-gradient(top, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+  background: linear-gradient(to bottom, #5b98e7 0%, #4282de 50%, #216dd6 50%, #216dd6 100%);
+}
+.riaswBadgeGreen {
+  background: #008000;
+  background: -webkit-linear-gradient(top, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+  background: -moz-linear-gradient(top, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+  background: -o-linear-gradient(top, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+  background: -ms-linear-gradient(top, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+  background: linear-gradient(to bottom, #6cd74a 0%, #5ec63c 50%, #4aad21 50%, #398c08 100%);
+}
+.riaswBadgeYellow {
+  background: #ff8c00;
+  background: -webkit-linear-gradient(top, #ffbc1c 0%, #ffa000 50%, #ffa000 50%, #ff9000 100%);
+  background: -moz-linear-gradient(top, #ffbc1c 0%, #ffa000 50%, #ffa000 50%, #ff9000 100%);
+  background: -o-linear-gradient(top, #ffbc1c 0%, #ffa000 50%, #ffa000 50%, #ff9000 100%);
+  background: -ms-linear-gradient(top, #ffbc1c 0%, #ffa000 50%, #ffa000 50%, #ff9000 100%);
+  background: linear-gradient(to bottom, #ffbc1c 0%, #ffa000 50%, #ffa000 50%, #ff9000 100%);
+}
+.riaswBadgeBlack {
+  background: #000;
+  background: -webkit-linear-gradient(top, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+  background: -moz-linear-gradient(top, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+  background: -o-linear-gradient(top, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+  background: -ms-linear-gradient(top, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+  background: linear-gradient(to bottom, #7f7f7f 0%, #303030 50%, #303030 50%, #303030 100%);
+}
+.riaswBadge > div > div {
+  display: none;
+}
+.riaswToolButton {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  background-color: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 1px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+}
+.riaswToolButtonHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswToolButtonFocused,
+.riaswToolButtonActive {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswToolButtonDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswToolButtonDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswLabel {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  overflow: hidden;
+  background-color: transparent;
+  border: 0;
+}
+.riaswLabelHover {
+  font-weight: bolder;
+}
+.riaswLabelFocused,
+.riaswLabelActive {
+  font-weight: bolder;
+  color: #ffb74d;
+}
+.riaswLabelDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswTimerLabel {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  overflow: hidden;
+  background-color: transparent;
+  border: 0;
+  z-index: 0;
+}
+.riaswTimerLabelHover {
+  font-weight: bolder;
+}
+.riaswTimerLabelFocused,
+.riaswTimerLabelActive {
+  font-weight: bolder;
+}
+.riaswTimerLabelDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswInlineEditBoxDisplayMode {
+  cursor: text;
+  border: 1px dashed transparent;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+}
+.riaswInlineEditBoxDisplayModeHover,
+.dj_a11y .riaswInlineEditBoxDisplayModeHover,
+.dj_ie6 .riaswInlineEditBoxDisplayModeHover {
+  background-color: transparent;
+  border: 1px dashed #039ffc;
+}
+.riaswInlineEditBoxDisplayModeDisabled {
+  cursor: default;
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.dj_a11y .riaswInlineEditBoxDisplayMode,
+.dj_ie6 .riaswInlineEditBoxDisplayMode {
+  border: none;
+}
+.riaswMenuPassive {
+  display: none;
+}
+.riaswMenu {
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 0.25em;
+  margin: 0;
+}
+.riaswDropDownMenu {
+  padding: 0.25em;
+}
+.riaswDropDownMenu {
+  border-collapse: separate;
+  border-spacing: 0 0;
+}
+.dj_webkit .riaswDropDownMenu td[colspan="2"] {
+  border-right: hidden;
+}
+.riaswMenuCaption {
+  background: #bdbdbd;
+}
+.riaswMenuItem {
+  vertical-align: middle;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  padding: 0.25em;
+  margin: 1px;
+}
+.riaswMenuItem :focus {
+  outline: none;
+}
+.riaswMenuItemIconCell {
+  background-color: #e0e0e0;
+  border-right: 1px solid #bdbdbd;
+  padding: 0.25em;
+  margin: 0 0 0 0.25em;
+  text-align: center;
+}
+.riaswMenuItemLabel {
+  position: relative;
+  padding: 0 0.5em;
+}
+.dj_ie8 .dj_a11y .riaswMenuItemLabel {
+  position: static;
+}
+.riaswMenuExpand {
+  background-image: none;
+}
+.riaswMenuExpand:before {
+  content: "\f072";
+}
+.riaswMenuExpandA11y {
+  display: none;
+}
+.dj_a11y .riaswMenuExpandA11y {
+  display: inline;
+}
+.riaswMenuSeparator {
+  border: 0;
+  padding: 0;
+}
+.riaswMenuSeparatorIconCell {
+  background-color: #e0e0e0;
+  border-right: 1px solid #bdbdbd;
+}
+.riaswMenuSeparatorTop {
+  border-bottom: 1px solid #bdbdbd;
+  font-size: 1px;
+  margin: 0;
+  margin-top: 0.25em;
+  height: auto;
+}
+.riaswMenuSeparatorBottom {
+  border-top: 0px solid #bdbdbd;
+  font-size: 1px;
+  margin: 0;
+  margin-bottom: 0.25em;
+  height: auto;
+}
+.riaswCheckMenuItemIconChar {
+  display: none;
+  visibility: hidden;
+}
+.dj_a11y .riaswCheckMenuItemIcon {
+  display: none;
+}
+.dj_a11y .riaswCheckMenuItemIconChar {
+  display: inline !important;
+}
+.riaswCheckMenuItemChecked .riaswCheckMenuItemIconChar {
+  visibility: visible;
+}
+.riaswMenuPreviousButton,
+.riaswMenuNextButton {
+  font-style: italic;
+}
+.riaswMenuItemHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswMenuItemHover .riaswMenuItemIconCell {
+  background-color: transparent;
+}
+.riaswMenuItemSelected {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  background-color: #0277bd;
+  border-color: #026baa;
+  color: #fff;
+}
+.riaswMenuItemSelected .riaswMenuItemIconCell {
+  background-color: transparent;
+}
+.riaswMenuItemFocused .riaswMenuItemShortcutKey,
+.riaswMenuItemActive .riaswMenuItemShortcutKey {
+  text-decoration: underline;
+}
+.dj_a11y .riaswMenuItemSelected {
+  border: 1px dotted #000 !important;
+}
+.dj_a11y .riaswMenuItemSelected .riaswMenuItemLabel {
+  border-width: 1px;
+  border-style: solid;
+}
+.riaswMenuItemDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswMenuItemDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.dj_ie .dj_a11y .riaswMenuItemDisabled,
+.dj_ie .dj_a11y .riaswMenuItemDisabled *,
+.dj_ie .riaswMenuItemDisabled * {
+  color: #424242;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswMenuBar {
+  background-color: #e0e0e0;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+.riaswMenuBar .riaswMenuItem {
+  padding: 0.5em 0.75em;
+  margin: 0;
+}
+.riaswMenuBarRtl {
+  text-align: right;
+}
+.riaswMenuItemRtl {
+  text-align: right;
+}
+.riaswMenuItemRtl .riaswMenuExpand:before {
+  content: "\f071";
+}
+.riaswComboBoxList {
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 0.25em;
+  margin: 0;
+}
+.riaswPopup .riaswComboBoxList {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswComboBoxListCaption {
+  background: #bdbdbd;
+}
+.riaswComboBoxListItem {
+  vertical-align: middle;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  padding: 0.25em;
+  margin: 1px;
+}
+.riaswComboBoxListItem :focus {
+  outline: none;
+}
+.riaswComboBoxListItemLabel {
+  position: relative;
+}
+.dj_ie8 .dj_a11y .riaswComboBoxListItemLabel {
+  position: static;
+}
+.riaswComboBoxListSeparator td {
+  border: 0;
+  padding: 0;
+}
+.riaswComboBoxListSeparatorTop {
+  border-bottom: 1px solid #bdbdbd;
+  font-size: 1px;
+  margin: 0;
+  margin-top: 0.25em;
+  height: auto;
+}
+.riaswComboBoxListSeparatorBottom {
+  border-top: 0px solid #bdbdbd;
+  font-size: 1px;
+  margin: 0;
+  margin-bottom: 0.25em;
+  height: auto;
+}
+.riaswComboBoxListPreviousButton,
+.riaswComboBoxListNextButton {
+  font-style: italic;
+}
+.riaswComboBoxListItemHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswComboBoxListItemSelected {
+  background-color: #0277bd;
+  border-color: #026baa;
+  color: #fff;
+}
+.riaswComboBoxListItemFocused,
+.riaswComboBoxListItemActive {
+  border-color: #039ffc;
+}
+.dj_a11y .riaswComboBoxListItemSelected {
+  border: 1px dotted #000 !important;
+}
+.dj_a11y .riaswComboBoxListItemSelected .riaswComboBoxListItemLabel {
+  border-width: 1px;
+  border-style: solid;
+}
+.riaswComboBoxListItemDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswComboBoxListItemDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.dj_ie .dj_a11y .riaswComboBoxListItemDisabled,
+.dj_ie .dj_a11y .riaswComboBoxListItemDisabled *,
+.dj_ie .riaswComboBoxListItemDisabled * {
+  color: #424242;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswComboBoxListItemRtl {
+  text-align: right;
+}
+.riaswToolbar {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  border: 0px solid #bdbdbd;
+  color: #000;
+  padding: 0.25em;
+}
+.riaswToolbar label {
+  padding: 0.5em;
+}
+.riaswToolbar .riaswToolButton,
+.riaswToolbar .riaswButton {
+  border-color: transparent;
+  margin: 1px;
+}
+.riaswToolbarSeparator {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #bdbdbd;
+  border: 0;
+  width: 1px;
+  height: 20px;
+  padding: 0;
+  margin: 0 0.25em;
+}
+.riaswToolbarDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswModule {
+  position: relative;
+  overflow: hidden;
+  border: 0px solid transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.riaswModuleContent {
+  position: relative;
+  overflow: auto;
+}
+.mobileBody .riaswModuleContent {
+  overflow: hidden;
+}
+.riaswModuleLoading {
+  vertical-align: middle;
+}
+.riaswModuleLoadingIcon {
+  background-image: url("icons/images/moduleLoading.gif");
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+  margin: 8px;
+}
+.riaswModuleLoadingError {
+  background-image: url("icons/images/warning32.png");
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+  margin: 8px;
+}
+.riaswDesktop {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+.riaswDesktopContent {
+  position: relative;
+}
+.riaswScene {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+.riaswSceneContent {
+  position: relative;
+}
+.riaswForm {
+/*display: block;*/
+  overflow: hidden;
+  position: relative;
+/*background-color: inherit;
+	padding: 0px;
+	margin:0;*/
+  border: 0px solid transparent;
+}
+.riaswFormContent {
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswFormContent {
+  overflow: hidden;
+}
+.riaswUnderlayWrapper {
+  display: none;
+  position: absolute;
+  background: transparent !important;
+  z-index: 4998;
+}
+.riaswUnderlay {
+  display: none;
+  position: absolute;
+  background: #424242;
+  z-index: 4998;
+}
+.riasApp {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  font-size: 12px;
+  background-color: #eee;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-width: 0;
+  color: #000;
+  padding: 0;
+  margin: 0;
+}
+.riasPage {
+  font-size: 12px;
+  background-color: #eee;
+  border-color: #bdbdbd;
+  color: #000;
+}
+.riasAppContent {
+  position: relative;
+}
+.dojoDndItem {
+  border: 1px solid transparent;
+  cursor: pointer;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+}
+.dojoDndItemOver {
+  background-color: #fafafa;
+  border-radius: 0.25em;
+}
+.dojoDndItemAnchor {
+  background-color: transparent;
+  border: 1px dashed #0277bd;
+  border-radius: 0.25em;
+}
+.dojoDndItemBefore {
+  background: transparent;
+  padding-top: 2px;
+  border-top: 1px solid #0277bd;
+}
+.dojoDndItemAfter {
+  background: transparent;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #0277bd;
+}
+table.dojoDndAvatar {
+  display: block;
+}
+.dojoDndAvatarHeader td {
+  display: none;
+}
+.dojoDndAvatarHeader:before {
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: table-cell;
+}
+.dojoDndMove .dojoDndAvatarHeader:before {
+  color: #ff3d00;
+  content: "\f002";
+}
+.dojoDndCopy .dojoDndAvatarHeader:before {
+  color: #ff3d00;
+  content: "\f002";
+}
+.dojoDndMove .dojoDndAvatarCanDrop .dojoDndAvatarHeader:before {
+  color: #9ccc65;
+  content: "\f054";
+}
+.dojoDndCopy .dojoDndAvatarCanDrop .dojoDndAvatarHeader:before {
+  color: #9ccc65;
+  content: "\f054";
+}
+.dojoDndAvatarItem {
+  border-radius: 0.25em;
+}
+.dojoDndAvatarItem td > * {
+  padding: 0.25em 0.5em;
+  list-style-type: none;
+  background-color: #0277bd;
+  -webkit-box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 7px 3px -4px rgba(0,0,0,0.35), 0 8px 8px rgba(0,0,0,0.25);
+}
+.riaswTriStateCheckBox,
+.riaswTriStateCheckBoxIcon {
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url("riasw/form/images/tristatecheckboxStates.png");
+/* checkbox sprite image */
+  background-repeat: no-repeat;
+  width: 15px;
+  height: 16px;
+  margin: 0 2px 0 0;
+  padding: 0;
+}
+.dj_ie6 .riaswTriStateCheckBox,
+.dj_ie6 .riaswTriStateCheckBoxIcon {
+  background-image: url("riasw/form/images/tristatecheckboxStates.png");
+/* checkbox sprite image */
+}
+.riaswTriStateCheckBox {
+/* unchecked */
+  background-position: -15px;
+}
+.riaswTriStateCheckBoxChecked {
+/* checked */
+  background-position: 0px;
+}
+.riaswTriStateCheckBoxMixed {
+/* mixed */
+  background-position: -30px;
+}
+.riaswTriStateCheckBoxDisabled {
+/* disabled and unchecked */
+  background-position: -105px;
+}
+.riaswTriStateCheckBoxCheckedDisabled {
+/* disabled and checked */
+  background-position: -90px;
+}
+.riaswTriStateCheckBoxMixedDisabled {
+/* disabled and mixed */
+  background-position: -120px;
+}
+.riaswTriStateCheckBoxHover {
+/* hovering over and unchecked */
+  background-position: -60px;
+}
+.riaswTriStateCheckBoxCheckedHover {
+/* hovering over and checked */
+  background-position: -45px;
+}
+.riaswTriStateCheckBoxMixedHover {
+/* hovering over and mixed */
+  background-position: -75px;
+}
+.dijit_a11y .riaswTriStateCheckBoxHover .riaswTriStateCheckBoxInner,
+.dijit_a11y .riaswTriStateCheckBoxFocused .riaswTriStateCheckBoxInner {
+  border: dashed;
+}
+.dijit_a11y .riaswTriStateCheckBoxDisabled .riaswTriStateCheckBoxInner {
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswTriStateCheckBoxInner {
+/* inner text */
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  text-align: center;
+}
+.dijit_a11y .riaswTriStateCheckBoxInner {
+/* inner text */
+  visibility: visible;
+  display: block;
+}
+.riaswTriStateCheckBoxInput {
+/* place the actual input on top, but all-but-invisible */
+  opacity: 0.01;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+  filter: alpha(opacity=1);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 15px;
+  height: 16px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.dj_ie .riaswTriStateCheckBoxInput {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.riaswToggleButton,
+.riaswCheckButton,
+.riaswRadioButton,
+.riaswComboButton,
+.riaswUploader,
+.riaswButton {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  background-color: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 1px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+}
+.riaswComboButton {
+  padding-right: 0;
+  height: 2.2em;
+}
+.riaswButtonPrimary {
+  background-color: #fff9c4;
+  color: #000;
+}
+.riaswButtonOk {
+  background-color: #9ccc65;
+  color: #000;
+}
+.riaswButtonInfo {
+  background-color: #1e88e5;
+  color: #fff;
+}
+.riaswButtonWarn {
+  background-color: #fb8c00;
+  color: #000;
+}
+.riaswButtonDanger {
+  background-color: #e53935;
+  color: #000;
+}
+.riaswButtonError {
+  background-color: #ff3d00;
+  color: #000;
+}
+.riaswButtonInverse {
+  background-color: #757575;
+  color: #fff;
+}
+.riaswArrowButtonContainer,
+.riaswSpinnerButtonContainer {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  float: right;
+  border-style: solid;
+  border-width: 0px 0px 0px 1px;
+  border-color: #bdbdbd;
+  border-radius: 0 0.25em 0.25em 0;
+  height: 100%;
+}
+.riaswArrowButton {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  float: none;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: 0;
+  line-height: inherit;
+  width: 20px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.riaswArrowButton:before {
+  content: none;
+}
+.riaswLeftArrowButton:before {
+  content: "\f071";
+}
+.riaswRightArrowButton:before {
+  content: "\f072";
+}
+.riaswUpArrowButton:before {
+  content: "\f074";
+}
+.riaswDownArrowButton:before {
+  content: "\f073";
+}
+.riaswToggleButtonChecked {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswCheckMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioBox,
+.riaswCheckBox {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  background-color: #fff;
+  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: 1px solid #bdbdbd;
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  line-height: normal;
+  padding: 0;
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  -o-transition: all 0.1s linear;
+  -ms-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+}
+.riaswCheckMenuItem .riaswCheckMenuItemIcon input,
+.riaswRadioMenuItem .riaswCheckMenuItemIcon input,
+.riaswRadioBox input,
+.riaswCheckBox input {
+  position: absolute;
+  top: 0;
+}
+.riaswRadioMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioBox {
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 50%;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+}
+.riaswRadioMenuItem .riaswCheckMenuItemIcon:after,
+.riaswRadioBox:after {
+  display: block;
+  position: absolute;
+  content: " ";
+  background-color: #0277bd;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -ms-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.riaswCheckMenuItemChecked .riaswCheckMenuItemIcon:before,
+.riaswCheckBoxChecked:before {
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: normal;
+  content: "\f001";
+  color: #0277bd;
+}
+.riaswRadioMenuItemChecked .riaswCheckMenuItemIcon:after,
+.riaswRadioBoxChecked:after {
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.riaswCheckMenuItemChecked .riaswCheckMenuItemIcon,
+.riaswCheckBoxChecked {
+  border-color: #0277bd;
+}
+.riaswRadioBoxChecked {
+  border-color: #0277bd;
+}
+.riaswCheckBoxHover {
+  border-color: #039ffc;
+}
+.riaswRadioBoxHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+}
+.riaswCheckBoxReadOnly,
+.riaswRadioBoxReadOnly {
+  cursor: default;
+  background-color: inherit;
+}
+.riaswCheckBoxReadOnly.riaswCheckBoxChecked:before {
+  color: #424242;
+}
+.riaswRadioBoxReadOnly.riaswRadioBoxChecked:after {
+  background-color: #424242;
+}
+.riaswRadioBoxDisabled,
+.riaswCheckBoxDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswCheckBoxDisabled.riaswCheckBoxChecked:before {
+  color: #424242;
+}
+.riaswRadioBoxDisabled.riaswRadioBoxChecked:after {
+  background-color: #424242;
+}
+.riaswCheckButton,
+.riaswRadioButton {
+  border-color: transparent;
+  background-color: transparent;
+}
+.riaswButtonHover,
+.riaswArrowButtonHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswButtonActive,
+.riaswArrowButtonActive,
+.riaswButtonFocused,
+.riaswArrowButtonFocused {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswButton .riaswArrowButtonHover,
+.riaswButton .riaswArrowButtonActive,
+.riaswButton .riaswArrowButtonFocused {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswButtonReadOnly {
+  color: #424242;
+  background-color: transparent;
+}
+.riaswButtonReadOnly .riaswArrowButtonContainer,
+.riaswButtonReadOnly .riaswSpinnerButtonContainer {
+  display: none;
+}
+.riaswCheckButtonReadOnly,
+.riaswRadioButtonReadOnly {
+  border-color: transparent;
+  background-color: transparent;
+}
+.riaswButtonDisabled,
+.riaswArrowButtonDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswButtonDisabled .riaswButtonIcon,
+.riaswArrowButtonDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswButtonDisabled .riaswArrowButtonContainer,
+.riaswArrowButtonDisabled .riaswArrowButtonContainer,
+.riaswButtonDisabled .riaswSpinnerButtonContainer,
+.riaswArrowButtonDisabled .riaswSpinnerButtonContainer {
+  display: none;
+}
+.riaswCheckButtonDisabled,
+.riaswRadioButtonDisabled {
+  border-color: transparent;
+  background-color: transparent;
+}
+table.riaswComboButtonRtl .dijitStretch {
+  border-radius: 0 0.25em 0.25em 0;
+}
+table.riaswComboButtonRtl .riaswArrowButton {
+  border-radius: 0.25em 0 0 0.25em;
+  border-left-width: 1px;
+  border-right-width: 0;
+}
+.dj_ie6 .riaswReadOnly input,
+.dj_ie7 .riaswReadOnly input,
+.dj_ie6 .riaswComboButtonDisabled .riaswButtonLabel,
+.dj_ie7 .riaswComboButtonDisabled .riaswButtonLabel {
+/* opacity doesn't work on table node in IE, work around here */
+  color: #aaa;
+}
+.dj_ie .riaswCheckBoxInput {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.dj_a11y .riaswCheckBoxInput {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  filter: none;
+  width: auto;
+  height: auto;
+}
+.dj_a11y .riaswCheckBoxFocusedLabel {
+  font-weight: bold;
+  color: #ffb74d;
+}
+.riaswSwitch {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  text-align: left;
+  overflow: hidden;
+  -webkit-tap-highlight-color: #fff;
+  margin: 0;
+  height: 2em;
+  width: 4em;
+  cursor: pointer;
+}
+.riaswSwitchInner {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+.riaswSwitchAnimation .riaswSwitchInner {
+  -webkit-transition-property: left;
+  transition-property: left;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+}
+.riaswSwitchOn .riaswSwitchInner {
+  left: 0;
+}
+.riaswSwitchBg {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid #0277bd;
+  top: 0;
+  height: 100%;
+}
+.riaswSwitchBgLeft {
+  background-color: #9ccc65;
+  background-image: -webkit-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -moz-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -o-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -ms-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: linear-gradient(to bottom, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  color: #000;
+}
+.riaswSwitchBgRight {
+  background-color: #e0e0e0;
+  background-image: -webkit-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -moz-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -o-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -ms-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: linear-gradient(to bottom, #e0e0e0 0%, #e6e6e6 100%);
+  color: #000;
+}
+.riaswSwitchKnob {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  background-color: #0277bd;
+  background-image: -webkit-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -moz-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -o-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -ms-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: linear-gradient(to bottom, #039ffc 0%, #0277bd 100%);
+  border: 1px solid #025f97;
+  top: 0;
+  height: 100%;
+  width: 50%;
+}
+.riaswSwitchText {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: bold;
+  padding: 0;
+  top: 0;
+  width: 50%;
+}
+.riaswSwitchTextLeft {
+  left: 0;
+}
+.riaswSwitchTextRight {
+  left: 50%;
+}
+.dj_gecko .riaswSwitchBg {
+  -moz-box-sizing: border-box;
+}
+.dj_gecko .riaswSwitchKnob {
+  -moz-box-sizing: border-box;
+}
+.dj_gecko .riaswSwitch .riaswSwitchBgLeft {
+  background-image: -moz--webkit-linear-gradient(top, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+  background-image: -moz--moz-linear-gradient(top, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+  background-image: -moz--o-linear-gradient(top, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+  background-image: -moz--ms-linear-gradient(top, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+  background-image: -moz-linear-gradient(to bottom, #00a200 0%, #00ba00 20%, #00ba00 20%, #00d300 100%);
+}
+.dj_gecko .riaswSwitch .riaswSwitchBgRight {
+  background-image: -moz--webkit-linear-gradient(top, #bdbebd 0%, #f7f3f7 100%);
+  background-image: -moz--moz-linear-gradient(top, #bdbebd 0%, #f7f3f7 100%);
+  background-image: -moz--o-linear-gradient(top, #bdbebd 0%, #f7f3f7 100%);
+  background-image: -moz--ms-linear-gradient(top, #bdbebd 0%, #f7f3f7 100%);
+  background-image: -moz-linear-gradient(to bottom, #bdbebd 0%, #f7f3f7 100%);
+}
+.dj_gecko .riaswSwitch .riaswSwitchKnob {
+  background-image: -moz--webkit-linear-gradient(top, #9c9a9c 0%, #848284 100%);
+  background-image: -moz--moz-linear-gradient(top, #9c9a9c 0%, #848284 100%);
+  background-image: -moz--o-linear-gradient(top, #9c9a9c 0%, #848284 100%);
+  background-image: -moz--ms-linear-gradient(top, #9c9a9c 0%, #848284 100%);
+  background-image: -moz-linear-gradient(to bottom, #9c9a9c 0%, #848284 100%);
+}
+.dj_ie .riaswSwitchBg {
+  border: none;
+  background: none;
+}
+.dj_ie .riaswSwitchBgLeft {
+  background-repeat: no-repeat;
+}
+.dj_ie .riaswSwitchBgRight {
+  background-repeat: no-repeat;
+}
+.dj_ie .riaswSwitchKnob {
+  background: none;
+  background-repeat: no-repeat;
+  border: none;
+}
+.riaswSwitchDefaultShape .riaswSwitchBg,
+.riaswSwitchSquareShape .riaswSwitchBg {
+  border-radius: 0.5em;
+}
+.riaswSwitchDefaultShape .riaswSwitchKnob,
+.riaswSwitchSquareShape .riaswSwitchKnob {
+  border-radius: 0.5em;
+}
+.riaswSwitchRoundShape .riaswSwitchBg {
+  border-radius: 50%;
+}
+.riaswSwitchRoundShape .riaswSwitchKnob {
+  border-radius: 50%;
+}
+.dj_ie .riaswSwitchDefaultShape .riaswSwitchBgLeft,
+.dj_ie .riaswSwitchSquareShape .riaswSwitchBgLeft {
+  background-image: url("images/switch-square-l.gif");
+}
+.dj_ie .riaswSwitchDefaultShape .riaswSwitchBgRight,
+.dj_ie .riaswSwitchSquareShape .riaswSwitchBgRight {
+  background-image: url("images/switch-square-r.gif");
+}
+.dj_ie .riaswSwitchDefaultShape .riaswSwitchKnob,
+.dj_ie .riaswSwitchSquareShape .riaswSwitchKnob {
+  background-image: url("images/switch-square-k.gif");
+}
+.dj_ie .riaswSwitchRoundShape .riaswSwitchBgLeft {
+  background-image: url("images/switch-round1-l.gif");
+}
+.dj_ie .riaswSwitchRoundShape .riaswSwitchBgRight {
+  background-image: url("images/switch-round1-r.gif");
+}
+.dj_ie .riaswSwitchRoundShape .riaswSwitchKnob {
+  background-image: url("images/switch-round1-k.gif");
+}
+.riaswSwitchHover .riaswSwitchBg,
+.riaswSwitchHover .riaswSwitchKnob {
+  border-color: #039ffc;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #039ffc inset;
+  box-shadow: 0 0 0.25em 0 #039ffc inset;
+}
+.riaswSwitchFocused .riaswSwitchBg,
+.riaswSwitchActive .riaswSwitchBg,
+.riaswSwitchFocused .riaswSwitchKnob,
+.riaswSwitchActive .riaswSwitchKnob {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswSwitchReadOnly {
+  cursor: default;
+}
+.riaswSwitchReadOnly .riaswSwitchBg {
+  border-color: #757575;
+}
+.riaswSwitchReadOnly .riaswSwitchKnob {
+  background-image: none;
+  background-color: #eee;
+  border-color: #757575;
+}
+.riaswSwitchDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+  cursor: default;
+}
+.riaswSwitchDisabled .riaswSwitchKnob {
+  background-image: none;
+  background-color: #eee;
+}
+.riaswTextBox,
+.riaswTextArea,
+.riaswSelect {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  line-height: 1.5em;
+  width: 20em; /* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+}
+.riaswTextArea {
+  height: 5em;
+}
+.riaswSelect {
+  background-color: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 1px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+  table-layout: fixed;
+}
+.riaswExpandingTextArea {
+  resize: none;
+}
+.riaswTextBoxLabel {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  text-align: right;
+  height: 100%;
+}
+.riaswTextBoxContainer {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  float: none;
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 0.25em;
+  color: #000;
+  -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -o-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -ms-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+.riaswTextArea .riaswTextBoxContainer[cols] {
+  width: auto;
+/* SimpleTextArea cols */
+}
+.riaswTextArea .riaswInputInner {
+  overflow: auto;
+  line-height: normal;
+}
+.dj_ie .riaswTextAreaCols .riaswTextBoxContainer {
+  width: auto;
+}
+.riaswInputContainer {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  float: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswInputInner {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  float: none;
+  background-color: transparent;
+  border: 0;
+  font: inherit;
+  font-weight: bold;
+  resize: none;
+  padding: 0 0.25em;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswCurrencyTextBox .riaswTextBoxContainer,
+.riaswNumberTextBox .riaswTextBoxContainer {
+  text-align: right;
+  direction: ltr;
+}
+.riaswCurrencyTextBox .riaswInputInner,
+.riaswNumberTextBox .riaswInputInner {
+  text-align: right;
+}
+.riaswTextBoxHover .riaswTextBoxContainer {
+  border-color: #039ffc;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #039ffc inset;
+  box-shadow: 0 0 0.25em 0 #039ffc inset;
+}
+.riaswTextBoxFocused .riaswTextBoxContainer,
+.riaswTextBoxActive .riaswTextBoxContainer {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswTextBoxReadOnly .riaswTextBoxContainer {
+  background-color: inherit;
+}
+.riaswTextBoxReadOnly .riaswArrowButtonContainer,
+.riaswTextBoxReadOnly .riaswSpinnerButtonContainer {
+  display: none;
+}
+.riaswTextBoxDisabled .riaswTextBoxContainer {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswTextBoxDisabled .riaswArrowButtonContainer,
+.riaswTextBoxDisabled .riaswSpinnerButtonContainer {
+  display: none;
+}
+.riaswTextArea .riaswInputInner,
+.riaswTextBoxDisabled .riaswInputInner,
+.riaswTextBoxReadOnly .riaswInputInner {
+  font-weight: normal;
+}
+.riaswValidationContainer {
+  display: none;
+  overflow: hidden;
+  float: right;
+  cursor: default;
+  color: #ff3d00;
+  height: 100%;
+  width: 16px;
+}
+.riaswValidationContainer:before {
+  content: "";
+}
+.riaswValidationTextBoxError .riaswValidationContainer {
+  display: block;
+}
+.riaswValidationTextBoxError .riaswValidationContainer:before {
+  display: block;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f006";
+}
+.riaswValidationTextBoxError .riaswTextBoxContainer {
+  border-color: #ff3d00;
+  background-color: #fff8e1;
+  background-image: none;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ff3d00 inset;
+  box-shadow: 0 0 0.25em 0 #ff3d00 inset;
+}
+.riaswComboBoxHighlightMatch {
+  background-color: #f9f7ba;
+}
+.riaswTextBoxRtl .riaswArrowButtonContainer,
+.riaswTextBoxRtl .riaswSpinnerButtonContainer {
+  border-right-width: 1px;
+  border-left-width: 0;
+}
+.riaswTextBoxRtlError .riaswValidationContainer {
+  border-left-width: 0;
+  border-right-width: 1px;
+}
+.dijitRtl .riaswPlaceHolder {
+  left: auto;
+  right: 0;
+}
+.riaswTextBoxRtl .riaswSpinnerButtonContainer,
+.riaswValidationTextBoxRtl .riaswValidationContainer,
+.riaswTextBoxRtl .riaswArrowButtonContainer {
+  float: left;
+}
+.riaswSpinnerRtl .riaswSpinnerButtonContainer .riaswArrowButton {
+  right: 0;
+  left: auto;
+}
+div.riaswNumberTextBoxRtl {
+  text-align: right;
+}
+.riaswSelectRtl .riaswButtonLabel {
+  float: right;
+}
+.riaswCheckedMultiSelect {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  line-height: 1.5em;
+  width: 20em; /* need to set default size on outer node since inner nodes say <input style="width:100%"> and <td width=100%>.  user can override */
+}
+.riaswCheckedMultiSelectContainer {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  overflow: auto;
+  float: none;
+  background: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bdbdbd;
+  border-radius: 0.25em;
+  color: #000;
+  -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -o-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  -ms-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+  padding: 0;
+  margin: 0;
+}
+.riaswCheckedMultiSelectHover .riaswCheckedMultiSelectContainer {
+  border-color: #039ffc;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #039ffc inset;
+  box-shadow: 0 0 0.25em 0 #039ffc inset;
+}
+.riaswCheckedMultiSelectFocused .riaswCheckedMultiSelectContainer,
+.riaswCheckedMultiSelectActive .riaswCheckedMultiSelectContainer {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswCheckedMultiSelectItem {
+  display: inline-block;
+  cursor: default;
+  white-space: nowrap;
+  padding: 0.25em;
+  margin: 1px;
+}
+.riaswCheckedMultiSelectItemLabel {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 0.25em;
+}
+.riaswCheckedMultiSelectItemHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswCheckedMultiSelectSelectedOption {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  background-color: #0277bd;
+  border-color: #026baa;
+  color: #fff;
+}
+.riaswCheckedMultiSelectItemActive,
+.riaswCheckedMultiSelectItemFocused {
+  border-color: #ffb74d;
+}
+.riaswCheckedMultiSelectReadOnly .riaswCheckedMultiSelectContainer {
+  background-color: inherit;
+  color: inherit;
+}
+.riaswCheckedMultiSelectReadOnly .riaswCheckBoxChecked:before {
+  color: inherit;
+}
+.riaswCheckedMultiSelectReadOnly .riaswRadioBoxChecked:after {
+  background-color: inherit;
+}
+.riaswCheckedMultiSelectDisabled .riaswCheckedMultiSelectContainer {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswCheckedMultiSelectDisabled .riaswCheckedMultiSelectSelectedOption {
+  background-color: #bdbdbd;
+  border-color: #bdbdbd;
+  color: #fff;
+}
+.riaswProgressBar {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0.25em;
+  z-index: 0;
+}
+.riaswProgressBarEmpty {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #bdbdbd;
+  z-index: 0;
+}
+.riaswProgressBarProgress {
+  position: absolute;
+  overflow: hidden;
+  background-color: #9ccc65;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition-property: width;
+  transition-property: width;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+}
+.riaswProgressBarTile {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+/*background-attachment: fixed;*/
+  background: url("riasw/form/images/progressBarStrips.png") repeat-x top;
+}
+.riaswProgressBarLabel {
+  display: block;
+  position: static;
+  width: 100%;
+  text-align: center;
+  background-color: transparent !important;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  color: #000;
+  font-size: 1em;
+  text-shadow: 0.1em 0.1em 1px #9e9e9e;
+}
+.riaswProgressBarReadOnly {
+  background-color: inherit;
+}
+.riaswProgressBarReadOnly .riaswProgressBarLabel {
+  text-shadow: none;
+}
+.riaswProgressBarDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.dj_a11y .riaswProgressBarTile {
+  border-width: 2px;
+  border-style: solid;
+  background-color: transparent !important;
+}
+.dj_ie6 .riaswProgressBarTile {
+  position: static;
+  height: 1.6em;
+}
+@-moz-keyframes progress-bar-stripes {
+  from {
+    background-position: 75px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 75px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@-o-keyframes progress-bar-stripes {
+  from {
+    background-position: 75px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 75px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.riaswSliderMoveable {
+  display: block;
+  vertical-align: middle;
+}
+.riaswSliderImageHandle {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  vertical-align: middle;
+  background-image: -webkit-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -moz-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -o-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -ms-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: linear-gradient(to bottom, #039ffc 0%, #0277bd 100%);
+  border: 1px solid #025f97;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+.riaswSliderDecrementIcon,
+.riaswSliderIncrementIcon {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  background-color: #fff;
+  color: #0277bd;
+  border-color: #0277bd;
+  height: 16px;
+  width: 16px;
+  padding: 0;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+}
+.riaswSliderDecrementIcon .riaswSliderButtonInner,
+.riaswSliderIncrementIcon .riaswSliderButtonInner {
+  display: none;
+}
+.dj_a11y .riaswSliderButtonInner {
+  visibility: visible !important;
+}
+.riaswSliderBar {
+  background-color: transparent;
+  border: 0px solid #0277bd;
+  cursor: pointer;
+}
+.riaswSliderProgressBar,
+.riaswSliderBottomBumper,
+.riaswSliderLeftBumper {
+  background-color: #9ccc65;
+  z-index: 1;
+}
+.riaswSliderRemainingBar,
+.riaswSliderTopBumper,
+.riaswSliderRightBumper {
+  overflow: hidden;
+  z-index: 1;
+}
+.riaswSliderDecoration {
+  text-align: center;
+}
+.riaswSliderButton {
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+.riaswRuleLabelsContainer {
+  color: #424242;
+  padding: 0;
+}
+.riaswRuleLabel {
+  position: relative;
+}
+.riaswRuleContainer {
+  position: relative;
+  overflow: visible;
+}
+.riaswRuleMark {
+  position: absolute;
+  line-height: 0;
+  height: 100%;
+  border: 0px solid #bdbdbd;
+}
+.riaswRuleLabelContainer {
+  position: absolute;
+}
+.dj_a11y .riaswSliderReadOnly,
+.dj_a11y .riaswSliderDisabled {
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswSlider {
+  border-style: solid;
+  outline: 1px;
+}
+.riaswSlider .riaswSliderLeftBumper {
+  border-radius: 0.125em 0 0 0.125em;
+  margin-left: 0.25em;
+}
+.riaswSlider .riaswSliderRightBumper {
+  border-radius: 0 0.125em 0.125em 0;
+  margin-left: -2px;
+  margin-right: 0.25em;
+}
+.riaswSlider .riaswButton {
+  padding: 0;
+  display: block;
+}
+.dj_a11y .riaswSlider .riaswSliderButtonContainer div {
+  font-family: monospace;
+  font-size: 1em;
+  line-height: 1em;
+  height: auto;
+  width: auto;
+  margin: 0 4px;
+}
+.riaswSliderH .riaswSliderBar {
+  height: 0.25em;
+  border-width: 1px 0;
+}
+.riaswSliderH .riaswSliderImageHandle {
+  position: absolute;
+  top: -7px;
+  right: -8px;
+}
+.riaswSliderH .riaswSliderBarContainer {
+  position: relative;
+  z-index: 1;
+}
+.riaswSliderH .riaswSliderProgressBar {
+  position: absolute !important;
+  vertical-align: middle;
+  overflow: visible;
+  width: 0;
+}
+.riaswSliderH .riaswSliderRemainingBar {
+  width: 100% !important;
+}
+.riaswSliderH .riaswSliderBottomBumper,
+.riaswSliderH .riaswSliderLeftBumper,
+.riaswSliderH .riaswSliderTopBumper,
+.riaswSliderH .riaswSliderRightBumper {
+  width: 8px;
+}
+.riaswSliderH .riaswSliderIncrementIcon:before {
+  content: "\f072";
+}
+.riaswSliderH .riaswSliderDecrementIcon:before {
+  content: "\f071";
+}
+.riaswSliderH .riaswSliderDecoration {
+  width: 100%;
+}
+.riaswSliderH .riaswRuleContainer {
+  height: 1em;
+}
+.riaswSliderH .riaswRuleLabelsContainer {
+  height: 2em;
+}
+.riaswSliderH .riaswRuleLabelContainer {
+  text-align: center;
+  display: inline-block;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+.riaswSliderH .riaswRuleLabel {
+  left: -50%;
+}
+.riaswSliderH .riaswRuleMark {
+  width: 0;
+  border-right: 1px solid #424242;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+/*border-left-width: 0 !important;*/
+}
+.riaswSliderV .riaswSliderImageHandle {
+  position: relative;
+  top: -8px;
+  left: -7px;
+}
+.riaswSliderV .riaswSliderBarContainer {
+  position: relative;
+  height: 100%;
+  z-index: 1;
+}
+.riaswSliderV .riaswSliderBar {
+  width: 0.25em;
+  border-width: 0 1px;
+}
+.riaswSliderV .riaswSliderProgressBar {
+  position: static !important;
+  vertical-align: top;
+  text-align: left;
+  height: 0;
+}
+.riaswSliderV .riaswSliderRemainingBar {
+  text-align: left;
+  height: 100%;
+}
+.riaswSliderV .riaswSliderBottomBumper,
+.riaswSliderV .riaswSliderLeftBumper,
+.riaswSliderV .riaswSliderTopBumper,
+.riaswSliderV .riaswSliderRightBumper {
+  height: 8px;
+}
+.riaswSliderV .riaswSliderTopBumper {
+  border-radius: 0.125em 0.125em 0 0;
+  margin-top: 0.25em;
+  margin-bottom: -2px;
+}
+.riaswSliderV .riaswSliderBottomBumper {
+  border-radius: 0 0 0.125em 0.125em;
+  margin-bottom: 0.25em;
+}
+.riaswSliderV .riaswSliderIncrementIcon:before {
+  content: "\f074";
+}
+.riaswSliderV .riaswSliderDecrementIcon:before {
+  content: "\f073";
+}
+.riaswSliderV .riaswSliderDecoration {
+  position: relative;
+  height: 100%;
+  white-space: nowrap;
+}
+.riaswSliderV .riaswRuleContainer {
+  display: inline-block;
+  height: 100%;
+  width: 1em;
+  line-height: 0;
+  text-align: left;
+}
+.riaswSliderV .dj_opera .riaswRuleContainer {
+  line-height: 2%;
+}
+.riaswSliderV .dj_ie .riaswRuleContainer {
+  line-height: normal;
+}
+.riaswSliderV .dj_gecko .riaswRuleContainer {
+  margin: 0 0 1px 0;
+}
+.riaswSliderV .riaswRuleLabelsContainer {
+  width: 2em;
+}
+.riaswSliderV .riaswRuleLabelContainer {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+.riaswSliderV .riaswSliderDecorationLeft .riaswRuleLabelContainer {
+  right: 0;
+}
+.riaswSliderV .dj_ie .riaswRuleLabelContainer {
+  margin-top: -0.55em;
+}
+.riaswSliderV .riaswRuleLabel {
+  display: inline-block;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+  top: -0.6em;
+}
+.riaswSliderV .riaswRuleMark {
+  height: 0;
+  width: 100%;
+  left: 0;
+  border-right-width: 0 !important;
+  border-left-width: 0 !important;
+/*border-bottom-width: 0 !important;*/
+  border-bottom: 1px solid #424242;
+}
+.riaswSliderHover .riaswSliderDecrementIcon,
+.riaswSliderHover .riaswSliderIncrementIcon {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswSliderHover .riaswSliderImageHandle {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+}
+.riaswSliderHHover .riaswSliderDecrementIcon,
+.riaswSliderHHover .riaswSliderIncrementIcon,
+.riaswSliderHHover .riaswSliderRemainingBar {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+}
+.riaswSliderVHover .riaswSliderDecrementIcon,
+.riaswSliderVHover .riaswSliderIncrementIcon,
+.riaswSliderVHover .riaswSliderProgressBar,
+.riaswSliderVHover .riaswSliderRemainingBar {
+  -webkit-box-shadow: 0.125em 0 0.25em rgba(0,0,0,0.35);
+  box-shadow: 0.125em 0 0.25em rgba(0,0,0,0.35);
+}
+.riaswSliderFocused .riaswSliderDecrementIcon,
+.riaswSliderActive .riaswSliderDecrementIcon,
+.riaswSliderFocused .riaswSliderIncrementIcon,
+.riaswSliderActive .riaswSliderIncrementIcon {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+}
+.riaswSliderFocused .riaswSliderImageHandle,
+.riaswSliderActive .riaswSliderImageHandle {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+}
+.riaswSliderHFocused .riaswSliderDecrementIcon,
+.riaswSliderHActive .riaswSliderDecrementIcon,
+.riaswSliderHFocused .riaswSliderIncrementIcon,
+.riaswSliderHActive .riaswSliderIncrementIcon,
+.riaswSliderHFocused .riaswSliderRemainingBar,
+.riaswSliderHActive .riaswSliderRemainingBar {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.25);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.25);
+}
+.riaswSliderVFocused .riaswSliderDecrementIcon,
+.riaswSliderVActive .riaswSliderDecrementIcon,
+.riaswSliderVFocused .riaswSliderIncrementIcon,
+.riaswSliderVActive .riaswSliderIncrementIcon,
+.riaswSliderVFocused .riaswSliderProgressBar,
+.riaswSliderVActive .riaswSliderProgressBar,
+.riaswSliderVFocused .riaswSliderRemainingBar,
+.riaswSliderVActive .riaswSliderRemainingBar {
+  -webkit-box-shadow: 0.125em 0 0.25em rgba(0,0,0,0.25);
+  box-shadow: 0.125em 0 0.25em rgba(0,0,0,0.25);
+}
+.riaswSliderReadOnly .riaswSliderImageHandle,
+.riaswSliderReadOnly .riaswSliderBar,
+.riaswSliderReadOnly .riaswSliderButtonContainer {
+  cursor: default;
+}
+.riaswSliderReadOnly .riaswSliderImageHandle {
+  background-image: none;
+  background-color: #eee;
+  border-color: #757575;
+}
+.riaswSliderReadOnly .riaswSliderDecrementIcon,
+.riaswSliderReadOnly .riaswSliderIncrementIcon {
+  background-color: inherit;
+  color: #757575;
+}
+.riaswSliderDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswSliderDisabled .riaswSliderImageHandle,
+.riaswSliderDisabled .riaswSliderBar,
+.riaswSliderDisabled .riaswSliderButtonContainer {
+  cursor: default;
+}
+.riaswSliderDisabled .riaswSliderImageHandle {
+  background-image: none;
+  background-color: #eee;
+}
+.riaswSliderDisabled .riaswSliderDecrementIcon,
+.riaswSliderDisabled .riaswSliderIncrementIcon {
+  background-color: inherit;
+}
+.riaswSimpleSlider {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+}
+.riaswSimpleSliderH {
+  margin: 8px 0;
+  padding: 0 8px;
+  width: 10em;
+  height: 2em;
+}
+.riaswSimpleSliderH .riaswSimpleSliderBar {
+  height: 0.5em;
+  width: 100%;
+}
+.riaswSimpleSliderH .riaswSimpleSliderProgressBar {
+  height: 100%;
+}
+.riaswSimpleSliderH .riaswSimpleSliderKnob {
+  top: 50%;
+}
+.riaswSimpleSliderV {
+  text-align: center;
+  margin: 0 8px;
+  padding: 8px 0;
+  height: 10em;
+  width: 2em;
+}
+.riaswSimpleSliderV .riaswSimpleSliderBar {
+  height: 100%;
+  width: 0.5em;
+}
+.riaswSimpleSliderV .riaswSimpleSliderProgressBar {
+  width: 100%;
+}
+.riaswSimpleSliderV .riaswSimpleSliderKnob {
+  left: 50%;
+}
+.riaswSimpleSliderBar {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  background-image: -webkit-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -moz-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -o-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: -ms-linear-gradient(top, #e0e0e0 0%, #e6e6e6 100%);
+  background-image: linear-gradient(to bottom, #e0e0e0 0%, #e6e6e6 100%);
+  border: 1px solid #0277bd;
+  border-radius: 0.25em;
+  height: 100%;
+  width: 100%;
+}
+.riaswSimpleSliderProgressBar {
+  position: absolute;
+  background-image: -webkit-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -moz-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -o-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: -ms-linear-gradient(top, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  background-image: linear-gradient(to bottom, #9ccc65 0%, #a6d174 20%, #a6d174 20%, #b0d684 100%);
+  border-radius: 0.25em;
+}
+.riaswSimpleSliderTouchBox {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  -webkit-tap-highlight-color: #fff;
+  margin: 0;
+  padding: 8px;
+  left: -8px;
+  top: -8px;
+  width: 100%;
+  height: 100%;
+}
+.riaswSimpleSliderKnob {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  background-image: -webkit-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -moz-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -o-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: -ms-linear-gradient(top, #039ffc 0%, #0277bd 100%);
+  background-image: linear-gradient(to bottom, #039ffc 0%, #0277bd 100%);
+  border: 1px solid #025f97;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  margin-left: -8px;
+}
+.riaswSimpleSliderTransition {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+}
+.riaswSimpleSliderHover .riaswSimpleSliderBar,
+.riaswSimpleSliderHover .riaswSimpleSliderKnob {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.35);
+}
+.riaswSimpleSliderFocused .riaswSimpleSliderKnob,
+.riaswSimpleSliderActive .riaswSimpleSliderKnob {
+  border-color: #ffb74d;
+}
+.riaswSimpleSliderFocused .riaswSimpleSliderBar,
+.riaswSimpleSliderActive .riaswSimpleSliderBar,
+.riaswSimpleSliderFocused .riaswSimpleSliderKnob,
+.riaswSimpleSliderActive .riaswSimpleSliderKnob {
+  -webkit-box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.25);
+  box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.25);
+}
+.riaswSimpleSliderReadOnly {
+  cursor: default;
+}
+.riaswSimpleSliderReadOnly .riaswSimpleSliderBar {
+  border-color: #757575;
+}
+.riaswSimpleSliderReadOnly .riaswSimpleSliderKnob {
+  background-image: none;
+  background-color: #eee;
+  border-color: #757575;
+}
+.riaswSimpleSliderDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+  cursor: default;
+}
+.riaswSimpleSliderDisabled .riaswSimpleSliderKnob {
+  background-image: none;
+  background-color: #eee;
+}
+.dj_ie .riaswSimpleSlider {
+  background-image: url("images/slider-h-bg.png");
+  background-repeat: repeat-x;
+}
+.dj_ie .riaswSimpleSliderProgressBar {
+  background-image: url("images/slider-h-bar-bg.png");
+  background-repeat: repeat-x;
+}
+.dj_ie .riaswSimpleSliderKnob {
+  background-image: url("images/slider-handle-bg.png");
+}
+.riaswRating {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+.riaswRatingStar {
+  display: inline-block;
+  position: relative;
+  background-image: url("riasw/form/images/rating16.png");
+  background-position: -16px center;
+  height: 16px;
+  width: 16px;
+}
+.riaswRatingStarChecked {
+  background-position: 0px center;
+}
+.riaswRatingStarHover {
+  background-position: 0px center;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswRatingDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswRatingDisabled .riaswRatingStar {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswColorPalette {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.5em;
+/* swatch */
+}
+.riaswColorPalette .riaswPaletteTable {
+  position: relative;
+  overflow: hidden;
+  outline: 0;
+  border-collapse: separate;
+  padding: 0.25em;
+}
+.riaswColorPalette .riaswPaletteTable td {
+  padding: 0;
+}
+.riaswColorPalette .riaswPaletteCell {
+  font-size: 1px;
+  text-align: center;
+  background: none;
+}
+.riaswColorPalette .riaswColorPaletteSwatch {
+  height: 15px;
+  width: 15px;
+  border-radius: 3px;
+}
+.riaswColorPalette .riaswPaletteImg {
+  padding: 0px;
+  margin: 1px;
+  cursor: default;
+  font-size: 1px;
+  border: 2px solid transparent;
+  line-height: normal;
+}
+.riaswColorPalette .riaswPaletteCell:hover .riaswPaletteImg {
+  border: 2px solid #ffb74d;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 3px;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.riaswColorPalette .riaswPaletteCell:active .riaswPaletteImg,
+.riaswColorPalette .riaswPaletteTable .riaswPaletteCellSelected .riaswPaletteImg {
+  border: 2px solid #0277bd;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.35), 0 2px 2px rgba(0,0,0,0.25);
+  border-radius: 3px;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.dj_a11y .riaswColorPalette .riaswPaletteTable,
+.dj_a11y .riaswColorPalette .riaswPaletteTable * {
+  background-color: transparent !important;
+}
+.dj_ie6 .riaswColorPalette .riaswPaletteTable,
+.dj_ie7 .riaswColorPalette .riaswPaletteTable,
+.dj_iequirks .riaswColorPalette .riaswPaletteTable {
+  padding: 0;
+  margin: 2px 3px 3px 3px;
+}
+.dj_gecko .riaswColorPalette .riaswPaletteImg {
+  padding-bottom: 0;
+}
+.riaswColorPaletteReadOnly {
+  background-color: inherit;
+}
+.riaswColorPaletteDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswColorPaletteRtl .riaswColorPaletteUnder {
+  left: auto;
+  right: 0;
+}
+.riaswColorPicker {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+.riaswColorPickerTable {
+  border: none;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.riaswColorPickerRightPad {
+  padding-right: 8px;
+}
+.riaswColorPickerBox {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0;
+  padding: 0;
+}
+.riaswColorPickerUnderlay {
+  position: relative;
+  border: 1px solid #bdbdbd;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+}
+.riaswColorPickerPoint {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0;
+  z-index: 3;
+  cursor: move;
+}
+.riaswColorPickerPreview {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  width: 45px;
+  height: 45px;
+  top: 0px;
+  left: 0px;
+}
+.riaswColorPickerWebSafePreview {
+  display: block;
+  position: relative;
+  border: 1px solid #bdbdbd;
+  width: 25px;
+  height: 25px;
+  top: 0px;
+  left: 0px;
+}
+.riaswColorPickerOptional {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+}
+.riaswColorPickerOptional table {
+  border-spacing: 4px;
+}
+.riaswColorPickerPreviewContainer table {
+  border-spacing: 6px 0px;
+}
+.riaswColorPickerOptional input {
+  border: 1px solid #9e9e9e;
+  width: 25px;
+  padding: 1px 3px 1px 3px;
+  line-height: 1.1em;
+}
+.riaswColorPickerHex input {
+  width: 4em;
+}
+.riaswHuePickerUnderlay {
+  position: relative;
+  text-align: center;
+  top: 0;
+  left: 0;
+  height: 150px;
+  width: 20px;
+  z-index: 1;
+}
+.riaswHuePicker {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  padding: 0px;
+}
+.riaswHuePickerPoint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 8px;
+  z-index: 3;
+  cursor: move;
+}
+.riaswColorPickerReadOnly {
+  background-color: inherit;
+}
+.riaswColorPickerDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswTimePicker {
+  overflow: auto;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 0.25em 0;
+}
+.riaswTimePickerItem {
+  text-align: center;
+  border-bottom: 1px solid #bdbdbd;
+  white-space: nowrap;
+  padding: 0.25em;
+}
+.riaswTimePickerTick {
+  color: #595959;
+}
+.riaswTimePickerMarker {
+  color: #000;
+  font-weight: bold;
+}
+.riaswTimePickerItemSelected {
+  font-weight: bold;
+  color: #fff;
+  background-color: #026baa;
+}
+.riaswTimePickerItemHover {
+  background-color: #b3e5fc;
+  color: #000;
+  cursor: pointer;
+}
+.riaswTimePickerItemDisabled {
+  color: #424242;
+  text-decoration: line-through;
+}
+.riaswEditorIconAutoSave {
+  background-image: url("riasw/editor/htmleditor/images/autoSave.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconAutoSaveDefault {
+  background-position: -18px 0px;
+}
+.riaswDisabled .riaswEditorIconAutoSaveDefault {
+  background-position: -54px 0px;
+}
+.riaswEditorIconAutoSaveSetting {
+  background-position: 0px 0px;
+}
+.riaswEditorAutoSaveSettingDialog {
+  width: 21em;
+}
+.riaswEditorAutoSaveSettingInputArea {
+  margin-top: 0.3em;
+  margin-left: 2em;
+}
+.riaswEditorAutoSaveSettingInputArea .textBox {
+  width: 2em;
+}
+.riaswEditorAutoSaveSettingInputArea .boxLabel {
+  margin: 0em 0em 0em 0.3em;
+}
+.riaswEditorAutoSaveSettingButtonArea {
+  text-align: right;
+  margin: 0.3em 0em 0em 0em;
+}
+.riaswEditorIcon.riaswEditorIconParaLeftToRight {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsEnabled.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  background-position: -828px;
+}
+.riaswDisabled .riaswEditorIcon.riaswEditorIconParaLeftToRight {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsDisabled.png");
+}
+.riaswEditorIcon.riaswEditorIconParaRightToLeft {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsEnabled.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  background-position: -846px;
+}
+.riaswDisabled .riaswEditorIcon.riaswEditorIconParaRightToLeft {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsDisabled.png");
+}
+.riaswEditorRtl .riaswEditorIcon.riaswEditorIconParaLeftToRight {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsEnabled_rtl.png");
+  background-position: -846px;
+}
+.riaswEditorRtlDisabled .riaswEditorIcon.riaswEditorIconParaLeftToRight {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsDisabled_rtl.png");
+}
+.riaswEditorRtl .riaswEditorIcon.riaswEditorIconParaRightToLeft {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsEnabled_rtl.png");
+  background-position: -828px;
+}
+.riaswEditorRtlDisabled .riaswEditorIcon.riaswEditorIconParaRightToLeft {
+  background-image: url("riasw/editor/htmleditor/images/bidiIconsDisabled_rtl.png");
+}
+.riaswEditorIconBlockquote {
+  background-image: url("riasw/editor/htmleditor/images/blockquote.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconBlockquote {
+  background-image: url("riasw/editor/htmleditor/images/blockquoteDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorBreadcrumbBar .riaswDownArrowButton {
+  width: 10px;
+}
+.riaswEditorBreadcrumbBar .riaswArrowButton {
+  background-image: url("riasw/editor/htmleditor/images/breadcrumbDown.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 8px;
+  height: 8px;
+}
+.riaswEditorCollapsibleToolbarContainer {
+  background-color: #f1f1f1;
+  border-collapse: collapse;
+  padding: 0px;
+  margin: 0px;
+  border-style: none;
+}
+.riaswEditorCollapsibleToolbarCollapse {
+  cursor: pointer;
+  background-image: url("riasw/editor/htmleditor/images/collapse.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 12px;
+  height: 12px;
+}
+.riaswEditorCollapsibleToolbarExpand {
+  cursor: pointer;
+  background-image: url("riasw/editor/htmleditor/images/expand.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 12px;
+  height: 12px;
+}
+.riaswEditorCollapsibleToolbarControl {
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  margin-bottom: 1px;
+}
+.dijit_a11y .riaswEditorCollapsibleToolbarCollapse {
+  border-style: outset;
+  border-width: 3px;
+  border-color: #000;
+  width: 1.5em;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+.dijit_a11y .riaswEditorCollapsibleToolbarExpand {
+  border-style: outset;
+  border-width: 3px;
+  border-color: #000;
+  width: 1.5em;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+.riaswEditorCollapsibleToolbarCollapseText {
+  display: none;
+}
+.riaswEditorCollapsibleToolbarExpandText {
+  display: none;
+}
+.dijit_a11y .riaswEditorCollapsibleToolbarCollapseText {
+  display: inline;
+  padding: 3px;
+  font-weight: bold;
+}
+.dijit_a11y .riaswEditorCollapsibleToolbarExpandText {
+  display: inline;
+  padding: 3px;
+  font-weight: bold;
+}
+.riaswEditorIconsFindReplace {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsFindReplaceEnabled.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+}
+.riaswDisabled .riaswEditorIconsFindReplace {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsFindReplaceDisabled.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+}
+.riaswEditorIconFindString {
+  background-position: 0px;
+}
+.riaswEditorIconFind {
+  background-position: -18px;
+}
+.riaswEditorIconReplace {
+  background-position: -36px;
+}
+.riaswEditorIconReplaceAll {
+  background-position: -54px;
+}
+.riaswEditorFindReplaceCheckBox {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}
+.riaswEditorFindReplaceTextBox {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+}
+.riaswEditorFindReplaceTextBox .focusTextBox {
+  width: 13em;
+}
+.riaswEditorIconsFindReplaceClose {
+  background-image: url("riasw/editor/htmleditor/images/close.gif");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  background-position: center;
+}
+.riaswFontNameCombo {
+  width: 10em;
+}
+.riaswFontSizeCombo {
+  width: 6em;
+}
+.riaswFormatBlockCombo {
+  width: 8em;
+}
+.riaswEditorIconInsertAnchor {
+  background-image: url("riasw/editor/htmleditor/images/anchor.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconInsertAnchor {
+  background-image: url("riasw/editor/htmleditor/images/anchorDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconInsertEntity {
+/* icon in toolbar for this plugin */
+  background-image: url("riasw/editor/htmleditor/images/insertEntity.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconInsertEntity {
+/* icon in toolbar for this plugin, when the plugin is disabled */
+  background-image: url("riasw/editor/htmleditor/images/insertEntityDisabled.gif");
+}
+.riaswEditorEntityPalette {
+/* outer node of the dropdown */
+  border: 1px solid #999;
+  background: #fff;
+}
+.riaswEditorEntityPaletteCell {
+/* individual cell of the drop down */
+  border: 1px dotted #808080;
+  width: 20px; /* todo: don't hardcode width/height; it's neither necessary nor a11y safe */
+  line-height: 18px;
+  overflow: hidden;
+  z-index: 10;
+  text-align: center;
+}
+.riaswEditorEntityPaletteCell:hover,
+.riaswEditorEntityPaletteCell:active,
+.riaswEditorEntityPaletteCell:focus {
+  width: 18px;
+  line-height: 16px;
+  overflow: hidden;
+  cursor: default;
+  border: 1px dashed #000;
+  outline: 1px dashed #dedede;
+}
+.riaswEditorEntityPalettePreviewTable {
+  table-layout: auto;
+  font-size: 1em;
+  width: 100%;
+}
+.riaswEditorEntityPalettePreviewHeader {
+  font-size: 0.8em;
+  padding: 3px 3px 3px 3px;
+}
+.riaswEditorEntityPalettePreviewDetailEntity {
+  font-size: 3em;
+  font-weight: bold;
+  width: 1em;
+  text-align: center;
+}
+.riaswEditorEntityPalettePreviewDetail {
+  font-size: 1em;
+  vertical-align: middle;
+  font-weight: bold;
+  padding: 3px 3px 3px 3px;
+}
+.dijit_a11y .riaswEditorEntityPaletteCell {
+  background-color: transparent !important;
+}
+.riaswEditorEilDialogTitle {
+  font-weight: bold;
+  margin-bottom: 0.6em;
+}
+.riaswEditorEilDialogDescription {
+  white-space: normal;
+  margin: 0em 0em 0.3em 0em;
+}
+.riaswEditorEilDialogField {
+  width: 20em;
+}
+.riaswEditorIconPageBreak {
+  background-image: url("riasw/editor/htmleditor/images/pageBreak.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconPageBreak {
+  background-image: url("riasw/editor/htmleditor/images/pageBreakDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconPasteFromWord {
+  background-image: url("riasw/editor/htmleditor/images/pasteFromWord.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconPasteFromWord {
+  background-image: url("riasw/editor/htmleditor/images/pasteFromWordDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconPreview {
+  background-image: url("riasw/editor/htmleditor/images/preview.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconPreview {
+  background-image: url("riasw/editor/htmleditor/images/previewDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconSave {
+  background-image: url("riasw/editor/htmleditor/images/save.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconSave {
+  background-image: url("riasw/editor/htmleditor/images/saveDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconShowBlockNodes {
+  background-image: url("riasw/editor/htmleditor/images/showBlockNodes.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswDisabled .riaswEditorIconShowBlockNodes {
+  background-image: url("riasw/editor/htmleditor/images/showBlockNodesDisabled.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorIconSmiley {
+/* Toolbar icon for Smiley plugin */
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+  background-image: url("riasw/editor/htmleditor/images/smiley.gif");
+}
+.riaswDisabled .riaswEditorIconSmiley {
+/* Toolbar icon for disabled Smiley plugin */
+  background-image: url("riasw/editor/htmleditor/images/smileyDisabled.gif");
+}
+.riaswEditorSmileyPalette {
+  border: 1px solid #000;
+  background: #fff;
+  overflow: hidden;
+}
+.riaswEditorSmileyPalette .riaswPaletteCell {
+  height: 50px;
+  width: 50px;
+}
+.riaswEditorSmileyPalette .riaswPaletteImg {
+  border: none;
+  height: 48px;
+  width: 48px;
+  padding: 1px;
+}
+.riaswEditorSmileyPalette .riaswPaletteCellHover .riaswPaletteImg {
+  border: 1px solid #000;
+  padding: 0px;
+}
+.riaswEditorSpellCheckIcon {
+  background-image: url("riasw/editor/htmleditor/images/spellcheck.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 18px;
+  height: 18px;
+}
+.riaswEditorSpellCheckBusyIcon {
+  background-image: url("riasw/editor/htmleditor/images/checking.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+.riaswEditorSpellCheckTable .riaswEditorSpellCheckBox {
+  width: 15em;
+}
+.riaswEditorSpellCheckTable .listHeight {
+  height: 5em;
+}
+.riaswEditorSpellCheckTable,
+.riaswEditorSpellCheckTable td {
+  border: none;
+  border-width: 0px;
+  vertical-align: top;
+}
+.riaswEditorSpellCheckTable .alignBottom {
+  vertical-align: bottom;
+}
+.riaswEditorSpellCheckTable .blockButton,
+.riaswEditorSpellCheckTable .riaswButton {
+  display: block;
+}
+.riaswEditorSpellCheckTable .topMargin {
+  margin-top: 0.56em;
+}
+.riaswEditorSpellCheckTable .hidden {
+  display: none;
+}
+.riaswEditorStatusBar {
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 2px;
+}
+.riaswEditorStatusBar table {
+  width: 100%;
+}
+.riaswEditorStatusBar .riaswResizeHandle {
+  position: static;
+  padding: 0px;
+  vertical-align: bottom;
+}
+.riaswEditorStatusBar .riaswEditorStatusBarText {
+  height: 1.5em;
+  vertical-align: middle;
+  width: 100%;
+  overflow: hidden;
+}
+.riaswEditorColorPicker {
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.EditorTableDialog .etdTable {
+  border: none;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.EditorTableDialog .etdTable td {
+  border: 1px solid #ccc 0px solid;
+  padding: 5px;
+}
+.EditorTableDialog .etdTable td.inner {
+  padding: 0px;
+}
+.EditorTableDialog .riaswTextBox {
+  width: 50px;
+  padding-left: 3px;
+}
+.EditorTableDialog .riaswComboBox {
+  width: 85px;
+  padding-left: 5px;
+}
+.EditorTableDialog label {
+  float: right;
+  margin: 0;
+  margin-right: 5px;
+}
+.EditorTableDialog .cellpad {
+  background: url("riasw/editor/htmleditor/images/cellpad.png") no-repeat 5px;
+}
+.EditorTableDialog .cellspace {
+  background: url("riasw/editor/htmleditor/images/cellspace.png") no-repeat 5px;
+}
+.dialogButtonContainer {
+  text-align: right;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.colorSwatchBtn {
+  display: block;
+  border: 1px solid #666 2px solid;
+  background-color: #ccc;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.colorSwatchBtn:hover {
+  border: 1px solid #09f 2px solid;
+}
+.colorSwatchBtn div {
+  background-color: #ccc;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.editorIcon {
+  background-image: url("riasw/editor/htmleditor/images/tableIcons.png");
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+}
+.editorIconUploadImage {
+  background: url("riasw/editor/htmleditor/images/uploadImageIcon.gif") no-repeat 0px 4px;
+}
+.editorIconInsertTable {
+  background-position: 0px 0px;
+}
+.riaswDisabled .editorIconInsertTable {
+  background-position: -162px 0px;
+}
+.editorIconInsertTableRowBefore {
+  background-position: -36px 0px;
+}
+.riaswDisabled .editorIconInsertTableRowBefore {
+  background-position: -198px 0px;
+}
+.editorIconInsertTableRowAfter {
+  background-position: -54px 0px;
+}
+.riaswDisabled .editorIconInsertTableRowAfter {
+  background-position: -216px 0px;
+}
+.editorIconInsertTableColumnBefore {
+  background-position: -72px 0px;
+}
+.riaswDisabled .editorIconInsertTableColumnBefore {
+  background-position: -234px 0px;
+}
+.editorIconInsertTableColumnAfter {
+  background-position: -90px 0px;
+}
+.riaswDisabled .editorIconInsertTableColumnAfter {
+  background-position: -252px 0px;
+}
+.editorIconDeleteTableRow {
+  background-position: -108px 0px;
+}
+.riaswDisabled .editorIconDeleteTableRow {
+  background-position: -270px 0px;
+}
+.editorIconDeleteTableColumn {
+  background-position: -126px 0px;
+}
+.riaswDisabled .editorIconDeleteTableColumn {
+  background-position: -288px 0px;
+}
+.editorIconColorTableCell {
+  background-position: -144px 0px;
+}
+.riaswDisabled .editorIconColorTableCell {
+  background-position: -306px 0px;
+}
+.editorIconModifyTable {
+  background-position: -18px 0px;
+}
+.riaswDisabled .editorIconModifyTable {
+  background-position: -180px 0px;
+}
+.RichTextEditable .riaswTextBox,
+.RichTextEditable .riaswComboBox,
+.RichTextEditable .riaswSpinner {
+  width: 5em;
+}
+.dojoxDropDownSelect {
+  background: #fff;
+  border: 1px solid;
+  border-top-color: #ccc;
+  border-right-color: #ccc;
+  border-left-color: #999;
+  border-bottom-color: #fff;
+}
+.dojoxDropDownSelect button {
+  line-height: 16px;
+  height: 16px;
+  width: 100px;
+  text-align: left;
+  color: #8397b9;
+}
+.dojoxEditorUploadNorm {
+  font-family: Arial;
+  font-size: 1em;
+  vertical-align: middle;
+  margin: 0;
+  line-height: normal;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #ccc url("riasw/editor/htmleditor/images/uploadImageIcon.gif") no-repeat 2px 2px;
+}
+.dojoxEditorUploadHover {
+  background: #ccc url("riasw/editor/htmleditor/images/uploadImageIcon.gif") no-repeat 2px 0px;
+}
+.dojoxEditorUploadActive {
+  background: #ccc url("riasw/editor/htmleditor/images/uploadImageIcon.gif") no-repeat 2px 4px;
+}
+.dojoxEditorUploadDisabled {
+  background: #ccc url("riasw/editor/htmleditor/images/uploadImageIcon.gif") no-repeat 2px 2px;
+}
+.riaswEditorIcon {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsEnabled.png"); /* editor icons sprite image for the enabled state */
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+}
+.riaswDisabled .riaswEditorIcon {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsDisabled.png"); /* editor icons sprite image for the disabled state */
+}
+.riaswEditorEmotion {
+  vertical-align: text-bottom;
+}
+.riaswEditorIconSep {
+  background-position: 0;
+}
+.riaswEditorIconSave {
+  background-position: -18px;
+}
+.riaswEditorIconPrint {
+  background-position: -36px;
+}
+.riaswEditorIconCut {
+  background-position: -54px;
+}
+.riaswEditorIconCopy {
+  background-position: -72px;
+}
+.riaswEditorIconPaste {
+  background-position: -90px;
+}
+.riaswEditorIconDelete {
+  background-position: -108px;
+}
+.riaswEditorIconCancel {
+  background-position: -126px;
+}
+.riaswEditorIconUndo {
+  background-position: -144px;
+}
+.riaswEditorIconRedo {
+  background-position: -162px;
+}
+.riaswEditorIconSelectAll {
+  background-position: -180px;
+}
+.riaswEditorIconBold {
+  background-position: -198px;
+}
+.riaswEditorIconItalic {
+  background-position: -216px;
+}
+.riaswEditorIconUnderline {
+  background-position: -234px;
+}
+.riaswEditorIconStrikethrough {
+  background-position: -252px;
+}
+.riaswEditorIconSuperscript {
+  background-position: -270px;
+}
+.riaswEditorIconSubscript {
+  background-position: -288px;
+}
+.riaswEditorIconJustifyCenter {
+  background-position: -306px;
+}
+.riaswEditorIconJustifyFull {
+  background-position: -324px;
+}
+.riaswEditorIconJustifyLeft {
+  background-position: -342px;
+}
+.riaswEditorIconJustifyRight {
+  background-position: -360px;
+}
+.riaswEditorIconIndent {
+  background-position: -378px;
+}
+.riaswEditorIconOutdent {
+  background-position: -396px;
+}
+.riaswEditorIconListBulletIndent {
+  background-position: -414px;
+}
+.riaswEditorIconListBulletOutdent {
+  background-position: -432px;
+}
+.riaswEditorIconListNumIndent {
+  background-position: -450px;
+}
+.riaswEditorIconListNumOutdent {
+  background-position: -468px;
+}
+.riaswEditorIconTabIndent {
+  background-position: -486px;
+}
+.riaswEditorIconLeftToRight {
+  background-position: -504px;
+}
+.riaswEditorIconRightToLeft,
+.riaswEditorIconToggleDir {
+  background-position: -522px;
+}
+.riaswEditorIconBackColor {
+  background-position: -540px;
+}
+.riaswEditorIconForeColor {
+  background-position: -558px;
+}
+.riaswEditorIconHiliteColor {
+  background-position: -576px;
+}
+.riaswEditorIconNewPage {
+  background-position: -594px;
+}
+.riaswEditorIconInsertImage {
+  background-position: -612px;
+}
+.riaswEditorIconInsertTable {
+  background-position: -630px;
+}
+.riaswEditorIconSpace {
+  background-position: -648px;
+}
+.riaswEditorIconInsertHorizontalRule {
+  background-position: -666px;
+}
+.riaswEditorIconInsertOrderedList {
+  background-position: -684px;
+}
+.riaswEditorIconInsertUnorderedList {
+  background-position: -702px;
+}
+.riaswEditorIconCreateLink {
+  background-position: -720px;
+}
+.riaswEditorIconUnlink {
+  background-position: -738px;
+}
+.riaswEditorIconViewSource {
+  background-position: -756px;
+}
+.riaswEditorIconRemoveFormat {
+  background-position: -774px;
+}
+.riaswEditorIconFullScreen {
+  background-position: -792px;
+}
+.riaswEditorIconWikiword {
+  background-position: -810px;
+}
+.riaswEditorRtl .riaswEditorIcon {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsEnabled_rtl.png"); /* editor icons sprite image for the enabled right to left state */
+}
+.riaswEditorRtlDisabled .riaswEditorIcon {
+  background-image: url("riasw/editor/htmleditor/images/editorIconsDisabled_rtl.png"); /* editor icons sprite image for the disabled right to left state */
+}
+.riaswEditor {
+  display: block;
+  position: relative;
+  background-color: #eee;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+}
+.riaswEditor .riaswEditorHeader {
+  border-bottom: 1px solid #bdbdbd;
+}
+.riaswEditor .riaswEditorFooter {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  border-top: 1px solid #bdbdbd;
+}
+.riaswEditor .riaswEditorContainer {
+  background-color: #fff;
+  border: 1px solid transparent;
+  color: #000;
+  padding: 0.25em 0.5em;
+  -webkit-transition: border 0.2s linear 0s;
+  -moz-transition: border 0.2s linear 0s;
+  -o-transition: border 0.2s linear 0s;
+  -ms-transition: border 0.2s linear 0s;
+  transition: border 0.2s linear 0s;
+}
+.riaswEditorHover .riaswEditorContainer {
+  border-color: #039ffc;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #039ffc inset;
+  box-shadow: 0 0 0.25em 0 #039ffc inset;
+}
+.riaswEditorActive .riaswEditorContainer {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswEditorFocused .riaswEditorContainer,
+.riaswEditorActive .riaswEditorContainer {
+  border-color: #ffb74d;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+  -webkit-box-shadow: 0 0 0.25em 0 #ffb74d inset;
+  box-shadow: 0 0 0.25em 0 #ffb74d inset;
+}
+.riaswEditorReadOnly .riaswEditorContainer {
+  background-color: inherit;
+}
+.riaswEditorDisabled .riaswEditorContainer {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswResizer {
+  float: right;
+  position: absolute;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  right: 0px;
+  bottom: 0px;
+  width: 16px;
+  height: 16px;
+}
+.riaswResizer:before {
+  content: "\f03a";
+}
+.dijitRtl .riaswResizer {
+  float: left;
+  left: 0px;
+  right: auto;
+}
+.dijitRtl .riaswResizer:before {
+  content: "\f03b";
+}
+.riaswResizerNW {
+  cursor: nw-resize;
+}
+.dijitRtl .riaswResizerNW {
+  cursor: ne-resize;
+}
+.riaswResizerNE {
+  cursor: ne-resize;
+}
+.dijitRtl .riaswResizerNE {
+  cursor: nw-resize;
+}
+.riaswResizerW {
+  cursor: w-resize;
+}
+.riaswResizerN {
+  cursor: n-resize;
+}
+.riaswResizerNone {
+  cursor: default;
+}
+.riaswResizerClone {
+  position: absolute;
+  border: 1px dashed #0277bd;
+  z-index: 5999;
+  top: 0;
+  left: 0;
+}
+.riaswPanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0px solid #bdbdbd;
+}
+.riaswPanelContent {
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswPanelContent {
+  overflow: hidden;
+}
+.riaswCaptionPanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #bdbdbd;
+  padding: 0;
+  margin: 0;
+}
+.riaswFieldset {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.5em;
+  padding: 0;
+  margin: 0;
+}
+.riaswFieldsetNoCaptionNode .riaswFieldsetCaptionNode {
+  display: none;
+}
+.riaswCaptionPanelContent,
+.riaswFieldsetContent {
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  margin: 0;
+}
+.riaswCaptionPanelCaptionNode,
+.riaswFieldsetCaptionNode,
+.riaswDialogCaptionNode {
+  display: block;
+  position: relative;
+  vertical-align: middle;
+  background-color: #bdbdbd;
+  border: 0px solid transparent;
+/*border-bottom-width: 1px;*/
+  color: #000;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.riaswCaptionPanelCaptionNode .riaswToolButton,
+.riaswFieldsetCaptionNode .riaswToolButton,
+.riaswDialogCaptionNode .riaswToolButton,
+.riaswCaptionPanelCaptionNode .riaswButton,
+.riaswFieldsetCaptionNode .riaswButton,
+.riaswDialogCaptionNode .riaswButton {
+  border-color: transparent;
+  margin: 1px;
+}
+.riaswCaptionPanelCaptionNode .riaswButtonHover,
+.riaswFieldsetCaptionNode .riaswButtonHover,
+.riaswDialogCaptionNode .riaswButtonHover,
+.riaswCaptionPanelCaptionNode .riaswToolButtonHover,
+.riaswFieldsetCaptionNode .riaswToolButtonHover,
+.riaswDialogCaptionNode .riaswToolButtonHover,
+.riaswCaptionPanelCaptionNode .riaswButtonActive,
+.riaswFieldsetCaptionNode .riaswButtonActive,
+.riaswDialogCaptionNode .riaswButtonActive,
+.riaswCaptionPanelCaptionNode .riaswButtonFocused,
+.riaswFieldsetCaptionNode .riaswButtonFocused,
+.riaswDialogCaptionNode .riaswButtonFocused,
+.riaswCaptionPanelCaptionNode .riaswToolButtonActive,
+.riaswFieldsetCaptionNode .riaswToolButtonActive,
+.riaswDialogCaptionNode .riaswToolButtonActive,
+.riaswCaptionPanelCaptionNode .riaswToolButtonFocused,
+.riaswFieldsetCaptionNode .riaswToolButtonFocused,
+.riaswDialogCaptionNode .riaswToolButtonFocused {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswCaptionPanelCaptionNode {
+  padding: 0.25em 0.25em 0 0.25em;
+}
+.riaswFieldsetCaptionNode {
+  background-color: transparent;
+  border: 0px solid transparent;
+  color: #000;
+  padding: 0.25em 0.25em 0 0.25em;
+  margin: 0 1em;
+}
+.riaswDialogCaptionNode {
+  padding: 0.5em 0.5em 0 0.5em;
+  border-radius: 0.5em 0.5em 0px 0px;
+  background-color: #bdbdbd;
+  -webkit-box-shadow: 0px 0.1em 0.5em 0px rgba(0,0,0,0.25) inset;
+  box-shadow: 0px 0.1em 0.5em 0px rgba(0,0,0,0.25) inset;
+}
+.riaswDialogMoveNode {
+  display: block;
+  border: 0px solid transparent;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+.riaswDialogCaptionNodeCollapsed {
+  border-radius: 0.5em;
+}
+.riaswDialogCaptionNodeHover {
+  background-color: #b3e5fc;
+}
+.riaswDialogCaptionNodeSelected {
+  background-color: #0277bd;
+  color: #fff;
+}
+.riaswDialogCaptionNodeFocused,
+.riaswDialogCaptionNodeActive {
+  background-color: #0277bd;
+  color: #fff;
+}
+.riaswCaptionPanelCaptionNodeVertical {
+  padding: 0.25em;
+}
+.riaswFieldsetCaptionNodeVertical {
+  margin: 0.25em 0;
+}
+.riaswDialog {
+  display: block;
+  position: absolute;
+  background-color: #eee;
+  border-width: 0px;
+  border-color: #bdbdbd;
+  border-style: solid;
+  border-radius: 0.5em;
+  color: #000;
+  padding: 0;
+  margin: 0;
+  -webkit-box-shadow: 0em 1.25em 0.5em -0.5em rgba(0,0,0,0.35), 0em 1em 1em 0em rgba(0,0,0,0.35), 0px 0px 0.5em 0px rgba(0,0,0,0.5) inset;
+  box-shadow: 0em 1.25em 0.5em -0.5em rgba(0,0,0,0.35), 0em 1em 1em 0em rgba(0,0,0,0.35), 0px 0px 0.5em 0px rgba(0,0,0,0.5) inset;
+}
+.dj_ie8 .riaswDialog {
+  border-width: 1px;
+}
+.dj_ie8 .riaswDialog,
+.dj_ie9 .riaswDialog {
+  border-width: 1px;
+  filter: "progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+}
+.riaswDialogHover {
+  background-color: #f5f5f5;
+  border-color: #b3e5fc;
+}
+.riaswDialogSelected {
+  background-color: #f5f5f5;
+  border-color: #0277bd;
+}
+.riaswDialogFocused,
+.riaswDialogActive {
+  border-color: #ffb74d;
+}
+.riaswDialogContent {
+  overflow: auto;
+  position: relative;
+  padding: 0;
+  margin: 0.5em;
+  -webkit-overflow-scrolling: touch;
+}
+.riaswDialogActionBar {
+  display: block;
+  background-color: #e0e0e0;
+  border: 0px solid #bdbdbd;
+  color: #000;
+  padding: 0.5em 1em;
+  margin: 0 0.5em 0.5em;
+  text-align: right;
+}
+.riaswDialogActionBarTop {
+  display: block;
+  background-color: #e0e0e0;
+  border: 0px solid #bdbdbd;
+  color: #000;
+  padding: 0.5em 1em;
+  margin: 0 0.5em;
+  text-align: left;
+}
+.riaswDialogTypeDropDown,
+.riaswDialogTypeTip {
+  background-color: #eee;
+  border-color: #bdbdbd;
+  border-width: 2px;
+  border-radius: 1em;
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswDialogTypeDropDown .riaswDialogCaptionNode,
+.riaswDialogTypeTip .riaswDialogCaptionNode {
+  background-color: transparent;
+  border-bottom-width: 1px;
+  color: inherit;
+  margin: 0 1em;
+  padding: 0.5em 0em 0.25em 0em;
+  -webkit-box-shadow: 0px 0px 0px 0px;
+  box-shadow: 0px 0px 0px 0px;
+}
+.riaswDialogTypeDropDown.riaswTooltipAbove,
+.riaswDialogTypeTip.riaswTooltipAbove {
+  -webkit-box-shadow: 0em -1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em -1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswDialogTypeDropDown.riaswTooltipLeft,
+.riaswDialogTypeTip.riaswTooltipLeft {
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswDialogTypeDropDown.riaswTooltipRight,
+.riaswDialogTypeTip.riaswTooltipRight {
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswDialogTypeDropDown .riaswTooltipConnector,
+.riaswDialogTypeTip .riaswTooltipConnector {
+  height: 0;
+  width: 0;
+  position: absolute;
+  z-index: 2;
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.riaswDialogTypeDropDown .riaswTooltipConnector:after,
+.riaswDialogTypeTip .riaswTooltipConnector:after {
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+.riaswDialogTypeDropDown.riaswTooltipAbove .riaswTooltipConnector,
+.riaswDialogTypeTip.riaswTooltipAbove .riaswTooltipConnector {
+  border-color: #bdbdbd transparent transparent;
+  border-width: 12px 12px 0;
+  border-style: solid;
+  bottom: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipAbove .riaswTooltipConnector:after,
+.riaswDialogTypeTip.riaswTooltipAbove .riaswTooltipConnector:after {
+  border-color: #eee transparent transparent;
+  border-width: 9px 9px 0;
+  border-style: solid;
+  left: -9px;
+  top: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipBelow .riaswTooltipConnector,
+.riaswDialogTypeTip.riaswTooltipBelow .riaswTooltipConnector {
+  border-color: transparent transparent #bdbdbd;
+  border-width: 0 12px 12px;
+  border-style: solid;
+  top: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipBelow .riaswTooltipConnector:after,
+.riaswDialogTypeTip.riaswTooltipBelow .riaswTooltipConnector:after {
+  border-color: transparent transparent #eee;
+  border-width: 0 9px 9px;
+  border-style: solid;
+  left: -9px;
+  bottom: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipLeft .riaswTooltipConnector,
+.riaswDialogTypeTip.riaswTooltipLeft .riaswTooltipConnector {
+  border-color: transparent transparent transparent #bdbdbd;
+  border-width: 12px 0 12px 12px;
+  border-style: solid;
+  right: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipLeft .riaswTooltipConnector:after,
+.riaswDialogTypeTip.riaswTooltipLeft .riaswTooltipConnector:after {
+  border-color: transparent transparent transparent #eee;
+  border-width: 9px 0 9px 9px;
+  border-style: solid;
+  top: -9px;
+  left: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipRight .riaswTooltipConnector,
+.riaswDialogTypeTip.riaswTooltipRight .riaswTooltipConnector {
+  border-color: transparent #bdbdbd transparent transparent;
+  border-width: 12px 12px 12px 0;
+  border-style: solid;
+  left: -12px;
+}
+.riaswDialogTypeDropDown.riaswTooltipRight .riaswTooltipConnector:after,
+.riaswDialogTypeTip.riaswTooltipRight .riaswTooltipConnector:after {
+  border-color: transparent #eee transparent transparent;
+  border-width: 9px 9px 9px 0;
+  border-style: solid;
+  top: -9px;
+  right: -12px;
+}
+.riaswDialogHover.riaswDialogTypeDropDown,
+.riaswDialogHover.riaswDialogTypeTip {
+  background-color: #f5f5f5;
+  border-color: #b3e5fc;
+}
+.riaswDialogHover.riaswTooltipAbove .riaswTooltipConnector {
+  border-color: #b3e5fc transparent transparent;
+}
+.riaswDialogHover.riaswTooltipAbove .riaswTooltipConnector:after {
+  border-color: #f5f5f5 transparent transparent;
+}
+.riaswDialogHover.riaswTooltipBelow .riaswTooltipConnector {
+  border-color: transparent transparent #b3e5fc;
+}
+.riaswDialogHover.riaswTooltipBelow .riaswTooltipConnector:after {
+  border-color: transparent transparent #f5f5f5;
+}
+.riaswDialogHover.riaswTooltipLeft .riaswTooltipConnector {
+  border-color: transparent transparent transparent #b3e5fc;
+}
+.riaswDialogHover.riaswTooltipLeft .riaswTooltipConnector:after {
+  border-color: transparent transparent transparent #f5f5f5;
+}
+.riaswDialogHover.riaswTooltipRight .riaswTooltipConnector {
+  border-color: transparent #b3e5fc transparent transparent;
+}
+.riaswDialogHover.riaswTooltipRight .riaswTooltipConnector:after {
+  border-color: transparent #f5f5f5 transparent transparent;
+}
+.riaswDialogSelected.riaswDialogTypeDropDown,
+.riaswDialogSelected.riaswDialogTypeTip {
+  background-color: #f5f5f5;
+  border-color: #0277bd;
+}
+.riaswDialogSelected.riaswTooltipAbove .riaswTooltipConnector {
+  border-color: #0277bd transparent transparent;
+}
+.riaswDialogSelected.riaswTooltipAbove .riaswTooltipConnector:after {
+  border-color: #f5f5f5 transparent transparent;
+}
+.riaswDialogSelected.riaswTooltipBelow .riaswTooltipConnector {
+  border-color: transparent transparent #0277bd;
+}
+.riaswDialogSelected.riaswTooltipBelow .riaswTooltipConnector:after {
+  border-color: transparent transparent #f5f5f5;
+}
+.riaswDialogSelected.riaswTooltipLeft .riaswTooltipConnector {
+  border-color: transparent transparent transparent #0277bd;
+}
+.riaswDialogSelected.riaswTooltipLeft .riaswTooltipConnector:after {
+  border-color: transparent transparent transparent #f5f5f5;
+}
+.riaswDialogSelected.riaswTooltipRight .riaswTooltipConnector {
+  border-color: transparent #0277bd transparent transparent;
+}
+.riaswDialogSelected.riaswTooltipRight .riaswTooltipConnector:after {
+  border-color: transparent #f5f5f5 transparent transparent;
+}
+.riaswDialogContentTypeChoose,
+.riaswDialogContentTypeInfo,
+.riaswDialogContentTypeWarn,
+.riaswDialogContentTypeError,
+.riaswDialogContentTypeAbout {
+  padding: 1.5em 1em 1em 1em;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.riaswDialogTypeWarn {
+  border-color: #fb8c00;
+}
+.riaswDialogCaptionTypeWarn {
+  background-color: #fb8c00;
+  color: #000;
+}
+.riaswDialogTypeError {
+  border-color: #ff3d00;
+}
+.riaswDialogCaptionTypeError {
+  background-color: #ff3d00;
+  color: #000;
+}
+.riaswFieldsetCaption .riaswDialogCaptionNode .riaswToolButtonHover,
+.riaswDialogTypeDropDown .riaswDialogCaptionNode .riaswToolButtonHover,
+.riaswDialogTypeTip .riaswDialogCaptionNode .riaswToolButtonHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswFieldsetCaption .riaswDialogCaptionNode .riaswToolButtonActive,
+.riaswDialogTypeDropDown .riaswDialogCaptionNode .riaswToolButtonActive,
+.riaswDialogTypeTip .riaswDialogCaptionNode .riaswToolButtonActive,
+.riaswFieldsetCaption .riaswDialogCaptionNode .riaswToolButtonFocused,
+.riaswDialogTypeDropDown .riaswDialogCaptionNode .riaswToolButtonFocused,
+.riaswDialogTypeTip .riaswDialogCaptionNode .riaswToolButtonFocused {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+}
+.riaswStackPanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0px solid #bdbdbd;
+}
+.riaswStackPanelContent {
+  overflow: hidden;
+  border: 0px solid transparent;
+}
+.riaswStackPanelChildWrapper {
+  position: absolute;
+}
+.riaswStackPanelChild {
+  position: absolute;
+}
+.riaswStackController .riaswToggleButtonChecked * {
+  cursor: default;
+}
+.riaswTablePanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0px solid #bdbdbd;
+}
+.riaswTablePanelContent {
+  position: relative;
+  overflow: auto;
+}
+.riaswTablePanelTable {
+  table-layout: fixed;
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+.riaswTablePanelRowHeader {
+  padding: 0;
+  margin: 0;
+  height: 0;
+}
+.riaswTablePanelColHeader {
+  padding: 0;
+  margin: 0;
+  width: 0;
+}
+.riaswTablePanelRow {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.riaswTablePanelCol {
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding: 0;
+}
+.riaswTabPanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  border: 0px solid transparent;
+}
+.riaswTabPanelNoLayout {
+  width: 100%;
+}
+.riaswTabPanelTopChildWrapper,
+.riaswTabPanelBottomChildWrapper,
+.riaswTabPanelLeftChildWrapper,
+.riaswTabPanelRightChildWrapper {
+  position: absolute;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+.riaswTabContainer {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  z-index: 1;
+}
+.riaswTabListWrapper {
+  overflow: hidden;
+  z-index: 1;
+}
+.riaswTabPanelContent {
+  background: inherit;
+  margin: 0;
+  padding: 0.25em;
+  border: 0px solid #0277bd;
+  z-index: 1;
+  overflow: visible !important;
+}
+.riaswTabController {
+  z-index: 1;
+}
+.riaswTab {
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  vertical-align: middle;
+  text-align: center;
+  position: relative;
+  background-color: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.75em;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 0.25em;
+  margin: 0;
+  -webkit-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+  z-index: 0;
+}
+.riaswTab .riaswTabLabel {
+/*min-height: 16px;*/
+  display: inline-block;
+}
+.riaswTabHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswTabChecked {
+  background-color: #0277bd;
+  border-color: #0277bd;
+  color: #fff;
+  font-weight: bold;
+  cursor: default;
+  z-index: 1;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35), 0em 0em 0.25em 0em #0277bd inset;
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35), 0em 0em 0.25em 0em #0277bd inset;
+}
+.riaswTabFocused,
+.riaswTabActive {
+  border-color: #ffb74d;
+}
+.riaswTabDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswTabDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+div.riaswTabDisabled,
+.dj_ie div.riaswTabDisabled {
+  cursor: auto;
+}
+.dj_ie6 .riaswTab .riaswButtonIcon.riaswNoIcon {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  height: 15px;
+  width: 1px;
+}
+.riaswTabCloseNode {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+.riaswTabCloseNode:before {
+  content: "\f077";
+}
+.dj_a11y .riaswTabCloseNode {
+  background-image: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+.riaswTabCloseNodeHover {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswTabCloseNodeActive,
+.riaswTabCloseNodeFocused {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswTabStripButton {
+  text-align: center;
+  vertical-align: middle;
+  z-index: 12;
+  background-color: #fff;
+  border: 1px solid #0277bd;
+  color: #0277bd;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  position: absolute;
+  padding: 0.25em;
+}
+.riaswTabPanelContent {
+  z-index: 0;
+  overflow: hidden;
+}
+.riaswTabControllerTop,
+.riaswTabControllerBottom,
+.riaswTabControllerLeft,
+.riaswTabControllerRight {
+  z-index: 1;
+  overflow: visible !important;
+  border: 0px solid transparent;
+}
+.riaswTabControllerTop,
+.riaswTabControllerBottom {
+  padding: 0 1em;
+}
+.riaswTabControllerTop .riaswTabSpace,
+.riaswTabControllerBottom .riaswTabSpace {
+  min-height: 28px;
+}
+.riaswTabControllerTop .riaswTabSpace,
+.riaswTabControllerBottom .riaswTabSpace,
+.riaswTabControllerTop .riaswTabSpace *,
+.riaswTabControllerBottom .riaswTabSpace * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-left-width: 0 !important;
+  border-right-width: 0 !important;
+  min-width: 0 !important;
+  width: 0 !important;
+}
+.riaswTabControllerLeft,
+.riaswTabControllerRight {
+  padding: 1em 0;
+}
+.riaswTabControllerLeft .riaswTabSpace,
+.riaswTabControllerRight .riaswTabSpace {
+  min-width: 28px;
+}
+.riaswTabControllerLeft .riaswTabSpace,
+.riaswTabControllerRight .riaswTabSpace,
+.riaswTabControllerLeft .riaswTabSpace *,
+.riaswTabControllerRight .riaswTabSpace * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  min-height: 0 !important;
+  height: 0 !important;
+}
+.riaswTabControllerTop .riaswTab,
+.riaswTabControllerBottom .riaswTab {
+  display: inline-block;
+}
+.riaswTabControllerTop {
+  border-bottom: 2px solid #0277bd;
+}
+.riaswTabControllerTop .riaswTab {
+  display: inline-block;
+  margin-right: 1px;
+  padding: 0.25em 0.5em;
+  border-radius: 0.75em 0.75em 0 0;
+  border-bottom-width: 0;
+}
+.riaswTabControllerTop .riaswTab.riaswTabClosable {
+  padding-right: 0.25em;
+}
+.riaswTabControllerBottom {
+  border-top: 2px solid #0277bd;
+}
+.riaswTabControllerBottom .riaswTab {
+  display: inline-block;
+  margin-right: 1px;
+  padding: 0.25em 0.5em;
+  border-radius: 0 0 0.75em 0.75em;
+  border-top-width: 0;
+}
+.riaswTabControllerBottom .riaswTab.riaswTabClosable {
+  padding-right: 0.25em;
+}
+.riaswTabControllerLeft {
+  border-right: 2px solid #0277bd;
+}
+.riaswTabControllerLeft .riaswTab {
+  display: block;
+  margin-bottom: 1px;
+  padding: 0.5em 0.25em;
+  border-radius: 0.75em 0 0 0.75em;
+  border-right-width: 0;
+}
+.riaswTabControllerRight {
+  border-left: 2px solid #0277bd;
+}
+.riaswTabControllerRight .riaswTab {
+  margin-bottom: 1px;
+  padding: 0.5em 0.25em;
+  border-radius: 0 0.75em 0.75em 0;
+  border-left-width: 0;
+  display: block;
+}
+.riaswTabStripIcon {
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0277bd;
+  vertical-align: middle;
+}
+.riaswTabStripIcon:before {
+  content: "\f071";
+}
+.riaswTabStripIconLeft:before {
+  content: "\f071";
+}
+.riaswTabStripIconRight:before {
+  content: "\f072";
+}
+.riaswTabStripIconUp:before {
+  content: "\f074";
+}
+.riaswTabStripIconDown:before {
+  content: "\f073";
+}
+.riaswTabStripIconMenu:before {
+  content: "\f00a";
+}
+.dj_a11y .riaswTabStripButton img {
+  display: none;
+}
+.riaswTabButtonDisabled .riaswTabStripButton {
+  display: none;
+}
+.riaswTabStripButtonHover {
+  background-color: #b3e5fc;
+}
+.riaswTabStripButtonActive {
+  background-color: #b3e5fc;
+}
+.riaswTabStripButtonDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.riaswTabStripButtonDisabled .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswTabControllerRtl,
+.riaswTabControllerRtl .riaswTabContainer {
+  text-align: right;
+}
+.riaswTabRtl .riaswTabCloseNode {
+  margin-left: 0;
+  margin-right: 0.25em;
+}
+.dijitRtl .riaswTab {
+  margin-right: 0;
+  margin-left: 2px;
+/* space between one tab and the next in top/bottom mode */
+}
+.dijitRtl .riaswTabPanelTopStrip,
+.dijitRtl .riaswTabPanelBottomStrip,
+.dijitRtl .riaswTabControllerTop,
+.dijitRtl .riaswTabControllerBottom {
+  padding-left: 0;
+  padding-right: 3px;
+}
+.dijitRtl .riaswTabInnerDiv {
+  padding-left: 3px;
+  padding-right: 4px;
+}
+.dijitRtl .riaswTabControllerLeft .riaswTab,
+.dijitRtl .riaswTabControllerRight .riaswTab {
+  margin-left: 0;
+}
+.dj_ie-rtl .riaswTabControllerLeft {
+  margin-left: 0 !important;
+}
+.dj_ie-rtl .riaswTabControllerRight {
+  margin-right: 0 !important;
+}
+.dj_ie-rtl .riaswTab .riaswTabInnerDiv {
+  width: 1%;
+}
+.riaswAccordionPanel {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #bdbdbd;
+}
+.riaswAccordionInner {
+  position: relative;
+  background-color: inherit;
+  border: 1px solid transparent;
+}
+.riaswAccordionChildContainer {
+  position: absolute;
+  border: 1px solid transparent;
+}
+.riaswAccordionPanelChild {
+  position: absolute;
+}
+.riaswAccordionCaption {
+  position: relative;
+  cursor: pointer;
+  background-color: #bdbdbd;
+  color: #000;
+  white-space: nowrap;
+  font-weight: bold;
+  padding: 0.5em 0.5em 0.25em 0.5em;
+  margin: 0px;
+  -webkit-tap-highlight-color: transparent;
+}
+.riaswAccordionCaptionLabel {
+  margin: 0 0.25em;
+}
+.riaswAccordionCaptionHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswAccordionCaptionSelected {
+  cursor: default;
+  background-color: #0277bd;
+  border-color: #026baa;
+  color: #fff;
+}
+.riaswAccordionCaptionFocused,
+.riaswAccordionCaptionActive {
+  cursor: default;
+  border-color: #ffb74d;
+}
+.riaswAccordionInnerHover {
+  border-color: #039ffc;
+}
+.riaswAccordionInnerSelected {
+  border-color: #026baa;
+}
+.riaswAccordionInnerFocused,
+.riaswAccordionInnerActive {
+  border-color: #ffb74d;
+}
+.riaswDockBar {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0px solid #bdbdbd;
+  padding: 0.25em;
+}
+.riaswDockBarContent {
+  padding: 0px;
+}
+.riaswDockNode {
+  z-index: 1;
+  min-width: 1em;
+  min-height: 1em;
+  margin: 0 1px;
+}
+.riaswDockBarVertical .riaswDockNode {
+  margin: 1px 0;
+}
+.riaswDockNodeHidden {
+  background-color: inherit;
+  color: inherit;
+}
+.riaswDockNodeShown {
+  background-color: #bdbdbd;
+  color: #000;
+  z-index: 2;
+}
+.riaswDockNodeHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+}
+.riaswDockNodeSelected,
+.riaswDockNodeChecked {
+  background-color: #0277bd;
+  border-color: #0277bd;
+  color: #fff;
+  cursor: default;
+  font-weight: bold;
+  z-index: 3;
+}
+.riaswDockNodeFocused,
+.riaswDockNodeActive {
+  border-color: #ffb74d;
+}
+.riaswDockCloseNode {
+  position: absolute;
+}
+.riaswDockBarCenter .riaswTabSpace,
+.riaswDockBarTop .riaswTabSpace,
+.riaswDockBarBottom .riaswTabSpace {
+  min-height: 28px;
+}
+.riaswDockBarCenter .riaswTabSpace,
+.riaswDockBarTop .riaswTabSpace,
+.riaswDockBarBottom .riaswTabSpace,
+.riaswDockBarCenter .riaswTabSpace *,
+.riaswDockBarTop .riaswTabSpace *,
+.riaswDockBarBottom .riaswTabSpace * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-left-width: 0 !important;
+  border-right-width: 0 !important;
+  min-width: 0 !important;
+  width: 0 !important;
+}
+.riaswDockBarLeft .riaswTabSpace,
+.riaswDockBarRight .riaswTabSpace {
+  min-width: 28px;
+}
+.riaswDockBarLeft .riaswTabSpace,
+.riaswDockBarRight .riaswTabSpace,
+.riaswDockBarLeft .riaswTabSpace *,
+.riaswDockBarRight .riaswTabSpace * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  min-height: 0 !important;
+  height: 0 !important;
+}
+.riaswTree {
+  overflow: auto;
+  background-color: transparent;
+}
+.riaswTreeContainer {
+  float: left;
+}
+.riaswTreeIndent {
+  width: 19px;
+}
+.riaswTreeNodeContent {
+  cursor: default;
+}
+.riaswTreeRow {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.riaswTreeRow .riaswTreeNodeContent {
+  white-space: nowrap;
+}
+.riaswTreeNodeExpandoText {
+  display: none;
+}
+.dj_a11y .riaswTreeNodeExpandoText {
+  display: inline;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: monospace;
+  border-style: solid;
+  border-width: thin;
+  cursor: pointer;
+}
+.riaswTreeNodeLabel {
+  margin: 0 4px;
+}
+.dj_ie .riaswTreeNodeLabel:focus {
+  outline: 1px dotted #000;
+}
+.riaswTreeNodeSelectNode {
+  width: 16px;
+  height: 16px;
+  margin: 0 6px 0 0;
+}
+.riaswTreeNodeSelectNodeIcon {
+  margin: 0 6px 0 0;
+}
+.riaswTreeRow,
+.riaswTreeNode .dojoDndItemBefore,
+.riaswTreeNode .dojoDndItemAfter {
+  padding: 0.25em;
+  border: 1px solid transparent;
+  line-height: 1.5em;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.riaswTreeRowHover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+}
+.riaswTreeRowSelected {
+  outline: none;
+  color: #fff;
+  background-color: #0277bd;
+  border-color: #026baa;
+}
+.riaswTreeRowFocused,
+.riaswTreeRowActive {
+  border-color: #ffb74d;
+}
+.riaswTreeExpando {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  line-height: 18px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+}
+.riaswTreeExpandoOpened:before {
+  content: "\f073";
+}
+.riaswTreeExpandoClosed:before {
+  content: "\f072";
+}
+.riaswTreeExpandoLeaf {
+  cursor: default;
+}
+.riaswTreeExpandoLoading {
+  background: url("icons/images/loading16blue.gif") no-repeat center;
+}
+.riaswTreeExpandoHover.riaswTreeExpandoOpened,
+.riaswTreeExpandoHover.riaswTreeExpandoClosed {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswTreeExpandoFocused.riaswTreeExpandoOpened,
+.riaswTreeExpandoActive.riaswTreeExpandoOpened,
+.riaswTreeExpandoFocused.riaswTreeExpandoClosed,
+.riaswTreeExpandoActive.riaswTreeExpandoClosed {
+  background-color: #fff;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswTreeNodeDisabled .riaswTreeRow {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+.riaswTreeNodeDisabled .riaswTreeRow .riaswButtonIcon {
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswTreeRtl {
+  text-align: right;
+/*.riaswTreeExpandoClosed:before {
+		content: "\e60b";
+	}*/
+}
+.riaswTreeRtl .riaswTreeContainer {
+  float: right;
+}
+.dj_ie8 .riaswTreeExpandoLoading,
+.dj_ie9 .riaswTreeExpandoLoading {
+  background: url("icons/images/loading16blue.gif") no-repeat center;
+}
+.dj_ie8 .riaswTreeExpandoLoading:before,
+.dj_ie9 .riaswTreeExpandoLoading:before {
+  content: "";
+}
+.dj_a11y .riaswTreeExpando {
+  display: none;
+}
+@-moz-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinning {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.riaswCalendar {
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-collapse: separate;
+  border-radius: 0.5em;
+  padding: 0.25em;
+}
+.riaswCalendarContainer {
+  width: auto;
+}
+.riaswCalendarContainer table {
+  width: auto; /* in case user has specified a width for the TABLE nodes, see #10553 */
+  clear: both; /* clear margin created for left/right month arrows; needed on IE10 for CalendarLite */
+}
+.riaswCalendarContainer th,
+.riaswCalendarContainer td {
+  vertical-align: middle;
+  padding: 0.25em;
+}
+.riaswCalendarIncrementControl,
+.riaswCalendarDateTemplate,
+.riaswCalendarMonthLabel,
+.riaswCalendarPreviousYear,
+.riaswCalendarNextYear {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.riaswCalendarMonthContainer,
+.riaswCalendarDayContainer,
+.riaswCalendarYearContainer {
+  background-color: #e0e0e0;
+}
+.riaswCalendarMonthContainer {
+  vertical-align: middle;
+  text-align: center;
+  padding: 0.25em;
+}
+.riaswCalendarMonthButton {
+  font-size: 115%;
+}
+.riaswCalendarIncrementControl {
+  vertical-align: middle;
+  font-family: "riasFont";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: inherit;
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  font-size: 24px;
+  line-height: normal;
+  padding: 1px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+}
+.riaswCalendarDecrementArrow {
+  float: left;
+}
+.riaswCalendarIncrementArrow {
+  float: right;
+}
+.riaswCalendarDecrease:before {
+  content: "\f071";
+}
+.riaswCalendarIncrease:before {
+  content: "\f072";
+}
+.riaswCalendarDayLabelTemplate {
+  text-align: center;
+}
+.riaswCalendarDayLabel {
+  font-weight: bold;
+  text-align: center;
+}
+.riaswCalendarSpacer {
+/* don't display it, but make it affect the width */
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+.riaswCalendarDateTemplate {
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.riaswCalendarDateTemplate .riaswCalendarDateLabel {
+  text-decoration: none;
+  display: block;
+  padding: 0.25em;
+  border: 1px solid transparent;
+  border-radius: 50%;
+}
+.riaswCalendarCurrentMonth .riaswCalendarDateLabel {
+  font-weight: bold;
+}
+.riaswCalendarPreviousMonth .riaswCalendarDateLabel,
+.riaswCalendarNextMonth .riaswCalendarDateLabel {
+  color: #424242;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswCalendarCurrentDate .riaswCalendarDateLabel {
+  border: 1px solid #026baa;
+}
+.riaswCalendarDisabledDate {
+  cursor: default;
+}
+.riaswCalendarDisabledDate .riaswCalendarDateLabel {
+  color: #424242;
+  text-decoration: line-through;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+}
+.riaswCalendarYearContainer {
+  vertical-align: middle;
+}
+.riaswCalendarYearLabel {
+  white-space: nowrap;
+  font-size: 115%;
+  padding: 0.25em;
+}
+.riaswCalendarSelectedYear,
+.riaswCalendarNextYear,
+.riaswCalendarPreviousYear {
+  background-color: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  padding: 1px;
+  cursor: pointer;
+  -webkit-transition: all 0.05s linear;
+  -moz-transition: all 0.05s linear;
+  -o-transition: all 0.05s linear;
+  -ms-transition: all 0.05s linear;
+  transition: all 0.05s linear;
+  border-color: transparent;
+}
+.riaswCalendarNextYear {
+  margin: 0 0 0 0.5em;
+}
+.riaswCalendarPreviousYear {
+  margin: 0 0.5em 0 0;
+}
+.riaswCalendarSelectedYear {
+  color: #fff;
+  background-color: #0277bd;
+  border: 1px solid #026baa;
+}
+.riaswCalendarMonthMenu {
+  padding: 0.25em;
+}
+.riaswCalendarMonthMenu .riaswCalendarMonthLabel {
+  text-align: center;
+  padding: 0.25em;
+}
+.riaswCalendarMonthMenu .riaswCalendarMonthLabelHover {
+  color: #000;
+  background-color: #b3e5fc;
+}
+.riaswCalendarArrowHover .riaswCalendarIncrementControl,
+.riaswCalendarArrow:hover .riaswCalendarIncrementControl,
+.riaswCalendarNextYearHover,
+.riaswCalendarNextYear:hover,
+.riaswCalendarPreviousYearHover,
+.riaswCalendarPreviousYear:hover {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+  color: #000;
+  -webkit-transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -o-transition: all 0.1s;
+  -ms-transition: all 0.1s;
+  transition: all 0.1s;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.riaswCalendarHoveredDate .riaswCalendarDateLabel,
+.riaswCalendarEnabledDate:hover .riaswCalendarDateLabel {
+  background-color: #b3e5fc;
+  border-color: #039ffc;
+}
+.riaswCalendarSelectedDate .riaswCalendarDateLabel,
+.riaswCalendarSelectedDate.riaswCalendarHoveredDate .riaswCalendarDateLabel {
+  background-color: #0277bd;
+  border-color: #026baa;
+}
+.riaswCalendarActiveDate .riaswCalendarDateLabel .riaswCalendarDateLabel,
+.riaswCalendarEnabledDate:active .riaswCalendarDateLabel .riaswCalendarDateLabel {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+}
+.riaswCalendarArrowActive .riaswCalendarIncrementControl,
+.riaswCalendarArrow:active .riaswCalendarIncrementControl,
+.riaswCalendarNextYearActive,
+.riaswCalendarNextYear:active,
+.riaswCalendarPreviousYearActive,
+.riaswCalendarPreviousYear:active {
+  background-color: #b3e5fc;
+  border-color: #ffb74d;
+  color: #000;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
+  outline: none;
+  -webkit-box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 0em 0.25em 0em rgba(0,0,0,0.35);
+}
+.dj_ie6 .riaswCalendar {
+  background-image: none;
+}
+.dj_ie6 .riaswCalendarIncrementControl {
+  background-image: url("riasw/widget/images/calendarArrows8bit.png");
+}
+.dj_ie6 .riaswCalendarDateTemplate {
+  background-image: none;
+}
+.dj_ie6 .riaswCalendarActiveDate .riaswCalendarDateLabel {
+  background-image: none;
+}
+.dj_a11y .riaswCalendarIncrementControl {
+  display: none;
+}
+.dj_a11y .riaswCalendarDateLabel {
+  padding: 1px;
+  border: 0px !important;
+}
+.dj_a11y .riaswCalendarSelectedDate .riaswCalendarDateLabel {
+  border-style: solid !important;
+  border-width: 1px !important;
+  padding: 0;
+}
+.dj_a11y .riaswCalendarDateTemplate {
+  padding-bottom: 0.1em !important;
+  border: 0px !important;
+}
+.riaswCalendarReadOnly {
+  background-color: inherit;
+}
+.riaswCalendarDisabled {
+  cursor: default;
+  color: #424242;
+  border-color: #757575;
+  background-color: transparent;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+  filter: grayscale(100%);
+}
+.riaswCalendarRtl .riaswCalendarDecrease:before {
+  content: "\f072";
+}
+.riaswCalendarRtl .riaswCalendarIncrease:before {
+  content: "\f071";
+}
+.webSeo {
+  left: -20000px;
+  top: -20000px;
+  width: 100px;
+  height: 100px;
+  visibility: hidden;
+  position: absolute;
+  display: block;
+}
+.riaswHidden {
+  display: none !important;
+}
+.riaswForceStatic {
+  position: static !important;
+}
+.riaswGlobalFocused {
+  top: -10000px;
+  left: -10010px;
+  width: 1em;
+  height: 1em;
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  z-index: 10010;
+  outline-color: #ff8c00;
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: -2px;
+}
+.riaswBackgroundIframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.riaswPlaceHolder {
+  color: #999;
+/*font-style: italic;*/
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.riaswMovable {
+  cursor: move;
+}
+.riaswFloatLeft {
+  float: left;
+}
+.riaswFloatRight {
+  float: right;
+}
+.riaswFloatNone {
+  float: none;
+}
+.riaswAlignLeft {
+  text-align: left;
+}
+.riaswAlignRight {
+  text-align: right;
+}
+.riaswAlignCenter {
+  text-align: center;
+}
+.riaswPopup {
+  position: absolute;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.riaswPopup .riaswCalendar,
+.riaswPopup .riaswColorPalette,
+.riaswPopup .riaswColorPicker,
+.riaswPopup .riaswTimePicker,
+.riaswPopup .riaswMenu,
+.riaswPopup .riaswPanel,
+.riaswPopup .riaswStackPanel,
+.riaswPopup .riaswTabPanel,
+.riaswPopup .riaswAccordionPanel,
+.riaswPopup .riaswCaptionPanel,
+.riaswPopup .riaswTablePanel,
+.riaswPopup .riaswForm,
+.riaswPopup .riaswModule {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25em;
+  -webkit-box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+  box-shadow: 0em 1em 0.5em -0.5em rgba(0,0,0,0.65), 0em 0em 0.5em 0em rgba(0,0,0,0.35);
+}
+.riaswButtonLabel {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  word-break: break-all;
+  line-height: normal;
+  padding: 0.25em;
+}
+.riaswCheckButton .riaswButtonLabel,
+.riaswRadioButton .riaswButtonLabel,
+.riaswToolButtonHasIcon .riaswButtonLabel,
+.riaswButtonHasIcon .riaswButtonLabel {
+  padding-left: 1px;
+}
+.riaswButtonIcon.riaswNoIcon {
+  border: 0;
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.riaswButtonLabel.riaswNoLabel {
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+/* IconTop ===============================================*/
+/* Vertical ===============================================*/
+.riaswIconLayoutTop .riaswButtonIcon,
+.riaswDisplayVertical .riaswButtonIcon,
+.riaswDisplayVerticalLR .riaswButtonIcon,
+.riaswDisplayVerticalRL .riaswButtonIcon {
+  display: block;
+  margin: 0 auto;
+}
+.riaswIconLayoutTop .riaswButtonLabel,
+.riaswDisplayVertical .riaswButtonLabel,
+.riaswDisplayVerticalLR .riaswButtonLabel,
+.riaswDisplayVerticalRL .riaswButtonLabel {
+  display: block;
+  height: auto;
+  margin: 0.25em auto;
+  padding: 0.25em;
+  white-space: nowrap;
+}
+.riaswIconLayoutTop .riaswArrowButton,
+.riaswDisplayVertical .riaswArrowButton,
+.riaswDisplayVerticalLR .riaswArrowButton,
+.riaswDisplayVerticalRL .riaswArrowButton {
+  display: block;
+  height: auto;
+}
+.riaswIconLayoutTop .riaswBadge,
+.riaswDisplayVertical .riaswBadge,
+.riaswDisplayVerticalLR .riaswBadge,
+.riaswDisplayVerticalRL .riaswBadge {
+  float: none;
+  height: 1.75em;
+  width: 1.25em;
+}
+.riaswIconLayoutTop .riaswToolButton,
+.riaswDisplayVertical .riaswToolButton,
+.riaswDisplayVerticalLR .riaswToolButton,
+.riaswDisplayVerticalRL .riaswToolButton,
+.riaswIconLayoutTop .riaswButton,
+.riaswDisplayVertical .riaswButton,
+.riaswDisplayVerticalLR .riaswButton,
+.riaswDisplayVerticalRL .riaswButton {
+  display: block;
+}
+.riaswIconLayoutTop.riaswToolButton,
+.riaswDisplayVertical.riaswToolButton,
+.riaswDisplayVerticalLR.riaswToolButton,
+.riaswDisplayVerticalRL.riaswToolButton,
+.riaswIconLayoutTop.riaswButton,
+.riaswDisplayVertical.riaswButton,
+.riaswDisplayVerticalLR.riaswButton,
+.riaswDisplayVerticalRL.riaswButton {
+  display: block;
+  padding: 0.5em 0.25em;
+}
+.riaswDisplayVertical .riaswButtonIcon.riaswNoIcon,
+.riaswDisplayVerticalLR .riaswButtonIcon.riaswNoIcon,
+.riaswDisplayVerticalRL .riaswButtonIcon.riaswNoIcon {
+  border: 0;
+  width: 16px;
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.riaswDisplayVertical .riaswButtonLabel.riaswNoLabel,
+.riaswDisplayVerticalLR .riaswButtonLabel.riaswNoLabel,
+.riaswDisplayVerticalRL .riaswButtonLabel.riaswNoLabel {
+  border: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* TextVertical ====================================*/
+.riaswTextHorizontal,
+.riaswTextHorizontalLR {
+  -webkit-writing-mode: horizontal-tb;
+  -mov-writin-mode: horizontal-tb;
+  writing-mode: horizontal-tb;
+}
+.riaswTextHorizontalRL {
+  -webkit-writing-mode: horizontal-tb;
+  -mov-writin-mode: horizontal-tb;
+  writing-mode: horizontal-tb;
+}
+.riaswTextVertical {
+  margin-top: 0;
+}
+.riaswTextVertical,
+.riaswTextVerticalLR {
+  letter-spacing: 2px;
+  -webkit-writing-mode: vertical-lr;
+  -mov-writin-mode: vertical-lr;
+  writing-mode: vertical-lr;
+  writing-mode: tb-rl;
+}
+.riaswTextVerticalRL {
+  letter-spacing: 2px;
+  -webkit-writing-mode: vertical-rl;
+  -mov-writin-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  writing-mode: tb-rl;
+}
+.riaswReadOnly *,
+.riaswDisabled *,
+.riaswReadOnly,
+.riaswDisabled {
+  cursor: default;
+}
+.riaswConsoleLog {
+  border-bottom: 1px dashed #bdbdbd;
+  padding: 0.5em;
+}
+.riaswConsoleLogDebug {
+  color: #1e88e5;
+}
+.riaswConsoleLogLog,
+.riaswConsoleLogInfo {
+  color: #000;
+}
+.riaswConsoleLogWarn {
+  color: #fb8c00;
+}
+.riaswConsoleLogError {
+  font-size: 1.1em;
+  color: #ff3d00;
+}

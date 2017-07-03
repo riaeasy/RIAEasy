@@ -1,0 +1,67 @@
+/// Toolbar
+
+@import '../../variables';
+
+.riaswToolbar {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	background-color: $toolbar-color;
+	border: 0px solid $theme-border-color;
+	color: $toolbar-text-color;
+	padding: $toolbar-padding;
+
+	label {
+		padding: $toolbar-label-padding;
+	}
+	.riaswToolButton,
+	.riaswButton {
+		//border-width: 1px;
+		border-color: $toolbar-button-border-color;
+		//padding: $toolbar-button-padding;
+		margin: $toolbar-button-margin;
+		//background-color: $toolbar-button-background-color;
+		//border-radius: $toolbar-button-border-radius;
+		//transition-property: background-color;
+		//transition-duration: .3s;
+	}
+}
+
+.riaswToolbarSeparator {
+	display: inline-block;
+	vertical-align: middle;
+	background-color: $toolbar-separator-color;
+	border: 0;
+	width: $toolbar-separator-width;
+	height: $toolbar-separator-height;
+	padding: 0;
+	margin: $toolbar-separator-margin;
+}
+
+.riaswToolbarDisabled {
+	disabled-grayscale();
+}
+
+/// Rtl
+.riaswToolbarRtl {
+	.riaswToolbarSeparator {
+	}
+}
+.riaswToolbar {
+	.riaswButtonRtl,
+	.riaswToggleButtonRtl,
+	.riaswDropDownButtonRtl,
+	.riaswComboButtonRtl {
+		//margin-right: auto;
+		.riaswArrowButton {
+			//margin-left: auto;
+			//margin-right: $theme-padding;
+		}
+	}
+
+}
+
+.riaswIEFixedToolbar {
+	//position:absolute;
+	//top: expression(eval((document.documentElement||document.body).scrollTop));
+}

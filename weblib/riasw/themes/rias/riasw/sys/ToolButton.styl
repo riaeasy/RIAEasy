@@ -1,0 +1,35 @@
+/// ToolButton
+
+@import '../../variables';
+
+.riaswToolButton {
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	//overflow: hidden;
+	//float: none;
+	button-style();
+}
+
+.riaswToolButtonHover {
+	button-hover-style('$theme-hover');
+}
+.riaswToolButtonFocused,
+.riaswToolButtonActive {
+	button-active-style('$theme-active');
+}
+.riaswToolButtonDisabled {
+	disabled-grayscale();
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+}
+
+/* Rtl */
+
+.riaswToolButtonRtl {
+	//padding-left: $theme-padding * 2;
+}
+

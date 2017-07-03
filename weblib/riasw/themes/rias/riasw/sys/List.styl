@@ -1,0 +1,124 @@
+/// List
+
+@import '../../variables';
+
+
+.riaswComboBoxList {
+	background: $menu-color;
+	border: 1px solid $menu-border-color;
+	border-radius: $menu-border-radius;
+	padding: $menu-padding;
+	margin: 0;
+}
+.riaswPopup {
+	.riaswComboBoxList {
+		color: $theme-popup-text-color;
+		background-color: $theme-popup-color;
+		border: 1px solid $theme-popup-border-color;
+		border-radius: $theme-popup-border-radius;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+		_shadow($shadow-popup);
+	}
+}
+
+.riaswComboBoxListCaption {
+	background: $menu-caption-color;
+}
+.riaswComboBoxListContainer {
+
+}
+
+.riaswComboBoxListItem {
+	vertical-align: middle;
+	cursor: pointer;
+	text-align: left;
+	white-space: nowrap;
+	//line-height: $menu-item-line-height;
+	padding: $menu-item-padding;
+	margin: $menu-item-margin;
+
+	:focus {
+		outline: none
+	}
+}
+.riaswComboBoxListItemLabel {
+	position: relative;
+	//vertical-align: middle;
+}
+.dj_ie8 {
+	.dj_a11y {
+		.riaswComboBoxListItemLabel {
+			position: static;
+		}
+	}
+}
+.riaswComboBoxListSeparator td {
+	border: 0;
+	padding: 0;
+}
+.riaswComboBoxListSeparatorTop {
+	border-bottom: 1px solid $menu-border-color;
+	font-size: 1px;
+	margin: 0;
+	margin-top: $menu-item-padding;
+	height: auto
+}
+.riaswComboBoxListSeparatorBottom {
+	border-top: 0px solid $menu-border-color;
+	font-size: 1px;
+	margin: 0;
+	margin-bottom: $menu-item-padding;
+	height: auto;
+}
+
+.riaswComboBoxListPreviousButton,
+.riaswComboBoxListNextButton {
+	font-style: italic;
+}
+
+.riaswComboBoxListItemHover {
+	make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+}
+.riaswComboBoxListItemSelected {
+	make-color($menu-item-selected-color, $menu-item-selected-border-color, $menu-item-selected-text-color);
+}
+.riaswComboBoxListItemFocused,
+.riaswComboBoxListItemActive {
+	make-color(false, $theme-hover-border-color, false);
+}
+.dj_a11y {
+	.riaswComboBoxListItemSelected {
+		border: 1px dotted black !important;
+
+		.riaswComboBoxListItemLabel {
+			border-width: 1px;
+			border-style: solid;
+		}
+	}
+}
+.riaswComboBoxListItemDisabled {
+	disabled-grayscale();
+
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+	.riaswComboBoxListItemSelected {
+		//color: $menu-item-disabled-hovered-text-color;
+		//background: $menu-item-disabled-hovered-background-color;
+	}
+}
+.dj_ie {
+	.dj_a11y .riaswComboBoxListItemDisabled,
+	.dj_a11y .riaswComboBoxListItemDisabled *,
+	.riaswComboBoxListItemDisabled * {
+		color: $theme-disabled-text-color;
+		opacity: $theme-disabled-opacity;
+	}
+}
+
+/* Rtl */
+.riaswComboBoxListItemRtl {
+	text-align: right;
+}
+

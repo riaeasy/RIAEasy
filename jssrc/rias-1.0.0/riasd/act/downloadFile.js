@@ -1,1 +1,0 @@
-define(["rias"],function(e){return function(c,d,b){b={success:!1,value:""};if("GET"===c||"POST"===c){var a=this.getConditionSrv(0,d,"pathname");c=this.extractFilename(a);a=this.convertFilePathName(a);this.fileExists(a)&&(a=this.readText(a,"rias"),b.success=!0,b.value=a,b.header={"content-disposition":"attachment;"+this.encodeFilename(d,c)})}return b}});

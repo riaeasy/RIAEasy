@@ -1,0 +1,73 @@
+
+/* Module */
+@import '../../variables';
+
+.riaswModule{
+	//display: block;
+	position: relative;
+	//background-color: inherit;
+	//border: 0;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: 0px solid transparent;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswModule {
+	//overflow: hidden;
+}
+.riaswModuleHover {
+	//border-color: $theme-hover-color;
+	//box-shadow: 0em 0em 2em gold;
+}
+.riaswModuleSelected {
+	//box-shadow: 0.5em 0.5em 2em #777;
+}
+.riaswModuleActive,
+.riaswModuleFocused {
+}
+
+//暂时不用
+/*.riaswModuleWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswModuleContent {
+	//display: block;
+	position: relative;
+	//background-color: inherit;
+	//border: 0;
+	overflow: auto;
+	//-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswModuleContent {
+	overflow: hidden;
+}
+
+
+.riaswModuleLoading {
+	vertical-align: middle;
+}
+.riaswModuleLoadingIcon {
+	background-image: url(join("/", $path-icons, "images/moduleLoading.gif"));
+	background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 8px;
+	//vertical-align: middle;
+}
+.riaswModuleLoadingError {
+	background-image: url(join("/", $path-icons, "images/warning32.png"));
+	background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 8px;
+	//vertical-align: middle;
+}
+.riaswModuleLoading .riaswModuleLoadingIcon,
+.riaswModuleLoading .riaswModuleLoadingError {
+	/*margin-right: 4px;*/
+}
+

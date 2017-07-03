@@ -1,0 +1,34 @@
+
+/* Form */
+
+@import '../../variables';
+
+.riaswForm {
+	/*display: block;*/
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	position: relative;
+	/*background-color: inherit;
+	padding: 0px;
+	margin:0;*/
+	border: 0px solid transparent;
+}
+.riaswFormHover {
+}
+.riaswFormSelected {
+}
+.riaswFormActive,
+.riaswFormFocused {
+}
+
+.riaswFormContent {
+	overflow: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswFormContent {
+	overflow: hidden;
+}
+
+.riaswFormFocusNode {
+}
+

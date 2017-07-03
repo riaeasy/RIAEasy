@@ -1,0 +1,136 @@
+/* Tooltip
+ * 
+ * Tooltip & TooltipDialog:
+ * 1. tooltip content container: 
+ * 		.riaswTooltipContainer - tooltip content container
+ *
+ * 2. tooltip connector: 
+ * 		.riaswTooltipConnector - tooltip anchor includes 4 direction(up, down, left, right)
+ */
+
+@import '../../variables';
+
+.riaswTooltip {
+	display: block;
+	position: absolute;
+	overflow: visible;
+	z-index: 2000;
+	background: transparent; /* make the area on the sides of the arrow transparent */
+	left: 0;
+	top: -10000px;
+	/* the outermost dom node, holding the connector and container */
+	font-size: 1.15em;
+}
+.riaswTooltipData {
+	display:none;
+}
+
+.riaswTooltipContainer {
+	background-color: $tooltip-color;
+	border: $tooltip-border;
+	border-radius: $tooltip-border-radius;
+	font-size: inherit;
+	white-space: nowrap;
+	color: $tooltip-text-color;
+	min-height: 1em;
+	min-width: 2em;
+	padding: $tooltip-padding $tooltip-padding * 2;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	_shadow($tooltip-shadow);
+}
+.dj_ie8,
+.dj_ie9 {
+	.riaswTooltipContainer {
+		background-color: rgb(0, 0, 0);
+		filter: "alpha(opacity=65) progid:DXImageTransform.Microsoft.DropShadow(OffX='4', OffY='4', Color='#555555', Positive=true)";
+	}
+}
+
+.riaswTooltipFocusNode {
+	padding: 2px 2px 2px 2px;
+}
+
+.riaswTooltipConnector {
+	/* the arrow */
+	z-index: 2;
+	width:auto;
+	height:auto;
+	position: absolute;
+}
+.riaswTooltipConnectorTestSize {
+	hight: $tooltip-arrow-size;
+	width: $tooltip-arrow-size;
+}
+.riaswTooltipABRight {
+	.riaswTooltipConnector {
+		/* above or below tooltip, but the arrow appears on the right,
+			and the right edges of target and tooltip are aligned rather than the left */
+		left: auto !important;
+		right: $tooltip-padding * 2;
+	}
+}
+.riaswTooltipBelow {
+	/* leave room for arrow above content */
+	//padding-top: $tooltip-arrow-size;
+	margin-top: $tooltip-arrow-size;
+
+	.riaswTooltipConnector {
+		/* the arrow piece for tooltips below an element */
+		//top: 0;
+		top: - $tooltip-arrow-size;
+		left: $tooltip-padding * 2;
+		border-bottom: $tooltip-arrow-size solid $tooltip-arrow-color;
+		border-left: $tooltip-arrow-size solid transparent;
+		border-right: $tooltip-arrow-size solid transparent;
+		border-top: 0;
+	}
+}
+.riaswTooltipAbove {
+	/* leave room for arrow below content */
+	//padding-bottom: $tooltip-arrow-size;
+	margin-bottom: $tooltip-arrow-size;
+
+	.riaswTooltipConnector {
+		/* the arrow piece for tooltips above an element */
+		//bottom: 0;
+		bottom: - $tooltip-arrow-size;
+		left: $tooltip-padding * 2;
+		border-top: $tooltip-arrow-size solid $tooltip-arrow-color;
+		border-left: $tooltip-arrow-size solid transparent;
+		border-right: $tooltip-arrow-size solid transparent;
+		border-bottom: 0;
+	}
+}
+.riaswTooltipLeft {
+	//padding-right: $tooltip-arrow-size;
+	margin-right: $tooltip-arrow-size;
+
+	.riaswTooltipConnector {
+		/* the arrow piece for tooltips to the left of an element, bottom borders aligned */
+		//right: 0;
+		right: - $tooltip-arrow-size;
+		border-left: $tooltip-arrow-size solid $tooltip-arrow-color;
+		border-bottom: $tooltip-arrow-size solid transparent;
+		border-top: $tooltip-arrow-size solid transparent;
+		border-right: 0;
+	}
+}
+.riaswTooltipRight {
+	//padding-left: $tooltip-arrow-size;
+	margin-left: $tooltip-arrow-size;
+
+	.riaswTooltipConnector {
+		/* the arrow piece for tooltips to the right of an element, bottom borders aligned */
+		//left: 0;
+		left: - $tooltip-arrow-size;
+		border-bottom: $tooltip-arrow-size solid transparent;
+		border-top: $tooltip-arrow-size solid transparent;
+		border-right: $tooltip-arrow-size solid $tooltip-arrow-color;
+	}
+}
+
+.dj_a11y {
+	.riaswTooltipConnector {
+		display: none;
+	}
+}

@@ -1,0 +1,41 @@
+
+/* Panel */
+/* ContentPanel */
+
+@import '../../variables';
+
+.riaswPanel {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	border: $panel-border;
+}
+.riaswPanelHover {
+}
+.riaswPanelSelected {
+}
+.riaswPanelActive,
+.riaswPanelFocused {
+}
+
+///暂时不用
+/*.riaswPanelWrapper {
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	position: relative;
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}*/
+.riaswPanelContent {
+	overflow: auto;
+	position: relative;
+	-webkit-overflow-scrolling: touch;
+}
+.mobileBody .riaswPanelContent {
+	overflow: hidden;
+}
+
+.riaswPanelFocusNode {
+}
+

@@ -1,0 +1,190 @@
+
+@require 'nib/gradients';
+@require 'nib/vendor';
+
+@import "../../../../variables";
+
+$dgrid-background ?= inherit;
+$dgrid-color ?= $theme-workarea-text-color;
+$dgrid-border-color ?= $theme-border-color;
+$dgrid-focused-border-color ?= $theme-highlight-border-color;
+
+$dgrid-cell-padding ?= $theme-padding * 2;
+$dgrid-cell-has-vertical-border ?= false;
+$dgrid-cell-canedit-border-color ?= $grey-700;
+
+$dgrid-header-background ?= inherit;
+//$dgrid-header-background-image ?= linear-gradient(top, #ebf0f5 0%,#d5e0ea 100%);
+//$dgrid-header-filter ?= unquote("progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf0f5', endColorstr='#d5e0ea',GradientType=0 )");
+$dgrid-header-text-transform ?= uppercase;
+$dgrid-header-cell-border-color ?= $theme-border-color;
+$dgrid-header-cell-border-bottom-width ?= 1px;
+$dgrid-header-cell-font-weight ?= bold;
+$dgrid-header-cell-hover-background ?= $theme-hover-color;
+//$dgrid-header-cell-hover-background-image ?= linear-gradient(top, #ffffff 0%,#d2e0eb 100%);
+
+$dgrid-body-cell-border-color ?= $theme-border-color;
+$dgrid-body-row-transition-duration ?= 0.25s;
+$dgrid-body-row-transition-property ?= unquote('background-color, border-color');
+$dgrid-body-row-background-color ?= $dgrid-background;
+$dgrid-body-row-hover-background-color ?= $theme-hover-color;
+//$dgrid-body-row-odd-background-color ?= $primary-color;
+$dgrid-row-even-background-color ?= $grey-50;
+$dgrid-row-odd-background-color ?= $yellow-100;
+
+$dgrid-selected-border ?= 0px solid $theme-hover-border-color;
+$dgrid-selected-background-color ?= $theme-selected-color;
+$dgrid-selected-text-color ?= $theme-selected-text-color;
+$dgrid-selected-hover-background-color ?= $theme-hover-color;
+$dgrid-selected-hover-text-color ?= $theme-hover-text-color;
+
+//$dgrid-highlight-background-color ?= $theme-selected-color;
+
+.dgrid-cell-padding {
+	padding: $dgrid-cell-padding;
+}
+.dgrid-header .dgrid-cell {
+	border-bottom-width: $dgrid-header-cell-border-bottom-width;
+}
+$dgrid-header-cell-border-bottom-width .dgrid-cell {
+	if (!$dgrid-cell-has-vertical-border) {
+		border-left: 0;
+		border-right: 0;
+	}
+}
+
+addStyleIfDefined($property, $varname) {
+	$value = lookup($varname);
+	{$property}: $value if ($value);
+}
+
+applyVariables(name) {
+	// Applies variables (if defined) with a given prefix for several common styles.
+	// Used to implement variables for header/footer and various row states while avoiding repetition.
+	addStyleIfDefined(background, '$dgrid-' + name + '-background');
+	addStyleIfDefined(background-color, '$dgrid-' + name + '-background-color');
+	addStyleIfDefined(background-image, '$dgrid-' + name + '-background-image');
+	addStyleIfDefined(filter, '$dgrid-' + name + '-filter');
+	addStyleIfDefined(border-color, '$dgrid-' + name + '-border-color');
+	addStyleIfDefined(color, '$dgrid-' + name + '-color');
+}
+
+.dgrid {
+	background: $dgrid-background if ($dgrid-background is defined);
+	border-color: $dgrid-border-color if ($dgrid-border-color is defined);
+	color: $dgrid-color if ($dgrid-color is defined);
+}
+
+.dgrid-header,
+.dgrid-footer {
+	applyVariables(header);
+}
+
+.dgrid-header {
+	text-transform: $dgrid-header-text-transform if ($dgrid-header-text-transform is defined);
+
+	.dgrid-cell {
+		border-color: $dgrid-header-cell-border-color if ($dgrid-header-cell-border-color is defined);
+		font-weight: $dgrid-header-cell-font-weight if ($dgrid-header-cell-font-weight is defined);
+
+		&:hover {
+			if ($dgrid-header-cell-hover-background is defined) {
+				background: $dgrid-header-cell-hover-background;
+			}
+			if ($dgrid-header-cell-hover-background-image is defined) {
+				background-image: $dgrid-header-cell-hover-background-image;
+			}
+		}
+	}
+}
+
+.dgrid-row {
+	applyVariables(body-row);
+	transition-duration: $dgrid-body-row-transition-duration if ($dgrid-body-row-transition-duration is defined);
+	transition-property: $dgrid-body-row-transition-property if ($dgrid-body-row-transition-property is defined);
+}
+.dgrid-row-even {
+	.dgrid-datacell {
+		background-color: $dgrid-row-even-background-color;
+	}
+	.dgrid-cell {
+		//background-color: $dgrid-row-even-background-color;
+	}
+	.dgrid-summary-cell,
+	.dgrid-header,
+	.dgrid-selector,
+	.dgrid-opcolumn,
+	.dgrid-rownumcolumn {
+		//background-color: $dgrid-background;
+	}
+}
+.dgrid-row-odd {
+	applyVariables(body-row-odd);
+
+	.dgrid-datacell {
+		background-color: $dgrid-row-odd-background-color;
+	}
+	.dgrid-cell {
+		//background-color: $dgrid-row-odd-background-color;
+	}
+	.dgrid-summary-cell,
+	.dgrid-header,
+	.dgrid-selector,
+	.dgrid-opcolumn,
+	.dgrid-rownumcolumn {
+		//background-color: $dgrid-background;
+	}
+}
+.dgrid-row:hover {
+	applyVariables(body-row-hover);
+	.dgrid-datacell {
+		background-color: $dgrid-body-row-hover-background-color if ($dgrid-body-row-hover-background-color is defined);
+	}
+}
+
+.dgrid-selected {
+	border: $dgrid-selected-border;
+	applyVariables(selected);
+	.dgrid-datacell {
+		background-color: $dgrid-selected-background-color if ($dgrid-selected-background-color is defined);
+		color: $dgrid-selected-text-color if ($dgrid-selected-text-color is defined);
+	}
+}
+.dgrid-selected:hover {
+	applyVariables(selected-hover);
+	.dgrid-datacell {
+		background-color: $dgrid-selected-hover-background-color if ($dgrid-selected-hover-background-color is defined);
+		color: $dgrid-selected-hover-text-color if ($dgrid-selected-hover-text-color is defined);
+	}
+}
+
+.dgrid-highlight {
+	applyVariables(highlight);
+}
+
+.dgrid-cell,
+.dgrid-header-tools {
+	border-color: $dgrid-body-cell-border-color if ($dgrid-body-cell-border-color is defined);
+}
+
+if ($dgrid-suppress-cell-borders == true) {
+	.dgrid-cell {
+		border-left: none;
+		border-right: none;
+	}
+}
+
+if ($dgrid-use-white-sort-arrow == true) {
+	.dgrid-sort-arrow {
+		background-image: url(join("/", $path-riasw-grid, 'images/ui-icons_ffffff_256x240.png'));
+	}
+}
+
+if ($dgrid-column-reorder-border is defined) {
+	.dgrid-header .dojoDndItemBefore {
+		border-left: $dgrid-column-reorder-border;
+	}
+	.dgrid-header .dojoDndItemAfter {
+		border-right: $dgrid-column-reorder-border;
+	}
+}

@@ -1,0 +1,38 @@
+.appIndexBg0 {
+  position: absolute;
+  text-align: center;
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  background-image: url("../images/bg0.jpg");
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/bg0.jpg", sizingMethod="scale")';
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+.appIndexBg1 {
+  position: absolute;
+  text-align: center;
+  opacity: 0.01;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+  filter: alpha(opacity=1);
+  background-image: url("../images/bg1.jpg");
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  background-size: 100% 100%;
+  filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/bg1.jpg", sizingMethod="scale")';
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}

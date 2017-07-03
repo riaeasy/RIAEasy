@@ -1,0 +1,68 @@
+
+/// Resizer
+
+@import '../../variables';
+
+.riaswResizer {
+	float: right;
+	position: absolute;
+	vertical-align: middle;///需要
+	text-align: center;
+	_icon-core-style();
+	right: 0px;
+	bottom: 0px;
+	width: $icon-size;
+	height: $icon-size;
+	//z-index: $resizer-zindex;
+	//background: $resizer-background-url;
+	//background-repeat: no-repeat;
+	//background-position: $resizer-background-position;
+	&:before {
+		content: $resizer-icon;
+	}
+}
+.dijitRtl {
+	.riaswResizer {
+		float: left;
+		left: 0px;
+		right: auto;
+		//background-position: $resizer-background-position-rtl;
+		&:before {
+			content: $resizer-icon-rtl;
+		}
+	}
+}
+
+.riaswResizerNW {
+	cursor: nw-resize;
+}
+.dijitRtl .riaswResizerNW {
+	cursor: ne-resize;
+}
+.riaswResizerNE {
+	cursor: ne-resize; 
+}
+.dijitRtl .riaswResizerNE {
+	cursor: nw-resize;
+}
+.riaswResizerW {
+	cursor: w-resize; 
+}
+.riaswResizerN {
+	cursor: n-resize;
+}
+.riaswResizerNone {
+	cursor: default;
+}
+
+.riaswResizerClone {
+	position: absolute;
+	border: $resizer-clone-border;
+	z-index: 5999;
+	top: 0;
+	left: 0;
+}
+
+
+
+

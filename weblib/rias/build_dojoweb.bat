@@ -1,0 +1,1 @@
+D:\riastudio\js-lib-src\dojo-1.12.2-src\util\buildscripts\build --profile .\rias.dojoweb.profile.js

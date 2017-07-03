@@ -1,0 +1,222 @@
+/*
+ * Includes icon and alternate color mixin functions.
+*/
+
+/* helpers */
+// to calculate when the value is an even number or not
+
+isEven($value) {
+	if ($value % 2 == 0) {
+		true;
+	} else {
+		false;
+	}
+}
+
+// to take half of the given value
+half($value) {
+	$value / 2;
+}
+
+
+make-color($backgroundColor, $borderColor, $textColor){
+	background-color: $backgroundColor if($backgroundColor);
+	border-color: $borderColor if($borderColor);
+	color: $textColor if($textColor);
+}
+
+/* icons */
+// line-height and font-size can be overridden after calling _icon-core-style()
+_icon-core-style() {
+	font-family: $icon-font-family;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: normal;
+	font-size: $icon-size;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+/*_icon-as-button-style() {
+	font-family: $icon-font-family;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	font-size: $icon-size;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	background-color: $button-color;
+	border: 1px solid $button-border-color;
+	border-radius: $button-border-radius;
+	line-height: $button-line-height;
+	padding: $button-padding;
+	cursor: pointer;
+	transition: all 0.05s linear;
+}*/
+
+/* Button */
+
+// common button style properties
+button-style() {
+	background-color: $button-color;
+	border: 1px solid $button-border-color;
+	border-radius: $button-border-radius;
+	//line-height: $button-line-height;
+	padding: $button-padding;
+	cursor: pointer;
+	transition: all 0.05s linear;
+}
+
+button-hover-style($name) {
+	make-color(lookup($name + '-color'), lookup($name + '-border-color'), lookup($name + '-text-color'));
+	transition: all 0.1s;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	box-shadow: $shadow-button;
+}
+button-active-style($name) {
+	make-color(lookup($name + '-color'), lookup($name + '-border-color'), lookup($name + '-text-color'));
+	transition: none;
+	outline: none;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	box-shadow: $shadow-button;
+}
+
+disabled-grayscale() {
+	cursor: default;
+	color: $theme-disabled-text-color;
+	border-color: $theme-disabled-border-color;
+	background-color: transparent;
+	opacity: $theme-disabled-opacity;
+	//filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	//filter: grayscale(100%);///会消隐 border
+	box-shadow: none;
+}
+
+/// css3
+transform($value) {
+	-webkit-transform: $value;
+	transform: $value;
+}
+transform-origin($value) {
+	-webkit-transform-origin: $value;
+	transform-origin: $value;
+}
+transform-style($value) {
+	-webkit-transform-style: $value;
+	// not supported in IE10
+}
+transition-property($value) {
+	-webkit-transition-property: $value;
+	transition-property: $value;
+}
+transition-property-2($value1, $value2) {
+	-webkit-transition-property: $value1, $value2;
+	transition-property: $value1, $value2;
+}
+transition-property-transform() {
+	-webkit-transition-property: -webkit-transform;
+	transition-property: transform;
+}
+transition-duration($value) {
+	-webkit-transition-duration: $value;
+	transition-duration: $value;
+}
+transition-delay($value) {
+	-webkit-transition-delay: $value;
+	transition-delay: $value;
+}
+transition-timing-function($value) {
+	-webkit-transition-timing-function: $value;
+	transition-timing-function: $value;
+}
+animation-name($value) {
+	-webkit-animation-name: $value;
+	animation-name: $value;
+}
+animation-duration($value) {
+	-webkit-animation-duration: $value;
+	animation-duration: $value;
+}
+animation-timing-function($value) {
+	-webkit-animation-timing-function: $value;
+	animation-timing-function: $value;
+}
+animation-iteration-count($value) {
+	-webkit-animation-iteration-count: $value;
+	animation-iteration-count: $value;
+}
+appearance($value) {
+	-webkit-appearance: $value;
+}
+tap-highlight-color($value) {
+	-webkit-tap-highlight-color: $value;
+}
+text-size-adjust($value) {
+	-webkit-text-size-adjust: $value;
+}
+user-select($value) {
+	-webkit-user-select: $value;
+	-ms-user-select: $value;
+}
+
+background-linear-gradient-top-bottom($from, $to) {
+	linear-gradient(to bottom, $from 0%, $to 100%);
+}
+background-linear-gradient-top-bottom-2-stops($from, $to, $pos1, $color1, $pos2, $color2) {
+	linear-gradient(to bottom, $from 0%, $color1 percentage($pos1), $color2 percentage($pos2), $to 100%);
+}
+background-linear-gradient-top-bottom-1-stop($from, $to, $pos1, $color1) {
+	linear-gradient(to bottom, $from 0%, $color1 percentage($pos1), $to 100%);
+}
+background-linear-gradient-top-bottom-3-stops($from, $to, $pos1, $color1, $pos2, $color2, $pos3, $color3) {
+	linear-gradient(to bottom, $from 0%, $color1 percentage($pos1), $color2 percentage($pos2), $color3 percentage($pos3), $to 100%);
+}
+background-linear-gradient-top-bottom-4-stops($from, $to, $pos1, $color1, $pos2, $color2, $pos3, $color3, $pos4, $color4) {
+	linear-gradient(to bottom, $from 0%, $color1 percentage($pos1), $color2 percentage($pos2), $color3 percentage($pos3), $color4 percentage($pos4), $to 100%);
+}
+background-linear-gradient-top-bottom-4-stops-no-from-to($pos1, $color1, $pos2, $color2, $pos3, $color3, $pos4, $color4) {
+	linear-gradient(to bottom, $color1 percentage($pos1), $color2 percentage($pos2), $color3 percentage($pos3), $color4 percentage($pos4));
+}
+background-linear-gradient-top-left-bottom-right($from, $to) {
+	linear-gradient(to right bottom, $from 0%, $to 100%);
+}
+background-linear-gradient-top-left-bottom-right-1-stop($from, $to, $pos1, $color1) {
+	linear-gradient(to right bottom, $from 0%, $color1 percentage($pos1), $to 100%);
+}
+background-linear-gradient-top-left-bottom-right-2-stops($from, $to, $pos1, $color1, $pos2, $color2) {
+	linear-gradient(to right bottom, $from 0%, $color1 percentage($pos1), $color2 percentage($pos2), $to 100%);
+}
+background-linear-gradient-top-left-bottom-right-3-stops($from, $to, $pos1, $color1, $pos2, $color2, $pos3, $color3) {
+	linear-gradient(to right bottom, $from 0%, $color1 percentage($pos1), $color2 percentage($pos2), $color3 percentage($pos3), $to 100%);
+}
+background-radial-gradient-center($r, $from, $to) {
+	radial-gradient($r+0px at center, $from 0%, $to 100%);
+}
+background-spinwheel() {
+	linear-gradient(to bottom, #313137 0%, #73747d 5%, #92939b 7%, #ababb5 9%, #c5c6ce 12%, #dfe0e4 16%, #f4f5f6 22%, #fbfcfc 35%, #fbfcfc 50%, #fbfcfc 61%, #b4c1c7 61%, #fbfcfc 65%, #f4f5f6 78%, #dfe0e4 84%, #c5c6ce 88%, #ababb5 91%, #92939b 93%, #73747d 95%, #313137 100%);
+}
+background-spinwheelbar() {
+	linear-gradient(to bottom, #edeef2 0%, #c8cadd 25%, #bbbfd4 49%, #9fa8c6 51%, #a2a9c7 81%, #a6abc9 82%, #a7adca 100%);
+}
+
+
+// zensst ==========================//
+
+_shadow($shadow) {
+	box-shadow: $shadow;
+	//-webkit-box-shadow: b1 b2 b3 b4 color;
+	//-moz-box-shadow: b1 b2 b3 b40 color;
+}
+_shadow_inset($shadow) {
+	box-shadow: $shadow inset;
+	//-webkit-box-shadow: b1 b2 b3 b4 color inset;
+	//-moz-box-shadow: b1 b2 b3 b4 color inset;
+}
+_textbox_shadow($color) {
+	_shadow_inset(0 0 0.25em 0 $color);
+}

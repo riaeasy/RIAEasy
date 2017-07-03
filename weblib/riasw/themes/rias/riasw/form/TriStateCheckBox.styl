@@ -1,0 +1,128 @@
+/* TriStateCheckBox
+ *
+ * Styling TriStateCheckBox mainly includes:
+ *
+ * 1. Containers
+ * 		.riaswTriStateCheckBox|.riaswTriStateCheckBoxIcon - for border, padding, width|height and background image
+ *
+ * 2. Checked state
+ * 		.riaswTriStateCheckBoxChecked - for checked background-color|image
+ * 		.riaswTriStateCheckBoxMixed - for mixed background-color|image
+ *
+ * 3. Hover state
+ * 		.riaswTriStateCheckBoxHover|.riaswTriStateCheckBoxCheckedHover|.riaswTriStateCheckBoxMixedHover - for background image
+ *
+ * 4. Disabled state
+ * 		.riaswTriStateCheckBoxDisabled|.riaswTriStateCheckBoxCheckedDisabled|.riaswTriStateCheckBoxMixedDisabled - for background image
+ */
+.riaswTriStateCheckBox,
+.riaswTriStateCheckBoxIcon {
+	display: inline-block;
+	vertical-align: middle;
+
+	background-image: url(join("/", $path-riasw-form, 'images/tristatecheckboxStates.png'));
+	/* checkbox sprite image */
+
+	background-repeat: no-repeat;
+	width: 15px;
+	height: 16px;
+	margin: 0 2px 0 0;
+	padding: 0;
+}
+.dj_ie6 .riaswTriStateCheckBox,
+.dj_ie6 .riaswTriStateCheckBoxIcon {
+	background-image: url(join("/", $path-riasw-form, 'images/tristatecheckboxStates.png'));
+	/* checkbox sprite image */
+
+}
+.riaswTriStateCheckBox{
+	/* unchecked */
+	background-position: -15px;
+}
+.riaswTriStateCheckBoxChecked{
+	/* checked */
+	background-position: 0px;
+}
+.riaswTriStateCheckBoxMixed {
+	/* mixed */
+	background-position: -30px;
+}
+.riaswTriStateCheckBoxDisabled {
+	/* disabled and unchecked */
+	background-position: -105px;
+}
+.riaswTriStateCheckBoxCheckedDisabled {
+	/* disabled and checked */
+	background-position: -90px;
+}
+.riaswTriStateCheckBoxMixedDisabled {
+	/* disabled and mixed */
+	background-position: -120px;
+}
+.riaswTriStateCheckBoxHover {
+	/* hovering over and unchecked */
+	background-position: -60px;
+}
+.riaswTriStateCheckBoxCheckedHover {
+	/* hovering over and checked */
+	background-position: -45px;
+}
+.riaswTriStateCheckBoxMixedHover {
+	/* hovering over and mixed */
+	background-position: -75px;
+}
+
+.dijit_a11y {
+	.riaswTriStateCheckBoxHover,
+	.riaswTriStateCheckBoxFocused {
+		// focused or hovering over
+		.riaswTriStateCheckBoxInner,
+		.riaswTriStateCheckBoxInner{
+			border: dashed;
+		}
+	}
+	.riaswTriStateCheckBoxDisabled {
+		.riaswTriStateCheckBoxInner{
+			opacity: 0.5;
+		}
+	}
+}
+
+.dj_ie {
+	.dijit_a11y {
+		.riaswTriStateCheckBoxDisabled .riaswTriStateCheckBoxInner{
+			/* disabled */
+		}
+	}
+}
+
+
+.riaswTriStateCheckBoxInner {
+	/* inner text */
+	visibility: hidden;
+	display: none;
+	position: absolute;
+	text-align: center;
+}
+
+.dijit_a11y .riaswTriStateCheckBoxInner {
+	/* inner text */
+	visibility: visible;
+	display: block;
+}
+
+.riaswTriStateCheckBoxInput {
+	/* place the actual input on top, but all-but-invisible */
+	opacity: 0.01;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 15px;
+	height: 16px;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.dj_ie .riaswTriStateCheckBoxInput {
+	opacity: 0;
+}

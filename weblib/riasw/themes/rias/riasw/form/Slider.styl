@@ -1,0 +1,482 @@
+/// riasw.form.Slider
+
+@import '../../variables';
+
+.riaswSliderMoveable {
+	display: block;
+	//position: absolute;
+	vertical-align: middle;
+	//z-index: 99;
+}
+
+/// Thumbs
+.riaswSliderImageHandle {
+	box-sizing: border-box;
+	display: block;
+	vertical-align: middle;
+	background-image: $simpleslider-knob-background-image;
+	border: $simpleslider-knob-border;
+	border-radius: $simpleslider-knob-border-radius;
+	width: $simpleslider-knob-size;
+	height: $simpleslider-knob-size;
+}
+
+/// Increment/Decrement Buttons
+.riaswSliderDecrementIcon,
+.riaswSliderIncrementIcon {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	_icon-core-style();
+	border: 1px solid $theme-border-color;
+	border-radius: $theme-border-radius;
+	background-color: $theme-input-color;
+	color: $slider-button-color;
+	border-color: $slider-button-color;
+	height: $slider-button-size;
+	width: $slider-button-size;
+	//line-height: $theme-line-height;
+	padding: 0;
+	cursor: pointer;
+	transition: all 0.05s linear;
+	.riaswSliderButtonInner {
+		display: none;
+	}
+}
+.dj_a11y .riaswSliderButtonInner {
+	visibility: visible !important;
+}
+
+.riaswSliderBar {
+	background-color: $slider-bar-color;
+	border: $slider-bar-border;
+	cursor: pointer;
+}
+.riaswSliderProgressBar,
+.riaswSliderBottomBumper,
+.riaswSliderLeftBumper {
+	background-color: $slider-progress-color;
+	//background-image: none;
+	//border-color: $theme-highlight-color;
+	z-index: 1;
+}
+.riaswSliderRemainingBar,
+.riaswSliderTopBumper,
+.riaswSliderRightBumper {
+	overflow: hidden;
+	//background-color: transparent;
+	z-index: 1;
+}
+.riaswSliderDecoration {
+	text-align: center;
+}
+.riaswSliderDecorationTop {
+}
+.riaswSliderDecorationBottom {
+}
+.riaswSliderDecorationLeft {
+}
+.riaswSliderDecorationRight {
+}
+.riaswSliderButton {
+	font-family: monospace;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.riaswSliderButtonContainer {
+	///text-align: center;///使用 td.align="center"
+	//height: 0;
+}
+.riaswRuleLabelsContainer {
+	color: $slider-ruler-color;
+	//font-size: smaller;
+	padding: 0;
+}
+.riaswRuleLabel {
+	position: relative;
+}
+.riaswRuleContainer {
+	position: relative;
+	overflow: visible;
+}
+/* ---- Rule Mark ---- */
+.riaswRuleMark {
+	position: absolute;
+	line-height: 0;
+	height: 100%;
+	border: 0px solid $theme-border-color;
+}
+.riaswRuleLabelContainer {
+	position: absolute;
+}
+.dj_a11y .riaswSliderReadOnly,
+.dj_a11y .riaswSliderDisabled {
+	opacity: $theme-disabled-opacity;
+}
+/* ----- Bar ----- */
+.riaswSlider {
+	border-style: solid;
+	outline: 1px;
+	.riaswSliderLeftBumper {
+		border-radius: $slider-bar-radius 0 0 $slider-bar-radius;
+		//border: 0 none;
+		margin-left: $slider-bar-spacing;
+	}
+	.riaswSliderRightBumper {
+		border-radius: 0 $slider-bar-radius $slider-bar-radius 0;
+		//border: 0 none;
+		margin-left: -2px;
+		margin-right: $slider-bar-spacing;
+	}
+	.riaswButton {
+		padding: 0;
+		display: block;
+	}
+}
+.dj_a11y .riaswSlider .riaswSliderButtonContainer div {
+	font-family: monospace;
+	font-size: 1em;
+	line-height: 1em;
+	height: auto;
+	width: auto;
+	margin: 0 4px;
+}
+
+/* ----- Horizontal Slider ----- */
+.riaswSliderH {
+	.riaswSliderBar {
+		height: $slider-bar-width;
+		border-width:1px 0;
+	}
+
+	.riaswSliderMoveable {
+	}
+	.riaswSliderImageHandle {
+		position: absolute;
+		top: -($icon-size - 2) * .5;/// 调整 boxSize 时的 border
+		right: -($icon-size) * .5;
+		//vertical-align: top;
+	}
+	.riaswSliderBarContainer {
+		position: relative;
+		z-index: 1;
+	}
+	.riaswSliderProgressBar {
+		position: absolute !important;
+		vertical-align: middle;
+		overflow: visible;
+		width: 0;
+	}
+	.riaswSliderRemainingBar {
+		width: 100% !important;
+	}
+	.riaswSliderBottomBumper,
+	.riaswSliderLeftBumper,
+	.riaswSliderTopBumper,
+	.riaswSliderRightBumper {
+		width: ($icon-size) * .5;
+	}
+	.riaswSliderProgressBar,
+	.riaswSliderLeftBumper {
+		//border: 0 none;
+		//background-color: $slider-progress-color;
+		//background-image: none;
+	}
+	.riaswSliderRemainingBar,
+	.riaswSliderRightBumper {
+		//border: 0 none;
+		//background-color: $theme-border-color;
+	}
+	.riaswSliderIncrementIcon {
+		&:before {
+			content: $slider-icon-increment;
+		}
+	}
+	.riaswSliderDecrementIcon {
+		&:before {
+			content: $slider-icon-decrement;
+		}
+	}
+
+	.riaswSliderDecoration {
+		width: 100%;
+	}
+	.riaswRuleContainer {
+		height: 1em;
+	}
+	.riaswRuleLabelsContainer {
+		height: 2em;
+	}
+	.riaswRuleLabelContainer {
+		text-align: center;
+		display: inline-block;
+		margin-top: $slider-ruler-padding;
+		margin-bottom: $slider-ruler-padding;
+	}
+	.riaswRuleLabel {
+		left: -50%;
+	}
+	.riaswRuleMark {
+		width: 0;
+		border-right: 1px solid $slider-ruler-color;
+		border-top-width: 0 !important;
+		border-bottom-width: 0 !important;
+		/*border-left-width: 0 !important;*/
+	}
+}
+/* ----- Vertical Slider ----- */
+.riaswSliderV {
+	.riaswSliderMoveable {
+	}
+	.riaswSliderImageHandle {
+		position: relative;
+		top: -($icon-size) * .5;
+		left: -($icon-size - 2) * .5;/// 调整 boxSize 时的 border
+		//margin-top: 0;
+	}
+	.riaswSliderBarContainer {
+		position: relative;
+		height: 100%;
+		z-index: 1;
+	}
+	.riaswSliderBar {
+		width: $slider-bar-width;
+		border-width: 0 1px;
+	}
+	.riaswSliderProgressBar {
+		position: static !important;
+		vertical-align: top;
+		text-align: left;
+		height: 0;
+	}
+	.riaswSliderRemainingBar {
+		//background-color: $theme-border-color;
+		text-align: left;
+		height: 100%;
+	}
+	.riaswSliderBottomBumper,
+	.riaswSliderLeftBumper,
+	.riaswSliderTopBumper,
+	.riaswSliderRightBumper {
+		height: ($icon-size) * .5;
+	}
+	.riaswSliderTopBumper {
+		//background-color: $theme-border-color;
+		border-radius: $slider-bar-radius $slider-bar-radius 0 0;
+		//border: 0 none;
+		margin-top: $slider-bar-spacing;
+		margin-bottom: -2px;
+	}
+	.riaswSliderBottomBumper {
+		border-radius: 0 0 $slider-bar-radius $slider-bar-radius;
+		//border: 0 none;
+		margin-bottom: $slider-bar-spacing;
+	}
+	.riaswSliderProgressBar,
+	.riaswSliderBottomBumper {
+	}
+	.riaswSliderRemainingBar,
+	.riaswSliderTopBumper {
+	}
+	.riaswSliderIncrementIcon {
+		&:before {
+			content: $slider-v-icon-increment;
+		}
+	}
+	.riaswSliderDecrementIcon {
+		&:before {
+			content: $slider-v-icon-decrement;
+		}
+	}
+
+	.riaswSliderDecoration {
+		position: relative;
+		height: 100%;
+		white-space: nowrap;
+	}
+	.riaswRuleContainer {
+		display: inline-block;
+		height: 100%;
+		width: 1em;
+		line-height: 0;
+		text-align: left;
+	}
+	.dj_opera .riaswRuleContainer {
+		line-height: 2%;
+	}
+	.dj_ie .riaswRuleContainer {
+		line-height: normal;
+	}
+	.dj_gecko .riaswRuleContainer {
+		margin: 0 0 1px 0;
+	}
+	.riaswRuleLabelsContainer {
+		width: 2em;
+	}
+	.riaswRuleLabelContainer {
+		margin-left: $slider-ruler-padding;
+		margin-right: $slider-ruler-padding;
+	}
+	.riaswSliderDecorationLeft {
+		.riaswRuleLabelContainer {
+			right: 0;
+		}
+	}
+	.dj_ie .riaswRuleLabelContainer {
+		margin-top: -0.55em;
+	}
+	.riaswRuleLabel {
+		display: inline-block;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		height: 1.2em;
+		line-height: 1.2em;
+		top: -0.6em;
+	}
+	.riaswRuleMark {
+		height: 0;
+		width: 100%;
+		left: 0;
+		border-right-width: 0 !important;
+		border-left-width: 0 !important;
+		/*border-bottom-width: 0 !important;*/
+		border-bottom: 1px solid $slider-ruler-color;
+	}
+}
+
+// hover
+.riaswSliderHover {
+	.riaswSliderProgressBar,
+	.riaswSliderLeftBumper,
+	.riaswSliderBottomBumper {
+	}
+	.riaswSliderRemainingBar,
+	.riaswSliderRightBumper,
+	.riaswSliderTopBumper {
+	}
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon {
+		make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+	}
+	.riaswSliderImageHandle {
+		box-shadow: $slider-thumb-hover-box-shadow;
+	}
+}
+.riaswSliderHHover {
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon,
+	//.riaswSliderRightBumper,
+	//.riaswSliderTopBumper,
+	//.riaswSliderLeftBumper,
+	//.riaswSliderBottomBumper,
+	//.riaswSliderProgressBar,///SliderH 不需要
+	.riaswSliderRemainingBar {
+		box-shadow: $slider-thumb-hover-box-shadow;
+	}
+}
+.riaswSliderVHover {
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon,
+	//.riaswSliderRightBumper,
+	//.riaswSliderTopBumper,
+	//.riaswSliderLeftBumper,
+	//.riaswSliderBottomBumper,
+	.riaswSliderProgressBar,///SliderV 需要
+	.riaswSliderRemainingBar {
+		box-shadow: $slider-v-thumb-hover-box-shadow;
+	}
+}
+// focus
+.riaswSliderFocused,
+.riaswSliderActive {
+	.riaswSliderProgressBar,
+	.riaswSliderLeftBumper,
+	.riaswSliderBottomBumper {
+		//background-image: none;
+		//make-color(false, $theme-active-border-color, false);
+		//box-shadow: none;
+	}
+	.riaswSliderRemainingBar,
+	.riaswSliderRightBumper,
+	.riaswSliderTopBumper {
+		//box-shadow: none;
+	}
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon {
+		make-color($theme-active-color, $theme-active-border-color, $theme-active-text-color);
+	}
+	.riaswSliderImageHandle {
+		box-shadow: $slider-thumb-hover-box-shadow;
+	}
+}
+.riaswSliderHFocused,
+.riaswSliderHActive {
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon,
+	//.riaswSliderRightBumper,
+	//.riaswSliderTopBumper,
+	//.riaswSliderLeftBumper,
+	//.riaswSliderBottomBumper,
+	//.riaswSliderProgressBar,///SliderH 不需要
+	.riaswSliderRemainingBar {
+		box-shadow: $slider-thumb-focused-box-shadow;
+	}
+}
+.riaswSliderVFocused,
+.riaswSliderVActive {
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon,
+	//.riaswSliderRightBumper,
+	//.riaswSliderTopBumper,
+	//.riaswSliderLeftBumper,
+	//.riaswSliderBottomBumper,
+	.riaswSliderProgressBar,///SliderV 需要
+	.riaswSliderRemainingBar {
+		box-shadow: $slider-v-thumb-focused-box-shadow;
+	}
+}
+
+// read only
+.riaswSliderReadOnly {
+	.riaswSliderImageHandle,
+	.riaswSliderBar,
+	.riaswSliderButtonContainer {
+		cursor: default;
+	}
+	.riaswSliderImageHandle {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+		//opacity: 1;//需要隔离 背景;
+	}
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon {
+		background-color: inherit;
+		color: $theme-disabled-border-color;
+	}
+}
+// disabled
+.riaswSliderDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+
+	.riaswSliderImageHandle,
+	.riaswSliderBar,
+	.riaswSliderButtonContainer {
+		cursor: default;
+	}
+	.riaswSliderImageHandle {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		//border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+	}
+	.riaswSliderDecrementIcon,
+	.riaswSliderIncrementIcon {
+		background-color: inherit;
+	}
+}
+
+/* Rtl */

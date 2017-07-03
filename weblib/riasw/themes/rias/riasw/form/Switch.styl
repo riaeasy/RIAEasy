@@ -1,0 +1,243 @@
+
+/// Switch
+
+@import '../../variables';
+
+.riaswSwitch {
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	text-align: left;
+	overflow: hidden;
+	//line-height: 100%;//$switch-height;
+	tap-highlight-color(rgb(255,255,255));
+	margin: 0;
+	height: $switch-height;
+	width: $switch-height * 2;
+	cursor: pointer;
+}
+.riaswSwitchInner {
+	position: absolute;
+	top: 0;
+	height: 100%;//$switch-height;
+}
+.riaswSwitchAnimation .riaswSwitchInner {
+	transition-property(left);
+	transition-duration(.1s);
+}
+.riaswSwitchOn .riaswSwitchInner {
+	left: 0;
+}
+.riaswSwitchBg {
+	box-sizing: border-box;
+	position: relative;
+	border: $switch-bg-border;
+	//line-height: 100%;//$switch-height;
+	top: 0;
+	//width: $switch-height * 2;
+	height: 100%;//$switch-height;
+}
+.riaswSwitchBgLeft {
+	background-color: $switch-bg-left-background-color;
+	background-image: $switch-bg-left-background-image;
+	color: $switch-bg-left-text-color;
+	//left: 0;
+}
+.riaswSwitchBgRight {
+	background-color: $switch-bg-right-background-color;
+	background-image: $switch-bg-right-background-image;
+	color: $switch-bg-right-text-color;
+}
+.riaswSwitchKnob {
+	box-sizing: border-box;
+	position: absolute;
+	background-color: $switch-knob-background-color;
+	background-image: $switch-knob-background-image;
+	border: $switch-knob-border;
+	top: 0;
+	height: 100%;//$switch-height;
+	width: 50%;
+}
+.riaswSwitchText {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+	//font-family: Helvetica;
+	//font-size: 16px;
+	font-weight: bold;
+	//line-height: $switch-height;
+	padding: 0;
+	top: 0;
+	width: 50%;
+	//height: 100%;//$switch-height;
+}
+.riaswSwitchTextLeft {
+	left: 0;
+}
+.riaswSwitchTextRight {
+	left: 50%;
+}
+
+
+.dj_gecko {
+	.riaswSwitchBg {
+		-moz-box-sizing: border-box;
+	}
+	.riaswSwitchKnob {
+		-moz-box-sizing: border-box;
+	}
+	.riaswSwitch {
+		.riaswSwitchBgLeft {
+			background-image: $switch-bg-left-background-image-gecko;
+		}
+		.riaswSwitchBgRight {
+			background-image: $switch-bg-right-background-image-gecko;
+		}
+		.riaswSwitchKnob {
+			background-image: $switch-knob-background-image-gecko;
+		}
+	}
+}
+.dj_ie {
+	.riaswSwitchBg {
+		border: none;
+		background: none;
+	}
+	.riaswSwitchBgLeft {
+		background-repeat: no-repeat;
+	}
+	.riaswSwitchBgRight {
+		background-repeat: no-repeat;
+	}
+	.riaswSwitchKnob {
+		background: none;
+		background-repeat: no-repeat;
+		border: none;
+	}
+}
+// Default Shape
+// Square Shape
+.riaswSwitchDefaultShape,
+.riaswSwitchSquareShape {
+	&.riaswSwitchOff .riaswSwitchInner {
+		//left: -53px;
+	}
+	.riaswSwitchBg {
+		border-radius: $switch-square-border-radius;
+	}
+	.riaswSwitchBgRight {
+		//left: 53px;
+	}
+	.riaswSwitchKnob {
+		//left: 53px;
+		//width: 50%;
+		border-radius: $switch-square-border-radius;
+	}
+	.riaswSwitchText {
+		//width: 53px;
+	}
+	.riaswSwitchTextRight {
+		//left: 40px;
+	}
+}
+// Round Shape
+.riaswSwitchRoundShape {
+	&.riaswSwitchOff .riaswSwitchInner {
+		//left: -50px;
+	}
+	.riaswSwitchBg {
+		//width: 77px;
+		border-radius: 50%;
+	}
+	.riaswSwitchBgRight {
+		//left: 50px;
+	}
+	.riaswSwitchKnob {
+		//left: 50px;
+		//width: 50%;
+		border-radius: 50%;
+	}
+	.riaswSwitchText {
+		//width: 50px;
+	}
+	.riaswSwitchTextRight {
+		//left: 26px;
+	}
+}
+.dj_ie {
+	.riaswSwitchDefaultShape,
+	.riaswSwitchSquareShape {
+		.riaswSwitchBgLeft {
+			background-image: url(images/switch-square-l.gif);
+		}
+		.riaswSwitchBgRight {
+			background-image: url(images/switch-square-r.gif);
+		}
+		.riaswSwitchKnob {
+			background-image: url(images/switch-square-k.gif);
+		}
+	}
+	.riaswSwitchRoundShape {
+		.riaswSwitchBgLeft {
+			background-image: url(images/switch-round1-l.gif);
+		}
+		.riaswSwitchBgRight {
+			background-image: url(images/switch-round1-r.gif);
+		}
+		.riaswSwitchKnob {
+			background-image: url(images/switch-round1-k.gif);
+		}
+	}
+}
+
+// hover
+.riaswSwitchHover {
+	.riaswSwitchBg,
+	.riaswSwitchKnob {
+		border-color: $theme-hover-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-hover-border-color);
+	}
+}
+// focus
+// active
+.riaswSwitchFocused,
+.riaswSwitchActive {
+	.riaswSwitchBg,
+	.riaswSwitchKnob {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+	}
+}
+
+// read only
+.riaswSwitchReadOnly {
+	cursor: default;
+	.riaswSwitchBg {
+		border-color: $theme-disabled-border-color;
+	}
+	.riaswSwitchKnob {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+	}
+}
+// disabled
+.riaswSwitchDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+	cursor: default;
+
+	//.riaswSwitchBg,
+	.riaswSwitchKnob {
+		background-image: none;
+		background-color: $theme-disabled-background-color;
+		//border-color: $theme-disabled-border-color;//$theme-disabled-text-color-1;
+	}
+}
+
+

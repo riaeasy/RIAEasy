@@ -1,0 +1,96 @@
+
+/// ColorPalette
+
+@import '../../variables';
+
+.riaswColorPalette {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	background-color: $colorpalette-background-color;
+	border: 1px solid $colorpalette-border-color;
+	border-radius: $colorpalette-border-radius;
+
+	.riaswPaletteTable {
+		position: relative;
+		overflow: hidden;
+		outline: 0;
+		border-collapse: separate;
+		padding: $colorpalette-padding;
+		//margin: $colorpalette-margin;
+		td {
+			padding: 0;
+		}
+	}
+	.riaswPaletteCell {
+		font-size: 1px;
+		//vertical-align: middle;
+		text-align: center;
+		background: none;
+	}
+
+	/* swatch */
+
+	.riaswColorPaletteSwatch {
+		height: $colorpalette-swatch-height;
+		width: $colorpalette-swatch-width;
+		border-radius: $colorpalette-swatch-radius;
+	}
+
+	.riaswPaletteImg {
+		padding: 0px;
+		margin: 1px;
+		cursor: default;
+		font-size: 1px;
+		border: 2px solid $colorpalette-swatch-border-color;
+		line-height: normal;
+	}
+
+	.riaswPaletteCell:hover {
+		.riaswPaletteImg {
+			border: 2px solid $colorpalette-swatch-hover-border-color;
+			box-shadow: $colorpalette-swatch-hover-box-shadow;
+			border-radius: $colorpalette-swatch-radius;
+			transform: scale(1.2);
+		}
+	}
+
+	.riaswPaletteCell:active,
+	.riaswPaletteTable .riaswPaletteCellSelected {
+		.riaswPaletteImg {
+			border: 2px solid $colorpalette-swatch-selected-border-color;
+			box-shadow: $colorpalette-swatch-selected-box-shadow;
+			border-radius: $colorpalette-swatch-radius;
+			transform: scale(1.2);
+		}
+	}
+}
+
+.dj_a11y .riaswColorPalette .riaswPaletteTable,
+.dj_a11y .riaswColorPalette .riaswPaletteTable * {
+	background-color: transparent !important;
+}
+.dj_ie6 .riaswColorPalette .riaswPaletteTable,
+.dj_ie7 .riaswColorPalette .riaswPaletteTable,
+.dj_iequirks .riaswColorPalette .riaswPaletteTable {
+	padding: 0;
+	margin: 2px 3px 3px 3px;
+}
+.dj_gecko .riaswColorPalette .riaswPaletteImg {
+	padding-bottom: 0;
+}
+
+.riaswColorPaletteReadOnly {
+	background-color: inherit;
+}
+.riaswColorPaletteDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+}
+
+/* Rtl */
+.riaswColorPaletteRtl .riaswColorPaletteUnder {
+	left: auto;
+	right: 0;
+}

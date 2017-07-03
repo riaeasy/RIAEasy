@@ -1,0 +1,181 @@
+/* Editor 
+ * 
+ * Styling Editor means styling the Editor inside iframe container (riaswEditorIFrameContainer)
+ * 
+ * 1. Editor iframe container (default styling): 
+ * 		.riaswEditorIFrameContainer - normal state styles: background-color, border, padding
+ *
+ * 2. hovered Editor iframe container (ie, mouse hover on editor)
+ * 		.riaswEditorHover .riaswEditorIFrameContainer/riaswEditorIFrame - styles when mouse hover on the container
+ * 
+ * 3. focused Editor iframe container (ie, mouse focus on the editor pane)
+ * 		.riaswEditorFocused .riaswEditorIFrameContainer/riaswEditorIFrame - styles when container focused
+ * 
+ * 3. disabled Editor iframe container 
+ * 		.riaswEditorDisabled - editor's inner iframe container disable status styles: background, border
+ */
+
+@import '../../variables';
+
+@import './htmleditor/editorPlugins';/// 有 icons 和 images 路径，用 css 好些
+
+.riaswEditorIcon {
+	background-image: url(join("/", $path-riasw-editor, 'htmleditor/images/editorIconsEnabled.png')); /* editor icons sprite image for the enabled state */
+	background-repeat: no-repeat;
+	width: 18px;
+	height: 18px;
+	text-align: center;
+}
+.riaswDisabled .riaswEditorIcon {
+	background-image: url(join("/", $path-riasw-editor, 'htmleditor/images/editorIconsDisabled.png')); /* editor icons sprite image for the disabled state */
+}
+
+.riaswEditorEmotion {
+	vertical-align: text-bottom;
+}
+.riaswEditorToolbar {
+	//border-bottom: 1px solid $editor-border-color;
+}
+
+.riaswEditorIconSep { background-position: 0; }
+.riaswEditorIconSave { background-position: -18px; }
+.riaswEditorIconPrint { background-position: -36px; }
+.riaswEditorIconCut { background-position: -54px; }
+.riaswEditorIconCopy { background-position: -72px; }
+.riaswEditorIconPaste { background-position: -90px; }
+.riaswEditorIconDelete { background-position: -108px; }
+.riaswEditorIconCancel { background-position: -126px; }
+.riaswEditorIconUndo { background-position: -144px; }
+.riaswEditorIconRedo { background-position: -162px; }
+.riaswEditorIconSelectAll { background-position: -180px; }
+.riaswEditorIconBold { background-position: -198px; }
+.riaswEditorIconItalic { background-position: -216px; }
+.riaswEditorIconUnderline { background-position: -234px; }
+.riaswEditorIconStrikethrough { background-position: -252px; }
+.riaswEditorIconSuperscript { background-position: -270px; }
+.riaswEditorIconSubscript { background-position: -288px; }
+.riaswEditorIconJustifyCenter { background-position: -306px; }
+.riaswEditorIconJustifyFull { background-position: -324px; }
+.riaswEditorIconJustifyLeft { background-position: -342px; }
+.riaswEditorIconJustifyRight { background-position: -360px; }
+.riaswEditorIconIndent { background-position: -378px; }
+.riaswEditorIconOutdent { background-position: -396px; }
+.riaswEditorIconListBulletIndent { background-position: -414px; }
+.riaswEditorIconListBulletOutdent { background-position: -432px; }
+.riaswEditorIconListNumIndent { background-position: -450px; }
+.riaswEditorIconListNumOutdent { background-position: -468px; }
+.riaswEditorIconTabIndent { background-position: -486px; }
+.riaswEditorIconLeftToRight { background-position: -504px; }
+.riaswEditorIconRightToLeft, .riaswEditorIconToggleDir { background-position: -522px; }
+.riaswEditorIconBackColor { background-position: -540px; }
+.riaswEditorIconForeColor { background-position: -558px; }
+.riaswEditorIconHiliteColor { background-position: -576px; }
+.riaswEditorIconNewPage { background-position: -594px; }
+.riaswEditorIconInsertImage { background-position: -612px; }
+.riaswEditorIconInsertTable { background-position: -630px; }
+.riaswEditorIconSpace { background-position: -648px; }
+.riaswEditorIconInsertHorizontalRule { background-position: -666px; }
+.riaswEditorIconInsertOrderedList { background-position: -684px; }
+.riaswEditorIconInsertUnorderedList { background-position: -702px; }
+.riaswEditorIconCreateLink { background-position: -720px; }
+.riaswEditorIconUnlink { background-position: -738px; }
+.riaswEditorIconViewSource { background-position: -756px; }
+.riaswEditorIconRemoveFormat { background-position: -774px; }
+.riaswEditorIconFullScreen { background-position: -792px; }
+.riaswEditorIconWikiword { background-position: -810px; }
+//.riaswEditorIconToggleDir { background-position: -540px; ;} - 03172010:
+
+/* no longer in the editor toolbar:  .riaswEditorIconToggleDir { background-position: -540px;  padding: 0; margin: 0; color:#555555;
+									font-family:verdana,arial,sans-serif; font-weight: 800; font-size: 70%; */
+/* Editor Rtl */
+.riaswEditorRtl .riaswEditorIcon {
+	background-image: url(join("/", $path-riasw-editor, 'htmleditor/images/editorIconsEnabled_rtl.png')); /* editor icons sprite image for the enabled right to left state */
+}
+.riaswEditorRtlDisabled .riaswEditorIcon {
+	background-image: url(join("/", $path-riasw-editor, 'htmleditor/images/editorIconsDisabled_rtl.png')); /* editor icons sprite image for the disabled right to left state */
+}
+
+.riaswEditor {
+	display: block;
+	position: relative;
+	background-color: $editor-background-color;
+	border: 1px solid $editor-border-color;
+	border-radius: $editor-border-radius;
+
+	.riaswEditorHeader {
+		//position: absolute;
+		//top: 0px;
+		//left: 0px;
+		//right: 0px;
+		border-bottom: 1px solid $editor-border-color;
+	}
+	.riaswEditorFooter {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		border-top: 1px solid $editor-border-color;
+	}
+	.riaswEditorContainer {
+		background-color: $editor-input-color;
+		border: 1px solid $editor-input-border-color;///需要占位
+		//border-top: 1px solid $editor-border-color;
+		//border-bottom: 1px solid $editor-border-color;
+		color: $editor-input-text-color;
+		padding: $editor-input-padding;
+		transition: border 0.2s linear 0s;
+	}
+}
+
+.riaswEditorHover {
+	.riaswEditorContainer {
+		border-color: $theme-hover-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-hover-border-color);
+
+		.riaswEditorIFrame {
+		}
+	}
+}
+.riaswEditorActive {
+	.riaswEditorContainer {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+
+		.riaswEditorIFrame {
+		}
+	}
+}
+.riaswEditorFocused,
+.riaswEditorActive {
+	.riaswEditorContainer {
+		border-color: $theme-active-border-color;
+		transition-duration: .25s;
+		_textbox_shadow($theme-active-border-color);
+
+		.riaswEditorIFrame {
+		}
+	}
+}
+
+.riaswEditorReadOnly {
+	.riaswEditorContainer {
+		//color: inherit;
+		background-color: inherit;// $theme-input-color;
+		//border-color: $theme-disabled-text-color;///用 text-color 更好些
+		//opacity: $theme-disabled-opacity;
+	}
+}
+.riaswEditorDisabled {
+	//border: 1px solid $editor-disabled-border-color;
+	///disabled-grayscale();///需要分散到 toolbar 和 editor
+
+	.riaswEditorContainer {
+		disabled-grayscale();
+	}
+}
+
+/* Rtl  */
+.riaswEditorRtl {
+}

@@ -1,7 +1,0 @@
-/* TitlePane */
-.rias .dijitTitlePaneRtl .dijitTitlePaneTitle {
-  text-align: right;
-}
-.rias .dijitTitlePaneRtl .dijitClosed .dijitArrowNode:before {
-  content: "\f006";
-}

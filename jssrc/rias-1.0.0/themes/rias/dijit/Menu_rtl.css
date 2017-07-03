@@ -1,9 +1,0 @@
-.rias .dijitMenuBarRtl {
-  text-align: right;
-}
-.rias .dijitMenuItemRtl {
-  text-align: right;
-}
-.rias .dijitMenuItemRtl .dijitMenuExpand:before {
-  content: "\f000";
-}

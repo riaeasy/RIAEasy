@@ -1,0 +1,16 @@
+{
+	"name": "rias",
+	"author": "Yan Zheng",
+	"version": "1.0.0",
+	"description": "A lightweight, modular, visual-desing, mobile-ready, data-driven for single-page-application",
+	"license": "LGPL v3",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/riaeasy/RIAEasy"
+	},
+	"devDependencies": {
+	},
+	"directories": {
+	},
+	"main": "./main"
+}

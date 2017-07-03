@@ -1,0 +1,282 @@
+/// Calendar
+
+@import '../../variables';
+
+.riaswCalendar {
+	text-align: center;
+	background-color: $calendar-color;
+	border: 1px solid $calendar-border-color;
+	border-collapse: separate;	// in case user CSS has set border-collapse: collapse for tables
+	border-radius: $calendar-border-radius;
+	padding: $calendar-padding;
+
+	.riaswButton {
+	}
+}
+
+.riaswCalendarContainer {
+	width: auto;
+
+	table {
+		width: auto;	/* in case user has specified a width for the TABLE nodes, see #10553 */
+		clear: both;    /* clear margin created for left/right month arrows; needed on IE10 for CalendarLite */
+	}
+	th,
+	td {
+		vertical-align: middle;
+		padding: $calendar-date-cell-padding;
+	}
+}
+.riaswCalendarIncrementControl,
+.riaswCalendarDateTemplate,
+.riaswCalendarMonthLabel,
+.riaswCalendarPreviousYear,
+.riaswCalendarNextYear {
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.riaswCalendarMonthContainer,
+.riaswCalendarDayContainer,
+.riaswCalendarYearContainer {
+	background-color: $calendar-bar-color;
+}
+
+.riaswCalendarMonthContainer {
+	vertical-align: middle;
+	text-align: center;
+	padding: $theme-padding;
+}
+.riaswCalendarMonthButton {
+	font-size: $calendar-bar-font-size;
+}
+.riaswCalendarIncrementControl {
+	vertical-align: middle;
+	_icon-core-style();
+	background-color: $button-color;
+	border: 1px solid transparent;///需要调整 border-color
+	border-radius: $button-border-radius;
+	font-size: $calendar-icon-size;///需要调整 font-size
+	line-height: normal;///需要调整 line-height
+	padding: $button-padding;
+	cursor: pointer;
+	transition: all 0.05s linear;
+}
+.riaswCalendarDecrementArrow {
+	float: left;
+}
+.riaswCalendarIncrementArrow {
+	float: right;
+}
+.riaswCalendarDecrease {
+	&:before {
+		content: $icon-drop-left;
+	}
+}
+.riaswCalendarIncrease {
+	&:before {
+		content: $icon-drop-right;
+	}
+}
+
+.riaswCalendarDayLabelTemplate {
+	text-align: center;
+	//border-bottom: 1px solid $theme-border-color;
+}
+.riaswCalendarDayLabel {
+	font-weight: bold;
+	text-align: center;
+}
+
+.riaswCalendarSpacer {
+	/* don't display it, but make it affect the width */
+	position: relative;
+	height: 1px;
+	overflow: hidden;
+	visibility: hidden;
+}
+.riaswCalendarDateTemplate {
+	//font-size: 1em;
+	letter-spacing: .05em;
+	text-align:center;
+
+	.riaswCalendarDateLabel {
+		text-decoration: none;
+		display: block;
+		padding: $calendar-date-date-padding;
+		border: 1px solid transparent;
+		border-radius: $calendar-date-date-border-radius;
+	}
+}
+.riaswCalendarCurrentMonth {
+	.riaswCalendarDateLabel {
+		font-weight: bold;
+	}
+}
+.riaswCalendarPreviousMonth,
+.riaswCalendarNextMonth {
+	.riaswCalendarDateLabel {
+		color: $theme-disabled-text-color;
+		opacity: $theme-disabled-opacity;
+	}
+}
+.riaswCalendarCurrentDate {
+	.riaswCalendarDateLabel {
+		border: 1px solid $theme-selected-border-color;
+	}
+}
+.riaswCalendarDisabledDate {
+	cursor: default;
+	.riaswCalendarDateLabel {
+		color: $theme-disabled-text-color;
+		text-decoration: line-through;
+		opacity: $theme-disabled-opacity;
+	}
+}
+
+.riaswCalendarYearContainer {
+	vertical-align:middle;
+}
+.riaswCalendarYearLabel {
+	white-space: nowrap;
+	//color: $theme-input-text-color;
+	//line-height: $theme-line-height;
+	font-size: $calendar-bar-font-size;
+	padding: $theme-padding;
+	//margin: 0;
+}
+.riaswCalendarSelectedYear,
+.riaswCalendarNextYear,
+.riaswCalendarPreviousYear {
+	button-style();
+	border-color: transparent;
+}
+.riaswCalendarNextYear {
+	margin: 0 0 0 0.5em;
+}
+.riaswCalendarPreviousYear {
+	margin: 0 0.5em 0 0;
+}
+.riaswCalendarSelectedYear {
+	color: $theme-selected-text-color;
+	background-color: $theme-selected-color;
+	border: 1px solid $theme-selected-border-color;
+}
+
+/* Styling for month drop down list */
+
+.riaswCalendarMonthMenu {
+	padding: $theme-padding;
+
+	.riaswCalendarMonthLabel {
+		text-align: center;
+		padding: $theme-padding;
+	}
+
+	.riaswCalendarMonthLabelHover {
+		color: $theme-hover-text-color;
+		background-color: $theme-hover-color;
+	}
+}
+
+.riaswCalendarArrowHover .riaswCalendarIncrementControl,
+.riaswCalendarArrow:hover .riaswCalendarIncrementControl,
+.riaswCalendarNextYearHover, .riaswCalendarNextYear:hover,
+.riaswCalendarPreviousYearHover, .riaswCalendarPreviousYear:hover  {
+	button-hover-style('$theme-hover');
+}
+.riaswCalendarHoveredDate,
+.riaswCalendarEnabledDate:hover {
+	.riaswCalendarDateLabel {
+		background-color: $theme-hover-color;
+		border-color: $theme-hover-border-color;
+		//color: $theme-hover-text-color;
+	}
+}
+.riaswCalendarSelectedDate,
+.riaswCalendarSelectedDate.riaswCalendarHoveredDate {
+	.riaswCalendarDateLabel {
+		background-color: $theme-selected-color;
+		border-color: $theme-selected-border-color;
+		//color: $theme-selected-text-color;
+	}
+}
+.riaswCalendarActiveDate .riaswCalendarDateLabel,
+.riaswCalendarEnabledDate:active .riaswCalendarDateLabel {
+	.riaswCalendarDateLabel {
+		background-color: $theme-active-color;
+		border-color: $theme-active-border-color;
+		//color: $theme-active-text-color;
+	}
+}
+.riaswCalendarArrowActive .riaswCalendarIncrementControl,
+.riaswCalendarArrow:active .riaswCalendarIncrementControl,
+.riaswCalendarNextYearActive, .riaswCalendarNextYear:active
+.riaswCalendarPreviousYearActive, .riaswCalendarPreviousYear:active  {
+	button-active-style('$theme-active');
+}
+
+.dj_ie6 {
+	.riaswCalendar {
+		background-image: none;
+	}
+	.riaswCalendarIncrementControl {
+		background-image: url(join("/", $path-riasw-widget, "images/calendarArrows8bit.png"));
+	}
+	.riaswCalendarDateTemplate {
+		background-image: none;
+	}
+	.riaswCalendarActiveDate .riaswCalendarDateLabel {
+		background-image: none;
+	}
+}
+
+.dj_a11y {
+	.riaswCalendarIncrementControl {
+		display: none;
+	}
+
+	.riaswCalendarDateLabel {
+		padding: 1px;
+		border: 0px !important;
+	}
+	.riaswCalendarSelectedDate {
+		.riaswCalendarDateLabel {
+			border-style: solid !important;
+			border-width: 1px !important;
+			padding: 0;
+		}
+	}
+	.riaswCalendarDateTemplate {
+		padding-bottom: 0.1em !important;
+		border: 0px !important;
+	}
+	//.riaswA11ySideArrow {
+	//	display: inline !important;
+	//	cursor: pointer;
+	//}
+}
+
+.riaswCalendarReadOnly {
+	background-color: inherit;
+}
+.riaswCalendarDisabled {
+	disabled-grayscale();
+	filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+	filter: grayscale(100%);
+}
+
+/* Rtl */
+.riaswCalendarRtl {
+	.riaswCalendarDecrease {
+		&:before {
+			content: $icon-drop-right;
+		}
+	}
+	.riaswCalendarIncrease {
+		&:before {
+			content: $icon-drop-left;
+		}
+	}
+}
+

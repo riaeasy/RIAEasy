@@ -1,0 +1,65 @@
+//// Time Picker
+
+@import '../../variables';
+
+.riaswTimePicker {
+	overflow: auto;
+	background-color: $timepicker-color;
+	border: 1px solid $timepicker-border-color;
+	border-radius: $timepicker-border-radius;
+	padding: $timepicker-padding;
+}
+
+.riaswTimePickerItem {
+	text-align: center;
+	//background-color: $timepicker-background-color;
+	//border: 0;
+	border-bottom: 1px solid $timepicker-border-color;
+	white-space: nowrap;
+	padding: $timepicker-item-padding;
+	//margin: 0;
+}
+.riaswTimePickerTick {
+	color: $timepicker-tick-text-color;
+}
+.riaswTimePickerMarker {
+	color: $timepicker-marker-text-color;
+	font-weight: bold;
+}
+.riaswTimePickerTick,
+.riaswTimePickerMarker {
+}
+.riaswTimePickerItemInner {
+}
+
+.riaswTimePickerItemSelected {
+	font-weight:bold;
+	color: $theme-selected-text-color;
+	background-color: $theme-selected-border-color;
+}
+.riaswTimePickerItemHover {
+	background-color: $theme-hover-color;
+	color: $theme-hover-text-color;
+	cursor: pointer;
+}
+.riaswTimePickerItemDisabled {
+	color: $theme-disabled-text-color;
+	text-decoration: line-through;
+}
+
+.riaswTimePickerPopup {
+	//height: 100px;
+}
+
+.dj_a11y {
+	.riaswTimePickerItemSelected {
+		.riaswTimePickerItemInner {
+			//border: solid 4px black;
+		}
+	}
+	.riaswTimePickerItemHover {
+		.riaswTimePickerItemInner {
+			//border: dashed 4px black;
+		}
+	}
+}

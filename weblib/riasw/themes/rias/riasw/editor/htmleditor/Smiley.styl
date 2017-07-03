@@ -1,0 +1,39 @@
+.riaswEditorIconSmiley {
+	/* Toolbar icon for Smiley plugin */
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 18px;
+	height: 18px;
+	background-image: url(join("/", $path-riasw-editor, "htmleditor/images/smiley.gif"));
+}
+
+.riaswDisabled .riaswEditorIconSmiley {
+	/* Toolbar icon for disabled Smiley plugin */
+	background-image: url(join("/", $path-riasw-editor, "htmleditor/images/smileyDisabled.gif"));
+}
+
+.riaswEditorSmileyPalette {
+	border: 1px solid black;
+	background: white;
+	overflow: hidden;
+	//overflow-x: hidden;
+	//overflow-y: hidden;
+}
+
+.riaswEditorSmileyPalette .riaswPaletteCell {
+	height: 50px;
+	width: 50px;
+}
+
+.riaswEditorSmileyPalette .riaswPaletteImg {
+	border: none;
+	height: 48px;
+	width: 48px;
+	padding: 1px;
+}
+
+.riaswEditorSmileyPalette .riaswPaletteCellHover .riaswPaletteImg {
+	border: 1px solid black;
+	padding: 0px;
+}
+

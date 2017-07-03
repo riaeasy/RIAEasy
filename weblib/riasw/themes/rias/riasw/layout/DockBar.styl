@@ -1,0 +1,104 @@
+
+/* DockBar */
+
+@import '../../variables';
+
+.riaswDockBar {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	//background-color: transparent;
+	border: 0px solid $theme-border-color;
+	//color: $toolbar-text-color;
+	padding: $toolbar-padding;
+}
+.riaswDockBarContent {
+	//position: absolute;
+	padding: 0px;
+}
+
+.riaswDockNode {
+	//box-sizing: border-box !important;
+	//display: inline-block;
+	//position: relative;
+	z-index: 1;
+	//border: 1px solid transparent;
+	min-width: 1em;
+	min-height: 1em;
+	//height: auto;
+	//padding: 0;
+	//margin: 0;
+	margin: 0 $tabpanel-tab-spacing;
+}
+.riaswDockBarVertical {
+	.riaswDockNode {
+		margin: $tabpanel-tab-spacing 0;
+	}
+}
+.riaswDockNodeHidden {
+	background-color: inherit;
+	color: inherit;
+}
+.riaswDockNodeShown {
+	background-color: $theme-border-color;
+	color: $theme-workarea-text-color;
+	z-index: 2;
+}
+.riaswDockNodeHover {
+	make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+}
+.riaswDockNodeSelected,
+.riaswDockNodeChecked {
+	make-color($tabpanel-tab-checked-color, $tabpanel-tab-checked-color, $tabpanel-tab-checked-text-color);
+	cursor: default;
+	font-weight: bold;
+	z-index: 3;
+}
+.riaswDockNodeFocused,
+.riaswDockNodeActive {
+	make-color(false, $theme-active-border-color, false);
+}
+
+.riaswDockNode * {
+	//cursor: pointer;
+}
+
+.riaswDockCloseNode {
+	position: absolute;
+}
+
+.riaswDockBarCenter,
+.riaswDockBarTop,
+.riaswDockBarBottom {
+	.riaswTabSpace {
+		min-height: $tabcontroller-tab-min-size;
+	}
+	.riaswTabSpace,
+	.riaswTabSpace * {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		border-left-width: 0 !important;
+		border-right-width: 0 !important;
+		min-width: 0 !important;
+		width: 0 !important;
+	}
+}
+.riaswDockBarLeft,
+.riaswDockBarRight {
+	.riaswTabSpace {
+		min-width: $tabcontroller-tab-min-size;
+	}
+	.riaswTabSpace,
+	.riaswTabSpace * {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		border-top-width: 0 !important;
+		border-bottom-width: 0 !important;
+		min-height: 0 !important;
+		height: 0 !important;
+	}
+}

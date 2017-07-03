@@ -1,0 +1,48 @@
+<div class="dijitDialog" tabindex="-1" role="dialog" aria-labelledby="${id}_title">
+	<div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+	<span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title">${insertTableTitle}</span>
+	<span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon" data-dojo-attach-event="onclick: onCancel" title="${buttonCancel}">
+		<span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+	</span>
+	</div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table class="etdTable"><tr>
+            <td>
+                <label>${rows}</label>
+			</td><td>
+                <span data-dojo-attach-point="selectRow" dojoType="riasw.form.TextBox" value="2"></span>
+            </td><td><table><tr><td class="inner">
+                <label>${columns}</label>
+			</td><td class="inner">
+                <span data-dojo-attach-point="selectCol" dojoType="riasw.form.TextBox" value="2"></span>
+            </td></tr></table></td></tr>		
+			<tr><td>
+                <label>${tableWidth}</label>
+            </td><td>
+                <span data-dojo-attach-point="selectWidth" dojoType="riasw.form.TextBox" value="100"></span>
+			</td><td>
+                <select data-dojo-attach-point="selectWidthType" hasDownArrow="true" dojoType="riasw.form.FilteringSelect">
+                  <option value="percent">${percent}</option>
+                  <option value="pixels">${pixels}</option>
+                </select></td></tr>	
+            <tr><td>
+                <label>${borderThickness}</label>
+            </td><td>
+                <span data-dojo-attach-point="selectBorder" dojoType="riasw.form.TextBox" value="1"></span>
+            </td><td>
+                ${pixels}
+            </td></tr><tr><td>
+                <label>${cellPadding}</label>
+            </td><td>
+                <span data-dojo-attach-point="selectPad" dojoType="riasw.form.TextBox" value="0"></span>
+            </td><td class="cellpad"></td></tr><tr><td>
+                <label>${cellSpacing}</label>
+            </td><td>
+                <span data-dojo-attach-point="selectSpace" dojoType="riasw.form.TextBox" value="0"></span>
+            </td><td class="cellspace"></td></tr></table>
+        <div class="dialogButtonContainer">
+            <div dojoType="riasw.form.Button" data-dojo-attach-event="onClick: onInsert">${buttonInsert}</div>
+            <div dojoType="riasw.form.Button" data-dojo-attach-event="onClick: onCancel">${buttonCancel}</div>
+        </div>
+	</div>
+</div>

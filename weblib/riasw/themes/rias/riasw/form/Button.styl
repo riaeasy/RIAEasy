@@ -1,0 +1,410 @@
+/// Button/CheckBox
+
+@import '../../variables';
+
+.riaswToggleButton,
+.riaswCheckButton,
+.riaswRadioButton,
+//.riaswDropDownButton,
+.riaswComboButton,
+.riaswUploader,
+.riaswButton {
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	//vertical-align: middle;
+	text-align: center;
+	//overflow: hidden;
+	//float: none;
+	button-style();
+}
+.riaswComboButton {
+	padding-right: 0;
+	height: 2.2em;/// ArrowButton 需要 height
+}
+
+.riaswButtonPrimary {
+	background-color: $primary-color;
+	color: $primary-text-color;
+}
+.riaswButtonOk {
+	background-color: $ok-color;
+	color: $ok-text-color;
+}
+.riaswButtonInfo {
+	background-color: $info-color;
+	color: $info-text-color;
+}
+.riaswButtonWarn {
+	background-color: $warn-color;
+	color: $warn-text-color;
+}
+.riaswButtonDanger {
+	background-color: $danger-color;
+	color: $danger-text-color;
+}
+.riaswButtonError {
+	background-color: $error-color;
+	color: $error-text-color;
+}
+.riaswButtonInverse {
+	background-color: $inverse-color;
+	color: $inverse-text-color;
+}
+
+.riaswArrowButtonContainer,
+.riaswSpinnerButtonContainer {
+	//box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	text-align: center;
+	float: right;
+	border-style: solid;
+	border-width: 0px 0px 0px 1px;
+	border-color: $button-border-color;
+	border-radius: 0 $button-border-radius $button-border-radius 0;
+	height: 100%;
+}
+
+.riaswArrowButton  {
+	//box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	///vertical-align: middle;///不需要
+	float: none;
+	_icon-core-style();
+	//background-color: inherit;
+	//background: $button-arrow-icon-url;
+	//background-color: inherit;
+	//background-repeat: no-repeat;
+	//background-position: $button-arrow-icon-position-down;
+	border: 0;
+	line-height: inherit;
+	width: $button-arrow-icon-width;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	&:before {
+		content: none; // remove arrow icons from riaswArrowButton nodes
+	}
+}
+.riaswLeftArrowButton {
+	//background-position: $button-arrow-icon-position-left
+	&:before {
+		content: $button-arrow-icon-left;
+	}
+}
+.riaswRightArrowButton {
+	//background-position: $button-arrow-icon-position-right
+	&:before {
+		content: $button-arrow-icon-right;
+	}
+}
+.riaswUpArrowButton {
+	//background-position: $button-arrow-icon-position-up
+	&:before {
+		content: $button-arrow-icon-up;
+	}
+}
+.riaswDownArrowButton {
+	//background-position: $button-arrow-icon-position-down;
+	&:before {
+		content: $button-arrow-icon-down;
+	}
+}
+.riaswSpinnerButtonContainer {
+	.riaswDownArrowButton {
+		//border-radius: 0 $button-border-radius $button-border-radius 0;
+	}
+}
+.riaswDisabled {
+	.riaswDownArrowButton {
+		//background-position: -144px -112px;
+	}
+	.riaswLeftArrowButton {
+		//background-position: -48px -112px;
+	}
+	.riaswRightArrowButton {
+		//background-position: -112px -112px;
+	}
+	.riaswUpArrowButton {
+		//background-position: -80px -112px;
+	}
+}
+
+.riaswToggleButtonChecked {
+	button-active-style('$theme-active');
+}
+
+/// riaswCheckBox
+//.riaswCheckBoxInput,
+.riaswCheckMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioBox,
+.riaswCheckBox {
+	//box-sizing: border-box;//不便于 before/after 定位
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	text-align: center;
+	overflow: hidden;
+	background-color: $theme-input-color;
+	background-image: none;///需要清空 background-image，避免有 image 叠加
+	background-position:center center;
+	background-repeat:no-repeat;
+	border: 1px solid $theme-border-color;
+	border-radius: $icon-size * 0.125;
+	width: $icon-size;
+	height: $icon-size;
+	line-height: normal;
+	padding: 0;
+	//cursor: pointer;
+	transition: all 0.1s linear;
+	input {
+		position: absolute;
+		top: 0;
+	}
+}
+.riaswRadioMenuItem .riaswCheckMenuItemIcon,
+.riaswRadioBox {
+	background-color: $theme-input-color;
+	border: 1px solid $theme-border-color;
+	border-radius: 50%;
+	padding: 0;
+	width: $icon-size;
+	height: $icon-size;
+	&:after {
+		display: block;
+		position: absolute;
+		content: " ";
+		background-color: $theme-highlight-color;
+		border-radius: 50%;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		margin: ($icon-size) * .5;
+		opacity: 0;
+		transition: all 0.15s ease-in-out;
+	}
+}
+.riaswCheckBoxInput {
+	/*overflow: hidden;
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: 0;
+	width: $icon-size;
+	height: $icon-size;
+	padding: 0;
+	cursor: pointer;
+	opacity: 0.01;*/
+}
+
+//.riaswCheckBoxIcon,
+.riaswCheckMenuItemChecked .riaswCheckMenuItemIcon,
+.riaswCheckBoxChecked {
+	&:before {
+		_icon-core-style();
+		line-height: normal;
+		content: $checkbox-icon;
+		color: $theme-highlight-color;
+	}
+}
+.riaswRadioMenuItemChecked .riaswCheckMenuItemIcon,
+.riaswRadioBoxChecked {
+	&:after {
+		width: ($icon-size) * .5;
+		height: @width;
+		margin: ($icon-size) * .25;
+		opacity: 1;
+	}
+}
+
+/// checked
+.riaswCheckMenuItemChecked .riaswCheckMenuItemIcon,
+.riaswCheckBoxChecked {
+	//background-color: $theme-highlight-color;
+	border-color: $theme-highlight-color;
+}
+.riaswRadioBoxChecked {
+	border-color: $theme-highlight-color;
+}
+
+/// hovered
+.riaswCheckBoxHover {
+	make-color(false, $theme-hover-border-color, false);
+}
+.riaswCheckBoxCheckedHover {
+	//make-color(false, $theme-hover-border-color, false);
+}
+.riaswRadioBoxHover {
+	make-color($theme-hover-color, $theme-hover-border-color, false);
+}
+
+.riaswCheckBoxReadOnly,
+.riaswRadioBoxReadOnly {
+	cursor: default;
+	background-color: inherit;// $theme-input-color;
+	//border-color: $theme-disabled-border-color;///用 text-color 更好些
+	//color: inherit;
+	//color: $theme-disabled-text-color;
+	//opacity: $theme-disabled-opacity;
+}
+.riaswCheckBoxReadOnly {
+	&.riaswCheckBoxChecked {
+		&:before {
+			color: $theme-disabled-text-color;
+		}
+	}
+}
+.riaswRadioBoxReadOnly {
+	&.riaswRadioBoxChecked {
+		&:after {
+			background-color: $theme-disabled-text-color;
+		}
+	}
+}
+.riaswRadioBoxDisabled,
+.riaswCheckBoxDisabled {
+	disabled-grayscale();
+}
+.riaswCheckBoxDisabled {
+	&.riaswCheckBoxChecked {
+		&:before {
+			color: $theme-disabled-text-color;
+		}
+	}
+}
+.riaswRadioBoxDisabled {
+	&.riaswRadioBoxChecked {
+		&:after {
+			background-color: $theme-disabled-text-color;
+		}
+	}
+}
+.riaswCheckBoxCheckedDisabled {
+	//color: $theme-disabled-text-color;
+	//background-color: $checkbox-checked-disabled-background-color;
+	//border-color: $checkbox-checked-disabled-border-color;
+}
+.riaswRadioBoxCheckedDisabled {
+	//background-color: $theme-disabled-background-color;
+	//border-color: $radio-checked-disabled-color;
+	//&:after {
+	//	background-color: $radio-checked-disabled-color;
+	//}
+}
+
+/// riaswCheckButton /// 需要在最后，覆盖 border-color、background-color
+.riaswCheckButton,
+.riaswRadioButton {
+	border-color: transparent;
+	background-color: transparent;
+}
+
+.riaswButtonHover,
+.riaswArrowButtonHover {
+	button-hover-style('$theme-hover');
+}
+.riaswButtonActive,
+.riaswArrowButtonActive,
+.riaswButtonFocused,
+.riaswArrowButtonFocused {
+	button-active-style('$theme-active');
+}
+.riaswButton {
+	.riaswArrowButtonHover,
+	.riaswArrowButtonActive,
+	.riaswArrowButtonFocused {
+		make-color($toolbutton-inner-hover-color, $toolbutton-inner-hover-border-color, $toolbutton-inner-hover-text-color);
+	}
+}
+// readonly
+.riaswButtonReadOnly {
+	color: $theme-disabled-text-color;
+	background-color: transparent;// $theme-input-color;
+	//border-color: $theme-disabled-text-color;///用 text-color 更好些
+	//opacity: $theme-disabled-opacity;
+
+	.riaswArrowButtonContainer,
+	.riaswSpinnerButtonContainer {
+		display: none;
+	}
+}
+.riaswCheckButtonReadOnly,
+.riaswRadioButtonReadOnly {
+	border-color: transparent;
+	background-color: transparent;
+}
+// disabled
+.riaswButtonDisabled,
+.riaswArrowButtonDisabled {
+	disabled-grayscale();
+
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+	.riaswArrowButtonContainer,
+	.riaswSpinnerButtonContainer {
+		display: none;
+	}
+}
+.riaswCheckButtonDisabled,
+.riaswRadioButtonDisabled {
+	border-color: transparent;
+	background-color: transparent;
+}
+
+/* Rtl */
+
+.riaswButtonRtl,
+.riaswArrowButtonRtl {
+	//padding-left: $theme-padding * 2;
+}
+table.riaswComboButtonRtl .dijitStretch  {
+	border-radius: 0 $button-border-radius $button-border-radius 0;
+}
+table.riaswComboButtonRtl .riaswArrowButton {
+	border-radius: $button-border-radius 0 0 $button-border-radius;
+	border-left-width: 1px;
+	border-right-width: 0;
+}
+
+.dj_ie6 .riaswReadOnly input,
+.dj_ie7 .riaswReadOnly input,
+.dj_ie6 .riaswComboButtonDisabled .riaswButtonLabel,
+.dj_ie7 .riaswComboButtonDisabled .riaswButtonLabel {
+	/* opacity doesn't work on table node in IE, work around here */
+	color: #aaa;
+}
+.dj_ie6 .riaswArrowButton {
+	//background-image: url("../images/spriteArrows.gif");
+}
+.dj_ie .riaswSpinner .riaswUpArrowButton {
+	//margin-top: 1px; /* image has too many blank pixels on top */
+}
+
+.dj_ie {
+	.riaswCheckBoxInput {
+		opacity: 0;
+	}
+}
+.dj_a11y {
+	.riaswCheckBoxInput {
+		opacity: 1;
+		filter: none;
+		width: auto;
+		height: auto;
+	}
+	.riaswCheckBoxFocusedLabel {
+		//border: 1px dotted;
+		//outline: 0px !important;
+		font-weight: bold;
+		color: $theme-active-border-color;
+	}
+}
+

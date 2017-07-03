@@ -1,0 +1,381 @@
+
+//@require 'nib';
+
+@import 'variables';
+
+:focus {
+	outline: none;
+	//outline-color: darkorange;
+	//outline-style: dashed;
+	//outline-width: 6px;
+	//outline-offset: -3px;
+}
+
+// dijit base
+@import "rias_dijit";
+
+// icons
+@import "icons/icons";//需要先引入
+//@import "icons/flat-icons";
+
+@import "riasw/sys/Common";
+@import "riasw/form/Common";
+@import "riasw/editor/Common";
+@import "riasw/layout/Common";
+@import "riasw/tree/Tree";
+@import "riasw/widget/Common";
+
+///@import "riasw/grid/dgrid";////dgrid 需要运行期引入
+
+.webSeo {///由于 css 的加载延迟，还是应该在 html 中设置
+	left: -20000px;
+	top: -20000px;
+	width: 100px;
+	height: 100px;
+	visibility: hidden;
+	position: absolute;
+	display: block;
+}
+
+.riaswHidden {
+	display: none !important;
+}
+
+.riaswForceStatic {
+	position: static !important;
+}
+.riaswGlobalFocused {
+	top: -10000px;
+	left: -10010px;
+	width: 1em;
+	height: 1em;
+	display: block;
+	position: absolute;
+	overflow: hidden;
+	z-index: 10010;
+	//border: 2px solid gold;
+	outline-color: darkorange;
+	outline-style: solid;
+	outline-width: 2px;
+	outline-offset: -2px;
+}
+
+.riaswBackgroundIframe {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+.riaswPlaceHolder {
+	color: #999;
+	/*font-style: italic;*/
+	position: absolute;
+	top: 0;
+	left: 0;
+	//filter: none;
+}
+
+.riaswMovable {
+	cursor: move;
+}
+
+/// float
+.riaswFloatLeft {
+	float: left;
+}
+.riaswFloatRight {
+	float: right;
+}
+.riaswFloatNone {
+	float: none;
+}
+
+/// text align
+.riaswAlignLeft {
+	text-align: left;
+}
+.riaswAlignRight {
+	text-align: right;
+}
+.riaswAlignCenter {
+	text-align: center;
+}
+
+/// region
+.riaswRegionNone,
+.riaswRegionCenter {
+	&.riaswCaptionPanel,
+	&.riaswFieldset,
+	&.riaswAccordionPanel,
+	&.riaswPanel,
+	&.riaswStackPanel,
+	&.riaswTablePanel {
+	}
+}
+.riaswRegionTop {
+	&.riaswCaptionPanel,
+	&.riaswFieldset,
+	&.riaswAccordionPanel,
+	&.riaswPanel,
+	&.riaswStackPanel,
+	&.riaswTablePanel {
+	}
+}
+.riaswRegionBottom {
+	&.riaswCaptionPanel,
+	&.riaswFieldset,
+	&.riaswAccordionPanel,
+	&.riaswPanel,
+	&.riaswStackPanel,
+	&.riaswTablePanel {
+	}
+}
+.riaswRegionLeft {
+	&.riaswCaptionPanel,
+	&.riaswFieldset,
+	&.riaswAccordionPanel,
+	&.riaswPanel,
+	&.riaswStackPanel,
+	&.riaswTablePanel {
+	}
+}
+.riaswRegionRight {
+	&.riaswCaptionPanel,
+	&.riaswFieldset,
+	&.riaswAccordionPanel,
+	&.riaswPanel,
+	&.riaswStackPanel,
+	&.riaswTablePanel {
+	}
+}
+
+/// popup
+.riaswPopup {
+	position: absolute;
+	background-color: transparent;
+	//background-color: $theme-popup-color;
+	border: 0;
+	//border: 1px solid $theme-popup-border-color;
+	//border-radius: $theme-popup-border-radius;
+	padding: 0;
+	margin: 0;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	//_shadow($shadow-popup);
+}
+.riaswPopup {
+	.riaswCalendar,
+	.riaswColorPalette,
+	.riaswColorPicker,
+	.riaswTimePicker,
+	.riaswMenu,
+	.riaswPanel,
+	.riaswStackPanel,
+	.riaswTabPanel,
+	.riaswAccordionPanel,
+	.riaswCaptionPanel,
+	.riaswTablePanel,
+	.riaswForm,
+	.riaswModule {
+		color: $theme-popup-text-color;
+		background-color: $theme-popup-color;
+		border: 1px solid $theme-popup-border-color;
+		border-radius: $theme-popup-border-radius;
+		//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+		_shadow($shadow-popup);
+	}
+}
+.riaswDropDown {
+	//border-radius: $theme-border-radius;
+	//opacity:1;
+}
+
+/// icon label
+.riaswButtonLabel {
+	//box-sizing: border-box;
+	display: inline-block;
+	//position: relative;
+	vertical-align: middle;///需要
+	text-align: center;
+	//white-space: nowrap;
+	word-break: break-all;
+	line-height: normal;
+	//float: none;
+	padding: $theme-padding;
+	//height: 100%;
+}
+.riaswCheckButton,
+.riaswRadioButton,
+.riaswToolButtonHasIcon,
+.riaswButtonHasIcon {
+	.riaswButtonLabel {
+		padding-left: 1px;
+	}
+}
+.riaswButtonIcon.riaswNoIcon {
+	//display: none !important;
+	border: 0;
+	width: 0;
+	//height: $icon-size;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+.riaswButtonLabel.riaswNoLabel {
+	border: 0;
+	//width: 0;
+	//height: auto;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+/* IconTop ===============================================*/
+/* Vertical ===============================================*/
+.riaswIconLayoutTop,
+.riaswDisplayVertical,
+.riaswDisplayVerticalLR,
+.riaswDisplayVerticalRL {
+	.riaswButtonIcon {
+		display: block;
+		margin: 0 auto;
+	}
+	.riaswButtonLabel {
+		display: block;
+		height: auto;
+		//margin-top: 0.25em;
+		margin: 0.25em auto;
+		padding: 0.25em;
+		white-space: nowrap;///normal 会引起显示不正常
+	}
+	.riaswArrowButton {
+		display: block;
+		height: auto;
+		//float: none;
+	}
+	.riaswBadge {
+		float: none;
+		height: 1.75em;
+		width: 1.25em;
+		//top: 0em;
+		//left: 0em;
+	}
+	.riaswBadge2 {
+		//width: 2em;
+	}
+	.riaswBadge3 {
+		//width: 2.75em;
+	}
+	.riaswBadgeMore {
+		//width: 3em;
+	}
+	.riaswBadgeText {
+	}
+	.riaswToolButton,
+	.riaswButton {
+		display: block;
+		//padding: $toolbar-button-padding 0;
+	}
+	///Tab & DockNode
+	&.riaswToolButton,
+	&.riaswButton {
+		display: block;
+		//margin: 0.25em;
+		padding: $tabpanel-right-tab-padding;
+	}
+}
+.riaswDisplayVertical,
+.riaswDisplayVerticalLR,
+.riaswDisplayVerticalRL {
+	.riaswButtonIcon.riaswNoIcon {
+		//display: none !important;
+		border: 0;
+		width: $icon-size;
+		height: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.riaswButtonLabel.riaswNoLabel {
+		border: 0;
+		//width: auto;
+		//height: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+/* TextVertical ====================================*/
+.riaswTextHorizontal,
+.riaswTextHorizontalLR {
+	-webkit-writing-mode: horizontal-tb;
+	-mov-writin-mode: horizontal-tb;
+	writing-mode: horizontal-tb;
+}
+.riaswTextHorizontalRL {
+	-webkit-writing-mode: horizontal-tb;
+	-mov-writin-mode: horizontal-tb;
+	writing-mode: horizontal-tb;
+}
+
+.riaswTextVertical {
+	margin-top: 0;
+}
+.riaswTextVertical,
+.riaswTextVerticalLR {
+	letter-spacing: 2px;
+	-webkit-writing-mode: vertical-lr;
+	-mov-writin-mode: vertical-lr;
+	writing-mode: vertical-lr;
+	writing-mode: tb-rl;
+	//text-orientation: upright;
+}
+.riaswTextVerticalRL {
+	letter-spacing: 2px;
+	-webkit-writing-mode: vertical-rl;
+	-mov-writin-mode: vertical-rl;
+	writing-mode: vertical-rl;
+	writing-mode: tb-rl;
+	//text-orientation: upright;
+}
+
+.riaswFocused {
+	//outline-color: darkorange;
+	//outline-style: dashed;
+	//outline-width: 2px;
+	//outline-offset: -2px;
+}
+.riaswReadOnly *,
+.riaswDisabled *,
+.riaswReadOnly,
+.riaswDisabled {
+	cursor: default;
+}
+
+.riaswConsoleLog {
+	border-bottom: 1px dashed $theme-border-color;
+	//font-size: 1.1em;
+	padding: 0.5em;
+}
+.riaswConsoleLogDebug {
+	color: $info-color;
+}
+.riaswConsoleLogLog,
+.riaswConsoleLogInfo {
+	color: $theme-input-text-color;
+}
+.riaswConsoleLogWarn {
+	color: $warn-color;
+}
+.riaswConsoleLogError {
+	font-size: 1.1em;
+	color: $error-color;
+}

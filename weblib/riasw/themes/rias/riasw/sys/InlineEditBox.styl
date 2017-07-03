@@ -1,0 +1,31 @@
+
+/// InlineEditBox
+
+@import '../../variables';
+
+
+.riaswInlineEditBoxDisplayMode {
+	cursor: text;
+	border: 1px dashed $inlineeditbox-border-color;
+	padding: $inlineeditbox-padding;
+	border-radius: $inlineeditbox-border-radius;
+}
+
+.riaswInlineEditBoxDisplayModeHover,
+.dj_a11y .riaswInlineEditBoxDisplayModeHover,
+.dj_ie6 .riaswInlineEditBoxDisplayModeHover {
+	background-color: $inlineeditbox-hover-background-color;
+	border: 1px dashed $inlineeditbox-hover-border-color;
+}
+
+.riaswInlineEditBoxDisplayModeDisabled {
+	cursor: default;
+	disabled-grayscale();
+}
+
+.dj_a11y,
+.dj_ie6 {
+	.riaswInlineEditBoxDisplayMode {
+		border: none;
+	}
+}

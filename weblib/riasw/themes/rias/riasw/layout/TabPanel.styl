@@ -1,0 +1,548 @@
+
+/// TabPanel
+
+@import '../../variables';
+
+.riaswTabPanel {
+	display: block;
+	position: relative;
+	overflow: hidden;///避免添加 shadow 时改变 size，如果希望看到 shadow，可以设置 margin
+	z-index: 0;
+	border: 0px solid transparent;
+	//border-radius: $tabpanel-wrapper-border-radius;
+}
+.dj_ie6 {
+	.riaswTabPanel {
+		//overflow: hidden;
+	}
+}
+.riaswTabPanelNoLayout {
+	width: 100%;
+}
+.riaswTabPanelTopChildWrapper,
+.riaswTabPanelBottomChildWrapper,
+.riaswTabPanelLeftChildWrapper,
+.riaswTabPanelRightChildWrapper {
+	position: absolute;///有 fx 存在，会 设置为 absolute
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.riaswTabContainer {
+	display: inline-block;
+	position: relative;
+	text-align: left;
+	z-index: 1;
+}
+.riaswTabListWrapper {
+	overflow: hidden;
+	z-index: 1;
+}
+
+.riaswTabPanelContent {
+	background: inherit;
+	margin: 0;
+	padding: $tabpanel-container-padding;
+	//border: none;
+	border: 0px solid $tabpanel-tab-checked-color;
+	//border-radius: 0 0 $tabpanel-wrapper-border-radius $tabpanel-wrapper-border-radius;
+	border-radius: $tabpanel-wrapper-border-radius if $tabpanel-wrapper-border-radius;
+	z-index: 1;
+	overflow: visible !important;
+}
+
+.riaswTabController {
+	z-index: 1;
+}
+
+// tab ======================== //
+.riaswTab {
+	box-sizing: border-box !important;
+	vertical-align: middle;
+	text-align: center;
+	position: relative;
+	background-color: $tabpanel-tab-color;
+	border: 1px solid $tabpanel-tab-border-color;
+	border-radius: $tabpanel-tab-border-radius if $tabpanel-tab-border-radius;
+	//font-size: 1em;
+	white-space: nowrap;
+	cursor: pointer;
+	padding: $tabpanel-tab-padding;
+	margin: $tabpanel-tab-margin;
+	transition-property: background, padding, margin;
+	transition-duration: .1s;
+	transition-timing-function: ease;
+	z-index: 0;
+	if ($tabpanel-tab-checked-has-highlight-border) {
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+		}
+	}
+	* {
+		//vertical-align: middle;
+	}
+	.riaswTabLabel {
+		/*min-height: 16px;*/
+		display: inline-block;
+	}
+}
+.riaswTabHover {
+	make-color($theme-hover-color, $theme-hover-border-color, $theme-hover-text-color);
+}
+.riaswTabChecked {
+	make-color($tabpanel-tab-checked-color, $tabpanel-tab-checked-color, $tabpanel-tab-checked-text-color);
+	font-weight: bold;
+	cursor: default;
+	z-index: 1;
+	//filter: "progid:DXImageTransform.Microsoft.Shadow(color='#aa555555', Direction=135, Strength=4)";
+	box-shadow: $shadow-button, 0em 0em 0.25em 0em $tabpanel-tab-checked-color inset;
+
+	&.riaswTabHover,
+	&.riaswTabFocused,
+	&.riaswTabActive {
+		//make-color($theme-active-color, $theme-active-border-color, $theme-active-text-color);
+	}
+}
+.riaswTabFocused,
+.riaswTabActive {
+	make-color(false, $theme-active-border-color, false);
+}
+.riaswTabDisabled {
+	disabled-grayscale();
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+}
+div.riaswTabDisabled, .dj_ie div.riaswTabDisabled {
+	cursor: auto;
+}
+
+.dj_ie6 {
+	.riaswTab {
+		.riaswButtonIcon.riaswNoIcon {
+			display: inline;
+			padding: 0;
+			margin: 0;
+			border: 0;
+			height: 15px;
+			width: 1px;
+		}
+	}
+}
+
+.riaswTabCloseNode {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	_icon-core-style();
+	width: $tabpanel-tab-close-icon-size;
+	height: @width;
+	line-height: @height;
+	&:before {
+		content: $tabpanel-tab-close-button-icon;
+		//font-size: $tabpanel-tab-close-icon-size;
+	}
+}
+.dj_a11y {
+	.riaswTabCloseNode {
+		background-image: none !important;
+		width: auto !important;
+		height: auto !important;
+	}
+}
+.riaswTabCloseNodeHover {
+	button-hover-style('$toolbutton-inner-hover');
+}
+.riaswTabCloseNodeActive,
+.riaswTabCloseNodeFocused {
+	button-active-style('$toolbutton-inner-hover');
+}
+
+.riaswTabStripButton {
+	text-align: center;
+	vertical-align: middle;
+	z-index: 12;
+	background-color: $theme-input-color;
+	border: 1px solid $theme-highlight-color;
+	color: $theme-highlight-color;
+	transition-property: background-color;
+	position: absolute;
+	padding: $tabpanel-tab-padding;
+}
+
+/************ top、bottom、left、right ***********/
+.riaswTabPanelContent {
+	z-index: 0;
+	overflow: hidden;
+}
+.riaswTabControllerTop,
+.riaswTabControllerBottom,
+.riaswTabControllerLeft,
+.riaswTabControllerRight {
+	z-index: 1;
+	overflow: visible !important;
+	border: 0px solid transparent;
+}
+.riaswTabControllerTop,
+.riaswTabControllerBottom {
+	padding: 0 1em;
+	.riaswTab {
+		//height: 2em;
+		//line-height: 2em;
+	}
+	.riaswTabSpace {
+		min-height: $tabcontroller-tab-min-size;
+	}
+	.riaswTabSpace,
+	.riaswTabSpace * {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		border-left-width: 0 !important;
+		border-right-width: 0 !important;
+		min-width: 0 !important;
+		width: 0 !important;
+	}
+	.riaswTabControllerContent {
+		//padding: 0 1em;
+	}
+}
+.riaswTabControllerLeft,
+.riaswTabControllerRight {
+	padding: 1em 0;
+	.riaswTab {
+		//width: 2em;
+	}
+	.riaswTabSpace {
+		min-width: $tabcontroller-tab-min-size;
+	}
+	.riaswTabSpace,
+	.riaswTabSpace * {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		border-top-width: 0 !important;
+		border-bottom-width: 0 !important;
+		min-height: 0 !important;
+		height: 0 !important;
+	}
+	.riaswTabControllerContent {
+		//padding: 1em 0;
+	}
+}
+
+.riaswTabControllerTop,
+.riaswTabControllerBottom {
+	.riaswTab {
+		display: inline-block;
+	}
+}
+/*************** top tabs ***************/
+.riaswTabControllerTop {
+	//margin-top: $tabpanel-tab-checked-border-width;
+	border-bottom: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+	.riaswTabListWrapper {
+		//margin-top: $tabpanel-tab-checked-border-width;///一般为 border-bottom-width
+	}
+	.riaswTabStripButton {
+		//margin-bottom: 1px;
+	}
+	.riaswTab {
+		display: inline-block;
+		margin-right: $tabpanel-tab-spacing;
+		padding: $tabpanel-top-tab-padding;
+		border-radius: $tabpanel-tab-border-radius $tabpanel-tab-border-radius 0 0;
+		border-bottom-width: 0;
+		//border-bottom: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+		//border-bottom-color: $tabpanel-wrapper-border-color;
+		//border-left : none;
+		//border-right: none;
+		&.riaswTabClosable {
+			padding-right: $tabpanel-tab-padding;
+		}
+	}
+	// .riaswTabHover,
+	// .riaswTabActive,
+	// .riaswTabChecked {
+	// }
+	.riaswTabChecked {
+		//top: 0px;
+		//border-bottom-color: $tabpanel-tab-checked-color;
+		//border-bottom: 1px solid $tabpanel-tab-checked-color;
+		//border-left: 1px solid $tabpanel-wrapper-border-color;
+		//border-right: 1px solid $tabpanel-wrapper-border-color;
+		/*if ($tabpanel-tab-checked-has-highlight-border) {
+			&:before {
+				height: 3px;
+				background: $tabpanel-tab-checked-color;
+				top: 0px;
+				left: -1px;
+				right: -1px;
+			}
+		}*/
+	}
+}
+/*************** end top tabs **************/
+/*************** bottom tabs ***************/
+.riaswTabControllerBottom {
+	//margin-top: - $tabpanel-tab-checked-border-width;
+	border-top: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+	.riaswTabListWrapper {
+		//margin-top: - $tabpanel-tab-checked-border-width;
+	}
+	.riaswTabStripButton {
+		//margin-top: 1px;
+	}
+	.riaswTab {
+		display: inline-block;
+		margin-right: $tabpanel-tab-spacing;
+		padding: $tabpanel-bottom-tab-padding;
+		border-radius: 0 0 $tabpanel-tab-border-radius $tabpanel-tab-border-radius;
+		border-top-width: 0;
+		//border-top: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+		//border-top-color: $tabpanel-wrapper-border-color;
+		//border-left: none;
+		//border-right: none;
+		&.riaswTabClosable {
+			padding-right: $tabpanel-tab-padding;
+		}
+	}
+	// .riaswTabHover,
+	// .riaswTabActive,
+	// .riaswTabChecked {
+	// }
+	.riaswTabChecked {
+		//top: 0px;
+		//border-top-color: $tabpanel-tab-checked-color;
+		//border-top: 1px solid $tabpanel-tab-checked-color;
+		//border-left: 1px solid $tabpanel-wrapper-border-color;
+		//border-right: 1px solid $tabpanel-wrapper-border-color;
+		/*if ($tabpanel-tab-checked-has-highlight-border) {
+			&:before {
+				height: 3px;
+				background: $tabpanel-tab-checked-color;
+				bottom: 0px;
+				left: -1px;
+				right: -1px;
+			}
+		}*/
+	}
+}
+/************ end bottom tabs ************/
+/*************** left tabs ***************/
+.riaswTabControllerLeft {
+	//margin-left: $tabpanel-tab-checked-border-width;
+	border-right: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+	.riaswTabListWrapper {
+		//margin-left: $tabpanel-tab-checked-border-width;
+	}
+	.riaswTabStripButton {
+		//margin-right: 1px;
+	}
+	.riaswTab {
+		display: block;
+		margin-bottom: $tabpanel-tab-spacing;
+		padding: $tabpanel-left-tab-padding;
+		border-radius: $tabpanel-tab-border-radius 0 0 $tabpanel-tab-border-radius;
+		border-right-width: 0;
+		//border-right: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+		//border-right-color: $tabpanel-wrapper-border-color;
+		//border-top: none;
+		//border-bottom: none;
+	}
+	// .riaswTabHover,
+	// .riaswTabActive,
+	// .riaswTabChecked {
+	// }
+	.riaswTabChecked {
+		//left: 0px;
+		//border-right-color: $tabpanel-tab-checked-color;
+		//border-right: 1px solid $tabpanel-tab-checked-color;
+		//border-top: 1px solid $tabpanel-wrapper-border-color;
+		//border-bottom: 1px solid $tabpanel-wrapper-border-color;
+		/*if ($tabpanel-tab-checked-has-highlight-border) {
+			&:before {
+				width: 3px;
+				background: $tabpanel-tab-checked-color;
+				bottom: -1px;
+				left: 0px;
+				top: -1px;
+			}
+		}*/
+	}
+}
+/************** end left tabs *************/
+/*************** right tabs ***************/
+.riaswTabControllerRight {
+	//margin-left: - $tabpanel-tab-checked-border-width;
+	border-left: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+	.riaswTabListWrapper {
+		//margin-left: - $tabpanel-tab-checked-border-width;
+	}
+	.riaswTabStripButton {
+		//margin-left: 1px;
+	}
+	.riaswTab {
+		margin-bottom: $tabpanel-tab-spacing;
+		padding: $tabpanel-right-tab-padding;
+		border-radius: 0 $tabpanel-tab-border-radius $tabpanel-tab-border-radius 0;
+		border-left-width: 0;
+		//border-left: $tabpanel-tab-checked-border-width solid $tabpanel-tab-checked-color;
+		//border-left-color: $tabpanel-wrapper-border-color;
+		//border-top: none;
+		//border-bottom: none;
+		display: block;
+	}
+	// .riaswTabHover,
+	// .riaswTabActive,
+	// .riaswTabChecked {
+	// }
+	.riaswTabChecked {
+		//left: 0px;
+		//border-left-color: $tabpanel-tab-checked-color;
+		//border-left: 1px solid $tabpanel-tab-checked-color;
+		//border-top: 1px solid $tabpanel-wrapper-border-color;
+		//border-bottom: 1px solid $tabpanel-wrapper-border-color;
+		/*if ($tabpanel-tab-checked-has-highlight-border) {
+			&:before {
+				width: 3px;
+				background: $tabpanel-tab-checked-color;
+				bottom: -1px;
+				right: 0px;
+				top: -1px;
+			}
+		}*/
+	}
+}
+/************* end right tabs *************/
+
+/************ scroll buttons + menu button ***********/
+.riaswTabStripIcon {
+	_icon-core-style();
+	color: $theme-highlight-color;
+	vertical-align: middle;
+	//margin: auto;
+	//display: block;
+	&:before {
+		content: $tabpanel-left-icon;
+	}
+}
+.riaswTabStripIconLeft {
+	&:before {
+		content: $tabpanel-left-icon;
+	}
+}
+.riaswTabStripIconRight {
+	&:before {
+		content: $tabpanel-right-icon;
+	}
+}
+.riaswTabStripIconUp {
+	&:before {
+		content: $tabpanel-up-icon;
+	}
+}
+.riaswTabStripIconDown {
+	&:before {
+		content: $tabpanel-down-icon;
+	}
+}
+.riaswTabStripIconMenu {
+	&:before {
+		content: $tabpanel-menu-icon;
+	}
+}
+.dj_a11y {
+	.riaswTabStripButton img {
+		display: none;
+	}
+}
+.riaswTabButtonDisabled {
+	.riaswTabStripButton {
+		display: none;
+	}
+}
+.riaswTabStripButtonHover {
+	background-color: $theme-hover-color;
+}
+.riaswTabStripButtonActive {
+	background-color: $theme-active-color;
+}
+
+/* disabled */
+
+.riaswTabStripButtonDisabled {
+	disabled-grayscale();
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+}
+
+/*********** end left/right scroll buttons + menu button *********/
+
+/* Rtl */
+.riaswTabControllerRtl,
+.riaswTabControllerRtl .riaswTabContainer {
+	text-align: right;
+}
+
+.riaswTabRtl{
+	.riaswTabCloseNode {
+		margin-left: 0;
+		margin-right: $tabpanel-tab-padding;
+	}
+}
+
+.dijitRtl {
+
+	.riaswTab {
+		margin-right:0;
+		margin-left:2px;		/* space between one tab and the next in top/bottom mode */
+	}
+
+	/* tab strips */
+	.riaswTabPanel .riaswTabStripButton {
+		//margin-left: 0;
+	}
+
+	.riaswTabPanelTopStrip,
+	.riaswTabPanelBottomStrip,
+	.riaswTabControllerTop,
+	.riaswTabControllerBottom {
+		padding-left: 0;
+		padding-right: 3px;
+	}
+
+	.riaswTabInnerDiv {
+		padding-left: 3px;
+		padding-right: 4px;
+	}
+
+	.riaswTabPanelContent {
+		//zoom: 1;
+	}
+
+	.riaswTabControllerLeft .riaswTab,
+	.riaswTabControllerRight .riaswTab {
+		margin-left:0;
+	}
+}
+
+.dj_ie-rtl {
+	.riaswTabControllerLeft {
+		margin-left: 0 !important;
+	}
+	.riaswTabControllerRight {
+		margin-right: 0 !important;
+	}
+	.riaswTab .riaswTabInnerDiv{
+		width : 1%;
+	}
+}

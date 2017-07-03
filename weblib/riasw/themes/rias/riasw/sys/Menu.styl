@@ -1,0 +1,250 @@
+/// Menu
+
+@import '../../variables';
+
+.riaswMenuActive {
+}
+.riaswMenuPassive {
+	display: none;
+}
+
+.riaswMenu {
+	background: $menu-color;
+	border: 1px solid $menu-border-color;
+	border-radius: $menu-border-radius;
+	padding: $menu-padding;
+	margin: 0;
+}
+.riaswDropDownMenu {
+	padding: $menu-padding;
+}
+.riaswDropDownMenu {
+	border-collapse: separate;
+	border-spacing: 0 0;
+}
+.dj_webkit {
+	.riaswDropDownMenu {
+		td[colspan="2"]{
+			border-right: hidden;
+		}
+	}
+}
+
+.riaswMenuCaption {
+	background: $menu-caption-color;
+}
+
+.riaswMenuItem {
+	vertical-align: middle;
+	cursor: pointer;
+	text-align: left;
+	white-space: nowrap;
+	//line-height: $menu-item-line-height;
+	padding: $menu-item-padding;
+	margin: $menu-item-margin;
+
+	:focus {
+		outline: none
+	}
+}
+.riaswMenuItemIconCell {
+	background-color: $menu-item-icon-background;
+	border-right: 1px solid $menu-border-color;
+	padding: $menu-item-icon-padding;
+	margin: 0 0 0 $menu-item-icon-margin;
+	text-align: center;
+}
+.riaswMenuItemLabel {
+	position: relative;
+	//vertical-align: middle;
+	padding: 0 $menu-item-padding * 2;
+}
+.dj_ie8 {
+	.dj_a11y {
+		.riaswMenuItemLabel {
+			position: static;
+		}
+	}
+}
+.riaswMenuItemIcon,
+.riaswMenuExpand {
+	//background-repeat: no-repeat;
+}
+.riaswMenuExpand {
+	background-image: none;
+	&:before {
+		content: $menu-item-expand-icon;
+	}
+}
+.riaswMenuExpandA11y {
+	display: none;
+}
+.dj_a11y {
+	.riaswMenuExpandA11y {
+		display: inline;
+	}
+}
+.riaswMenuSeparator {
+	border: 0;
+	padding: 0;
+}
+.riaswMenuSeparatorIconCell {
+	background-color: $menu-item-icon-background;
+	border-right: 1px solid $menu-border-color;
+}
+.riaswMenuSeparatorTop {
+	border-bottom: 1px solid $menu-border-color;
+	font-size: 1px;
+	margin: 0;
+	margin-top: $menu-item-padding;
+	height: auto
+}
+.riaswMenuSeparatorBottom {
+	border-top: 0px solid $menu-border-color;
+	font-size: 1px;
+	margin: 0;
+	margin-bottom: $menu-item-padding;
+	height: auto;
+}
+
+.riaswCheckMenuItemIconChar {
+	display: none;
+	//vertical-align: middle;
+	visibility: hidden;
+}
+.dj_a11y {
+	.riaswCheckMenuItemIcon {
+		display: none;
+	}
+	.riaswCheckMenuItemIconChar {
+		display: inline !important;
+	}
+}
+.riaswCheckMenuItemChecked {
+	.riaswCheckMenuItemIconChar {
+		visibility: visible;
+	}
+}
+
+.riaswMenuPreviousButton,
+.riaswMenuNextButton {
+	font-style: italic;
+}
+
+.riaswMenuItemHover {
+	///menuItem 是 hover/focus 自动 selected
+	button-hover-style('$theme-hover');
+
+	.riaswMenuItemIconCell {
+		background-color: transparent;
+	}
+}
+.riaswMenuItemSelected {
+	///menuItem 是 hover/focus 自动 selected
+	transition: none;
+	outline: none;
+	//font-weight: bold;
+	make-color($menu-item-selected-color, $menu-item-selected-border-color, $menu-item-selected-text-color);
+
+	.riaswMenuItemIconCell {
+		background-color: transparent;
+	}
+}
+.riaswMenuItemFocused,
+.riaswMenuItemActive {
+	//menuItem 是 hover/focus 自动 selected
+	//button-active-style('$theme-active');
+	.riaswMenuItemShortcutKey {
+		text-decoration: underline;
+	}
+}
+.dj_a11y {
+	.riaswMenuItemSelected {
+		border: 1px dotted black !important;
+
+		.riaswMenuItemLabel {
+			border-width: 1px;
+			border-style: solid;
+		}
+	}
+}
+.riaswMenuItemDisabled {
+	disabled-grayscale();
+
+	.riaswButtonIcon {
+		filter: "progid:DXImageTransform.Microsoft.BasicImage(Grayscale=1)";
+		filter: grayscale(100%);
+	}
+	.riaswMenuItemSelected {
+		//color: $menu-item-disabled-hovered-text-color;
+		//background: $menu-item-disabled-hovered-background-color;
+	}
+}
+.dj_ie {
+	.dj_a11y .riaswMenuItemDisabled,
+	.dj_a11y .riaswMenuItemDisabled *,
+	.riaswMenuItemDisabled * {
+		color: $theme-disabled-text-color;
+		opacity: $theme-disabled-opacity;
+	}
+}
+
+
+/// Menu Bar
+.riaswMenuBar {
+	background-color: $menubar-color;
+	color: $menubar-text-color;
+	margin: 0;
+	padding: 0;
+
+	.riaswMenuItem {
+		padding: $menubar-item-padding;
+		margin: 0;
+	}
+
+	.riaswMenuItemHover {
+		//background-color: $theme-hover-color;
+		//color: $theme-hover-text-color;
+	}
+	.riaswMenuItemFocused {
+		//color: $theme-active-text-color;
+		//background-color: $theme-active-color;
+	}
+	.riaswMenuItemSelected {
+		//color: $menu-item-selected-text-color;
+		//background-color: $menu-item-selected-color;
+	}
+	.riaswMenuItemActive {
+		//color: $theme-active-text-color;
+		//background-color: $theme-active-color;
+	}
+	.riaswMenuItemDisabled {
+		&.riaswMenuItemSelected {
+			//color: $menu-item-disabled-hovered-text-color;
+			//background: $menu-item-disabled-hovered-background-color;
+		}
+	}
+}
+.dj_ie .dj_a11y {
+	.riaswMenuBar {
+		.riaswMenuItem {
+			//margin: 0;
+		}
+	}
+}
+
+/* Rtl */
+.riaswMenuBarRtl {
+	text-align: right;
+}
+
+.riaswMenuItemRtl {
+	text-align: right;
+
+	.riaswMenuExpand {
+		&:before {
+			content: $menu-item-expand-icon-rtl;
+		}
+	}
+}
+

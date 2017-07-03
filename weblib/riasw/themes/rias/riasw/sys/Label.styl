@@ -1,0 +1,27 @@
+
+/* Module */
+@import '../../variables';
+
+.riaswLabel {
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	//text-align: left;
+	overflow: hidden;
+	background-color: transparent;
+	border: 0;
+}
+.riaswLabelHover {
+	font-weight: bolder
+	//color: $theme-hover-border-color;
+}
+.riaswLabelFocused,
+.riaswLabelActive {
+	font-weight: bolder;
+	color: $theme-active-border-color;
+}
+.riaswLabelDisabled {
+	disabled-grayscale();
+}
+
+
