@@ -174,8 +174,8 @@ define([
 			if(this._loadContentDeferred){
 				this._loadContentDeferred.cancel(this.id + "._loadContentDeferred _cancelLoad.");
 			}
-			if(this.ownerModule()){
-				rias.removeItems(this.ownerModule()._loadingDeferreds, this._loadContentDeferred);
+			if(this.getOwnerModule()){
+				rias.removeItems(this.getOwnerModule()._loadingDeferreds, this._loadContentDeferred);
 			}
 			this._loadContentDeferred = undefined;
 			///使用后进先出，并逐一删除。
@@ -249,8 +249,8 @@ define([
 				}*/
 				return rias.when(!self.isDestroyed(false) && self._afterLoadedAll(!self.loadError));
 			});
-			if(self.ownerModule()){
-				self.ownerModule()._loadingDeferreds.push(self._loadContentDeferred);
+			if(self.getOwnerModule()){
+				self.getOwnerModule()._loadingDeferreds.push(self._loadContentDeferred);
 			}
 			//rias.dom.removeClass(self.containerNode, "riaswDialogContentMessage");
 			rias.when(self.beforeLoad(), function(){

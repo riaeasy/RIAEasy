@@ -14,7 +14,7 @@ define([
 
 	});
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		params = rias.mixinDeep({}, params);
 		if(!params.store && !this.srcNodeRef){///注意：!params.store && this.srcNodeRef 的时候，默认是取 srcNodeRef 中的数据。
 			params.store = {

@@ -142,14 +142,14 @@ define([
 				}
 				anim.curve = new basefx.PropLine(pm);
 
-				_hBegin.remove();
+				//_hBegin.remove();
 				//_hBegin = undefined;
 
 			}, true),
 			_hAnimate = rias.after(anim, "onAnimate", function(value){
 				//console.debug(value);
 				_dom.setStyle(node, value);
-			}, true),
+			}, true)/*,
 			_hStop = rias.after(anim, "onStop", function(){
 				_hAnimate.remove();
 				//_hAnimate = undefined;
@@ -165,7 +165,7 @@ define([
 				//_hStop = undefined;
 				_hEnd.remove();
 				//_hEnd = undefined;
-			}, true);
+			}, true)*/;
 
 		return anim; // Animation
 	};
@@ -432,17 +432,17 @@ define([
 					pso = pn.style.overflow;
 					node.style.overflow = "hidden";
 					pn.style.overflow = "hidden";
-					_hBegin.remove();
+					//_hBegin.remove();
 					//_hBegin = undefined;
 				}, true),
 				_hStop = rias.before(anim, "onStop", function(){
 					fini();
-					_hStop.remove();
+					//_hStop.remove();
 					//_hStop = undefined;
 				}, true),
 				_hEnd = rias.before(anim, "onEnd", function(){
 					fini();
-					_hEnd.remove();
+					//_hEnd.remove();
 					//_hEnd = undefined;
 				}, true);
 
@@ -489,17 +489,17 @@ define([
 					pso = pn.style.overflow;
 					node.style.overflow = "hidden";
 					pn.style.overflow = "hidden";
-					_hBegin.remove();
+					//_hBegin.remove();
 					//_hBegin = undefined;
 				}, true),
 				_hStop = rias.before(anim, "onStop", function(){
 					fini();
-					_hStop.remove();
+					//_hStop.remove();
 					//_hStop = undefined;
 				}, true),
 				_hEnd = rias.before(anim, "onEnd", function(){
 					fini();
-					_hEnd.remove();
+					//_hEnd.remove();
 					//_hEnd = undefined;
 				}, true);
 
@@ -658,17 +658,17 @@ define([
 				pso = pn.style.overflow;
 				node.style.overflow = "hidden";
 				pn.style.overflow = "hidden";
-				_hBegin.remove();
+				//_hBegin.remove();
 				//_hBegin = undefined;
 			}, true),
 			_hStop = rias.before(anim, "onStop", function(){
 				fini();
-				_hStop.remove();
+				//_hStop.remove();
 				//_hStop = undefined;
 			}, true),
 			_hEnd = rias.before(anim, "onEnd", function(){
 				fini();
-				_hEnd.remove();
+				//_hEnd.remove();
 				//_hEnd = undefined;
 			}, true);
 
@@ -723,7 +723,7 @@ define([
 			}, args)),
 			_hBegin = rias.after(_anim, "beforeBegin", function(){
 				init();
-				_hBegin.remove();
+				//_hBegin.remove();
 				//_hBegin = undefined;
 			}, true);
 
@@ -793,7 +793,7 @@ define([
 		if(endColor === "transparent"){
 			var _hEnd = rias.after(anim, "onEnd", function(){
 				node.style.backgroundColor = endColor;
-				_hEnd.remove();
+				//_hEnd.remove();
 				//_hEnd = undefined;
 			}, true);
 		}

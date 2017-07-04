@@ -12,9 +12,9 @@ define([
 		//              a backward or forward action).
 		_currentPosition: 0,
 
-		// currentState: Object
+		// currentHashDetail: Object
 		//              Current state
-		currentState: {},
+		currentHashDetail: {},
 
 		postCreate: function(){
 			var self = this;
@@ -22,13 +22,13 @@ define([
 			this._popstateHandle = this.on(window, "popstate", function(evt){
 				self.onPopState(evt);
 			});
-			this._startTransitionHandle = this.on("startTransition", function(evt){
-				self.onStartTransition(evt);
+			this._buildHashHandle = this.on("desktop-updateHash", function(evt){
+				self.onUpdateHash(evt);
 			});
 		},
 		destroy: function(){
 			///注意：没有继承自 Destroyable
-			this._startTransitionHandle.remove();
+			this._buildHashHandle.remove();
 			this._popstateHandle.remove();
 			this.inherited(arguments);
 		},
@@ -60,35 +60,19 @@ define([
 			var opts = rias.mixin({
 				reverse: backward ? true : false
 			}, evt.state);
-			opts.transition = backward ? opts.bwdTransition : opts.fwdTransition;
-			this.emit("app-transition", {
-				viewId: evt.state.target,
+			opts.transition = backward ? opts.backwardTransition : opts.forwardTransition;
+			this.publish("/desktop/history/popState", evt.state.target);
+			this.emit("desktop-historyaction", {
+				target: evt.state.target,
 				opts: opts
 			});
-			this.publish("/app/history/popState", evt.state.target);
 		},
-		onStartTransition: function(evt){
-			// summary:
-			//		Response to riasw/sys/Desktop "startTransition" event.
-			//
-			// example:
-			//		Use rias.dom.dispatchTransition to trigger "startTransition" event, and this function will response the event. For example:
-			//		|	var transOpts = {
-			//		|		title:"List",
-			//		|		target:"items,list",
-			//		|		url: "#items,list"
-			//		|		params: {"param1":"p1value"}
-			//		|	};
-			//		|	rias.dom.dispatchTransition(domNode, transOpts, e);
-			//
-			// evt: Object
-			//		transition options parameter
-
-			var currentHash = window.location.hash;
-			var currentView = rias.hash.getTarget(currentHash, this.defaultView);
-			var currentParams =  rias.hash.getParams(currentHash);
-			var _detail = rias.mixinDeep({}, evt.detail);//rias.clone(evt.detail);
-			_detail.target = _detail.title = currentView;
+		onUpdateHash: function(evt){
+			var currentHash = window.location.hash,
+				widget = rias.hash.getTargetWidget(currentHash),
+				currentParams =  rias.hash.getTargetParams(currentHash),
+				_detail = rias.mixinDeep({}, evt.detail);//rias.clone(evt.detail);
+			_detail.target = _detail.title = widget ? widget.id : "";
 			_detail.url = currentHash;
 			_detail.params = currentParams;
 			_detail.id = this._currentPosition;
@@ -99,27 +83,25 @@ define([
 			}
 
 			// Update the current state
-			_detail.bwdTransition = _detail.transition;
-			rias.mixin(this.currentState, _detail);
-			history.replaceState(this.currentState, this.currentState.href, currentHash);
+			_detail.backwardTransition = _detail.transition;
+			rias.mixin(this.currentHashDetail, _detail);
+			history.replaceState(this.currentHashDetail, this.currentHashDetail.href, currentHash);
 
 			// Create a new "current state" history entry
 			this._currentPosition += 1;
 			evt.detail.id = this._currentPosition;
 
-			var newHash = evt.detail.url || "#" + evt.detail.target;
+			widget = rias.by(evt.target);
+			var newHash = evt.detail.url || "#";
+			newHash = rias.hash.buildHash(newHash, widget, evt.detail.params);
 
-			if(evt.detail.params){
-				newHash = rias.hash.buildWithParams(newHash, evt.detail.params);
-			}
-
-			evt.detail.fwdTransition = evt.detail.transition;
+			evt.detail.forwardTransition = evt.detail.transition;
 			history.pushState(evt.detail, evt.detail.href, newHash);
-			//this.currentState = rias.clone(evt.detail);
-			this.currentState = rias.mixinDeep({}, evt.detail);
+			//this.currentHashDetail = rias.clone(evt.detail);
+			this.currentHashDetail = rias.mixinDeep({}, evt.detail);
 
 			// Finally: Publish pushState topic
-			this.publish("/app/history/pushState", evt.detail.target);
+			this.publish("/desktop/history/pushState", evt.detail.target);
 		}
 	});
 });

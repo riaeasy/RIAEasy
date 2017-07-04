@@ -20,9 +20,9 @@ define([
 		"riasw.sys.Scene": {
 			requires: ["riasw/sys/Scene"]
 		},
-		"riasw.sys.View": {
-			requires: ["riasw/sys/View"]
-		},
+		//"riasw.sys.View": {
+		//	requires: ["riasw/sys/View"]
+		//},
 		"riasw.sys.Form": {
 			requires: ["riasw/sys/Form"]
 		},

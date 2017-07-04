@@ -553,7 +553,7 @@ define([
 				moduleParams: mParams,
 				initData: initData,
 				popupArgs: {
-					parent: grid.viewModuleParent || grid.ownerModule()
+					parent: grid.viewModuleParent || grid.getOwnerModule()
 				},
 				caption: i18n.add,
 				query: {
@@ -807,7 +807,7 @@ define([
 		}
 	};
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		return rias.when(DGridParamExt(params), function(p){
 			return rias.mixinDeep({
 				indent: 1,

@@ -81,7 +81,7 @@ define([
 					"style": {
 					},
 					"onClick": function (evt){
-		this.ownerModule().set("items", this.ownerModule().get("items"));
+		this.getOwnerModule().set("items", this.getOwnerModule().get("items"));
 	}
 				},
 				{

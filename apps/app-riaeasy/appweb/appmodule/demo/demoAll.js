@@ -241,7 +241,7 @@ define([
 												"$refObj": "rias.desktop.oper.code"
 											},
 											"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			m.edtPass.focus();
 			m.edtPass.select();
@@ -260,7 +260,7 @@ define([
 											"tooltip": "密码",
 											"type": "password",
 											"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			m.btnSubmit.focus();
 		}
@@ -284,7 +284,7 @@ define([
 											"label": "确定",
 											"tooltip": "提交登录信息...",
 											"onClick": function (evt){
-		this.ownerModule().submit(evt);
+		this.getOwnerModule().submit(evt);
 	}
 										},
 										{
@@ -295,7 +295,7 @@ define([
 											"iconClass": "cancelIcon",
 											"disabled": false,
 											"onClick": function (evt){
-							this.ownerModule().abort();
+							this.getOwnerModule().abort();
 						}
 										}
 									]

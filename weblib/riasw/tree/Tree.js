@@ -1353,7 +1353,7 @@ define([
 
 	Widget.PathError = rias.createError("TreePathError");
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		params = rias.mixinDeep({}, {
 			autoExpand: false,
 			showRoot: true,

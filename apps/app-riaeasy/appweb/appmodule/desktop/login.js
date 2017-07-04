@@ -134,7 +134,7 @@ define([
 					},
 					"tooltip": "用户登录名",
 					"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			rias.stopEvent(evt);
 			m.edtPass.focus();
@@ -173,7 +173,7 @@ define([
 					"tooltip": "密码",
 					"type": "password",
 					"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			rias.stopEvent(evt);
 			m.btnLogin.focus();
@@ -197,7 +197,7 @@ define([
 					},
 					"tooltip": "提交登录信息...",
 					"onClick": function (evt){
-		this.ownerModule().submit(evt);
+		this.getOwnerModule().submit(evt);
 	}
 				}
 			]

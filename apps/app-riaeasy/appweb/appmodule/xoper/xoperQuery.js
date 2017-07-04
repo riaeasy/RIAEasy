@@ -162,7 +162,7 @@ define([
 							"style": {
 							},
 							"onClick": function (evt){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 			g = m.grid,
 			a = m.qForm ? m.qForm.get("value") : undefined,
 			q, k;
@@ -191,7 +191,7 @@ define([
 							"style": {
 							},
 							"onClick": function (evt){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 			g = m.grid;
 		if(g){
 			if(m.qForm && m.qForm.reset){

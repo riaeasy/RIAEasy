@@ -49,7 +49,7 @@ define([
 					"style": {
 					},
 					"onScroll": function (evt){
-						var m = this.ownerModule(),
+						var m = this.getOwnerModule(),
 							p = evt.target,
 							c = 1;
 						if(p && p.scrollHeight){
@@ -69,7 +69,7 @@ define([
 						{
 							"_riaswType": "riasw.layout.ContentPanel",
 							"_riaswIdInModule": "about1",
-							"content": "<p style=\"text-indent: 2em;\">\n   RIAEasy - A lightweight, modular, mobile-ready, data-driven for single-page-application.\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个模块化、轻量的富客户/单页应用框架。\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用 RIAStudio 在线可视化设计器。\n</p>\n",
+							"content": "<p style=\"text-indent: 2em;\">\n   RIAEasy - A modular, mobile-ready, data-driven for single-page-application.\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个模块化的富客户/单页应用框架。\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用 RIAStudio 在线可视化设计器。\n</p>\n",
 							"stateStyle": {
 								"containerNode": {
 									"base": {

@@ -300,7 +300,7 @@ define([
 		return undefined;
 	};
 	rias.ownerModuleBy = function(/*String|DOMNode|riasWidget*/any){
-		var r = any && (isFunction(any.ownerModule) && any.ownerModule() || any._riasrModule);
+		var r = any && (isFunction(any.getOwnerModule) && any.getOwnerModule() || any._riasrModule);
 		if(!r){
 			r = isFunction(any.getOwnerRiasw) && any.getOwnerRiasw() || any.ownerRiasw;
 			if(r){
@@ -533,7 +533,7 @@ define([
 	///注意：在 _WidgetBase.postCreate() 之前（包含 _WidgetBase.postCreate()） obj._created都为 false，故 rias.isRiasw() 为 false。
 	///建议在 _WidgetBase.startUp() 之后使用。
 	var isRiasw = rias.isRiasw = function(obj){
-		return !!(hostBrowser && obj && obj.domNode && is(obj, "riasw.sys._WidgetBase"));
+		return !!(hostBrowser && obj && obj._riasrCreated && obj.domNode && is(obj, "riasw.sys._WidgetBase"));
 	};
 	rias.isRiaswCtor = function(obj){
 		return !!(isFunction(obj) && obj.prototype && obj.prototype.declaredClass);
@@ -558,9 +558,6 @@ define([
 	};
 	rias.isRiaswDialog = function(obj){
 		return !!(hostBrowser && isRiasObject(obj) && is(obj, "riasw.sys.Dialog"));
-	};
-	rias.isRiaswView = function(obj){
-		return !!(hostBrowser && isRiasObject(obj) && is(obj, "riasw.sys.View"));
 	};
 	//rias.isRiaswApp = function(obj){
 	//	//return _isRiasWebApp(obj) || _isRiasServerApp(obj);
@@ -2857,7 +2854,7 @@ define([
 			}
 			return false;
 		},
-		ownerModule: function(){
+		getOwnerModule: function(){
 			return this._riasrModule;
 		},
 
@@ -2938,7 +2935,7 @@ define([
 							hitch(this, errCall)(new Error(s));
 						}
 					}
-					m = w.ownerModule();
+					m = w.getOwnerModule();
 					if(m){
 						if(rias.getObject(w._riaswIdInModule, false, m)){
 							//if(rias.hostBrowser){
@@ -2984,7 +2981,7 @@ define([
 				}
 			}
 			if(!w.id){
-				m = w.ownerModule();
+				m = w.getOwnerModule();
 				w.id = m && w._riaswIdInModule ? (m.id + "_" + w._riaswIdInModule) :
 					w._riasrOwner ? w._riaswAttachPoint ? w._riasrOwner.id + "_" + w._riaswAttachPoint :
 						rias.rt.getUniqueId(w._riasrOwner.id + "_" + rias.rt._getUniqueCat(w)) :
@@ -3316,7 +3313,7 @@ define([
 				//	widget: this
 				//});
 			}
-			owner = this.ownerModule();
+			owner = this.getOwnerModule();
 			if(owner && owner[this._riaswIdInModule] === this){
 				delete owner[this._riaswIdInModule];
 			}
@@ -3411,15 +3408,15 @@ define([
 							}
 						}
 
-						if(!handle.ownerModule()){
+						if(!handle.getOwnerModule()){
 							if(rias.isRiaswModule(self)){
 								handle._riasrModule = self;
-							}else if(rias.isRiaswModule(self.ownerModule())){
-								handle._riasrModule = self.ownerModule();
+							}else if(rias.isRiaswModule(self.getOwnerModule())){
+								handle._riasrModule = self.getOwnerModule();
 							}
 						}
-						if(rias.isDebug && !handle.ownerModule() && !rias.isRiaswDesktop(handle)){///new Desktop() 时，rias.desktop 尚未赋值，只能用 isRiaswDesktop 来判断。
-							console.debug("The widget('" + (handle.id || handle.name || handle._riaswType) + "').ownerModule() is undefined.");
+						if(rias.isDebug && !handle.getOwnerModule() && !rias.isRiaswDesktop(handle)){///new Desktop() 时，rias.desktop 尚未赋值，只能用 isRiaswDesktop 来判断。
+							console.debug("The widget('" + (handle.id || handle.name || handle._riaswType) + "').getOwnerModule() is undefined.");
 						}
 
 						if(is(handle, Destroyable) && self.getDesigning()){
@@ -3538,7 +3535,7 @@ define([
 								hitch(this, errCall)(new Error(s));
 							}
 						}
-						m = w.ownerModule();
+						m = w.getOwnerModule();
 						if(!m){
 							w.persist = false;
 						}else{
@@ -3588,7 +3585,7 @@ define([
 					this.persist = false;
 				}
 			}else{
-				m = this.ownerModule();
+				m = this.getOwnerModule();
 				if(!m){
 					if(this.persist){
 						console.error("The widget('" + (this.id || this.name || this._riaswType) + "') define persist, but no ownerModule.", this);

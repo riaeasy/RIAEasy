@@ -103,7 +103,7 @@ define([
 					"type": "password",
 					"value": "password",
 					"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			rias.stopEvent(evt);
 			if(this.isValid()){
@@ -128,7 +128,7 @@ define([
 					"type": "password",
 					"value": "value",
 					"onKeyDown": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(evt.keyCode === rias.keys.ENTER){
 			if(this.isValid()){
 				m.btnSubmit.set("disabled", false);
@@ -140,11 +140,11 @@ define([
 		}
 	},
 					"onChange": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 				m.btnSubmit.set("disabled", !this.isValid());
 	},
 					"validator": function (){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		return m.edtText2.get("value") && m.edtText1.get("value") === m.edtText2.get("value");
 	}
 				},
@@ -165,7 +165,7 @@ define([
 					"tooltip": "显示密码明文",
 					"onClick": function (){
 		/// 设置 type ，IE8 有可能出错
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		if(this.get("checked")){
 			rias.dom.removeAttr(m.edtText1.textbox, "type");
 			rias.dom.removeAttr(m.edtText2.textbox, "type");
@@ -197,7 +197,7 @@ define([
 						"$refObj": "rias.i18n.action.save"
 					},
 					"onClick": function (evt){
-		this.ownerModule().submit(evt);
+		this.getOwnerModule().submit(evt);
 	}
 				},
 				{
@@ -222,7 +222,7 @@ define([
 						"$refObj": "rias.i18n.action.abort"
 					},
 					"onClick": function (evt){
-		this.ownerModule().abort();
+		this.getOwnerModule().abort();
 	}
 				}
 			]

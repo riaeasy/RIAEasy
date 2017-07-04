@@ -289,6 +289,13 @@ define([
 			var self = this,
 				df = rias.newDeferred(function(){
 					console.debug(self.id + "._transition cancel " + (newWidget ? newWidget.id : ""));
+					if(oldWidget && oldWidget._stopPlay){
+						oldWidget._stopPlay();
+					}
+					if(newWidget && newWidget._stopPlay){
+						newWidget._stopPlay();
+					}
+					return false;
 				});
 			if(!this.animate || !this.isShowing(false) || !this.get("visible") || rias.has("ie") < 9){
 				// workaround animation bugs by not animating; not worth supporting animation for IE6 & 7

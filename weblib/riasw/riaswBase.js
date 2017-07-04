@@ -29,14 +29,13 @@ define([
 	//	console.memory = {};
 	//}
 
-	rias.defaultDuration = rias.config.defaultDuration || 400;
+	rias.defaultDuration = rias.config.defaultDuration || rias.has("ff") ? 400 : 200;
 	rias.autoToggleDuration = rias.defaultDuration;
 
 	rias.popupManager = popupManager;
 
 	//rias.registry = registry;
 	rias.mixin(rias.rt, {
-		_views: {},
 		add: function(widget){
 			// summary:
 			//		Add a widget to the _widgets. If a duplicate ID is detected, a error is thrown.
@@ -46,18 +45,12 @@ define([
 			}
 			this._widgets[widget.id] = widget;
 			this.length++;
-			if(rias.isRiaswView(widget)){
-				this._views[widget.id] = widget;
-			}
 		},
 		remove: function(/*String*/ id, doDestroy){
 			// summary:
 			//		Remove a widget from the this._widgets. Does not destroy the widget; simply
 			//		removes the reference.
 			var w = this._widgets[id];
-			if(this._views[id]){
-				delete this._views[id];
-			}
 			if(w){
 				delete this._widgets[id];
 				this.length--;
@@ -135,47 +128,6 @@ define([
 			return outAry;
 		},
 
-		getViews: function(){
-			// summary:
-			//		Gets all registered views.
-			// returns: Array
-			var arr = [];
-			for(var i in this._views){
-				arr.push(this._views[i]);
-			}
-			return arr;
-		},
-		getParentView: function(/*dojox/mobile/View*/ view){
-			// summary:
-			//		Gets the parent view of the specified view.
-			// returns: dojox/mobile/View
-			for(var v = view.getParent(); v; v = v.getParent()){
-				if(rias.isRiaswView(v)){
-					return v;
-				}
-			}
-			return null;
-		},
-		getChildViews: function(/*dojox/mobile/View*/ parent){
-			// summary:
-			//		Gets the children views of the specified view.
-			// returns: Array
-			return rias.filter(this.getViews(), function(v){
-				return this.getParentView(v) === parent;
-			}, this);
-		},
-		getEnclosingView: function(/*DomNode*/ node){
-			// summary:
-			//		Gets the view containing the specified DOM node.
-			// returns: dojox/mobile/View
-			for(var n = node; n && n.tagName !== "BODY"; n = n.parentNode){
-				if(n.nodeType === 1 && rias.isRiaswView(n.__riasrWidget)){
-					return n.__riasrWidget;
-				}
-			}
-			return null;
-		},
-
 		getEnclosingScrollable: function(/*DomNode*/ node){
 			// summary:
 			//		Gets the dojox/mobile/scrollable object containing the specified DOM node.
@@ -186,6 +138,22 @@ define([
 				}
 			}
 			return null;
+		},
+
+		dispatchTransition: function(sender, detail, triggerEvent){
+			// summary:
+			//		Dispatches this transition event. Emits a "startTransition" event on the target.
+			/// triggerEvent 是 sender 监听到的“原始事件”
+			sender = rias.by(sender);
+			detail.sender = sender;
+			if(sender){
+				rias.on.emit(sender.domNode, "startTransition", {
+					bubbles:true,
+					cancelable:true,
+					detail: detail,
+					triggerEvent: triggerEvent
+				});
+			}
 		}
 	});
 
@@ -770,9 +738,9 @@ define([
 					if(rias.is(_owner, rias.Destroyable)){
 						params.ownerRiasw = _owner;
 					}
-					rias.decodeRiaswParams(params, params, "", _ref);///makeParams 不支持 $ref，且需要后期绑定，故应先 decodeRiaswParams
-					if(ctor.makeParams && rias.isFunction(ctor.makeParams)){
-						params = ctor.makeParams(params);///此时，有可能尚未有 _owner 实例，只能支持 _module 为 contextWidget
+					rias.decodeRiaswParams(params, params, "", _ref);///buildParams 不支持 $ref，且需要后期绑定，故应先 decodeRiaswParams
+					if(rias.isFunction(ctor.buildParams)){
+						params = ctor.buildParams(params);///此时，有可能尚未有 _owner 实例，只能支持 _module 为 contextWidget
 					//}else{
 					//	params = rias.mixinDeep({}, _params);
 					}
@@ -1493,13 +1461,13 @@ define([
 				location: "../riasbi",
 				main: "main"
 			};
-			rias.defer(function(){///优化加载速度
-				rias.require([
-					"riasw/riaswBase",
-					"riasbi/riasbiCommon"
-				], function(rias){
-				});
-			}, 20);
+			//rias.defer(function(){///优化加载速度
+			//	rias.require([
+			//		"riasw/riaswBase",
+			//		"riasbi/riasbiCommon"
+			//	], function(rias){
+			//	});
+			//}, 20);
 		}
 		rias.has.add("riasd", 0);
 		if(rias.has("riasd") && !(rias.has("ie") < 11)){

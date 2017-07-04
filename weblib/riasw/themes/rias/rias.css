@@ -3117,9 +3117,6 @@ div.riaswNumberTextBoxRtl {
   -ms-transition: none;
   transition: none;
   outline: none;
-  background-color: #0277bd;
-  border-color: #026baa;
-  color: #fff;
 }
 .riaswCheckedMultiSelectItemActive,
 .riaswCheckedMultiSelectItemFocused {
@@ -3145,11 +3142,6 @@ div.riaswNumberTextBoxRtl {
   filter: alpha(opacity=50);
   -webkit-box-shadow: none;
   box-shadow: none;
-}
-.riaswCheckedMultiSelectDisabled .riaswCheckedMultiSelectSelectedOption {
-  background-color: #bdbdbd;
-  border-color: #bdbdbd;
-  color: #fff;
 }
 .riaswProgressBar {
   -webkit-box-sizing: border-box;
@@ -5175,6 +5167,26 @@ div.riaswNumberTextBoxRtl {
   padding: 0.5em 1em;
   margin: 0 0.5em 0.5em;
   text-align: right;
+}
+.riaswDialogActionBar .riaswButtonLabel {
+  padding: 0px 0.25em;
+  margin: 0px 0.25em;
+}
+.riaswDialogActionBar .riaswToolButton,
+.riaswDialogActionBar .riaswButton {
+  background-color: transparent;
+  color: inherit;
+  border-width: 0 0 4px 0;
+  border-color: transparent;
+  margin: 0px 0.5em;
+}
+.riaswDialogActionBar .riaswToolButtonActive,
+.riaswDialogActionBar .riaswButtonActive,
+.riaswDialogActionBar .riaswToolButtonFocused,
+.riaswDialogActionBar .riaswButtonFocused,
+.riaswDialogActionBar .riaswToolButtonHover,
+.riaswDialogActionBar .riaswButtonHover {
+  border-color: #ffb74d;
 }
 .riaswDialogActionBarTop {
   display: block;

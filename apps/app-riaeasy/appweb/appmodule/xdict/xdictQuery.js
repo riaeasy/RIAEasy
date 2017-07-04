@@ -82,13 +82,13 @@ define([
 						"toggleable": true
 					},
 					"allowSelect": function (row){
-		return !this.ownerModule().grid.get("modified");
+		return !this.getOwnerModule().grid.get("modified");
 	},
 					"onSelect": function (e){
 		var d = e.rows[0];
 		d = d && d.data;
 		if(d){
-			this.ownerModule().grid.refresh({
+			this.getOwnerModule().grid.refresh({
 				idq: d.id + "%"
 			});
 		}

@@ -441,12 +441,31 @@ define([
 				return p.promise;
 			}
 			///注意 _transition 的 new 和 old 是否正确
+			if(child && child.needUpdateHash){
+				var s = rias.getModuleCaptionPath(child);
+				if(rias.dom.doc.title.indexOf("#") >= 0){
+					rias.dom.doc.title = rias.dom.doc.title.substring(0, rias.dom.doc.title.indexOf("#")) + "#" + s;
+				}else{
+					rias.dom.doc.title = rias.dom.doc.title + "#" + s;
+				}
+				if(child._inHistoryAction > 0){
+					child._inHistoryAction--;
+				}else{
+					rias.hash.updateHash(child, rias.mixinDeep({}, child._updateDetail));
+				}
+			}
 			return this._transition(child, this.selectedChild, animate);
 		},
 		_transition: function(newWidget, oldWidget, animate){
 			var self = this,
 				df = rias.newDeferred(function(){
 					//console.debug("_transition.cancel - " + self.id + " - " + (newWidget ? newWidget.id : ""));
+					if(oldWidget && oldWidget._stopPlay){
+						oldWidget._stopPlay();
+					}
+					if(newWidget && newWidget._stopPlay){
+						newWidget._stopPlay();
+					}
 					return false;
 				});
 

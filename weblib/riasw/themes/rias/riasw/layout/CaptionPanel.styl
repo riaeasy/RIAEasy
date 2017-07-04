@@ -236,6 +236,46 @@
 	margin: 0 $dialog-actionbar-margin $dialog-actionbar-margin;
 	text-align: right;
 	//border-top-width: 1px;
+
+	.riaswButtonPrimary,
+	.riaswButtonOk,
+	.riaswButtonInfo,
+	.riaswButtonWarn,
+	.riaswButtonDanger,
+	.riaswButtonError,
+	.riaswButtonInverse {
+		//background-color: transparent;
+		//color: inherit;
+	}
+
+	.riaswButtonIcon {
+		//font-size: 20px;
+		//line-height: 20px;
+	}
+	.riaswButtonLabel {
+		padding: 0px 0.25em;
+		margin: 0px 0.25em;
+	}
+	.riaswToolButton,
+	.riaswButton {
+		background-color: transparent;
+		color: inherit;
+		border-width: 0 0 4px 0;
+		border-color: transparent;
+		//padding: 0px;
+		margin: 0px 0.5em;
+	}
+	.riaswToolButtonActive,
+	.riaswButtonActive,
+	.riaswToolButtonFocused,
+	.riaswButtonFocused,
+	.riaswToolButtonHover,
+	.riaswButtonHover {
+		//background-color: transparent;
+		//border-width: 0 0 3px 0;
+		border-color: $theme-highlight-border-color
+		//color: $theme-highlight-border-color;
+	}
 }
 .riaswDialogActionBarTop {
 	display: block;

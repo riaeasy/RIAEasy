@@ -196,7 +196,7 @@ define([
 						}
 					},
 					"onClick": function (item, node, evt){
-					this.ownerModule().treeOnClick(item, node, evt);
+					this.getOwnerModule().treeOnClick(item, node, evt);
 				}
 				}
 			]

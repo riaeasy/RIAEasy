@@ -98,7 +98,7 @@ define([
 									height: "2em"
 								},
 								onChange:  function(){
-									this.ownerModule().btnSave.set("disabled", !this.isValid());
+									this.getOwnerModule().btnSave.set("disabled", !this.isValid());
 								}
 							},{
 								_riaswType: "riasw.form.ValidationTextBox",
@@ -115,7 +115,7 @@ define([
 									height: "2em"
 								},
 								onChange:  function(){
-									this.ownerModule().btnSave.set("disabled", !this.isValid());
+									this.getOwnerModule().btnSave.set("disabled", !this.isValid());
 								}
 							}]
 						}]

@@ -1003,13 +1003,16 @@ define([
 			});
 		},
 		show: function(){
+			var self = this;
+			function _do(){
+				return self.set("displayState", displayShowNormal);
+			}
 			if(!this._started){
-				var self = this;
 				return rias.when(this.startup()).then(function(){
-					return self.set("displayState", displayShowNormal);
+					return _do();
 				});
 			}
-			return this.set("displayState", displayShowNormal);
+			return _do();
 		},
 
 		onRestore: function(){
@@ -1059,7 +1062,7 @@ define([
 				});
 			}
 			return this.inherited(arguments).always(function(){
-				return self.set("displayState", displayShowNormal).always(function(result){
+				return self.show().always(function(result){
 					if(play){/// 不建议 return self._doPlayNode
 						self._doPlayNode(true, self.domNode, self.duration / 2);
 					}

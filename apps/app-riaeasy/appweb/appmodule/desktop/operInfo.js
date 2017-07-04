@@ -151,7 +151,7 @@ define([
 						"$refObj": "rias.i18n.desktop.clearPersist"
 					},
 					"onClick": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		rias.confirm({
 			content: rias.i18n.desktop.confirmClearPersist,
 			caption: rias.i18n.action.confirm,
@@ -239,7 +239,7 @@ define([
 						"$refObj": "rias.i18n.action.close"
 					},
 					"onClick": function (evt){
-		this.ownerModule().submit(evt);
+		this.getOwnerModule().submit(evt);
 	}
 				}
 			]

@@ -238,6 +238,7 @@ define([
 			var m = this,
 				b = m.oper.logged;
 			m.btnLogin.set("label", b ? rias.i18n.desktop.logout : rias.i18n.desktop.login);
+			m.btnLogin.set("iconClass", b ? "powerIcon" : "loginIcon");
 			m.btnOperInfo.set("label", b ? rias.desktop.oper.name : rias.i18n.desktop.operInfo);
 			m.btnOperInfo.set("visible", b);
 			m.desktopTop.layout();
@@ -323,7 +324,7 @@ define([
 							"_riaswType": "riasw.form.DropDownButton",
 							"_riaswIdInModule": "btnOperInfo",
 							"visible": false,
-							"iconClass": "infoIcon",
+							"iconClass": "optionIcon",
 							"label": {
 								"$refObj": "rias.i18n.desktop.operInfo"
 							},
@@ -343,7 +344,7 @@ define([
 						{
 							"_riaswType": "riasw.form.Button",
 							"_riaswIdInModule": "btnLogin",
-							"iconClass": "powerIcon",
+							"iconClass": "loginIcon",
 							"label": {
 								"$refObj": "rias.i18n.desktop.login"
 							},
@@ -351,7 +352,7 @@ define([
 							//	"width": "4em"
 							//},
 							"onClick": function (evt){
-								var m = this.ownerModule();
+								var m = this.getOwnerModule();
 								if(m.oper.logged){
 									m.doLogout({
 										dialogType: "dropDown",
@@ -380,7 +381,7 @@ define([
 							},
 							showLabel: false,
 							onClick: function(){
-								this.ownerModule().mMsg.toggle();
+								this.getOwnerModule().mMsg.toggle();
 							}
 						},
 						{
@@ -392,7 +393,7 @@ define([
 							},
 							showLabel: false,
 							onClick: function(){
-								this.ownerModule().mConsole.toggle();
+								this.getOwnerModule().mConsole.toggle();
 							}
 						}
 					]

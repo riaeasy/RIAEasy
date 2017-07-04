@@ -81,7 +81,7 @@ define([
 							_riaswAttachPoint: "colorPicker",
 							//region: "center",
 							onChange: function(value){
-								this.ownerModule().value = value;
+								this.getOwnerModule().value = value;
 								///FIXME:zensst.需要判断是否有选中
 								//self.editor.execCommand(self.command, value, true);
 							}

@@ -136,7 +136,7 @@ define([
 									height: "2em"
 								},
 								onChange:  function(){
-									self._checkAndFixInput(this.ownerModule());
+									self._checkAndFixInput(this.getOwnerModule());
 								}
 							},{
 								_riaswType: "riasw.form.ValidationTextBox",
@@ -158,7 +158,7 @@ define([
 									return self._urlRegExp.test(value) || self._emailRegExp.test(value);
 								},
 								onChange:  function(){
-									self._checkAndFixInput(this.ownerModule());
+									self._checkAndFixInput(this.getOwnerModule());
 								}
 							},{
 								_riaswType: "riasw.form.Select",

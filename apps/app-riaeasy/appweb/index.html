@@ -19,7 +19,7 @@
 				"require-encoding": 1,
 				//"rias-desktop-focusAction": "outline",/// none, outline, animate
 				"rias-xhr-simulate": 0,
-				"riasd": 0,
+				"riasd": 1,
 				"riasw-enterAsTab": true
 			},
 			hookConsole: {
@@ -39,16 +39,6 @@
 			ioPublish: true,
 			//locale: "zh-cn",
 			extraLocale: ["en"],
-			trace:{
-				"loader-inject": 0,
-				"loader-define": 0,
-				"loader-exec-module": 0,
-				"loader-run-factory": 0,
-				"loader-finish-exec": 0,
-				"loader-define-module": 0,
-				"loader-circular-dependency": 1,
-				"loader-define-nonmodule": 1
-			},
 			packages: [
 				//{name: "dojo", location: "../dojo"},
 				//{name: "dijit", location: "../dijit"},
@@ -81,6 +71,7 @@
 				if(!result){
 					return;
 				}
+				rias.defaultDuration = rias.has("ff") ? 400 : 200;
 				var theme = rias.urlParamsToObj(_locationSearch).theme;
 				if(!theme){
 					theme = rias.cookie("desktopTheme") || "rias";

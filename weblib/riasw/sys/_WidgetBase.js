@@ -885,8 +885,8 @@ define([
 		},
 		postCreate: function(){
 			this.inherited(arguments);/// inherited RiasBase
-			if(this.debounceLayoutDelay >= rias.defaultDuration / 2){///debounceLayoutDelay 需要小于 playing 最短的 defaultDuration
-				this.debounceLayoutDelay = rias.defaultDuration / 2 - 10;
+			if(this.debounceLayoutDelay >= rias.defaultDuration){///debounceLayoutDelay 需要小于 playing 最短的 defaultDuration
+				this.debounceLayoutDelay = rias.defaultDuration - 10;
 			}
 			///还是手动设置好些
 			//if(this.parent){
@@ -1235,7 +1235,7 @@ define([
 				this._doContainerChanged(value);
 			}
 		},
-		debounceLayoutDelay: 110,
+		debounceLayoutDelay: rias.has("ff") ? 240 : 120,
 		_containerLayout: function(container, delay){
 			//console.debug("_containerLayout - " + this.id);
 			//if(!this._canDoDom()){///因为 container.removeChild 时需要调用，这里检测 destroyed 会导致丢失 container.layout，改在下面检测
@@ -1597,6 +1597,7 @@ define([
 				parent = self.getParent();
 				///parent = self._getContainerRiasw();
 				if(parent && parent !== rias.desktop){
+					parent._inHistoryAction = self._inHistoryAction;
 					if(rias.isFunction(parent.restore)){
 						dr = parent.restore(forceVisible, ignoreMax, ignoreCollapsed, self, ++_deep);
 					}else if(!parent.get("visible")){
@@ -1612,12 +1613,10 @@ define([
 			return rias.when(d).always(function(result){
 				if(!self._started){
 					return rias.when(self.startup()).then(function(){
-						self.set("visible", true);
-						return self.get("visible");
+						return self.show();
 					});
 				}
-				self.set("visible", true);
-				return self.get("visible");
+				return self.show();
 			});
 		},
 		onHide: function(){
@@ -1632,21 +1631,21 @@ define([
 		onClose: function(){
 		},
 
+		needUpdateHash: false,
 		transition: "slide",//"slide", "fade", "flip", "cover", "coverv", "dissolve",
 		//"reveal", "revealv", "scaleIn", "scaleOut", "slidev", "swirl", "zoomIn", "zoomOut", "cube", "swap"
 		transitionDir: 1,
-		transitionTo: function(/*String|Object*/moveTo, /*String*/href, /*String*/url, /*String*/scene, transition, transitionDir){
+		transitionTo: function(/*String|Object*/moveTo, /*String*/href, /*String*/url, transition, transitionDir){
 			// summary:
 			//		Performs a view transition.
 			// description:
 			//		Given a transition destination, this method performs a view
 			//		transition. This method is typically called when this item
 			//		is clicked.
-			rias.dom.dispatchTransition(this.domNode, (moveTo && typeof(moveTo) === "object") ? moveTo : {
+			rias.rt.dispatchTransition(this, (moveTo && typeof(moveTo) === "object") ? moveTo : {
 				moveTo: moveTo,
 				href: href,
 				url: url,
-				scene: scene,
 				transition: transition || this.transition,
 				transitionDir: transitionDir || this.transitionDir
 			});

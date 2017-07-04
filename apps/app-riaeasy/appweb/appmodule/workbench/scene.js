@@ -81,8 +81,8 @@ define([
 	"launchWorkbench": function (args){
 		if(!this.workbench){
 			this.launch([{
-				moduleMeta: "appmodule/workbench/workbench",
-				_riaswIdInModule: "workbench",
+				moduleMeta: "appmodule/workbench/welcome",
+				_riaswIdInModule: "welcome",
 				//caption: "工作台",
 				reCreate: false,
 				//selectedOnShow: false,
@@ -132,7 +132,7 @@ define([
 								"$refObj": "rias.i18n.action.message"
 							},
 							"onStartup": function (){
-								var m = this.ownerModule();
+								var m = this.getOwnerModule();
 								this.subscribe("/rias/desktop/message", function(messages){
 									if(messages && messages.length){
 										this.set("badge", messages.length);

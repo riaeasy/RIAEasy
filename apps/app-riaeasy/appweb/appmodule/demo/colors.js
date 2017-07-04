@@ -44,7 +44,7 @@ define([
 							"style": {
 							},
 							"onClick": function (){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		m.edtValue.set("value", rias.toJson(m.get("value"), true));
 	}
 						}
@@ -76,7 +76,7 @@ define([
 							"checked": false,
 							"label": "readOnly",
 							"onClick": function (){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 		ck = this.checked;
 		rias.forEach(m.form.getChildren(), function(child){
 			if(child.is("riasw.form._FormWidgetMixin")){
@@ -91,7 +91,7 @@ define([
 							"checked": false,
 							"label": "disabled",
 							"onClick": function (){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 		ck = this.checked;
 		rias.forEach(m.form.getChildren(), function(child){
 			if(child.is("riasw.form._FormWidgetMixin")){
@@ -106,7 +106,7 @@ define([
 							"checked": true,
 							"label": "editable",
 							"onClick": function (){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 		ck = this.checked;
 		rias.forEach(m.form.getChildren(), function(child){
 			if(child.is("riasw.form.TextBox")){

@@ -61,7 +61,7 @@ define([
 		var d = e.rows[0];
 		d = d && d.data;
 		if(d){
-			this.ownerModule().grid.refresh({
+			this.getOwnerModule().grid.refresh({
 				id: d.id + "%"
 			});
 		}

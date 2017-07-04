@@ -499,7 +499,7 @@ define([
 		}
 	});
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		params = rias.mixinDeep({}, {
 			rootId: "$root$",
 			rootLabel: "ROOT",

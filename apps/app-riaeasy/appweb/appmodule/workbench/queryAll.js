@@ -65,12 +65,12 @@ define([
 							"showLabel": true,
 							"tooltip": "编号 / 电话 / 证件编号 的模糊查询",
 							"onKeyDown": function (evt){
-			//var m = this.ownerModule();
+			//var m = this.getOwnerModule();
 			if(evt.keyCode === rias.keys.ENTER){
 			}
 		},
 							"onChange": function (newValue){
-			//var m = this.ownerModule();
+			//var m = this.getOwnerModule();
 		}
 						},
 						{
@@ -91,12 +91,12 @@ define([
 							"showLabel": true,
 							"tooltip": " 户名 / 姓名 / 地址 的模糊查询",
 							"onKeyDown": function (evt){
-			//var m = this.ownerModule();
+			//var m = this.getOwnerModule();
 			if(evt.keyCode === rias.keys.ENTER){
 			}
 		},
 							"onChange": function (newValue){
-			//var m = this.ownerModule();
+			//var m = this.getOwnerModule();
 		}
 						},
 						{
@@ -113,7 +113,7 @@ define([
 								"width": "auto"
 							},
 							"onClick": function (evt){
-		//var m = this.ownerModule();
+		//var m = this.getOwnerModule();
 	}
 						},
 						{
@@ -130,7 +130,7 @@ define([
 								"width": "auto"
 							},
 							"onClick": function (evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		m.q_idall.set("value", "");
 		m.q_textall.set("value", "");
 	}
@@ -145,7 +145,7 @@ define([
 						"padding": "0px"
 					},
 					"onShowChild": function (page){
-		//var m = this.ownerModule();
+		//var m = this.getOwnerModule();
 		//m._currGrid = page || m.tabs.selectedChild;
 		//if(m._currGrid){
 		//}

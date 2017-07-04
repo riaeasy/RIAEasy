@@ -1,5 +1,5 @@
 <p style="font-size: 15px; line-height: 1.5em; text-indent: 2em;">
-    RIAEasy - A modular, mobile-ready, data-driven for single-page-application.模块化富客户/单页应用框架。
+    RIAEasy - A modular, mobile-ready, data-driven for single-page-application.模块化的富客户/单页应用框架。
 </p>
 <p style="font-size: 15px; line-height: 1.5em; text-indent: 2em;">
     RIAEasy是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用RIAStudio在线可视化设计器。

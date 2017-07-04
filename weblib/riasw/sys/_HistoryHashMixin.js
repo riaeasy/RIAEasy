@@ -10,8 +10,8 @@ define([
 		postCreate: function(){
 			var self = this;
 			self.inherited(arguments);
-			this._startTransitionHandle = this.on("startTransition", function(evt){
-				self.onStartTransition(evt);
+			this._buildHashHandle = this.on("desktop-updateHash", function(evt){
+				self.onUpdateHash(evt);
 			});
 			this._hashchangeHandle = this.subscribe("/dojo/hashchange", function(newhash){
 				self._onHashChange(newhash);
@@ -56,38 +56,24 @@ define([
 			this._previous = null;
 
 			this._hashchangeHandle.remove();
-			this._startTransitionHandle.remove();
+			this._buildHashHandle.remove();
 			this.inherited(arguments);
 		},
 
-		onStartTransition: function(evt){
-			// summary:
-			//		Response to riasw/sys/Desktop "startTransition" event.
-			//
-			// example:
-			//		Use rias.dom.dispatchTransition to trigger "startTransition" event, and this function will response the event. For example:
-			//		|	var transOpts = {
-			//		|		title:"List",
-			//		|		target:"items,list",
-			//		|		url: "#items,list"
-			//		|		params: {"param1":"p1value"}
-			//		|	};
-			//		|	rias.dom.dispatchTransition(domNode, transOpts, e);
-			//
-			// evt: Object
-			//		transition options parameter
-
-			var target = evt.detail.target;
+		onUpdateHash: function(evt){
+			var widget = evt.detail.target,
+				hash = "";
 			var regex = /#(.+)/;
-			if(!target && regex.test(evt.detail.href)){
-				target = evt.detail.href.match(regex)[1];
+			if(!widget){
+				if(regex.test(evt.detail.href)){
+					hash = evt.detail.href.match(regex)[1];
+				}else{
+					widget = rias.by(evt.target);
+				}
 			}
 
-			var currentHash = evt.detail.url || "#" + target;
-
-			if(evt.detail.params){
-				currentHash = rias.hash.buildWithParams(currentHash, evt.detail.params);
-			}
+			hash = evt.detail.url || "#" + hash;
+			hash = rias.hash.buildHash(hash, widget, evt.detail.params);
 
 			this._oldHistoryLen = window.history.length;
 			// pushState on iOS will not change location bar hash because of security.
@@ -95,7 +81,7 @@ define([
 
 			// history.length will be changed by set location hash
 			// change url hash, to workaround iOS pushState not change address bar issue.
-			window.location.hash = currentHash;
+			window.location.hash = hash;
 
 			// The operation above will trigger hashchange.
 			// Use _addToHistoryStack flag to indicate the _onHashChange method should add this hash to history stack.
@@ -143,15 +129,6 @@ define([
 			//window.history.length increase, add hash to application history stack.
 			if(this._historyLen < window.history.length){
 				this._addHistory(currentHash);
-				if(!this._startTransitionEvent){
-					// transition to the target view
-					this.emit("app-transition", {
-						viewId: rias.hash.getTarget(currentHash),
-						opts: {
-							params: rias.hash.getParams(currentHash) || {}
-						}
-					});
-				}
 			}else{
 				if(currentHash === this._current){
 					// console.log("do nothing.");
@@ -181,7 +158,7 @@ define([
 					if(0 < index < this._historyStack.length){
 						this._go(index, (index - this._index));
 					}else{
-						console.error("app.go error. index out of history stack.");
+						console.error("desktop.go error. index out of history stack.");
 					}
 				}
 			}
@@ -198,7 +175,9 @@ define([
 			this._historyStack.push({
 				"hash": hash,
 				"url": window.location.href,
-				"detail": {target:hash}
+				"detail": {
+					target: hash
+				}
 			});
 
 			this._historyLen = window.history.length;
@@ -215,7 +194,7 @@ define([
 			this._addToHistoryStack = false;
 		},
 		_back: function(currentHash, detail){
-			console.debug("back: " + currentHash);
+			console.debug("desktop.back: " + currentHash);
 			this._next = this._historyStack[this._index].hash;
 			this._index--;
 			if(this._index > 0){
@@ -225,25 +204,24 @@ define([
 			}
 			this._current = currentHash;
 
-			var target = rias.hash.getTarget(currentHash, this.defaultView);
+			var widget = rias.hash.getTargetWidget(currentHash);
 
 			// publish history back event
-			this.publish("/app/history/back", {
-				"viewId": target,
+			this.publish("/desktop/history/back", {
+				"target": widget,
 				"detail": detail
 			});
-			// transition to the target view
-			this.emit("app-transition", {
-				viewId: target,
- 				opts: rias.mixin({
+			this.emit("desktop-historyaction", {
+				target: widget,
+				opts: rias.mixinDeep({
 					reverse: true
 				}, detail, {
-					"params": rias.hash.getParams(currentHash)
+					"params": rias.hash.getTargetParams(currentHash)
 				})
 			});
 		},
 		_forward: function(currentHash, detail){
-			console.debug("forward: " + currentHash);
+			console.debug("desktop.forward: " + currentHash);
 			this._previous = this._historyStack[this._index].hash;
 			this._index++;
 			if(this._index < this._historyStack.length - 1){
@@ -253,20 +231,19 @@ define([
 			}
 			this._current = currentHash;
 
-			var target = rias.hash.getTarget(currentHash, this.defaultView);
+			var widget = rias.hash.getTargetWidget(currentHash);
 
 			// publish history forward event
-			this.publish("/app/history/forward", {
-				"viewId": target,
+			this.publish("/desktop/history/forward", {
+				"target": widget,
 				"detail": detail
 			});
-			// transition to the target view
-			this.emit("app-transition", {
-				viewId: target,
-				opts: rias.mixin({
+			this.emit("desktop-historyaction", {
+				target: widget,
+				opts: rias.mixinDeep({
 					reverse: false
 				}, detail, {
-					"params": rias.hash.getParams(currentHash)
+					"params": rias.hash.getTargetParams(currentHash)
 				})
 			});
 		},
@@ -280,21 +257,20 @@ define([
 			this._previous = this._historyStack[index - 1] ? this._historyStack[index - 1].hash : null;
 			this._next = this._historyStack[index + 1] ? this._historyStack[index + 1].hash : null;
 
-			var target = rias.hash.getTarget(this._current, this.defaultView);
+			var widget = rias.hash.getTargetWidget(this._current);
 
 			// publish history go event
-			this.publish("/app/history/go", {
-				"viewId": target,
+			this.publish("/desktop/history/go", {
+				"target": widget,
 				"step": step,
 				"detail": this._historyStack[index].detail
 			});
-			// transition to the target view
-			this.emit("app-transition", {
-				viewId: target,
-				opts: rias.mixin({
+			this.emit("desktop-historyaction", {
+				target: widget,
+				opts: rias.mixinDeep({
 					reverse: (step <= 0)
 				}, this._historyStack[index].detail, {
-					"params": rias.hash.getParams(this._current)
+					"params": rias.hash.getTargetParams(this._current)
 				})
 			});
 		}

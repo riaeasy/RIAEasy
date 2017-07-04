@@ -259,7 +259,7 @@ define([
 				unhidable: true,
 				renderCell: asButton ? function(data, cellData, cell, options){
 					var grid = this.grid,
-						module = grid.ownerModule(),
+						module = grid.getOwnerModule(),
 						item, n, i, l;
 					for(i = 0, l = opColumn.length; i < l; i++){
 						item = opColumn[i];
@@ -302,7 +302,7 @@ define([
 					}
 				} : function(data, cellData, cell, options){
 					var grid = this.grid,
-						module = grid.ownerModule(),
+						module = grid.getOwnerModule(),
 						btn;
 					function _do(){
 						var menu = new Menu({
@@ -401,7 +401,7 @@ define([
 					ownerRiasw: grid,
 					dialogType: "top",
 					popupArgs: {
-						parent: grid.viewModuleParent || grid.ownerModule(),
+						parent: grid.viewModuleParent || grid.getOwnerModule(),
 						around: {
 							x: r.element.offsetWidth >> 1,
 							y: rias.dom.getPosition(cell).y
@@ -523,7 +523,7 @@ define([
 				unhidable: true,
 				renderCell: function(data, cellData, cell, options){
 					var //grid = this.grid,
-					//module = grid.ownerModule(),
+					//module = grid.getOwnerModule(),
 						level;
 					level = Number(options && options.queryLevel);
 					if(!isNaN(level)){

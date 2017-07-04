@@ -997,7 +997,7 @@ define([
 	Widget.pluginsBase = pluginsBase;
 	Widget.pluginsAll = pluginsAll;
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		var p = params.plugins;
 		if(rias.isArray(p)){
 			if(p.length === 0){

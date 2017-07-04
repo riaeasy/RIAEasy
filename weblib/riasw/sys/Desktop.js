@@ -210,6 +210,8 @@ define([
 					}, self, self.operPersistInterval, function(){
 						//console.debug(this.id + "PersistChange debounce pass...");
 					})();
+				}), self.on("desktop-historyaction", function(evt){
+					self._doHistoryAction(evt);
 				})
 			);
 
@@ -255,7 +257,7 @@ define([
 
 		addWidget: function(widget){
 			if(!widget.id){
-				widget.id = widget.ownerModule() && widget._riaswIdInModule ? (widget.ownerModule().id + "_" + widget._riaswIdInModule) :
+				widget.id = widget.getOwnerModule() && widget._riaswIdInModule ? (widget.getOwnerModule().id + "_" + widget._riaswIdInModule) :
 					rias.rt.getUniqueId(this.id + "_" + rias.rt._getUniqueCat(widget), this);
 			}
 			if(this._riasWidgets[widget.id]){
@@ -806,6 +808,7 @@ define([
 						displayStateOnLeave: (args.displayStateOnLeave != undefined ? args.displayStateOnLeave : ""),
 						alwaysShowDockNode: (args.alwaysShowDockNode != undefined ? args.alwaysShowDockNode : true)
 					});
+					moduleParams.needUpdateHash = args._riaswIdInModule && args.needUpdateHash != false;
 					moduleParams.style = rias.dom.styleToObject(moduleParams.style);
 					if(asDialog){
 						_getStyle(moduleParams, meta);
@@ -990,6 +993,17 @@ define([
 			}
 			if(removeDefine){
 				this.removeSceneDefine(id);
+			}
+		},
+
+		_doHistoryAction: function(evt){
+			var opts = evt.opts,
+				widget = rias.by(opts.target);
+			if(rias.isRiasw(widget)){
+				///TODO:zensst. 先简化处理，只 restore
+				widget._inHistoryAction = widget._inHistoryAction >= 0 ? ++widget._inHistoryAction : 1;
+				widget._updateDetail = opts;
+				widget.restore(true);
 			}
 		}
 

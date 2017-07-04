@@ -9,7 +9,7 @@ define([
 	var Widget = rias.declare(riaswType, [_Widget], {
 	});
 
-	Widget.makeParams = function(params){
+	Widget.buildParams = function(params){
 		if(!params.errorMessage){
 			params.errorMessage = "The widget have some errors.";
 		}

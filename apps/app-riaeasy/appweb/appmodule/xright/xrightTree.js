@@ -72,11 +72,11 @@ define([
 		return item.text + (item.dval ? "(" + item.dval + ")" : "");
 	},
 					"onClick": function (item, node, evt){
-		var m = this.ownerModule();
+		var m = this.getOwnerModule();
 		m.currentItem = item;
 	},
 					"onDblClick": function (item, node, evt){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 			p = node.tree.model.mayHaveChildren(item),
 			t = rias.getSelectTreeModeInt(m.selectMode);
 		if(!p && t === 2 || p && t === 1){

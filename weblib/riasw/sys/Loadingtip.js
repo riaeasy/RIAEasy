@@ -42,7 +42,7 @@ define([
 		attachToPointer: true,
 		// duration: Integer
 		//		time in ms to toggle in/out the visual load indicator
-		duration: rias.defaultDuration / 2,
+		duration: rias.defaultDuration,
 		loadingtipUnderlayOpacity: 0.1,///用 css 存在 placeAt 时 获取不准确的问题，还是显式控制好些。
 		// _offset: Integer
 		//		distance in px from the mouse pointer to show attachToPointer avatar

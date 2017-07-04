@@ -46,16 +46,16 @@ var profile = (function(){
 
 		basePath: "../../../js-lib-src/dojo-1.12.2-src",///相对于本文件的路径，接下类的编译都从这里开始计算。关联编译配置的文件位置。
 		releaseDir: "../dojo-1.12.2-web-min",///相对于 build.bat 的 basePath（即 build 所用的 dojo 的目录），编译目标目录，编译器会覆盖它发现的一切。
-		releaseName: "",
+		releaseName: "riaeasy-v2017-b1",///releaseDir 的子目录
 		action: "release",//一般就这样写，不要修改。
 		//默认值为"shrinksafe"。若该值为false，则关闭压缩。shrinksafe.keeplines, closure, closure.keeplines, comments,comments.keeplines///dojo1.7+建议用closure。
-		layerOptimize: false,//"closure",//"comments.keeplines",//"closure",
+		layerOptimize: "closure",//"comments.keeplines",//"closure",
 		//设置那些不是层的模块的压缩设置，默认为false，其他值和layerOptimize相同///dojo1.7+建议用closure。
 		optimize: false,//"closure",
 		//处理CSS的优化。默认为false。若为comments则去除注释和换行，并连接任何@import命令。其他可选的值有comments.keeplines，剔除注释和连接@import命令，但是保留换行。
 		cssOptimize: true,//true,
 		//决定编译过程中是否最小化。如果为真则标记为miniExcludes的文件被排除在外就像tests那样，demo和其他元素对于编译不是必需的。默认的为false。
-		mini: true,
+		mini: true,///确定整个编译是否为"mini"， 如果为true, 不会复制标记了miniExclude的文件，如测试，DEMO，以及不需要被编译（复制，最小化）的文件。 默认为false.
 		stripConsole: "none",///处理输出代码中的console语名， 默认为"normal", 会删除所有console语句，除了console.error 和 console.warn.最需注意的是，这个特征只在优化级别时才适用。否则它会被忽略。 另外可能的值为"none", "warn" 和"all"
 		//selectorEngine: "lite",///标识默认的选择器引擎。这不会直接使代码变小，它确保选择器引擎不包含其他的调用。默认没有设置，Dojo包含两个引擎lite和acme。
 
@@ -109,6 +109,8 @@ var profile = (function(){
 				//{name: 'riasd', location: '../../../RIASServer/weblib/riasd', main: "riasd"}
 			]
 		},
+
+		localeList: 'zh,en',///打包后直接加载的 i18n 包
 		///build 时 has 的预设值，会直接导致 build 的结果直接采用这些默认值进行 build，如果不是明确用于某个明确项目，不要显式设置。
 		///需要与上面的 defaultConfig 的 hasCache 配合使用，即显式设置 defaultConfig 中的非 dojo 的缺省 config 值
 		staticHasFeatures: {
@@ -156,9 +158,9 @@ var profile = (function(){
 			"dojo-publish-privates": 1,//是否显示加载器的一些内部信息
 			"dojo-config-api": 1,//是否保证 build 是可以配置的
 			"dojo-sniff": 1,//是否当从一个CDN加载模块的时候，启用一些老式的模块加载行为？//设为0才能支持 Rhino
-			"dojo-sync-loader": 1,//是否支持同步加载器
+			"dojo-sync-loader": 1,//是否支持同步加载器，是否禁止使用1.7版本之前的加载器
 			"dojo-test-sniff": 0,//Disables some features for testing purposes.是否包含测试代码
-			"config-deferredInstrumentation": 1,//是否自动加载那些会报告un-handled rejected promises的代码
+			"config-deferredInstrumentation": 1,//是否禁止自动加载dojo/promise/instrumentation模块. 该模块用于监测被拒绝的承诺，将末被处理的错误输出到控制台
 			"config-tlmSiblingOfDojo": 1,//是否支持非标准的模块解析代码
 
 			"dojo-built": 1

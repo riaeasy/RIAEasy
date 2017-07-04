@@ -5,9 +5,9 @@ define([
 	"_rsfVersion": 21,
 	"_riaswVersion": "0.8",
 	"caption": {
-		"$refObj": "rias.i18n.desktop.workbench"
+		"$refObj": "rias.i18n.desktop.welcome"
 	},
-	"iconClass": "worksIcon",
+	"iconClass": "smileIcon",
 	"style": {
 	},
 	"_riaswElements": [

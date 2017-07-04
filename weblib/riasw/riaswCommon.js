@@ -34,7 +34,6 @@ define([
 	"riasw/sys/Tag",
 	"riasw/sys/ContainerTag",
 	"riasw/sys/Dialog",
-	//"riasw/sys/View",
 	"riasw/sys/Toolbar",
 	"riasw/form/Button",
 	"riasw/form/TextBox",

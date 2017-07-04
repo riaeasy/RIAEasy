@@ -50,7 +50,7 @@ define([
 								"$refObj": "rias.i18n.action.message"
 							},
 							"onStartup": function (){
-								var m = this.ownerModule();
+								var m = this.getOwnerModule();
 								this.subscribe("/rias/desktop/message", function(messages){
 									if(messages && messages.length){
 										this.set("badge", messages.length);
