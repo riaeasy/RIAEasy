@@ -702,6 +702,7 @@ define([
 			}else{
 				if(this.badgeNode && this.badgeNode !== this._badgeNode0){
 					rias.dom.destroy(this.badgeNode);
+					delete this.badgeText;
 					delete this.badgeNode;
 				}
 			}
