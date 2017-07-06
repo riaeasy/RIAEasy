@@ -110,9 +110,9 @@ define([
 				this.load();
 			}
 		},
-		_getContentAttr: function(){
-			return this.content;
-		},
+		//_getContentAttr: function(){
+		//	return this.content;
+		//},
 
 		_show: function(newState){
 			var self = this,
@@ -295,13 +295,15 @@ define([
 			var self = this;
 			return rias.when(self.afterLoadedAll(loadOk)).always(function(result){
 				if(self.isShowing()){
-					try{
-						result = self._afterLoadedAllAndShown(loadOk);
-					}catch(e){
-						result = rias.newDeferredReject(e);
-						console.error("_afterLoadedAllAndShown execute error:", e, self);
-						rias.error("_afterLoadedAllAndShown execute error:\n" + e, self);
-					}
+					self._whenDisplayed(function(){
+						try{
+							result = self._afterLoadedAllAndShown(loadOk);
+						}catch(e){
+							result = rias.newDeferredReject(e);
+							console.error("_afterLoadedAllAndShown execute error:", e, self);
+							rias.error("_afterLoadedAllAndShown execute error:\n" + e, self);
+						}
+					});
 				}else{
 					self._needLoadedAllAndShown = true;
 				}

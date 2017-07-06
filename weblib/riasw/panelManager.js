@@ -182,7 +182,7 @@ define([
 			}else{
 				df.resolve(undefined);
 			}
-			_deep = 0;
+			_deep--;
 			return df.promise;
 		}
 

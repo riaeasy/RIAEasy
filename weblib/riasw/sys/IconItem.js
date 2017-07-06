@@ -248,7 +248,7 @@ define([
 					parent.appView._heading.set("label", this.label);
 				}
 				this.moveTo = parent.id + "_mblApplView";
-				rias.dom.dispatchTransition(this.domNode, this.getTransOpts(), e);
+				rias.rt.dispatchTransition(this, this.getTransOpts(), e);
 			}
 		},
 

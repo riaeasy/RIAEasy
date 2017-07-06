@@ -483,7 +483,11 @@ define([
 	var is = rias.is = function(obj, base){
 		function _do(ctor){
 			if(isString(ctor)){
-				ctor = getObject(ctor);
+				if(typeof obj === ctor){
+					return true;
+				}else{
+					ctor = getObject(ctor);
+				}
 			}
 			if(!ctor){
 				return false;
@@ -522,7 +526,8 @@ define([
 		return !!(hostBrowser && obj && /*(obj instanceof Node) &&*/ (obj.nodeType === 1 || obj.nodeType === 3));
 	};
 	rias.isWindow = function(obj){
-		return rias.is(obj, Window);
+		//return rias.is(obj, Window);
+		return obj === window;
 	};
 	rias.isDocument = function(obj){
 		return obj === rias.doc;
@@ -2372,7 +2377,7 @@ define([
 	//	};
 	//};
 	var _throttleCache = {};
-	rias._throttle = function(id, callback, scope, delay, callPass){
+	rias._throttle = function(id, callback, delay, scope, callPass){
 		/// 调用一开始即执行 callback，并在 delay 时间内不再执行，类似 keydown
 		/// callback
 		/// |------delay------|callback
@@ -2442,7 +2447,7 @@ define([
 		return r;
 	};
 	var _throttleDelayedCache = {};
-	rias._throttleDelayed = function(id, callback, scope, delay, callPass){
+	rias._throttleDelayed = function(id, callback, delay, scope, callPass){
 		/// 调用开始的 delay 时间后执行 callback，并在 delay 时间内不再执行，类似 keyup
 		/// |------delay------|callback
 		///                   |------delay------|callback...
@@ -2510,7 +2515,7 @@ define([
 		return r;
 	};
 	var _debounceCache = {};
-	rias._debounce = function(id, callback, scope, delay, callPass){
+	rias._debounce = function(id, callback, delay, scope, callPass){
 		/// 调用开始的 delay 时间后不再有调用时才执行 callback，类似 defer once
 		/// |------delay------|
 		///          |------delay------|
@@ -2616,7 +2621,7 @@ define([
 						if(self.logs.length > logLimit){
 							self.logs.shift();
 						}
-						rias.publish("/rias/console/log", self.logs);
+						self._publish();
 					};
 					console[level]._hooked = true;
 				}
@@ -2633,7 +2638,12 @@ define([
 		},
 		clear: function(){
 			this.logs = [];
-			rias.publish("/rias/console/log", this.logs);
+			this._publish();
+		},
+		_publish: function(){
+			rias._debounce("/rias/console/log", function(){
+				rias.publish("/rias/console/log", this.logs);
+			}, 430, this)();
 		}
 	};
 	//if(config.hookConsole){

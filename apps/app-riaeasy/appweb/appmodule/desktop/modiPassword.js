@@ -49,7 +49,7 @@ define([
 	},
 	"_riaswElements": [
 		{
-			"_riaswType": "riasw.layout.ContentPanel",
+			"_riaswType": "riasw.sys.Tag",
 			"_riaswIdInModule": "mTitle",
 			"content": "请输入新的密码：",
 			"region": "top",

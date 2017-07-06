@@ -2,7 +2,7 @@ define([
 	"riasw/riaswBase"
 ], function(rias){
 	return {
-	"_rsfVersion": 168,
+	"_rsfVersion": 169,
 	"caption": "标题1",
 	"style": {
 		"padding": "0px"
@@ -93,7 +93,7 @@ define([
 									]
 								},
 								{
-									"_riaswType": "riasw.layout.ContentPanel",
+									"_riaswType": "riasw.sys.Tag",
 									"_riaswIdInModule": "contentPane0",
 									"content": "状态信息",
 									"region": "center",
@@ -147,7 +147,7 @@ define([
 							]
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.layout.Panel",
 							"_riaswIdInModule": "contentPane2",
 							"caption": "测试1",
 							"closable": false,
@@ -180,13 +180,13 @@ define([
 							"caption": "测试模块2",
 							"closable": true,
 							"disabled": true,
-							"moduleMeta": "appmodule/demo/input",
+							"moduleMeta": "appmodule/demo/input1",
 							"region": "center",
 							"style": {
 							}
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.layout.Panel",
 							"_riaswIdInModule": "contentPane1",
 							"caption": "测试4",
 							"closable": false,
@@ -197,7 +197,7 @@ define([
 							},
 							"_riaswElements": [
 								{
-									"_riaswType": "riasw.layout.ContentPanel",
+									"_riaswType": "riasw.sys.Tag",
 									"_riaswIdInModule": "mTitle",
 									"content": "<font color='darkblue'><b>(当前没有开通用户，请直接点击【确定】登录。)</b></font>",
 									"region": "top",

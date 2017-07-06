@@ -299,7 +299,7 @@ define([
 				}else{
 					this.closeDropDown(true);	// refocus button to avoid hiding node w/focus
 				}
-			}, this, 33)();
+			}, 33, this)();
 		},
 		onLoadDropDown: function(){
 			return this.dropDown;

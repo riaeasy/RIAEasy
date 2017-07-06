@@ -157,7 +157,7 @@ define([
 					"style": {
 					},
 					"onScroll": function (evt){
-		var m = this.ownerModule(),
+		var m = this.getOwnerModule(),
 			p = evt.target,
 			c = 1;
 		if(p && p.scrollHeight){
@@ -175,9 +175,9 @@ define([
 	},
 					"_riaswElements": [
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.sys.Tag",
 							"_riaswIdInModule": "about1",
-							"content": "<p style=\"text-indent: 2em;\">\n   RIAEasy - A lightweight, modular, mobile-ready, data-driven for single-page-application.\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个模块化、轻量的富客户/单页应用框架。\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用 RIAStudio 在线可视化设计器。\n</p>\n",
+							"content": "<p style=\"text-indent: 2em;\">\n   RIAEasy - A modular, mobile-ready, data-driven for single-page-application.\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个模块化的富客户/单页应用框架。\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 是一个单页 Web 应用 (single-page application 简称为 SPA)设计平台。旨在实现RIA/SPA应用的快速、高质量开发，实现模块化开发，实现移动、桌面系统统一的跨浏览器开发。可以使用 RIAStudio 在线可视化设计器。\n</p>\n",
 							"stateStyle": {
 								"containerNode": {
 									"base": {
@@ -199,7 +199,7 @@ define([
 							}
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.sys.Tag",
 							"_riaswIdInModule": "about2",
 							"content": "<p style=\"text-indent: 2em;\">\n   <span style=\"text-indent: 2em;\">RIAEasy 基于 dojo 构建（dojo 1.10），支持 HTML5、CSS3；采用 AMD（异步模块定义）加载。扩展了 dojo，替换并完善了 dijit 和部分 dojox 模块，封装并扩展了 dgrid 和 Eclipse&nbsp;orion 的在线编辑等控件。</span>\n   <br>\n</p>\n<p style=\"text-indent: 2em;\">\n   RIAEasy 基于 webComponent 概念设计，包括一整套基础控件，具有良好的运行期动态适应性；实现了完全的前端渲染，数据驱动，前后分离，无需后端服务器生成页面；实现了主题（theme）分离，可以自由换肤；同时支持桌面和移动端。目前已经基本可以替代 EasyUI、ExtJS(Sencha)，特别适合于 webMIS 和 webApp 应用。\n</p>\n",
 							"stateStyle": {
@@ -223,7 +223,7 @@ define([
 							}
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.sys.Tag",
 							"_riaswIdInModule": "about3",
 							"content": "<p style=\"text-indent: 2em;\">\n   <span style=\"text-indent: 2em;\">RIAEasy 是面向跨平台的单页应用设计平台，与传统的网页设计模式差别较大，反而更接近传统的C/S桌面应用设计模式。尽管 RIAEasy 也可以用来快速设计传统的网页，但这显然不是其真正的优势。正如 RIAEasy 的名称已经表明的，这是一个用来做 RIA 的工具。如果您做过 C/S 桌面应用，用过 Delphi、C++Builder、VisualStudio 这些工具，那么就更容易理解 RIAEasy。</span><span style=\"text-indent: 2em;\">&nbsp;</span>\n   <br>\n</p>\n",
 							"stateStyle": {
@@ -451,7 +451,7 @@ define([
 							]
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.sys.Tag",
 							"_riaswIdInModule": "history",
 							"caption": "变更历史",
 							"content": "<p>\n   &nbsp;2015-1-18，RIAEasy的0.7版上线。&nbsp;\n</p>\n<p>\n   2015-1-19，增加 InnerHTML 编辑功能。&nbsp;\n</p>\n<p>\n   2015-1-20，修改了【助手小易】。&nbsp;\n</p>\n<p>\n   2015-1-21，riasw.sys.Tag可用。&nbsp;\n</p>\n<p>\n   2015-1-30，扩展 dijit.form.TextBox 及其子类，增加 label 属性；同时修改了其 css。&nbsp;\n</p>\n<p>\n   2015-2-1，调整设计器界面及功能操作，并修改了部分bug。&nbsp;\n</p>\n<p>\n   2015-2-3，新增 riasw.layout.TablePanel 控件，实现 Table 布局。（暂时不支持 rowSpan）&nbsp;\n</p>\n<!--\n   nested divs because wipeIn()/wipeOut() doesn't work right on node w/padding etc.  Put padding on inner div.\n-->\n",
@@ -477,12 +477,13 @@ define([
 							"toggleable": true
 						},
 						{
-							"_riaswType": "riasw.layout.ContentPanel",
+							"_riaswType": "riasw.sys.Tag",
 							"_riaswIdInModule": "footer",
 							"content": "<p style=\"text-align: center; widows: 1;\">\n   备案号: 蜀ICP备16035796号\n   <br>\n</p>\n<p style=\"text-align: center;\">\n   主页：<a href=\"http://www.riaeasy.com\" target=\"_blank\">RIAEasy</a>&nbsp; &nbsp; 博客：<a href=\"http://blog.csdn.net/zensst/article/category/2913205\" target=\"_blank\">关于 RIAEasy 的博客</a>\n</p>\n",
 							"style": {
 								"background-color": "steelblue",
-								"font-size": "12px"
+								"font-size": "12px",
+								"padding": "1em"
 							}
 						}
 					]

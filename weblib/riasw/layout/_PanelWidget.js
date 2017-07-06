@@ -180,7 +180,7 @@ define([
 
 		startup: function(){
 			if(this._started){
-				return this.whenPlayed();
+				return this._whenDisplayed();
 			}
 			this.inherited(arguments);
 
@@ -656,7 +656,7 @@ define([
 					//console.debug("debounceLayout - layout - " + this.id);
 					this.layout();
 				}
-			}, this, (delay == undefined ? this.debounceLayoutDelay : delay), function(){
+			}, (delay == undefined ? this.debounceLayoutDelay : delay), this, function(){
 				//console.debug("debounceLayout pass... - " + this.id);
 			})();
 		},
@@ -935,7 +935,7 @@ define([
 					self._onScrollHandle = rias._throttleDelayed(self.id + "_onScroll", function(){
 						self._onScrollHandle = undefined;
 						self._resize();
-					}, self, 370)();
+					}, 370, self)();
 				});
 			}
 		},
@@ -996,7 +996,7 @@ define([
 					self.displayState = displayShowNormal;
 				}
 				self._updateDisplayState();
-				return self.whenPlayed(function(){
+				return self._whenDisplayed(function(){
 					self._onShow();
 					return self.isShowing();
 				});
@@ -1035,7 +1035,7 @@ define([
 				this.set("maxSize", this._maxSize0);
 			}
 			this._updateDisplayState();
-			this.whenPlayed(function(){
+			this._whenDisplayed(function(){
 				this.onRestore();
 			});
 			return this.isShowNormal();
@@ -1094,7 +1094,7 @@ define([
 				this.displayState = displayShowNormal;
 			}
 			this._updateDisplayState();
-			this.whenPlayed(function(){
+			this._whenDisplayed(function(){
 				this.onExpand();
 			});
 			return this.isShowNormal();
@@ -1113,7 +1113,7 @@ define([
 				this.set("minSize", undefined);
 			}
 			this._updateDisplayState();
-			this.whenPlayed(function(){
+			this._whenDisplayed(function(){
 				this.onCollapse();
 			});
 			return this.isCollapsed() || this.isDocked();
@@ -1141,7 +1141,7 @@ define([
 				this.set("maxSize", undefined);
 			}
 			this._updateDisplayState();
-			this.whenPlayed(function(){
+			this._whenDisplayed(function(){
 				this.onShowMax();
 			});
 			return this.isShowMax();
@@ -1238,7 +1238,7 @@ define([
 
 		///displayState:	1=shown(showNormal, restore, expand), 2=showMax, 3=collapsed(showMin, shrunk),
 		//			0=hideen(display=none), -1=closed(destroy), -2=hideen(but display)
-		whenPlayed: function(callback){
+		_whenDisplayed: function(callback){
 			var self = this;
 			return rias.when(this._playingDeferred || true).always(function(result){
 				if(result && rias.isFunction(callback)){
@@ -1284,7 +1284,7 @@ define([
 							return self._doPlayNode(false, self.domNode, self.duration / 2).always(function(){
 								self._set("displayState", value);
 								self._doDisplay(value);
-								return self.whenPlayed(_do);
+								return self._whenDisplayed(_do);
 							});
 						}
 						return self.displayState;
@@ -1292,7 +1292,7 @@ define([
 				}else{
 					self._set("displayState", value);
 					self._doDisplay(value);
-					return self.whenPlayed(_do);
+					return self._whenDisplayed(_do);
 				}
 			}else{
 				return rias.when(self.displayState);

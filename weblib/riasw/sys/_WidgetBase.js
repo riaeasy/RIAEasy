@@ -602,30 +602,28 @@ define([
 				console.error("The stateStyle need a Object value, " + value);
 				return;
 			}
-			if(!rias.objEqual(this._stateStyle, value)){
-				_dom.clearComputedStyle(this.domNode);
-				for(var pn in value){
-					if(value.hasOwnProperty(pn) && rias.isDomNode(this[pn]) && value[pn]){
-						try{
-							if(value[pn].base){
-								if(this._trackMouseState){
-									if(pn === "domNode"){
-										this._trackMouseState(this.domNode, this._baseClass0 ? this._baseClass0 : "_riasrStateStyle");
-									}else{
-										this._trackMouseState(this[pn], this.cssStateNodes && this.cssStateNodes[pn] ? this.cssStateNodes[pn] : "_riasrStateStyle");
-									}
+			_dom.clearComputedStyle(this.domNode);
+			for(var pn in value){
+				if(value.hasOwnProperty(pn) && rias.isDomNode(this[pn]) && value[pn]){
+					try{
+						if(value[pn].base){
+							if(this._trackMouseState){
+								if(pn === "domNode"){
+									this._trackMouseState(this.domNode, this._baseClass0 ? this._baseClass0 : "_riasrStateStyle");
+								}else{
+									this._trackMouseState(this[pn], this.cssStateNodes && this.cssStateNodes[pn] ? this.cssStateNodes[pn] : "_riasrStateStyle");
 								}
-								_dom.setStyle(this[pn], value[pn].base);
 							}
-						}catch(e){
-							console.error(e.message, e, this);
+							_dom.setStyle(this[pn], value[pn].base);
 						}
+					}catch(e){
+						console.error(e.message, e, this);
 					}
 				}
-				this._stateStyle = value;
-				this._set("stateStyle", value);
-				this._containerLayout();
 			}
+			this._stateStyle = value;
+			this._set("stateStyle", value);
+			this._containerLayout();
 		},
 		_setZIndexAttr: function(value){
 			value = rias.toNumber(value);
@@ -883,6 +881,9 @@ define([
 				_dom.addClass(this.domNode, this.widgetCss);
 				_dom.clearComputedStyle(this.domNode);
 			}
+			if(!this.containerNode){
+				this.containerNode = this.domNode;
+			}
 		},
 		postCreate: function(){
 			this.inherited(arguments);/// inherited RiasBase
@@ -1079,7 +1080,8 @@ define([
 			//		widget's scope you must do `myWidget.on("click", lang.hitch(myWidget, func))`.
 
 			///调整参数。
-			if(!rias.isDomNode(target) && !rias.isDocument(target) && !rias.isWindow(target) && !rias.isRiasw(target)){
+			//if(!rias.isDomNode(target) && !rias.isDocument(target) && !rias.isWindow(target) && !rias.isRiasw(target)){
+			if(rias.isString(target) || rias.isFunction(target)){
 				func = type;
 				type = target;
 				target = this.domNode;
@@ -1236,7 +1238,7 @@ define([
 				this._doContainerChanged(value);
 			}
 		},
-		debounceLayoutDelay: rias.has("ff") ? 240 : 120,
+		debounceLayoutDelay: rias.has("ff") || rias.has("ie") < 11 ? 360 : 120,
 		_containerLayout: function(container, delay){
 			//console.debug("_containerLayout - " + this.id);
 			//if(!this._canDoDom()){///因为 container.removeChild 时需要调用，这里检测 destroyed 会导致丢失 container.layout，改在下面检测
@@ -1264,7 +1266,7 @@ define([
 							//console.debug("debounceLayout - layout - " + container.id);
 							container.layout();
 						}
-					}, this, (delay == undefined ? this.debounceLayoutDelay : delay), function(){
+					}, (delay == undefined ? this.debounceLayoutDelay : delay), this, function(){
 					})();
 				}else{
 					this._parentLayoutHandle = rias._debounce(container.id + ".layout", function(){
@@ -1279,7 +1281,7 @@ define([
 								container.resize();
 							}
 						}
-					}, this, (delay == undefined ? this.debounceLayoutDelay : delay), function(){
+					}, (delay == undefined ? this.debounceLayoutDelay : delay), this, function(){
 					})();
 				}
 				//}
@@ -1297,7 +1299,7 @@ define([
 							//console.debug("debounceLayout - layout - " + this.id);
 							this.layout();
 						}
-					}, this, (delay == undefined ? this.debounceLayoutDelay : delay), function(){
+					}, (delay == undefined ? this.debounceLayoutDelay : delay), this, function(){
 					})();
 				}else if(this.resize){
 					this._parentLayoutHandle = rias._debounce(this.id + ".resize", function(){
@@ -1310,7 +1312,7 @@ define([
 							//console.debug("debounceLayout - resize - " + this.id);
 							this.resize();
 						}
-					}, this, (delay == undefined ? this.debounceLayoutDelay : delay), function(){
+					}, (delay == undefined ? this.debounceLayoutDelay : delay), this, function(){
 					})();
 				}
 			}
@@ -1346,7 +1348,7 @@ define([
 							}else{
 								self._containerLayout();
 							}
-						}, self, self._onViewportResizeDelay, function(){
+						}, self._onViewportResizeDelay, self, function(){
 						})();
 					}) : rias.desktop.addResizeWidget(self, true)[0];
 			}else{
@@ -1636,21 +1638,15 @@ define([
 		transition: "slide",//"slide", "fade", "flip", "cover", "coverv", "dissolve",
 		//"reveal", "revealv", "scaleIn", "scaleOut", "slidev", "swirl", "zoomIn", "zoomOut", "cube", "swap"
 		transitionDir: 1,
-		transitionTo: function(/*String|Object*/moveTo, /*String*/href, /*String*/url, transition, transitionDir){
-			// summary:
-			//		Performs a view transition.
-			// description:
-			//		Given a transition destination, this method performs a view
-			//		transition. This method is typically called when this item
-			//		is clicked.
-			rias.rt.dispatchTransition(this, (moveTo && typeof(moveTo) === "object") ? moveTo : {
-				moveTo: moveTo,
-				href: href,
-				url: url,
-				transition: transition || this.transition,
-				transitionDir: transitionDir || this.transitionDir
-			});
-		},
+		//transitionTo: function(/*String|Object*/moveTo, /*String*/href, /*String*/url, transition, transitionDir){
+		//	rias.rt.dispatchTransition(this, (moveTo && typeof(moveTo) === "object") ? moveTo : {
+		//		moveTo: moveTo,
+		//		href: href,
+		//		url: url,
+		//		transition: transition || this.transition,
+		//		transitionDir: transitionDir || this.transitionDir
+		//	});
+		//},
 
 		disabled: false,
 		_setDisabledAttr: function(value){

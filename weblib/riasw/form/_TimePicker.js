@@ -108,7 +108,6 @@ define([
 		},
 		buildRendering: function(){
 			this.inherited(arguments);
-			this.containerNode = this.domNode;	// expected by _ListMixin
 			this.timeMenu = this.domNode;	// for back-compat
 		},
 

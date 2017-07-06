@@ -63,9 +63,9 @@ define([
 
 			// Track hover and active mouse events on widget root node, plus possibly on subnodes
 			for(var ap in this.cssStateNodes || {}){
-				this._trackMouseState(this[ap], this.cssStateNodes[ap]);
+				this._trackMouseState(this[ap], this.cssStateNodes[ap] ? this.cssStateNodes[ap] : this.stateStyle ? "_riasrStateStyle" : "");
 			}
-			this._trackMouseState(this.domNode, this._baseClass0);
+			this._trackMouseState(this.domNode, this._baseClass0 ? this._baseClass0 : this.stateStyle ? "_riasrStateStyle" : "");
 
 			// Set state initially; there's probably no hover/active/focus state but widget might be
 			// disabled/readonly/checked/selected so we want to set CSS classes for those conditions.

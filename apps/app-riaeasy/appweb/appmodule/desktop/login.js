@@ -80,7 +80,7 @@ define([
 	},
 	"_riaswElements": [
 		{
-			"_riaswType": "riasw.layout.ContentPanel",
+			"_riaswType": "riasw.sys.Tag",
 			"_riaswIdInModule": "mTitle",
 			"content": "<font color='darkblue'><b>请输入登录名和密码（可以用 developer 登录，无密码）：</b></font>",
 			"region": "top",

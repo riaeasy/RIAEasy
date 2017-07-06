@@ -44,7 +44,9 @@ define([
 					node: self.containerNode
 				});
 			}
-			return self._contentSetter.setContent((rias.isObject(content) && content.domNode) ? content.domNode : content, setterParams);
+			return self._contentSetter.setContent((rias.isObject(content) && content.domNode) ? content.domNode : content, setterParams).then(function(result){
+				this.onSetContent(result);
+				});
 		}
 
 	});

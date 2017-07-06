@@ -3,12 +3,12 @@
 
 define([
 	"riasw/riaswBase",
-	"riasw/layout/ContentPanel",
+	"riasw/layout/Panel",
 	"riasw/sys/_TemplatedMixin",
 	"riasw/sys/ToolButton",
 	"riasw/sys/ToolbarSeparator",
 	"riasw/layout/DockBar"
-], function(rias, ContentPanel, _TemplatedMixin, ToolButton, ToolbarSeparator, DockBar){
+], function(rias, Panel, _TemplatedMixin, ToolButton, ToolbarSeparator, DockBar){
 
 	///由于 css 加载的延迟，造成如果 domNode 的 css 有 padding、margin、border，可能显示不正确，最好移到 _PabelBase 中加载。
 	//rias.theme.loadThemeCss([
@@ -17,7 +17,7 @@ define([
 
 	var _dom = rias.dom;
 	var riaswType = "riasw.layout.CaptionPanel";
-	var Widget = rias.declare(riaswType, [ContentPanel, _TemplatedMixin], {
+	var Widget = rias.declare(riaswType, [Panel, _TemplatedMixin], {
 
 		templateString:
 			"<div role='region' class='dijitReset' data-dojo-attach-event='onmouseenter: _onMouseEnter, onmouseleave: _onMouseLeave'>"+

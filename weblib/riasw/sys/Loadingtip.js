@@ -277,7 +277,7 @@ define([
 					//console.info("hide");
 					this._hide();
 				}
-			}, this, (delay == undefined ? this.debounceToggleDelay : delay), function(){
+			}, (delay == undefined ? this.debounceToggleDelay : delay), this, function(){
 				//console.debug("debounceToggle pass... - " + this.id);
 			})();
 		}

@@ -21,16 +21,6 @@ define([
 
 			this.inherited(arguments);
 		},
-		buildRendering: function(){
-			this.inherited(arguments);
-			if(!this.containerNode){
-				// All widgets with descendants must set containerNode.
-				// NB: this code doesn't quite work right because for TabContainer it runs before
-				// _TemplatedMixin::buildRendering(), and thus
-				// sets this.containerNode to this.domNode, later to be overridden by the assignment in the template.
-				this.containerNode = this.domNode;
-			}
-		},
 		destroyDescendants: function(preserveDom){
 			var ow;
 			rias.forEach(this.getChildren(), function(widget){

@@ -393,7 +393,7 @@ define([
 				this._debounceSetupTableHandle = undefined;
 				_do(this.__setupChildren.length ? this.__setupChildren : undefined);
 				this.__setupChildren = [];
-			}, this, (delay == undefined ? this.debounceSetupTableDelay : delay), function(){
+			}, (delay == undefined ? this.debounceSetupTableDelay : delay), this, function(){
 				//console.debug("debounceSetupTable pass... - " + this.id);
 			})();
 		},

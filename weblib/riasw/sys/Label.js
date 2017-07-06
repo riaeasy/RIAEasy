@@ -22,8 +22,8 @@ define([
 				}
 			}
 			rias.dom.addClass(this.domNode, "dijitReset");
-			this.containerNode = this.labelNode = this.domNode;
 			this.inherited(arguments);
+			this.labelNode = this.domNode;
 		},
 
 		isFocusable: function(){
@@ -42,10 +42,8 @@ define([
 		_setLabelAttr: function(value){
 			this._set("label", value);
 			this.labelNode.innerHTML = value;
-			//if(this.applyTextDir){
-			//	this.applyTextDir(this.labelNode);
-			//}
 			this.onSetLabel(value);
+			this.resize();
 		}
 	});
 

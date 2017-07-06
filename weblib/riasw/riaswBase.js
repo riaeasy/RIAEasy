@@ -29,7 +29,7 @@ define([
 	//	console.memory = {};
 	//}
 
-	rias.defaultDuration = rias.config.defaultDuration || rias.has("ff") ? 400 : 200;
+	rias.defaultDuration = rias.config.defaultDuration || rias.has("ff") || rias.has("ie") < 11 ? 400 : 200;
 	rias.autoToggleDuration = rias.defaultDuration;
 
 	rias.popupManager = popupManager;
@@ -1165,16 +1165,17 @@ define([
 				rias.desktop = rias.newRiasw(Desktop, params, refNode || _dom.docBody);
 
 				rias.ready(1000, function(){
-					if(rias.has("ie") < 10){
+					rias.desktop.startup();
+					rias.desktop.resize();
+					if(rias.has("rias-needIE10") && rias.has("ie") < 10){
 						rias.defer(function(){
 							rias.message({
 								_riaswIdInModule: "ie10",
 								dialogType: "top",
-								content: "为了得到更好的效果，请使用 ie10+ 或者 chrome/safari/firefox 等 HTML5 内核的浏览器。"
+								content: rias.i18n.message.needIE11
 							});
-						}, 50);
+						}, 290);
 					}
-					rias.desktop.startup();
 					d.resolve(rias.desktop);
 				});
 

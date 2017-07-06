@@ -152,7 +152,7 @@ define([
 			"toggleable": true,
 			"_riaswElements": [
 				{
-					"_riaswType": "riasw.layout.ContentPanel",
+					"_riaswType": "riasw.layout.Panel",
 					"_riaswIdInModule": "qBar",
 					"region": "top",
 					"_riaswElements": [

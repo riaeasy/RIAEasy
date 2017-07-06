@@ -24,12 +24,15 @@ define([
 			}
 			this.tagType = this.domNode.tagName.toLowerCase();
 			this.inherited(arguments);
+			this.contentNode = this.domNode;
 		},
-		_getContentAttr: function(){
-			return this.domNode.innerHTML;
+		onSetContent: function(value){
 		},
 		_setContentAttr: function(value){
+			this._set("content", value);
 			this.domNode.innerHTML = value;
+			this.onSetContent(value);
+			this.resize();
 		}
 	});
 

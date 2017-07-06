@@ -363,7 +363,8 @@ define([
 	rias.ready(function(){
 		var handle = singleton.registerWin(rias.dom.getWindow(document));
 		//if(rias.has("ie")){
-			rias.on(window, "unload", function(){
+		var hUnload = rias.on(window, "unload", function(){
+				hUnload.remove();
 				if(handle){// because this gets called twice when doh.robot is running
 					handle.remove();
 					handle = null;

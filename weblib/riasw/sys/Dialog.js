@@ -701,11 +701,12 @@ define([
 			var self = this;
 			///有些时候，show 之前已经 focus，导致 onFocus 时不能 selected
 			self.whenLoadedAll(function(){
-				self.whenPlayed(function(){
+				self._whenDisplayed(function(){
 					if(self.isShowing() && (self.selected || (self.autoFocus && !self.isTip() && !(self.closeDelay > 1)))){
 						//console.debug("selectedOnShow - " + self.id);
-						//self.select(true);
-						self.defer(self.focus);
+						/// defer 会造成多重弹出 Dialog 时循环。
+						self.focus();
+						//self.defer(self.focus);
 					}else{
 						this.panelManager.selectPanel();
 					}
@@ -723,6 +724,7 @@ define([
 			}
 			return rias.when(self.inherited(arguments), function(result){
 				//if(self._riaswIdInModule === "ie10"){
+				//	console("ie10");
 				//}
 				self._updateSelectPanel();
 				return result;

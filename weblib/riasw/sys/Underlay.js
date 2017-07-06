@@ -28,7 +28,6 @@ define([
 
 		buildRendering: function(){
 			this.inherited(arguments);
-			this.containerNode = this.domNode;
 			rias.dom.addClass(this.domNode, "dijitReset");
 		},
 		postCreate: function(){

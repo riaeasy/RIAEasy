@@ -3347,7 +3347,7 @@ define([
 		rias._debounce("rias.dom.resizeAll", function(){
 			console.debug("rias.dom.resizeAll");
 			_do();
-		}, _dom, 230, function(){
+		}, 230, _dom, function(){
 			console.debug("rias.dom.resizeAll pass");
 		})();
 	};

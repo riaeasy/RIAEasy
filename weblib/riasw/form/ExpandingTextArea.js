@@ -59,7 +59,7 @@ define([
 							return;
 						}
 						this._containerLayout();
-					}, this, this._onViewportResizeDelay, function(){
+					}, this._onViewportResizeDelay, this, function(){
 					})());
 				});
 			}

@@ -146,26 +146,10 @@ define([
 
 			this.inherited(arguments);
 		},
-		postCreate: function(){
-			this.inherited(arguments);
-			this.set("disabled", this.disabled);
-			if(!this.activeResize){
-				// there shall be only a single resize rubberbox that at the top
-				// level so that we can overlay it on anything whenever the user
-				// resizes something. Since there is only one mouse pointer he
-				// can't at once resize multiple things interactively.
-				this._resizerHelper = rias.by('_riasrGlobalResizeHelper');
-				if(!this._resizerHelper){
-					this._resizerHelper = new _ResizerHelper({
-						ownerRiasw: rias.desktop,
-						id: '_riasrGlobalResizeHelper'
-					}).placeAt(rias.dom.desktopBody);/// 用 rias.dom.desktopBody 而不是 rias.desktop，可以闪避 desktop.resize
-					rias.dom.addClass(this._resizerHelper.domNode, this.activeResizeClass);
-				}
-			}else{
-				this.animateSizing = false;
-			}
-		},
+		//postCreate: function(){
+		//	this.inherited(arguments);
+		//	//this.set("disabled", this.disabled);
+		//},
 
 		_onDestroy: function(){
 			this._cancel();
@@ -271,13 +255,38 @@ define([
 			value = !!value;
 			if(value){
 				this._cancel();
-				this._resizerHelper.hide();
+				if(this._resizerHelper){
+					this._resizerHelper.hide();
+				}
 			}
 			rias.dom.visible(this.domNode, !value);
 			this._set("disabled", value);
 			this._handleResizeMove();
 		},
 
+		_setActiveResizeAttr: function(value){
+			this._cancel();
+			if(this._resizerHelper){
+				this._resizerHelper.hide();
+			}
+			this._set("activeResize", !!value);
+			if(!this.activeResize){
+				// there shall be only a single resize rubberbox that at the top
+				// level so that we can overlay it on anything whenever the user
+				// resizes something. Since there is only one mouse pointer he
+				// can't at once resize multiple things interactively.
+				this._resizerHelper = rias.by('_riasrGlobalResizeHelper');
+				if(!this._resizerHelper){
+					this._resizerHelper = new _ResizerHelper({
+						ownerRiasw: rias.desktop,
+						id: '_riasrGlobalResizeHelper'
+					}).placeAt(rias.dom.desktopBody);/// 用 rias.dom.desktopBody 而不是 rias.desktop，可以闪避 desktop.resize
+					rias.dom.addClass(this._resizerHelper.domNode, this.activeResizeClass);
+				}
+			}else{
+				this._resizerHelper = undefined;
+			}
+		},
 		_getBoxResizeHandle: function(evt){
 			if(this.disabled || this._isSizing){
 				return;

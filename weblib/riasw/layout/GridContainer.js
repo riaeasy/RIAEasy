@@ -70,7 +70,7 @@ define([
 		visual: true,
 		//iconClass48: "riaswGridContainerIcon48",
 		//iconClass16: "riaswGridContainerIcon16",
-		makeParams: {
+		buildParams: {
 			//content: "<span></span>",
 			nbZones: "3",
 			opacity: "0.7",

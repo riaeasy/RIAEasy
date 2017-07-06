@@ -133,6 +133,8 @@ define({root: {
 	},
 
 	message: {
+		needIE10: "Please use ie10+ or other.",
+		needIE11: "Please use ie11+ or other.",
 		error: "Error.",
 		notfound: "${0} not found.",
 		isExists: "${0} already exists.",

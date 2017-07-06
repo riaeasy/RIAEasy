@@ -66,7 +66,7 @@ define([
 						this.select();
 					},
 					"onKeyDown": function (evt){
-						var m = this.ownerModule();
+						var m = this.getOwnerModule();
 						if(evt.keyCode === rias.keys.ENTER){
 							if(m.btnSubmit){
 								m.btnSubmit.focus();
@@ -76,7 +76,7 @@ define([
 						}
 					},
 					"onChange": function (newValue){
-						var m = this.ownerModule();
+						var m = this.getOwnerModule();
 						if(!m.contentLoaded){
 							return;
 						}

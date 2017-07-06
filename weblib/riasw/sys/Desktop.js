@@ -92,7 +92,6 @@ define([
 		},
 		buildRendering: function(){
 			this.inherited(arguments);
-			rias.dom.addClass(this.domNode, "riasApp");
 			rias.dom.desktopBody = this.domNode;
 			rias.dom.place(rias.dom._globalTempDiv, rias.dom.desktopBody);
 			this.containerNode = rias.dom.create("div");
@@ -207,7 +206,7 @@ define([
 						if(self.oper.logged && self.operPersistUrl){
 							self.saveOperPersist();
 						}
-					}, self, self.operPersistInterval, function(){
+					}, self.operPersistInterval, self, function(){
 						//console.debug(this.id + "PersistChange debounce pass...");
 					})();
 				}), self.on("desktop-historyaction", function(evt){

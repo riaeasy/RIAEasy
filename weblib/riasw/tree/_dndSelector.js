@@ -186,7 +186,7 @@ define([
 					this._focusHandle = rias._debounce(tree.id + ".autoFocusWhenSelectNode", function(){
 						this._focusHandle = undefined;
 						nodes[0].focus();
-					}, this, (this._debounceSelectFocusDelay))();
+					}, this._debounceSelectFocusDelay, this)();
 				}
 			}
 		},

@@ -1,7 +1,7 @@
 define([
 	"riasw/riaswBase",
 	"riasd/main"
-], function(rias, riasd){
+], function(rias){
 
 	return {
 	"_rsfVersion": 1,
@@ -19,12 +19,29 @@ define([
 			"riasd/module/fileSelector",
 			"riasd/module/visualEditor"
 		],
+		checkNeedIE11: function(){
+			if(rias.has("ie") < 11){
+				if(!this.ie10){
+					rias.message({
+						_riaswIdInModule: "ie10",
+						dialogType: "top",
+						content: rias.i18n.message.needIE11
+					}, this, this.dockNode);
+				}
+				this._initRiasdOk = false;
+				return true;
+			}
+			return false;
+		},
 		beforeDestroyed: function(){
 			if(rias.desktop.launchRiasdModule === this.launchRiasdModule){
 				delete rias.desktop.launchRiasdModule;
 			}
 		},
 		beforeParse: function(){
+			if(this.checkNeedIE11()){
+				return;
+			}
 			//riasd, riasdMetas, fileSelector, visualEditor
 			rias.theme.loadCss([/// module.themeCss 是 app 路径，这里需要用 rias 路径
 				rias.toUrl("riasd/resources/riasd.css")
@@ -98,6 +115,9 @@ define([
 			//m.mainTop.layout();
 		},
 		toggleContextOption: function(args, around){
+			if(this.checkNeedIE11()){
+				return;
+			}
 			if(this.contextOption){
 				if(this.contextOption.isShowing()){
 					this.contextOption.hide();
@@ -114,7 +134,7 @@ define([
 						dialogType: "dropDown",
 						showCaption: false,
 						caption: rias.i18n.desktop.studio,//"资源管理器",
-						tooltip: rias.i18n.desktop.studio + "<br/>IE11及以下版本只能使用" + rias.i18n.riasd.ModuleEditor + "部分功能",
+						tooltip: rias.i18n.desktop.studio + "<br/>IE10及以下版本不支持此功能",
 						iconClass: "riasdIcon",
 						reCreate: false,
 						closable: false,
@@ -213,7 +233,7 @@ define([
 								"$refObj": "rias.i18n.action.message"
 							},
 							onStartup: function(){
-								var m = this.ownerModule();
+								var m = this.getOwnerModule();
 								this.subscribe("/rias/desktop/message", function(messages){
 									if(messages && messages.length){
 										this.set("badge", messages.length);

@@ -131,6 +131,8 @@ define({
 	},
 
 	message: {
+		needIE10: "请使用 ie10+ 或其他内核的浏览器.",
+		needIE11: "请使用 ie11+ 或其他内核的浏览器.",
 		error: "有错误。",
 		notfound: "未找到 ${0}。",
 		isExists: "${0} 已经存在.",

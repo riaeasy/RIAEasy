@@ -30,7 +30,7 @@ define([
 	},
 	"_riaswElements": [
 		{
-			"_riaswType": "riasw.layout.ContentPanel",
+			"_riaswType": "riasw.sys.Tag",
 			"_riaswIdInModule": "mTitle",
 			"content": "当前登录信息：",
 			"region": "top",

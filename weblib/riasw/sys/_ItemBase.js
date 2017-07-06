@@ -317,7 +317,7 @@ define([
 			}
 			if(doTransition){
 				this.setTransitionPos(e);
-				rias.dom.dispatchTransition(this.domNode, opts, e);
+				rias.rt.dispatchTransition(this, opts, e);
 			}
 		},
 

@@ -80,10 +80,10 @@ define([
 			this.subscribe("/rias/console/log", function(items){
 				if(!m.isDestroyed()){
 					try{
-						m.set("items", items);
 						if(rias.desktopBy(this).autoShowConsole){
 							m.show();
 						}
+						m.set("items", items);
 					}catch(err){
 					}
 				}
@@ -125,17 +125,23 @@ define([
 			]
 		},
 		{
-			"_riaswType": "riasw.layout.ContentPanel",
-			"_riaswIdInModule": "itemsContainer",
+			"_riaswType": "riasw.layout.Panel",
+			"_riaswIdInModule": "itemsPanel",
 			"caption": "内容",
 			"region": "center",
 			style: {
-				//fontSize: "1.1em",
 				"border-width": "1px"
 			},
-			afterLoaded: function(){
-				rias.dom.scrollIntoView(this.contentNode.lastChild);
-			}
+			"_riaswElements": [
+				{
+					"_riaswType": "riasw.sys.Tag",
+					"_riaswIdInModule": "itemsContainer",
+					//"region": "center",
+					onSetContent: function(){
+						rias.dom.scrollIntoView(this.contentNode.lastChild);
+					}
+				}
+			]
 		}
 	]
 };
